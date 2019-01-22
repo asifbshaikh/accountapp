@@ -1,0 +1,58 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Credit Note Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@credit_note.in_frozen_year?]}_credit_note_actions"%>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial=> "shared/flash_msg"%>
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-8">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-7">
+                  <p>
+                    <strong> Voucher Number: </strong><%= @credit_note.credit_note_number %>
+                  </p>
+                  <p><strong> Credit for: </strong> <%= @credit_note.to_account_name %></p>
+                  <% unless @credit_note.read_only? %>
+                  <p><strong> Credit Account of: </strong> <%= @credit_note.from_account_name %></p>
+                  <% end %>
+                  <p><strong> Amount: </strong> <%= @credit_note.currency %> <%= format_amount @credit_note.amount %></p>
+                </div>
+              </div>
+              
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Credited on <%=@credit_note.transaction_date %> by <%= User.find(@credit_note.created_by).full_name %></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Invoice table ends -->
+      <div class="row">
+          <%if !@credit_note.description.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Description</label><br/>
+              <%= breaking_word_wrap(@credit_note.description)%>
+            </p>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>

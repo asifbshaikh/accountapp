@@ -1,0 +1,80 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>List of companies</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-body">
+            <span class="badge text-large">Pay What You Want = <%= Company.free_plan.blank? ? "" : Company.free_plan.count %></span>
+            <span class="badge bg-primary">Trial = <%= Company.trial_plan.blank? ? "" : Company.trial_plan.count %></span>
+            <span class="badge bg-success">SMB = <%= Company.smb_plan.blank? ? "" : Company.smb_plan.count %></span>
+            <span class="badge bg-info">Enterprise = <%= Company.enterprise_plan.blank? ? "" : Company.enterprise_plan.count %></span>
+            <span class="badge bg-inverse">Professional =<%= Company.professional_plan.blank? ? "" : Company.professional_plan.count %></span>
+            <span class="badge bg-warning">Registered This year = <%= Company.this_year.blank? ? "" : Company.this_year.count %></span>
+            <span class="badge bg-danger">Registered This month = <%= Company.this_month.blank? ? "" : Company.this_month.count %></span>
+            <span class="badge bg-primary">Total Companies = <%= Company.all.blank? ? "" : Company.all.count %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+        <%= render :partial => "filter" %>
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-left" id="adminCompanies">
+              <li class="active"><a href="#all_companies" data-toggle="tab"><i class="icon-share icon-large text-default"></i>All</a></li>
+              <li><a href="#paid_company" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Paid</a></li>
+              <li><a href="#exp_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Expiring This Month</a></li>
+              <li><a href="#expired" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Expired</a></li>
+            </ul>
+          </header>
+          <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <div class="tab-content">
+              <div class="tab-pane active" id="all_companies">
+                <div class="table-responsive row">
+                  <table id="companies" class="table table-striped m-b-none text-small" data-source="<%= admin_companies_url(:format => 'json',:tab_ref=> "all_companies") %>">
+                    <thead>
+                      <%= render :partial => "header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <tr style="visibility:hidden;">
+                        <td>Company Name</td>
+                        <td>Plan</td>
+                        <td>Owner</td>
+                        <td>Email</td>
+                        <td>Registration date</td>
+                        <td>Renewal date</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="exp_month">
+                <%= render :partial => "admin/companies/expiring_this_month" %>
+              </div>
+              <div class="tab-pane" id="expired">
+                <%= render :partial => "admin/companies/expired_companies" %>
+              </div>
+              <div class="tab-pane" id="paid_company">
+                <%= render :partial => "admin/companies/paid_company" %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

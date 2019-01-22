@@ -1,0 +1,20 @@
+<tr class="gradeU">
+	<td><a href="#"><%= link_to deleted_estimate.estimate_number, deleted_estimate %></a></td>
+	<td><%= truncate(deleted_estimate.customer_name, :length =>20) %></td>
+	<td><%= deleted_estimate.estimate_date.strftime("%d-%m-%Y") %></td>
+	<td ><%= format_currency deleted_estimate.amount%></td>
+  <td><%= !deleted_estimate.status.blank? ? deleted_estimate.status : "Not available" %></td>
+	<td>
+	    <div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/estimates/<%= deleted_estimate.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href= <%= "/estimates/restore_estimate?id=#{deleted_estimate.id}"%>  >Restore</a></li>
+             <li class="divider"></li>
+            <li><a href= <%= "/estimates/permanent_delete_estimate?id=#{deleted_estimate.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+          </ul>
+      </div>     
+	</td>
+</tr>

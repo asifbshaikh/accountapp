@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial =>"shared/flash_msg"%>
+        <%= form_for @account, :html=>{:class=>"form-horizontal"}  do |f| %>
+        <%= render 'shared/form_error' , :object => @account %>
+            <%= hidden_field :account, :account_head_id %> 
+
+<div class="col-lg-6">
+<table class="table">
+  <tbody>
+    <tr>
+    <td width='30%' class="text-right" style='background:none; border:none;'><label class='control-label-required'>Tax name</label></td>
+    <td width='70%'style='background:none; border:none;'><%= f.text_field :name , :maxlength => 50, :size => 30, :class=>"bg-focus form-control"%></td>
+    </tr>
+    <%= f.fields_for :accountable do |a| %>
+    <tr>
+      <td width='30%' class="text-right" style='background:none; border:none;'><label class=''>Registration number</label></td>
+      <td width='70%' style='background:none; border:none;'><%= a.text_field :registration_number, :class => 'form-control' %></td>
+    </tr>
+      <tr>
+        <td width='30%' class="text-right" style='background:none; border:none;'>
+          <label class='control-label-required'>Filling frequency</label>
+          </td>
+        <td width='70%' style='background:none; border:none;'>
+        <%= a.collection_select(:filling_frequency, Account.filling_frequency, :first, :last, {:include_blank => true}, :class=>"bg-focus form-control") %> 
+        </td>
+      </tr>
+      <tr>
+        <td class="text-right" style='background:none; border:none;'><label class='control-label-required'> Tax rate %</label></td>
+        <td style='background:none; border:none;'><%= a.text_field :tax_rate, :onkeydown => "return numbersOnly(event);", :class => "bg-focus form-control amount" %></td>
+      </tr>
+      <tr>
+        <td width='30%' class="text-right" style='background:none; border:none;'><label class=''>Description</label></td>
+        <td width='70%' style='background:none; border:none;'><%= a.text_area :description, :class=>"bg-focus form-control", :rows=> 3 %></td>
+      </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td style='background:none; border:none;'></td>
+        <td style='background:none; border:none;'>
+          <%= f.submit "Save", :class => 'btn btn-success' %>
+          <%= link_to "Cancel", "/duties_and_taxes/index", :class => "btn btn-default" %>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+<% end %>
+</div>
+    </section>
+  </div>
+</div>
+
+

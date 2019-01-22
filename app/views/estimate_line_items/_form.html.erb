@@ -1,0 +1,38 @@
+<%= form_for(@estimate_line_item) do |f| %>
+	  <%= render 'shared/form_error', :object => @estimate_line_item %>
+	  <div class="field">
+	    <%= f.label :estimate_id %><br />
+	    <%= f.text_field :estimate_id %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :account_id %><br />
+	    <%= f.text_field :account_id %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :quantity %><br />
+	    <%= f.text_field :quantity %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :unit_rate %><br />
+	    <%= f.text_field :unit_rate %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :discount %><br />
+	    <%= f.text_field :discount %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :tax %><br />
+	    <%= f.text_field :tax %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :amount %><br />
+	    <%= f.text_field :amount %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :description %><br />
+	    <%= f.text_area :description %>
+	  </div>
+	  <div class="actions">
+	    <%= f.submit %>
+	  </div>
+<% end %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  user_id: 1
+  leave_type_id: 1
+  card_year: 1
+  total_leaves: 1
+  leaves_utilized: 9.99
+
+two:
+  company_id: 1
+  user_id: 1
+  leave_type_id: 1
+  card_year: 1
+  total_leaves: 1
+  leaves_utilized: 9.99

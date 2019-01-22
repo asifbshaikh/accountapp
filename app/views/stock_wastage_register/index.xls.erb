@@ -1,0 +1,82 @@
+<table>
+  <tr><td colspan=6 align=center><%= @page_name %></td></tr>
+<% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center">Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= (params[:start_date].blank?) ? @financial_year.start_date : params[:start_date].to_date %> To 
+<%= (params[:end_date].blank?) ? ((Time.zone.now.to_date > @financial_year.end_date)? @financial_year.end_date : Time.zone.now.to_date) : params[:end_date].to_date %> </td></tr>
+  <thead>
+      <tr>
+        <th>Date</th>
+        <th>Voucher number</th>
+        <% if !@custom_field.blank? %>
+          <% if !@custom_field.custom_label1.blank? %>
+           <th><%= @custom_field.custom_label1 %></th>
+          <% end %>
+          <% if !@custom_field.custom_label2.blank? %>
+           <th><%= @custom_field.custom_label2 %></th>
+          <% end %>
+          <% if !@custom_field.custom_label3.blank? %>
+           <th><%= @custom_field.custom_label3 %></th>
+          <% end %>
+        <% end %>
+        <th><%= @company.label.warehouse_label %></th>
+        <th>Product</th>
+        <th><span class='char_spacing'>Particulars</span></th>
+        <th>Quantity</th>
+       </tr>
+    </thead>
+    <tbody>
+      <% total_quantity = 0
+       @stock_wastage_vouchers.each do |swv| %>
+        <% quantity = 0
+        swv.stock_wastage_line_items.each do |line_item| %> 
+        <tr>
+          <td><%= swv.voucher_date.to_date %></td>
+          <td><%= swv.voucher_number %></td>
+          <% if !@custom_field.blank? %>
+            <% if (!@custom_field.custom_label1.blank? && !swv.custom_field1.blank?) || (!@custom_field.custom_label1.blank? && swv.custom_field1.blank?) %>
+               <td><%= swv.custom_field1 %></td>
+              <% end %>
+
+            <% if (!@custom_field.custom_label2.blank? && !swv.custom_field2.blank?) || (!@custom_field.custom_label2.blank? && swv.custom_field2.blank?) %>
+               <td><%= swv.custom_field2 %></td>
+              <% end %>
+
+              <% if (!@custom_field.custom_label3.blank? && !swv.custom_field3.blank?) || (!@custom_field.custom_label3.blank? && swv.custom_field3.blank?) %>
+               <td><%= swv.custom_field3 %></td>
+              <% end %>
+          <% end %>
+          <td><%= swv.warehouse.name %></td>
+          <td><%= line_item.product.name %></td>
+          <td><%= line_item.reason %></td>
+          <td align="center"><%= line_item.quantity %></td>
+        </tr>
+        <% quantity += line_item.quantity %>
+        <% end %>
+        <% total_quantity += quantity %>
+      <% end %>
+    </tbody>
+    <tr>
+      <td></td><td></td><td></td><td></td>
+      <% if !@custom_field.blank? %>
+ 
+        <% if !@custom_field.custom_label1.blank?  %>
+         <td></td>
+        <% end %>
+
+      <% if !@custom_field.custom_label2.blank?  %>
+         <td></td>
+        <% end %>
+
+        <% if !@custom_field.custom_label3.blank?  %>
+         <td></td>
+        <% end %>
+
+       <% end %>
+       <td align="center"><b>Total Quantity</b></td>
+      <td class = 'border_down'align="center">
+            <b><%= total_quantity %></b>
+          </td>
+    </tr>
+</table>

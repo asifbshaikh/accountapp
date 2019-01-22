@@ -1,0 +1,22 @@
+  
+ 
+<tr>
+    <td><%= link_to deleted_journal.voucher_number, deleted_journal %></td>
+    <td><%= deleted_journal.date.strftime("%d-%m-%Y") %></td>
+    <td><%= truncate(deleted_journal.to_account_name, :length =>20) %></td>
+    <td><%= format_currency deleted_journal.amount %></td>
+    <td><%= deleted_journal.created_by_user %></td>
+    <td>
+	  <div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/journals/<%= deleted_journal.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/journals/restore_journal?id=#{deleted_journal.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/journals/permanent_delete_journal?id=#{deleted_journal.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+    </td>
+</tr>

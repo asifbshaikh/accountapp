@@ -1,0 +1,4 @@
+<div class="col-lg-10" id='account-select'>
+	<%= select_tag("expense[account_id]", content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@accounts, :id, :name, nil, :"currency"=>:get_currency), {:prompt => 'Type to select'}) %>
+	<span id="expense-currency"></span>
+</div>

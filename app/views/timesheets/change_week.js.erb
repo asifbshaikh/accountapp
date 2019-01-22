@@ -1,0 +1,11 @@
+$("#old_data").remove();
+$("#week").after("<%= escape_javascript render :partial =>'week' %>");
+
+$("#timesheet_start_date").val("<%= @week %>");
+$("#timesheet_end_date").val("<%= @week.end_of_week %>");
+<% @tasks.each do %>
+ <% 7.times do |i|%>
+  $("#timesheet_timesheet_line_items_attributes_<%= i %>_day").val("<%= @week+ i.days %>");
+ <% end %>
+<% end %>
+

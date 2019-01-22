@@ -1,0 +1,48 @@
+            <%= form_for @product_update, :url => ([:admin, @product_update]), :html => {:class => "form-horizontal"} do |f|  %> 
+              <%= render 'shared/form_error', :object => @product_update %>
+              <div class="form-group ">
+                <label class="col-lg-3 control-label-required">Feature</label>
+                <div class="col-lg-4">
+                  <%= f.select :feature_id, ProfitbooksWorkstream::FEATURES, {}, {:class => "form-control"} %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :icon_code, :class => "col-lg-3 control-label-required" %>
+                <div class="col-lg-4">
+                  <%= f.text_field :icon_code, :class => "form-control", :placeholder => "icon-star" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :release_date, :class=> "col-lg-3 control-label-required" %>
+                <div class="m-b row">
+                  <div class="col-lg-6">
+                    <%= f.text_field :release_date, :class => "input-sm form-control"%>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :title, :class => "col-lg-3 control-label-required" %>
+                <div class="col-lg-8">
+                  <%= f.text_field :title, :class => "form-control parsley-validated" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :details, :class => "col-lg-3 control-label" %>
+                <div class="col-lg-8">
+                  <%= f.text_area :details, :rows=>"5", :class => "form-control" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= f.label :link_URL, :class=>"col-lg-3 control-label" %>
+                <div class="col-lg-8">
+                  <%= f.text_field :link_URL, :class=> "form-control parsley-validated" %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-9 col-lg-offset-3">                      
+                  <%= f.submit "Save as Draft", :name=> "draft", :class => "btn btn-success" %>
+                  <%= f.submit "Save & Publish", :name=> "publish", :class => "btn btn-primary" %>
+                  <button type="reset" class="btn btn-white">Cancel</button>
+                </div>
+              </div>
+            <% end %>

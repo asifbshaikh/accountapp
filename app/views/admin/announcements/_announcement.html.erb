@@ -1,0 +1,9 @@
+<tr>
+  <td><%= link_to "#{announcement.subject}", admin_announcement_path(announcement.id) %></td>
+  <td><%= announcement.starts_at.to_date %></td>
+  <td><%= announcement.ends_at.to_date %>  
+  <td><%= announcement.message %></td>       
+  <td><%= link_to 'Delete', admin_announcement_path(announcement), :confirm =>'Are you sure?', :method =>:delete,:class =>"btn btn-gray"%>
+  </td>
+</tr>
+

@@ -1,0 +1,27 @@
+<% new_text = "Dear Sir,
+
+It was pleasure interacting with you over phone. With reference to our discussion, ProfitBooks Professional Plan  meets your requirements. The plan is priced at Rs.9000/- per year. In your case we are offering you 3 months of free extension. 
+
+You can choose to pay subscription fee of Rs.9000/- in any of following mode:
+
+    1. Online Payment on Website: You can login to your trial account and click on Billing and upgrade at the bottom of page. The page will be directed on Payment gateway and you can make payment via Online Banking, Debt Cards or Credit Cards
+    2. NEFT transfer: Following are our bank details. You can make the payment via NEFT. Please send the confirmation on transfer and we will update your subscription plan accordingly. 
+
+
+        ProfitBooks Solutions Pvt. Ltd.
+
+        Bank: Corporation Bank
+
+        Branch: East Street, Camp, Pune
+
+        Current Account No. 013201601000753
+
+        IFSC Code: CORP0000132
+
+
+
+Please feel free to revert for any query. " %>
+<div class="block" id = "template">
+<%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+<%= text_area_tag  :text, new_text,:rows=>4, :class=>"bg-focus form-control"%>
+</div>

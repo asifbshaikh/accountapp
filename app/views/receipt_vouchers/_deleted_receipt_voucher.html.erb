@@ -1,0 +1,24 @@
+<tr>
+	<td><%= link_to deleted_receipt_voucher.voucher_date, receipt_voucher_path(deleted_receipt_voucher)%></td>
+    <%if !@company.plan.free_plan? %>
+    <td><%= !deleted_receipt_voucher.project_id.blank? ? deleted_receipt_voucher.project_name : "Not available" %></td>
+    <% end %>
+	<td><%= deleted_receipt_voucher.voucher_number %></td>
+	<td><%= truncate(deleted_receipt_voucher.from_account_name, :length => 20) %></td>
+	<td><%= format_currency deleted_receipt_voucher.amount %></td>
+	<td><%= deleted_receipt_voucher.payment_detail.type %></td>
+	<td>
+<div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/receipt_vouchers/<%= deleted_receipt_voucher.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href= <%= "/receipt_vouchers/restore_receipt_voucher?id=#{deleted_receipt_voucher.id}"%>  >Restore</a></li>
+             <li class="divider"></li>
+            <li><a href= <%= "/receipt_vouchers/permanent_delete_receipt_voucher?id=#{deleted_receipt_voucher.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+          </ul>
+      </div>     
+
+	</td>
+</tr>

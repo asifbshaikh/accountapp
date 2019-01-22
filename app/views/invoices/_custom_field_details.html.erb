@@ -1,0 +1,13 @@
+ <% if !@company.plan.free_plan? %>                
+                  <div class="col-sm-6">
+                    <% if !@custom_field.custom_label1.blank? && !@invoice.custom_field1.blank? %>                    
+                      <p><strong><%= @custom_field.custom_label1 %>: </strong> <%= @invoice.custom_field1 %></p>
+                    <% end %>
+                    <% if !@custom_field.custom_label2.blank? && !@invoice.custom_field2.blank? %>
+                      <p><strong> <%= @custom_field.custom_label2 %>: </strong> <%= @invoice.custom_field2 %></p>
+                    <% end %>
+                    <% if !@custom_field.custom_label3.blank? && !@invoice.custom_field3.blank? %>
+                      <p><strong> <%= @custom_field.custom_label3 %>: </strong> <%= @invoice.custom_field3 %></p>
+                    <% end %>  
+                  </div>
+                <% end %>  

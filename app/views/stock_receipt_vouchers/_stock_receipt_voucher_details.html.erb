@@ -1,0 +1,12 @@
+<div class='table-responsive row'>
+  <table class="table table-striped m-b-none text-small" id="stock-receipt" data-source="<%= stock_receipt_vouchers_url(:format=>'json') %>">
+    <thead>
+     <%= render "stock_receipt_vouchers/header"%>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+      <%= render "stock_receipt_vouchers/footer" %>
+    </tfoot>
+  </table>
+</div>

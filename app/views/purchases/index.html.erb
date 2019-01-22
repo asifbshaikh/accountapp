@@ -1,0 +1,87 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Purchases</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= link_to "<i class='icon-plus'></i> New Purchase".html_safe, new_purchase_path, :class => 'btn btn-success btn-lg' %>
+            <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i> </a> 
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <header class="panel-heading text-right">
+            <ul class="nav nav-tabs pull-left"  id="purchaseTabs">
+              <li class='active'>
+                <a data-toggle="tab" href="#all-purchases-tab">
+                  All Purchases
+                </a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#draft-purchases-tab">
+                  Draft Purchases
+                </a>
+              </li>
+              <li class=''>
+                <a data-toggle="tab" href="#return-purchases-tab">
+                  Purchase Returns
+                </a>
+              </li>
+            </ul>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">
+              <%= render :partial=> "shared/flash_msg"%>
+              <div id='all-purchases-tab' class='tab-pane fade active in'>
+                <%= render :partial=> "filter" %>
+                <div class="table-responsive row">
+                  <table class="table table-striped m-b-none text-small" id="purchases"  data-source="<%= purchases_url(:format => 'json') %>">
+                    <thead>
+                      <%= render :partial => "header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <%= render 'footer' %>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div id='draft-purchases-tab' class='tab-pane fade'>
+                <div class="table-responsive row">
+                  <table class="table table-striped m-b-none text-small" id="draft-purchases"  data-source="<%= purchases_url(:format => 'json', :status_id=>2) %>">
+                    <thead>
+                      <%= render :partial => "header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <%= render 'footer' %>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div id='return-purchases-tab' class='tab-pane fade'>
+                <div class="table-responsive row">
+                  <table class="table table-striped m-b-none text-small" id="purchase-returns"  data-source="<%= purchase_returns_url(:format => 'json') %>">
+                    <thead>
+                      <%= render :partial => "purchase_returns/header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <%= render 'purchase_returns/footer' %>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

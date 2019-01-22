@@ -1,0 +1,83 @@
+<!--<h1>ProcessPayroll#index</h1>
+<p>Find me in app/views/process_payroll/index.html.erb</p> -->
+
+<!-- Page title -->
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Process Payroll</h1>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+     <section class="column width6 first"><br />
+        <div class="highlight">
+       	<%= render "shared/flash_msg"%>
+        	 <div id="user">
+              <% if @users.blank? %>
+                 <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+              <% else %>
+                 <table class="display stylized" id="example">
+                    <thead>   
+                       <tr>
+               	  	<th colspan="4"> Users Payroll</th>
+               	  </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><label>For Month</label></td>
+
+
+<% mo_start = 1
+   mo_end = (Time.zone.now.to_date.month) %>
+   <% y= Time.zone.now.to_date.year  %>
+       
+<td><select name="select" selected="<%= Date::MONTHNAMES[Time.zone.now.to_date.month]%>">
+
+<% (mo_start..mo_end).each do |m|  %>
+<option><%=Date::MONTHNAMES[m]%></option>
+<%end%>
+</select></td></tr>
+
+<%@users.each do |user|%>
+<tr>                   <td><%= user.full_name %></td>
+                       <td><input type="text" size=3  value="<%=Time.days_in_month(mo_end, y)%>"></td>
+</tr>
+                      <%end%>
+
+<tr><td><a href="/process_payrolls/show_data" class="btn btn-green">Save and Continue</a></td></tr>
+               </tbody>
+                    <tfoot>
+                       <%= render :partial => "footer" %>
+                    </tfoot>
+                 </table>    
+                 <div class="clear">
+          	      <div class="width3 column">
+                      <%= paginate @users %>
+                  </div>
+                </div> 
+               <% end %>
+               </div>
+         </div><br />
+     </section>
+   <!-- End of Left column/section -->
+   <!-- Right column/section -->
+   <aside class="column width2"><br />
+   	
+      <div id="rightmenu">
+         <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+             <dd><%= link_to 'Help', "/#", :class=>"nyroModal" %></dd>
+             <dd class="last">This page displays the list of payrolls of all the users.<br/></dd>
+         </dl>
+       </div><br />
+    </aside>
+   <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

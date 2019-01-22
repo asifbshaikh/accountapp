@@ -1,0 +1,444 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file-text-alt text"></i> View Invoice</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+      <%= render "#{FinancialYear::STATUS[@invoice.in_frozen_year?]}_invoice_actions"%>
+
+      </div>
+    </div>
+    <section class="panel">
+    <%= render :partial=>"shared/flash_msg"%>
+      <div class="panel-body">
+        <div class="row">
+          <div class='col-sm-5'>
+            <div class="on-go-form" >
+            <%= render :partial=> "address_details"%>
+          <!-- Invoice First section -->
+            </div>
+            <a class="text-right"  data-toggle="modal" data-target='#model1'><span class="dropdown-label"> Edit Address</span> </a></br></br>
+
+            <% if @invoice.gst_invoice%>
+              <% if @invoice.cash_invoice %>
+                <b>GSTIN</b> <%= @invoice.cash_customer_gstin %>
+              <% else %>
+                <% gstn = @invoice.customer.present? ? @invoice.customer.gstn_id : @invoice.vendor.gstn_id %>
+                <b>GSTIN</b> <%= gstn %>
+              <% end %>
+            <% end %>   
+          </div>
+          <!-- Invoice second section -->
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p>
+                    <strong> Invoice Number: </strong><%= @invoice.invoice_number %>
+                    <span class="badge <%=invoice_status_badge(@invoice.get_status)%>"><%= @invoice.get_status %></span>
+                  </p>
+                  <% if @invoice.allocated_gst_credit > 0 %>
+                  <% gcn1 = 0 %>
+                    <% @invoice.gst_credit_notes.each do |gst_credit_note| %>
+                    <% gcn = gst_credit_note.gst_credit_note_number %>
+                  <% if gcn1 != gcn %>
+                    <% gcn1 = gcn %>
+                    <p>
+                      <strong> GST credit note Number: </strong><%= link_to gst_credit_note.gst_credit_note_number, gst_credit_note_path(gst_credit_note) %>
+                    </p>
+                    <% end %>
+                    <% end %>
+                  <% end %>
+                  <p><strong> Due Date: </strong> <%= @invoice.due_date %></p>
+                  <p><strong>Invoice Amount: </strong> <%= invoice_amount @invoice%></p>
+                  <% if @invoice.exchange_rate > 1.0 %>
+                  <p><strong>Exchange Rate: </strong> <%= @invoice.exchange_rate %></p>
+                  <% end %>
+                  <% currency_array = ['INR', 'PKR'] %>
+                  <% if currency_array.include?(@invoice.currency) %>
+                  <p><strong>Amount in words: </strong> <%= amount_in_words(@invoice.total_amount)%></p>
+                  <% end %>
+                </div>
+                <!-- Invoice basic details end-->
+                <!-- Invoice optional details -->
+                <% if !@custom_field.blank? %>
+                <%= render :partial=> "custom_field_details"%>
+                <% end %>
+                <!-- Invoice optional details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-4"><i class="icon-calendar"> </i> Created on <%=@invoice.invoice_date.strftime("%d-%m-%Y") %> by <%= @invoice.created_by_user %></div>
+                  <div class="col-sm-4"><i class="icon-suitcase"> </i><strong> Project: </strong> <%= @invoice.project_name %></div>
+                  <% if @invoice.export_invoice? %>
+                    <div class="col-sm-4"><i class="icon-hand-up"> </i>Export/Deemed Export Invoice<strong></div>
+                  <% end %>  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped b-t">
+              <thead>
+                <% if @invoice.time_invoice? %>
+                  <%= render :partial => "time_invoice_header" %>
+                <% else %>
+                  <%= render :partial => "product_invoice_header" %>
+                <% end %>
+              </thead>
+              <tbody>
+                <% if @invoice.time_invoice? %>
+                  <%= render :partial => "time_line_item_details", :collection => @time_line_items %>
+                <% else %>
+                  <%= render :partial => "line_item_details", :collection => @invoice_line_items %>
+                <% end %>
+                <%= render :partial=>"calculation_details" %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+        <!-- Start receive payment table -->
+        <div class="row">
+          <div class="col-lg-12">
+
+          <% if !@invoice.cash_invoice? %>
+            <% if @receipt_vouchers.blank?%>
+              <div class="alert alert-info">
+                <i class="icon-info-sign icon-large"></i> <strong>Payment is due for this invoice.</strong>
+              </div>
+            <%else%>
+              <table class="table table-striped b-t">
+                  <thead>
+                    <tr>
+                     <th>Voucher Number</th>
+                      <th>Voucher Date</th>
+                      <th>Payment Received Date</th>
+                      <th>Payment Mode</th>
+                      <% if @receipt_vouchers.sum('tds_amount') > 0 %>
+                      <th class="text-right">TDS</th>
+                      <% end %>
+                      <th class="text-right">Amount (<%= @invoice.currency %>)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%= render :partial => "invoice_receipt_vouchers", :collection => @receipt_vouchers %>
+                    <tr>
+                      <td style='background-color:#fff; border-bottom:none;' colspan='3'>&nbsp;</td>
+                      <td class="text-right" style='background-color:#fff;'><b>Total</b></td>
+                      <% if @receipt_vouchers.sum('tds_amount') > 0 %>
+                        <td class="text-right" style='background-color:#fff;'><b><%= format_amount @invoice.tds_amt %></b></td>
+                      <% end %>
+                      <td class="text-right" style='background-color:#fff;'><b><%= format_amount @receipt_vouchers.sum('amount') %></b></td>
+                    </tr>
+                  </tbody>
+                </table>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+
+
+
+ <div class="row">
+          <div class="col-lg-12">
+           <strong>Gstr advance Receipt</strong>
+          <% if @invoice.gstr_advance_receipt_invoices.blank? %>
+            
+              <div class="alert alert-info">
+                <i class="icon-info-sign icon-large"></i> <strong>Payment is due for this invoice.</strong>
+              </div>
+            <%else%>
+             <% @invoice.gstr_advance_receipt_invoices.each do |invoice_receipt| %>
+              <table class="table table-striped b-t">
+                  <thead>
+                    <tr>
+                     <th>Voucher Number</th>
+                     <th>Voucher Date</th>
+                     
+                     <th>Received Date</th>
+                     <th class="text">Amount (<%= @invoice.currency %>)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   
+                    <tr>
+                      <td style='background-color:#fff; border-bottom:none;'><%= link_to invoice_receipt.gstr_advance_receipt.voucher_number,invoice_receipt.gstr_advance_receipt %></td>
+                      <td class="text" style='background-color:#fff;'><b><%= invoice_receipt.gstr_advance_receipt.voucher_date %></b></td>
+                       <td class="text" style='background-color:#fff;'><b><%= invoice_receipt.gstr_advance_receipt.received_date %></b></td>
+                      
+                      
+                      <td class="text" style='background-color:#fff;'><b></b><b><%= format_amount invoice_receipt.amount %></b></td>
+                      <% end %> 
+                      </tr>   
+                      <tr>                  
+                      <td align="right" colspan="3"><strong></strong></td>
+                      <td colspan="3"><strong>Total :<%= @invoice.gstr_advance_receipt_invoices.sum(:amount) %></strong></td>
+                      </tr> 
+                    </tbody>
+                </table>
+        
+            <% end %>
+          </div>
+        </div>
+        <!-- receive payment table ends -->
+        <div class="row">
+          <%if !@invoice.customer_notes.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Customer Notes</label><br/>
+              <%= breaking_word_wrap(@invoice.customer_notes)%>
+            </p>
+          </div>
+          <% end %>
+          <% if !@invoice.terms_and_conditions.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productvendor">Terms and Conditions</label><br/>
+              <%= breaking_word_wrap(@invoice.terms_and_conditions) %>
+            </p>
+          </div>
+          <% end %>
+        </div>
+        <% if @invoice.recursive_invoice? %>
+      <div class="row">
+      <section class="panel">
+        <header class="panel-heading">
+         <strong>Recurring profile</strong><span class="pull-right">This invoice has been set to repeat in future as per the details</span>
+        </header>
+        <div class="panel-body">
+         <% if @invoice.active_recursion? %>
+           <div class="col-sm-6">
+           <p><strong>Starts on: </strong><%= @invoice.recursion.schedule_on %></p>
+           <p><strong>Frequency: </strong><%= @invoice.recursion.get_frequency %></p>
+           </div>
+         <div class="col-sm-6">
+           <p><strong>Iterations: </strong><%= @invoice.recursion.iteration.blank? ? "Infinit" : @invoice.recursion.iteration %></p>
+           <% unless @invoice.recursion.iteration.blank? %>
+          <p><strong>Remaining iterations :</strong> <%= @invoice.recursion.iteration - (@invoice.recursion.utilized_iteration.blank? ? 0 : @invoice.recursion.utilized_iteration) %></p>
+           <% end %>
+         </div>
+         <% else %>
+         <div class="col-sm-6">
+           <p><strong>Status: </strong><%= @invoice.recursion.get_status %></p>
+         </div>
+         <% end %>
+      </div>
+      </section>
+        </div>
+        <% end %>
+        <% if @invoice.company.invoice_setting.enable_gateway? && @invoice.unpaid? %>
+         <button id="inv_pay_button" class="btn btn-sm btn-info m-b-small"  data-toggle="modal" data-target='#modal3'>Generate Payment link Via Instamojo</button>
+        <% end %>
+
+        <%= render :partial => 'invoices/link_history', :@link_history => @link_history %>
+        <% if @invoice.company.invoice_setting.enable_cashfree? && @invoice.unpaid? %>
+            <% if !@cflink_history %>
+              <button id="inv_pay_button" class="btn btn-sm btn-success m-b-small"  data-toggle="modal" data-target='#modal4'>Generate Payment link Via CashFree</button>
+            <% else %>
+              <button id="inv_pay_button" class="btn btn-sm btn-success m-b-small"  data-toggle="modal" data-target='#modal4'>Update Payment link Via CashFree</button>
+            <% end %>
+              <%= render :partial => 'invoices/cflink_history', :@link_history => @cflink_history %>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-sm-12">
+        <button id="inv_history_button" class="btn btn-sm btn-info m-b-small">Show Invoice History</button>
+         <% if @invoice.so_invoice? && !@sales_orders.blank? %>
+        <button id="inv_dc_button" class="btn btn-sm btn-info m-b-small">Delivery Challan Details</button>
+        <% end %>
+          <div id="invoice_history" style="display:none;">
+          <div class="block">
+          <% if @invoice_history.blank?%>
+            <%= render :partial => "shared/no_record"%>
+          <% else %>
+          <table class="table text-small row">
+            <thead>
+            </thead>
+            <tbody>
+            <%= render :partial => 'invoices/invoice_history', :collection => @invoice_history %>
+            </tbody>
+          </table>
+          <% end %>
+          </div>
+          </div>
+          <div id="invoice_dc_details" style="display:none">
+          <div class="block">
+              <table class="table table-striped b-t">
+                  <thead>
+                    <tr>
+                     <th>Voucher Date</th>
+                     <th>Delivery Challan</th>
+                     <th>Sales Order</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @sales_orders.each do |so|%>
+                  <% if so.billing_status==2%>
+                  <% so.delivery_challans.each do |dc|%>
+                  <tr>
+                  <td><%= dc.voucher_date%></td>
+                  <td><%= link_to dc.voucher_number, delivery_challan_path(dc)%></td>
+                  <td><%= link_to so.voucher_number, sales_order_path(so)%></td>
+                  </tr>
+                  <% end %>
+                  <% end %>
+                  <% end %>
+                  </tbody>
+                </table>
+          </div>
+        </div>
+        </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+ <!--invoice attachments-->
+
+<div class="row ">
+<div class="col-lg-12">
+<section class="col-lg-12">
+  <section class="panel">
+   <div class='voucher-title-info-error'></div>
+  <header class="panel-heading">
+    <i class="icon-book"></i> Attachments
+
+ <button title="Add New Attachment" id ="add_new" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</button>
+  </header>
+   <body>
+  <div id="invoice_attachment" style="display:none;">
+    <header class="panel-heading">
+            <strong> Attach a scanned proof (Image or PDF document)</strong>
+    </header>
+       <div class="panel-body">
+  <%= form_for('invoice_document',:url=>{:action => :new, :controller => "/invoice_attachments"},:html => {:multipart => true, :class=>"form-horizontal", :remote=>true}) do |f| %>
+
+  <%= render "shared/form_error", :object => @invoice %>
+
+  <div class="block">
+    <%= hidden_field_tag  "company_id" ,@company.id,:id => "company" %>
+    <%= f.label :uploaded_file, "Choose File", :class=>"control-label" %>
+    <%= f.file_field :uploaded_file, :class => "btn btn-white",:id => "file" %>
+      <%= hidden_field_tag  "invoice_id" , @invoice.id ,:id => "invoice_id"%>
+   </div>
+  <div class="block">
+    <%= f.submit "Upload", :class=>"btn btn-success", :id =>"submit"%>
+  </div>
+<% end %>
+        </div>
+    </div>
+  </body>
+
+  <% if @invoice_attachment.blank?%>
+      <%= render :partial => "shared/no_record"%>
+        <%else%>
+
+            <div class="panel-body">
+              <div class="table-responsive row">
+                <table class="table table-striped b-t">
+                  <thead>
+                     <%= render :partial => "invoice_attachments/header" %>
+                  </thead>
+                  <tbody>
+                  <%= render :partial => "invoice_attachments/show",:documents => @invoice_attachment,:invoice=> @invoice %>
+                  </tbody>
+                  <tfoot>
+                     <%= render :partial => "invoice_attachments/footer" %>
+                  </tfoot>
+               </table>
+               </div>
+            </div>
+      <%end%>
+
+   </section>
+  </section>
+ </div>
+</div>
+
+</section>
+
+ <div id="modal1" class="modal fade">
+    <%= render "email_form", :invoice => @invoice %>
+  </div>
+ <div id="modal2" class="modal fade">
+    <%= render "add_payment_form", :invoice => @invoice %>
+  </div>
+
+  <div id="modal3" class="modal fade">
+    <%= render "instamojo_payment",:invoice => @invoice %>
+  </div>
+  <div id="modal4" class="modal fade">
+    <%= render "cashfree_payment",:invoice => @invoice %>
+  </div>
+<% if @invoice.unpaid? %>
+  <div id='modal-settlement' class='modal fade'>
+    <%= render "settlement_form" %>
+  </div>
+<% end %><script type="text/javascript">
+<% if !params[:save_and_print].blank? && params[:save_and_print]=="1" %>
+<script>
+  $(document).ready(function(){
+    $("#print1-inv")[0].click();
+  });
+</script>
+<% end %>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#settlement_account_id").select2({width:'200px'});
+  });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    <% if @info && !@invoice.foreign_currency?  %>
+      $(".error-place1").after("<div class='alert alert-info invoice-setting-notif'> Please activate Instamojo account by setting auth-key and api-key in settings before proceeding.</div>")
+      $(".btnsave1").remove();
+    <%end %>
+
+    <% if  @invoice.foreign_currency? %>
+      $(".error-place1").after("<div class='alert alert-info invoice-setting-notif'>Insatamojo support only users who have an Indian bank account to use Instamojo to collect payments and transactions occur in INR</div>")
+      $(".btnsave1").remove();
+    <%end %>
+    <% if !@invoice.account.customer.nil? %>
+     <% if @invoice.account.customer.primary_phone_number == ""  %>
+      $(".cf-error-place").after("<div class='alert alert-info invoice-setting-notif'>Contact number cannot be blank.</div>")
+      $(".btnsave2").remove();
+    <% end %>
+    <% end %>
+
+    <% if @cfinfo && !@invoice.foreign_currency?  %>
+      $(".cf-error-place").after("<div class='alert alert-info invoice-setting-notif'> Please activate CashFree account by setting appId and secret key in settings before proceeding.</div>")
+      $(".btnsave2").remove();
+    <%end %>
+
+
+
+    $('input[type=checkbox]').click(function(){
+       if ($('input[type=checkbox]').is(':checked')) {
+        $('#text').html("Hello <%= escape_javascript @invoice.account.name %>,"+"\n\t"+"A new invoice has been created for you. Please find the invoice attached with this email. Total amount due is <%= escape_javascript format_amt_with_currency(@invoice.currency,@invoice.outstanding) %> and the due date is <%= escape_javascript @invoice.due_date.to_s %>. \n For your convenience we have generated a payment link. Please follow the link below to pay using your credit/debit card or netbanking. <%= escape_javascript @longurl %>  ."+"\n"+"Thanks,"+"\n"+"<%= escape_javascript @company.name %>");
+    }
+    else{
+        $('#text').html("Hello <%= escape_javascript @invoice.account.name %>,"+"\n\t"+"A new invoice has been created for you. Please find the invoice attached with this email.Total amount due is <%= escape_javascript format_amt_with_currency(@invoice.currency,@invoice.outstanding) %> and the due date is <%= escape_javascript @invoice.due_date.to_s %>."+"\n"+"Thanks,"+"\n"+"<%= escape_javascript @company.name %>");
+    }
+    });
+
+});
+</script>
+
+<div id="model1" class="modal fade">
+    <%= render "address",:billing_address=> @billing_address,:shipping_address=> @shipping_address%>
+</div>

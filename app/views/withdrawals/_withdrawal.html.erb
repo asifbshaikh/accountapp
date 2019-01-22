@@ -1,0 +1,36 @@
+   <tr class="gradeB">
+      <td>
+        <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                      <strong> From Account: </strong> <%= withdrawal.from_account_name %></p>
+                      <p>
+                      <strong> To Account: </strong> <%= withdrawal.to_account_name %>
+                      </p>
+                      <p>
+                      <strong> Amount: </strong> <%= format_currency withdrawal.amount %>
+                      </p>
+                        <p>
+                         <% if !withdrawal.description.blank? %>
+                          <strong> Description: </strong> 
+                          <%= breaking_word_wrap(withdrawal.description)%>
+                          <% end %>
+                        </p>
+                      <p>
+                      <strong> Created by:</strong> <%= User.find(withdrawal.created_by).full_name %>
+                      </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'><%= withdrawal.voucher_number %></a>
+      </td>
+	    <td><%=  withdrawal.transaction_date.strftime("%d-%m-%Y") %></td>
+	    <td><%= truncate(Account.find(withdrawal.from_account_id).name, :length =>20) %></td>
+	    <td><%= truncate(Account.find(withdrawal.to_account_id).name, :length =>20) %></td>
+	    <td><%= format_currency withdrawal.amount %></td>
+	    <td><div class="btn-group" style="float: right;">
+          <button  onclick="location.href= '<%= edit_withdrawal_path(withdrawal)%>'"; class="btn btn-white btn-sm" >Edit</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/withdrawals/<%= withdrawal.id%>" >Delete</a></li>
+          </ul>
+      </div></td>
+   </tr>

@@ -1,0 +1,92 @@
+<script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for rv in @receipt_vouchers
+      @data<<rv.voucher_number
+      @data<<rv.amount
+      @data<<rv.voucher_date
+      @data<<rv.payment_detail.type
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+ <!-- Page title -->
+  <div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Income &rarr;<span> Deleted Receive Money</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/receipt_vouchers/deleted_receipt_voucher" do |f| %>
+    <%=f.text_field :voucher_number_or_amount_or_voucher_date_or_payment_detail_type_equals, :id => "autocomplete", :placeholder => "search" %>
+    <%end%>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+		<!-- Left column/section -->
+       <section class="column width6 first"><br />
+        <div class="highlight">
+        <%= render "shared/flash_msg" %>
+         <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/receipt_vouchers">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/receipt_vouchers/deleted_receipt_voucher">Deleted</a>
+                    </li>
+                </ul>
+            </div> 
+        <div class="clearfix"></div>
+           <div id = "task_container">
+            <div id="receipt_voucher_list">
+              <% if @receipt_vouchers.blank? %>
+              	<p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+              <% else %>
+
+                <table class="display stylized" id="example">
+                	<thead>   
+                  	<%= render :partial => "header" %>
+                  </thead>
+                  <tbody>
+                  	<%= render :partial => "deleted_receipt_voucher", :collection => @receipt_vouchers%>
+                  </tbody>
+                  <tfoot>
+                  	<%= render "footer"%>
+                  </tfoot>
+                </table>    
+                <div class="clear">
+          	      <div class="width3 column">
+                      <%= paginate @receipt_vouchers %>
+                  </div>
+                </div> 
+              <% end %>
+            </div>
+           </div>
+      </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2"><br />
+           <a class="btn btn-special btn-green btn-green-new" href="/receipt_vouchers/new" >&nbsp; Add new receipt</a>
+           <div id="rightmenu">
+                 <dl class="first">
+                     <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                     <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd>
+                     <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

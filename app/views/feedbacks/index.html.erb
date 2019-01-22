@@ -1,0 +1,60 @@
+ <!-- Page title -->
+  <div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Expenses &rarr;<span>Expenses List</span></h1>
+
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper"></br>
+    <!-- Left column/section -->
+    <section class="column width6 first">&nbsp;</br>
+    	<div class="highlight">
+    <div id="tabs-all">
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <% if @feedbacks.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+           <% else %>
+          <table class="display stylized" id="example">
+            <thead>
+              <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+                <%= render :partial => "feedback", :collection => @feedbacks %>
+            </tbody>
+            <tfoot>
+               <%= render :partial => "footer" %>
+            </tfoot>
+          </table>
+          <% end %>
+          <div class="clear">&nbsp;</div>
+        </div>
+        
+      </div>
+      </div>
+    </section></br>
+    <!-- End of Left column/section -->
+ 
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <a href="/feedbacks/new" class="btn btn-special btn-green nyroModal"><img SRC="images/add.png" class="icon" alt=""/>New Feedback</a>
+   <div id="rightmenu">
+            <dl class="first">
+              <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+              <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd>  
+              <dd class="last">If you are a new user, you should read "Getting started"</dd>              
+            </dl>
+          </div>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

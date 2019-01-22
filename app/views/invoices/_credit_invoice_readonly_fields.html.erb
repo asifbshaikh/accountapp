@@ -1,0 +1,67 @@
+<div class="col-lg-4">
+  <div class="row">
+    <label class=" col-lg-4 control-label" style="padding:0;"><%= @company.label.customer_label %> </label>
+    <div class="col-lg-8">
+      <%= @invoice.account.name %><br/>
+    </div>
+  </div>
+  <% if @invoice.currency != @company.currency_code %>
+    <div class="row">
+      <label class=" col-lg-4 control-label" style="padding:0;">Invoice Currency:</label>
+      <div class="col-lg-8">
+        <%= @invoice.currency %>
+      </div>
+    </div>
+    <div class="row">
+      <label class=" col-lg-4 control-label" style="padding:0;">Exchange rate in <%= @company.currency_code%>:</label>
+      <div class="col-lg-8">
+        <%= @invoice.exchange_rate %>
+      </div>
+    </div>
+  <% end %>
+  <% unless @invoice.invoice_title.blank? %>
+    <div class="row">
+      <label class="control-label col-lg-4" style="padding:0;">Invoice Title</label>
+      <div class="col-lg-8">
+        <%= @invoice.invoice_title %><%= f.hidden_field :voucher_title_id %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="col-lg-4">
+  <div class="row">
+    <% if @company.invoice_setting.free_format? %>
+    <label class="col-lg-4 control-label-required">Invoice #</label>
+    <div class="col-lg-8">
+      <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+    </div>
+    <% else %>
+      <label class="col-lg-4 control-label" style="padding:0;">Invoice #</label>
+      <div class="col-lg-8">
+        <%= @invoice.invoice_number%><%= f.hidden_field :invoice_number %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label" style="padding:0;" >Date </label>
+    <div class="col-lg-4">
+      <%= @invoice.invoice_date %>
+      <%= f.hidden_field :invoice_date %>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label" style="padding:0;" >Due On </label>
+    <div class="col-lg-4">
+      <%= @invoice.due_date %>
+      <%= f.hidden_field :due_date %>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label" style="padding:0;" >PO Ref #</label>
+    <div class="col-lg-4">
+      <%= @invoice.po_reference %>
+      <%= f.hidden_field :po_reference %>
+    </div>
+  </div>
+</div>

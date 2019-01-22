@@ -1,0 +1,20 @@
+<% @voucher_titles.each do |title| %>
+  <tr>
+    <td>
+     <%= best_in_place title, :voucher_title, :path => "/voucher_titles/#{title.id}", :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 50, :class=>"bg-focus form-control"} %>
+    </td>
+    <td>
+      <%= best_in_place title, :status, :type => :checkbox, :path => "/voucher_titles/#{title.id}",:collection => ["Hide", "Show"],:html_attrs=>{:class=>"form-control"} %>
+    </td>
+    <% title_used = Invoice.find_by_voucher_title_id(title.id) %>
+    <% if title_used.blank? %>
+    <td class="text-center">
+      <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/voucher_titles/<%= title.id%>" title="Delete" ><i class="icon-trash"></i></a>
+    </td>
+    <%else%>
+     <td class="text-center">
+      <a rel="nofollow" title="There are some invoices associated with this title You can't delete this !" ><i class="icon-ban-circle"></i></a>
+    </td>
+ <% end %>
+  </tr>
+<% end %>

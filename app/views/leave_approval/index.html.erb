@@ -1,0 +1,56 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div id="tabs-all" class="highlight">
+        <%= render :partial => "shared/flash_msg"  %>
+        <div id="task_container">
+          <% if @approval_requests.blank? %>
+            <%= render :partial => "shared/no_record", :locals => { :message => "You don't have any leave requests that are awaiting approval."}%>
+          <% else %>
+            <table class="display stylized" id="example">
+              <thead>   
+                <%= render :partial => "leave_requests/header" %>
+              </thead>
+              <tbody>
+                 <%= render :partial => "approval_request", :collection => @approval_requests %>
+              </tbody>
+              <tfoot>
+                <%= render :partial => "leave_requests/footer" %>
+              </tfoot>
+            </table> 
+            <div class="clear">
+              <div class="width3 column">
+                <%= paginate @approval_requests %>
+              </div>
+            </div>   
+          <% end %>
+        </div>
+      </div><br />
+    </section>
+    <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+    <%= new_button "Apply For Leave", new_leave_request_path %>
+    <p><%= show_button "View Leave Dashboard", leave_requests_dashboard_path %></p>       
+      <div id="rightmenu">
+        <dl class="first">
+          <dt><%= image_tag "help.png" %></dt>
+          <dd><a href="#" class="nyroModal">Help</a></dd>
+          <dd class="last">This page displays the list of all pending leave requests waiting for your approval.<br/>Click onleave type to view more details.</dd>
+        </dl>
+      </div><br/>
+  
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

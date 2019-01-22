@@ -1,0 +1,32 @@
+  <div class='account_container'>
+  <table class="display stylized" id="act_details">
+    <thead>
+      <tr><th colspan="2">Account Details</th></tr>
+    </thead>
+   <tbody>
+     <tr>
+	<td><label>Account Name</label></td>
+	<td><%=@account.name%></td>
+     </tr>
+     <tr>
+        <td><label> Opening balance</label></td>
+	<td>
+          <%= ( @account.opening_balance.blank?)? '0.0':@account.opening_balance.abs %><%= @account.opening_balance >=0 ? "Dr":"Cr" unless @account.opening_balance.blank? %>
+        </td>
+     </tr>
+     <% if !@account.accountable.blank? %>
+	<%= render :partial=> "#{@account.accountable_type.downcase}_details" %>
+     <% end %>
+   </tbody>
+   <tfoot>
+      <tr>
+        <td colspan="2">
+          <%= link_to 'Edit account', edit_account_path(@account), :class =>'btn btn-green'  %>
+          &nbsp;<%= link_to 'Back to accounts', accounts_path, :class=> "btn " %>
+          &nbsp;<%= link_to 'Delete', @account, :confirm => "Are you sure?", :method => "delete", 
+                          :title =>"Delete account", :class => "btn " %>
+        </td>
+      </tr>
+    </tfoot>
+   </table>
+ </div>

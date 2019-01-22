@@ -1,0 +1,23 @@
+<%= form_for @blog_category, :url => ([:admin, @blog_category]), :class=>"form-horizontal"  do |f| %>
+  <% if @blog_category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blog_category.errors.count, "error") %> prohibited this blog_category from being saved:</h2>
+      <ul>
+      <% @blog_category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="panel panel-info">
+  <div class="panel-heading"><h4 class="panel-title" >Add Blog Category</h4></div>
+  <div class="panel-body">
+  <div class="col-lg-2">Category name</div>
+    <div class="col-lg-4">
+     <%= f.text_field :title, :class=>"form-control bg-focus" %>
+    </div>
+    <div class="col-lg-6"><%= f.submit :class=> "btn btn-success"%> </div>
+    </div>
+  </div>
+
+<% end %>

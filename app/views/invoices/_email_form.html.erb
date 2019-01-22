@@ -1,0 +1,51 @@
+<form id="myform" action="/invoices/email_invoice" method="post" class="" data-remote='true' >
+  <%= hidden_field_tag  :id, invoice.id %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Email Invoice</h4>
+      </div>
+      <div class="modal-body">
+        <div class="errorPlace"></div>
+        <div class="block">
+          <%= label_tag 'Email', 'Email', :class => "control-label-required" %>
+          <%=text_field_tag :email, "#{invoice.email}", :class => 'bg-focus form-control' %>
+          <small>separate multiple email ID&apos;s with comma</small>
+        </div>
+        <a id="flip" href="#"><i class="icon-plus"></i>Add cc</a>
+        <div id="cc_text_box" >
+          <div class="block">
+           <%= label_tag :cc, 'CC' , :class => "control-label" %>
+           <%=text_field_tag :cc, "", :class => 'bg-focus form-control' %>
+         </div>
+       </div>
+       <div class="block">
+         <%= label_tag :subject, 'Subject' , :class => "control-label" %>
+         <%=text_field_tag :subject, "New invoice has been created for you", :class => 'bg-focus form-control' %>
+       </div>
+       <div class="block">
+         <%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+         <%= text_area_tag  :text,
+         "Hello #{invoice.account.name},
+         A new invoice has been created for you. Please find the invoice attached with this email.Total amount due is #{ format_amt_with_currency(invoice.currency,invoice.outstanding)} and the due date is #{invoice.due_date}. 
+
+         Thanks,
+         #{@company.name}" ,rows: 7, cols: 30, :class=>"form-control"%>
+         <div class="block"><br/>
+           <label><i class="icon-paper-clip icon-large"></i></label>
+           <%= image_tag 'pdf.gif' %> <%=  invoice.invoice_number.to_s + ".pdf" %><br/>
+           <% if (@company.invoice_setting.enable_gateway? || @company.invoice_setting.enable_cashfree)  && invoice.unpaid? && ( !@link_history.blank? || !@cflink_history.blank? )%>
+           <label><input type="checkbox"  value="">Add Payment link.</label><br>
+           <%end%>
+         </div>
+       </div>
+       <div class="text-center">
+        <div class='save-btn'></div>
+        <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Sending...">Send</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

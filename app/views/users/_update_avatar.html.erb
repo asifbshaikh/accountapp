@@ -1,0 +1,25 @@
+<%= form_for @user , :html => {:multipart => true} do |f|%>
+<div class="col-sm-12">
+ <div class="text-center">
+   <% unless @user.new_record? || !@user.avatar? %>
+  <%= image_tag(@user.avatar.url(:thumb), :alt => 'avatar', :title => 'Current avatar') %>
+    <% end %> 
+ </div><br/>
+  <% if @user.new_record? || !@user.avatar? %> 
+   <%= f.label "Upload new profile picture" %>
+  <% else %>
+   <%= f.label "Change profile picture"%>
+  <% end %>
+  <%= f.file_field :avatar, :class=>"btn btn-white" %><%= hidden_field_tag "old_file_size", @user.old_file_size %><small>Only JPG and PNG files are supported</small><br>
+         
+  <% unless @user.new_record? || !@user.avatar? %>
+     <%= f.check_box(:delete_avatar) %>
+     <%= f.label(:delete_avatar, 'Remove Profile picture') %>
+  <% end %>
+ <%= hidden_field_tag 'row_index', params[:index] %>
+</div>
+
+  <div class="col-lg-8 col-lg-offset-4">                      
+   <%= submit_tag "Submit", :class => "btn btn-success" %>&nbsp;<%= link_to 'Cancel',"", :id => 'bck_avatar', :class => 'btn btn-white', :remote => true %>
+  </div>
+<% end %>

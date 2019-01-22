@@ -1,0 +1,30 @@
+<section class="panel">
+            <div class="panel-body bg-lighter"> 
+                <div class="table-responsive col-lg-10">
+              <table class="table text-small">
+                <thead>
+                  <tr>
+                    <th class="text-center">Total Invoices</th>
+                    <th class="text-center">Taxable Amount</th>
+                    <th class="text-center">CGST</th>
+                    <th class="text-center">SGST</th>
+                    <th class="text-center">IGST</th>
+                    <th class="text-center">Total Inclusive Of Taxes</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center"><%= @general_info[:count] %></td>
+                    <td class="text-center"><%= format_currency(@general_info[:taxable_amount]) %></td>
+                    <td class="text-center"><%= format_currency(@general_info[:total_cgst]) %></td>
+                    <td class="text-center"><%= format_currency(@general_info[:total_sgst]) %></td>
+                    <td class="text-center"><%= format_currency(@general_info[:total_igst] )%></td>
+                    <td class="text-center"><%=format_currency( @general_info[:total_amount]) %></td>
+                    <td class="text-center"><%= @gstr_one.status_name%></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+         </section>   

@@ -1,0 +1,8 @@
+<script>
+  $(document).ready(function() {
+    $('#p_acc').typeahead({
+      name: 'accounts',
+      local: <%= raw(@accounts.map {|acc| acc.name }.to_json(:only => [:name ])) %>
+    });
+  });
+</script>

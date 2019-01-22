@@ -1,0 +1,11 @@
+<div id="prev_data">
+<div class='titleBar'><div id="popupHeading">Upload file</div> <a id="popupBoxClose" class="btn btn-red">x</a></div><!-- <hr class='seperator'> -->
+<br/>
+<form method="post" enctype="multipart/form-data" action="/db/upload" accept-charset="UTF-8" data-remote='true'> 
+  <%= hidden_field_tag 'path', params[:path] %><br/>
+  <%= file_field_tag 'file' %><br/>
+  <span class='no-filename' style='color: red'></span>
+  <br/>
+  <%= submit_tag 'Upload file', :class =>'btn btn-green btn-save'%>
+</form>
+</div>

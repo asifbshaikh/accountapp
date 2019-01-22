@@ -1,0 +1,8 @@
+<tr>
+	<td><%= help.screen_id %></td>
+	<td><%= help.screen_name %></td>
+	<td ><%=truncate (help.help,:length => 100) %></td>
+	<td><%= link_to 'Show', help %></td>
+	<td><%= link_to 'Edit', edit_help_path(help) %></td>
+	<td><%= link_to 'Destroy', help, :confirm => 'Are you sure?', :method => :delete %></td>
+</tr>

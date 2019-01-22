@@ -1,0 +1,29 @@
+<h1>Listing plan_properties</h1>
+
+<table>
+  <tr>
+    <th>Plan</th>
+    <th>Name</th>
+    <th>Value</th>
+    <th>Datatype</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @plan_properties.each do |plan_property| %>
+  <tr>
+    <td><%= plan_property.plan_id %></td>
+    <td><%= plan_property.name %></td>
+    <td><%= plan_property.value %></td>
+    <td><%= plan_property.datatype %></td>
+    <td><%= link_to 'Show', plan_property %></td>
+    <td><%= link_to 'Edit', edit_plan_property_path(plan_property) %></td>
+    <td><%= link_to 'Destroy', plan_property, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Plan property', new_plan_property_path %>

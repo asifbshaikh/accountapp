@@ -1,0 +1,35 @@
+<% unless @purchase.last_step? %>
+  <%= render :partial => 'auto_calculate' %>
+<% end %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <%= form_for @purchase, :html => {:multipart => true, :class =>'form-horizontal'} do |f| %>
+      <%= render 'shared/form_error', :object => @purchase %>
+      <%= f.hidden_field :current_step %>
+      <%= render "#{@purchase.current_step}_step", :f=>f %>
+
+      <div class='form-group'>
+        <div class="col-lg-8 col-lg-offset-4">
+        <%= link_to "Previous", edit_purchase_path(@purchase), :class=>"btn btn-default" unless @purchase.first_step? || @purchase.converted_from_po? %> &nbsp;
+        <%= f.submit "Continue", :class => "btn btn-success" %> &nbsp;   
+        <%= f.submit "Save As Draft", :name=>"draft", :class => "btn btn-default" if @purchase.original_purchase.draft? %> &nbsp;   
+        <a href="/purchases" class="btn btn-default">Cancel</a>
+        </div>
+      </div>  
+      <%end %>
+      </div>
+    </section>
+  </div>
+</div>
+<% unless @purchase.last_step? %>
+  <div id='modalPlace'></div>
+  <div id="modal-vendor" class="modal fade">
+  <%= render "vendors/popup_vendor_form", :selector=>"purchase_account_id" %>
+  </div>
+  <script type="text/javascript"> 
+    $("#purchase_account_id").select2();
+    $("#purchase_project_id").select2();
+   </script>
+ <% end %>

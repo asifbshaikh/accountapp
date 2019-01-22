@@ -1,0 +1,193 @@
+<div class="row">
+  <div class="col-lg-12"><br/>
+    <%= render "shared/flash_msg" %>
+    <div class='col-lg-6'>
+      <%= form_tag({:controller=>'settings', :action=> 'set_voucher_sequence'}, :class=>'form-horizontal') do %>
+      <section class="panel">
+        <header class="panel-heading">
+          <strong> Set preferences for </strong> 
+          <select name='voucher_type' style='width:50%' id='select2option' class='voucher_type_select'>
+            <% @company.get_allowed_vouchers.each do |object| %>
+              <option value="<%= object.first%>" data-strategy="<%= VoucherSetting.get_strategy(@company.id, object.first) %>" data-customfield="<%= CustomField.get_custom_field(@company.id, object.first) %>"><%= object.last %></option>
+            <% end %>
+          </select>
+        </header>
+        <div class='panel-body'>
+          <div class="customField" style="display:none;">
+            <div class='form-group'>
+              <div class='col-lg-2'></div>
+              <div class='col-lg-3'>
+                <strong>Custom Field</strong><br />Custom Field1
+              </div>
+              <div class='col-lg-3'>
+                <strong>Field Name</strong><br /><%= text_field_tag "custom_label1", '', :class=>'form-control' %>
+              </div>
+              <div class='col-lg-3'>
+                <strong>Value</strong><br /><%= text_field_tag "default_value1", '', :class=>'form-control' %>
+              </div>
+            </div>
+            <div class='form-group'>
+              <div class='col-lg-2'></div>
+              <div class='col-lg-3'>
+                Custom Field2
+              </div>
+              <div class='col-lg-3'>
+                <%= text_field_tag "custom_label2", '', :class=>'form-control' %>
+              </div>
+              <div class='col-lg-3'>
+                <%= text_field_tag "default_value2", '', :class=>'form-control' %>
+              </div>
+            </div>
+            <div class='form-group'>
+              <div class='col-lg-2'></div>
+              <div class='col-lg-3'>
+                Custom Field3
+              </div>
+              <div class='col-lg-3'>
+                <%= text_field_tag "custom_label3", '', :class=>'form-control' %>
+              </div>
+              <div class='col-lg-3'>
+                <%= text_field_tag "default_value3", '', :class=>'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-2"></div>
+              <div class="col-lg-5">
+                Show these fields in report
+              </div>
+
+              <div class='col-lg-4'>
+                <div class="radio">
+                  <label class="radio-custom" id='status_1_label'>
+                    <input type="radio" name="status" value='1' id='cstmfld_status_1' >
+                    <i class="icon-circle-blank" id='status_1'></i>
+                    Yes
+                  </label>
+                </div>
+                <div class="radio">
+                  <label class="radio-custom" id='status_0_label'>
+                    <input type="radio" name="status" value='0' id='cstmfld_status_0' >
+                    <i class="icon-circle-blank" id='status_0'></i>
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>             
+            <div class="line line-dashed m-t-large"></div>
+          </div>
+
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'></div>
+            <div class='col-lg-10'>
+              <div class="radio">
+                <label class="radio-custom" id='strategy_0_label'>
+                  <input type="radio" name="voucher_number_strategy" value='0' id='voucher_number_strategy_0' >
+                  <i class="icon-circle-blank" id='strategy_0'></i>
+                  System generated voucher number.
+                </label>
+              </div>
+              <div class="radio">
+                <label class="radio-custom" id='strategy_2_label'>
+                  <input type="radio" name="voucher_number_strategy" value='2' id='voucher_number_strategy_2' >
+                  <i class="icon-circle-blank" id='strategy_2'></i>
+                  I'll input my own voucher number.
+                </label>
+              </div>
+              <div class="radio">
+                <label class="radio-custom" id='strategy_1_label'>
+                  <input type="radio" name="voucher_number_strategy" value='1' id='voucher_number_strategy_1' >
+                  <i class="icon-circle-blank" id='strategy_1'></i>
+                  Sequencial voucher number.
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'></div>
+            <div class='col-lg-3'>
+              <span>Prefix</span><br /><%= text_field_tag "prefix",'', :class=>'form-control' %>
+            </div>
+            <div class='col-lg-4'>
+              <span>Starting sequence</span><br /><%= text_field_tag "starting_sequence", '', :class=>'form-control' %>
+            </div>
+            <div class='col-lg-3'>
+              <span>Suffix</span><br /><%= text_field_tag "suffix", '', :class=>'form-control' %>
+            </div>
+          </div>
+          <div class="cntc" style="display:none;">
+            <div class="form-group">
+              <div class="col-lg-2"></div>
+              <div class="col-lg-10">
+                <label>Customer Notes</label><br/>
+                <%= text_area_tag "customer_notes",'', :class=>"form-control", :rows=> 3, :cols=> 10%>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-2"></div>
+              <div class="col-lg-10">
+                <label>Terms & Conditions</label><br/>
+                <%= text_area_tag "terms_and_conditions",'', :class=>"form-control", :rows=> 3, :cols=> 10%>
+              </div>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="col-sm-8 col-sm-offset-4">
+            <p>
+              <button type="submit" class="btn btn-success">Save</button>
+            </p>                   
+            </div>
+          </div>
+        </div>
+      </section>
+      <% end %>
+    </div> 
+
+    <div class="col-sm-6">
+      <section class="panel">
+        <header class="panel-heading">
+          Other preferences 
+        </header>
+        <% if @label.blank? %>
+          <%= render :partial => "shared/no_record" %>
+        <% else %>
+          <table class="table table-striped b-t">
+            <tbody>
+              <tr>
+                <td><strong>Clients who pays you:</strong></td>
+                <td><%= best_in_place @label, :customer_label, :type => :select, :collection => [["Customer", "Customer"],["Client", "Client"], ["Patient", "Patient"], ["Donor", "Donor"],["Member","Member"],["Guest", "Guest"],["User", "User"]],:html_attrs=>{:class=>"bg-focus  form-control"} %></td>
+              </tr>
+              <tr>
+                <td><strong>Estimate :</strong></td>
+                <td><%= best_in_place @label, :estimate_label, :type => :select, :collection => [["Estimate", "Estimate"],["Quotation", "Quotation"], ["Quote", "Quote"], ["Proforma Invoice","Proforma Invoice"]],:html_attrs=>{:class=>"bg-focus  form-control"} %></td>
+              </tr>
+              <% if @company.plan.is_inventoriable? %>
+                <tr>
+                  <td><strong>Warehouse :</strong></td>
+                  <td><%= best_in_place @label, :warehouse_label, :type => :select, :collection => [["Warehouse", "Warehouse"],["Godown", "Godown"], ["Location", "Location"]],:html_attrs=>{:class=>"bg-focus  form-control"} %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <td><strong>Footer text for your reports:</strong></td>
+                <td><%= best_in_place  @company, :watermark, :type=> :input,:nil=> '<span class ="variable_item">Click here to add watermark <br/>For ex.: "Generated from www.profitbooks.net"</span> ', :html_attrs => {:maxlength => 100,:class=>"bg-focus form-control"} %><br/><small>(Will display in all PDF reports) </small></td>
+
+              </tr>
+              <tr>
+                <td><strong>Terms and conditions</strong></td>
+                <td><%= best_in_place  @company, :estimate_terms_and_conditions, :type=> :textarea,:nil=> '<span class ="variable_item">Click here to add terms and conditions </span> ', :html_attrs => {:maxlength => 700,:class=>"bg-focus form-control"} %><br/><small>(default for your estimates) </small></td>           
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+      </section>
+    </div>
+  </div>
+</div>
+<div class='row'>
+  <div class="col-lg-12">
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6"></div>
+  </div>
+</div>
+<script type="text/javascript"> 
+$("#select2option").select2();
+</script>

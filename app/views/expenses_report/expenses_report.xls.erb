@@ -1,0 +1,40 @@
+ <table class="table table-striped b-t text-small">
+<tr><td colspan=6 align=center>
+<h3>Expenses Summary Report</h3>
+</td></tr>
+<tr><td colspan=6 align=center>As on: 
+<%= (params[:end_date].blank?) ? ( Time.zone.now.to_date) : params[:end_date].to_date %> </td></tr>
+
+                <thead>
+                  <tr>
+                    <th class="text-left" width="7%" >Sr. No.</th>
+                    <th class="text-center" width="300" colspan="2">Voucher number</th>
+                    <th class="text-center">Expense date</th>
+                    <th class="text-center" width="15%" colspan="3">Expense</th>
+                    <th class="text-right" width="15%" colspan="2">Paid From</th>
+                    <th class="text-center" width="15%" colspan=2>Amount</th>
+                    <th colspan=2 class="text-center">Created by</th>
+                    <th class="text-center">Status</th>
+                  </tr>             
+              </thead>
+              <tbody>
+             <% sum =0 %>
+              <% @expenses.each_with_index do | expense, index | %>
+                <% sum += expense.total_amount %>
+               <tr>
+               <td align="center"><%= index+1 %></td>
+                <td width="300" colspan=2 align=center> <%= expense.voucher_number %></td>
+                <td align=center><%= expense.expense_date.strftime("%d-%m-%Y") %></td>
+                <td  width="15%" colspan=3 align=center><%= expense.expense_line_items[0].account.name%></td>
+                <td  width="15%" colspan=2 align=center><%= truncate(expense.account.name, :length =>20) unless expense.account.blank? %></td>
+                <td colspan=2 align=right><%= format_currency expense.total_amount %></td>
+                <td  width="15%" colspan=2 align=center><%= expense.created_by_user %></td>
+                <td align=center><%=content_tag(:span, expense.status, :class => "label #{expense_status_badge expense.status}")%></td>
+            </tr>
+               <% end %> 
+               <tr><td colspan = 11 rowspan = 2 align=right>
+               <h4>Total Expenses <%= format_currency sum %></h4>
+              </td></tr>
+              </tbody>
+              
+</table>

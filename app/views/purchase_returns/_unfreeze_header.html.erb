@@ -1,0 +1,5 @@
+<% if !@current_user.auditor? %>
+  <%= render "#{PurchaseReturn::ALLOCATION_STATUS[@purchase_return.is_debit_note_allocated?]}_purchase_return_actions"%>
+  
+<% end %>
+<%= render "frozen_header" %>

@@ -1,0 +1,28 @@
+
+<% if @company.plan.is_inventoriable? %>
+<tr class="gradeU even">
+  <td><label>Enable inventory for this account</label></td>
+		<td>
+      <%=radio_button_tag 'purchase[inventoriable]', '1',true  %>Yes &nbsp;
+     	<%=radio_button_tag 'purchase[inventoriable]', '0', false %> No
+    </td>
+    
+    </tr>
+  <tr class="gradeU even">
+    <td><label>Treat this as reseller product</label></td>
+	<td>
+      <%= radio_button_tag 'purchase[reseller_product]', '1', false  %>Yes &nbsp;
+      <%= radio_button_tag 'purchase[reseller_product]', '0', true %> No
+    </td>
+  </tr>
+<% else %>  
+ <%= hidden_field_tag 'purchase[inventoriable]', '0'%>
+<% end %>
+<tr class="gradeU even">
+    <td><label>Unit cost</label></td>
+    <td><%= text_field_tag 'purchase[unit_cost]','',:maxlength => "8", :onkeydown => "return numbersOnly(event);",:size => 30, :class => "amount" %> </td>
+  </tr>
+<tr class="gradeU odd">
+    <td><label>Description</label></td>
+    <td><%= text_area_tag 'purchase[description]','' %> </td>
+  </tr>

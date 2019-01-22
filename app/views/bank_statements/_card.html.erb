@@ -1,0 +1,12 @@
+<div id='remIt'>
+<div class='col-lg-4'>
+<%= text_field_tag 'card_payment[payment_date]',"#{params[:card_payment][:payment_date] unless params[:card_payment].blank? }", :class => "form-control bg-focus", :placeholder =>"Transaction Date *" %> 
+</div>
+<div class='col-lg-4'>
+<%= text_field_tag 'card_payment[account_number]',"#{params[:card_payment][:account_number] unless params[:card_payment].blank? }",
+:onkeydown => "return card_cheque_number(event);", :maxlength => 16, :class => "form-control bg-focus", :placeholder =>"Card Number" %> 
+</div>
+<div class='col-lg-4'>
+<%= text_field_tag 'card_payment[transaction_reference]',"#{params[:card_payment][:transaction_reference] unless params[:card_payment].blank? }", :class => "form-control bg-focus", :placeholder =>"Transaction Reference" %>
+</div>
+</div>

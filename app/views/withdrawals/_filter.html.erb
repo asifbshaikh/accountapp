@@ -1,0 +1,23 @@
+
+<div class="panel panel-info data-filter" id = "filter">
+  <div class="panel-heading"><h4 class="panel-title" >Withdrawal Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="withdrawal-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="withdrawvoucherno"></td>
+          <td class='text-right'><label>Date</label></td>
+          <td id="transactionDate"></td>
+          <td width='10%' class='text-right'><label>From Account</label></td>
+          <td id="withdrawfromacc" data-fromaccounts="<%= Account.withdraw_from_accounts(@company.id) %>"></td>
+        </tr>
+        <tr>
+          <td width='10%' class='text-right'><label>To Account</label></td>
+          <td id="withdrawtoacc" data-toaccounts="<%= Account.withdraw_to_accounts(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="withdrawamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

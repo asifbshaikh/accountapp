@@ -1,0 +1,59 @@
+
+<tr>
+  <td colspan=2 id="txrow<%= index %>">
+    <a style="position:absolute;right:5px;float:right;" id='tax-close-btn' data-index='<%= index %>'><i class="icon-remove"></i></a>
+    <h4 ><strong>Linked tax </strong></h4>
+    <table width='100%'>
+      <tr>
+        <td width='30%' align=right style='background:none; border:none;'><label class='control-label-required'>Tax name</label></td>
+        <td width='70%' style='background:none; border:none;'><%= text_field_tag "linked_tax[#{index}][account_name]", tax.blank? ? "" : tax['account_name'], :class=>"bg-focus form-control" %></td>
+      </tr>
+      <tr>
+        <td width='30%' align=right style='background:none; border:none;'><label>Registration no.</label></td>
+        <td width='70%' style='background:none; border:none;'><%= text_field_tag "linked_tax[#{index}][registration_number]", tax.blank? ? "" : tax['registration_number'], :class=>"bg-focus form-control" %></td>
+      </tr>
+      <tr>
+        <td width='30%' align=right style='background:none; border:none;'>
+          <label>Calculation method</label>
+        </td>
+        <td width='70%' style='background:none; border:none;'>
+            <label>
+              <input type="radio" value="1" name="linked_tax[<%=index%>][calculation_method]" checked="checked">
+              On Primary tax
+            </label><p></p>
+            <label>
+              <input type="radio" value="2" name="linked_tax[<%=index%>][calculation_method]">
+              On base price + Primary tax
+            </label><p></p>
+            <label>
+              <input type="radio" value="3" name="linked_tax[<%=index%>][calculation_method]">
+              On base price
+            </label>
+
+        </td>
+      </tr>
+      <tr class='sales-info'>
+        <td align=right style='background:none; border:none;'><label class='control-label-required'>Sales tax rate</label></td>
+        <td style='background:none; border:none;'>
+          <div class="input-group" style="width:120px;">
+            <%= text_field_tag "linked_tax[#{index}][sales_tax_rate]", tax.blank? ? "" : tax['sales_tax_rate'], :onkeydown => "return numbersOnly(event);", :class => "bg-focus form-control text-right" %>
+            <div class="input-group-addon">%</div>
+          </div>
+        </td>
+      </tr>
+      <tr class='purchase-info'>
+        <td align=right style='background:none; border:none;'><label class='control-label-required'>Purchase tax rate</label></td>
+        <td style='background:none; border:none;'>
+          <div class="input-group" style="width:120px;">
+            <%= text_field_tag "linked_tax[#{index}][purchase_tax_rate]", tax.blank? ? "" : tax['purchase_tax_rate'], :onkeydown => "return numbersOnly(event);", :class => "bg-focus form-control text-right" %>
+            <div class="input-group-addon">%</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align=right style='background:none; border:none;'><label>Description</label></td>
+        <td style='background:none; border:none;'><%= text_area_tag "linked_tax[#{index}][description]", tax.blank? ? "" : tax['description'], :class=>"bg-focus form-control" %></td>
+      </tr>
+    </table>
+  </td>
+</tr>

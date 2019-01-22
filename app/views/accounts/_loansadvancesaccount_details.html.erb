@@ -1,0 +1,24 @@
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Loan and Advances Account Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>Interest bearing ?: </strong> 
+       <div class="btn-group m-t-n-mini m-r-n-mini" data-toggle="button">
+      <% if @account.accountable.interest_applicable? %>
+        <label class="btn btn-sm btn-white btn-on active">Yes</label>
+        <label class="btn btn-sm btn-white">No</label>
+      <% else %>
+        <label class="btn btn-sm btn-white">Yes</label>
+        <label class="btn btn-sm btn-white btn-on active">No</label>
+      <% end %>  
+      </div>
+    </p>
+    <p><strong>Interest compounding type:</strong><%= @account.accountable.compounding %></p>
+    <p><strong>Interest rate:</strong><%=@account.accountable.interest_rate%></p>
+   </div>
+   
+  </div>
+ </section>
+

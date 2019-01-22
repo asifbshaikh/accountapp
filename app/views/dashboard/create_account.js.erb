@@ -1,0 +1,12 @@
+$('body').append("<div id='msg_box'><div class='box box-success'>Account created successfully</div></div>");
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+<% else %>
+  $(".<%= params[:transaction_type]%>").attr('src', '/images/valid.gif');
+  $("#progress2 span").css({'width': "<%= @progress %>%"});
+  $("#progress2 span").html("<b><%= @progress %>%</b>");
+  $('#popup_box').fadeOut("slow");
+  $('#msg_box').fadeIn("slow", function(){
+    $('#msg_box').fadeOut(7000);
+  });
+<% end %>

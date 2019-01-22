@@ -1,0 +1,11 @@
+<%= form_for @policy_document, :html => {:multipart => true} do |f| %>
+<%= render 'shared/form_error', :object => @policy_document %>
+  
+  <div class="field">
+    <%= f.label :uploaded_file, " Choose File:" %> <br />
+    <%= f.file_field :uploaded_file, :autofocus =>"autofocus"%><%= hidden_field_tag "old_file_size", @policy_document.old_file_size %>
+  </div><br />
+  <div class="actions">
+    <%= f.submit "Upload", :class =>"btn btn-green"%>
+  </div>
+<% end %>

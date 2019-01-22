@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ProfitBooks.net - Online Accounting & Payroll Management Software for small business</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Stylesheets Files       // -->
+<!-- ////////////////////////////////// -->
+<%= render :partial=> "stylesheets" %>
+  
+<!-- ////////////////////////////////// -->
+<!-- //     Google Webfont Files     // -->
+<!-- ////////////////////////////////// -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //        Favicon Files         // -->
+<!-- ////////////////////////////////// -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Javascript Files        // -->
+<!-- ////////////////////////////////// -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="javascripts/jquery.easing-1.3.min.js"></script>
+<script src="javascripts/camera.min.js"></script>
+<script src="javascripts/tooltip.js"></script>
+<script src="javascripts/superfish.js"></script>
+<script src="javascripts/tinynav.min.js"></script>
+<script src="javascripts/jquery.fancybox.js?v=2.0.6"></script>
+<script src="javascripts/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="javascripts/jquery.ui.totop.min.js"></script>
+<script src="javascripts/ddaccordion.js"></script>
+<script src="javascripts/jquery.twitter.js"></script>
+<script src="javascripts/jflickrfeed.min.js"></script>
+<script src="javascripts/faq-functions.js" ></script>
+<script src="javascripts/theme-functions.js"></script>
+<script src="javascripts/jquery.retina.js"></script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('#services-camera-slide').camera({    
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <!-- logo start here -->
+      <div id="logo">
+          <a href="/home/index"><img src="/images/logo.png" alt="ProfitBooks - Online Accounting and Payroll Management Software" class="retina"/></a>
+          
+        </div>
+        <!-- logo end here -->
+        
+        <!-- top information start here -->
+        <div id="top-info">
+          <ul>
+              <li>
+                  <p>Call us to know more</p>
+                    <img src="/images/top_info1.png" alt="" class="retina" /><br/>
+                    <p class="info-text">+91 84 85 86 3000</p>
+                </li>
+                <li>
+                  <p>Already Registered ?</p>
+                    <p class="info-text"><a href="https://www.profitbookshq.com/login/index">Login to your account</a></p>
+                </li>
+            </ul>
+        </div>
+        <!-- top information end here -->
+        
+        <div id="mainmenu-wrapper">
+          <!-- mainmenu start here -->
+            <nav id="mainmenu">
+                <ul id="menu">
+                    <li class="dropdown"><a href="/home/index">Home</a>
+                        <ul> 
+                            <li><a href="index-layout2.html"><span>-</span> home layout 2</a></li>
+                            <li><a href="index-layout3.html"><span>-</span> home layout 3</a></li>
+                            <li><a href="index-layout4.html"><span>-</span> home layout 4</a></li>      
+                        </ul>
+                    </li>
+                  <li><a href="about.html">How Its Useful</a></li>
+                  <li class="selected"><a href="/home/services">Services</a></li>
+                    <li class="dropdown"><a href="#">Common Questions</a>
+                      <ul> 
+                            <li><a href="portfolio-2col.html"><span>-</span> portfolio 2 column</a></li>
+                            <li><a href="portfolio-3col.html"><span>-</span> portfolio 3 column</a></li>
+                            <li><a href="portfolio-4col.html"><span>-</span> portfolio 4 column</a>
+                              <ul> 
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a>
+                                      <ul> 
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>      
+                                        </ul>
+                                    </li>     
+                                </ul>
+                            </li>     
+                      </ul>
+                  </li>
+                    <li class="dropdown"><a href="#">Partners</a>
+                      <ul> 
+                            <li><a href="blog-right-sidebar.html"><span>-</span> blog right sidebar</a></li>
+                            <li><a href="blog-left-sidebar.html"><span>-</span> blog left sidebar</a></li>
+                            <li><a href="single-right-sidebar.html"><span>-</span> single right sidebar</a></li> 
+                            <li><a href="single-left-sidebar.html"><span>-</span> single left sidebar</a></li>    
+                      </ul>
+                  </li>
+                  <li><a href="/home/contact">Contact</a></li>
+                    <li class="dropdown"><a href="#">Pages</a>
+                      <ul> 
+                            <li><a href="column.html"><span>-</span> column page</a></li>
+                            <li><a href="tables.html"><span>-</span> table page</a></li>
+                            <li><a href="button-list.html"><span>-</span> button &amp; list page</a></li>
+                            <li><a href="/home/icons"><span>-</span> glyphicons page</a></li>
+                            <li><a href="/home/typhography"><span>-</span> typhography page</a></li>
+                            <li><a href="/home/testimonials"><span>-</span> testimonials page</a></li>  
+                            <li><a href="/home/pricing"><span>-</span> pricing page</a></li>
+                            <li><a href="/home/faq"><span>-</span> faq page</a></li>
+                            <li><a href="/home/features_team"><span>-</span> team page</a></li>
+                            <li><a href="/home/services-layout2"><span>-</span> services layout alt</a></li>
+                            <li><a href="contact-layout2.html"><span>-</span> contact layout alt</a></li>
+                            <li><a href="/home/sitemap"><span>-</span> sitemap page</a></li>
+                            <li><a href="fullwidth.html"><span>-</span> fullwidth page</a></li>
+                            <li><a href="/home/404"><span>-</span> 404 page</a></li>                             
+                      </ul>
+                  </li>
+              </ul>
+            </nav>
+            <!-- mainmenu end here -->
+            
+            <!-- top socials start here -->
+            <div id="top-socials">
+                <ul class="socials-list">
+                    <li><a href="#" title="facebook" class="tooltip"><img src="/images/socials/facebook.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="twitter" class="tooltip"><img src="/images/socials/twitter.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="dribbble" class="tooltip"><img src="/images/socials/dribbble.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="google+" class="tooltip"><img src="/images/socials/google+.png" alt="" class="retina" /></a></li>
+                    
+                </ul>
+            </div>
+            <!-- top socials end here -->
+        </div>
+    </header>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Our Services.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <ul>
+                        <li><a href="/home/index">home</a></li>
+                        <li class="current-page"><a href="#">services</a></li>
+                    </ul>
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+          <div class="twelve columns">
+              <h5 class="title-line"><span>We Offers Best Services</span></h5>
+            </div>
+          <div class="six columns">
+              <div id="portfolio-slider">
+                    <div id="services-camera-slide">
+                        <div data-src="/images/portfolio_big/single-p1.jpg"></div>
+                        <div data-src="/images/portfolio_big/single-p2.jpg"></div>
+                        <div data-src="/images/portfolio_big/single-p3.jpg"></div>
+                        <div data-src="/images/portfolio_big/single-p4.jpg"></div>
+                    </div>
+              </div> 
+          </div>
+            <div class="six columns">
+              <h5>Our Fields of Expertise</h5>
+                <p>Sed perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <ul class="check">
+                    <li>Quisaute reprehenderit voluptate molestia</li>
+                    <li>Et harum quidem facilis expedita distinctio</li>
+                    <li>Temporibus autem quibusdam officiis debit</li>                           
+                </ul>
+                <a href="#" class="button small grey">Learn More</a>
+                <a href="#" class="button small green">Get a Quote</a>
+          </div>        
+      </div>
+        
+        <div class="row">
+          <div class="six columns">
+              <h5 class="title-line"><span>What they Say</span></h5>
+              <!-- begin of testimonials 1 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>I searched all over and looked at many different company websites to decide which one to use and yours was by far the best. The designs are amazing.</p>
+                        </blockquote>                                                         
+                    </div>
+                    <div class="clear"></div>                                                                      
+                </div>
+                <div class="testi-baloon"></div>
+              <div class="testi-name">Jake Wood<br/><span class="company-name">Silver Arrow Corp</span></div>
+            </div>        
+          <div class="six columns">
+              <div class="box-flip">
+                    <h5>Our Philoshopy</h5>
+                    <blockquote><p>Sometimes when you innovate, you make mistakes. It is best to admit them quickly and get on with improving your other innovations.</p><cite>Steve Jobs</cite></blockquote>
+                    <div class="clear"></div>
+              </div>
+          </div>
+      </div>   
+              
+        <div class="row">
+          <div class="twelve columns">
+              <h5 class="title-line"><span>Another Fantastic Services</span></h5>
+            </div>
+          <div class="three columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-mixer"></span>
+              </div>
+              <h5>Easy to Customize</h5>
+              <p>Nemo delenim ipsam voluptatem quia voluptas siter aspernatur autodit fugit consequuntur magni dolores eosq ratione voluptatem</p>
+          </div>
+            <div class="three columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-heart-full"></span>
+              </div>
+              <h5>Built with Passion</h5>
+              <p>Nemo delenim ipsam voluptatem quia voluptas siter aspernatur autodit fugit consequuntur magni dolores eosq ratione voluptatem</p>
+          </div>
+            <div class="three columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-settings-2"></span>
+              </div>
+              <h5>Solid Clean Code</h5>
+              <p>Nemo delenim ipsam voluptatem quia voluptas siter aspernatur autodit fugit consequuntur magni dolores eosq ratione voluptatem</p>
+          </div>
+            <div class="three columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-watch"></span>
+              </div>
+              <h5>Ready for Retina</h5>
+              <p>Nemo delenim ipsam voluptatem quia voluptas siter aspernatur autodit fugit consequuntur magni dolores eosq ratione voluptatem</p>
+          </div>
+      </div>
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial=> "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

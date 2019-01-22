@@ -1,0 +1,37 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i>Add New User</h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), users_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+          <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+           <% if !@company.plan.essential_plan? %>
+            <div class="wizard clearfix">
+            <!-- <div class="actions">
+            <button class="btn btn-white btn-xs btn-prev" type="button" disabled="disabled">
+            <i class="icon-chevron-left"></i>
+            Prev
+            </button>
+            <button class="btn btn-white btn-xs btn-next" data-last="Finish" type="button">
+            Next
+            <i class="icon-chevron-right"></i>
+            </button>
+            </div> -->
+            </div>
+            <% end %>
+            <div class="step-content">
+             <div id="step1" class="step-pane active"><%= render :partial=>"form" %></div>
+            </div>
+           </section>
+        </div>
+      </div>
+    </section>
+  </section>

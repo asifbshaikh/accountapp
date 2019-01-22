@@ -1,0 +1,16 @@
+<tr id="shipping_row<%= shipping_index %>" valign="top" class = 'shp_line'>
+   <%= hidden_field_tag "sales_order[shipping_line_items_attributes][#{shipping_index}][id]",shipping_line_item.id %>
+   <%= hidden_field_tag "sales_order[shipping_line_items_attributes][#{shipping_index}][line_item_type]",shipping_line_item.line_item_type, :value =>"ShippingLineItem"%>   
+   <%= hidden_field_tag "sales_order[shipping_line_items_attributes][#{shipping_index}][_destroy]"%>
+   <td style="background:#EDF4FF" colspan=2 ></td>
+   <td  class="ta-right" style="background:#EDF4FF" colspan="2"><label class="required">Add Other Charge:</label></td>
+   <td class="ta-right"  colspan="2" style="background:#EDF4FF">
+    <%= select_tag "sales_order[shipping_line_items_attributes][#{shipping_index}][account_id]", options_from_collection_for_select(@shipping_accounts, :id, :name, shipping_line_item.account_id ), :include_blank => true, :class=>"full bg-focus form-control", :id => 'shipping_dropdown' %>
+    <%= hidden_field_tag "shipping_index", shipping_index %>
+   </td>
+   <td style="background:#EDF4FF" >
+    <%= text_field_tag "sales_order[shipping_line_items_attributes][#{shipping_index}][amount]", shipping_line_item.amount, :class =>'amount bg-focus form-control text-right', :id =>'ship_charge', :onkeydown => "return balOnly(event);", :maxlength => 20 %>
+   </td>
+  <td style="background:#EDF4FF; padding-right:0;"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_shipping_item, :shipping_index => shipping_index,:id =>'cancel',:shipping_line_item_id => shipping_line_item.id },:class =>"btn btn-danger",:remote => true %>
+    </td>
+</tr>

@@ -1,0 +1,77 @@
+<%= render :partial => "auto_calculate" %>
+<%= form_for @timesheet, :url => '/timesheets/create_weekly_timesheet', :html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @timesheet %>
+ <%= f.hidden_field :start_date, :value => @dates[0] %> 
+ <%= f.hidden_field :end_date, :value=> @dates[6]  %>
+ <%= hidden_field_tag "dated_on", params[:dated_on] %>
+  <span id = "week"></span>
+   <%= render :partial=> "week"%>
+  <div class="form-group">
+  <div class="col-lg-12">
+  <table class="table table-striped b-t" id="weekly_timesheet" width="100%">
+  <thead>
+    <tr>
+        <th><label>Task</label></th>
+        <th width='6%'><label>Mon<br/><small><%= @dates[0].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>Tue<br /><small><%= @dates[1].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>Wed<br /><small><%= @dates[2].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>The<br /><small><%= @dates[3].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>Fri<br /><small><%= @dates[4].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>Sat<br /><small><%= @dates[5].strftime("%d %b") %></small></label></th>
+        <th width='6%'><label>Sun<br /><small><%= @dates[6].strftime("%d %b") %></small></label></th>
+        <th class="text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>   
+      <%= render "timesheet_line_items1" %>
+    </tbody>
+      <tbody>
+      <% daily_time_spent = [0,0,0,0,0,0,0] %>
+      <% total_time_spent = 0 %>
+      <% @tasks.each do |task| %>
+        <% if task.timesheet_for_this_week(@dates) %>
+          <tr>
+            <td><%= task.description %></td>
+            <% weekly_time_spent = 0 %>
+            <% 7.times do |i| %>
+            <td align='right'>
+              <% if task.curresponding_timestamp(@dates[i]).blank? %>
+                0
+              <% else %>
+                <%= task.curresponding_timestamp(@dates[i]) %>
+                <% weekly_time_spent += task.curresponding_timestamp(@dates[i]) %>
+                <% daily_time_spent[i] += task.curresponding_timestamp(@dates[i]) %>
+              <% end %>
+            </td>
+            <% end %>
+            <td align="right">
+              <b><%= weekly_time_spent %></b>
+              <% total_time_spent += weekly_time_spent %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr>
+        <td align="right"><b>Total</b></td>
+        <td align="right"><b><%= daily_time_spent[0] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[1] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[2] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[3] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[4] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[5] %></b> </td>
+        <td align="right"><b><%= daily_time_spent[6] %></b> </td>
+        <td align="right"> <b><%= total_time_spent %></b></td>
+      </tr>
+      </tbody>
+  </table>
+   <div class="form-group">
+        <div class="col-lg-7 col-lg-offset-5">   
+        <%if @tasks.blank?  %> 
+         <a href="#" class="btn btn-success">Save</a>
+        <% else %> 
+          <button type="submit" class="btn btn-success">Book Time</button>
+        <% end %>                   
+          <%= link_to 'Cancel', timesheets_path, :class => "btn btn-default" %>
+        </div>
+    </div>
+<% end %>

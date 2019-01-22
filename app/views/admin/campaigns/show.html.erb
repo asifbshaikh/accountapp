@@ -1,0 +1,115 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#new_note').live('click', function(){
+      $('.form').show();
+    });
+  });
+</script>
+<!-- Page Title-->
+<%= render "shared/page_title" %> 
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+ <!-- Wrapper -->
+  <!-- Left column/section -->
+  <div class="wrapper">
+    <section class ="column width6 first"><br/>
+      <div id="tabs" class ="highlight">
+        <%= render "shared/flash_msg" %>
+        <div id="tab1">
+          <ul id="tabnav">
+            <li class="tab1">
+              <a href="<%= admin_company_path(@company.id) %>">Details</a>
+            </li>
+            <li class="tab2">
+              <a href="/admin/messages">Messages</a>
+            </li>
+            <li class="tab3">
+              <a href="/admin/#">Payments Done By Company</a>
+            </li>
+          </ul>
+        </div>
+        <div id="task_container">
+          <div class="clearfix"></div>
+          <table class="display stylized" id="company_table">
+          <thead>
+            <tr>
+              <th colspan="2">Company Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Company name</td>
+              <td><%= @company.name %></td>
+            </tr>
+            <tr>
+              <td>Plan</td>
+              <td><%= @company.plan.display_name %></td>
+            </tr>
+            <tr>
+              <td>URL</td>
+              <td><%= @company.subdomain %></td>
+            </tr>
+            <tr>
+              <td>Owner</td>
+              <td><%=@company.users.first.first_name%>  <%=@company.users.first.last_name%></td>
+            </tr>
+            <tr>
+              <td>Owner Contact</td>
+              <td><%= @company.phone %></td>
+            </tr>
+            <tr>
+              <td>Registered date</td>
+               <td><%= @company.activation_date %></td>
+            </tr>
+            <tr>
+              <td>Renewal date</td>
+              <td><%= @company.subscriptions[0].renewal_date.to_date %></td>
+            </tr>
+            <tr>
+              <td>Allocated storage</td>
+              <td><%= number_to_human_size(@company.subscriptions[0].allocated_storage_mb) %></td>
+            </tr>
+            <tr>
+              <td>Current storage</td>
+              <td><%= number_to_human_size(@company.subscriptions[0].utilized_storage_mb, :precision => 2) %></td>
+            </tr>
+            <tr>
+              <td>Allocated Users</td>
+              <td><%= @company.subscriptions[0].allocated_user_count  %></td>
+            </tr>
+            <tr>
+              <td>Current Users Count</td>
+              <td><%=@company.subscriptions[0].utilized_user_count  %></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">
+                <!--<a href= "/settings/edit" class="btn btn-green">&nbsp;&nbsp; Edit company</a>&nbsp;
+                 <%= link_to "Exit",admin_companies_path,:class=> "btn " %> -->
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="clear">&nbsp;</div>
+        <%= render "customer_relationships" %>
+      </div>
+    </div>
+    <br />
+        <!-- End of Left column/section -->
+  </section>
+		<!-- Right column/section -->
+    <aside class="column width2">
+   <br/>
+   <%= list_button_white("View Companies", admin_companies_path)%>
+    <p>
+    <%= email_button("Resend Welcome Email", "/admin/companies/resend_welcome_email?id=#{@company.id}")%>
+    </p>
+   <p><%= show_button("Workstream", "/admin/companies/workstream?id=#{@company.id}")%></p>
+
+    <br/>
+</aside>
+	</div>
+</div>
+

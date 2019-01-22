@@ -1,0 +1,9 @@
+                <tr>
+                  <td><%= campaign.campaign_name %></td>
+                  <td><%= campaign.start_date %></td>
+                  <td><%= campaign.end_date %></td>
+                  <td>
+                   	<%= link_to '<i class="icon-trash"></i>'.html_safe, admin_campaign_path(campaign), :confirm => 'Are you sure?', :method => :delete%>
+                  </td>
+                </tr>
+

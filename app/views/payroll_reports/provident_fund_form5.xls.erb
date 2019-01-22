@@ -1,0 +1,86 @@
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+            &nbsp;
+          
+            <div class='highlight'>
+                <div id='report_header' align='center'>
+                    <span class='company_name'>FORM 5</span><br>
+                    <span class='medium'>THE EMPLOYEES'PROVIDENT FUND SCHEME, 1952<br>
+                    [Paragraph 36(2)(a) & THE EMPLOYEES PENSION SCHEME,1995 Paragraph 20(2)]</span>
+                </div>    
+                    
+                <br>
+                <p><span class='small'>Retuns of Employees'qualifying for membership of the employees'Pension Fund and Employees'Deposite linked
+                insurance fund for the first time during the month of April 2010(To be sent to the Commitionar with form2 (EPF)&(EPS))</span></p>
+				<table class='width6 medium'>
+					<tr><td>Name and address of the Factory/Establishment</td><td><b>: <%= @company.name  %></b></td></tr>
+					<tr><td>Code No. of the Factory/Establishment</td><td><b>: <%= @company.id%></b></td></tr>
+				</table>
+                <table class = "zebra-sriped" border = 1 align = center width=100%>
+                    <thead>
+                    <tr><th>Sl. No.</th><th>Account No.</th><th>Nmae of Employee</th><th>Fathers name or Husbund's name(in case of married women)</th><th>Date of Birth</th><th>Sex</th><th>Date of Joining the Fund</th><th>Total period of previous service as on the date of joining the fund(enclose scheme certificate if applicable)</th><th>Remark</th></tr>
+                    <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>    
+                    </head>
+                    <tbody>
+                    	<% i=1 %>
+                    	<% for user in @users %>
+							<% user_info = UserInformation.find_by_user_id(user.id)
+							user_salary = UserSalaryDetail.find_by_user_id(user.id)
+							%>
+							<tr><td><%= i %></td><td>
+								<% if !user_salary.nil? %>
+									<%= user_salary.bank_account_number %>
+								<% else %>
+									<span class='light'><i>Not available</i></span>
+								<% end %>
+								</td><td><%= user.first_name %> <%= user.last_name %></td>
+								<td>
+									<span class='light'><i>Not available</i></span>
+								</td>
+								<td>
+									<% if !user_info.nil? %>
+										<%= user_info.birth_date %>
+									<% else %>
+										<span class='light'><i>Not available</i></span>
+									<% end %>
+									</td><td>
+										<% if !user_info.nil? %>
+											<%= user_info.gender %>
+										<% else %>
+											<span class='light'><i>Not available</i></span>
+										<% end %>
+										</td><td>
+											<% if !user_salary.nil? %>
+												<%= user_salary.date_of_joining %>
+											<% else %>
+												<span class='light'><i>Not available</i></span>
+											<% end %>
+											</td><td>
+												
+												<span class='light'><i>Not available</i></span>
+											</td><td>
+												
+												<span class='light'><i>Not available</i></span>
+											</td></tr>
+							<% i+=1 %>
+						<% end %>
+                        </tbody>
+                        </table>
+						<br><br>&nbsp;
+                        <div style='padding:0px 0px 5px 0px;'><span>Date : <%= Time.zone.now.to_date %></span><span style='float:right;'>Signatur of employer or other authorised <br>officer of the Factory/Establishment and stamp of <br>the Factory/Establishment</span></div>
+                        <br>
+						<hr>
+                        <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+                    </div>
+                </section>
+                &nbsp;&nbsp;
+                <!-- End of Left column/section -->
+                <!-- End of Left column/section -->
+            </div>
+            <!-- End of Wrapper -->
+            </div>

@@ -1,0 +1,21 @@
+<% new_text = "Dear Sir,
+
+ 
+
+As per the telephonic conversation. I would like to give you the brief description about the costing. The suitable plan for you is Professional Plan.The annual Subscription charges for the plan are Rs.9000/- The charges will remain the same for each year on renewal. 
+
+ 
+
+As per company's policy, we provide 25% discount on annual subscription of ProfitBooks for new businesses. This discount is applicable for first 2 years only and from 3rd year, regular annual subscription of Rs.9000./- will be applicable. 
+
+ 
+
+Profitbooks is a cloud based application trusted by thousands of users not only in India but outside India. ProfitBooks enables you to access your data anytime anywhere on smart phones, Tablets or any internet enabled device. Data is transferred over 256 bit encrypted HTTPS connection (which is higher than bank level security in India) to ensure maximum security. Our data servers enforce 5 levels of security measures to data protection and secure access. The data is protected in much better way being an online application. 
+
+ 
+
+Please feel free to ask any queries." %>
+<div class="block" id = "template">
+<%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+<%= text_area_tag  :text, new_text,:rows=>4, :class=>"bg-focus form-control"%>
+</div>

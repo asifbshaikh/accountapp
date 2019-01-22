@@ -1,0 +1,37 @@
+ <div class="row" >
+      <div class="col-lg-12">
+        <div class="row" >
+             <div class="col-lg-1">
+               &nbsp;
+             </div>
+             <div class="col-lg-10" style="margin-left: 100px">
+               <div class="info-form">
+                <%= render :partial=> "fetch_info" %>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row text-small">
+            <div class="col-sm-1 m-b-mini">
+             <div class="btn-group" id="btn-group" >
+              <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> All Purchases <span class="caret"></span></button>
+              <ul id ="myTab" class="dropdown-menu text-left" >
+                <li><%= link_to 'B2B Purchases', gstr2_filing_path(@gstr_two, :type =>'B2B') %></li>
+                <li><%= link_to 'B2BUR Purchases', gstr2_filing_path(@gstr_two,:type =>'B2BUR') %></li>
+                <li><%= link_to 'Debit Notes', gstr2_filing_path(@gstr_two,:type =>'CDNR') %></li> 
+                <li><%= link_to 'Advance Payments', gstr2_filing_path(@gstr_two,:type =>'AP') %></li> 
+                <li><%= link_to 'NIL Rated', gstr2_filing_path(@gstr_two,:type =>'NIL') %></li>
+                 <li><%= link_to 'Expense', gstr2_filing_path(@gstr_two,:type =>'EXPENSE') %></li>
+                <li class="divider"></li>
+                 <li><%= link_to 'All Purchases', gstr2_filing_path(@gstr_two) %></li>           
+               </ul>
+              </div>
+            </div>
+          </div>
+          <div class="on-go-form">
+            <%= render :partial=> "fetch_data" %>
+          </div>
+          </div>
+         </div>
+          

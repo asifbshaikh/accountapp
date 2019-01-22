@@ -1,0 +1,55 @@
+<table class="display stylized" id="act_details">
+  <thead>
+    <tr>
+      <th colspan="2">Invoice Number #: <%= @billing_invoice.invoice_number%></th>
+    </tr>
+  </thead>
+  <tbody> 
+    <tr>
+      <td width="60%">
+        <label for="productcat">Customer Name</label><br/>
+        <%= @billing_invoice.company.users[0].full_name%><br/>
+        <%= @billing_invoice.company.name %><br/>
+        <%= raw address_info %><br/>
+
+      </td>
+      <td><label>Invoice date </label> <%= @billing_invoice.invoice_date%><br/>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="background-color:#fff; border-bottom: none;">
+        <table id="line_items" width="100%">
+          <thead>
+            <tr>
+              <th style=' width:60%;'><label class="required">Item</label></th>
+              <th style=' width:35%;text-align:right;'><label class="required" align="right">Amount</label></th>
+              <th style=' width:5%;'> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @billing_invoice.billing_line_items.each do |line_item| %>
+              <% if line_item.billing_type != 'coupon'%>
+                <tr>
+                  <td><%= line_item.line_item %>(Valid till <%= @billing_invoice.invoice_date.to_date + line_item.validity.to_i.months %>)</td>
+                  <td style='width:35%;text-align:right;'><%= @company.currency_code.html_safe %> <%= line_item.amount %></td>
+                  <td>&nbsp;</td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td class="ta-right" >Discount - Coupon code : <%= line_item.line_item %></td>
+                  <td align="right"><span id="discount"><%= @company.currency_code.html_safe %> <%= line_item.amount %></span></td>
+                  <td style='background-color:#fff;'></td>
+                </tr>
+              <% end %>
+            <% end %>      
+            <tr>
+              <td class="ta-right" style='background-color:#fff;'>Total</td>
+              <td align="right" style='background-color:#fff;'><span id = "total"><%= @company.currency_code.html_safe %> <%= @billing_invoice.amount %></span></td>
+              <td style='background-color:#fff;'></td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

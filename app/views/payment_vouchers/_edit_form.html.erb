@@ -1,0 +1,66 @@
+<%= render "auto_calculate"%>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+				<%= form_for @payment_voucher, :html => {:multipart => true, :class=>'form-horizontal'} do |f| %>
+					<%= f.hidden_field :voucher_type %>
+					<%= render 'shared/form_error', :object => @payment_voucher %>
+					<%= render "voucher_number", :f=>f %>
+					<div class='form-group'>
+						<div class='col-lg-2 text-right'>
+							<%= f.label :deposit_to_account_id, "Paid to", :class => "control-label-required" %>
+						</div>
+						<div class='col-lg-3'>
+							<%= @payment_voucher.to_account_name %>
+						</div>
+					</div>
+
+		      <% if @payment_voucher.foreign_currency? %>
+			      <div class="form-group">
+			      	<div class="col-lg-2 text-right">
+			      		<label class="control-label">Exchange Rate in <%= @company.currency_code %></label>
+			      	</div>
+			      	<div class="col-lg-3">
+			      		<%= f.text_field :exchange_rate, :class=>'form-control bg-focus' %>
+			      	</div>
+			      </div>
+		      <% end %>
+		      
+		      <%= render "edit_#{PaymentVoucher::PAYMENT_OPTION[@payment_voucher.voucher_type]}_form", :f=>f %>
+					<input type="hidden" name="source" id="source" value="payment"/>
+	       
+	 				<%= render :partial => "#{@payment_detail.type.to_s.downcase.gsub(/\s+/, "")}_edit", :locals =>  {:a => f} %>
+	 				<div class="pmnt"></div>
+	         
+					<div class='form-group'>
+						<div class="col-lg-2 text-right">
+							<%= f.label :description, :class=>'control-label' %>
+						</div>
+						<div class='col-lg-3'>
+					    <%= f.text_area :description, :rows => 3, :cols => 58, :class=>'form-control bg-focus' %>
+						</div>
+					</div>
+					<div class="form-group">
+					  <div class="col-lg-9 col-lg-offset-3">                      
+					    <button type="submit" class="btn btn-success">Save</button>
+					    <%= link_to 'Cancel', payment_vouchers_path, :class => "btn btn-default" %>
+					  </div>
+					</div>
+				<% end %> 
+			</div>
+		</section>
+	</div>
+</div>
+
+<div id='modal-payment-from-account'  class="modal fade">
+	<%= render 'shared/account_details', :account_heads => @from_account_heads, :transaction_type=>'paid_from' %>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$("#payment_voucher_to_account_id").select2();
+		$("#payment_voucher_from_account_id").select2();
+		$("#payment_voucher_tds_account_id").select2();
+	});
+</script>

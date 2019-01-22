@@ -1,0 +1,45 @@
+<div class="block cm" id = 'soinv'>
+<% if @invoices.blank? %>
+<%= render :partial=>"shared/no_record"%>
+<% else %>
+<section class="panel row">
+<header class="panel-heading">
+Invoices
+</header>
+<div class="table-responsive">
+  <table class="table table-striped b-t text-small">
+    <thead>
+      <tr>
+        <th>Invoice#</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @invoices.each do |invoice|%>
+      <tr>
+        <td><%= link_to invoice.invoice_number, (invoice.draft? ? edit_invoice_path(invoice) : invoice_path(invoice))%></td>
+        <td><%= invoice.invoice_date%></td>
+        <td><%= invoice.total_amount%></td>
+        <td><%= invoice.get_status%></td>
+        <td> <div class="btn-group">
+         <button class="btn btn-white btn-sm" onclick="location.href= '<%= invoice.draft? ? edit_invoice_path(invoice) : invoice_path(invoice) %>'"; >View</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <% unless invoice.draft? %>
+          <ul class="dropdown-menu">
+            <li class="text-left"><%= link_to raw('<i class="icon-print"> </i> Export to PDF'), invoice_path(invoice, :format => 'pdf'), :target=>"_blank" %> </li>
+          </ul>
+          <% end %>
+        </div> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+</section>
+<% end %>
+</div>

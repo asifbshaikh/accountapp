@@ -1,0 +1,142 @@
+<p></p>
+<div class='col-lg-12'>
+
+     <table class="table table-striped">
+         <thead>
+             <tr>
+                <td colspan="2"><strong>Enable Instamojo in Invoices   </strong></td>
+                <td>
+                <div class='form-group'>
+                  <div class="btn-group col-lg-8" data-toggle="buttons">
+                  <label class="<%= @company.invoice_setting.enable_gateway? ? 'btn btn-sm btn-success active': 'btn btn-sm btn-default'   %>" id="option-instamojo-enable" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to enable Instamojo payment links in invoices.">
+                  <input type="radio" name='settings[:enable_gateway]' value="1" <%= 'checked' if @company.invoice_setting.enable_gateway? %> > Yes
+                </label>
+                <label class="<%= @company.invoice_setting.enable_gateway? ? 'btn btn-sm btn-default': 'btn btn-sm btn-danger active'  %>" id="option-instamojo-disable" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to disable Instamojo payment links in invoices.">
+                 <input type="radio" name='settings[:enable_gateway]' value="0" > No
+                </label>
+                  </div>
+                </div> 
+
+
+                </td>
+                
+          </tr> 
+         </tbody>
+       </table>
+      <section class="panel">
+       <div class='error-place1'></div>
+        <div class='key_data'>
+          <div class='instamojo-error'></div>
+          <header class="panel-heading">
+            <div class='row'>
+              <div class='col-lg-6'><strong>Instamojo</strong><br>(Details on how to configure, Check this  <a href="http://www.profitbooks.net/instamojo-integration/" target="_blank"> Usage Guide.</a> )</div>
+              <div class='col-lg-6 text-right'>
+                <%= link_to "<i class='icon-plus'></i> Add New".html_safe, '#', :class=>'btn btn-success btn-sm', :id=>'add_key' %>
+              </div>
+            </div>
+          </header>
+          <div>
+              <div class='warehousePlace'></div>
+              <%= render :partial=>"/invoice_settings/insta_data" %>
+             </div>
+        </div>
+        
+        <div class='key_add'>
+          <header class='panel-heading'>
+            <div class='row'>
+              <div class='col-lg-6'><strong>Configure Instamojo</strong></div>
+              <div class='col-lg-6 text-right'>
+                <a title="Back" id ="bck_key" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a>
+              </div>
+            </div>
+          </header>
+          <div>
+           <%= render :partial=>"/invoice_settings/insta_form" %>
+          
+          </div>
+        </div>
+      </section>
+   </div>
+<br>
+<br>
+<br>
+
+<div class="line line-dashed m-t-large"></div>
+
+    <div class="col-lg-12">
+     <table class="table table-striped">
+         <thead>
+             <tr>
+                <td colspan="2"><strong>Enable CashFree in Invoices   </strong></td>
+                <td>
+                 <div class='form-group'>
+                  <div class="btn-group col-lg-8" data-toggle="buttons">
+                  <label class="<%= @company.invoice_setting.enable_cashfree? ? 'btn btn-sm btn-success active': 'btn btn-sm btn-default'   %>" id="option-cashfree-enable" title="" data-placement="bottom" data-toggle="tooltip"  data-original-title="Use this option to enable CashFree payment links in invoices." >
+                  <input type="radio" name='settings[:enable_gateway]' value="1" <%= 'checked' if @company.invoice_setting.enable_cashfree? %> >   Yes
+                </label>
+                <label class="<%= @company.invoice_setting.enable_cashfree? ? 'btn btn-sm btn-default': 'btn btn-sm btn-danger active'  %>" id="option-cashfree-disable" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to disable CashFree payment links in invoices.">
+                 <input type="radio" name='settings[:enable_gateway]' value="0" <%= 'checked' unless @company.invoice_setting.enable_cashfree?%> >   No
+                </label>
+                  </div>
+                </div> 
+
+
+                </td>
+                
+          </tr> 
+         </tbody>
+       </table>
+     <section class="panel">
+       <div class='cashfree-error-place'></div>
+        <div class='cashfree_key_data'>
+          <header class="panel-heading">
+            <div class='row'>
+              <div class='col-lg-8'><strong>CashFree</strong><br>(Details on how to configure, Check this  <a href="http://www.profitbooks.net/cashfree-invoicing/" target="_blank"> Usage Guide.</a> )</div>
+            </div>
+          </header><br>
+          <strong>
+          <div class="field text-center">
+                Start accepting payments from your customer online. You can send payment links with invoices, customers can pay using Debit/Credit Card, Netbanking or using wallets.
+         </div> <br>
+         <div class="field text-center">
+                <strong><u>Payment Gateway Charges</u></strong><br><br>
+                <div class="field text-left">
+                 <ul>
+                    <li>Credit/Debit Card : 1.90% of the transaction amount</li><br>
+                    <li>Net Banking : 1.90% of the transaction amount or Rs.99 whichever is minimum.</li><br>
+                    <li>Wallets : 2.25% of the transaction amount. </li><br>
+                </ul> 
+                <button id="inv_pay_button" class="btn btn-sm btn-success m-b-small"  data-toggle="modal" data-target='#modal1'>Create New Account</button>
+                <div class='col-lg-4 text-right'>
+                <%= link_to "</i> I already have an Account.".html_safe, '#', :class=>'btn btn-white btn-sm', :id=>'cashfree_add_key' %>
+              </div>
+               <div id="modal1" class="modal fade">
+                <%= render "cashfree_email_form" %>
+              </div>
+
+
+                </div>
+         </div>
+          <div>
+              <%= render :partial=>"/invoice_settings/cashfree_data" %>
+             </div>
+        </div>
+        
+        <div class='cashfree_key_add'>
+          <header class='panel-heading'>
+            <div class='row'>
+              <div class='col-lg-6'><strong>Configure Cashfree</strong></div>
+              <div class='col-lg-6 text-right'>
+                <a title="Back" id ="bck_key" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a>
+              </div>
+            </div>
+          </header>
+          <div>
+           <%= render :partial=>"/invoice_settings/cashfree_form" %>
+          
+          </div>
+        </div>
+      </section>
+</div>
+</div>     
+  

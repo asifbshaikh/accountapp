@@ -1,0 +1,5 @@
+$("#discount-row-loader").remove();
+$("#discount_row_link").before('<%= escape_javascript render( "discount_line_items",{ :discount_line_item=> @discount_line_item, :discount_index => params[:discount_index]} ) %>');
+$("#discount_row_link").replaceWith('<%= escape_javascript render( "add_discount_row_link",{ :discount_index => params[:discount_index].to_i+1} ) %>');
+
+

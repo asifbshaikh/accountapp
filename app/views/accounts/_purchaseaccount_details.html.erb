@@ -1,0 +1,27 @@
+                <div class="form-group">
+                  <div class="col-lg-5">
+                    <label labelfor="inventoriable" class="col-lg-5">Reseller product</label>
+                    <div class="col-lg-5">
+                      <div class="btn-group m-t-n-mini m-r-n-mini" data-toggle="button">
+                      <% if @account.accountable.reseller_product? %>
+                        <label class="btn btn-sm btn-white btn-on active">Yes</label>
+                        <label class="btn btn-sm btn-white">No</label>
+                      <% else %>
+                        <label class="btn btn-sm btn-white">Yes</label>
+                        <label class="btn btn-sm btn-white btn-on active">No</label>
+                      <% end %>  
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-5">
+                    <label for="unit_cost" class="col-lg-5">Unit cost</label>
+                    <div class="col-lg-5"><%= @account.accountable.unit_cost %></div>
+                  </div>
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-5">
+                    <label for="description" class="col-lg-5">Description</label>
+                    <div class="col-lg-5"><%= @account.accountable.description %></div>
+                  </div>
+                </div>

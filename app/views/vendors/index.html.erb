@@ -1,0 +1,47 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Vendors</h2>
+      </div>
+
+      <div class="col-lg-9 m-t-large" align="right">
+        <div class="btn-group">
+          <button  onclick="location.href= '<%= new_vendor_path%>'"; class="btn btn-success btn-lg" > <i class="icon-plus"> </i> Add New Vendor</button>
+          <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to raw('<i class="icon-cloud-upload"> </i>Import Vendors '), vendor_imports_path %></li>
+            <li><%= link_to raw('<i class ="icon-cloud-download"> </i>Export Vendors '),
+          vendors_path(:format=>:xls)%></li>
+          </ul>
+        </div>
+
+        <!-- <a href="#" class="btn btn-white btn-lg " id="use_filter"><i class="icon-filter"></i> Filter </a> -->
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial => "shared/flash_msg"%>
+          <div class="table-responsive">
+            <table id="vendors" class="table table-striped m-b-none text-small" data-source ="<%= vendors_url(:format => "json") %>" >
+              <thead>
+                <tr>
+                  <th width="30%">Name</th>
+                  <th width="25%">Email</th>
+                  <th width="20%">Contact Number</th>
+                  <th width="25%">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

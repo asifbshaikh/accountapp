@@ -1,0 +1,33 @@
+<div>
+  <table>
+  <tr><td align="center" colspan=8>Purchase Settlement for <%= (@account.blank?)? "All Venders" : @account.name %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=8 align=center>Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td align="center" colspan=8><%= @start_date %> To <%= @end_date %></td></tr>
+    <thead>
+      <tr>
+        <th>Voucher No.</th>
+        <th>Customer</th>
+        <th>Account</th>
+        <th>Due Date</th>
+        <th>Settled on</th>
+        <th>Settled by</th>
+        <th>Purchase amount</th>
+        <th>Settled amount</th>
+      </tr>
+     <%@purchases.each do|purchase|%>
+      <tr>
+     	<td><%=purchase.purchase_number%></td>
+   	  <td><%=purchase.vendor_name%></td>
+   	  <td><%=purchase.settlement_account.name%></td>
+   	  <td><%=purchase.due_date%></td>
+   	  <td><%=purchase.updated_at.to_date %></td>
+   	  <td><%=purchase.created_by_user %></td>
+   	  <td align='right'><%= purchase.currency %> <%=purchase.total_amount%></td>
+   	  <td align='right'><%= purchase.currency %> <%=purchase.settled_amount %></td>
+    </tr>
+    <%end%>
+    </thead>
+  </table>
+ </div>

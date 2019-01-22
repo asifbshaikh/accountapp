@@ -1,0 +1,235 @@
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial=>"/shared/flash_msg"%>
+          <div class="panel-body">
+            <% if !@current_user.inventory_manager? %>
+              <div class="row">
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Financial Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="col-sm-5">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/horizontal_balance_sheet/index"> Balance Sheet</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/horizontal_profit_and_loss/index"> Profit and Loss</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/trial_balance/index"> Trial Balance </a></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-7">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/duties_and_taxes/report">Taxation</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/duties_and_taxes/tax_report">Tax Summary Report</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/duties_and_taxes/vat_report">VAT Summary Report</a></div>
+                        </div>
+                      </div>
+                      <!-- <div class="media">
+                        <div class="pull-left media-small">Transaction Summary</div>
+                      </div> -->
+                    </div>
+                  </section>
+                </div>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Other Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="col-sm-6">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/account_books_and_registers/ledger">Ledger</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/daybook/index"> Day Book</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/cash_book/index"> Cash Book </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/bank_book/index">Bank Book</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/bank_statements/report">Bank Reconciliation</a></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/journal_register/index"> Journal Register </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/credit_note_register/index"> Credit Note Register </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/gst_credit_note_register/index">GST Credit Note Register </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/debit_note_register/index">Debit Note Register</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/gst_debit_note_register/index">Gst Debit Note Register</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/custom_fields/custom_field_report?voucher_type=Invoice">Custom Field Report</a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Sales Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="media">
+                    <div class="pull-left media-small"> <a href="/sales_register/index"> Sales Register</a></div>
+                  </div>
+                         <div class="media">
+                     <div class="pull-left media-small"> <a href="/invoice_report/index"> Invoice Report</a></div>
+                    </div>
+                      
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/bills_receivable/index"> Outstanding Receipts</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/customer_statements/index"> Customer Statement</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/invoice_settlement/index"> Invoice Settlement</a></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            <% end %>
+            <div class="row">
+              <% if !@current_user.inventory_manager?  %>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Expense Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/purchase_register/index"> Purchase Register</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/bills_payable/index"> Outstanding Payments</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/sundry_creditor/index"> Sundry Creditor</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/credit_expense_reports/index"> Credit Expense Outstandings </a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/purchase_settlement/index"> Purchase Settlement</a></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              <% end %>
+              <% if @company.plan.is_inventoriable? && !@current_user.staff? %>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Inventory Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="col-sm-6">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/product_wise_stock/index"> Product Wise Stock</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/low_stock/index"> Low Stock Register</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/stock_wastage_register/index"> Stock Wastage Register </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/warehouse_wise_stock/index"> <%= @company.label.warehouse_label%> Wise Stock </a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/warehouse_wise_stock/inventory_valuation"> Inventory Valuation </a></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="media">
+                          <div class="pull-left media-small"> <a href="/sales_order_reports/customer_wise_so"> <%= @company.label.customer_label%> Wise Pending Order</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"> <a href="/sales_order_reports/product_wise_so"> Product Wise Pending Order</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"> <a href="/sales_order_reports/pending_invoices_for_dc">Pending Delivery Challan</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"> <a href="/inventory_statements/stock_statement">Stock Summary</a></div>
+                        </div>
+                        <div class="media">
+                          <div class="pull-left media-small"> <a href="/inventory_statements/product_statement">Product Statement</a></div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              <% end %>
+              <% if (@company.plan.payroll_enabled?) && (!@current_user.staff? || !@current_user.inventory_manager?) %>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Payroll Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/payment_advice/index">Payment Advice</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/employee_breakup/index">Breakup by Employee</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/employee_breakup/breakup_for_employee">Breakup for Employee</a></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              <% end %>
+            </div>
+            <div class="row">
+              <% if !@current_user.inventory_manager?  %>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Work Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/workstreams"> Recent Activities </a></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <% if !@company.plan.free_plan? && !@company.plan.essential_plan? %>
+                  <div class="col-lg-4">
+                    <section class="panel">
+                      <header class="panel-heading bg-lighter"><strong>Timesheet Reports</strong></header>
+                      <div class="panel-body">
+                        <div class="media">
+                          <div class="pull-left media-small"><a href="/timesheets/report"> Timesheet </a></div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                <% end %>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <header class="panel-heading bg-lighter"><strong>Gain Or Loss Reports</strong></header>
+                    <div class="panel-body">
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/gain_or_loss_report/index"> Gain or Loss Report</a></div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>

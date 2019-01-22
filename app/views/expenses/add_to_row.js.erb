@@ -1,0 +1,3 @@
+$("#to_row_link").before('<%= escape_javascript render( "paid_line_items",{ :paid_line_item => @paid_line_item, :index => params[:index]} ) %>');
+$("#to_row_link").replaceWith('<%= escape_javascript render( "add_to_row_link",{ :index => params[:index].to_i+1} ) %>');
+

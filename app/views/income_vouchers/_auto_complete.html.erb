@@ -1,0 +1,13 @@
+<script>
+  $(document).ready(function() {
+	$('#other_income_to_account_auto_complete').typeahead({
+      name: 'customers',
+      local: <%= raw(@other_income_to_accounts.map {|cust| cust.name }.to_json(:only => [:name ])) unless @other_income_to_accounts.blank? %>
+    });
+
+    $('#other_income_from_account_auto_complete').typeahead({
+      name: 'account',
+      local: <%= raw(@other_income_from_accounts.map {|acc| acc.name }.to_json(:only => [:name ])) unless @other_income_from_accounts.blank? %>
+    });
+      });
+</script>

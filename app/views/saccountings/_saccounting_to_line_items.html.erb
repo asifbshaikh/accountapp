@@ -1,0 +1,7 @@
+<tr id="to_row<%= index %>" valign="top" >
+          <%= hidden_field_tag "saccounting[saccounting_to_line_items_attributes][#{index}][id]",saccounting_to_line_item.id%>
+        <td width="75%"><%= select_tag "saccounting[saccounting_to_line_items_attributes][#{index}][to_account_id]", options_from_collection_for_select(@to_accounts, :id, :name,:selected => saccounting_to_line_item.to_account_id ),:class=>'half',:include_blank => true  %>
+           <!-- <a href="#" class="nyroModal">Search and select</a> --></td>
+        <td class="ta-right" width="15%"><%= text_field_tag "saccounting[saccounting_to_line_items_attributes][#{index}][amount]", saccounting_to_line_item.amount, :class => 'amount',:onkeydown =>"return numbersOnly(event);", :size =>8, :maxlength => 20 %></td>
+             <td><%= link_to "X",{:action => :remove_to_line_item, :index => index}, :class =>"btn btn-red", :remote => true %></td>
+     </tr> 

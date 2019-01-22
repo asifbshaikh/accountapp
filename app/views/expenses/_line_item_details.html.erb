@@ -1,0 +1,19 @@
+<tr valign="top">
+  <td valign="top" ><%= line_item_details.account.name %></td>
+  <td ><%= line_item_details.description%></td>
+  <% unless @tax_line_items.blank? %>
+  	<td><%= applied_taxes_on_expense(line_item_details) %></td>
+  	<td class="text-right"><%= number_with_precision line_item_details.tax_amount, :precision=>2 %></td>
+  <% end %>
+  <td class="text-right"><%= number_with_precision line_item_details.amount, :precision=>2 %></td>
+    
+<!-- <td align="right" data-toggle="modal" data-target=<%="#myModal#{line_item_details.id}" %> id="my" >
+          <%= link_to "Add ITC Details" %> </td> -->
+</tr> 
+
+
+<div id=<%="myModal#{line_item_details.id}"%> class="modal fade" role="dialog" value="line_item_details.id">
+  <div class="modal-dialog">
+  <%= render "add_itc_details", :expense_line_items => line_item_details  %>
+  </div>
+</div>

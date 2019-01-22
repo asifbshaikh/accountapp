@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  stock_transfer_voucher_id: 1
+  product_id: 1
+  available_quantity: 9.99
+  transfer_quantity: 9.99
+  destination_warehouse_id: 1
+
+two:
+  stock_transfer_voucher_id: 1
+  product_id: 1
+  available_quantity: 9.99
+  transfer_quantity: 9.99
+  destination_warehouse_id: 1

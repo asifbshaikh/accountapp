@@ -1,0 +1,11 @@
+  $(".popup-error").remove();
+<% if @income_voucher.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/form_error',{:object=>@income_voucher})%>");
+  $(".btnsave").remove();
+  $(".save-btn").after(" <button  class='btnsave btn btn-sm btn-success' type='submit'  data-loading-text='Saving...''>Save</button>");
+<% else %>
+  window.location.reload();
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+  $("div[id^='modal']").modal('hide');
+<% end %>

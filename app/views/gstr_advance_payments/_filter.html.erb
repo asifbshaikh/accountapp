@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="gstr_advance_payment-filter">
+      <tbody>
+        <tr>
+          <td><label>Advance Payment No</label></td>
+          <td id="gstr_advance_paymentno"></td>
+          <td><label>Advance Payment Date</label></td>
+          <td id="gstr_advance_paymentDate"></td>
+          <td ><label><%= @company.label.customer_label%></label></td>
+          <td id="gstr_advance_paymentcustomer" data-customer="<%= @customers %>"></td>
+        </tr>
+        <tr>
+          <td><label>Status</label></td>
+          <td id="gstr_advance_paymentstatus"></td>
+          <td><label>Amount</label></td>
+          <td id="gstr_advance_paymentamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

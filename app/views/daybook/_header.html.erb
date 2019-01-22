@@ -1,0 +1,15 @@
+<div class="row">
+		<div class="col-lg-8">
+				<% if !params[:branch_id].blank? %>
+		Branch: <b><%= Branch.find(params[:branch_id]).name%></b>
+		<% end %><br />
+		<span class="xxsmall light">
+      <%= (params[:for_date].blank?) ? @ledgers.first.transaction_date : params[:for_date] %> 
+    </span>
+	</div>
+	<div class="col-lg-4" align="right">
+		<span class="xsmall light"> </span>
+		<br />
+		<span class="large"></span>
+	</div>
+</div>

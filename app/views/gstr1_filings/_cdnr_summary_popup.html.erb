@@ -1,0 +1,37 @@
+<div class="modal-content"  style="margin: 20px; padding: 20px">
+                            <div>
+                            <h1 style="font-size:20px;">CDNR Counter Party Summary</h1>
+                            <table class="table table-bordered text-small">
+                                <thead>
+                                  <tr>                    
+                                    <th>Customer Name</th>
+                                    <th>CTIN</th>
+                                    <th>Total Record</th>
+                                    <th>Taxable Amount</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>IGST</th>
+                                    <th>Total Inclusive Of Taxes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                <% @cdnr_counter_party_summary.each_with_index do |summary, index| %>
+                                  <tr>
+                                    <td><%= counter_party_name(summary.ctin) %></td>
+                                    <td><%= summary.ctin %></td>
+                                    <td><%= summary.total_record %></td>
+                                    <td class="text-right"><%= format_amount(summary.total_taxable_value) %></td>
+                                    <td class="text-right"><%= format_amount(summary.total_cgst) %></td>
+                                    <td class="text-right"><%= format_amount(summary.total_sgst) %></td>
+                                    <td class="text-right"><%= format_amount(summary.total_igst) %></td>
+                                    <td class="text-right"><%= format_amount(summary.total_value) %></td>
+                                    </tr>
+                                  <% end %>
+                                </tbody>
+                            </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+</div>

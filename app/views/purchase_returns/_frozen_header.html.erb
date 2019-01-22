@@ -1,0 +1,2 @@
+<%= link_to raw('<i class="icon-print"> </i>'), purchase_return_path(@purchase_return, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), purchase_url(@purchase_return.purchase), :class => 'btn btn-default btn-lg' %>

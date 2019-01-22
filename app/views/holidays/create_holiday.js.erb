@@ -1,0 +1,14 @@
+$(".popup-error").remove();
+<% if @holiday.errors.any?  %>
+	console.log("error");
+	$(".holiday-notif").after("<%= escape_javascript render('shared/popup_form_error', {:object => @holiday})%>");
+<% else %>
+	$(".hld_add").hide();
+	$(".hld_info").show();
+	$(".holiday-info-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".holiday-body").html("<%= escape_javascript render('holidays/holidays')%>");
+	fadeOutMessage();
+	console.log("success");
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

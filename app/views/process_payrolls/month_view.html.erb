@@ -1,0 +1,77 @@
+
+ <!-- Page title -->
+  <div id ="pagetitle">
+	<div class ="wrapper" >
+	<%= render "shared/page_title"%>
+      </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+    	<div class="highlight">
+     <%= render :partial => "shared/flash_msg"%>
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+
+          <table class="display stylized" id="example">
+            <thead>
+               <tr>
+                 <th> For month</th>
+                 <th class = "ta-right">Status</th>
+                 <th class = "ta-right">Action</th>
+               </tr>
+            </thead>
+            <tbody>
+              <% for a in @financial_year.start_date.month..Time.zone.now.month %>
+               <tr>
+                <td><%= ProcessPayroll.get_month(a.to_s) %></td>
+                <td class = "ta-right"><%= ProcessPayroll.get_status(@company.id, a.to_s, @financial_year)%></td>
+                <td class = "ta-right">
+                  <%if ProcessPayroll.get_status(@company.id, a.to_s, @financial_year)== "Pending"%>
+                   <a href="<%= "/process_payrolls/new?month=#{a.to_s}" %>" class="btn btn-green btn-green-new"> Process payroll</a>
+                  <% else %>
+                   <a href="<%= "/process_payrolls/?company_id=#{@company.id}&month=#{a.to_s}" %>" class = "btn">View details</a>
+                  <% end %>
+                </td>
+               </tr>
+             <% end %>
+            </tbody>
+            <tfoot>
+             <tr>
+               <td colspan=4></td>
+             </tr>
+            </tfoot>
+          </table>
+          <div class="clear">
+           &nbsp;
+          </div>
+
+
+     </div></br>
+    </section>
+    <!-- End of Left column/section -->
+
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <!--<a href="/process_payrolls/new" class="btn btn-special btn-green btn-green-new"><img src = "/images/add.png"  alt = "add" class ="icon"/> Process payroll</a>-->
+    <div id="rightmenu">
+         <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+             <dd><%= link_to 'Help', "/#", :class=>"nyroModal" %></dd>
+             <dd class="last">This page displays the list of all the payrolls month wise with their status.<br/>From the first month of the financial year.</dd>
+         </dl>
+       </div><br />
+
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+

@@ -1,0 +1,21 @@
+<h1>Listing purchase_attachments</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @purchase_attachments.each do |purchase_attachment| %>
+  <tr>
+    <td><%= link_to 'Show', purchase_attachment %></td>
+    <td><%= link_to 'Edit', edit_purchase_attachment_path(purchase_attachment) %></td>
+    <td><%= link_to 'Destroy', purchase_attachment, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Purchase attachment', new_purchase_attachment_path %>

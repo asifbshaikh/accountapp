@@ -1,0 +1,14 @@
+<div class="btn-group">
+  <%= edit_invoice_link %>
+  <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span><i></i>
+  </button>
+  <ul class="dropdown-menu">
+    <% unless @invoice.recursive_invoice? %>
+      <li class="text-left"><%= copy_invoice_link %></li>
+      <li class="divider"></li>
+    <% end %>
+    <li><%= link_to raw('<i class="icon-trash"> </i>Delete this invoice'), invoice_path(@invoice), :method => "delete", :confirm => "Are you sure?" %>
+    </li>
+  </ul>
+</div>

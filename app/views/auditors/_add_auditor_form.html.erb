@@ -1,0 +1,27 @@
+	<%= form_for @invitation_detail, :html=>{:class=>"m-b-none form-horizontal", :remote=>true} do |f| %>
+<div class="modal-dialog">
+<div class="modal-content">
+	<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+	<h4 class="modal-title" id="myModalLabel">Auditor Invitation</h4>
+	</div>
+ <div class="modal-body">
+            <div class="errorSection"></div>
+	<div class="block">
+	   <label class='control-label-required'>Name</label>
+	   <%= f.text_field :name, :class=>"form-control" %>
+	 </div>
+	 <div class="block">  
+	   <label class='control-label-required'>Email</label>
+	   <%= f.text_field :email, :class=>"form-control" %>
+	  </div>
+</div>
+	  <div class="modal-footer"> 
+     <div class='save-btn'></div>
+       <button  class='btnsave btn btn-sm btn-success' type='submit'  data-loading-text='Sending invitation...'>Invite</button>
+	   <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+	   </div>
+  
+</div>
+</div>
+	<% end %>

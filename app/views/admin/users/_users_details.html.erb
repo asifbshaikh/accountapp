@@ -1,0 +1,28 @@
+<div class="content-box">
+        <header>
+          <h3>User Details</h3>
+        </header>
+        <section>
+           <form class="nav-task">
+          <div>
+            <label> Total users:</label>&nbsp;<%= User.count %>
+          </div>
+          <div>
+            <label> Login last month:</label>&nbsp;<%= User.last_month.count%>
+          </div>
+          <div>
+            <label> Last 3 month:</label>&nbsp;<%= User.last3_month.count%>
+          </div>
+          <div>
+            <label> Last 6 month:</label>&nbsp;<%= User.last6_month.count%>
+          </div>
+          <div>
+            <label> Last 9 month:</label>&nbsp;<%= User.last9_month.count%>
+          </div>
+          <div>
+            <label> Last 12 month:</label>&nbsp;<%= User.last12_month.count%>
+          </div>
+
+            </form>
+        </section>
+      </div>

@@ -1,0 +1,114 @@
+<%= form_for @payhead, :html=>{:class=>"form-horizontal"} do |f| %>
+  <%= render 'shared/form_error', :object => @payhead %>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Payhead name", :class => "control-label-required" %>
+    </div>
+    <div class="col-lg-3">
+      <%= f.text_field :payhead_name, :class=>"form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Name appear in payslip", :class => "control-label-required"%>
+    </div>
+    <div class="col-lg-3">
+      <%= f.text_field :name_appear_in_payslip, :class=>"form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Payhead type", :class => "control-label-required" %>
+    </div>
+    <div class="col-lg-3">
+      <%= f.select(:payhead_type, [['Earnings'],['Standard deductions'],['Other deductions']],{}, :class=>"form-control") %>
+    </div>
+                    <a href="#" title="Payheads can be categorised into 2 categories:" data-toggle="popover" data-placement="right" data-content=" 1) Earnings:
+                    like  Basic, DA (Dearness Allowance), Travel Allowance, House Rent Allowance, Medical Allowance, Bonus, etc
+                  2) Deductions:
+                    like Professional Tax, TDS, Provident Fund and all types of taxes."><i class="icon-question-sign icon-xlarge"></i></a>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Select Account Name", :class => "control-label-required"  %> 
+    </div>
+    <div class="col-lg-3">
+      <%= render "payhead_account" %>
+    <small>(Select an account for this payhead)</small>
+    </div>
+
+        <a href="#" title="Payhead Account" data-toggle="popover" data-placement="right" data-content="Select the account you want to map this payhead to. It can be Indirect Expense, Direct Expense or Current Liability."><i class="icon-question-sign icon-xlarge"></i></a>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Calculation Type", :class =>"control-label" %>
+    </div>
+    <div class="col-lg-2">
+      <div class="btn-group " data-toggle="buttons" >
+        <label class="btn btn-sm btn-default <%= (@payhead.calculation_type == Payhead::CALC_TYPE[:fixed])? 'active' : ''%>">
+          <%= radio_button_tag "payhead[calculation_type]",Payhead::CALC_TYPE[:fixed], (@payhead.calculation_type == Payhead::CALC_TYPE[:fixed]) %>
+          <i class="icon-ok icon-large text-active"></i>Fixed
+        </label>
+        <label class="btn btn-sm btn-default <%= (@payhead.calculation_type == Payhead::CALC_TYPE[:percent])? 'active' : ''%>">
+          <%= radio_button_tag "payhead[calculation_type]",Payhead::CALC_TYPE[:percent], (@payhead.calculation_type.blank? || @payhead.calculation_type == Payhead::CALC_TYPE[:percent]) %>
+          <i class="icon-ok icon-large text-active"></i>Calculated
+        </label>
+        <div class="col-lg-2">
+            <a href="#" title="Calculations Type" data-toggle="popover" data-placement="right" data-content="Specify whether the calculation of this payhead is affected by the number of days an employee is present. For example, Professional Tax component is fixed regardless of the attendance."><i class="icon-question-sign icon-xlarge"></i></a>
+          </div>
+
+          </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Applicable", :class =>"control-label" %>
+    </div>
+    <div class="col-lg-4">
+      <div class="btn-group " data-toggle="buttons" >
+        <label class="btn btn-sm btn-default <%= (@payhead.optional == true)? 'active' : ''%>">
+          <%= radio_button_tag "payhead[optional]",true, (@payhead.optional == true) %>
+          <i class="icon-ok icon-large text-active"></i>Optional
+        </label>
+        <label class="btn btn-sm btn-default <%= (@payhead.optional.blank? || @payhead.optional == false)? 'active' : ''%>">
+          <%= radio_button_tag "payhead[optional]",false, (@payhead.optional.blank? || @payhead.optional == false) %>
+          <i class="icon-ok icon-large text-active"></i>Mandatory
+        </label>
+
+         <div class="col-lg-2">
+
+         <a href="#" title="Applicable" data-toggle="popover" data-placement="right" data-content="Specify if its mandatory to add this payhead while defining a salary structure of an employee. Optional payheads can be used for components like Bonus or any other variable pay while running the payroll process."><i class="icon-question-sign icon-xlarge"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Affect net salary", :class=>"control-label"%>
+    </div>
+    <div class="col-lg-3">
+      <div class="btn-group " data-toggle="buttons" >
+        <label class="btn btn-sm btn-default <%= (@payhead.affect_net_salary.blank? ||@payhead.affect_net_salary == 'Yes')? 'active' : ''%>">
+          <%= radio_button_tag "payhead[affect_net_salary]",'Yes', (@payhead.affect_net_salary.blank? ||@payhead.affect_net_salary == 'Yes') %>
+          <i class="icon-ok icon-large text-active"></i>Yes
+        </label>
+        <label class="btn btn-sm btn-default <%= (@payhead.affect_net_salary == 'No')? 'active' : ''%>">
+          <%= radio_button_tag "payhead[affect_net_salary]",'No',(@payhead.affect_net_salary == 'No') %>
+          <i class="icon-ok icon-large text-active"></i>No
+        </label>
+  
+         <div class="col-lg-2">
+        <a href="#" title="Affect Net salary" data-toggle="popover" data-placement="right" data-content="If you select Yes, this component will be calculated on pro-rated basis (For the number of days in months). Otherwise, it will be fixed."><i class="icon-question-sign icon-xlarge"></i></a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-7 col-lg-offset-3">
+      <%= f.submit "Save", :class => "btn btn-success "%>&nbsp;
+      &nbsp;<%= link_to 'Cancel', payheads_path, :class => "btn btn-default "%>
+    </div>
+  </div>
+<% end %>

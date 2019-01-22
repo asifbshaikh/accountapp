@@ -1,0 +1,65 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+   $('#status').live('click', function(){
+      $('.status_form').toggle('slow');
+  });
+   
+    });
+</script>
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first "><br />
+      <div class="highlight"> 
+        <%= render :partial => "shared/flash_msg" %>
+          <h5>Invoice number setting</h5>
+          <%= selected_setting %>
+           <h5>Custom invoice labels</h5>
+           <div class="box box-info">You can change invoice fields label by clicking on respective field vlaue and this setting is applicable only on cash and credit invoice.</div>
+           <table>
+             <tbody>
+               <tr>
+                 <td><label>Product/Service: </label></td>
+                 <td><%= best_in_place  @invoice_setting, :item_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+               <tr>
+                 <td><label>Description:</label></td>
+                 <td><%= best_in_place  @invoice_setting, :desc_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+               <tr>
+                 <td><label>Quantity: </label></td>
+                 <td><%= best_in_place  @invoice_setting, :qty_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+               <tr>
+                 <td><label>Price/Rate: </label></td>
+                 <td><%= best_in_place  @invoice_setting, :rate_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+               <tr>
+                 <td><label>Discount %: </label></td>
+                 <td><%= best_in_place  @invoice_setting, :discount_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+               <tr>
+                 <td><label>Amount: </label></td>
+                 <td><%= best_in_place  @invoice_setting, :amount_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30} %></td>
+               </tr>
+             </tbody>
+           </table>
+          <h5>Invoice Template : <%= @invoice_template.template.template_name  %> template</h5><%= render :partial=> "change_template"%>
+
+      </div></br>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= edit_button_white("Edit Invoice Number Settings", edit_invoice_setting_path(@invoice_setting))%>
+      <br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- Page title -->
+<%= render "shared/page_title" %> 
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width6 first"></br>
+			<div class="highlight">
+				<%= render :partial => "shared/flash_msg"%>
+			 <!--  <% if @leave_types.blank? %><br />
+					  <div class = "box box-warning">
+						   Currently there are no Leave Type, please <a href = "/leave_types/new"> create</a> atleast one to make a request.
+					  </div>
+			   <%end%>-->
+			   <%= render 'form' %>
+			</div><br />
+		</section>
+		<!-- End of Left column/section -->
+		<!-- Right column/section -->
+		<aside class="column width2"></br>
+			<%= list_button_white "View All Requests", leave_requests_path %>
+			<p><%= show_button "View Leave Dashboard", leave_requests_dashboard_path %></p>         
+		</aside>
+		<!-- End of Right column/section -->
+	</div>
+</div>

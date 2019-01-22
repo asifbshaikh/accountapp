@@ -1,0 +1,90 @@
+ <script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for policy_doc in @policy_documents
+  	 	@data<<policy_doc.file_name
+  	 	@data<<policy_doc.file_size
+  	 	@data<<policy_doc.uploaded_file_updated_at
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+ <!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Organisation &rarr;<span>Policy Document</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%=f.text_field :uploaded_file_file_name_or_uploaded_file_file_size_or_uploaded_file_updated_at_equals, :id=>"autocomplete", :placeholder=>"search" %>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	 <div id="tabs-all" class="highlight">
+              <%= render "shared/flash_msg" %>
+             <div id="policy_document">
+                    <% if @policy_documents.blank? %>
+                        <p class="no-policy_document"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                    <table class="display stylized" id="policy_document">
+		                  <thead id="example">   
+		                    <%= render :partial => "header" %>
+		                  </thead>
+		                  <tbody>
+		                     <%= render :partial => "policy_document", :collection => @policy_documents%>
+		                  </tbody>
+		                  <tfoot>
+		                  	<%= render :partial => "footer" %>
+		                  </tfoot>
+		               </table> 
+                              <%= paginate @policy_documents %>   
+                   <% end %>
+               </div>
+          </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2">
+       <% if @current_user.roles[0].name == "Owner" || @current_user.roles[0].name == "Accountant" %>
+       <br/>
+       	<a href ="/policy_documents/new", class="btn btn-special btn-green"><img src ="/images/add.png" class ="icon"/>Upload new document</a>
+       <% end %> 
+      <div id="rightmenu">
+           <dl class="first">
+					<dt><img width="16" height="16" alt="" SRC="/images/help.png" class = "icon" >
+					</dt>
+					<dd>
+						<dd><a href="#">Help</a></dd>
+					</dd>
+					<dd class="last">
+					This page displays the list of all policy documents.<br/>Click on the file name to download the file.<br/><br/>
+					</dd>
+				</dl>
+     </div><br/>  
+       <!--<div class="content-box highlight" >
+					    <header>
+					      <h3>Upload New Document</h3>
+					    </header>
+			        <section><br />
+			         <%= render 'form' %>
+			        </section>
+			      
+		      </div><br />-->
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

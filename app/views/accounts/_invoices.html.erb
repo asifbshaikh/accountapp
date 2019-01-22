@@ -1,0 +1,34 @@
+<!-- <div class='account_container'>
+<% if @invoices.blank? %>
+	<%= render "shared/no_record"%>
+<% else %>
+	<table class="display stylized" id="act_details">
+	    <thead>
+	      <tr>
+	      	<th>Invoice#</th>
+	      	<th>Due date</th>
+	      	<th>Amount</th>
+	      	<th>Status</th>
+	      	<th></th>
+	      </tr>
+	    </thead>
+	  <tbody>
+	  	<% @invoices.each do |invoice| %>
+	  	<tr>
+	  		<td><%= link_to invoice.invoice_number, invoice %></td>
+	  		<td><%= invoice.due_date %></td>
+	  		<td><%= invoice.amount %></td>
+	  		<td><% if invoice.invoice_status_id == 0 %>
+    	    Unpaid
+    	<% elsif invoice.invoice_status_id == 1 %>
+    	   Draft 
+    	<% elsif invoice.invoice_status_id == 2 %>
+    	    Paid    
+    	<% end %></td>
+	  		<td><%= %></td>
+	  	</tr>
+	  	<% end %>
+	  </tbody>
+	</table>
+<% end %>
+</div> -->

@@ -1,0 +1,25 @@
+<% Rails.logger.debug gstr_advance_purchases_payments.inspect%>
+<% if gstr_advance_purchases_payments.blank?%>
+  <%= render "shared/no_record" %>
+<% else %>
+  <table class="table table-striped" id='unpaid-vouchers'>
+    <thead>
+      <tr>
+        <th>Voucher #</th>
+        <th>Paid Amount</th>
+        <th>Outstanding</th>
+        <th>Due Date</th>
+        <th width="10%">TDS Deducted</th>
+        <th width="10%">Payment Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render "unpaid_purchases", :gstr_advance_purchases_payments=>gstr_advance_purchases_payments %>
+      <tr>
+        <td colspan="3"></td>
+        <td class="text-right"><strong>Total</strong></td>
+        <td class="text-right"><strong><span id="total-amount">0.00</span></strong></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,21 @@
+<h1>Listing payroll_settings</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @payroll_settings.each do |payroll_setting| %>
+  <tr>
+    <td><%= link_to 'Show', payroll_setting %></td>
+    <td><%= link_to 'Edit', edit_payroll_setting_path(payroll_setting) %></td>
+    <td><%= link_to 'Destroy', payroll_setting, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Payroll setting', new_payroll_setting_path %>

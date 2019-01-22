@@ -1,0 +1,29 @@
+<%= form_for(@gst_return) do |f| %>
+  <% if @gst_return.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gst_return.errors.count, "error") %> prohibited this gst_return from being saved:</h2>
+
+      <ul>
+      <% @gst_return.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_id %><br />
+    <%= f.number_field :company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :financial_year_id %><br />
+    <%= f.number_field :financial_year_id %>
+  </div>
+  <div class="field">
+    <%= f.label :month %><br />
+    <%= f.number_field :month %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

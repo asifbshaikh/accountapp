@@ -1,0 +1,21 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+	
+	<div class="wrapper">
+		<div id="page">
+			<!-- Wrapper -->
+			<!--   <div class="wrapper"> -->
+			<!-- Left column/section -->
+			<div class = "content-box">
+				<header>
+					<h3>Hi, <%= session[:name]%></h3>
+				</header>
+				<section>
+					<%= render 'form'%>
+				</section>
+				<!-- <h1>New help</h1> -->
+				<%= render 'form' %>
+
+				<%= link_to 'Back', helps_path %>
+			</div>
+</div>&nbsp;

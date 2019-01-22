@@ -1,0 +1,33 @@
+
+<div class="status_form" <%= "style='display:none;'" if flash[:error].blank? %>>
+  <%= form_for @company, :url => ([:admin, @company]) do |f| %>
+    <%= hidden_field_tag  "company_id" ,@company.id %>
+    <%= hidden_field_tag  "company[subscription_attributes][id]" ,@company.subscription.id %>
+    <table>
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= f.label "New Status :" %>
+            <%= f.select(:status, {'Green'=>1,'Red'=>2,'Amber'=>0},{:class => 'form-control'},  :prompt => false, :class => "form-control") %><br/>
+          </td>
+          <td>
+            <label> New Payment status :</label>
+            <select name="company[subscription_attributes][status]" class="form-control">
+              <option selected="selected"></option>
+              <option value="Paid">Paid</option>
+              <option value="Trial">Trial</option>
+            </select><br/>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">
+            <%= f.submit "Update Status", :class => "btn btn-success" %>&nbsp;
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
+</div>

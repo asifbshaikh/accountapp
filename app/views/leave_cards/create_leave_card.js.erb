@@ -1,0 +1,13 @@
+$(".popup-error").remove();
+<% if @leave_card.errors.any? %>
+	$(".errorPlace").after("<%= escape_javascript render('shared/popup_form_error',{:object => @leave_card}) %>");
+<% else %>
+	$(".leave_card_add").hide();
+	$(".leave_card_info").show();
+	$(".oldData").remove();
+	$(".leave-card-error").after("<div class='alert alert-success leave-card-notif'>Created successfully.</div>")
+	$(".leaveCardPlace").after("<%= escape_javascript render('leave_cards_details')%>");
+	fadeOutMessage();
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>")

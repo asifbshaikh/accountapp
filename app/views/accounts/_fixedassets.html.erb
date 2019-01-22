@@ -1,0 +1,11 @@
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Depreciable</label></div>
+		<div class="col-lg-3">
+      <%=radio_button_tag 'fixed[depreciable]', '1',true,{ :tabindex=>'4'}  %>Yes &nbsp;
+     	<%=radio_button_tag 'fixed[depreciable]', '0', false,{ :tabindex=>'5'} %> No
+    </div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Depreciation rate</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'fixed[depreciation_rate]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>

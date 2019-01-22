@@ -1,0 +1,7 @@
+<% unless @company.blank? %>
+	$("input[name=company_id]").val("<%= @company.id %>");
+	$(".plan_name").text("<%= @company.plan.display_name %>");
+	$("input[name=plan_name]").val("<%= @company.plan.name %>");
+	$(".renewal_date").text("<%= @company.subscription.renewal_date.to_date %>");
+	$("input[name=renewal_date]").val("<%= @company.subscription.renewal_date %>");
+<% end %>

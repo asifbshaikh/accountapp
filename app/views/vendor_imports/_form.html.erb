@@ -1,0 +1,65 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <section class="panel">
+          <div class="panel-body">
+            <%= form_for ImportFile.new,:url => "/vendor_imports/upload", :html => {:onsubmit =>"return checkForm(this); return false;",:multipart => true, :class => "form-horizontal"} do |f| %>
+            <%= f.hidden_field :created_by, :value => @current_user.id %>
+            <%= f.hidden_field :company_id, :value => @company.id %>
+            <%= f.hidden_field :item_type, :value => 4 %>
+            <%= f.hidden_field :status, :value => 0%>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-3">
+              <%= label_tag "select_file", "Select file", :class => "control-label-required"%>
+              </div>
+              <div class="col-lg-1">
+              <%= f.file_field :file, :class=>"btn btn-white", :onchange=>"check_file()" %>
+              </div>
+              <div class="col-lg-2 save-btn"></div>
+              <%= submit_tag "Import",:id => "import_file", :class => "btnsave btn btn-sm btn-success" %>
+            </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-6">
+        <section class="panel">
+          <div class="panel-body">
+          <p class="icon-gittip"><strong>Tips :</strong></p>
+          <ul>
+          <li>Please download sample file here. <a href="/vendor_file.csv"><u>Download</u></a></li>
+          <li>If billing address and shipping address are same then fill only billing address field.</li>
+          </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>
+<script type="text/javascript">
+  function check_file(){
+    str=document.getElementById('import_file_file').value.toUpperCase();
+    suffix=".CSV";
+    if(str.indexOf(suffix, str.length - suffix.length) == -1){
+    alert('File type not allowed,\nAllowed file: *.csv');
+    document.getElementById('import_file_file').value='';
+    }
+  }
+  function checkForm(f)
+{
+    if (f.elements['import_file_file'].value == "")
+    {
+        alert("Please select file !");
+        $(".btnsave").remove();
+        $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Import</button>");
+        return false;
+    }
+    else
+    {
+        f.submit();
+        return false;
+    }
+}
+</script>

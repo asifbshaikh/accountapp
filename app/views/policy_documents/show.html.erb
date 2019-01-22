@@ -1,0 +1,16 @@
+<%= render "shared/page_title"%>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @policy_document.company_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @policy_document.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_policy_document_path(@policy_document) %> |
+<%= link_to 'Back', policy_documents_path %>

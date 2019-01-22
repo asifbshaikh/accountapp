@@ -1,0 +1,87 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file-text-alt text"></i> Taxes</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <a href="/duties_and_taxes/new" class="btn btn-success btn-lg"><i class="icon-plus"> </i> New Tax</a>
+        <a href="/duties_and_taxes/report" class="btn btn-white btn-lg"><i class="icon-bar-chart"> </i> Reports</a>
+        <p></p>
+      </div>
+    </div>
+  <section class="panel">
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"><br />
+      <div class="column width6 first highlight">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="column width3 first">
+       <p>
+         <label for="productcat"> Tax name:</label>
+         <label for="productcat"> <h4><%= @account.name%> </h4></label>
+          <label for="description"> <%= !@account.accountable.description.blank? ? @account.accountable.description : "Description not provided" %>
+
+          </label>
+       </p>
+      </div>
+      <div class="column width3">
+       <p class="box">
+        <label>Registration number: <%= @account.accountable.registration_number %></label>
+        <br/>
+        <label>Filling frequency: <%= @account.get_filling_frequency %></label>
+        <br/>
+        <label>Tax rate: <%= @account.accountable.tax_rate %>%</label>
+        <br/>
+        <label>Total tax collected: <%= @account.collected_tax(@financial_year) %></label>
+        <br/>
+       </p>
+     </div>
+     <div class ="column width6 first">
+       <% if @account.get_linked_taxes.blank? %>
+           <div class = "box box-info">This tax have no linked taxes</div>
+       <% else %>
+        <table class="display stylized full" id ="act_details" >
+         <thead>
+                 <tr>
+            <th>Tax</th>
+                   <th></th>
+            <th class ="ta-center">
+              <% if @account.tax_on_sales? %>
+                Collected on sales
+              <% else %>
+                Paid on purchase
+              <% end %>
+            </th>
+            <th></th>
+          </tr>
+          </thead>
+                <tbody>
+                <% @account.get_linked_taxes.each do |account| %>
+            <tr>
+              <td><%= account.name %></td>
+                    <td></td>
+              <td class = "ta-center"><%=  account.collected_tax(@financial_year) %></td>
+              <td><%= link_to "View report", "/duties_and_taxes/report?account_id=#{account.id}" %></td>
+            </tr>
+         <% end %>
+         </tbody>
+        </table>
+      <div class="clear">
+        <div class="width3 column">
+        </div>
+      </div>
+        <% end %>
+   </div>
+      </div><br />&nbsp;
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= new_button("Add New Tax", duties_and_taxes_new_path)%>
+      <p><%= list_button_black("View Taxes", duties_and_taxes_index_path)%></p>
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

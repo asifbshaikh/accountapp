@@ -1,0 +1,37 @@
+<script>
+	$(document).ready(function(){
+	var balance = new Object();
+      '<% @other_income_from_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#other_income_from_account_auto_complete').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#other_income_from_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#other_income_from_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @other_income_to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#other_income_to_account_auto_complete').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#other_income_to_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#other_income_to_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+
+	});
+</script>

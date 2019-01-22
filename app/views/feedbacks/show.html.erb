@@ -1,0 +1,61 @@
+<!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+    <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+   <!-- Left column/section -->
+         <section class="column width6 first"  >
+            <br /><p id="notice"><%= notice %></p>
+            <div class="column width6 first highlight">
+              <div id='user_info_div'><span>User Feedback</span></div>
+             
+				
+				<p>
+				  <b>Vote:</b>
+				  <%= @feedback.vote %>
+				</p>
+				
+				<p>
+				  <b>Comment:</b>
+				  <%= @feedback.comment %>
+				</p>
+				
+				<p>
+				  <b>Submitted by:</b>
+				  <%= User.find(@feedback.submitted_by).first_name  %>
+				</p>
+				<p>
+				  <b>Company:</b>
+				  <%= Company.find(@feedback.company_id).name  %>
+				</p><br />
+				
+				 <div class="actions" >
+<!-- 	                 <%= link_to 'Edit', edit_feedback_path(@feedback),{:class=>"btn btn-green big" } %> &nbsp; -->
+<!-- 	                 <a href="/feedbacks" class="btn btn-green big">Back</a> -->
+	              </div>
+	              
+            <div class="clearfix"></div>
+			</div><br />&nbsp;
+           <!-- End of Left column/section -->
+           </section>
+          <!-- Right column/section -->
+           <aside class="column width2"><br />
+           <!--<p ><a href="/departments" class="btn btn-special btn-gray"><img SRC="/images/add.png" class="icon" alt=""/>Create New Department</a></p>-->
+             <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd> 
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+              </div><br />
+  
+           </aside>
+         <!-- End of Right column/section -->
+ 
+      </div>
+   <!-- End of Wrapper -->
+
+  </div>
+<!-- End of Page content -->

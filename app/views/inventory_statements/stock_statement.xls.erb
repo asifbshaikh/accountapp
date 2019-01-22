@@ -1,0 +1,72 @@
+<table>
+    <tr>
+      <th align="center" colspan="9">Stock Summary</th>
+    </tr>
+    <% if !@branch_id.blank? %>
+      <tr>
+        <th align="center" colspan="9"><%= display_branch(@branch_id) %></th>
+      </tr>
+      <%= display_branch(@branch_id) %>
+    <% end %>
+    <tr>
+      <th align="center" colspan="9">Duration <%= @start_date %> To <%= @end_date %></th>
+    </tr>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" class="text-center">Opening stock on <%= @start_date %></th>
+      <th colspan="4" class="text-center">Purchases</th>
+      <th colspan="2" class="text-center">Produced</th>
+      <th colspan="2" class="text-center">Issued for Production</th>
+      <th colspan="1" class="text-center">Wastage</th>
+      <th colspan="4" class="text-center">Sales</th>
+      <th colspan="2" class="text-center">Net</th>
+    </tr>
+    <tr>
+      <th>Item Name (units)</th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Value <%= @company.currency_code%></th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Total (<%= @company.currency_code %>)</th>
+      <th class="text-right">Avg.price (<%= @company.currency_code %>)</th>
+      <th class="text-right">Return Qty</th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Value <%= @company.currency_code%></th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Value <%= @company.currency_code%></th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Total Value(<%= @company.currency_code %>)</th>
+      <th class="text-right">Avg. price (<%= @company.currency_code %>)</th>
+      <th class="text-right">Return Qty</th>
+      <th class="text-right">Qty</th>
+      <th class="text-right">Total value(<%= @company.currency_code %>)</th>
+      <!--<th align="center">Value(Based on Avg. Cost)</th>-->
+    </tr>
+  </thead>
+  <tbody>
+    <% @stock_summaries.each do |stock_summary|%>
+      <tr>
+        <td><%= stock_summary.product.name %> <%= "(#{stock_summary.product.unit_of_measure})" unless stock_summary.product.unit_of_measure.blank? %></td>
+        <td class="text-right"><%= stock_summary.opening_stock_quantity %> </td>
+        <td class="text-right"><%= number_with_precision stock_summary.opening_stock_valuation, precision: 2 %></td>
+        <td class="text-right"><%= stock_summary.purchase_quantity %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.purchase_amount, precision: 2 %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.average_purchase_price, precision: 2 %></td>
+        <td class="text-right"><%= stock_summary.purchase_return_quantity %></td>
+        <td class="text-right"><%= stock_summary.stock_received_quantity%></td>
+        <td class="text-right"><%= number_with_precision stock_summary.stock_received_amount, precision: 2%></td>
+        <td class="text-right"><%= stock_summary.stock_issued_quantity %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.stock_issued_amount, precision: 2%></td>
+        <td class="text-right"><%= stock_summary.stock_wasted_quantity %></td>
+        <td class="text-right"><%= stock_summary.sales_quantity %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.sales_amount, precision: 2 %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.average_sales_price, precision: 2 %></td>
+        <td class="text-right"><%= stock_summary.sales_return_quantity %></td>
+        <td class="text-right"><%= stock_summary.net_quantity %></td>
+        <td class="text-right"><%= number_with_precision stock_summary.inventory_valuation, precision: 2 %></td>
+        <!-- <td></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>>

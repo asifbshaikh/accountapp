@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div id="jHere"></div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => 'auto_calculate' %>
+        <%= form_for @reimbursement_voucher, :html => {:class => "form-horizontal"} do |f| %>
+          <%= render 'shared/form_error', :object => @reimbursement_voucher %>
+          <div class="form-group">
+            <% if @reimbursement_voucher.voucher_setting.custom_sequence? %>
+              <div class="col-lg-2 text-right">
+                <label class="control-label-required">Voucher Number</label>
+              </div>
+              <div class="col-lg-2">
+                <%= f.text_field :reimbursement_voucher_number, :class=>"form-control bg-focus", :style => "width:200px;" %>
+              </div>
+            <% else %>
+              <div class="col-lg-2 text-right">
+                <label class="control-label">Voucher Number</label>
+              </div>
+              <div class="col-lg-3">
+                <label class="control-label">
+                  <%= @reimbursement_voucher.voucher_number%><%= f.hidden_field :voucher_number %>
+                </label>
+              </div>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <%= f.label :Voucher_date,  :class=>"control-label-required"  %>
+            </div>
+            <div class="col-lg-3">
+              <%= f.text_field :voucher_date, :size => "14", :class => 'bg-focus form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label class="control-label-required" for="reimbursement_voucher_From_account_id">Customer</label>
+            </div>
+            <div class="col-lg-3">
+              <div class="input-group">
+                <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, @reimbursement_voucher.from_account_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+              </div>
+              <span id ='from_acc_bal'></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <%= f.label :To_account_id, :class=>"control-label-required"%>
+            </div>
+            <div class="col-lg-3">
+              <div class="input-group">
+                <%= f.select(:to_account_id, options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, @reimbursement_voucher.to_account_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+              </div>
+              <span id ='to_acc_bal'></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label class="control-label">Detail</label>
+            </div>
+            <div class="col-lg-4">
+              <%= f.text_area :description, :rows => "3", :class=>"bg-focus form-control" %>
+            </div>
+          </div>
+          <div class="line line-dashed m-t-large"></div>
+            <div class="row">
+              <div class="col-lg-10">
+                <h4>Showing Outstanding Reimbursement Vouchers</h4>
+              </div>
+            </div>
+          <div id="reimbursement_data">
+            <% if @reimbursement_notes_for_account.blank? %>
+              <%= render "shared/no_record" %>
+              <div class="line line-dashed m-t-large"></div>
+            <% else %>
+              <%= render "get_reimbursement_notes_for_account" %>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">
+              <%= f.submit "Save", :class=>"btn btn-success"%>
+              <%= link_to 'Cancel', reimbursement_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<!-- .modal -->
+<div id="modal-reimbursement-note-from-account" class="modal fade">
+  <%= render "shared/account_details", :account_heads => @from_account_heads, :transaction_type => "journal" %>
+</div>
+<div id="modal-reimbursement-note-to-account" class="modal fade">
+  <%= render('shared/customer_vendor_form', {:selector=>'reimbursement_voucher_to_account_id'}) %>
+</div>
+<!-- / .modal -->
+<script type="text/javascript">
+$("#reimbursement_voucher_from_account_id").select2();
+$("#reimbursement_voucher_to_account_id").select2();
+</script>

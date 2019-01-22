@@ -1,0 +1,48 @@
+<%= form_for(@voucher_setting) do |f| %>
+   <div class='form-group'>
+     <div class='col-lg-2 text-right'>
+       <%= label_tag "Voucher", "Voucher", :class=>'control-label' %>
+     </div>
+     <div class='col-lg-10'>
+     <%= select_tag("voucher_setting[voucher_type]", options_from_collection_for_select(@company.get_allowed_vouchers, :first, :last), :style=>'width:50%', :id=>'select2option', :prompt=>'Select voucher') %>
+     </div>
+   </div>
+   <div class='form-group'>
+     <div class='col-lg-2 text-right'></div>
+     <div class='col-lg-10'>
+       <div class="radio">
+         <label class="radio-custom">
+           <input type="radio" name="voucher_setting[voucher_number_strategy]" checked="checked">
+           <i class="icon-circle-blank"></i>
+           System generated voucher number.
+         </label>
+       </div>
+       <div class="radio">
+         <label class="radio-custom">
+           <input type="radio" name="voucher_setting[voucher_number_strategy]">
+           <i class="icon-circle-blank"></i>
+           Sequencial voucher number.
+         </label>
+       </div>
+     </div>
+   </div>
+  <!--  <div class='form-group'>
+     <div class='col-lg-2 text-right'></div>
+     <div class='col-lg-3'>
+       <span>Prefix</span><br /><%= text_field_tag "prefix",'', :class=>'form-control' %>
+     </div>
+     <div class='col-lg-4'>
+       <span>Starting sequence</span><br /><%= text_field_tag "starting_sequence", '', :class=>'form-control' %>
+     </div>
+     <div class='col-lg-3'>
+       <span>Suffix</span><br /><%= text_field_tag "suffix", '', :class=>'form-control' %>
+     </div>
+   </div> -->
+   <div class='form-group'>
+     <div class="col-sm-8 col-sm-offset-4">
+       <p>
+         <button type="submit" class="btn btn-success">Save</button>
+       </p>                   
+     </div>
+   </div>
+<% end %>

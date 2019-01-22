@@ -1,0 +1,295 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for(@customer, :html=>{:class=>'form-horizontal', :multipart => true}) do |f| %>
+        <%= render('shared/form_error', :object=>@customer)%>
+        <div class='form-group'>
+          <div class="col-sm-2">
+            <%= f.label :customer_name, :class=>'control-label-required' %>
+          </div>
+          <div class="col-lg-4">
+            <%= f.text_field :name, :class=>"form-control bg-focus" %>
+          </div>
+        </div>
+            <!-- <div class='col-lg-1'></div>
+            -->
+            <div class='form-group'>
+              <div class='col-sm-2'>
+                <%= f.label :phone_number, :class=>'control-label-required' %>
+              </div>
+              <div class="col-lg-2">
+                <%= f.text_field :primary_phone_number, :class=>"form-control bg-focus", :maxlength=> 15, :placeholder => "Primary" %>
+              </div>
+              <div class="col-lg-2">
+                <%= f.text_field :secondary_phone_number, :class=>"form-control bg-focus", :maxlength=> 15, :placeholder => "Secondary" %>
+              </div> 
+            </div>
+            <div class='form-group'>
+              <div class="col-sm-2">
+                <%= f.label :email,  :class=>'control-label-required' %>
+              </div>
+              <div class="col-lg-4">
+                <%= f.text_field :email, :class=>"form-control bg-focus" %>
+              </div>
+            </div>
+
+            <div class='form-group'>
+              <div class="col-sm-2">
+                <%= f.label :website, :class=>'control-label' %>
+              </div>
+              <div class="col-lg-4">
+                <%= f.text_field :website, :class=>"form-control bg-focus" %>
+              </div>
+            </div>
+
+            <div class="line line-dashed m-t-large"></div>
+
+            <div class='form-group'>
+              <div class="col-sm-2">
+                <%= f.label :tax_information, :class=>'control-label' %>
+              </div>
+              <% if @company.country_id == 93 %>  
+              <div class='form-group'>
+                <div class="col-lg-3">
+                  <label class='control-label'>GST Registration type</label><br/>
+                  <%= collection_select(:customer, :gst_category_id, GstCategory.all, :id, :name, {:prompt => true}, { :style=>"width:200px;"} ) %>
+                </div>
+              </div>
+
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class="col-lg-3">
+                  <label class='control-label'>GSTIN</label>
+                  <%= f.text_field :gstn_id, :maxlength=> 15, :class=>"form-control bg-focus" %>
+                </div>
+                <!-- <div class='col-lg-1'></div> -->
+
+                <div class="col-lg-3">
+                  <%= f.label :pan, :class=>'control-label' %>
+                  <%= f.text_field :pan, :class=>"form-control bg-focus" %>
+                </div>
+                <% end -%>
+
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class="col-lg-3">
+                  <%= f.label :tan,  :class=>'control-label' %>
+                  <%= f.text_field :tan, :class=>"form-control bg-focus" %>
+                </div>
+                <div class="col-lg-3">
+                  <%= f.label :vat_tin, :class=>'control-label' %>
+                  <%= f.text_field :vat_tin, :class=>"form-control bg-focus" %>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class="col-lg-3">
+                  <%= f.label :cst_reg_no,  :class=>'control-label' %>
+                  <%= f.text_field :cst_reg_no, :class=>"form-control bg-focus" %>
+                </div>
+                <div class="col-lg-3">
+                  <%= f.label :cin,  :class=>'control-label' %>
+                  <%= f.text_field :cin, :class=>"form-control bg-focus" %>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class="col-lg-3">
+                  <%= f.label :excise_reg_no,  :class=>'control-label' %>
+                  <%= f.text_field :excise_reg_no, :class=>"form-control bg-focus" %>
+                </div>
+                <div class="col-lg-3">
+                  <%= f.label :service_tax_reg_no,  :class=>'control-label' %>
+                  <%= f.text_field :service_tax_reg_no, :class=>"form-control bg-focus" %>
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class="col-lg-3">
+                  <%= f.label :lbt_registration_number, "Lbt reg no",  :class=>'control-label' %>
+                  <%= f.text_field :lbt_registration_number, :class=>"form-control bg-focus" %>
+                </div>
+              </div>
+
+
+              <div class="line line-dashed m-t-large"></div>
+
+              <div class='form-group'>
+                <div class='col-sm-2'>
+                  <%= f.label :billing_information, :class=>'control-label' %>
+                </div>
+
+                <div class="col-lg-3">
+                  <%= f.label :currency_id,  :class=>'control-label' %><br/>
+                  <%= collection_select(:customer, :currency_id, Currency.all, :id, :currency_code, {:selected => "68"},{:id=>"select2-option", :style=>"width:200px;"}) %>
+
+                </div>
+
+                <div class='col-lg-3'>
+                  <%= label_tag 'opening_balance', "Opening Balance (In #{@company.currency_code})", :class=>'control-label' %>
+                  <% if !@customer.new_record? %>
+                  <%= f.fields_for :account do |a|%>
+                  <%= a.text_field :opening_balance, :class=>'form-control bg-focus text-right' %>
+                  <% end %>
+                  <% elsif !@opening_balance.blank? %>
+                  <%= text_field_tag 'opening_balance', @opening_balance, :class=>'form-control bg-focus text-right' %>
+                  <% else %>
+                  <%= text_field_tag 'opening_balance', params[:opening_balance], :class=>'form-control bg-focus text-right', :onkeydown => "return balOnly(event);", :maxlength => "18", :class=>"bg-focus form-control text-right", :style=>"width:120px;" %>
+                  <% end %>
+                </div>
+                <!--     <div class='col-lg-1'></div> -->
+                <div class="col-lg-3">
+                  <%= label_tag "as_on_date", "As On Date", :class=>'control-label-required' %><br/>
+                  <%= text_field_tag 'as_on_date', params[:as_on_date], :class=>'form-control bg-focus', :style=>"width:120px" %>
+                </div>            
+              </div>
+
+
+              <div class='form-group'>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-3">
+                  <%= f.label :credit_days,  :class=>'control-label' %>
+                  <%= f.text_field :credit_days, :class=>"form-control bg-focus text-right" %>
+                </div>
+                <div class="col-lg-3">
+                  <%= f.label :credit_limit, :class=>'control-label' %>
+                  <%= f.text_field :credit_limit, :class=>"form-control bg-focus text-right" %>
+                </div>
+                <div class="col-lg-3">
+                  <%= label_tag "account_starts_from", "Account Starts From", :class=>'control-label-required' %><br/>
+                  <%= text_field_tag 'account_starts_from', params[:account_starts_from], :value =>@financial_year.start_date, :class=>'form-control bg-focus', :style=>"width:120px" %>
+                </div> 
+              </div>
+              <div class="line m-l m-r"></div>
+
+              <div class='form-group'>
+                <div class='col-sm-2'>
+                  <%= f.label :billing_address, "Billing Address", :class=>'control-label' %>
+                </div>
+                <div class='col-lg-3'>
+                  <%= f.fields_for :addresses, @billing_address do |ba| %>
+                  <%= ba.label :address_line1, "Billing Address", :class=>'control-label' %>
+                  <%= ba.text_area :address_line1, :class=>'form-control bg-focus', :rows=>4, :maxlength => 255 %>
+                  <%= ba.hidden_field :address_type %>
+                </div>
+
+                <div class='col-lg-4'>
+                  <%= ba.label :city, :class=>'control-label' %>
+                  <%= ba.text_field :city, :class=>'form-control bg-focus' %>
+                </div>
+                <div class='col-lg-4', id="indian">
+                  <%= ba.label :state,  :class=>'control-label' %><br/>
+                  <%= ba.collection_select(:state_code, State.all, :state_code, :name, {:prompt=>true},{:state_code=>"select2-option", :style=>"width:200px;", :style=>"height:40px;"}) %>
+                </div>
+                <span id="non_indian">
+                <div class='col-lg-4'>
+                  <%= ba.label :state, :class=>'control-label' %>
+                  <%= ba.text_field :state, :class=>'form-control bg-focus'%>
+                </div>
+              </span> 
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class='col-lg-3'>
+                  <%= ba.label :country,  :class=>'control-label' %>
+                  <%= ba.text_field :country, :class=>'form-control bg-focus' %>
+                </div>
+                <div class='col-lg-4'>
+                  <%= ba.label :postal_code,  :class=>'control-label' %>
+                  <%= ba.text_field :postal_code, :class=>'form-control bg-focus' %>
+                </div>
+              </div>
+
+              <% end %> 
+              
+              <div class="line m-l m-r"></div>
+
+              <div class='form-group'>
+                <div class='col-sm-2'>
+                  <%= f.label :shipping_address, :class=>'control-label' %>            
+                </div>
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'>
+                  <label class='same_address'>
+                    <input id="same_address" value="1" type="checkbox" name="same_address">Same As Billing  
+                  </label>
+                </div>
+                <div class="col-lg-3">
+                  <%= f.fields_for :addresses, @shipping_address do |sa| %>
+                  <%= sa.label :address_line1, "Shipping address", :class=>'control-label' %>
+                  <%= sa.text_area :address_line1, :class=>'form-control bg-focus', :rows=>4, :maxlength => 255 %>
+                  <%= sa.hidden_field :address_type %>
+                </div>
+                <div class='col-lg-4'>
+                  <%= sa.label :city,  :class=>'control-label' %>
+                  <%= sa.text_field :city, :class=>'form-control bg-focus' %>
+                </div>
+                 <div class='col-lg-4', id="indian1">
+                  <%= sa.label :state,  :class=>'control-label' %><br/>
+                  <%= sa.collection_select(:state_code, State.all, :state_code, :name, {:prompt=>true},{:state_code=>"select2-option", :style=>"width:200px;", :style=>"height:40px;"}) %>
+                </div>
+              <span id="non_indian1">
+                <div class='col-lg-4'>
+                  <%= sa.label :state, :class=>'control-label' %>
+                  <%= sa.text_field :state, :class=>'form-control bg-focus' %>
+                </div>
+              </span>
+              </div>
+              <div class='form-group'>
+                <div class='col-lg-2'></div>
+                <div class='col-lg-3'>
+                  <%= sa.label :country,  :class=>'control-label' %>
+                  <%= sa.text_field :country, :class=>'form-control bg-focus' %>
+                </div>
+                <div class='col-lg-4'>
+                  <%= sa.label :postal_code,  :class=>'control-label' %>
+                  <%= sa.text_field :postal_code, :class=>'form-control bg-focus' %>
+                </div>
+              </div>
+              <% end %> 
+             
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-4" id="submit">
+                  <%= f.submit "Save", :class => "btn btn-success" %> &nbsp; 
+                  <a class="btn btn-default" href="/customers">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script type="text/javascript"> 
+    $("select#customer_gst_category_id").select2();
+  </script>
+
+  <script type ="text/javascript">
+    $("#non_indian").hide();
+    $("#non_indian1").hide();
+    var val = "";
+    $("#select2-option").click(function(){
+    //var x = $("#select2-option")val();
+    var x = $(this).val();
+    val = x;
+    if (x == 68 )
+     {
+        $("#indian").show();
+        $("#non_indian").hide();
+        $("#indian1").show();
+        $("#non_indian1").hide();
+        document.getElementById("customer_addresses_attributes_0_state").value='';
+        document.getElementById("customer_addresses_attributes_1_state").value='';
+     } else
+     {
+        $("#non_indian").show();
+        $("#indian").hide();
+        $("#non_indian1").show();
+        $("#indian1").hide();
+     }   
+  });
+</script>

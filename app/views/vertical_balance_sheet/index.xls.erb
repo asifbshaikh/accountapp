@@ -1,0 +1,58 @@
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+					<%= render :partial => "shared/no_record" %>
+				<% else %>
+		
+			<div class='highlight'>
+				<div id='report_header' align="center">
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Balance Sheet </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table class = "zebra-sriped"  border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width5'><span class='char_spacing'>Particulars</span></th>
+							<th align="right" colspan="2">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</head>
+						<tbody>
+							<tr><td><b><u><span class = 'char_spacing'>Sources of Fund :</span></u></b></td><td></td><td></td></tr>
+							<tr><td><b>Capital Account</b></td><td></td><td align="right"><b><%=  @total_capital_amount %></b></td></tr>
+							<tr><td><b>Loans (Liability)</b></td><td></td><td align="right"><b><%=  @total_loan_amount %></b></td></tr>
+							<tr><td><b>Current Liabilities</b></td><td></td><td align="right"><b><%=  @total_liability_amount %></b></td></tr>
+							<tr><td><b>Profit and Loss Accounts</b></td><td></td><td align="right"><b><%=(@nett_profit) %></b></td></tr>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td></td><td class='border_down border_up'align="right"><b><%= (@total_capital_amount + @total_loan_amount + @total_liability_amount + @nett_profit) %></b></td></tr>
+							<tr><td><b><u><span class = 'char_spacing'>Application of Fund :</span></u></b></td><td></td><td></td></tr>
+							<tr><td><b>Fixed Assets</b></td><td></td><td align="right"><b><%= (@total_fixed_asset_amount) %></b></td></tr>
+							<tr><td><b>Investments</b></td><td></td><td align="right"><b><%= (11) %></b></td></tr>
+							<tr><td><b>Current Assets</b></td><td></td><td align="right"><b><%= (@total_current_asset_amount) %></b></td></tr>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td></td><td class='border_down border_up'align="right"><b><%=(@total_fixed_asset_amount + @total_investment_amount + @total_current_asset_amount) %></b></td></tr>
+						</tbody>
+						<tfoot>
+							
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+&nbsp; 

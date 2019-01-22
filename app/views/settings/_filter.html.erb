@@ -1,0 +1,23 @@
+<form action='' >
+<table >
+<tr>
+<td > Show custom fields for :</td>
+<td>
+<select name = "voucher_type" id ="custom_field_filter" class="bg-focus form-control" >
+  <option>Select voucher</option>
+  <option value="Invoice" <%= "selected='selected'" if params[:voucher_type]== "Invoice"%>>Invoice</option>
+  <option value="Estimate" <%= "selected='selected'" if params[:voucher_type]== "Estimate"%>>Estimate</option>
+  <option value="Purchase" <%= "selected='selected'" if params[:voucher_type]== "Purchase"%>>Purchase</option>
+<% if @company.plan.is_inventoriable? %>
+  <option value="StockReceiptVoucher" <%= "selected='selected'" if params[:voucher_type]== "StockReceiptVoucher"%> >Stock receipt voucher</option>
+  <option value="StockIssueVoucher" <%= "selected='selected'" if params[:voucher_type]== "StockIssueVoucher"%> >Stock issue voucher</option>
+    <option value="StockWastageVoucher" <%= "selected='selected'" if params[:voucher_type]== "StockWastageVoucher"%> >Stock wastage voucher</option>
+</select>
+<% end %>
+</td>
+<td>
+<input type="submit" value="Go" class="btn btn-success"/>
+</td>
+ </tr>
+  </table>
+</form>

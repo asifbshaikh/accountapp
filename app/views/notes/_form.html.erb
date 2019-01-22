@@ -1,0 +1,31 @@
+<%= form_for(@note) do |f| %>
+   <%= render 'shared/form_error', :object => @note %>
+   <table class="stylized" width="100%">
+     <thead> 
+       <tr><th colspan="2">New Note</th></tr>
+     </thead> 
+     <tbody> 
+       <tr class="gradeU even">
+	       <td width="25%"><%= f.label :subject, "Title", :class=>"required"  %></td>
+	       <td><%= f.text_field :subject, :autofocus =>"autofocus", :size => 50 %></td>
+	     </tr>
+		   <tr>
+		     <td><%= f.label :description, :class=>"required" %><br/><small>(Max 500 characters)</small></td>
+		     <td> <%= f.text_area :description, :rows => 5, :cols=> 52 %></td>
+		   </tr>
+		   <tr>
+		     <td>
+           <%= f.label :tags, "Tag your note"%><br/>
+           <small>(separate tags with a comma)</small>
+         </td>
+         <td><%= f.text_field :tag_list, :class=> "input", :size => 50 %></td>
+		   </tr>
+     </tbody>
+     <tfoot>
+       <tr>
+         <td colspan ="2"><%= f.submit 'Save Note', :class => 'btn btn-green btn-save' %>&nbsp;
+	       <%= link_to 'Cancel', notes_path, :class => "btn btn-cancel" %></td> 
+       </tr>
+     </tfoot>
+   </table> 
+<% end %>

@@ -1,0 +1,61 @@
+<table class="table table-striped b-t" id="line_items">
+    <thead>
+      <tr>
+        <th style=' width:20%;'>
+         <label class="control-label-required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+        </th>
+        <th style=' width:21%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+        <th style=' width:12%;'><label class = "control-label-required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Quantity" %></label></th>
+        <th style=' width:12%;'><label class="control-label-required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+        <th style=' width:8%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Disc %" %></th>
+        <th style=' width:11%;'>Tax</th>
+        <th style=' width:22%;text-align:right;'><label class="control-label-required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %></label></th>
+        <th style=' width:5%;'> </th>
+      </tr>
+    </thead>
+    <tbody>
+                  
+        <% @invoice.invoice_line_items.each_with_index do |invoice_line_item, index| %>
+           <%= render "invoice_line_items", :invoice_line_item => invoice_line_item, :index => index %>
+              <% end %>
+       <tr id="row_link" class='row-link' valign="top">            
+          <td valign="top" colspan="8">
+             <%= link_to "+ Add new row",{:action => :add_row, :index => @invoice.invoice_line_items.size}, :class => 'btn btn-white btn-sm',:remote => true %> 
+         </td>
+       </tr>
+        <% @invoice.shipping_line_items.each_with_index do |shipping_line_item, shipping_index| %>
+          <%= render "shipping_line_items", :shipping_line_item => shipping_line_item, :shipping_index => shipping_index %>
+          <% end %>
+       
+       <tr id="shipping_row_link" valign="top">           
+          <td valign="top" colspan="8">                                           
+          <%= link_to "+ Add other charge",{:action => :add_shipping_row, :shipping_index=>@invoice.shipping_line_items.size}, :class =>'btn btn-white btn-sm',:remote => true %></td>
+       </tr>
+          
+       <tr>
+        <td style='background-color:#fff;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Sub total</td>
+         <td align="right" style='background-color:#fff;'> <span id="inv-total">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+        <tr>
+        <tr>
+               <td style='background-color:#fff;border:none;' colspan='5'>&nbsp;</td>
+           <td class="ta-right" style='background-color:#fff;'>Discount</td>
+           <td align="right" style='background-color:#fff;'><span id="discount">0.00</span></td>
+           <td style='background-color:#fff;'></td>
+              </tr>
+        <tr>
+           <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Total tax <span id="tax-status"></span></td>
+         <td align="right" style='background-color:#fff;'><span id="tax-amount">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+      <tr>
+        <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+        <td class="ta-right" style='background-color:#fff;'><label>Total</label></td>
+        <td align="right" style='background-color:#fff;'><label> <span id = "total">0.00</span></label></td>
+        <td style='background-color:#fff;'></td>
+      </tr>
+  </tbody>
+  </table>

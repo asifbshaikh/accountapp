@@ -1,0 +1,2 @@
+$(".removeThis").remove();
+$("<%= escape_javascript render( 'stock_transfer_line_items',{ :stock_transfer_line_item=> @stock_transfer_line_item, :index => params[:index]} ) %>").prependTo("tbody#putHere");

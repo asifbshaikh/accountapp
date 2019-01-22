@@ -1,0 +1,46 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+  <form action = '' class="form-horizontal" method="get">
+    <div class="row">
+      <div class="form-group"><br/>
+      <div class="col-lg-1"></div>
+    <% if @company.plan.enterprise_plan? && @current_user.owner?%>
+          <div class="col-lg-2">
+          <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), {:prompt => 'Select branch',:style => "width:150px;"}) %>
+         </div>
+
+        <% end %>
+        <div class="col-lg-2">
+          <% if ["bills_payable", "bills_receivable", "credit_expense_reports", "sales_register", "purchase_register"].include?(@current_controller) %>
+            <%= select_tag('account_id', options_from_collection_for_select(@accounts, :id, :name, params[:account_id]), :prompt=>"All customers", :style => "width:150px;") %>
+          <% else %>
+            <%= select_tag('account_id', options_from_collection_for_select(@accounts, :id, :name, params[:account_id]), :style => "width:240px;") %>
+          <% end %>
+        </div>
+
+        <div class="col-lg-2">
+         <%= select_tag('user_id', options_from_collection_for_select(@company.users, :id, :full_name, params[:user_id]), {:prompt => 'Created By', :style => "width:160px;"}) %>
+         </div>
+        <div class="col-lg-1">
+          <%= text_field_tag :start_date, params[:start_date],  :placeholder => "Start date", :size => '5',:class=>"form-control parsley-validated" %>
+        </div>
+        <div class="col-lg-1">
+          <%= text_field_tag :end_date, params[:end_date],  :placeholder => "End date", :size => '5',:class=>"form-control parsley-validated" %>
+        </div>
+
+        <div class="col-lg-2">
+          <input type="submit" value="Search" class="btn btn-success"/>
+        </div>
+        </div>
+        </div>
+   </form>
+</div>
+
+
+<script type="text/javascript">
+   $('#account_id').select2();
+   $('#branch_id').select2();
+   $('#user_id').select2();
+</script>
+
+

@@ -1,0 +1,88 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file-text-alt text"></i> Taxes</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <a href="/duties_and_taxes/new" class="btn btn-success btn-lg"><i class="icon-plus"> </i> New Tax</a>
+        <a href="/duties_and_taxes/report" class="btn btn-white btn-lg"><i class="icon-bar-chart"> </i> Reports</a>
+        <p></p>
+      </div>
+    </div>
+  <section class="panel">
+            <header class="panel-heading">
+              Taxes
+            </header>
+            <div class="panel-body">
+              <%= render :partial => "shared/flash_msg"%> 
+              <div class="row text-small">
+                <div class="col-sm-4 m-b-mini">
+                </div>
+                <div class="col-sm-4 m-b-mini">
+<!--                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm btn-info">
+                      <input type="radio" name="options" id="option1"> <i class="icon-ok icon-large text-active"></i>Active
+                    </label>
+                    <label class="btn btn-sm btn-danger">
+                      <input type="radio" name="options" id="option2"> <i class="icon-ok icon-large text-active"></i>Inactive
+                    </label>
+                    <label class="btn btn-sm btn-inverse active">
+                      <input type="radio" name="options" id="option3"> <i class="icon-ok icon-large text-active"></i>All
+                    </label>
+                  </div>
+-->                  
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th class="th-sortable" >
+                      <%= sortable 'name' %>
+                      <span class="th-sort">
+                        <i class="icon-sort-down text"></i>
+                        <i class="icon-sort-up text-active"></i>
+                        <i class="icon-sort"></i>
+                      </span>
+                    </th>
+                    <th>Registration No</th>
+                    <th>Filing Frequency</th>
+                    <th>Tax rate</th>
+                    <th width="45">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @accounts.each do |account| %>
+                  <tr>
+                    <td><%= account.name%></td>
+                    <td><%=account.accountable.registration_number%></td>
+                    <td><%= account.get_filling_frequency %></td>
+                    <td><%= format_amount(account.accountable.tax_rate) %></td>
+                    <td>
+                      <% if account.archive? %>
+                        <%= form_for account, :html=>{:class=>"form-horizontal", :remote=>true, :style=>"margin-bottom:0px;"} do |f|%>
+                          <%= hidden_field_tag "account[end_date]", nil %>
+                          <%= f.submit 'Activate', :class=>"btn btn-white btn-xs active", :confirm=> "Are you sure?" %>
+                      <% end %>
+                    <% else %>
+                      <%= link_to 'Mark inactive', {:controller=>"duties_and_taxes", :action=>"show_modal", :account=>account.id}, :class=>"btn btn-white btn-xs", :remote=>true, :id=>"archive-btn" %>
+                    <% end %>
+                    </td>
+                  </tr>
+                <% end %>  
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-7 text-right text-center-sm">
+                  <%= paginate @accounts %>
+                </div>
+              </div>
+            </footer>
+          </section>
+    </section>
+
+</section>

@@ -1,0 +1,23 @@
+
+
+Hello <b><%= @leave_request.approver_name %></b>,
+<br/>
+<br/>
+A new leave request created by <b><%= User.find(@leave_request.user_id).first_name %></b>.<br/> 
+and selected you as approver.
+<br/>
+
+<b>Leave Summary</b><br/>
+   -----------------------------------------------<br/>
+  Leave type : <%= LeaveType.find(@leave_request.leave_type_id).leave_type %><br/>
+  Leave Duration : <%= @leave_request.start_date %> <b>to</b> <%= @leave_request.end_date %><br/>
+  for <b><%= @leave_request.no_of_days_on_leave %></b> days <br/>
+  Contact during leave : <%= @leave_request.contact_during_leave %><br/>
+  
+ 
+<br/><br/>
+
+ProfitBooks Team.
+<hr>
+Sent using <a href= "https://www.profitbooks.net" target = "_blank">ProfitBooks.net</a><br/>
+<a href= "https://www.profitbooks.net/home/pricing" target = "_blank">Create</a> your free account today and start managing office finances in a smarter way.

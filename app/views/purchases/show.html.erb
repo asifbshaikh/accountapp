@@ -1,0 +1,338 @@
+<section id="content">
+  <section class="main padder">
+    <div class='row'>
+      <div class='col-lg-3'>
+        <h2><i class="icon-file-text-alt text"></i> View Purchase</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@purchase.in_frozen_year?]}_purchase_actions"%>
+      </div>
+    </div>
+    <p></p>
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial => "shared/flash_msg"%>
+        <div class='row'>
+          <div class='col-sm-5'>
+            <%= @purchase.account.vendor.blank? ? customer_details(@purchase.account.customer) : vendor_details(@purchase.account.vendor) %>
+            
+            <b>GSTIN:</b> <%= @purchase.account.vendor.blank? ? @purchase.account.customer.gstn_id : @purchase.account.vendor.gstn_id %>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+              <div class="panel-body">
+              <div class="col-sm-6">
+                <% if !@purchase.project_id.blank? %> 
+                <p><strong>Under Project: </strong><%= @purchase.project_name %></p>
+                <% end %> 
+                <p><strong>Purchase Number#:</strong> <%=@purchase.purchase_number%><span class="badge bg-<%=purchase_status_badge%>"><%= @purchase.get_status %></span></p>
+                <% if !@purchase.bill_reference.blank? %>
+                <p><strong>Quotation Reference#:</strong> <%=  @purchase.bill_reference %></p>
+                <% end %>
+                <% if !@purchase.bill_date.blank? %>
+                <p><strong>Quotation Date#:</strong> <%=@purchase.bill_date %></p>
+                <% end  %>
+                <p><strong>Record Date :</strong> <%=@purchase.record_date.strftime("%d-%m-%Y") %></p>
+                <p><strong>Due Date :</strong> <%=@purchase.due_date.strftime("%d-%m-%Y") %></p>
+                <p><strong>Amount :</strong> <%= @purchase.currency %> <%= format_amount (@purchase.total_amount)%></p>
+                <% if @purchase.exchange_rate != 0 %>
+                  <p><strong>Exchange Rate :</strong> <%= format_amount(@purchase.exchange_rate) %></p>
+                <% end %>
+                <% if @purchase.purchase_order_id.present? %>
+                  <p><strong>Purchase Order Number#:</strong> <%= @purchase.purchase_order_number %></p>
+                <% end %>
+                <% if @purchase.allocated_gst_debit >= 0 %>
+                  <% @gst_debit_note.each do |gst_debit_note| %>
+                    <p><strong> Against Gst Debit Note: </strong> <%= link_to gst_debit_note.gst_debit_note_number, gst_debit_note_path(gst_debit_note) %>
+                  <% end %>
+                <% end %>
+                </div>
+                <% if !@custom_field.blank? %>
+                  <div class="col-sm-6">
+                  <% if !@purchase.purchase_order_id.blank? %>
+                  <p><strong>Generated from :</strong> <%= link_to @purchase.purchase_order.purchase_order_number , purchase_order_path(@purchase.purchase_order)%></p>
+                  <% end %>
+                  <%= render :partial => "custom_field_details" %>
+                  </div>
+                <% end %>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="icon-calendar"> </i>Created on <%=@purchase.created_at.strftime("%d-%m-%Y") %> by <%= @purchase.created_by_user %>
+                  </div>
+                  <div class="col-sm-6">
+                    <i class="icon-suitcase"> </i><strong> Project: </strong> <%= @purchase.project_id.blank? ? "<i>Not assigned</i>".html_safe : @purchase.project_name %>
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-lg-12'>
+            <table  class="table table-striped b-t text-small" id="report">
+              <thead>
+                <tr>
+                <th>Item</th>
+                <th>Description</th>
+                 <th class="text-right">Qty</th>
+                <th class="text-right">Unit Cost</th>
+                <th class="text-right">Discount</th>
+                <th class="text-right">Amount (<%= @purchase.currency %>)</th>
+                <!-- <th class="text-right">ITC Details</th> --> 
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @purchase_line_items %>
+                <%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+                <tr>
+                  <td align="right" colspan="5">Sub total</td>
+                  <td align="right"> <%=format_amount(@purchase.sub_total)%></td>
+                </tr>
+                <tr>
+                  <td align="right" colspan="5">Discount</td>
+                  <td align="right"> <%= number_with_precision @purchase.discount, :precision=>2 %></td>
+                </tr>
+                <tr>
+                 <td  align="right" colspan="5"><b>Tax <%= @purchase.tax_inclusive? ? "Inclusive" : "Exclusive" %></b></td>
+                  <td align="right"> <%= format_amount(@purchase.tax)%></td>
+                </tr>
+                <%= render :partial=> "other_charge_line_item_details" , :collection => @other_charge_line_items %>
+
+                <tr>
+
+                  <td align="right" colspan="5"><b>Total</b></td>
+                  <td align="right"><b>  <%= format_amount(@purchase.total_amount)%></b></td>
+                </tr>
+                 <tr>
+                 <% if @purchase.reverse_charge? %>
+                  <td  align="right" colspan="5"><b>Reverse charge</b></td>
+                  <td align="right"> 
+                  <%= number_with_precision @purchase.tax, :precision=>2 %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan='4'>&nbsp;</td>
+                  <td align="right"><b>Payment made</b></td>
+                  <td align="right"><b> <%= format_amount(@purchase.payment_maid)%></b></td> 
+                </tr>
+                <% if @purchase.settled? %>
+                  <tr>
+                    <td colspan='4'>&nbsp;</td>
+                    <td align="right"><b>Settled amount</b></td>
+                    <td align="right"><b> <%= format_amount(@purchase.settled_amount)%></b></td> 
+                  </tr>
+                <% end %>
+                <% if @purchase.has_return_any? %>
+                  <tr>
+                    <td colspan='4'>&nbsp;</td>
+                    <td align="right"><b>Return voucher amount</b></td>
+                    <td align="right"><b> <%=  format_amount(@purchase.debit_note_amount)%></b></td> 
+                  </tr>
+                <% end %>
+                <% if @purchase.has_debit_allocation_any? %>
+                  <tr>
+                    <td colspan='4'>&nbsp;</td>
+                    <td align="right"><b>Debit note amount</b></td>
+                    <td align="right"><b> <%= format_amount(@purchase.allocated_debit)%></b></td> 
+                  </tr>
+                <% end %>
+                <% if @payment_vouchers.sum(:tds_amount) > 0 %>
+                <tr>
+                  <td colspan='4'>&nbsp;</td>
+                  <td align="right"><b>TDS Deducted</b></td>
+                  <td align="right"><b> <%= format_amount(@purchase.tds_amt)%></b></td> 
+                </tr>
+                <% end %>
+                <% if @purchase.status_id == 0 && @purchase.outstanding > 0 %>
+                <tr>
+                  <td colspan='4'>&nbsp;</td>
+                  <td align="right"><b>Balance due</b></td>
+                  <td align="right"><b> <%= format_amount(@purchase.outstanding) %></b></td> 
+                </tr>
+                <% end %>
+
+                
+
+                <% if @purchase.exchange_rate != 0 && @purchase.status_id == 1 %>
+                <tr>
+                  <td colspan='4'>&nbsp;</td>
+                  <td align="right"><b><%= (@purchase.gain_or_loss > 0) ? "Gain" : "Loss" %></b> </td>
+                  <td align="right"><b> <%= format_amount(@purchase.gain_or_loss) %></b></td> 
+                </tr>
+                <% end %>
+                
+                
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-lg-12'>
+            <% if @payment_vouchers.blank? %>
+            <div class="alert alert-info">
+              <i class="icon-info-sign icon-large"></i> <strong>Payment is due for this purchase.</strong>
+            </div>
+            <%else%>
+            <table class="table table-striped b-t">
+              <thead>
+                <tr>
+                  <th>Voucher Number</th>
+                  <th>Voucher Date</th>
+                  <th>Payment Date</th>
+                  <th>Payment Mode</th>
+                  <% if @payment_vouchers.sum('tds_amount') > 0 %>
+                  <th class="text-right">TDS</th>
+                  <% end %>
+                  <th class="text-right">Amount (<%= format_amount(@purchase.currency)%>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "purchase_payment_vouchers" %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <% if @payment_vouchers.sum('tds_amount') > 0%>
+                    <td align="right" colspan="5">Total</td>
+                  <% else %>
+                    <td align="right" colspan="4">Total</td>
+                  <% end %>
+                    <td align="right">
+                    <%=format_amount(@purchase.payment_maid)%>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <% end %>
+          </div>
+        </div>
+        <!-- Gstr advance payment voucher display -->
+        <div class="row">
+          <div class='col-lg-12'>
+          <b>Gst Advance Payment</b>
+            <% if @purchase.gstr_advance_purchases_payments.blank? %>
+            <div class="alert alert-info">
+              <i class="icon-info-sign icon-large"></i> <strong>Payment is due for this purchase.</strong>
+            </div>
+            <%else%>
+            <% @purchase.gstr_advance_purchases_payments.each do |purchase|%>
+            <table class="table table-striped b-t">
+              <thead>
+                <tr>
+                  <th>Voucher Number</th>
+                  <th>Voucher Date</th>
+                  <th>Payment Date</th>
+                  <th class="text-right">Amount (<%= format_amount(@purchase.currency)%>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style='background-color:#fff; border-bottom:none;'><%= link_to purchase.gstr_advance_payment.voucher_number,purchase.gstr_advance_payment %></td>
+                  <td class="text" style='background-color:#fff;'><%= purchase.gstr_advance_payment.voucher_date %></td>
+                  <td class="text" style='background-color:#fff;'><%= purchase.gstr_advance_payment.received_date %></td>
+                  <td align="right" class="text" style='background-color:#fff;'><%= format_amount purchase.amount %></td>
+                </tr>
+              </tbody>
+              <% end %>
+              <tfoot>
+              <tr></tr>
+                <tr>
+                    <td align="right" colspan="3"><strong>Total</strong></td>
+                    <td align="right"><strong>
+                    <%=format_amount(@purchase.payment_maid)%></strong>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <% end %>
+          </div>
+        </div>
+        <!--  -->
+        <div class='row'>
+          <%if !@purchase.customer_notes.blank?%>
+            <div class="col-lg-6">
+              <label for="productcat">Customer Notes</label><br/>
+              <%= breaking_word_wrap(@purchase.customer_notes)%>
+            </div>
+          <% end %>
+          <% if !@purchase.terms_and_conditions.blank?%> 
+            <div class="col-lg-6">
+            <label for="productvendor">Terms and Conditions</label><br/>
+            <%= breaking_word_wrap(@purchase.terms_and_conditions) %>
+            </div>
+          <% end %> 
+        </div>
+       </div>
+    </section>
+  </section>
+
+<div class="row ">
+<div class="col-lg-12">
+<section class="col-lg-12">
+  <section class="panel">
+   <div class='voucher-title-info-error'></div>
+  <header class="panel-heading">
+    <i class="icon-book"></i> Attachments
+
+ <button title="Add New Attachment" id ="add_new" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</button>
+  </header>
+  <body>
+  <div id="purchase_attachment" style="display:none;">
+    <header class="panel-heading">
+            <strong> Attach a scanned proof (Image or PDF document)</strong>
+    </header>
+        <div class="panel-body">
+  <%= form_for('purchase_document',:url=>{:action => :new, :controller => "/purchase_attachments"},:html => {:multipart => true, :class=>"form-horizontal", :remote=>true}) do |f| %>
+  
+  <%= render "shared/form_error", :object => @purchase %>
+  
+  <div class="block">
+    <%= hidden_field_tag  "company_id" ,@company.id,:id => "company" %>
+    <%= f.label :uploaded_file, "Choose File", :class=>"control-label" %>
+    <%= f.file_field :uploaded_file, :class => "btn btn-white",:id => "file" %>
+      <%= hidden_field_tag  "purchase_id" , @purchase.id ,:id => "purchase_id"%>
+   </div>
+  <div class="block">
+    <%= f.submit "Upload", :class=>"btn btn-success", :id =>"submit"%>
+  </div>
+<% end %>
+        </div>
+  </div>
+</body>
+    <% if @purchase_attachment.blank?%>
+      <%= render :partial => "shared/no_record"%>
+        <%else%>
+
+            <div class="panel-body">
+              <div class="table-responsive row">
+                <table class="table table-striped b-t">
+                  <thead>   
+                     <%= render :partial => "purchase_attachments/header" %>
+                  </thead>
+                  <tbody>
+                  <%= render :partial => "purchase_attachments/show",:documents => @purchase_attachment,:purchase=> @purchase %>
+                  </tbody>
+                  <tfoot>
+                     <%= render :partial => "purchase_attachments/footer" %>
+                  </tfoot>
+               </table>
+               </div>
+            </div>
+      <%end%>
+   </section>
+  </section>
+ </div>
+</div>
+    
+
+<div id="modal-make-payment" class="modal fade">
+  <%= render "payment_form", :purchase => @purchase %>
+</div>
+<% if @purchase.unpaid? %>
+  <div id='modal-settlement' class='modal fade'>
+    <%= render "settlement_form" %>
+  </div>
+<% end %>

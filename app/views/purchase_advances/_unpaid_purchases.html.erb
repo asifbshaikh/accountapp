@@ -1,0 +1,19 @@
+<% purchases_payments.each_with_index do |purchase_payment, index| %>
+  <% purchase = purchase_payment.purchase %>
+  <tr>
+    <td><%= purchase.purchase_number %></td>
+    <td><%= purchase.currency %> <%= number_with_precision purchase.total_paid, :precision=>2 %></td>
+    <td><%= purchase.currency %> <%= number_with_precision purchase.outstanding, :precision=>2 %></td>
+    <td><%= purchase.due_date  %></td>
+    <td>
+      <%= hidden_field_tag "purchase_advance[purchases_payments_attributes][#{index}][id]", purchase_payment.id %>
+      <%= hidden_field_tag "purchase_advance[purchases_payments_attributes][#{index}][purchase_id]", purchase.id %>
+      <% if !purchase.foreign_currency? %>
+        <%= text_field_tag "purchase_advance[purchases_payments_attributes][#{index}][tds_amount]", purchase_payment.tds_amount , :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %>
+      <% else %>
+        <%= text_field_tag "purchase_advance[purchases_payments_attributes][#{index}][tds_amount]", "", :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);", :disabled => true %>
+      <% end %>
+    </td>
+    <td><%= text_field_tag "purchase_advance[purchases_payments_attributes][#{index}][amount]", purchase_payment.amount, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %></td>
+  </tr>
+<% end %>

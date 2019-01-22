@@ -1,0 +1,148 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-10">
+      <h3><i class="icon-edit text"></i>
+        Purchase Order to Purchase - <%= @purchase.purchase_number%></h3>
+      </div>
+      <div class="col-lg-2 m-t-large" align="right">
+       <!--<%= link_to raw('<i class="icon-mail-reply"> </i>'), purchases_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>-->
+        <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a> -->
+        <p></p>        
+      </div>  
+    </div>
+    <%= render :partial => "shared/project_auto_complete" %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <%= form_for @purchase, :html => {:multipart => true, :class =>'form-horizontal'} do |f| %>
+      <div id="jHere"></div>
+      <%= render 'shared/form_error', :object => @purchase %>
+      <div class='form-group'>
+        <div class='col-lg-3'>
+        <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+        <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+        <%= hidden_field_tag "purchase[status_id]", 0 %>      
+        <%= hidden_field_tag "purchase[purchase_order_id]", @purchase_order.id %>      
+        <%= hidden_field_tag "purchase[bill_reference]", @purchase_order.purchase_order_number %>      
+        <%= f.hidden_field :purchase_number %>
+          <label  class="control-label-required">Vendor Name</label> <%= @purchase.vendor.name %><br />
+          <%= f.hidden_field :account_id %>
+          <% if @purchase.foreign_currency? %>
+            <label>Purchase Currency:</label>  <%= @purchase.currency %><br/>
+            <%= f.hidden_field :currency_id %>
+            <label>Exchange rate in <%= @company.currency_code %>:</label> <%= number_with_precision @purchase.exchange_rate, :precision=>2 %>
+            <%= f.hidden_field :exchange_rate %>
+          <% end %>
+        
+        </div>
+        <div class='col-lg-1'></div>
+        <div class='col-lg-3'>
+        <%= f.label :Record_date,  :class=>"control-label-required"  %>
+        <%= f.text_field :record_date, :size => "14", :class => 'form-control bg-focus' %>
+        </div>
+        <div class='col-lg-1'></div>
+        <div class='col-lg-3'>
+        <%= f.label :Due_date,  :class=>"control-label-required"  %>
+        <%= f.text_field :due_date, :class => 'form-control bg-focus' %>
+        </div>
+      </div>
+      <table class="table table-striped b-t text-small purchase-line" id="purchase_line_items">
+        <thead>
+          <tr>
+            <th width='19%'><label class="control-label-required">Item</label></th>
+            <th width='19%'>Description</th>
+            <th width='12%'><label class="control-label-required">Qty</label></th>
+            <th width='12%'><label class="control-label-required">Unit Cost</label></th>
+            <th width='11%'>Discount%</th>
+            <th width='11%'>Tax</th>
+            <th width='22%'><label class="control-label-required">Amount (<span class="comcur"><%= @purchase.currency%></span><span id='taccur'></span>)</label></th>
+            <th width='5%'></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @purchase.purchase_line_items.each_with_index do |purchase_line_item, index| %>
+        <%= render "po_to_purchase_line_items", :purchase_line_item => purchase_line_item, :index => index %>
+        <% end %>
+        
+        <% @purchase.other_charge_line_items.each_with_index do |other_charge_line_item, other_charge_index| %>
+        <%= render "po_other_charge_line_items", :other_charge_line_item => other_charge_line_item, :other_charge_index => other_charge_index %>
+        <% end %>
+
+        <tr>
+          <td colspan='4'>
+          <td align='right' colspan='2'>Sub total</td>
+          <td align='right'><%= number_with_precision @purchase.purchase_line_total_amount, :precision=>2  %></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4"></td>
+          <td align='right' colspan='2'>Discount</td>
+          <td align='right'> <span id="discount"><%= number_with_precision @purchase.discount, :precision=>2  %></span></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="4"></td>
+          <td align='right' colspan='2'>Tax<span id="tax-status"></span></td>
+          <td align='right'> <span id="tax-amount"><%= number_with_precision @purchase.tax_total_amount, :precision=>2  %></span></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tr>
+        <td colspan="4"></td>
+        <td align='right' colspan='2'><b>Total</b></td>
+        <td align='right'> <span id = "total"><%= number_with_precision @purchase.total_amount, :precision=>2  %></span></td>
+        <td></td>
+      </tr>
+      </table>
+      <div class='form-group'>
+      <div class='col-lg-12'>
+        <% unless !@purchase.uploaded_file_file_name? %>
+        <%=  truncate(@purchase.file_name, :length => 30)%>
+        (<%= number_to_human_size(@purchase.file_size) %>)<br/>
+        <% end %> 
+        <% if !@purchase.uploaded_file_file_name? %> 
+        <%= f.label "Attach a scanned proof (Image or PDF document)" %>
+        <% else %>
+        <%= f.label "Replace scanned proof (Image or PDF document)"%>
+        <% end %>
+
+      <%= f.file_field :uploaded_file, :class => "btn btn-white" %><%= hidden_field_tag "old_file_size", @purchase.old_file_size %>
+
+      <% unless !@purchase.uploaded_file_file_name? %>
+        <div class='checkbox'>
+        <label class='checkbox-custom'>
+        <input type="checkbox" name="purchase[delete_uploaded_file]" value=1>
+        <i class="icon-unchecked checked"></i>
+        Remove file
+        </label>
+        </div>
+      <% end %>
+      </div>
+      </div>
+       <div class="form-group">
+        <div class="col-lg-5">
+        <label class="control-label">Customer Notes</label>
+          <%= text_area_tag "purchase[customer_notes]", "#{@purchase.customer_notes.blank? ? @voucher_setting.customer_notes : @purchase.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+        <label class="control-label">Terms and Conditions</label>
+          <%= text_area_tag "purchase[terms_and_conditions]", "#{@purchase.terms_and_conditions.blank? ? @voucher_setting.terms_and_conditions : @purchase.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %><br/>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <div class="col-lg-8 col-lg-offset-4">
+        <%= hidden_field_tag 'purchase_order_id', @purchase_order.id %>
+        <%= f.submit "Save", :class => "btn btn-success" %> &nbsp;   
+        <%= link_to 'Cancel', "/purchase_orders/#{@purchase_order.id}", :class => "btn btn-default" %>
+        </div>
+      </div>  
+      <%end %>
+      </div>
+    </section>
+  </div>
+</div>
+  </section>
+</section>

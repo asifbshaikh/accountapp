@@ -1,0 +1,9 @@
+$(".popup-error").remove();
+<% if @basic_details  %>
+ $('.user_detail_info').show();
+  $('.user_detail_add').hide();
+	$(".user-basic-info-error").after("<div class='alert alert-success invoice-setting-notif'>Basic information updated successfully.</div>")
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+ window.location.reload()

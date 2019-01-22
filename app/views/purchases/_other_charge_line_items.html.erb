@@ -1,0 +1,17 @@
+<tr id="other_charge_row<%= other_charge_index %>" valign="top" class = 'other_charge_line'>
+  <%= hidden_field_tag "purchase[other_charge_line_items_attributes][#{other_charge_index}][id]",other_charge_line_item.id %>
+  <%= hidden_field_tag "purchase[other_charge_line_items_attributes][#{other_charge_index}][_destroy]"%>
+  <td colspan=2 ></td>
+  <td colspan="2" align='right'>
+    <label class="required">Add Other Charge:</label>
+  </td>
+  <td colspan="2">
+    <%= select_tag "purchase[other_charge_line_items_attributes][#{other_charge_index}][account_id]", options_from_collection_for_select(@other_charge_accounts, :id, :name, other_charge_line_item.account_id ), :include_blank => false, :class=>"form-control bg-focus", :id => 'other_charge_dropdown' %>
+    <%= hidden_field_tag "other_charge_index", other_charge_index %>
+  </td>
+  <td align='right'>
+    <%= text_field_tag "purchase[other_charge_line_items_attributes][#{other_charge_index}][amount]", other_charge_line_item.amount, :class =>'form-control bg-focus text-right', :id =>'other_charge', :onkeydown => "return balOnly(event);", :maxlength => 20 %>
+  </td>
+  <td><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_other_charge_item, :other_charge_index => other_charge_index, :other_charge_line_item_id => other_charge_line_item.id }, :id => 'cancel', :class =>"btn btn-danger",:remote => true %>
+  </td>
+</tr>

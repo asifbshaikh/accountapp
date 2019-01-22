@@ -1,0 +1,15 @@
+$("#row-loader").remove();
+$(".row-link").before("<%= escape_javascript render('linked_tax', {:tax => nil, :index => params[:index]}) %>");
+$(".row-link").replaceWith("<%= escape_javascript render('row_link', {:index => params[:index]}) %>");
+
+if($("#sales").is(":checked")){
+  $('.sales-info').show();
+}else{
+  $('.sales-info').hide();
+}
+
+if($("#purchase").is(":checked")){
+  $('.purchase-info').show();
+}else{
+  $('.purchase-info').hide();
+}

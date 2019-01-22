@@ -1,0 +1,15 @@
+<script>
+  $(document).ready(function() {
+    $('#to_account_auto_complete').typeahead({
+      name: 'customers',
+      local: <%= @to_accounts.blank? ? [].to_json : raw(@to_accounts.map {|cust| cust.name }.to_json(:only => [:name ])) %>
+    });
+
+    $('#from_account_auto_complete').typeahead({
+      name: 'account',
+      local: <%= @from_accounts.blank? ? [].to_json : raw(@from_accounts.map {|acc| acc.name }.to_json(:only => [:name ])) %>
+    });
+
+  });
+</script>
+

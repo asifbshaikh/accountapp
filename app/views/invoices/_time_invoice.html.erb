@@ -1,0 +1,50 @@
+<table class="table table-striped" id="line_items">
+    <thead>
+      <tr>
+        <th style=' width:20%;'><label class="control-label-required">Task</label></th>
+        <th style=' width:21%;'>Description</th>
+        <th style=' width:12%;'><label class = "control-label-required">Hours</label></th>
+        <th style=' width:12%;'><label class="control-label-required">Rate</label></th>
+        <th style=' width:8%;'>Disc %</th>
+        <th style=' width:11%;'>Tax</th>
+        <th style=' width:22%;text-align:right;'><label class="control-label-required" align="right">Amount (<span class="comcur"><%= @invoice.currency %></span><span id='taccur'></span>)</label></th>
+        <th style=' width:5%;'> </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @invoice.time_line_items.each_with_index do |time_line_item, index| %>
+        <%= render "time_line_items", :time_line_item => time_line_item, :index => index %>
+        <% end %>
+       <tr id="row_link" class='row-link' valign="top">            
+          <td valign="top" colspan="8">
+             <%= link_to "+ Add new row",{:action => :add_time_row, :index => @invoice.time_line_items.size}, :class => 'btn btn-white btn-sm',:remote => true %>
+
+         </td>
+       </tr>
+       <tr>
+         <td style='background-color:#fff;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff; '>Sub total</td>
+         <td align="right" style='background-color:#fff;'><span id="inv-total">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+        <tr>
+        <tr>
+          <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+           <td class="ta-right" style='background-color:#fff;'>Discount</td>
+           <td align="right" style='background-color:#fff;'><span id="discount">0.00</span></td>
+           <td style='background-color:#fff;'></td>
+              </tr>
+        <tr>
+           <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Total tax</td>
+         <td align="right" style='background-color:#fff;'><span id="tax-amount">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+      <tr>
+        <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+        <td class="ta-right" style='background-color:#fff;'>Total</td>
+        <td align="right" style='background-color:#fff;'><span id = "total">0.00</span></td>
+        <td style='background-color:#fff;'></td>
+      </tr>
+    </tbody>
+    </table>

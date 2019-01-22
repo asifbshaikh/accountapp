@@ -1,0 +1,29 @@
+<%= form_for(@support) do |f| %>
+  <%= render 'shared/form_error', :object => @support %>
+  <div class="column width6 first">
+  <table class="display stylized" id="act_details">
+    <div id='user_info_div'><span class='basic_info'>Ticket Number : <%= @support.ticket_number%> <%= f.hidden_field :ticket_number %></span></div>
+   <tbody>
+     <tr>
+       <td><%= f.label 'Message To' %></td>
+       <td><label> Support ProfitBooks Team</label><%= f.hidden_field :assigned_to %></td>
+     </tr>
+     <tr>
+       <td><%= f.label :subject, :class => 'required' %></td>
+       <td>
+        <%= f.text_field :subject, :class => "half" %>
+       </td>
+     </tr>
+     <tr>
+	<td><%= f.label 'Message' %></td>
+	<td><%= f.text_area :description, :class => 'medium half' %></td>
+     </tr>
+   </tbody>
+   <tfoot>
+	<tr>
+	   <td colspan="2"><%= f.submit 'Send', :class => "btn btn-green"%></td>
+  	</tr>
+   </tfoot>
+  </table>
+ </div>
+<% end %>

@@ -1,0 +1,47 @@
+<div class='form-group'>
+  <div class='col-lg-2 text-right'>
+    <%= f.label :From_account_id, "From account", :class => "control-label-required" %>
+  </div>
+  <div class='col-lg-3'>
+    <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, @payment_voucher.from_account_id), {}, {:style=>"width:200px;"}) %>
+    <span id="bal"></span>
+  </div>
+</div>
+
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= f.label :Payment_date, :class=>"control-label-required" %>
+	</div>
+	<div class='col-lg-3'>
+		<%= f.text_field :payment_date, :class=>"form-control bg-focus" %>
+	</div>
+</div>
+
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= f.label :Amount, :class => "control-label-required" %>
+  </div>
+  <div class='col-lg-3'>
+    <%= f.text_field :amount,:class=>"form-control bg-focus text-right", :onkeydown => 'return numbersOnly(event);', :style=>"width:120px;", :maxlenght=>'11' %> 
+	</div>
+</div>
+
+<% if !@payment_voucher.tds_account_id.blank? && !@payment_voucher.tds_amount.blank? && @company.indian_company? %>
+	<div class='form-group'>
+		<div class='col-lg-2 text-right'>
+			<%= label_tag "TDS", "TDS Section", :class => "control-label-required" %>
+		</div>
+		<div class="col-lg-3">
+			<%= select_tag('payment_voucher[tds_account_id]', options_from_collection_for_select(Account.get_tds_payable_accounts(@company), :id, :name, @payment_voucher.tds_account_id ), {:prompt=> "Select TDS Section", :style=>"width:210px;"})%>
+		</div>
+	</div>
+  <div class='form-group'>
+ 		<div class='col-lg-2 text-right'>
+      <%= label_tag "payment_voucher[tds_amount]", "TDS Amount", :class=>'control-label' %>
+    </div>
+    <div class='col-lg-3'>
+    	<p></p>
+     	<%= f.text_field :tds_amount, :style=>"width:120px;", :onkeydown => "return numbersOnly(event);", :class => "form-control bg-focus text-right", :placeholder=>'TDS Amount' %>
+    </div>
+	</div>
+<% end %>

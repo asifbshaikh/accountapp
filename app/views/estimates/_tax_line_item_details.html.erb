@@ -1,0 +1,9 @@
+<% 
+ tax_account = tax_line_item_details.account
+ if !(tax_account.accountable_type=='DutiesAndTaxesAccounts' && tax_account.accountable.calculation_method==4 && tax_account.accountable.split_tax == 0) 
+ %>
+<tr valign="top">
+  <td class="text-right" colspan='<%= estimate_line_count %>' style="background:none;"><%= tax_line_item_details.account.name %></td>
+  <td class="text-right" style="background:none;"><%=  number_with_precision @estimate.group_tax_amt(tax_line_item_details.account_id), :precision=>2 %></td>
+</tr> 
+<% end %>

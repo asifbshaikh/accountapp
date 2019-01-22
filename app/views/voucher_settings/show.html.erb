@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @voucher_setting.company_id %>
+</p>
+
+<p>
+  <b>Voucher number strategy:</b>
+  <%= @voucher_setting.voucher_number_strategy %>
+</p>
+
+<p>
+  <b>Prefix:</b>
+  <%= @voucher_setting.prefix %>
+</p>
+
+<p>
+  <b>Suffix:</b>
+  <%= @voucher_setting.suffix %>
+</p>
+
+<p>
+  <b>Voucher type:</b>
+  <%= @voucher_setting.voucher_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_voucher_setting_path(@voucher_setting) %> |
+<%= link_to 'Back', voucher_settings_path %>

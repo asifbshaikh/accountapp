@@ -1,0 +1,15 @@
+<% @payment_vouchers.each do |payment| %>
+ <% payment_voucher = payment.payment_voucher %>
+	<tr>
+		<td><%= link_to payment_voucher.voucher_number, payment_voucher_path(payment_voucher) %></td>
+		<td><%= payment_voucher.voucher_date %></td>
+		<td><%= payment_voucher.payment_date %></td>
+		<td><%= payment_voucher.payment_detail.payment_mode%>
+	  <%= (payment_voucher.exchange_rate != 0) ? "(Exchange rate in #{@company.currency_code} = #{payment_voucher.exchange_rate})" : "" %>
+	  </td>
+		<% if @payment_vouchers.sum(:tds_amount)>0 %>
+		<td align="right"><%= number_with_precision payment.tds_amount, :precision=>2 %></td>
+		<% end %>
+		<td align="right"><%= number_with_precision payment.amount, :precision=>2 %></td>
+	</tr>
+<% end %>

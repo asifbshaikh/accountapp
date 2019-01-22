@@ -1,0 +1,64 @@
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+   <section class="column first">
+      
+     <!--  <form  action="update"> -->
+     	
+          <div class="column width6 first">
+			<% if @ledgers.nil? || @ledgers.blank? %>
+          		<%= render :partial => "shared/no_record" %>
+          	<% else %>
+          	  &nbsp;&nbsp;
+                 	
+                <div id='report_header' align="center">
+                    <span class='company_name'><%= @company.name %></span>
+                    <br>
+                    <span >123, raja marg,<br>Magarpatta road , Hadapsar</span>
+                    <br>&nbsp;
+                    <span class='report_title'> <b> Bank Book</b></span><br>
+                    <br><br>
+                    1-Apr-2010 to 31-Mar-2011
+                </div>
+                <br>
+            <table width="738" class="display stylized full" id="report" style="" border="1">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Corresponding a/c</th>
+                  <th>Description</th>
+                  <th>Debit</th>
+                  <th>Credit</th>
+                 </tr>
+              </thead>
+              <tbody>
+              	<% for ledger in @ledgers %>
+                <tr valign="top">
+                  <td valign="top" ><%= ledger.transaction_date%></td>
+                  <td class="ta-left"><%= Account.find(ledger.retrieve_corresponding_account).name%></td>
+                  <td ><%= ledger.description %></td>
+                  <td class="ta-left" ><%= ledger.credit %></td>
+                  <td class="ta-left" ><%=  ledger.debit %></td>
+                </tr>
+                <% end %>
+              </tbody>
+             
+            </table><br />
+            
+            <p>
+                    22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                </p>
+          </div>	
+         
+     <% end %> 
+       <!-- </form> -->
+    </section>
+    <!-- End of Left column/section -->
+
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

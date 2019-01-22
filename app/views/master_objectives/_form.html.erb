@@ -1,0 +1,37 @@
+<%= form_for(@master_objective) do |f| %>
+   <%= render 'shared/form_error', :object => @master_objective %>
+   <table class="display stylized" id="act_details" >
+   	<div id='user_info_div'><span class='basic_info'>Enter Master Objective</span></div>
+    	 <!-- <thead> 
+   <tr><th colspan="2">Enter Master Objective</th></tr>
+   </thead> --> 
+   <tbody> 
+  <tr>
+		    <td><%= f.label :department_id,"Objective for department ", :class => "required" %><br />
+		    <%= collection_select(:master_objective, :department_id, @departments, :id, :name, :prompt => true) %></td>
+				<!-- &nbsp;<%= link_to "Add New Department", departments_path, :class => "nyroModal" %> -->
+</tr>
+<tr>
+		    <td><%= f.label :objective_name, :class =>"required" %><br />
+		    <%= f.text_field :objective_name,:autofocus =>"autofocus" %></td>
+	</tr>
+<tr>
+		    <td><%= f.label :details, :class => "required" %><br />
+		    <%= f.text_area :details, :rows=> 4, :cols=> 75  %></td>
+</tr>
+</body>
+  <tfoot>
+		 	<tr>
+		 	      <td colspan="2">
+		 	      <%if @departments.blank?  %>
+	              <a href="#" class="btn btn-green">Save</a>
+            <% else %>
+	              <%= f.submit :value =>'Save', :class=>"btn btn-green"%>
+            <% end %>
+            &nbsp;<%= link_to "Cancel", master_objectives_path, :class=>"btn btn-grey" %>
+            </td>
+      </tr>      
+		  </tfoot>
+  
+  </table>
+<% end %>

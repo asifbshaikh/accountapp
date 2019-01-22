@@ -1,0 +1,41 @@
+<!-- Page title -->
+<<!--<%= render 'shared/page_title'%>-->
+<!-- Page content -->
+    <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+
+         <!-- Left column/section -->
+         <section  class="column width6 first">
+            <p id="notice"><%= notice %></p>
+
+            <div class="column width3 first">
+              <fieldset>
+              <legend> Job Details : </legend><p>
+ 
+              <table width="80%" cellpadding="2" cellspacing="2">
+   								 <tr>
+                      <th align="left">Title:</th>
+                      <td align= "left"><%= @job.title %></td>
+                   </tr>
+                   <tr>
+                       <th align="left">Description:</th>
+                       <th align="left"><%= @job.description %></th>
+                   </tr>
+                    <tr>
+                       <th align="left">Status:</th>
+                       <th align="left"><%= @job.status %></th>
+                   </tr>
+                   
+                   
+              </table> 
+
+              <p >
+                 <%= link_to 'Edit', edit_job_path(@job),{:class=>"btn btn-green big" } %> &nbsp;
+                 <a href="/jobs" class="btn btn-green big">Back</a>
+          </p>
+              </fieldset>
+            </div>
+           <!-- End of Left column/section -->
+        </section>
+                 

@@ -1,0 +1,2 @@
+module CreditNotesHelper
+end

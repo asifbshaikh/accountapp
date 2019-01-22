@@ -1,0 +1,5 @@
+<% if !@invoice_return.invoice.gst_invoice? %>
+<%= link_to raw('<i class="icon-anchor"> </i>Allocate Amount'), "/credit_notes/allocate?id=#{@invoice_return.credit_note.id}", :class=>"btn btn-info btn-lg" %>
+<% else %>
+<%= link_to raw('<i class="icon-anchor"> </i>Allocate Amount'), "/gst_credit_notes/allocate?id=#{@invoice_return.gst_credit_note.id}", :class=>"btn btn-info btn-lg" %>
+<% end %>

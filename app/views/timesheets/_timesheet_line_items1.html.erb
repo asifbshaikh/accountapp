@@ -1,0 +1,14 @@
+<tr valign="top" class ='time_stamp'>
+<td valign="top" style='padding-left:0;' width='30%'>
+  <%= select_tag "task_id", options_from_collection_for_select(@tasks, :id, :description,{:selected => params[:task_id]} ), :include_blank => true, :class=>"bg-focus form-control" %>
+</td>
+ <% 7.times do |index| %>
+ <td>
+   <%= text_field_tag "timestamp_#{index}", "", :size =>"1",:maxlength=>"2", :class => "form-control text-right" %>
+   <%= hidden_field_tag "day_#{index}", @dates[index].to_date %>
+  </td>
+ <% end %>
+ <td class="text-right">
+<span id="timestamp">0.0</span>
+  </td>
+</tr>

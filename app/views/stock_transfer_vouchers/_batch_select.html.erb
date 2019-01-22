@@ -1,0 +1,4 @@
+<div class='transfer-batch-details' style="display:inline">
+  <%= select_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{params[:index]}][product_batch_id]", options_from_collection_for_select_with_data(@product_batches, :id, :batch_number, "#{@product_batches.first.id unless @product_batches.blank?}" ,{:'quantity' => :quantity}), :style => "width:30%;display:inline;", :id => "batch-select", :"data-unit"=>@product_batches.first.product.unit_of_measure, :'data-index' => params[:index], :class=>'form-control bg-focus transfer-batch-select'  %>
+  <i style='color:green;' id='qty-notif'>Available qty <%= "#{@product_batches.first.quantity} #{@product_batches.first.product.unit_of_measure}" %></i>
+</div>

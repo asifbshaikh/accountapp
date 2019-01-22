@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sales_order_line_item_id: 1
+  account_id: 1
+
+two:
+  sales_order_line_item_id: 1
+  account_id: 1

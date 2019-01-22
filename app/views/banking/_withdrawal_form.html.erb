@@ -1,0 +1,90 @@
+<%= render :partial => "shared/banking_auto_complete" %>
+        <%= render :partial => 'shared/banking_acc_bal' %>
+<%= form_for @withdrawal, :html => {:class => "form-horizontal"} do |f| %>
+      <%= render 'shared/form_error', :object => @withdrawal %> 
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+          <label class="control-label">Voucher Number</label>
+        </div>
+        <div class="col-lg-3">
+          <label class="control-label">
+            <%= @withdrawal.voucher_number%><%= f.hidden_field :voucher_number %>
+          </label>
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-lg-2 text-right">
+          <%= f.label :Transaction_date,  :class=>"control-label-required"  %>
+        </div>
+        <div class="col-lg-3">
+          <%= f.text_field :transaction_date, :size => "14", :class => 'bg-focus form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+         <%= f.label :From_account_id, :class=>"control-label-required"%>
+        </div>
+        <div class="col-lg-3">
+        <div class="input-group">
+         <!-- <input type="text" name="from_account_name" class="bg-focus form-control"  
+          id="with_from_account" value='<%= (!@withdrawal.from_account_id.blank?)? "#{@company.accounts.find(@withdrawal.from_account_id).name}" : ""%>' /> -->
+          <%= f.select(:from_account_id, options_from_collection_for_select(@with_from_accounts, :id, :name), {:prompt => 'Select Account'},{:style => "width:210px;"}) %>
+          <div class="input-group-btn">
+              <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#modal1'>
+                <span class="dropdown-label"><i class="icon-plus"></i></span>  
+              </button>
+            </div>
+          </div>
+          <span id ='from_acc_bal'></span>
+        </div>
+      </div>
+       <div class="form-group">
+       <div class="col-lg-2 text-right">
+          <%= f.label :To_account_id,:class=>"control-label-required" %>
+       </div>
+        <div class="col-lg-3">
+        <div class="input-group">
+          <!-- <input type="text" name="to_account_name" class= "bg-focus form-control" 
+           id="with_to_account" value='<%= (!@withdrawal.to_account_id.blank?)? "#{@company.accounts.find(@withdrawal.to_account_id).name}" : ""%>' /> -->
+           <%= f.select(:to_account_id, options_from_collection_for_select(@with_to_accounts, :id, :name), {:prompt => 'Select Account'},{:style => "width:210px;"}) %>
+           <div class="input-group-btn">
+              <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#modal2'>
+                <span class="dropdown-label"><i class="icon-plus"></i></span>  
+              </button>
+            </div>
+           </div>
+          <span id ='to_acc_bal'></span>
+        </div>
+        </div>
+       <div class="form-group">
+       <div class="col-lg-2 text-right">
+          <%= f.label :Amount, :class =>"control-label-required" %>
+       </div> 
+        <div class="col-lg-3">
+          <%= f.text_field :amount , :onkeydown => "return numbersOnly(event);", :maxlength => 18, :size => "14", :class=> "bg-focus form-control text-right" %>
+        </div>
+      </div>
+      <div class="form-group">
+      <div class="col-lg-2 text-right">
+          <label class="control-label">Description</label>
+      </div>
+        <div class="col-lg-4">
+          <%= f.text_area :description, :rows => "3", :class=>"bg-focus form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+          <div class="col-lg-7 col-lg-offset-3">                      
+            <button type="submit" class="btn btn-success">Save</button>
+            <%= link_to 'Cancel', banking_index_path, :class => "btn btn-default" %>
+          </div>
+      </div>
+      <% end %>
+
+      <!-- .modal -->
+  <div id="modal1" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @with_from_account_heads, :transaction_type => "bankacc" %>
+  </div>
+  <div id="modal2" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @with_to_account_heads, :transaction_type => "" %>
+  </div>
+  <!-- / .modal -->

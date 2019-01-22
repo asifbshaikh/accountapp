@@ -1,0 +1,50 @@
+<!-- Page title -->
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-8">
+       <h2><i class="icon-file text"></i>Billing Invoice History</h2>
+        </div>
+        <div class="col-lg-4 m-t-large" align="right">
+           <%= link_to raw('<i class="icon-mail-reply"> </i>'), billing_index_path,:title=>"Back" ,:class => 'btn btn-default btn-lg' %>
+           <p></p>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+          <%= render :partial=> "shared/flash_msg"%>
+          <div class="panel-body">
+      	<% if @billing_invoices.blank? %>
+      			<%= render :partial => "shared/no_record" %>
+      	<% else %>
+      		 <table class="table table-striped b-t text-small" id="example">
+      		 	<thead>
+      		 		<tr>
+      		 			<th>Invoice invoice no.</th>
+      		 			<th>Date</th>
+      		 			<th>Amount</th>
+      		 			<th>Status</th>
+      		 		</tr>
+      		 	</thead>
+      		 	<tbody>
+      		 		<% @billing_invoices.each do |invoice| %>
+      		 		<tr>
+      		 			<td><%= link_to invoice.invoice_number, {:controller => 'billing_history', :action => 'show', :id => invoice.id } %></td>
+      		 			<td><%= invoice.invoice_date.to_date %></td>
+      		 			<td><%= invoice.amount %></td>
+      		 			<td><%= invoice.status %></td>
+      		 		</tr>
+      		 		<% end %>
+      		 	</tbody>
+            </table>
+            <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

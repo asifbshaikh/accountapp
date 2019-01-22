@@ -1,0 +1,42 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-3">
+          <h2><i class="icon-edit text"></i>Account Details</h2>
+        </div>
+        <div class="col-lg-9 m-t-large" align="right">
+          <%= link_to raw('<i class="icon-plus"> </i> New Account'), new_account_path, :class => 'btn btn-success btn-lg'%>
+          <% if @account.erasable? %>
+            <%= link_to raw('<i class="icon-edit"> </i> '), edit_account_path(@account), :class => 'btn btn-white btn-lg'%>
+            <%= link_to raw('<i class="icon-trash"> </i>'), @account, :confirm => "Are you sure?", :method => "delete", :title =>"Delete account", :class => 'btn btn-white btn-lg' %>
+          <% end %>
+          <%= link_to raw('<i class="icon-mail-reply"> </i>'), accounts_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+          <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <section class="panel">
+            <div class="panel-body">
+             <%= render :partial=>"shared/flash_msg"%>
+                <div class="col-xs-12">
+                  <section class="panel text-center">
+                    <div class="panel-body">
+                     <p><strong><h4><%= @account.name%></h4></strong></p>
+                      <div class="line m-l m-r"></div>
+                      <p><strong>Opening Balance:</strong> <%= @company.currency_code %> <%= opening_balance %></p></div>
+                  </section>
+                </div>
+        
+              <div class="col-lg-12">
+                <% if !@account.accountable.blank? %>
+                  <%= render :partial=> "#{@account.accountable_type.downcase}_details"  %>
+                <% end %>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </section>

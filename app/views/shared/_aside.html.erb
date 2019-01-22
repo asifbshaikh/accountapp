@@ -1,0 +1,13 @@
+      <!-- Aside links -->
+      <aside>
+        <% if @msg_cnt== 0%>
+         <%= link_to 'Messages', messages_path %> &middot;
+        <% else %>  
+          <%= link_to "Messages(#{@msg_cnt})", messages_path %> &middot;
+        <% end %>
+        <%= link_to 'Tasks', tasks_path %> &middot;
+        <%= link_to 'Notes', notes_path %> &middot;
+        <%= link_to 'Documents', documents_index_url %>
+        <!--  <%= link_to 'Contact', contacts_path %> -->
+      </aside>
+      <!-- End of Aside links -->

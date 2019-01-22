@@ -1,0 +1,2 @@
+<%= select_tag("payment_voucher[to_account_id]", options_from_collection_for_select_with_data(@to_accounts, :id, :name, defined?(@payment_voucher) ? @payment_voucher.to_account_id : nil , :"currency"=>:get_currency), {:prompt => 'Type to select', :style=>"width:260px;"}) %>
+<span id="payment-currency"></span>

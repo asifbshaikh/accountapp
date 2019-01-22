@@ -1,0 +1,7 @@
+ <% Announcement.current(cookies.signed[:hidden_announcement_ids]).each do |announcement| %>
+ <%= div_for announcement do %>
+    <%= announcement.subject %>
+    <%= link_to "X",  hide_announcement_path(announcement), :remote=> true %>
+ <% end %>
+<% end %>
+

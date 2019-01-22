@@ -1,0 +1,17 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+  <form action="detail">
+    <div class="form-group"><br/>
+      <div class="col-lg-2 text-right">
+        <select name="month" class="form-control">
+      	  <option value=<%= Time.zone.now.to_date.month %>>Select month</option>
+          <% @months.uniq!.each do |m| %>
+            <option value=<%= "#{m.strftime("%Y-%m")}" %>><%= m.strftime("%B-%Y") %></option>
+          <% end %>
+        </select> 
+      </div>
+       <%= hidden_field_tag "user_id", @user.id %>
+      <input type="submit" value="Search" class="btn btn-success"/>
+		</div>
+  </form>
+</div>

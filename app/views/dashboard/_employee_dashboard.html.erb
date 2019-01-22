@@ -1,0 +1,51 @@
+      <div class="row">
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Leave Requests</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+              <tr>
+                <th>Leave Date :</th>
+                <th>Status :</th>
+              </tr>
+              <% @leave_requests.each do |leave_request| %>
+            <tr>
+             <td><a href="/leave_requests" class="h5"><%= leave_request.start_date %><b> To </b><%= leave_request.end_date %></a></td>
+             <td><%= LeaveRequest.get_leave_status(leave_request.leave_status)%>
+            </tr>
+            <% end %> 
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Timesheet</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+              <tr>
+              <th>Day :</th>
+              <th>Task :</th>
+              </tr>
+              <% count = 0%>
+                <%@timesheets.each do |t|%>
+                  <% t.timesheet_line_items.each do |tl|%>
+                  <% count +=1 %>
+                  <% if count> 5
+                    break
+                    end%>
+                    <%task = tl.task_id%>
+                    <% description=Task.where(:id => task)%>
+                      <% description.each do |d|%>
+                    <tr>
+                    <td><%= tl.day%></td>
+                    <td><a href="/timesheets" class="h5"><%= d.description%></a></td>
+                    </tr>
+                    <%end%>
+                    <%end%>
+                <%end%>
+              </table>
+            </div>
+          </section>
+        </div>
+        </div>    

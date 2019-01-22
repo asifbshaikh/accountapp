@@ -1,0 +1,14 @@
+<div id='remIt'>
+<div class='col-lg-3'>
+<%= text_field_tag 'internet_banking_payment[bank_name]',"#{params[:internet_banking_payment][:bank_name] unless params[:internet_banking_payment].blank? }", :class=>"form-control bg-focus", :placeholder=>'Bank Name' %>
+</div>
+<div class='col-lg-3'>
+<%= text_field_tag 'internet_banking_payment[payment_date]',"#{params[:internet_banking_payment][:payment_date] unless params[:internet_banking_payment].blank? }", :class=>"form-control bg-focus", :placeholder=>'Payment Date *' %>
+</div>
+
+<div class='col-lg-3'>
+<%= text_field_tag 'internet_banking_payment[transaction_reference]',"#{params[:internet_banking_payment][:transaction_reference] unless params[:internet_banking_payment].blank? }", :class=>"form-control bg-focus", :placeholder=>'Transaction Reference' %>
+</div>
+<br />
+<br />
+</div>

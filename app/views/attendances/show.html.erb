@@ -1,0 +1,76 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+       <div class="col-lg-3">
+        <h2><i class="icon-group text"></i> Manage Payroll</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">       
+        <a href="/users" class="btn btn-default btn-lg"> <i class="icon-mail-reply"></i></a>      
+        <p></p>
+      </div>  
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+           <%= render :partial => "shared/flash_msg"%>
+           <h4>Running payroll for <%= Attendance.get_month(params[:month])%> <%= (params[:month].to_i>Time.zone.now.month) ? (Time.zone.now.year-1) : Time.zone.now.year %></h4>
+           <div class="wizard clearfix">
+            <ul class="steps">
+              <li data-target="#step1" ><span class="badge">1</span>Enter Attendance & Variable Pay</li>
+              <li data-target="#step2" ><span class="badge">2</span>Review Information</li>
+              <li data-target="#step3" class="active"><span class="badge">3</span>Result</li>
+            </ul>
+          </div>
+          <% if @payroll_detail.status == 3 %>
+          <div class="col-lg-12">
+          <h5 class="text-danger">Sorry. An error occurred while processing the payroll!</h5>
+          <h5 class="text-danger">Please contact the support team.</h5>
+          </div>
+          <% else %>
+          <div class="row">
+            <div class="col-lg-2 text-right">
+              <label for="productcat">Account to Pay From:</label>
+            </div>
+            <div class="col-lg-10">
+              <%= (!@payroll_execution_job.blank?) ? Account.find(@payroll_execution_job.account_id).name : "Account not selected" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-2 text-right">
+             <label for="productvendor">Payroll Schedule Date:</label>
+           </div>
+           <div class="col-lg-6">
+            <%= (!@payroll_execution_job.blank?) ? @payroll_execution_job.execution_date : "Execution date not selected" %>
+          </div>
+        </div>
+        <h4>Payroll Summary</h4>
+        <div class="col-lg-12">
+          <% if @payroll_accounts_details_status != 0 %>
+          <%= render "attendances/attendance_details_results" %>
+          <% else %>
+          <%= render "attendances/attendance_details_results_computed" %>
+          <% end %>
+        </div>
+        <h4>Accounts Summary</h4>
+        <div class="col-lg-12">
+          <%= render "attendances/payroll_accounts_summary" %>
+        </div>    
+      </div>
+    </section>
+    <section>
+        <div class="col-md-12 col-md-offset-5">
+          <% if @payroll_accounts_details_status != 0 %>
+          <h5>This is your finalised payroll.</h5>
+          <% else %>
+          <%= link_to raw("Discard"),"/attendances/discard?month=#{params[:month].to_i}", :class=>'btn btn-danger btn-lg' %>
+          <%= link_to raw("Finalise"),"/attendances/finalize?month=#{params[:month].to_i}", :class=>'btn btn-info btn-lg' %>
+          <% end %>
+        </div>
+      </section>
+    <% end %>  
+  </div>
+</div>
+</section> 
+</section>
+</section>

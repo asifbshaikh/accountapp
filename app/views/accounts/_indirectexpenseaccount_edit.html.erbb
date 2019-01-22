@@ -1,0 +1,10 @@
+<%= f.fields_for :accountable do |a| %>
+  <tr class="gradeU even">
+	  <td><label>Enable inventory</label></td>
+		<td>
+      <%= a.radio_button :inventoriable, true,  { :tabindex=>'4'}  %>Yes &nbsp;
+     	<%= a.radio_button :inventoriable, false,  { :tabindex=>'5'} %> No
+    </td>
+  </tr>
+<% end %>
+

@@ -1,0 +1,15 @@
+<div class="alert alert-info">
+  <h6><i class="icon-info-sign icon-large"></i> 
+    <strong>
+      <% if !local_assigns[:message].nil? %>
+        <% if message.blank? %>
+        Currently there are no records to show.
+        <% else %>
+          <%= message %>
+        <% end %>  
+      <% else %>  
+        Currently there are no records to show.
+      <% end %>
+    </strong>
+  </h6>
+</div>

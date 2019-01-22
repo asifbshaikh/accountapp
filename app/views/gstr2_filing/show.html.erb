@@ -1,0 +1,103 @@
+<section id="content">
+  <section class="main padder">
+
+    <div class="row">
+      <div class="col-lg-5">
+        <h2><i class="icon-file text"></i>GSTR2 Filing</h2>
+      </div>
+
+      <div class="col-lg-7 m-t-large" align="right">
+        <%= link_to raw("<i class='icon-upload'> </i> Upload Data"), gstr2_filing_upload_path(:id => @gstr_two), :class => "btn btn-success "%>
+
+        <%= link_to raw("<i class='icon-done'> </i> Verify with GSTN"), gstr2_filing_verify_path(:id => @gstr_two), :class => "btn btn-success"%>
+        <%= link_to raw("<i class='icon-done'> </i> Generate Summary"), gstr2_filing_summary_path(:id => @gstr_two), :class => "btn btn-success"%>
+          <a href="#" class="btn btn-success  disabled" data-toggle="modal" data-target='#model1'><i class="icon-upload"> </i> File GSTR-2</a>&nbsp;
+        <a href=" http://www.profitbooks.net/how-to-file-gstr-2/" class="btn btn-default " target="_new"><i class="icon-info"> </i> </a> &nbsp;
+        <%= link_to raw("<i class='icon-reply'></i>"), gst_returns_path, :class=>"btn btn-default  "%>
+        <p></p>
+      </div>  
+    </div>
+    <div class="row">
+      <div class="col-lg-12"><p></p>
+        <section class="panel">
+          <header class="panel-heading text-right">
+            <ul class="nav nav-tabs pull-left"  id="invoiceTabs">
+              <li class=''>
+                <a data-toggle="tab" href="#all-purchase-tab">
+                  <i class="icon-file-text icon-large text-default"></i>
+                  View Your Purchases
+                </a>
+              </li>
+              <li class=''>
+                <a data-toggle="tab" href="#gstr2a-tab">
+                  <i class="icon-align-left icon-large text-default"></i>
+                  View GSTR2A 
+                </a>
+              </li>              
+              <li class=''>
+                <a data-toggle="tab" href="#return-purchase-tab">
+                  <i class="icon-check text-default"></i>
+                  Match & Reconcile
+                </a>
+              </li>
+              <li class=''>
+                <a data-toggle="tab" href="#itc-summary-tab">
+                  <i class="icon-align-left icon-large text-default"></i>
+                  ITC Summary
+                </a>
+              </li>
+              <li class=''>
+                <a data-toggle="tab">
+                  <i class="icon-cloud-upload icon-large text-default"></i>
+                  Upload To GSTN
+                </a>
+              </li>
+            </ul>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="col-lg-1">
+                &nbsp;
+              </div>
+              <div id='itc-summary-tab' class='tab-pane fade'>
+                <%= render :partial => "itc_summary"%>
+              </div>
+              
+              <div id='gstr2a-tab' class='tab-pane fade'>
+                <%= render :partial => "gstr2a"%>
+              </div>
+              <div id='all-purchase-tab' class='tab-pane fade'>
+                <%= render :partial => "all_purchases"%>
+              </div>
+              
+            </div>
+          </div>
+
+           
+  </section>
+</section>
+
+
+<% if @show_modal %>
+  <div id="model1" class="modal fade">
+    <%= render "request_gross_values"%>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  
+$(".info-form").html('<%= escape_javascript render "fetch_info" %>');
+$(".on-go-form").html('<%=image_tag "ajax-loader.gif" %>')
+$(".on-go-form").html('<%= escape_javascript render "fetch_data" %>');
+
+  var gstr2Table = $('#gstr2').dataTable({
+      sDom: "<'row'<'col-sm-2'f><'col-sm-4'>r>t<'row'<'col-sm-3'l><'col-sm-4'i><'col col-sm-5'p>>",
+      sPaginationType: "full_numbers",
+      iDisplayLength:50,
+      bFilter: false,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#gstr2').data('source')
+      })
+  gstr1Table.fnFilterOnReturn();
+</script>

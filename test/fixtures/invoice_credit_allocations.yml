@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  invoice_id: 1
+  credit_note_id: 1
+  amount: 9.99
+  deleted: false
+
+two:
+  invoice_id: 1
+  credit_note_id: 1
+  amount: 9.99
+  deleted: false

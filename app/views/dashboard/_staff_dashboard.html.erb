@@ -1,0 +1,265 @@
+<div class="row">
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-6"><!-- Top 5 Receivables  -->
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#amount-1" data-toggle="tab">By Amount</a></li>
+              <li><a href="#period-1" data-toggle="tab">By Period</a></li>
+            </ul>
+            <span class="hidden-sm">Unpaid Invoices</span>
+          </header>
+          <div class="tab-content">
+            <div class="tab-pane active" id="amount-1">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Invoice No.</th>
+                    <th width="60%">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if @overdue_invoices.present?
+                    counter = 1
+                    @overdue_invoices.each do |i|
+                      counter +=1
+                      if counter >= 5
+                        break
+                        end %>
+                        <tr>
+                          <td><a href="/invoices"><%= i.invoice_number%></a></td>
+                          <td><%= format_currency i.amount%></td>
+                        </tr>
+                        <%end
+                        else %>
+                        <div class="">0 Invoices</div>
+                        <%end%>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="tab-pane" id="period-1"><div class="tab-pane active" id="amount-1">
+                    <table class="table table-striped m-t-none text-small">
+                      <thead>
+                        <tr>
+                          <th>Invoice No.</th>
+                          <th>Amount</th>
+                          <th>Overdue Days</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if !@overdue_invoices.blank?
+                          counter = 1
+                          @overdue_invoices.each do |i|
+                            counter +=1
+                            if counter >= 5
+                              break
+                              end %>
+                              <tr>
+                                <td><a href="/invoices"><%= i.invoice_number%></a></td>
+                                <td><%= format_currency i.amount%></td>
+                                <% count =1
+                                date = i.due_date
+                                while date <= Date.today do
+                                  date +=1.day
+                                  count +=1
+                                  end%>
+                                  <td><%= count%> Days</td>
+                                </tr>
+                                <% end
+                                else %>
+                                <div class="">0 Invoices</div>
+                                <%end%>
+                              </tbody>
+                            </table>
+
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div><!-- Top 5 Receivables ends -->
+
+                  <div class="col-lg-6">
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <span class="hidden-sm">Tasks this week</span>
+                      </header>
+                      <table class="table table-striped m-t-none text-small">
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>Due on</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <%@week_tasks.each do |t|%>
+                          <tr>
+                            <td><%= t.description%></td>
+                            <td><%= t.due_date.strftime("%d %b %Y")%>
+                            </td>
+                          </tr>
+                          <%end%>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+
+                            <td colspan="2">
+                              <div class="text">&nbsp;&nbsp;&nbsp;
+                                <a href="/tasks" class="btn btn-success btn-sm">All Tasks </span></a>&nbsp;
+                                <a href="/timesheets" class="btn btn-info btn-sm">My Timesheet </span></a>&nbsp;
+                              </div>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </section>
+                  </div>
+                </div>
+
+                <div class="row"><!-- Row to show payables and expense pie chart-->
+                  <div class="col-lg-6"><!-- Top 5 Payables  -->
+                    <section class="panel">
+                      <header class="panel-heading">
+                        <ul class="nav nav-tabs pull-right">
+                          <li class="active"><a href="#amount-2" data-toggle="tab">By Amount</a></li>
+                          <li><a href="#period-2" data-toggle="tab">By Period</a></li>
+                        </ul>
+                        <span class="hidden-sm">Top 5 Payables</span>
+                      </header>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="amount-2">
+                          <table class="table table-striped m-t-none text-small">
+                            <thead>
+                              <tr>
+                                <th>Account</th>
+                                <th width="60%">Value</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if !@overdue_expences.blank?
+                                counter = 1
+                                @overdue_expences.each do |r|
+                                  if counter >= 5
+                                    break
+                                    end %>
+                                    <tr>
+                                      <td>
+                                        <a href=<%= "/purchases/#{r.id}"%>><%= r.customer_name %></a>
+
+                                      </td>
+                                      <%
+                                      if r.total_amount > 0
+                                        suffix = " Dr"
+                                      elsif r.total_amount < 0
+                                        suffix = " Cr"
+                                      end
+                                      %>
+                                      <td><%= format_currency r.total_amount.abs %><%= suffix %></td>
+                                    </tr>
+                                    <% counter += 1
+                                  end
+                                  else %>
+                                  <div class="">0 paybles</div>
+                                  <% end %>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="tab-pane" id="period-2"><div class="tab-pane active" id="amount-2">
+                              <table class="table table-striped m-t-none text-small">
+                                <thead>
+                                  <tr>
+                                    <th>Account</th>
+                                    <th width="40%">Value</th>
+                                    <th >Overdue Days</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <% if !@overdue_expences.blank?
+                                    counter = 1
+                                    @overdue_expences.each do |r|
+                                      if counter >= 5
+                                        break
+                                        end %>
+                                        <tr>
+                                          <td>
+                                            <a href=<%= "/purchases/#{r.id}"%>><%= r.customer_name %></a>
+
+                                          </td>
+                                          <%
+                                          if r.total_amount > 0
+                                            suffix = " Dr"
+                                          elsif r.total_amount < 0
+                                            suffix = " Cr"
+                                          end
+                                          %>
+                                          <td><%= format_currency r.total_amount.abs %><%= suffix %></td>
+                                          <% count =1
+                                          date = r.due_date
+
+                                          while date <= Date.today do
+                                            date +=1.day
+                                            count +=1
+                                            end%>
+                                            <td><%= count%> Days</td>
+                                          </tr>
+                                          <% counter += 1
+                                        end
+                                        else %>
+                                        <div class="">0 paybles</div>
+                                        <% end %>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </section>
+                          </div><!-- Top 5 Receivables ends -->
+
+                        </div><!-- Row to show payables and expense pie chart ends -->
+
+                      </div>
+                      <!-- End of col8 -->
+
+                      <div>
+                        <div class="col-lg-4">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <% if !@todays_birthday_guys.blank? || @holidays_this_week.count != 0%>
+                              <section class="panel bg-info">
+                                <div class="panel-body">
+                                  <% if !@todays_birthday_guys.blank?%>
+                                  <p><i class="icon-bell"></i> <% @todays_birthday_guys.each do |b| %>
+                                    <%= b.full_name%>'s Birthday Today!
+                                    <%end%> </p>
+                                    <%end%>
+                                    <%if @holidays_this_week.count != 0%>
+                                    <p><i class="icon-bell"></i> <% @holidays_this_week.each do |h|%>
+                                      <%= h.holiday  %>
+                                      <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small>
+                                      <%end%> </p>
+                                      <%end%>
+                                    </div>
+                                  </section>
+                                  <%end%>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-lg-12"><!-- Recent Activity start -->
+                                  <section class="panel">
+                                    <header class="panel-heading">
+                                      <span class="hidden-sm">Recent Activities</span>
+                                    </header>
+                                    <div class="panel-body">
+                                     <!--Recent Activities -->
+                                     <%= render :partial => 'dashboard/workstream', :collection => @workstreams %><br>
+                                     <a href="/workstreams" class="btn btn-info"> View All Activities</a>
+                                   </div>
+                                 </section>
+                               </div><!-- / Recent Activity end -->
+                             </div>
+
+                           </div> <!-- Col4 ends -->
+                         </div>
+                       </div>

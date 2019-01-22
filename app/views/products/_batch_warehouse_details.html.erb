@@ -1,0 +1,61 @@
+<form action = '/products/record_batch_warehouse_details' data-remote='true' method="post" class='form-horizontal'>
+  <div class="modal-dialog" style='width:700px;'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Batch Details</h4>
+      </div>
+      <div class='modal-body scroll-y' style='max-height:500px;'>
+        <%= hidden_field_tag 'id', params[:product]%>
+        <table class="table table-striped b-t text-small" >
+          <tr>
+            <th><label class='control-label-required'> Warehouse</label></th>
+            <th><label class='control-label-required'> Quantity</label></th>
+             <th>Unit price</th>            
+             <th><label class='control-label-required'> Batch no. </label></th>
+            <th>Mfd.date</th>
+            <th>Exp.date</th>
+          </tr>
+          <% if @product.product_batches.blank? %>
+              <tr class='row0'>
+                <td>
+                  <%= select_tag("warehouse_at0", options_from_collection_for_select( @warehouses, :id, :name), :class=>'form-control') %>
+                  <%= hidden_field_tag "row_index[]", 0 %>
+                </td>
+                <td><%= text_field_tag "quantity_at0", nil, :class => 'form-control text-right' %></td>
+                 <td><%= text_field_tag "price_at0", nil, :class => 'form-control text-right' %></td>                
+                <td><%= text_field_tag "batch_number_at0", nil, :class=>'form-control' %></td>
+                <td><%= text_field_tag "mfd_at0", nil, :class => 'form-control mfd_date', "data-index" => 0 %></td>
+                <td><%= text_field_tag "exp_at0", nil, :class => 'form-control exp_date', "data-index" => 0 %></td>
+              </tr>
+              <tr class='link_row0'>
+                <td colspan='6'><a class="btn btn-white btn-sm" data-remote="true" href="/products/add_row?index=1">+ Add row</a></td>
+              </tr>
+          <% else %>
+            <% @product.product_batches.each_with_index do |product_batch, index| %>
+              <tr class='row<%= index %>'>
+                <td><%= select_tag("warehouse_at#{index}", options_from_collection_for_select( @warehouses, :id, :name, product_batch.warehouse_id), :class=>'form-control', :include_blank => true) %>
+                <%= hidden_field_tag "row_index[]", index %>
+                <%= hidden_field_tag "product_batch_id_at#{index}", product_batch.id %>
+                </td>
+                <td><%= text_field_tag "quantity_at#{index}", product_batch.quantity, :class => 'form-control text-right' %></td>
+                <td><%= text_field_tag "price_at#{index}", product_batch.opening_stock_unit_price, :class => 'form-control text-right' %></td>
+                <td><%= text_field_tag "batch_number_at#{index}", product_batch.batch_number, :class=>'form-control' %></td>
+                <td><%= text_field_tag "mfd_at#{index}", product_batch.manufacture_date, :class => 'form-control mfd_date', "data-index" => index %></td>
+                <td><%= text_field_tag "exp_at#{index}", product_batch.expiry_date, :class => 'form-control exp_date', "data-index" => index %></td>
+              </tr>
+            <% end %>
+              <tr class='link_row<%= @product.product_batches.count - 1 %>'>
+                <td colspan='5'><a class="btn btn-white btn-sm" data-remote="true" href="/products/add_row?index=<%= @product.product_batches.count %>">+ Add row</a></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+        <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>

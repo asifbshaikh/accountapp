@@ -1,0 +1,19 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Simple Accounting Entry Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="saccounting-filter" >
+      <tbody>
+        <tr>
+          <td><label>Voucher no</label></td>
+          <td id="saccountingvoucherno"></td>
+          <td><label>Voucher Date</label></td>
+          <td id="saccountingDate"></td>
+        </tr>
+        <tr>
+          <td><label>To Account Name</label></td>
+          <td id="saccountingtoacc" data-saccountingtoaccounts="<%= Account.saccounting_to_accounts(@company.id) %>"></td>
+          <td><label>Amount</label></td>
+          <td id="saccountingamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

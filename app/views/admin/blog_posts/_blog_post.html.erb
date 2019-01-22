@@ -1,0 +1,13 @@
+              <div class="colgroup leading">
+                <div class="width5 column">
+                  <a href="#" title="<%= blog_post.title %>"><b class="big"><%= blog_post.title %></b></a><br/>
+                  <small>
+                    <b><%= blog_post.word_count %> words</b> | 
+                    Author: <b><%= blog_post.author %></b> |
+                    Status: <b><%= blog_post.blog_status %></b>
+                  </small><br/>
+                  <a href="#">remove</a> &middot; 
+                  <%= link_to 'show', admin_blog_post_path(blog_post) %> &middot; 
+                  <%= link_to 'edit', edit_admin_blog_post_path(blog_post)%>
+                </div>
+              </div>

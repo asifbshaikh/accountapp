@@ -1,0 +1,31 @@
+<h1>Listing voucher_settings</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Voucher number strategy</th>
+    <th>Prefix</th>
+    <th>Suffix</th>
+    <th>Voucher type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @voucher_settings.each do |voucher_setting| %>
+  <tr>
+    <td><%= voucher_setting.company_id %></td>
+    <td><%= voucher_setting.voucher_number_strategy %></td>
+    <td><%= voucher_setting.prefix %></td>
+    <td><%= voucher_setting.suffix %></td>
+    <td><%= voucher_setting.voucher_type %></td>
+    <td><%= link_to 'Show', voucher_setting %></td>
+    <td><%= link_to 'Edit', edit_voucher_setting_path(voucher_setting) %></td>
+    <td><%= link_to 'Destroy', voucher_setting, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Voucher setting', new_voucher_setting_path %>

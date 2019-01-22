@@ -1,0 +1,13 @@
+<% if  @gstr1_summary.processing? %>
+  setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/gstr1_summaries/processing?id=<%= @gstr1_summary.id %>"
+    });
+  }, 10000);
+<% else %>
+  setTimeout(function(){
+    $( ".loader" ).val("<strong> The gstr1 summary fetching is complete. Redirecting you to summary page......</strong>");
+    window.location.href = "/gstr1_summaries/<%= @gstr1_summary.id %>";
+  }, 3000);
+<% end %>

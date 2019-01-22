@@ -1,0 +1,41 @@
+<tr id="row<%= index %>" valign="top" data-product-type="<%= delivery_challan_line_item.product.inventory %>" >
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][id]",delivery_challan_line_item.id%>
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][product_id]", delivery_challan_line_item.product_id%>
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][description]", delivery_challan_line_item.description%>
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][sales_order_line_item_id]", delivery_challan_line_item.sales_order_line_item_id%>
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][_destroy]"%>
+  <%= hidden_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][sales_order_line_item_id]", delivery_challan_line_item.sales_order_line_item_id%>
+  <td valign="top" style='padding-left:0;' id='product_quantity' data-index = '<%= index %>' 
+  data-batch-enable = "<%= Product.find(delivery_challan_line_item.product_id).batch_enable %>" 
+  data-available-quantity= "<%= Product.find(delivery_challan_line_item.product_id).group_stock%>"data-productId= "<%=delivery_challan_line_item.product_id%>"
+  class="dc-product deliver-quantity" style=' width:20%;' >
+    <%= delivery_challan_line_item.item_name %>
+  </td>
+  <td style=' width:21%;'><%= delivery_challan_line_item.description%></td>
+  <td style=' width:33%;'>
+    <% if !delivery_challan_line_item.product.blank? && delivery_challan_line_item.product.batch_enable? %>
+       <div class='dc-batch-details avlstk' style="display:inline">
+        <% if ProductBatch.get_warehouse_batches(@delivery_challan.warehouse_id, delivery_challan_line_item.product_id).blank? %>
+          <i style='color:red;' id='dcqty-notif<%= index %>'>Please select warehouse.</i>
+        <% else %>
+        <%= select_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][product_batch_id]", options_from_collection_for_select_with_data(ProductBatch.get_warehouse_batches(@delivery_challan.warehouse_id, delivery_challan_line_item.product_id), :id, :batch_number,delivery_challan_line_item.product_batch_id, {:"available-quantity"=> :quantity}), :style => "width:40%;display:inline;", :"data-index" => index, :"data-unit"=> delivery_challan_line_item.product.unit_of_measure, :id => "prdqty", :class=>'form-control bg-focus dc-batch-select' %>
+            <% if delivery_challan_line_item.product_batch.quantity.blank? || delivery_challan_line_item.product_batch.quantity <=0 %>
+              <i style='color:red;' id='dcqty-notif<%= index %>'>Stock not available.</i>
+            <% else %>
+              <i style='color:green;' id='dcqty-notif<%= index %>'>Available qty <%= "#{delivery_challan_line_item.product_batch.quantity} #{delivery_challan_line_item.product.unit_of_measure}" %></i>
+            <% end %>
+        <% end %>
+       </div>
+      <% else %> 
+      <% if delivery_challan_line_item.product.quantity <=0 %>
+              <i style='color:red;' id='dcqty-notif<%= index %>'>Stock not available.</i>
+            <% else %>
+              <i style='color:green;' id='dcqty-notif<%= index %>'>Available qty <%= "#{delivery_challan_line_item.quantity} #{delivery_challan_line_item.product.unit_of_measure}" %></i>
+            <% end %>
+    <% end %>
+  </td>
+  <td data-index = '<%= index %>' data-soquantity= '<%= SalesOrderLineItem.soqty(delivery_challan_line_item.sales_order_line_item_id) %>' class="soqty_<%= index %>" style=' width:8%;'><%= SalesOrderLineItem.soqty(delivery_challan_line_item.sales_order_line_item_id) %> </td>
+  <td style=' width:12%;'>
+      <%= text_field_tag "delivery_challan[delivery_challan_line_items_attributes][#{index}][quantity]", delivery_challan_line_item.quantity, :id=>"qty_delivered_#{index}", :class =>'form-control text-right', :onkeydown => "return numbersOnly(event);",:maxlength => 8, 'data-index' => index, 'data-id' => delivery_challan_line_item.id %>
+  </td>
+</tr>

@@ -1,0 +1,20 @@
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+  <div class="form-group"><br/>
+        <div class="col-lg-2"></div>
+            <div class="col-lg-2">
+ 				<select name="name" class="form-control">
+ 				<option value=<%= @current_user.id %>>Select Employee</option>
+ 				<% @users.each do |u| %>
+		 				<option value=<%= u.id%>><%= u.first_name %> <%= u.last_name %></option>
+		 				<% end %>
+ 				</select>
+			</div>
+			<div class="col-lg-2">
+				 <input type="submit" value="Search" class="btn btn-success"/>
+			</div>
+        </div>
+</form>
+</div>
+

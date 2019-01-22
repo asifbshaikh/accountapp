@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  voucher_type: MyString
+  custom_label1: MyString
+  custom_label2: MyString
+  custom_label3: MyString
+
+two:
+  company_id: 1
+  voucher_type: MyString
+  custom_label1: MyString
+  custom_label2: MyString
+  custom_label3: MyString

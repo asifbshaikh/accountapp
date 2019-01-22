@@ -1,0 +1,61 @@
+<%= render :partial => "payheads/payhead_account"%>
+<div id="prev_data">
+<div class='titleBar'><div id="popupHeading">New Payhead</div> <a id="popupBoxClose" class="btn btn-red">x</a></div><!-- <hr class='seperator'> -->
+<br/>
+<%= form_tag :action => "create_payhead" do %>
+<%= hidden_field_tag 'row_index', params[:index] %>
+  <table class="stylized">
+  <tr>
+    <td colspan =2><%= label_tag "name","Payhead name", :class =>"required" %><br/>
+    <%= text_field_tag 'name',nil, :autocomplete => 'off' %><br><span id='name'></span></td>
+  </tr>
+  <tr>
+    <td colspan =2>
+      <%= label_tag "payslip_name ","Name appear in payslip", :class => "required"%><br>
+      <%= text_field_tag 'payslip_name',nil, :autocomplete => 'off' %><br><span id='name'></span>
+    </td>
+   </tr>
+   <tr>
+    <td colspan =2><%= label_tag "type","Payhead type", :class => "required" %><br/>
+      <select id='type' name='type'>
+        <option selected ='selected' >Please select</option>
+        <option value="Earnings">Earnings</option>
+        <option value="Standard deductions">Standard deductions</option>
+        <option value="Other deductions">Other deductions</option>
+      </select>
+    </td> 
+  </tr>
+  <tr>
+    <td colspan =2>
+         <%= label_tag "Select account" %><br/>
+         <%= text_field_tag "account_id", "#{!@payhead.account_id.blank? ? @payhead.account_name : " " }", :id => "account_auto_complete", :placeholder =>
+           "Press <space> to search account" ,:size =>"14" %>
+          <br/><small>(Select an account for this payhead)</small>
+    </td>
+  </tr>
+    <tr>
+      <td>
+         <%= label_tag "affect_net_salary","Affect net salary"%><br/>
+        <select id='affect_net_salary' name='affect_net_salary'>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </td>
+      <td>
+         <%= label_tag "use_of_gratuity", "Use of gratuity" %><br/>
+         <select id='use_of_gratuity' name='use_of_gratuity'>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </td> 
+      </tr>
+  <tr>
+
+    <td colspan=2>        
+      <%= link_to 'Save', "", :id => 'submit_payhead', :class => "btn btn-green", 'data-account' => @data_account, 'data-controller' => controller.controller_name, :remote => true  %>
+      &nbsp;<%= link_to 'Cancel',"", :id => 'close', :class => 'btn', :remote => true %>
+    </td>
+  </tr>
+  </table>
+<% end %>
+</div>

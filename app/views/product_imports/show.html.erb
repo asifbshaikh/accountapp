@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @product_import.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @product_import.description %>
+</p>
+
+<p>
+  <b>Warehouse:</b>
+  <%= @product_import.warehouse %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @product_import.quantity %>
+</p>
+
+<p>
+  <b>Batch no:</b>
+  <%= @product_import.batch_no %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%= @product_import.unit_price %>
+</p>
+
+<p>
+  <b>Reorder level:</b>
+  <%= @product_import.reorder_level %>
+</p>
+
+<p>
+  <b>Unit of measure:</b>
+  <%= @product_import.unit_of_measure %>
+</p>
+
+<p>
+  <b>Sales price:</b>
+  <%= @product_import.sales_price %>
+</p>
+
+<p>
+  <b>Income account:</b>
+  <%= @product_import.income_account %>
+</p>
+
+<p>
+  <b>Purchase price:</b>
+  <%= @product_import.purchase_price %>
+</p>
+
+<p>
+  <b>Expense account:</b>
+  <%= @product_import.expense_account %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @product_import.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_product_import_path(@product_import) %> |
+<%= link_to 'Back', product_imports_path %>

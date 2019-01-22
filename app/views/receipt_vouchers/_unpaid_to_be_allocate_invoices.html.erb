@@ -1,0 +1,60 @@
+<% if @allcated_invoices.blank? && @unallocated_invoices.blank? %>
+  <%= render "shared/no_record" %>
+<% else %>
+  <table class="table table-striped" id='unpaid-invoices'>
+    <thead>
+      <tr>
+        <th>Invoice #</th>
+        <th>Received</th>
+        <th>Outstanding</th>
+        <th>Due Date</th>
+        <th width="10%">TDS Deducted</th>
+        <th width="10%">Received Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @allocated_invoices.each do |invoice_receipt| %>
+        <% invoice = invoice_receipt.invoice %>
+        <tr>
+          <td><%= invoice.invoice_number %></td>
+          <td><%= invoice.currency %> <%= number_with_precision invoice.total_received_amt, :precision=>2 %></td>
+          <td><%= invoice.currency %> <%= number_with_precision invoice.outstanding, :precision=>2 %></td>
+          <td><%= invoice.due_date  %></td>
+          <td>
+            <%= hidden_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][invoice_id]", invoice.id %>
+            <%= hidden_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][id]", invoice_receipt.id %>
+           <% if invoice.foreign_currency? %>
+            <%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][tds_amount]", invoice_receipt.tds_amount, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);", :disabled => true %>
+           <% else %> 
+            <%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][tds_amount]", invoice_receipt.tds_amount, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %>
+            <% end %>
+          </td>
+          <td><%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][amount]", invoice_receipt.amount, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %></td>
+        </tr>
+      <% end %>
+      <% @unallocated_invoices.each do |invoice| %>
+        <tr>
+          <td><%= invoice.invoice_number %></td>
+          <td><%= invoice.currency%> <%= number_with_precision invoice.total_received_amt, :precision=>2 %></td>
+          <td><%= invoice.currency%> <%= number_with_precision invoice.outstanding, :precision=>2 %></td>
+          <td><%= invoice.due_date  %></td>
+          <td>
+            <%= hidden_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][invoice_id]", invoice.id %>
+          <% if invoice.foreign_currency? %>
+            <%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][tds_amount]", nil, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);", :disabled => true %>
+            <% else %>
+            <%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][tds_amount]", nil, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %>
+            <% end %>
+          </td>
+          <td><%= text_field_tag "receipt_voucher[invoices_receipts_attributes][#{invoice.id}][amount]", nil, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="3"></td>
+        <td class="text-right"><strong>Total</strong></td>
+		  <td class="text-left"><strong><%= @receipt_voucher.currency_code%> <span id="total-tds-amount">0.00</span></strong></td>
+	    <td class="text-left"><strong><%= @receipt_voucher.currency_code%> <span id="total-amount">0.00</span></strong></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

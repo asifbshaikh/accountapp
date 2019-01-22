@@ -1,0 +1,24 @@
+<div id="prevRight">
+<table class="display stylized">
+<tr>
+  <td width="42%"><label class="required">Select rights</label><br />
+	<select name="right[]" id ="right" multiple="multiple" size=15 class="full">
+	  <% @ungranted_rights.each do |right| %>
+		<option value=<%= right.id %>><%= "#{right.resource}-#{right.operation}"%></option>
+	  <% end %>
+	</select>
+  </td>
+  <td width="16%" style="vertical-align:middle" align="center">
+	<%= link_to ">>", "#", :id=>"to_right", :class=>"btn", :remote => true%><br /><br />
+	<%= link_to "<<", "#", :id=>"to_left", :class=>"btn", :remote => true%>
+  </td>
+  <td width="42%"><label class="required">Rights to be grant</label><br />
+	<select name="grant[right_id][]" id="grant" multiple="multiple" size=15 class="full">
+	<%= @granted_rights.each do |grant, index| %>
+	  <option value=<%= grant.right_id %>><%= "#{grant.right.resource}-#{grant.right.operation}"%></option>
+	<% end %>
+	</select>
+  </td>
+</tr>
+</table>
+</div>

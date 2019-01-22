@@ -1,0 +1,25 @@
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Vendor Account Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>PAN: </strong> <%= @account.accountable.PAN %></p>
+    <p><strong>Sales tax number: </strong> <%= @account.accountable.sales_tax_number %></p>
+    <p><strong>TAN: </strong> <%= @account.accountable.tan %><br/><small>Tax Account Number</small></p>
+    <p><strong>VAT TIN :</strong> <%= @account.accountable.vat_tin %></p>
+    <p><strong>CST :</strong> <%= @account.accountable.cst %></p>
+    <p><strong>Excise registration number :</strong> <%= @account.accountable.excise_reg_no %></p>
+    <p><strong>Service tax registration number :</strong> <%= @account.accountable.service_tax_reg_no %></p>
+   </div>
+   <div class="col-sm-6">
+     <p><strong>Email:</strong><%= @account.accountable.email%></p>
+     <p><strong>Phone:</strong><%= @account.accountable.contact_number%></p>
+     <p><strong>Address line1:</strong><%= account_address_line1 %></p>
+     <p><strong>Address line2:</strong><%= account_address_line2 %></p>
+     <p><strong>City:</strong><%= account_city %></p>
+     <p><strong>State:</strong><%= account_state %></p>
+     <p><strong>Pin code:</strong><%= account_postal_code %></p>
+   </div>
+  </div>
+ </section>

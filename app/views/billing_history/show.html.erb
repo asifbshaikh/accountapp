@@ -1,0 +1,94 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i>Billing History Detail</h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <%= link_to raw('<i class="icon-print"> </i>'), url_for(:format => :pdf, :id => @billing_invoice.id), :class => 'btn btn-white btn-lg', :target=>"_blank", :title=>"Export to PDF" %>
+		<%= link_to raw('<i class="icon-mail-reply"> </i>'), billing_history_index_path, :class => 'btn btn-default btn-lg' %>
+    <p></p>
+        <!-- <a href="#" class="btn btn-default  btn-lg "><i class="icon-info"> </i> </a> -->
+      </div>  
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+         <div class="col-sm-5">
+           <h4><strong> Customer Name: </strong> <br/><%= @current_user.full_name%></h4>
+         </div>
+            <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p>
+                   <strong> Invoice Number: </strong><%= @billing_invoice.invoice_number%>
+                  </p>
+                  <p><strong>Amount:</strong><%= format_currency @billing_invoice.amount %></p>
+                  </div>
+                  <div class="col-sm-6">
+                  <p><strong> Company Name: </strong> <%= @company.name %></p>
+                  <p><strong> Address: </strong> <%=raw address_info %></p>
+                </div>
+              </div>
+              
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Invoice Date <%= @billing_invoice.invoice_date%>
+                  </div>
+                  
+                  </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+      <div class="col-lg-12 row">
+        <table class="table table-striped b-t text-small">
+        <thead>
+            <tr>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead> 
+          <tbody>  
+            <% @billing_invoice.billing_line_items.each do |line_item| %>
+            <% if line_item.billing_type != 'coupon' && line_item.billing_type != 'referral_earning'%>
+                <tr>
+                  <td><%= line_item.line_item %>(Valid for <%= line_item.get_validity %>)</td>
+                  <td><span id="discount"><%= format_currency line_item.amount %></span></td>
+                </tr>
+              <% elsif line_item.billing_type ='referral_earning' %>
+              <tr>
+                  <td><%= line_item.line_item %></td>
+                  <td><%= format_currency line_item.amount %></td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td>Discount - Coupon code : <%= line_item.line_item %></td>
+                  <td><%= format_currency line_item.amount %></td>
+                </tr>
+              <% end %>
+            <% end %>      
+              <tr>
+                <td style='background-color:#fff;'>Total</td>
+                <td style='background-color:#fff;'><span id = "total"><%= format_currency @billing_invoice.amount%></span></td>
+                
+              </tr>
+          </tbody>
+         </table>
+      </div>
+     </div>
+    </section>
+  </section>
+</section>
+
+
+                 
+                 
+            
+          
+	  

@@ -1,0 +1,25 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+       <%= render :partial=> "shared/flash_msg"%>
+       <%= render :partial=> "template_form"%>
+ </div>
+  
+      </div><br />
+      </section>
+      <!-- End of Left column/section -->
+    <!-- Right column/section -->
+      <aside class="column width2">
+        <%= list_button_white("View Templates", admin_email_templates_path)%>
+    </aside>
+  <!-- End of Right column/section -->
+ </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

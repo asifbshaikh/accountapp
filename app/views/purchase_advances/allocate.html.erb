@@ -1,0 +1,50 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      
+     
+    </div>
+    <section class="panel">
+    	<%= render :partial => 'purchase_advances/auto_calculate' %>
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        	<%= form_for  @purchase_advance, :html=>{:class => "form-horizontal"} do |f| %>
+        		<%= hidden_field_tag "back_action", params[:back_action].blank? ? @current_action : params[:back_action] %>
+        		<%= render 'shared/form_error', :object => @purchase_advance %>
+        		<div class='form-group'>
+        			<div class='col-lg-2 text-right'>
+      					<%= label_tag "Money Paid To" %>
+        			</div>
+        			<div class='col-lg-2'>
+        				<%= @purchase_advance.to_account_name %>			
+        			</div>
+        		</div>
+  		  		<div class='form-group'>
+  		  			<div class='col-lg-2 text-right'>
+  							<%= label_tag "Unallocated Amount" %>
+  		  			</div>
+  		  			<div class='col-lg-2'>
+			    			<%= @purchase_advance.currency%> <%= number_with_precision @purchase_advance.unallocated_amount, :precision=>2 %>	
+  		  			</div>
+  		  		</div>
+  		  		
+            <div class="line line-dashed m-t-large"></div>
+  		  		<div class='form-group'>
+			  		  <div class="col-lg-12">
+			  		    <h4>Showing unpaid vouchers for the selected customer:</h4>
+			  		  </div>
+			  		  <div class="col-lg-12" id='invoiceDetails'>
+		  		      <%= render "purchase_advances/unpaid_vouchers", :gstr_advance_purchases_payments => @purchase_advance.gstr_advance_purchases_payments%>
+			  		  </div>
+			  		</div>
+  		  		<div class="form-group">
+  		  		  <div class="col-lg-9 col-lg-offset-3">                      
+  		  		    <button type="submit" class="btn btn-success">Save</button>
+  		  		    <%= link_to 'Cancel', gstr_advance_payments_path, :class => "btn btn-default" %>
+  		  		  </div>
+  		  		</div>
+        	<% end %>
+      </div>
+    </section>
+  </section>
+</section>

@@ -1,0 +1,118 @@
+<%= form_for @payment_voucher,:html => {:class => "m-b-none form-horizontal"}, :remote=>true do |f| %>
+	<%= hidden_field_tag "payment_voucher[to_account_id]", purchase.account_id %>
+	<%= hidden_field_tag "payment_voucher[voucher_type]", 0 %>
+	<%= hidden_field_tag "payment_voucher[voucher_date]", Time.zone.now.to_date %>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Add Payment</h4>
+      </div>
+      <div class="modal-body scroll-y" style="max-height:500px;">
+        <div class="errorSection"></div>
+        <div class='block'>
+          <% if @payment_voucher.voucher_setting.custom_sequence? %>
+            <%= f.label :voucher_number, :class=>"control-label-required" %>
+            <%= f.text_field :voucher_number, :class=>"form-control bg-focus", :style=>"width:200px;" %>
+          <% else %>
+            <label>Voucher number <%= @payment_voucher.voucher_number %></label>
+            <%= f.hidden_field :voucher_number %>
+          <% end %>
+        </div>
+        <div class='block'>
+      		<%= f.label :deposit_to_account_id, "Pay to vendor #{@payment_voucher.to_account_name}", :class => "control-label" %>
+        </div>
+        <% if @purchase.foreign_currency? %>
+          <div class="block">
+            <%= label_tag "currency", "Currency: #{@purchase.currency}" %>
+          </div>
+          <div class="block">
+            <%= f.label :exchange_rate, :class=>"control-label-required" %>
+            <%= f.text_field :exchange_rate, :class=>"form-control bg-focus text-right", :style=>"width:120px;" %>
+          </div>
+        <% end %>
+	      <div class='block'>
+          <%= f.label :From_account_id, "From account", :class => "control-label-required" %>
+          <br />
+          <%= f.select(:from_account_id, options_from_collection_for_select(@from_accounts, :id, :name, @payment_voucher.from_account_id), {}, {:style=>"width:200px;"}) %>
+	      </div>
+	      <div class='block'>
+      		<%= f.label :Payment_date, :class=>"control-label-required" %>
+      		<%= f.text_field :payment_date, :class=>"form-control bg-focus" %>
+	      </div>
+	      <div class='block'>
+      		<%= f.label :Amount, :class => "control-label-required" %>
+          <%= text_field_tag "payment_voucher[purchases_payments_attributes][0][amount]", purchase.outstanding,:class=>"form-control bg-focus text-right", :onkeydown => 'return numbersOnly(event);', :style=>"width:120px;", :maxlenght=>'11' %> 
+	      </div>
+        <% if @company.indian_company? %>
+        <div class='block hide-tds'>
+      		<%= label_tag "payment_mode", "TDS applicable?", :class=>'control-label' %>
+      		<div class="btn-group" data-toggle="buttons">
+      		  <label class="btn btn-sm btn-default tds_yes <%= (params[:tds] == 'yes')? 'active' : ''%>">
+      		  	<%= radio_button_tag :tds,'yes', (params[:tds] == 'yes') %>
+      		  	<i class="icon-ok icon-large text-active"></i>Yes
+      		  </label>
+      		  
+      		  <label class="btn btn-sm btn-default tds_no <%= (params[:tds].blank? || params[:tds] == 'no')? 'active' : ''%>">
+        		  <%= radio_button_tag :tds,'no', (params[:tds].blank? || params[:tds] == 'no') %>
+        		  <i class="icon-ok icon-large text-active"></i>No
+      		  </label>
+      		</div>
+        </div>
+        <div class='tds-pay' style='display: none;'>
+        	<div class='block'>
+        		<div class='col-sm-4'>
+  						<%= select_tag('payment_voucher[tds_account_id]', options_from_collection_for_select(Account.get_tds_payable_accounts(@company), :id, :name, @payment_voucher.tds_account_id),{:prompt=> "Select TDS Section", :style=>"width:210px;"})%>
+  					</div>
+  					<div class='col-sm-1'></div>
+  					<div class='col-sm-7'>
+            	<%= text_field_tag "payment_voucher[purchases_payments_attributes][0][tds_amount]", @payment_voucher.tds_amount, :style => "width:120px;", :onkeydown => "return numbersOnly(event);", :class => "form-control bg-focus text-right", :placeholder=>'TDS Amount*' %>
+            	<%= hidden_field_tag "payment_voucher[purchases_payments_attributes][0][purchase_id]", @purchase.id %>
+            </div>
+        	</div>
+        	<div class="block">&nbsp;</div>
+        </div>
+        <% end %>
+        <input type="hidden" name="source" id="source" value="payment"/>
+				<div class='block'>
+					<%= label_tag "payment_mode", "Payment Mode", :class=>'control-label-required' %>
+					<div class="btn-group" data-toggle="buttons" >
+					  <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+					  <%= radio_button_tag 'transaction_type','cash' %>
+					  <i class="icon-ok icon-large text-active"></i>Cash
+					  </label>
+					  <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+					  <%= radio_button_tag "transaction_type",'cheque' %>
+					  <i class="icon-ok icon-large text-active"></i>Cheque
+					  </label>
+					  <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+					  <%= radio_button_tag "transaction_type",'card'%>
+					  <i class="icon-ok icon-large text-active"></i>Credit/Debit Card
+					  </label>
+					  <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+					  <%= radio_button_tag "transaction_type",'ibank' %>
+					  <i class="icon-ok icon-large text-active"></i>Internet Banking
+					  </label>
+					</div>
+				</div>
+				<div class='block'>
+					<div class="pmnt"></div>
+					<%= render :partial => "#{params[:transaction_type]}" unless @payment_detail.blank? || params[:transaction_type].blank? %> 
+        </div>
+        <div class='block'>
+          <%= f.label :description, :class=>"control-label" %>
+          <%= f.text_area :description, :class=>"form-control bg-focus", :rows=>4 %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+          <button class="btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+	</div>
+<% end %>
+<script>
+  $("#payment_voucher_from_account_id").select2({ width: "200px"});
+  $("#payment_voucher_tds_account_id").select2({ width: "200px"});
+</script>

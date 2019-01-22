@@ -1,0 +1,13 @@
+<div class="row">
+<ul class="breadcrumb">
+        <% if @current_folder #checking if we are under any folder %>  
+            <li><a href="/documents/index"><i class="icon-book"></i>Document</a></li>
+           <% @current_folder.ancestors.reverse.each do |folder| %>  
+              <li><i class='icon-folder-close'></i><%= link_to folder.name, browse_path(folder) %></li>
+           <% end %>  
+             <li><i class='icon-folder-close'></i><%= @current_folder.name %></li>
+        <% else #if we are not under any folder %>  
+            <li><a href="/documents/index"><i class="icon-book"></i>Document</a></li>
+       <% end %>  
+</ul>
+</div>

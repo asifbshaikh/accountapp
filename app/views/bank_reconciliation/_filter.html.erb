@@ -1,0 +1,32 @@
+<div class="panel panel-info" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+<form action = 'reconcile' class="form-horizontal">
+<div class="row">
+<div class="form-group"><br/>
+<div class="col-lg-2"></div>
+  <div class="col-lg-3">
+  <label>Select Account</label>
+    	<select name = 'account_id' class="form-control">
+			<% for acc_id in @accounts %>
+    		<% if !params[:account_id].nil? && acc_id.id == params[:account_id].to_i %>
+    			<option value = '<%= acc_id.id %>' selected="selected"><%= acc_id.name %></option>
+    		<% else %>
+    			<option value = '<%= acc_id.id %>' ><%= acc_id.name %></option>
+			  <% end %>	
+		   <% end %>
+		  </select>	
+  </div>
+	<div class="col-lg-2"><br/>
+		<%= text_field_tag :start_date, params[:start_date] ,:placeholder=>"From Date", :class=>"form-control" %>
+	</div>
+	<div class="col-lg-2"><br/>
+		<%= text_field_tag :end_date, params[:end_date] ,:placeholder =>"To Date", :class=>"form-control" %>
+	</div>
+	<div class="col-lg-2"><br/>
+	   <input type="submit" value="Search" class="btn btn-success"/>
+  </div>
+</div> 
+</div>
+	
+</form>
+</div>

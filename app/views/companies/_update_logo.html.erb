@@ -1,0 +1,34 @@
+<div id="prev_data">
+<div class='titleBar'><div id="popupHeading">Company Logo</div> <a id="popupBoxClose" class="btn btn-red">x</a></div>
+<br/>
+<%= form_for @company , :html => {:multipart => true} do |f|%>
+ <table>
+ <% unless @company.new_record? || !@company.logo? %>
+    <tr>  <td colspan = 4><%= image_tag(@company.logo.url(:thumb), :alt => 'logo', :title => 'Current logo') %></td></tr>
+      <% end %> 
+        <tr>
+           <td class ="field" colspan = 4>
+              <% if @company.new_record? || !@company.logo? %> 
+               <%= f.label "Upload new Logo" %>
+              <% else %>
+               <%= f.label "Change Logo"%>
+              <% end %>
+           <br/>
+           <%= f.file_field :logo %><%= hidden_field_tag "old_file_size", @company.old_file_size %><br/>
+            <small>Only JPG and PNG files are supported</small><br>
+         
+           <% unless @company.new_record? || !@company.logo? %>
+        <%= f.check_box(:delete_logo) %>
+        <%= f.label(:delete_logo, 'Remove Logo') %>
+    <% end %>
+      </td>
+        </tr> 
+<%= hidden_field_tag 'row_index', params[:index] %>
+</table>
+  <table class="stylized">
+ <tr>
+    <td colspan=2><%= submit_tag "Submit", :class => "btn btn-success" %>&nbsp;<%= link_to 'Cancel',"", :id => 'close', :class => 'btn btn-white', :remote => true %></td>
+  </tr>
+  </table>
+<% end %>
+</div>

@@ -1,0 +1,64 @@
+  <!-- header -->
+  <header id="header" class="navbar">
+    <ul class="nav navbar-nav navbar-avatar pull-right">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="profile_tour">            
+          <span class="hidden-xs-only"><%= @auditor.full_name %> </span>
+          <span class="thumb-small avatar inline">
+              <%= image_tag 'avatar_green.png', :alt=>"auditor name", :class=>'img-circle'%>
+          </span>
+          <b class="caret hidden-xs-only"></b>
+        </a>
+        <ul class="dropdown-menu">
+         
+         <!--  <li><a href="#">Profile</a></li>
+          <li><a href="/messages">Messages</a></li>
+          <li><a href="/settings/show">Settings</a></li>
+          <li><a href="/product_updates/index">Updates</a></li>
+          <li style="background:#CAD3D3">
+            <a href="/pbreferrals" data-toggle="tooltip" data-placement="top" title="Get free subscription. Do you know a friend who is doing accounting old fashioned way? Invite him & earn free ProfitBooks subscriptions." ><i class="icon-gift"></i> Free Subscription</a>
+          </li>
+          <li class="divider"></li> -->
+          <li><a href="/login/signout">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    <a class="navbar-brand" href="/auditor_login/switch" style="width:58.33%;"><%= @auditor.full_name %> </a>
+    <button type="button" class="btn btn-link pull-left nav-toggle visible-xs" data-toggle="class:slide-nav slide-nav-left" data-target="body">
+      <i class="icon-reorder icon-xlarge text-default"></i>
+    </button>
+    <ul class="nav navbar-nav hidden-xs">
+      <li>
+        <!-- <div class="btn-group">
+          <button class="btn btn-white m-t-small btn-sm dropdown-toggle" data-toggle="dropdown" id="new_button_tour">
+            <i class="icon-plus"></i> New &nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="/invoices/new">Invoice</a></li>
+            <li><a href="/expenses/new">Expense</a></li>
+            <li><a href="/purchases/new">Purchase</a></li>
+            <li><a href="/tasks">Task</a></li>
+            <li><a href="/products/new">Product</a></li>
+            <li><a href="/accounts/new">Account</a></li>
+          </ul>
+        </div> -->
+      </li>
+      <li>
+        <div class="m-t m-b-small">
+          <a href="/auditor_login/switch" title="Main Dashboard" id="dashboard_tour"><i class="icon-dashboard icon-xlarge"></i></a>
+        </div>
+      </li>
+      <li>
+        <div class="m-t m-b-small">
+          <%= link_to raw("<i class='icon-check icon-xlarge'></i>"), tasks_path, :id=>"task_menu_tour" %>
+        </div>
+      </li>
+      <li>
+        <div class="m-t m-b-small">
+          <a id="Intercom" href="mailto:402c2c9d003ab5c965babf93ec504bed456a7bc4@incoming.intercom.io" class="dropdown-toggle" ><i class="icon-question-sign icon-xlarge"></i></a>
+        </div>
+      </li>
+    </ul>
+  </header>
+  <!-- / header -->
+

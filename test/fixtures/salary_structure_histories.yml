@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  salary_structure_id: 1
+  company_id: 1
+  for_employee: 1
+  created_by: 1
+  effective_from_date: 2013-06-20
+  updated_on_date: 2013-06-20
+
+two:
+  salary_structure_id: 1
+  company_id: 1
+  for_employee: 1
+  created_by: 1
+  effective_from_date: 2013-06-20
+  updated_on_date: 2013-06-20

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  purchase_effects_inventory: false
+  inventory_model: MyString
+
+two:
+  company_id: 1
+  purchase_effects_inventory: false
+  inventory_model: MyString

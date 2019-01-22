@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  created_by: 1
+  sales_order_id: 1
+  account_id: 1
+  voucher_number: MyString
+  voucher_date: 2014-01-31
+  status: 1
+
+two:
+  company_id: 1
+  created_by: 1
+  sales_order_id: 1
+  account_id: 1
+  voucher_number: MyString
+  voucher_date: 2014-01-31
+  status: 1

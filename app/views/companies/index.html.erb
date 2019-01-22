@@ -1,0 +1,66 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %>
+<!-- Page Title end -->
+
+
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+      
+	  <!-- Left column/section -->
+      <section class="column width6 first"></br>
+      	<div class="highlight">
+       <div id="tabs">
+         <div id="tabs-today">
+            <div class="colgroup">
+               <div class="width3 column first"> </div>
+            </div>
+            <div class="clearfix"></div>
+            
+            <div id="companies_index">
+                <% if @companies.blank? %>
+                   <p class="no-companies"><%= render :partial => "shared/no_record" %></p>
+                <% else %>
+                  <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "company", :collection => @companies %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                        </table> 
+                <% end %>
+            </div>
+            <div class="clear">&nbsp;</div>
+	   </div>
+     
+     <br />
+  
+     </div>
+     </div><br />
+     </section>
+  <!-- End of Left column/section -->
+ 
+  <!-- Right column/section -->
+    <aside class="column width2"><br/>
+    	
+       <a href="/companies/new" class="btn btn-special btn-green btn-green-new">&nbsp; Add new company</a>
+      <div id="rightmenu">
+		  <dl class="first">
+		      <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+			 <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>  
+			  <dd class="last">If you are a new user, you should read "Getting started"</dd>							
+		  </dl>
+	  </div><br />
+     
+    </aside>
+  <!-- End of Right column/section -->
+   </div>
+</div>
+		
+
+
+

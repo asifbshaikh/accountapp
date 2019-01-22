@@ -1,0 +1,73 @@
+<div id="prev_data">
+<script type="text/javascript">
+  $(document).ready(function(){
+   
+// script to get account through auto complete
+   var balance = new Object();
+    '<% 
+    @data_hash1 = {}
+     for acc in @accounts
+      @data_hash1[acc.name] = acc.id
+     end
+     %>'
+    data_hash1 = '<%= @data_hash1.keys.join(',')%>'.split(',');
+    $("input#to_account_auto_complete").autocomplete({
+      source: data_hash1
+  });
+  
+
+// script to get account balance
+'<% @accounts.each do |acc|%>'
+    balance['<%= acc.name %>']=parseFloat('<%= acc.current_balance %>')
+  '<% end %>'
+    $('#to_account_auto_complete').focusout(function(){
+      var name = $(this).attr('value');
+      bal = parseFloat(balance[name]);
+      //alert(bal + bal);
+      //$('p#bal').html(" ");
+      if (name != '' && bal > 0){
+        $('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+      }else if(bal <= 0){
+        $('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+      }else{}
+    });
+ });
+</script>
+<div class='titleBar'>
+  <div id="popupHeading">Update payroll details</div>&nbsp; 
+  <a id="popupBoxClose" class="btn btn-red">x</a>
+</div><br/>
+ <%= form_tag (:action => :update_payroll_execution, :controller => :attendances, :html => {:remote => true}) do |f| %>
+        <%= hidden_field_tag  "company_id" ,@company.id %>
+        <%= hidden_field_tag "id", @payroll_execution_job.id %>
+        <%= hidden_field_tag "month", @payroll_execution_job.execution_date.month %>
+          <table class="display stylized" id="company_table">
+              <tbody>
+                 <tr>
+                   <td><label class ="required">Account to pay from</label><br/>
+                   
+                    <input type="text" name="to_account_id" size ="14" placeholder = "Press <space> to search" id="to_account_auto_complete" value='<%= (!@payroll_execution_job.account_id.blank?)? "#{@company.accounts.find(@payroll_execution_job.account_id).name}" : " "%>' />
+                    <span id="to_acc_bal"></span>
+                  </td>
+                </tr>
+                <tr> 
+                   <td>
+                      <%= label_tag "renewal_date", "New renewal date" , :class => "required"%>
+                      <br/>
+                      <input type="text" name="execution_date" size ="14" id = "payroll_execution_job_execution_date"  value='<%= (!@payroll_execution_job.execution_date.blank?)? @payroll_execution_job.execution_date : " " %>' />
+                    </td>
+                  </tr>
+                  
+              </tbody>
+              <tfoot>
+                    <tr>
+                      <td colspan = "2">
+                       <%= submit_tag "Submit", :class => "btn btn-green" %>&nbsp;
+                       
+                      </td>
+                    </tr>
+              </tfoot>
+          </table>
+          <% end %>
+ 
+</div>

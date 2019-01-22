@@ -1,0 +1,38 @@
+<!-- Filter widget starts -->
+<section class="panel">
+  <header class="panel-heading bg-light">
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="#" class="panel-toggle text-muted"><i class="icon-caret-down icon-large text-active"></i><i class="icon-caret-up icon-large text"></i></a>
+      </li>
+    </ul>
+    <a href="#" class="panel-toggle "><i class="icon icon-search"></i> Search and Filter Records</a>
+  </header>
+  <section class="panel-body ">
+      <div class="row">
+        <form action = '' class="form-horizontal" method="get">
+          <div class="col-lg-12">                  
+            <% if @company.plan.enterprise_plan? && @current_user.owner?%> 
+              <strong>Select Branch</strong>
+              <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), {:prompt => 'Select branch', :style => "width:150px;display:inline"}) %>
+            <% end %>
+            <% unless @accounts.blank? %>
+              <strong>Select Vendor</strong>
+              <%= select_tag('account_id', options_from_collection_for_select(@accounts, :id, :name, params[:account_id]), :prompt=>"All vendors" ,:style => "width:150px;display:inline;") %>
+            <% end %>
+            &nbsp;
+            <input type="text" id="start_date" name="start_date" class="form-control sm-input" placeholder="Start date" value="<%= params[:start_date]%>" style="display:inline;">
+            &nbsp;
+            <input type="text" id="end_date" name="end_date" class="form-control sm-input" placeholder="End date" value="<%= params[:end_date]%>" style="display:inline;">
+            &nbsp;
+            <button type="submit" class="btn btn-info btn-sm"><i class="icon-search"></i> Search </button>
+          </div>
+        </form>
+      </div>
+  </section>
+</section>
+<!-- Filter widget Ends-->
+<script type="text/javascript">
+  $('#branch_id').select2();
+  $('#account_id').select2();
+</script>

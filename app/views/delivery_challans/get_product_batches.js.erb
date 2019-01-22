@@ -1,0 +1,10 @@
+ $(".dc-line #row"+<%= params[:index] %>+" .dc-batch-details").remove();
+ $(".dc-line #row"+<%= params[:index] %>+" #dcqty-notif"+<%= params[:index] %>+" ").remove();
+$(".loader").remove();
+<% if @product_batches.blank? %>
+	$("<i style='color:red;' id='dcqty-notif<%= params[:index] %>'>Stock not available.</i>").appendTo(".dc-line #row<%= params[:index] %> td:eq(2)");
+	$("#qty_delivered_"+<%= params[:index]%>+" ").attr("disabled", true);
+<% else %>
+	$("<%= escape_javascript render :partial => '/delivery_challans/batch_select' %>").appendTo(".dc-line #row<%= params[:index] %> td:eq(2)");
+	$("#qty_delivered_"+<%= params[:index]%>+" ").attr("disabled", false);
+<% end %>

@@ -1,0 +1,74 @@
+<table>
+  <tr><td colspan=5 align='center'>Group Summary Report</td></tr>
+  <tr><td colspan=5 align='center'><%= @start_date%> To <%= @end_date%> </td></tr>
+               <thead>
+                    <tr>
+                      <th> Particulars</th>
+                      <th class="text-right"> Opening Balance </th>
+                      <th class="text-right"> Debit</th>
+                      <th class="text-right"> Credit</th>
+                      <th class="text-right"> Closing Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <% total_debit = 0
+                        total_credit = 0
+                        total_closing_balance = 0
+                        total_opening_balance = 0
+                        branch = params[:branch_id].blank? ? @current_user.branch_id : params[:branch_id].to_i
+                         %>
+
+                        <%
+
+                          @accounts.each do |account|
+                          debit = 0
+                          credit = 0
+                          %>
+                            <tr>
+                              <td class = 'textindent1'><%= account.name %></td>
+                              <%
+                              opening_balance = 0
+                              # opening_balance = account.opening_balance unless account.opening_balance.blank?
+                               opening_balance = account.opening_balance_on_date(@start_date)
+                              total_opening_balance += opening_balance unless opening_balance.blank?
+                              opening_balance_sufix=''
+                              if opening_balance < 0
+                                opening_balance_sufix = " Cr"
+                                opening_balance = opening_balance.abs
+                              elsif opening_balance > 0
+                                opening_balance_sufix = " Dr"
+                              end
+                              %>
+                              <td align="right" width = "19%"><%= format_currency opening_balance %><%= opening_balance_sufix %></td>
+                              <% credit = Ledger.by_branch(branch).ledgers_in_current_year(@company.id, account.id, @start_date, @end_date).sum(:credit)#account.ledgers.sum(:credit)
+                              debit = Ledger.by_branch(branch).ledgers_in_current_year(@company.id, account.id, @start_date, @end_date).sum(:debit)
+                              total_credit += credit
+                              total_debit += debit
+                              closing_balance = 0
+                              # closing_balance = Ledger.current_year_balance(branch, account.id, start_date, end_date) unless account.current_balance.blank?
+                              closing_balance = account.balance_on_date(@end_date)
+                              total_closing_balance += closing_balance
+                              if !closing_balance.blank? && closing_balance < 0
+                                sufix = " Cr"
+                                closing_balance = closing_balance.abs
+                              elsif !closing_balance.blank? && closing_balance > 0
+                                sufix = " Dr"
+                              end
+                              %>
+                              <td align="right" width = "20%"><%= format_currency debit %></td>
+                              <td align="right" width = "20%"><%= format_currency credit %></td>
+                              <td align="right" width = "21%"><%= format_currency closing_balance %><%= sufix %></td>
+                            </tr>
+                          <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td><b>Grand Total</b></td>
+                    <td align="right"><b><%= format_currency total_opening_balance %></b></td>
+                    <td align="right"><b><%= format_currency total_debit %></b></td>
+                    <td align="right"><b><%= format_currency total_credit %></b></td>
+                    <td align="right"><b><%= format_currency total_closing_balance %></b></td>
+                  </tr>
+                </tfoot>
+              </table>
+

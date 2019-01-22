@@ -1,0 +1,20 @@
+  $("#prev_data").remove();
+  if($("#product_batch_enable_1").is(":checked")){
+    $("#putHere").after("<%= escape_javascript render :partial =>  'batch_warehouse_details' %>")
+  }else{
+    <% if @product.blank? ||! @product.batch_enable? %>
+      $("#putHere").after("<%= escape_javascript render :partial =>  'warehouse_details' %>")
+    <% else %>
+      $("#putHere").after("<%= escape_javascript render :partial =>  'batch_warehouse_details' %>")
+    <% end %>
+  }
+
+  var h = $("#popup_box_fixed").height();
+  var w = $("#popup_box_fixed").width();
+  var winH = $(window).height();
+  var winW = $(window).width();
+  var top1 = (winH - h)/2;
+  var left = (winW - w)/2;
+  $("#popup_box_fixed").css({'left': left, 'top': top1});
+  $('#popup_box_fixed').fadeIn("slow");
+  // calculateQuantity();

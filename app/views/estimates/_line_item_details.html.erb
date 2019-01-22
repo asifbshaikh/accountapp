@@ -1,0 +1,21 @@
+<tr valign="top">
+  <td valign="top" ><%= line_item_details.item_name %><br/>
+    <% if line_item_details.product.inventory? && line_item_details.estimate.gst_estimate? %>
+      HSN: 
+      <% elsif !line_item_details.product.inventory? && line_item_details.estimate.gst_estimate? %>
+      SAC: 
+      <% end %>
+       <%= "#{line_item_details.product.hsn_code}" if line_item_details.product.hsn_code.present? %>
+  </td>
+  <td colspan="2"><%= breaking_word_wrap(line_item_details.description)%></td>
+  <td class="text-right"><%= line_item_details.quantity%> <%= line_item_details.product.unit_of_measure unless line_item_details.product.blank?%></td>
+  <td class="text-right"><%= number_with_precision line_item_details.item_unit_cost, :precision=>(line_item_details.item_unit_cost == line_item_details.item_unit_cost.round(2) ? 2 : 4) %></td>
+	<% if @estimate.get_discount != 0 %>
+  	<td class="text-right"><%= number_with_precision line_item_details.discount, :precision=>2 %></td>
+  <% end %>
+  <% if @estimate.has_tax_lines? %>
+  	<td><%= line_item_details.applied_taxes %></td>
+  	<td class="text-right"><%= number_with_precision line_item_details.tax_amount, :precision=>2 unless line_item_details.tax_accounts.blank? %></td>
+  <% end %>
+  <td class="text-right"><%= number_with_precision line_item_details.amount, :precision=>2 %></td>
+</tr> 

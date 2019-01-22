@@ -1,0 +1,27 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first "><br />
+      <div class="highlight"> 
+        <%= render :partial => "shared/flash_msg" %>
+        <h2>Product setting</h2>
+        <fieldset>
+          <div class="column width6 first">
+            <%= render 'form' %>
+          </div>
+        </fieldset>
+      </div></br>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= show_button_white 'View Product Setting', product_setting_path(@product_setting) %>
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

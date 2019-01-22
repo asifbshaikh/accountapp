@@ -1,0 +1,32 @@
+<tr>
+  <td><%= line_item_details.item_name %><br/>
+      <% if line_item_details.product.inventory? && line_item_details.invoice.gst_invoice? && !line_item_details.product.hsn_code.blank? %>
+      HSN: 
+      <% elsif !line_item_details.product.inventory? && line_item_details.invoice.gst_invoice? && !line_item_details.product.hsn_code.blank? %>
+      SAC: 
+      <% end %>
+      <%= "#{line_item_details.product.hsn_code}" if line_item_details.product.hsn_code.present? %>
+  </td>
+  <td colspan="2">
+  <%= breaking_word_wrap(line_item_details.description) unless line_item_details.description.blank? %>
+  <% if line_item_details.product.batch_enable? %>
+	  <p>
+	  	<strong>Batch Numbers :</strong>
+	  	<% line_item_details.sales_warehouse_details.each do |swd| %>
+	  		<%= ", " unless line_item_details.sales_warehouse_details.first==swd %>
+	  		<%= swd.product_batch.batch_number %>  <strong>Mfd. on</strong> : <%= !swd.product_batch.manufacture_date.nil? ? swd.product_batch.manufacture_date : "Not Available" %> <strong> Exp. on :</strong> <%= !swd.product_batch.expiry_date.nil? ? swd.product_batch.expiry_date : "Not Available" %> 
+	  	<% end %>
+	  </p>
+  <% end %>
+  </td>
+  <td class="text-right"><%= number_with_precision line_item_details.quantity, :precision=>2 %> <%= line_item_details.product.unit_of_measure %></td>
+  <td class="text-right"><%= number_with_precision line_item_details.item_cost, :precision=>(line_item_details.item_cost == line_item_details.item_cost.round(2) ? 2 : 4) %></td>
+  <% if @invoice.discount>0 %>
+    <td class="text-right"><%= number_with_precision line_item_details.discount_percent, :precision => 2 unless line_item_details.discount_percent.blank? %></td>
+  <% end %>
+  <% if @invoice.tax>0 %>
+    <td><%= applied_taxes(line_item_details) %></td>
+    <td class = "text-right"><%= format_amount line_item_details.tax_amount unless line_item_details.tax_accounts.blank? %></td>
+  <% end %>
+  <td class="text-right"><%= format_amount line_item_details.amount %></td>
+</tr>

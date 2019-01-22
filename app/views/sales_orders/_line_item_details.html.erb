@@ -1,0 +1,14 @@
+<tr valign="top">
+  <td valign="top" ><%= line_item_details.item_name %></td>
+  <td><%= breaking_word_wrap(line_item_details.description) unless line_item_details.description.blank? %></td>
+  <td class="text-right"><%= number_with_precision line_item_details.quantity, :precision=>2 %> <%= line_item_details.product.unit_of_measure unless line_item_details.product.blank? %></td>
+  <td class="text-right"><%= number_with_precision line_item_details.unit_rate, :precision=>(line_item_details.unit_rate == line_item_details.unit_rate.round(2) ? 2 : 4) unless line_item_details.unit_rate.blank? %></td>
+	<% if @sales_order.get_discount != 0 %>
+  	<td class="text-right"><%= number_with_precision line_item_details.discount, :precision=>2 %></td>
+  <% end %>
+  <% if @sales_order.has_tax_lines? %>
+  	<td><%= applied_taxes(line_item_details) %></td>
+  	<td class = "text-right"><%= number_with_precision line_item_details.tax_amount, :precision=>2 %></td>
+  <% end %>
+	<td class="text-right"><%= number_with_precision line_item_details.amount, :precision=>2 %></td>
+</tr> 

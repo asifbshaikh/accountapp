@@ -1,0 +1,23 @@
+$('body').append("<div id='msg_box'><div class='box box-success'>Account created successfully</div></div>");
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation" %>
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% else %>
+   $("#jData").remove();
+  $("#jHere").after("<%= escape_javascript render :partial =>  'purchase_orders/auto_calculate'%>");
+  <% if params[:transaction_type] == "vendor" %>
+    $("#purchase_order_account_id").val('<%= @account.name %>');
+  <% elsif params[:transaction_type] == "item"%>
+    $("#purchase_order_purchase_order_line_items_attributes_<%= params[:index] %>_account_id").append("<option value='<%= @account.id %>' selected='selected'><%= @account.name %></option>");
+    $("#row<%= params[:index]%> #description").val("<%= @account.accountable.description %>");
+    $("#row<%= params[:index]%> #unit_cost").val("<%= @account.accountable.unit_cost %>");
+    cal();
+  <% elsif params[:transaction_type] == "tax" %>
+    $("#tax_row<%= params[:index] %> #purchase_tax_item").append("<option value='<%= @account.id %>' selected='selected'><%= @account.name %></option>");
+    cal();
+  <% end %>
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>

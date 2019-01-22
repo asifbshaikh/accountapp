@@ -1,0 +1,218 @@
+<div class="row">
+        <div class="col-lg-8">
+          <section class="panel">
+            <header class="panel-heading">
+              Income and Expense Overview
+        
+        <div class="btn-group m-r-none" data-toggle="buttons">
+                <label class="btn btn-sm btn-white">
+                  <input type="radio" name="options" id="option2"> Week
+                </label>
+                <label class="btn btn-sm btn-white active">
+                  <input type="radio" name="options" id="option2"> Month
+                </label>
+                <label class="btn btn-sm btn-white">
+                  <input type="radio" name="options" id="option2"> Year
+                </label>
+              </div>
+            </header>
+<div class="panel-body">
+              Total Income =<%= @total_income%>
+              Total Expense =<%= @total_expense%>
+              <div class="line line-large pull-in"></div>
+              <div class="sparkline" data-type="line" data-resize="true" data-height="205" data-width="100%" data-line-color="#bfea5f" data-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="5" data-composite-data="[160,230,250,300,320,330,280,260,250,280,250,260,250,255,330,345,300,210,200,200,170,180,250,250,200,200,280,270,310,250,280,175]" data-composite-line-color="#a3e2fe" data-composite-fill-color="#e3f6ff" data-data="[120,250,200,325,400,380,250,320,345,250,250,250,200,325,300,365,250,210,200,180,150,160,250,250,250,200,300,310,330,250,320,205]"></div>
+              <ul class="list-inline text-muted axis"><li>12:00<br>am</li><li>2:00</li><li>4:00</li><li>6:00</li><li>8:00</li><li>10:00</li><li>12:00<br>pm</li><li>2:00</li><li>4:00</li><li>6:00</li><li>8:00</li><li>10:00</li></ul>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-4">
+          <section class="panel">
+            <header class="panel-heading">Sales Overview (Start of year till date)</header>
+            <div class="panel-body text-center">              
+              <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="['#233445','#3fcf7f','#ff5f5f','#f4c414','#13c4a5']"><%=@credit_invoice_amount%>,<%=@payment_received%>,<%=@total_due%>,<%=@cash_invoice_amount%></div>
+              
+              <!-- 20,15,5,40,20 -->
+              <div class="line pull-in"></div>
+              <div class="text-mini">
+                <i class="icon-circle text-info"></i> Credit Invoice
+                <i class="icon-circle text-success"></i> Payment Recieved
+                <i class="icon-circle text-danger"></i> Total Due
+                <i class="icon-circle text-primary"></i> Cash Invoice
+                <i class="icon-circle text-warning"></i> Other
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class='row'>
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Top 5 Receivables</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Customer</th>                    
+                    <th width="40%">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <% if !@receivable_hash.nil? && !@receivable_hash.blank?
+                      counter = 1 
+                   @receivable_hash.sort.reverse.each do |key, value|
+                    if counter >= 5
+                      break
+                  end %>
+                  <tr>
+                    <td>
+                      <a href=<%= "/account_books_and_registers/ledger?account_id=#{@company.accounts.find_by_name(value).id}"%>><%= value %></a>
+                    </td>
+                    <%
+                    if key > 0
+                      suffix = " Dr"
+                    elsif key < 0
+                      suffix = " Cr"
+                    end
+                    %>
+                    <td><%= format_currency key.abs %><%= suffix %></td>
+                    </tr>
+                <% counter += 1
+                     end 
+                   else %>
+                  <div class="">0 receivables</div> 
+          <% end %>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Top 5 Payables</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Vendors</th>                    
+                    <th width="40%">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+             <% if !@payable_hash.blank?
+                 counter =1
+                @payable_hash.sort.reverse.each do |key, value|
+                 if counter >= 5
+                  break
+                end
+                  %>
+            <tr>
+              <td>
+            <a href=<%= "/account_books_and_registers/ledger?account_id=#{@company.accounts.find_by_name(value).id}"%>><%= value %></a>
+              </td>
+      <%
+        if key > 0
+          suffix = " Dr"
+        elsif key < 0
+          suffix = " Cr"
+        end
+      %>
+          <td><%= format_currency key.abs %><%= suffix %></td>
+             </tr>
+           <% counter += 1
+               end
+             else %>
+               <div class="">0 payables</div>
+            <%  end %>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+          
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Bank Accounts</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Bank</th>                    
+                    <th width="70">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% if !@bank_accounts.blank?
+                 counter =1
+                @bank_hash.sort.reverse.each do |key, value|
+                 if counter >= 5
+                  break
+                end
+                  %>
+                  <tr>
+                    <td>
+                      <%=value%>
+                    </td>
+                    <td>
+                      <%=key%>
+                    </td>
+                  </tr>
+                  <%end
+                  end%>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>        
+        </div>
+        <div class="row">
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Cash Accounts</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Name</th>                    
+                    <th width="70">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if !@cash_accounts.blank?
+                 counter =1
+                @cash_hash.sort.reverse.each do |key, value|
+                 if counter >= 5
+                  break
+                end
+                  %>
+                  <tr>
+                    <td>
+                      <%=value%>
+                    </td>
+                    <td>
+                      <%=key%>
+                    </td>
+                  </tr>
+                  <%end
+                  end%>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>        
+        <div class="col-lg-4">    
+          <section class="panel">
+            <header class="panel-heading">Recent Activities</header>
+            <div>
+              <table class="table table-striped m-b-none text-small">
+                <%= render :partial => 'dashboard/workstream', :collection => @workstreams %>  
+              <tr><td align = "right"><%= link_to "more", workstreams_path %></td></tr>       
+              </table>
+            </div>
+          </section>
+        </div>
+        </div>
+        
+
+                
+        

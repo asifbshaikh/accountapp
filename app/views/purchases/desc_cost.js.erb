@@ -1,0 +1,10 @@
+<% if @product.blank? %>
+  $(".purchase-line #row<%= params[:index]%> #description").val("");
+  $(".purchase-line #row<%= params[:index]%> #unit_cost").val("");
+<% else %>
+  <% description=@product.description.gsub(/[\r\n]+/, '\n').gsub(/\"/, "\\\"").html_safe unless @product.description.blank?%>
+  $(".purchase-line #row<%= params[:index]%> #quantity").val('');
+  $(".purchase-line #row<%= params[:index]%> #description").val("<%= description %>");
+  $(".purchase-line #row<%= params[:index]%> #unit_cost").val(<%= @product.purchase_price %>);
+<% end %>
+cal();

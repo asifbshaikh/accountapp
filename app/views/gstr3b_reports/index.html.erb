@@ -1,0 +1,77 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file-text-alt text"></i>GST Return Filing</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <a href="#" class="btn btn-default btn-lg "><i class="icon-info"> </i> </a>
+        <p></p>
+      </div>  
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <section class="panel">
+          <header class="panel-heading bg-light">
+            <i class="icon-list icon-download-alt text-default"></i> Manage Your GSTRs
+          </header>
+          <div class="panel-body">
+            <div class="tab-pane active" id="all">
+              <div class="row text-small">
+                <div class="col-sm-7">
+                  <h5>Showing monthly returns </h5>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @gstr3b_reports.each do |report| %>
+                    <tr>
+                      <td><%= report.month_name %> </td>
+                      <td><i class="icon icon-ok-sign text-success"></i> <%= report.name %></td>
+                      <td><%= next_report_action(report, report.status_name) %></td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-6">
+        <section class="panel">
+          <header class="panel-heading">
+            <i class="icon icon-info text-default"></i> How It works
+          </header>
+          <div class="panel-body">
+            <div class="row text-small">
+              <div class="col-sm-7"></div>
+              <div class="col-sm-7">
+                <p>Things to do before you file GSTR 3B:</p>
+                <ol>
+                  <li>Ensure the GSTN is updated for all your vendors and customers </li>
+                  <li> Ensure that you have included correct 'Place of Supply' on all Sales Invoices</li>
+                  <li>Ensure correct rate of tax is applied while recording Purchases and Sales</li>
+                  <li>Record expenses under Reverse Charge if total of all expenses in a day is more than Rs.5000/-. Remember the credit of tax paid on reverse charge can be taken in following month and not this month.</li>
+                  <li>Export the GSTR 3B Report and fill up data on GSTN portal with your login and password</li>
+                </ol>                
+                <p>The detailed tutorial can be accessed <a href="https://tutorial.gst.gov.in/userguide/returns/index.htm#t=Create_and_Submit_GSTR3B.htm&rhsearch=3B&rhhlterm=3B&rhsyns=%20" target="_new">here</a>.</p>
+
+                <p>Read more about GSTR 3B on this <a href=" http://www.profitbooks.net/gstr-3b-format/" target="_new">guide</a>.</p>
+              </div>
+            </div>  
+          </div>
+        </section>
+      </div>    
+    </div>
+  </section>
+</section>  

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ProfitBooks.net - Online Accounting & Payroll Management Software for small business</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Stylesheets Files       // -->
+<!-- ////////////////////////////////// -->
+<%= render :partial=> "stylesheets"%>  
+<!-- ////////////////////////////////// -->
+<!-- //     Google Webfont Files     // -->
+<!-- ////////////////////////////////// -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //        Favicon Files         // -->
+<!-- ////////////////////////////////// -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Javascript Files        // -->
+<!-- ////////////////////////////////// -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="javascripts/jquery.easing-1.3.min.js"></script>
+<script src="javascripts/tooltip.js"></script>
+<script src="javascripts/superfish.js"></script>
+<script src="javascripts/tinynav.min.js"></script>
+<script src="javascripts/jquery.fancybox.js?v=2.0.6"></script>
+<script src="javascripts/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="javascripts/jquery.ui.totop.min.js"></script>
+<script src="javascripts/ddaccordion.js"></script>
+<script src="javascripts/jquery.twitter.js"></script>
+<script src="javascripts/jflickrfeed.min.js"></script>
+<script src="javascripts/faq-functions.js" ></script>
+<script src="javascripts/theme-functions.js"></script>
+<script src="javascripts/jquery.retina.js"></script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <!-- logo start here -->
+      <div id="logo">
+          <a href="/home/index"><img src="/images/logo.png" alt="ProfitBooks - Online Accounting and Payroll Management Software" class="retina"/></a>
+          
+        </div>
+        <!-- logo end here -->
+        
+        <!-- top information start here -->
+        <div id="top-info">
+          <ul>
+              <li>
+                  <p>Call us to know more</p>
+                    <img src="images/top_info1.png" alt="" class="retina" /><br/>
+                    <p class="info-text">+91 84 85 86 3000</p>
+                </li>
+                <li>
+                  <p>Already Registered ?</p>
+                    <p class="info-text"><a href="https://www.profitbookshq.com/login/index">Login to your account</a></p>
+                </li>
+            </ul>
+        </div>
+        <!-- top information end here -->
+        
+        <div id="mainmenu-wrapper">
+          <!-- mainmenu start here -->
+            <nav id="mainmenu">
+                <ul id="menu">
+                    <li class="dropdown"><a href="index.html">Home</a>
+                        <ul> 
+                            <li><a href="index-layout2.html"><span>-</span> home layout 2</a></li>
+                            <li><a href="index-layout3.html"><span>-</span> home layout 3</a></li>
+                            <li><a href="index-layout4.html"><span>-</span> home layout 4</a></li>      
+                        </ul>
+                    </li>
+                    <li><a href="about.html">How Its Useful</a></li>
+                    <li><a href="services.html">Pricing & Signup</a></li>
+                    <li class="dropdown"><a href="#">Common Questions</a>
+                        <ul> 
+                            <li><a href="portfolio-2col.html"><span>-</span> portfolio 2 column</a></li>
+                            <li><a href="portfolio-3col.html"><span>-</span> portfolio 3 column</a></li>
+                            <li><a href="portfolio-4col.html"><span>-</span> portfolio 4 column</a>
+                              <ul> 
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a>
+                                      <ul> 
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>      
+                                        </ul>
+                                    </li>     
+                                </ul>
+                            </li>     
+                      </ul>
+                  </li>
+                    <li class="dropdown"><a href="#">Partners</a>
+                      <ul> 
+                            <li><a href="blog-right-sidebar.html"><span>-</span> blog right sidebar</a></li>
+                            <li><a href="blog-left-sidebar.html"><span>-</span> blog left sidebar</a></li>
+                            <li><a href="single-right-sidebar.html"><span>-</span> single right sidebar</a></li> 
+                            <li><a href="single-left-sidebar.html"><span>-</span> single left sidebar</a></li>    
+                      </ul>
+                  </li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown selected"><a href="#">Pages</a>
+                        <ul> 
+                            <li><a href="column.html"><span>-</span> column page</a></li>
+                            <li><a href="tables.html"><span>-</span> table page</a></li>
+                            <li><a href="button-list.html"><span>-</span> button &amp; list page</a></li>
+                            <li><a href="icons.html"><span>-</span> glyphicons page</a></li>
+                            <li><a href="typhography.html"><span>-</span> typhography page</a></li>
+                            <li><a href="testimonials.html"><span>-</span> testimonials page</a></li>  
+                            <li><a href="pricing.html"><span>-</span> pricing page</a></li>
+                            <li><a href="faq.html"><span>-</span> faq page</a></li>
+                            <li><a href="team.html"><span>-</span> team page</a></li>
+                            <li><a href="services-layout2.html"><span>-</span> services layout alt</a></li>
+                            <li><a href="contact-layout2.html"><span>-</span> contact layout alt</a></li>
+                            <li><a href="sitemap.html"><span>-</span> sitemap page</a></li>
+                            <li><a href="fullwidth.html"><span>-</span> fullwidth page</a></li>
+                            <li><a href="404.html"><span>-</span> 404 page</a></li>                             
+                      </ul>
+                  </li>
+              </ul>
+            </nav>
+            <!-- mainmenu end here -->
+            
+            <!-- top socials start here -->
+            <div id="top-socials">
+                <ul class="socials-list">
+                    <li><a href="#" title="facebook" class="tooltip"><img src="images/socials/facebook.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="twitter" class="tooltip"><img src="images/socials/twitter.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="dribbble" class="tooltip"><img src="images/socials/dribbble.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="google+" class="tooltip"><img src="images/socials/google+.png" alt="" class="retina" /></a></li>
+                    
+                </ul>
+            </div>
+            <!-- top socials end here -->
+        </div>
+    </header>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Typhography.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <ul>
+                        <li><a href="index.html">home</a></li>
+                        <li><a href="#">pages</a></li>
+                        <li class="current-page"><a href="#">typhography</a></li>
+                    </ul>
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">        
+            <div class="six columns"> 
+                <h1>H1 header example</h1>                    
+                <h2>H2 header example</h2>                    
+                <h3>H3 header example</h3>                    
+                <h4>H4 header example</h4>                    
+                <h5>H5 header example</h5>                    
+                <h6>H6 header example</h6>
+                                    
+                <div class="clear"></div>
+                <div class="divider"></div>  
+                    
+                <pre>&lt;h6 class="title-blue"&gt; [...] &lt;/h5&gt;</pre> 
+                <h6 class="title-green">Heading Title Green</h6>
+                <h6 class="title-blue">Heading Title Blue</h6>
+                <h6 class="title-orange">Heading Title Orange</h6>
+                <h6 class="title-red">Heading Title Red</h6>
+                    
+                <div class="clear"></div>
+                <div class="divider"></div>
+                    
+                <h5>Custom message</h5>
+                <pre>&lt;div class="info"&gt; [...] &lt;/div&gt;</pre>         
+                <div class="info">This is information message</div>
+                                                                  
+                <pre>&lt;div class="success"&gt; [...] &lt;/div&gt;</pre>         
+                <div class="success">This is success message</div>
+                    
+                <pre>&lt;div class="warning"&gt; [...] &lt;/div&gt;</pre>         
+                <div class="warning">This is warning message</div> 
+                    
+                <pre>&lt;div class="error"&gt; [...] &lt;/div&gt;</pre>         
+                <div class="error">This is error message</div>       
+            </div>
+            <div class="six columns">
+              <h5>Drop caps</h5>
+                <pre>&lt;span class="dropcap1"&gt; [...] &lt;/span&gt;</pre>
+                <span class="dropcap1">Q</span><p>uis autem veleum iurepo reprehenderit quiea voluptate velitasuru essecomm quamel nihil molestiae consequatur vel illum quikor dolorem eumar fugiator quovoluptas nulla pariatur consequuntur magni dolores</p>
+                <pre>&lt;span class="dropcap2"&gt; [...] &lt;/span&gt;</pre>
+                <span class="dropcap2">Q</span><p>uis autem veleum iurepo reprehenderit quiea voluptate velitasuru essecomm quamel nihil molestiae consequatur, vel illum quikor dolorem eumar fugiator quovoluptas nulla pariatur consequuntur magni dolores</p>
+                <pre>&lt;span class="dropcap3"&gt; [...] &lt;/span&gt;</pre>
+                <span class="dropcap3">Q</span><p>uis autem veleum iurepo reprehenderit quiea voluptate velitasuru essecomm quamel nihil molestiae consequatur, vel illum quikor dolorem eumar fugiator quovoluptas nulla pariatur consequuntur magni dolores</p>            
+                    
+                <h5>Blockquote text</h5>
+                <pre>&lt;blockquote&gt; [...] &lt;/blockquote&gt;</pre>
+                <blockquote><p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quamnihil molestiae consequatur, vel illum qui dolorem eum fugiat voluptas nulla pariati libero tempore soluta nobise</p></blockquote>  
+                    
+                <h5>Pullquote text</h5>
+                <pre>&lt;span class="pullquote_left"&gt; [...] &lt;/span&gt;</pre>
+                <p>Tempor incididunt ut labore et dolore magna aliqua ut enim ader minim veniam <span class="pullquote_left">Similique sunt inter culpawe quillor officia</span> quisvitael nostrud exercitation ullamco robi laboris nisiutoy expeart commodol consequatore duis aute irure dolor intropa reprehenderitin</p>
+                <pre>&lt;span class="pullquote_right"&gt; [...] &lt;/span&gt;</pre>
+                <p>Tempor incididunt ut labore et dolore magna aliqua ut enim ader minim veniam <span class="pullquote_right">Similique sunt inter culpawe quillor officia</span> quisvitael nostrud exercitation ullamcoro laboris nisiutoy expeart commodo consequatore duiser irure dolor soluta intropa reprehenderit</p>     
+          </div>                   
+      </div>          
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial=> "footer"%>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

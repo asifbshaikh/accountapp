@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  created_by: 1
+  estimate_label: MyString
+  warehouse_label: MyString
+  customer_label: MyString
+
+two:
+  company_id: 1
+  created_by: 1
+  estimate_label: MyString
+  warehouse_label: MyString
+  customer_label: MyString

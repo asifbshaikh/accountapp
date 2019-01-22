@@ -1,0 +1,19 @@
+<%= form_for @designation, :html=> {:class=>"form-horizontal", :remote=>true} do |f| %>
+<div class='designation-notif'></div>
+<div class="form-group">
+  <div class='col-lg-7'>
+    <%= f.label "Title", :class=>"control-label-required" %><br/>
+    <%= f.text_field :title,:class=>"bg-focus form-control" %>
+  </div>
+</div>
+<div class="form-group">
+  <div class='col-lg-7'>
+    <%= f.label :Description, :class=>"control-label-required" %><br />
+    <%= f.text_area :description, :rows=> 3, :class=>"bg-focus form-control" %>
+  </div>
+</div>
+ <div class="col-lg-8 col-lg-offset-4">                      
+  <div class='save-btn'></div>
+  <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+</div>
+<% end %>

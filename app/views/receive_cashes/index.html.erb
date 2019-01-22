@@ -1,0 +1,65 @@
+<!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>Income &rarr; <span>Receive Cash History</span></h1>
+      <!-- Quick search box -->
+      <form action="" method="get">
+          <input class="" type="text" id="q" name="q" />
+      </form>
+    </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first">
+          <%#<p>Click on the Date to view detail.</p>%>
+  
+          <div id="tabs-all">
+             <div class="colgroup">
+                <div class="width3 column first"> </div>
+             </div>
+             <div class="clearfix"></div>
+             <div id="receive_cash">
+                    <% if @receive_cashes.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                    
+                       <p>Click on the Date to view detail.</p>
+                        <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "receive_cash", :collection => @receive_cashes%>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "header" %>
+                          </tfoot>
+                        </table>    
+                   <% end %>
+               </div>
+      
+        </div>
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2">
+           <p ><a href="/receive_cashes/new" class="btn btn-special btn-green"><img SRC="" class="icon" alt=""/>Receive Cash</a></p>
+           <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="#">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div>
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

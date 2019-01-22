@@ -1,0 +1,2 @@
+$(".loader").remove();
+$("#row-<%= params[:index] %>-<%= params[:swd_index] %> #batch-td").html("<%= escape_javascript render 'invoices/batch_details', :index=>params[:index], :swd_index=>params[:swd_index] %>")

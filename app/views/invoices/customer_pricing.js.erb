@@ -1,0 +1,1 @@
+$('#invoice_due_date').val("<%= (@customer.blank? || @customer.credit_days.blank?) ? Time.zone.now.to_date.advance(:weeks =>1) : @date + @customer.credit_days.days %>");

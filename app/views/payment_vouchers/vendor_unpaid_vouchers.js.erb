@@ -1,0 +1,2 @@
+$("#voucher-details").html("<%= escape_javascript render 'unpaid_vouchers', :purchases_payments=>@purchases_payments, :expenses_payments=>@expenses_payments %>");
+$("#payment-save").removeClass('disabled');

@@ -1,0 +1,2 @@
+module GstAuthorizerHelper
+end

@@ -1,0 +1,25 @@
+<div class="col-sm-4 m-b-mini" align="left">
+   <h6>Showing all <%= "#{@type}" %> invoices (specify the filter details here)</h6>
+          </div>
+                          
+        <div class="table-responsive">
+      
+           <div class="tab-content">
+                <%= render :partial=> "shared/flash_msg"%>
+                <div id='all-gstr1-tab' class='tab-pane fade active in'>
+                  <div class="table-responsive">
+                     <table id="gstr1" class="table table-striped m-b-none text-small" data-source="<%= gstr1_filing_path(:format =>'json', :type => @type) %>" >
+                      <thead>
+                        <%= render :partial=> "header" %>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+               
+              </div> 
+                
+      </div>    

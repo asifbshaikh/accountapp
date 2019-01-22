@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  estimate_line_item_id: 1
+  account_id: 1
+
+two:
+  estimate_line_item_id: 1
+  account_id: 1

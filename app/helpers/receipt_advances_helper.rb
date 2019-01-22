@@ -1,0 +1,2 @@
+module ReceiptAdvancesHelper
+end

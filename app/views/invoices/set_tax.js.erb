@@ -1,0 +1,10 @@
+
+$(".tax-line<%= params[:index] %>").remove();
+$("<div class='tax-line<%= params[:index]%>'></div>").appendTo('#row<%= params[:index]%> td:eq(5)');
+
+<% if !@account.blank? %>
+  <% @account.parent_child_accounts.each_with_index do |child, index| %>
+    $("<input type='hidden' name='invoice[tax_line_items_attributes][<%= params[:tax_index].to_i + index %>][account_id]' value='<%= child.id %>'>").appendTo(".tax-line<%= params[:index] %>");
+    $("<input type='hidden' name='invoice[tax_line_items_attributes][<%= params[:tax_index].to_i + index %>][amount]' value=''>").appendTo(".tax-line<%= params[:index] %>");
+  <% end %>
+<% end %>

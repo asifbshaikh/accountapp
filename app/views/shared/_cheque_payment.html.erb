@@ -1,0 +1,30 @@
+ <div id="cheque" style="display:none;">
+	  <div id='user_info_div'><span class='basic_info'>Enter Cheque Detail</span></div>
+<table class="display stylized" >	
+
+	<tbody>
+		<tr>
+			<td>
+			   <label> Cheque number </label><br/>
+			    <%= text_field_tag 'cheque_payment[cheque_number]', '', 
+                                 :onkeydown => "return card_cheque_number  (event);",  :maxlength => 6, :size => "17" %>
+			</td>
+			<td>
+			<label class ="required"> Cheque date</label><br/>
+			    <%= text_field_tag 'cheque_payment[cheque_date]', '', :size => "17"%>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			  <label> Bank name </label><br/>
+			    <%= text_field_tag 'cheque_payment[bank_name]', '',:size => "17"%>
+			</td>
+			<td>
+				<label> Branch </lanel><br />
+			    <%= text_field_tag 'cheque_payment[branch]', '', :size => "17" %>
+			</td>
+		</tr>
+	</tbody>
+	
+</table>
+</div>

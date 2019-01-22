@@ -1,0 +1,43 @@
+<!-- Filter widget starts -->
+<section class="panel">
+  <header class="panel-heading bg-light">
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="#" class="panel-toggle text-muted"><i class="icon-caret-down icon-large text-active"></i><i class="icon-caret-up icon-large text"></i></a>
+      </li>
+    </ul>
+    <a href="#" class="panel-toggle "><i class="icon icon-search"></i> Search and Filter Records</a>
+  </header>
+  <section class="panel-body ">
+    <div class="row">
+      <form action = '' class="form-horizontal" method="get">
+        <div class="col-lg-12">                  
+          <% if @company.plan.enterprise_plan? && @current_user.owner?%> 
+          <div class="col-lg-2-4">
+            <strong>Branch</strong>
+            <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), {:prompt => 'Select branch', :style => "width:150px;display:inline"}) %>
+          </div>  
+          <% end %>
+          <div class="col-lg-2-4">
+            <strong>Category</strong>
+            <%= select_tag(:category, options_from_collection_for_select(@tags,'name','name',params[:category]),{:prompt => 'Select category', :style => "width:150px;"}) %>
+          </div>          
+          <div class="col-lg-2-4">
+            <input type="text" id="start_date" name="start_date" class="form-control sm-input" placeholder="Start date" value="<%= params[:start_date]%>" style="display:inline;">
+          </div>
+          <div class="col-lg-2-4">  
+            <input type="text" id="end_date" name="end_date" class="form-control sm-input" placeholder="End date" value="<%= params[:end_date]%>" style="display:inline;">
+          </div>  
+          <div class="col-lg-2-4">
+            <button type="submit" class="btn btn-info btn-sm"><i class="icon-search"></i> Search </button>
+          </div>  
+        </div>
+      </form>
+    </div>
+  </section>
+</section>
+<!-- Filter widget Ends-->
+<script type="text/javascript">
+  $('#branch_id').select2();
+  $('#category').select2();  
+</script>

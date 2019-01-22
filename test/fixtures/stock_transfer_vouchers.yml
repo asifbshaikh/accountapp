@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  transferred_by: 1
+  warehouse_id: 1
+  voucher_number: MyString
+  details: MyString
+  transfer_date: 2013-08-29
+  voucher_date: 2013-08-29
+  branch_id: 1
+
+two:
+  company_id: 1
+  transferred_by: 1
+  warehouse_id: 1
+  voucher_number: MyString
+  details: MyString
+  transfer_date: 2013-08-29
+  voucher_date: 2013-08-29
+  branch_id: 1

@@ -1,0 +1,2 @@
+module VerticalProfitAndLossHelper
+end

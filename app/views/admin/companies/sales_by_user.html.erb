@@ -1,0 +1,81 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Sales by user and revenue</h2>
+    </div>
+    <div class="col-lg-5 m-t-large" align="right">
+           <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        </div>
+  </div><br/>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <strong>Sales by user and revenue</strong>
+            </header>
+          <div class="panel-body">
+
+          <%= render :partial => "report_activity_filter" %>
+            <% if @sales_by_user.blank? %>
+            <div class="row">
+                <div class="col-lg-8">
+                Sales by:<strong><%= SuperUser.find(@sales_person).full_name%></strong>
+                </div><br>
+                <div class="col-lg-8">
+                For: <b><%= @start_date.strftime("%d %b %Y") %> To <%= @end_date.strftime("%d %b %Y") %></b>
+                </div>
+            </div><br>
+             <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <div class="row">
+                <div class="col-lg-8">
+                Sales by:<strong><%= SuperUser.find(@sales_person).full_name%></strong>
+                </div><br>
+                <div class="col-lg-8">
+                For the period:
+                      <b><%= @start_date.strftime("%d %b %Y") %> To <%= @end_date.strftime("%d %b %Y") %></b>
+                </div>
+            </div><br>
+
+            
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width='20%'>Company Name</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th> Closed By </th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% total_amount = 0%>
+                    <% @sales_by_user.each do |sale|%>
+                  <tr>
+                    <td><%= Company.find(sale.company_id).name%></td>
+                    <td><%= sale.invoice_date.to_date %></td>
+                    <td align="right"><%= sale.amount %></td>
+                    <td><%= SuperUser.find(sale.closed_by).full_name %></td>
+                    <% total_amount += sale.amount%>
+                  </tr>
+                    <% end %>
+                    <tr>
+                      <td></td>
+                      <td align="right"><strong>Total Amount :</strong></td>
+                      <td align="left"><strong><%= total_amount%></strong></td>
+                      <td></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          <%end%>
+</div>
+</section>
+</div>
+</div>
+</section>
+</section>

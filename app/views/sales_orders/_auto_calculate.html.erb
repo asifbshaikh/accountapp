@@ -1,0 +1,151 @@
+<div id="jData">
+<script>
+  $(document).ready(function(){
+	cal();
+	$('table#sales_order_line_items input:text').live('keyup', function(e){
+		cal();
+    e.preventDefault();
+	});
+	
+	$("table#sales_order_line_items select#manj").live('change', function(e){
+		cal();
+    e.preventDefault();
+	});
+	
+
+	$("table#sales_order_line_items .slsord_line  #item-td select").live('change', function(){
+	  var index = $(this).attr("data-index");
+	  var product_id = $(this).val();
+	  $.ajax({
+	    type:'GET',
+	    data: {index: index, product_id: product_id},
+	    url: "/sales_orders/desc_cost"
+	  });
+	});
+	$("table#sales_order_line_items .slsord_line  #tax-td select").live('change', function(e){
+		cal();
+    e.preventDefault();
+	});
+	
+	$('table#sales_order_line_items span#total').text(parseFloat($('input[name=total]').val()).toFixed(2));
+	$('table#sales_order_line_items span#tax-amount').text(parseFloat($('input[name=total_tax]').val()).toFixed(2));
+	$('table#sales_order_line_items span#discount').text(parseFloat($('input[name=discount]').val()).toFixed(2));
+  });
+  
+  function cal(){
+	$("tr#auto-added-row").remove();
+	var auto_calculate = new Object();
+	var tax_rate = new Object();
+	'<% @tax_accounts.each do |tax| %>'
+		auto_calculate['<%= tax.id %>'] = '<%= tax.accountable.auto_calculate_tax %>'
+		tax_rate['<%= tax.id %>'] = '<%= tax.accountable.tax_rate %>'
+	'<% end %>'
+	//alert('hi there');
+	var i = 0;
+	var total = 0;
+	var total_tax = 0;
+	var total_discount = 0;
+	var estimate_total=0;
+	$('table#sales_order_line_items tbody tr').each(function(){
+    //alert($('table#sales_order_line_items tbody tr:eq(' + i + ')').is(":visible"));
+		var qut = 0;
+		var unitCost = 0;
+		var discount = 1;
+		var amount = 0;
+		var x = 0;
+		var t = 0;
+		var ship_amount=0;
+		if (($('table#sales_order_line_items tbody tr:eq(' + i + ')').is(":visible")) && ($('table#sales_order_line_items tbody tr:eq(' + i + ')').attr('class') == 'slsord_line') && $('table#sales_order_line_items tbody tr:eq(' + i + ') #quantity').val() && $('table#sales_order_line_items tbody tr:eq(' + i + ') #unit_cost').val()) {
+			var qut = $('table#sales_order_line_items tbody tr:eq(' + i + ')  #quantity').val();
+			var unitCost = $('table#sales_order_line_items tbody tr:eq(' + i + ') #unit_cost').val();
+			var dis_amt=0;
+			$('span#discount').text(x.toFixed(2));
+			if ($('table#sales_order_line_items tbody tr:eq(' + i + ') #discount').val()) {
+				dis_amt = parseFloat($('table#sales_order_line_items tbody tr:eq(' + i + ') #discount').val());
+				if(dis_amt > 100){
+				  alert("Discount should be less than 100%.");
+				  $('table#sales_order_line_items tbody tr:eq(' + i + ') #discount').val('');
+				}else{
+				  var discount = (dis_amt / 100);
+				  x = (qut * unitCost) * discount;
+				}
+			}
+			amount = qut * unitCost;
+			estimate_total += amount;
+			amount = amount - x;
+
+			// calculatin for tax
+			for (var taxIndex = 0; taxIndex < 2; taxIndex++) {
+				data = $('table#sales_order_line_items tbody tr:eq(' + i + ') #tax-td select:eq('+taxIndex+') option:selected').attr('data-linked');
+				// console.log(data)
+				if(data){
+					if(taxIndex==1){
+						$("#tax-"+ i +"-1").show();
+						$("table#sales_order_line_items tbody tr:eq(" + i + ") #tax-td a#add-tax").remove();
+					}
+					var parent_tax_amount=0
+					var base_amount = 0
+					$.each($.parseJSON(data), function(index,	object){
+					    // console.log(object["name"]);
+					    var tax_rate = parseFloat(object["rate"]);
+					    var tax_name = object["name"];
+					    var class_name = object["class_name"];
+					    var calculate_on_percent= parseFloat(object["calculate_on_percent"]);
+					    var calculation_method=object["calculation_method"]
+					    var tax_amount = 0
+	  			    if(object["parent"]){
+	    	    		base_amount=amount*(calculate_on_percent/100.0)
+	    	    		 if(calculation_method==4){
+				                parent_tax_amount = base_amount*(tax_rate/100.0);
+				              }else{
+				                parent_tax_amount=tax_amount = base_amount*(tax_rate/100.0);
+				              }
+	  			    	// parent_tax_amount=tax_amount = amount*(tax_rate/100);
+	  			    }else{
+	  			    	amount_to_calculate=parent_tax_amount
+					    	if(calculation_method=="2"){
+					    		amount_to_calculate+=base_amount 
+					    	}
+					    	tax_amount = amount_to_calculate*(tax_rate/100);
+	  			    	// tax_amount=parent_tax_amount*(tax_rate/100);
+	  			    }
+							if(tax_amount > 0){
+								total_tax += tax_amount;
+								// amount = amount + tax_amount
+								if($("."+class_name+" td span.tx-amt").text()){
+									var temp = parseFloat($("."+class_name+" td span.tx-amt").text());
+									$("."+class_name+" td span.tx-amt").text((temp+tax_amount).toFixed(2));
+								}else{
+									$('table#sales_order_line_items tr.row-link:last').after("<tr id='auto-added-row' class='"+class_name+" row-link'><td colspan='6' style='background-color:#fff;' align='right'>"+tax_name+"</td><td style='background-color:#fff;' align='right'><span class='tx-amt'>"+tax_amount.toFixed(2)+"</span></td><td style='background-color:#fff;'></td></tr>")
+								}
+							}
+					});
+				}
+			};
+			$('table#sales_order_line_items tbody tr:eq(' + i + ') #total').val(amount.toFixed(2));
+			$('table#sales_order_line_items tbody tr:eq(' + i + ') #amount').text(amount.toFixed(2));
+			total = total + amount;
+			total_discount += x;
+		}else if ($('table#sales_order_line_items tbody tr:eq(' + i + ')').is(":visible") && ($('table#sales_order_line_items tbody tr:eq(' + i + ')').attr('class') == 'shp_line') && ($('table#sales_order_line_items tbody tr:eq(' + i + ') #shipping_dropdown').val())
+			&& $('table#sales_order_line_items tbody tr:eq(' + i + ') #ship_charge').val()){
+			// alert($('table#sales_order_line_items tbody tr:eq(' + i + ') #ship_charge').val());
+			ship_amount = parseFloat($('table#sales_order_line_items tbody tr:eq(' + i + ') #ship_charge').val());
+			total = total + ship_amount;
+		 }else {
+			$('table#sales_order_line_items tbody tr:eq(' + i + ') td:eq(5) #total').val('');
+		}
+		i++;
+	});
+	total = total + total_tax;
+	$('input[name=total]').val(total);
+	$('input[name=total_tax]').val(total_tax);
+	$('input[name=discount]').val(total_discount);
+	$('span#tax-amount').text(total_tax.toFixed(2));
+	$('span#discount').text(total_discount.toFixed(2));
+	$('table#sales_order_line_items span#total').text(total.toFixed(2));
+	$('table#sales_order_line_items span#est-total').text(estimate_total.toFixed(2));
+	
+	}
+	
+</script>
+</div>

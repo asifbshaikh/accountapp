@@ -1,0 +1,20 @@
+<section class="panel">
+  <header class="panel-heading">
+   <strong>Unsecured Loan Account Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>Entity name: </strong> <%= @account.accountable.entity_name %></p>
+    <p><strong>Loan type:</strong><%= @account.accountable.loan_type %></p>
+    <p><strong>Interest rate: </strong> <%= @account.accountable.interest_rate %></p>
+    <p><strong>Details :</strong><%=@account.accountable.details%></p>
+   </div>
+   <div class="col-sm-6">
+     <p><strong>Address line1:</strong><%= account_address_line1 %></p>
+     <p><strong>Address line2:</strong><%= account_address_line2 %></p>
+     <p><strong>City:</strong><%= account_city %></p>
+     <p><strong>State:</strong><%= account_state %></p>
+     <p><strong>Pin code:</strong><%= account_postal_code %></p>
+   </div>
+  </div>
+ </section>

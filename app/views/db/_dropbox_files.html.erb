@@ -1,0 +1,29 @@
+<div class="table-responsive row" id="oldData">
+<% if @contents.blank? %>
+<%= render :partial=>"shared/no_record"%>
+<% else %>
+<table class="table table-striped b-t">
+  <thead>
+	<tr>
+	  <th colspan='2'>File/Folder</th>
+	  <th>Size</th>
+	  <th>Dated</th>
+	  <th>Action</th>
+	</tr>
+  </thead>
+  <tbody>
+	
+	<% @contents.each do |xx| %>
+	<tr>
+	  <td style='width: 2%;' colspan="text-right">
+    <i class="<%= xx['is_dir'] ? 'icon-folder-close' : 'icon-file'%>"></i>
+    </td><td style='vertical-align:middle;padding:0;'><%= link_to xx['path'].split('/').last, {:action => "#{xx['is_dir'] ? 'index' : 'download'}", :path => xx['path']} %></td>
+	  <td><%= xx['size']%></td>
+	  <td><%= Date.parse(xx['modified']) %></td>
+	  <td><%= link_to "<i class='icon-trash'></i>".html_safe,{:action => 'delete_file', :path => xx['path']}, :confirm => "Are you sure to delete #{xx['path'].split('/').last}", :title => "Delete" %></td>
+	</tr>
+	<% end %>
+  </tbody>
+</table>
+<% end %>
+</div>

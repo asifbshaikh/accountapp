@@ -1,0 +1,5 @@
+Product Code,Name,Description,Warehouse,Quantity,Batch No,Unit Price,Reorder Level,Unit of Measure,Sales price,Income Account,Purchase price,Expense Account,Product category
+,HP Laptop,Laptop,default warehouse,50,,30000,5,,35000,Sales Account - default income,,,"performance laptops, gaming laptop"
+,Lenovo,Laptop,default warehouse,30,,30000,5,,35000,Sales Account - default income,30000,Purchase Account - default expense,home laptop
+,Acer Aspire,Laptop,default warehouse,40,13,28000,10,,32000,Sales Account - default income,28000,Purchase Account - default expense,home laptop
+,Dell Inspiron,Laptop,default warehouse,60,14,35000,10,,40000,Sales Account - default income,35000,Purchase Account - default expense,"business laptop, performance laptop"

@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		Hello, Administrator,
+		<br>
+		This mail is received from:
+		<br />
+		<h1> "<%= @user.first_name  %>
+		<%= @user.last_name  %>"</h1>
+		Email from --> <b> "<%= @user.email%>" </b>
+		<p>
+			<br/>
+			Feedback Received -->
+			<br>
+			<b>Vote:</b>- "<%= @feedback.vote %>"
+			<br>
+			<b>Comment:</b>- "<%= @feedback.comment %>"
+			<br>
+			<b>Submitted by:</b>- "<%= User.find(@feedback.submitted_by).first_name  %>"
+			<br>
+			<b>Company:</b>- "<%= Company.find(@feedback.company_id).name  %>"
+			<br>
+		</p>
+		<p>
+			Regards and have a great day!
+		</p>
+	</body>
+</html>

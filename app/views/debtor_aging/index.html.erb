@@ -1,0 +1,17 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+       <div class="col-lg-4">
+        <h2><i class="icon-bar-chart text"></i>Debtor Aging Report</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <% if !@invoice.blank?  %>
+         <%= link_to_pdf params %>
+         <%= link_to_xls params %>
+        <%end%>
+      </div>
+    </div>
+      <%= render "filter" %>
+      <%= render "form" %>
+   </section>
+</section>

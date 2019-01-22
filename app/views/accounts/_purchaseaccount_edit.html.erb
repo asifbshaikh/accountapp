@@ -1,0 +1,45 @@
+<%= f.fields_for :accountable do |a| %>
+<% if @company.plan.is_inventoriable? %>
+    <div class="form-group">
+      <div class="col-lg-4">
+        <label class="control-label">Depreciable ?</label><br/>
+        <div class="block">
+          <% if @account.accountable.depreciable ? %>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-sm btn-white active">
+                <%= a.radio_button :depreciable, true,  { :tabindex=>'4'}  %>Yes
+              </label>
+              <label class="btn btn-sm btn-white">
+                <%= a.radio_button :depreciable, false,  { :tabindex=>'4'}  %>No
+              </label>
+            </div>
+          <% else %>
+            <%= hidden_field_tag :depreciable, '0'%>
+          <% end %>
+        </div>  
+      </div>
+      <div class="col-lg-4">
+        <%= a.label 'Treat this as a reseller product',  :class=>"control-label-required"%>
+        <div class="input-group">
+          <%= a.radio_button :reseller_product, true  %>Yes &nbsp;
+          <%= a.radio_button :reseller_product, false %> No
+        </div>
+      </div>
+<% else %>
+  <%= hidden_field_tag :inventoriable, '0'%>
+<% end %>
+  <div class="form-group">
+    <div class="col-lg-8">
+      <%= a.label :unit_cost, :class=>'control-label'%>
+      <div class="input-group">
+        <%= a.text_field :unit_cost, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <%= a.label :description, :class=>'control-label'%>
+      <div class="input-group">
+        <%= a.text_field :description, :class => 'form-control' %>
+      </div>
+    </div>
+  </div>
+<% end %>

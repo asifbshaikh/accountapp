@@ -1,0 +1,117 @@
+<section id="content">
+	<section class="main padder">
+		<div class="row">
+			<div class="col-lg-7">
+				<h2><i class="icon-bar-chart text"></i>Outstanding Expenses </h2>
+			</div>
+			<div class="col-lg-5 m-t-large" align="right">
+				<a href="/account_books_and_registers/reports" class="btn btn-white btn-lg"><i class="icon-mail-reply"></i> Report List </a>
+				<% if !@expenses.blank? %> 
+					<%= link_to_pdf params %> 
+				<%= link_to_xls params %>
+				<%end%>
+				<p></p>
+			</div>
+		</div>
+		<div class="row">
+			<!-- Table starts -->
+			<div class="col-lg-12">
+				<section class="panel">
+					<div class="panel-body">
+						<!-- Filter widget starts -->
+						<section class="panel">
+						  <header class="panel-heading bg-light">
+						    <ul class="nav nav-pills pull-right">
+						      <li>
+						        <a href="#" class="panel-toggle text-muted"><i class="icon-caret-down icon-large text-active"></i><i class="icon-caret-up icon-large text"></i></a>
+						      </li>
+						    </ul>
+						    <a href="#" class="panel-toggle "><i class="icon icon-search"></i> Search and Filter Records</a>
+						  </header>
+						  <section class="panel-body ">
+						      <div class="row">
+						      	<form action = '' class="form-horizontal" method="get">
+							        <% if @company.plan.enterprise_plan? && @current_user.owner?%> 
+			                  <div class="col-lg-2">                  
+								        	<strong>Select Branch</strong>
+				                  <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), {:prompt => 'Select branch', :style => "width:150px;"}) %>
+			                  </div>
+			                <% end %>
+			                <div class="col-lg-3">
+			                	<strong>Select Vendor</strong>
+		                    <%= select_tag('account_id', options_from_collection_for_select(@accounts, :id, :name, params[:account_id]), :prompt=>"All vendors", :style => "width:210px;") %>
+			                </div>
+							        <div class="col-lg-2">
+							        	<button type="submit" class="btn btn-info btn-sm"><i class="icon-search"></i> Search </button>
+							        </div>
+							      </form>
+						      </div>
+						  </section>
+						</section>
+						<!-- Filter widget Ends-->
+						<% if @expenses.blank? || @accounts.blank? %><br />
+							<%= render :partial => "shared/no_record" %>
+						<% else %>
+						<div class="row">
+	            <div class="col-lg-8">
+	            <% if !params[:branch_id].blank? %>
+	              Branch: <b><%= Branch.find(params[:branch_id]).name%></b>
+	            <% end %><br />
+	              <%= render "shared/duration" %>
+	            </div>
+	            <div class="col-lg-4" align="right">
+	              <span class="xsmall light">Vendor name : </span>
+	              <br />
+	              <span class="large"><b><%= @account.blank? ? "All Vendors" : @account.name %></b></span>
+	            </div>
+	          </div>
+	          <br />
+						<div class="table-responsive row">
+							<table class="table table-striped b-t text-small">
+								<thead>
+									<tr>
+										<th>Voucher</th>
+										<th>Due date</th>
+										<th>Vendor</th>
+										<th class="text-right">Expense Amount(<%= @company.currency_code %>)</th>
+										<th class="text-right">Outstanding(<%= @company.currency_code %>)</th >
+										<th class="text-right">Overdue by days</th >
+									</tr>
+								</thead>
+								<tbody>
+									<% @expenses.each do |expense| %>							
+										<tr>
+											<td><%= link_to expense.voucher_number, expense %></td>
+											<td><%= expense.expense_date %></td>
+											<td><%= expense.account.name %></td>
+											<td class="text-right"><%= expense_report_amount(expense) %></td>
+											<td class="text-right"><%= expense_report_outstanding(expense) %></td >
+											<td class="text-right"><%= distance_of_time_in_words(expense.due_date, Time.zone.now.to_date) %></td >
+										</tr>
+									<% end %>
+									<tr>
+										<td></td>
+										<td></td>
+										<td class="text-right"><strong>Grand Total</strong></td>
+										<td class="text-right"><strong><%= expense_report_total_amount %></strong></td >
+										<td class="text-right"><strong><%= expense_report_total_outstanding %></strong></td >
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<footer class="row">
+						<%= render "shared/report_footer"%>
+						</footer>
+					</div>
+				</section>
+			<!-- Table ends -->
+			<%end%>
+			</div>
+		</div>   
+	</section>
+</section>
+<script type="text/javascript">
+   $('#account_id').select2();
+   $('#branch_id').select2();
+</script>

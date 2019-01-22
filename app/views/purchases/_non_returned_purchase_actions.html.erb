@@ -1,0 +1,14 @@
+<% if @purchase.settled? %>
+	<%= render "returned_purchase_actions" %>
+<% else %>
+	<div class="btn-group">
+	  <%= link_to raw('<i class="icon-edit"> </i> Edit'), edit_purchase_path(@purchase), :class => 'btn btn-info btn-lg' %>
+	  <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+	    <span class="caret"></span><i></i>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to raw('<i class="icon-mail-reply"> </i>Return this purchase'), new_purchase_return_path(:purchase_id=>@purchase.id) %></li>
+	    <li><%= link_to raw('<i class="icon-trash"> </i>Delete this voucher'), purchase_path(@purchase), :method => "delete", :confirm => "Are you sure?" %></li>
+	  </ul>
+	</div>
+<% end %>

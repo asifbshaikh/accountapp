@@ -1,0 +1,193 @@
+<div class="row">
+ <div class="col-sm-12"><br/>
+  <div class="col-sm-6">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Invoice Number Setting:</strong> 
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/invoice_settings/form" %>
+    </div>
+ </section>
+</div>
+
+
+<div class="col-sm-6">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Custom Invoice Labels and other setting </strong> 
+  </header>
+  <div class="">
+   <table class="table table-striped b-t">
+     <tbody>
+       <tr>
+         <td><strong>Product/Service:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :item_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Description:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :desc_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Quantity:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :qty_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Price/Rate:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :rate_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Discount:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :discount_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Amount:</strong></td>
+         <td><%= best_in_place  @invoice_setting, :amount_label, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+       </tr>
+       <tr>
+         <td><strong>Customer Notes:</strong></td>
+         <td><%= best_in_place  @company, :customer_note, :type=> :textarea,:nil=> '<span class ="variable_item">Click here to add customer note</span> ', :html_attrs => {:maxlength => 700,:class=>"bg-focus form-control"} %><br/><small>(Default for your invoice) </small></td>
+       </tr>
+       <tr>
+         <td><strong>Terms and Conditions:</strong></td>
+         <td><%= best_in_place  @company, :terms_and_conditions, :type=> :textarea,:nil=> '<span class ="variable_item">Click here to add terms and conditions</span> ', :html_attrs => {:maxlength => 700,:class=>"bg-focus form-control"} %><br/><small>(Default for your invoice) </small></td>
+       </tr>
+       <tr>
+         <td><strong>Invoice footer</strong></td>
+         <td><%= best_in_place  @company.invoice_setting, :invoice_footer, :type=> :textarea,:nil=> '<span class ="variable_item">Click here to add invoice footer</span> ', :html_attrs => {:maxlength => 2000,:class=>"bg-focus form-control"} %><br/><small>(Default for your invoice) </small></td>
+       </tr>
+       <tr>
+         <td><strong>Show payment history in report</strong></td>
+         <td><%= best_in_place  @company.invoice_setting, :view_payment, :type=>:checkbox,:collection=> [raw("<a>No</a>"), raw("<a>Yes</a>")] %> </td>
+       </tr>
+     </tbody>
+   </table>
+
+    
+  </div>
+ </section>
+</div>
+</div>
+</div>
+<div class="line line-dashed m-t-large"></div>
+<div class="row">
+ <div class="col-sm-12">
+ <div class="col-sm-6">
+   <section class="panel">
+    <header class="panel-heading">
+     <strong>Invoice Template:</strong> <strong><%= @invoice_template.template.template_name.capitalize  %> Template</strong>
+    </header>
+    <div class="panel-body">
+        <%= render :partial=> "/invoice_settings/change_template"%>
+    </div>
+   </section>
+   </div>
+    <div class="col-sm-6">
+     <section class="panel">
+      <header class="panel-heading">
+        <strong>Invoice Custom Fields:</strong> 
+      </header>
+      <div class="">
+       <% if @invoice_custom_field.blank? %>
+        <%= render :partial=>"shared/no_record"%>
+       <% else %>
+       <table class="table table-striped b-t">
+         <thead>
+           <tr>
+             <th><strong>Custom Field</strong></th>
+             <th><strong>Field Name</strong></th>
+             <th><strong>Default Value</strong></th>
+           </tr>
+         </thead>
+         <tbody>
+          <tr>
+            <td><strong>Custom Field1</strong></td>
+            <td id='custom-label1'><%= best_in_place  @invoice_custom_field, :custom_label1, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+            <td><%= best_in_place  @invoice_custom_field, :default_value1, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+          </tr> 
+          <tr>
+            <td><strong>Custom Field2</strong></td>
+            <td><%= best_in_place  @invoice_custom_field, :custom_label2, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+            <td><%= best_in_place  @invoice_custom_field, :default_value2, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+          </tr> 
+          <tr>
+            <td><strong>Custom Field3</strong></td>
+            <td><%= best_in_place  @invoice_custom_field, :custom_label3, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+            <td><%= best_in_place  @invoice_custom_field, :default_value3, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30, :class=>"bg-focus form-control"} %></td>
+          </tr> 
+          <tr>
+            <td colspan="2"><strong>Show these fields in report:</strong></td>
+            <td><%= best_in_place @invoice_custom_field, :status, :type => :checkbox, :collection => ["No, thanks", "Yes, of course!"] %></td>
+          </tr>
+         </tbody>
+       </table>
+       <% end %>
+      </div>
+     </section>
+</div>
+</div>
+</div>
+<div class="line line-dashed m-t-large"></div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="col-sm-6">
+      <div class="vttl_info">
+        <section class="panel">
+          <div class='voucher-title-info-error'></div>
+          <header class="panel-heading">
+            <strong>Invoice Titles</strong><span class="pull-right"><a title="Add New Title" id ="add_vttl" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</a></span>
+          </header>
+          <div class="">
+            <% if @voucher_titles.blank? %>
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+              <table class="table table-striped m-b-none text-small ">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="voucher-title-body">
+                  <%= render "settings/voucher_titles" %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </section>
+      </div>
+      <div class="vttl_add">
+        <section class="panel">
+          <header class="panel-heading">
+            <strong>Add New Title</strong><span class="pull-right"><a  title="Back" id ="bck_vttl" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+          </header>
+          <div class="panel-body">
+            <%= form_for @voucher_title, :html=> {:class=>"form-horizontal", :remote=>true} do |f| %>
+              <div class='voucher-title-notif'></div>
+              <%= render 'shared/form_error', :object => @voucher_title %>
+              <div class="col-sm-6">
+                <p>
+                  <%= f.label "Title", :class=>"control-label-required" %><br/>
+                  <%= f.text_field :voucher_title,:class=>"bg-focus form-control" %>
+                </p>
+              </div>
+              <div class="col-sm-6">
+                <p>
+                  <%= f.label :Status, :class=>"control-label-required" %><br />
+                  <%= f.select(:status, [['Show','1'],['Hide','0']],{} ,{:class=>"bg-focus form-control"}) %>
+                </p>
+              </div>
+              <div class="col-lg-8 col-lg-offset-4">
+                <div class='save-btn'></div>
+                <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>
+  

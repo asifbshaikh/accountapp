@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="keywords" content="accounting software, doing business online, professional invoices, tracking income, expenses, inventory, Invite an auditor, payroll, generate salary slips, profitbooks, training, webinar" />
+<meta name="description" content="ProfitBooks is an online accounting and payroll management software for small businesses. It helps you organise your office finances and keeps track of all activities related to your business. It also comes with productivity tools like task management, notepad, internal messaging system and document management (with Dropbox integration). Its best suited for accountants, startups, entrepreneurs and SMEs." />
+<meta name="copyright" content="&copy; 2012 The Nextwave Technologies. All rights reserved." />
+<meta name="country" content="India" />
+<meta name="author" content="Profitbooks Team" />
+<meta name="organization-Email" content="support@profitbooks.net" />
+<meta name="language" content="English" />
+<title>ProfitBooks.net - Enroll for online webinar</title>
+
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+	  thisHeight = $(this).height();
+	  if(thisHeight > tallest) {
+		  tallest = thisHeight;
+	  }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div itemscope itemtype="http://schema.org/Event" id="main-wrapper">
+
+	<!-- header start here -->
+    <%= render :partial=>"header" %>
+    <!-- header end here -->
+    
+            
+     <!-- second section -->
+	 <section id="content-wrapper">
+     <div class="row">
+        	<div class="twelve ">
+                	<div class="row">
+                        <div class="six columns">
+                            <h4><span class="title-green">Join us in one of our <span itemprop="name">online sessions to learn how ProfitBooks </span>can help your business.</span></h4>
+                            <p itemprop="description"><strong>What you will learn:</strong>
+							<br>- How doing business online can improve efficiency
+							<br>- Creating professional invoices, tracking income and expenses
+							<br>- Managing documents online and going papaerless.
+							<br>- Managing inventory
+							<br>- Improving productivity using tasks, projects and messages
+							<br>- Inviting an auditor to review your books
+							<br>- Running payroll and generate salary slips</p> 
+							
+                            <p><strong>How it works:</strong>
+							<br>Just enroll for one of the sessions using this form. You will get an email with instructions to join the <span  itemprop="location" itemscope itemtype="http://schema.org/Place">WebEx meeting<span>. On the meeting day, you can visit the link from your computer and listen to the live session.</p>
+							<p><h6  class="title-green">Sometimes we distribute discount codes at the end of the session, so join now!</h6></p>
+                        </div>
+                        <div class="six columns">
+                        <br>
+                            <!-- Form starts -->
+                           - *Name
+						   <br>-*Email
+						   <br>-*Phone
+						   <br>-*Date
+						   <br>-City
+						   <br>-Brief information about your business
+                            <!-- Form ends -->
+						<div class="info"> Every tuesday at 11:30am IST and every friday at 04:30pm IST 						</div>	
+                      </div>
+                  </div>
+                
+            </div>
+        </div>
+	</section>	
+     <!-- second section ends -->   
+        
+         
+           
+    </section>
+    <!-- content section end here -->
+    
+  <!-- footer section start here -->
+    <footer>
+    	<div class="footer-logo">
+            <p><strong>ProfitBooks.net</strong><br/>A product of The Nextwave Technologies.<br/>Copyright &copy; 2013. All rights reserved.</p>
+        </div>
+        <div class="footer-column">
+        	<h6>Business Association</h6>
+            <p>Get associated with us for any type of business development activity using <a href="contact.html">this form.</a></p>
+        </div>
+        <div class="footer-column">
+        	<h6>Current Promotions</h6>            
+            <p>Get 1 year subscription of Entrepreneur magazine FREE with all our <a href="pricing.html">paid plans.</a></p>
+        </div>
+        <div class="footer-column">
+        	<h6>Resources</h6>
+             <ul class="footer-list-link">
+            	<li><a href="https://profitbooks.zendesk.com/home">Support Center</a></li>
+                <li><a href="contact.html">Careers</a></li>
+                <li><a href="privacy_policy.html">Privacy</a></li>
+                <li><a href="terms_of_service.html">Terms</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </footer>
+    <!-- footer section end here -->
+    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<meta itemprop="price" content="Free"></span>
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

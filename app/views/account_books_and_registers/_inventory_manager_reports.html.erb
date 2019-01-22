@@ -1,0 +1,71 @@
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial=>"/shared/flash_msg"%>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-4">
+                <section class="panel">
+                  <header class="panel-heading bg-lighter"><strong>Expense Reports</strong></header>
+                  <div class="panel-body">
+                    <div class="media">
+                      <div class="pull-left media-small"><a href="/purchase_register/index"> Purchase Register</a></div>
+                    </div>
+                    <div class="media">
+                      <div class="pull-left media-small"><a href="/bills_payable/index"> Outstanding Payments</a></div>
+                    </div>
+                    <div class="media">
+                      <div class="pull-left media-small"><a href="/sundry_creditor/index"> Sundry Creditor</a></div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="col-lg-4">
+                <section class="panel">
+                  <header class="panel-heading bg-lighter"><strong>Inventory Reports</strong></header>
+                  <div class="panel-body">
+                    <div class="col-sm-6">
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/product_catalog/index"> Product Catalog</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/product_wise_stock/index"> Product Wise Stock</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/low_stock/index"> Low Stock Register</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/stock_wastage_register/index"> Stock Wastage Register </a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/warehouse_wise_stock/index"> <%= @company.label.warehouse_label%> Wise Stock </a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"><a href="/warehouse_wise_stock/inventory_valuation"> Inventory Valuation </a></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="media">
+                        <div class="pull-left media-small"> <a href="/sales_order_reports/customer_wise_so"> <%= @company.label.customer_label%> Wise Pending Order</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"> <a href="/sales_order_reports/product_wise_so"> Product Wise Pending Order</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"> <a href="/sales_order_reports/pending_invoices_for_dc">Pending Delivery Challan</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"> <a href="/inventory_statements/stock_statement">Stock Summary</a></div>
+                      </div>
+                      <div class="media">
+                        <div class="pull-left media-small"> <a href="/inventory_statements/product_statement">Product Statement</a></div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>

@@ -1,0 +1,49 @@
+
+<div class="content-box">
+	<header>
+		<h3>Company count details</h3>
+	</header>
+	<section>
+	   <form class="nav-task">
+		<ul>
+		<li>
+			<label> Total Companies:</label>&nbsp;<%= Company.count%>
+		</li>
+		<li>
+       <label>With free plan :</label>&nbsp; <%= Company.free_plan.count %>
+		</li>
+		<li>
+       <label>With essential plan :</label>&nbsp; <%= Company.essential_plan.count %>
+		</li>
+		<li>
+       <label>With plus plan :</label>&nbsp; <%= Company.basic_plan.count %>
+		</li>
+		<li>
+       <label>With professional plan :</label>&nbsp; <%= Company.premium_plan.count %>
+		</li>
+		<li>
+       <label>With enterprise plan :</label>&nbsp; <%= Company.enterprise_plan.count %>
+		</li>
+		<li>
+			<label> Open This Week:</label>&nbsp;<%= Company.this_week.count%>
+		</li>
+		<li>
+			<label> Open This Month:</label>&nbsp;<%= Company.this_month.count%>
+		</li>
+		<li>
+			<label> Open This Year:</label>&nbsp;<%= Company.this_year.count%>
+		</li>
+		<li>
+			<label> Expiring this week:</label>&nbsp;<%= Subscription.expiring_this_week.count%>
+		</li>
+		<li>
+			<label> Expiring in 15 days:</label>&nbsp;<%= Subscription.expiring_in_15_days.count%>
+		</li>
+		<li>
+			<label> Expired:</label>&nbsp;<%= Company.closed.count%>
+		</li>
+		</ul>
+	    </form>
+	</section>
+</div>
+	

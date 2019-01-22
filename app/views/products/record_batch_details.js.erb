@@ -1,0 +1,17 @@
+$(".errorPlace").html('');
+<% if @product.errors.any? %>
+	$(".errorPlace").html("<%= escape_javascript render('shared/popup_form_error', {:object => @product})%>")
+<% else %>
+	$(".batch<%=params[:index]%>").html("");
+	<% batches = PurchaseWarehouseDetail.get_hold_product_batches(@company.id, @product.id) 
+	if @company.plan.is_inventoriable? && @product.batch_enable? && batches.size > 0 %>
+	  $(".batch<%=params[:index]%>").html("<span class='label bg-info'><%= batches.size %> unallocate batches</span>");
+		$(".qty<%= params[:index] %>").html("<%= @product.quantity %>");
+	<% else %>
+		$(".batch-link<%= params[:index] %>").remove();
+	<% end %>
+	$(".modalbody<%= params[:index] %>").html("<%= escape_javascript render('modal_body.html.erb', {:product=>@product, :row_index => params[:index]})%>");
+	$("div[id^='modal']").modal('hide');
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

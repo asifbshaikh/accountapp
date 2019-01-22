@@ -1,0 +1,2 @@
+$("#remIt").remove();
+$(".tds_pmnt").after('<%= escape_javascript render :partial => params[:mode] unless params[:mode] == 'cash' %>');

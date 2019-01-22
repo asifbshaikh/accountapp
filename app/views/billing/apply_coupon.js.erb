@@ -1,0 +1,22 @@
+var validity =  parseFloat($('select[name=validity] option:selected').val());
+<% if !@coupon.blank? && @total.to_i <= 0 %>	
+  $('span#error-msg').text('Select plan/user_pack first');
+<% elsif !@coupon.blank? && @coupon.can_use?(@company.id, @order_total,validity) %>
+  $('span#order-total').text(<%= @total %>);
+  $("#amount").val(<%= @total %>);
+  $("#coupon_name").val("<%= @coupon.name %>");
+  $("#coupon_amt").val(<%= @discount %>);
+  $('span#coupon-amt').text(<%= @discount %>);
+  $("#coupon_cd").val("<%= @coupon.coupon_code%>");
+  $("#rb2").attr('figure', '<%= @coupon.discount %>');
+  $("#rb2").attr('coupontype', '<%= @coupon.coupon_type %>');
+  $("tr .coupon").hide('slow');
+  $("tr #msg-success").show('slow');
+  cal();
+<% elsif !@coupon.blank? && @coupon.can_use?(@company.id, @order_total,validity) && @coupon.total_amount > @order_total  %>
+  $('span#error-msg').text('This coupon is applicable on deal greater than ' + <%= @coupon.total_amount %> + ' only');
+<% elsif !@coupon.blank? && !@coupon.can_use?(@company.id, @order_total,validity)%>	
+  $('span#error-msg').text('Expired coupon');
+<% else %>
+  $('span#error-msg').text('Invalid coupon');
+<% end %>

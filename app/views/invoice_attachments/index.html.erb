@@ -1,0 +1,21 @@
+<h1>Listing invoice_attachments</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invoice_attachments.each do |invoice_attachment| %>
+  <tr>
+    <td><%= link_to 'Show', invoice_attachment %></td>
+    <td><%= link_to 'Edit', edit_invoice_attachment_path(invoice_attachment) %></td>
+    <td><%= link_to 'Destroy', invoice_attachment, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invoice attachment', new_invoice_attachment_path %>

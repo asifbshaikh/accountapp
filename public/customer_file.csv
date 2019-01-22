@@ -1,0 +1,9 @@
+Name,Opening Balance,Currency,Billing Address,Billing City,Billing State,Billing Country,Billing Postal Code,Shipping Address,Shipping City,Shipping State,Shipping Country,Shipping postal code,Primary Phone Number,Seconday Phone number,Email,Website,GSTIN/Tax number,PAN,TAN,VAT TIN,CST No,CIN,Excise No,Service Tax No,LBT No,Credit Days,Credit Limit,Customer since
+Ravi Rana,15000,INR,Street Name,Pune,Maharastra,India,411052,shipping address1,Pune,Maharastra,India,,9848012345,,ravi@example.com,,22AFYPT8504A22K,,,,,,,,,30,10000,
+Mohit Mogha,5000,INR,Street ,Pune,Maharastra,India,411021,shipping address2,Pune,Maharastra,India,,9848012345,,mohit@example.com,,22AFYPT8504A22U,,,,,,,,,20,15000,
+Rohit Deshpande,15000,,Street Name,Pune,Maharastra,India,411052,shipping address3,Pune,Maharastra,India,,9848012345,,rohit.deshpande@example.com,,22AFYPT8504A22K,,,,,,,,,30,10000,
+Rohit Chandran,5000,INR,Street ,Pune,Maharastra,India,411021,shipping address4,Pune,Maharastra,India,,9848012345,,rohit.chandran@example.com,,22AFYPT8504A22U,,,,,,,,,20,15000,
+Rushikesh,15000,AUD,Street Name,Pune,Maharastra,India,411052,shipping address5,Pune,Maharastra,India,,9848012345,,rushikesh@example.com,,22AFYPT8504A22K,,,,,,,,,30,10000,
+Ali,5000,PKR,Street ,Pune,Maharastra,India,411021,shipping address6,Pune,Maharastra,India,,9848012345,,suraj@example.com,,22AFYPT8504A22U,,,,,,,,,20,15000,
+Snehal,15000,INR,Street Name,Pune,Maharastra,India,411052,shipping address7,Pune,Maharastra,India,,9848012345,,snehal@example.com,,22AFYPT8504A22K,,,,,,,,,30,10000,
+Renuka,5000,SGD,Street ,Pune,Maharastra,India,411021,shipping address8,Pune,Maharastra,India,,9848012345,,renuka@example.com,,22AFYPT8504A22U,,,,,,,,,20,15000,

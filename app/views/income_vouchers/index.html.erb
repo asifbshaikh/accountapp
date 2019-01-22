@@ -1,0 +1,74 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h2><i class="icon-file text"></i>Receipts</h2>
+        </div>
+        <div class="col-lg-8 m-t-large" align="right">
+          <a href="/receipt_vouchers/new" class="btn btn-success btn-lg"><i class='icon-plus'></i> New Receipt</a>
+          <p></p>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+          <%= render :partial=> "shared/flash_msg"%>
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li><a href="#receive_money" data-toggle="tab"><i class="icon-money icon-large text-default"></i>Receive Money</a></li>
+                <li class="active"><a href="#other_income" data-toggle="tab"><i class="icon-signin icon-large text-default"></i>Other Income</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+            <div class="tab-content"> 
+            <div class="tab-pane " id="receive_money">
+              <div class="table-responsive">
+                <% if @receipt_vouchers.blank? %>   
+               <%= render :partial => "shared/no_record"%>
+               <% else %>
+                <table id="receipt_vouchers" class="table table-striped m-b-none text-small" data-source ="<%= receipt_vouchers_url(:format => "json") %>" >
+                <thead>
+                  <%= render :partial => "/receipt_vouchers/header" %>
+                </thead>
+                <tbody>
+                <%= render :partial => "/receipt_vouchers/receipt_voucher", :collection => @receipt_vouchers %>
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "/receipt_vouchers/footer" %>
+                </tfoot>
+              </table>
+              <% end %>
+              </div>
+            </div>
+            <div class="tab-pane active" id="other_income">
+              <div class="table-responsive">
+              <% if @income_vouchers.blank? %>   
+               <%= render :partial => "shared/no_record"%>
+               <% else %>
+                <table id="income_vouchers" class="table table-striped m-b-none text-small" data-source ="<%= income_vouchers_url(:format => "json") %>" >
+                <thead>
+                  <%= render :partial => "/income_vouchers/header" %>
+                </thead>
+                <tbody>
+                <%= render :partial => "/income_vouchers/income_voucher", :collection => @income_vouchers %>
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "/income_vouchers/footer" %>
+                </tfoot>
+              </table>
+              <% end %>
+              </div>
+            </div>
+            
+            </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+
+
+  

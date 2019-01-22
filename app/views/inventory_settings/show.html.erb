@@ -1,0 +1,46 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first "><br />
+      <div class="highlight"> 
+        <%= render :partial => "shared/flash_msg" %>
+        <h2>Inventory Settings</h2>
+        <fieldset>
+        <h4>Inventory effect</h4>
+        <div class="box box-info">
+          Currently set to - <b><%= inventory_effect_setting %></b><br/>
+          This setting changes how the inventory if effected. Incase set to effected on entry of purchase voucher the inventory of
+          the purchased items increases when the purchase voucher is passed. Incase this setting is not set, the inventory of items
+          is NOT effected with the purchase voucher. The inventory is increased when the goods are received by the Stock Receipt voucher
+          at the Warehouse.
+        </div>
+        <!-- Commented out. Will uncomment when I have more understanding of the inventory costing methods and ready to implement the changes
+        <h4>Inventory Model</h4>
+        <div class="box info">
+          This setting is used to calculate the cost of the inventory. Profitbooks supports three kinds of inventory costing.
+          They are
+          <ol>
+            <li>LIFO <br>Last in first out method of inventory costing.</li>
+            <li>FIFO <br>First in first out method of inventory costing.</li>
+            <li>AVCO <br>Average Costing method of inventory costing.</li>
+          </ol>
+        </div>
+      -->
+      </fieldset>
+      <%= edit_button_white("Change Inventory Settings", edit_inventory_setting_path(@inventory_setting))%>
+      </div></br>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= edit_button_white("Edit Inventory Settings", edit_inventory_setting_path(@inventory_setting))%>
+      <br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

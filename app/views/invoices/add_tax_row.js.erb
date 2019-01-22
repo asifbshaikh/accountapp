@@ -1,0 +1,4 @@
+$("#tax-row-loader").remove();
+$("#tax_row_link").before('<%= escape_javascript render( "tax_line_items",{ :tax_line_item => @tax_line_item, :tax_index => params[:tax_index]} ) %>');
+$("#tax_row_link").replaceWith('<%= escape_javascript render( "add_tax_row_link",{ :tax_index => params[:tax_index].to_i+1} ) %>');
+

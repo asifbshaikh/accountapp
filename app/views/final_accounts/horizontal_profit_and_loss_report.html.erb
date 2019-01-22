@@ -1,0 +1,112 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+			<% if true %>
+			 <p align="right">
+            	<a href="#" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	<a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+			<% end %>
+			<div class='highlight'>
+				<div id='report_header'>
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Profit and Loss Account </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width2'><span class='char_spacing'>Expense</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+							<th class='width2'><span class='char_spacing'>Income</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<% if !@inventories.nil?
+										for inv in @inventories %>
+											<tr class="border_right"><td>manjeet s bhatkar</td><td align="right">1234567890</td><td align="right">1234567890</td></tr>
+										<% end 
+										end%>
+										<tr><td><b>Purchase Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_purchase_amount)%></b></td></tr>
+										<% if !@purchase_accounts.nil?
+											for p_acc in @purchase_accounts %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{p_acc.id}" %>><%= p_acc.name %></a></td><td align="right"><%= format_currency(p_acc.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+										
+										<tr><td><b>Direct Expences</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_direct_expence)%></b></td></tr>
+										<% if !@direct_expenses.nil?
+											for exp in @direct_expenses %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{exp.id}" %>><%= exp.name %></a></td><td align="right"><%= format_currency(exp.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+										
+										<tr><td><b>Indirect Expences</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_indirect_expence)%></b></td></tr>
+										<% if !@indirect_expenses.nil?
+											for inexp in @indirect_expenses %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{inexp.id}" %>><%= inexp.name %></a></td><td align="right"><%= format_currency(inexp.closing_balance)%></td><td></td></tr>
+										<%  end
+										   end 
+									   nett_profit = @total_sales_amount + @total_inventories - (@total_purchase_amount + @total_direct_expence  + @total_indirect_expence) %>
+									   	
+									   	<tr><td><b><span class='char_spacing'>Net Profit</span></b></td><td></td><td class="border_down" align="right"><b><%= format_currency(nett_profit)%></td></b></tr>
+									</tbody>
+								</table>
+							</td>
+							<td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Sales Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_sales_amount)%></b></td></tr>
+										<% if !@sale_accounts.nil?
+											for s_acc in @sale_accounts %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{s_acc.id}" %>><%= s_acc.name %></a></td><td align="right"><%= format_currency(s_acc.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+									    <tr><td><b>Direct Incomes</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_direct_income_amount)%></b></td></tr>
+										<% if !@direct_income_accounts.nil?
+											for s_acc in @direct_income_accounts %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{s_acc.id}" %>><%= s_acc.name %></a></td><td align="right"><%= format_currency(s_acc.closing_balance)%></td><td></td></tr>
+										<%end end %>
+										<tr><td><b>Indirect Incomes</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_indirect_income_amount)%></b></td></tr>
+									    <% if !@indirect_income_accounts.nil?
+											for s_acc in @indirect_income_accounts %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{s_acc.id}" %>><%= s_acc.name %></a></td><td align="right"><%= format_currency(s_acc.closing_balance)%></td><td></td></tr>
+										<%end end %>
+									</tbody>
+								</table>
+							</td></tr>
+						</tbody>
+						<tfoot>
+							<tr><td><b><span class='char_spacing'>Total</span></b></td><td align="right"><b><%= format_currency(@total_purchase_amount + @total_direct_expence  + @total_indirect_expence + nett_profit)%></b></td><td><b><span class='char_spacing'>Total</span></b></td><td align="right"><b><%= format_currency(@total_sales_amount + @total_inventories)%></b></td></tr>
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		&nbsp;&nbsp;
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+ 

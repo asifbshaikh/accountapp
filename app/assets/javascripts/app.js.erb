@@ -1,0 +1,985 @@
+// Place your application-specific JavaScript functions and classes here
+// This file is automatically included by javascript_include_tag :defaults
+//= require bootstrap
+
+$(document).ready(function(){
+// flush opening stock details on batch enabled/disabled
+// var prevElement = "product_batch_enable_0";
+//   $("#product_batch_enable_0, #product_batch_enable_1").click(function(){
+//     if(prevElement != $(this).attr('id')){
+//       $('.warehouse-detail').remove();
+//       $("#opening-stock").val(''); 
+//     }
+//     prevElement = $(this).attr('id');
+//   });
+// for showing and hiding recursion form on invoice
+  if($("#recursive_0").is(":checked")){
+    $("tr.recursiveForm").hide(); 
+  }
+  
+  $("input:radio[name=recursive]").live('click', function(){
+      if($(this).val() == 1){
+      $("#invoice_recursion_attributes_status").val("true");
+      $("tr.recursiveForm").show(); 
+    }else{
+      $("#invoice_recursion_attributes_status").val("false");
+      $("tr.recursiveForm").hide(); 
+    }
+  });
+// removing linked tax
+$("#tax-close-btn").live('click', function(){
+  var index = $(this).attr('data-index');
+  $("#txrow"+index).remove();
+});  
+//Script to copy billing address into shipping address
+$('#same').live("click",function(){
+    if($('#same').attr('checked')){
+        //alert('hi');
+      $('#shipping_add').val($('#billing_add').val());
+     };
+    });
+
+$(".waiting").live('click', function(){
+  $(".old-p").remove();
+  $("#waiting").html('<%= image_tag "ajax-loade.gif", :class => "loader"%>');
+});
+// script for popup on product screen to enter intial quantity in warehouse
+  $("#opening-stock").live('click',function(e){
+    var product = $(this).attr('data-id');
+    $("body").append('<div id="popup_box_fixed"><div id="putHere"></div></div>');
+    $("#putHere").html('<%= image_tag "ajax-loade.gif", :class => "loader" %>');
+        var winH = $(window).height();
+        var winW = $(window).width();
+        var top1 = winH/2;
+        var left = winW/2;
+        $("#popup_box_fixed").css({'left': left, 'top': top1, 'overflow':'auto'});
+        $('#popup_box_fixed').fadeIn("slow");
+    $.ajax({
+      data: {product: product},
+      url: "/products/select_warehouse"
+    });
+    });
+
+// script for toglling information form in product new screen
+  if($("#sales").is(":checked")){
+    $('.sales-info').show();
+  }else{
+    $('.sales-info').hide();
+  }
+
+  if($("#purchase").is(":checked")){
+    $('.purchase-info').show();
+  }else{
+    $('.purchase-info').hide();
+  }
+
+  if($("#product_inventory_1").is(":checked")){
+    $('#sales_opening_inventory').show();
+    $('#purchase_opening_inventory').show();
+  }
+
+  $('#sales').live('click', function(){
+    if($("#sales").is(":checked")){
+      $('.sales-info').show();
+    }else{
+      $('.sales-info').hide();
+    }
+  });
+
+  $('#purchase').live('click', function(){
+    if($("#purchase").is(":checked")){
+      $('.purchase-info').show();
+    }else{
+      $('.purchase-info').hide();
+    }
+  });
+
+  $("input:radio[name='product[inventory]']").live('click', function(){
+    if($(this).val() == '1'){
+      $('#sales_opening_inventory').show();
+      $('#purchase_opening_inventory').show();
+    }else{
+      $('#sales_opening_inventory').hide();
+      $('#purchase_opening_inventory').hide();
+    }
+  });
+
+// script for toggling tds fields in receive money and payment voucher
+ $("#tds_yes").live('click', function(){
+ if($("#tds_yes").is(":checked")){
+    $('.tds-rec').show();
+    $('.tds-pay').show();
+  }else{
+    $('.tds-rec').hide();
+    $('.tds-pay').hide();
+  }
+});
+ $("#tds_no").live('click', function(){
+ if($("#tds_no").is(":checked")){
+    $('.tds-rec').hide();
+    $('.tds-pay').hide();
+  }else{
+    $('.tds-rec').show();
+    $('.tds-pay').show();
+  }
+});
+// script for popup removing red border when click on save buton
+  $("#account_name").live('keyup', function(){
+    $("#account_name").css('border-color', '');
+    $("span#name").text('');
+  });
+  $("#accountHead").live('change', function(){
+    $("#accountHead").css('border-color', '');
+    $("span#account_head_id").text('');
+  });
+  $("#duties_tax_rate").live('keyup', function(){
+    if($(this).val()){
+      $("span#tax_rate").text('');
+      $("#duties_tax_rate").css("border-color", "");
+    }
+  });
+  $("#email").live('keyup', function(){
+    $("span#email").text('');
+    $("#email").css("border-color", "");
+  });
+// script for adding new row
+$("tr#row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#row_link td a").attr('href') != '#'){
+    $("tr#row_link").before('<tr id="row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#row_link td a").attr('href', '#'); // disable link
+    $("tr#row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+$("tr#shipping_row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#shipping_row_link td a").attr('href') != '#'){
+    $("tr#shipping_row_link").before('<tr id="shipping-row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#shipping_row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#shipping_row_link td a").attr('href', '#'); // disable link
+    $("tr#shipping_row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+
+
+$("tr#discount_row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#discount_row_link td a").attr('href') != '#'){
+    $("tr#discount_row_link").before('<tr id="discount-row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#discount_row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#discount_row_link td a").attr('href', '#'); // disable link
+    $("tr#discount_row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+
+// script for search invoice filter
+$('#invoice_amount').live('change', function(e){
+  var val = $('#invoice_amount').val();
+  var fdate = $('input:text[name=from_date]').val();
+  var tdate = $('input:text[name=to_date]').val();
+  $.ajax({
+    type: 'get',
+    data: {invoice_amount: val, from_date: fdate, to_date: tdate},
+    url: '/receipt_vouchers/search_invoice'
+  });
+});
+// script for search invoice
+$("input:radio[name=invoice]").live('click', function(){
+  $('#invoice_id_auto_complete').val($(this).val());
+  $('#invoice_id_auto_complete').focus();
+  $('#invoice_id_auto_complete').focusout();
+
+});
+
+// script for search purchase filter
+$('#purchase_amount').live('change', function(e){
+  var val = $('#purchase_amount').val();
+  var fdate = $('input:text[name=from_date]').val();
+  var tdate = $('input:text[name=to_date]').val();
+  $.ajax({
+    type: 'get',
+    data: {purchase_amount: val, from_date: fdate, to_date: tdate},
+    url: '/payment_vouchers/search_purchase'
+  });
+});
+// script for search purchase
+$("input:radio[name=purchase]").live('click', function(){
+  $('#purchase_id_auto_complete').val($(this).val());
+  $('#purchase_id_auto_complete').focus();
+  $('#purchase_id_auto_complete').focusout();
+
+});
+/*autocompete off for complete app */
+$("input:text").attr('autocomplete','off');
+
+// $('#example').tablesorter();
+
+   $('#filter').hide();
+   $('div#use_filter').click(function(e){
+   $('div#filter').toggle('slow',function(){
+      if ($('img.show_image').attr("src") == '<%= image_tag "sort_desc.png"%>')
+         $('img.show_image').attr('src','<%= image_tag "sort_asc.png"%>');
+      else
+         $('img.show_image').attr('src','<%= image_tag "sort_desc.png" %>');
+     }
+     );
+     e.stopProgration();
+   });
+    /* setup navigation, content boxes, etc... */
+     // Administry.setup()
+      // $('#example').dataTable();
+    /* expandable rows */
+    //  Administry.expandableRows();
+   
+   //sharebox function end
+   
+   //Script for animated footer 
+  $('#animated').each(function () {
+        $(this).hover(function () {
+            $(this).stop().animate({
+                opacity: 0.9
+            }, 400);
+        }, function () {
+            $(this).stop().animate({
+                opacity: 0.0
+            }, 200);
+        });
+    });
+ //  End of script for animated footer
+    
+      
+    /* task_links using AJAX */
+$('#tabnav a').click(function(e){
+        var url = $(this).attr('href');
+            url = url + ' #task_container';
+        $('#task_container').html('<div align="center"><%= image_tag "loader.gif"%><div>').load(url, function(respons, status, xhr, t){
+            var msg = "Sorry but there was an error: ";
+            if (status == "error" && xhr.status == 404) {
+                $('#task_container').html("<b>" + msg + ' ' + xhr.status + "</b>" + '  Unable to reach to the link');
+                t.stopProgration();
+            }
+            else 
+                if (status == "error" && xhr.status == 0) {
+                    $('#task_container').html("<b>" + msg + '  ' + xhr.status + "</b>" + '  Unable to reach to the server');
+                    t.stopProgration();
+                }
+        });
+    $('ul#tabnav li a').css('background-color', '#999');
+    $(this).css('background-color', '#2A7AD2');
+        e.preventDefault();
+    });
+
+  $('#pagin a').live('click', function(e){
+        var url = $(this).attr('href');
+            url = url + ' #task_container';
+        $('#task_container').html('<div align="center"><%= image_tag "loader.gif" %><div>').load(url, function(respons, status, xhr, t){
+            var msg = "Sorry but there was an error: ";
+            if (status == "error" && xhr.status == 404) {
+                $('#task_container').html("<b>" + msg + ' ' + xhr.status + "</b>" + '  Unable to reach to the link');
+                t.stopProgration();
+            }
+            else 
+                if (status == "error" && xhr.status == 0) {
+                    $('#task_container').html("<b>" + msg + '  ' + xhr.status + "</b>" + '  Unable to reach to the server');
+                    t.stopProgration();
+                }
+        });
+        e.preventDefault();
+    });
+   
+    //This code is written by Manjeet for calculating total amount for invoices
+    
+     
+    
+    $('table#line_items_estimate input:text').live('keyup', function(e){
+        var i = 0;
+        total = 0;
+        var total_discount = 0;
+        var tax = 0;
+        $('table#line_items_estimate tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var discount = 1;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                $('table#line_items_estimate span#discount').text(x.toFixed(2));
+                if ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(4) input:text').val()) {
+                    var discount = ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(4) input:text').val() / 100);
+                    x = (qut * unitCost) * discount;
+                }
+                amount = (qut * unitCost) - x;
+                $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(5) input:text').val(amount.toFixed(2));
+                total = total + amount;
+                total_discount = total_discount + x; 
+            }
+            else {
+                $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(5) input:text').val('');
+            }
+             if ($('table#line_items_estimate tbody tr:eq(' + i + ') td #tax').val()){
+              tax += parseFloat($('table#line_items_estimate tbody tr:eq(' + i + ') td #tax').val())
+              // alert(tax);
+            }
+            i++;
+        });
+        total =  total + tax ;
+        $('table#line_items_estimate span#discount').text(total_discount.toFixed(2));
+        $('table#line_items_estimate span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+    
+       $('table#line_items_purchase input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        var tax = 0 ;
+        $('table#line_items_purchase tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                amount = (qut * unitCost);
+                $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(5) input:text').val(amount.toFixed(2));
+                total = total + amount;
+            }
+            if ($('table#line_items_purchase tbody tr:eq(' + i + ') td #tax').val()){
+              tax += parseFloat($('table#line_items_purchase tbody tr:eq(' + i + ') td #tax').val())
+              // alert(tax);
+            }
+            i++;
+        });
+        total =  total + tax ;
+        $('table#line_items_purchase span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+    
+    $('table#line_items_purchase_order input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#line_items_purchase_order tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                amount = (qut * unitCost);
+                $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(4) input:text').val(amount.toFixed(2));
+                total = total + amount;
+            }
+            else {
+                $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(4) input:text').val('');
+            }
+            i++;
+        });
+        $('table#line_items_purchase_order span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+    
+    $('table#line_items_saccounting input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#line_items_saccounting tbody tr').each(function(){
+            var amount = 0;
+            if ($('table#line_items_saccounting tbody tr:eq(' + i + ') td .amount').val()) {
+                amount = parseFloat($('table#line_items_saccounting tbody tr:eq(' + i + ') td .amount').val());
+                total = total + amount;
+                //alert($('table#line_items_saccounting tbody tr:eq(1) td:eq(1) input:text').val());
+            }
+            i++;
+        });
+        $('table#line_items_saccounting span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+    
+    $('table#report input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#report tbody tr').each(function(){
+            var amount = 0;
+            if ($('table#report tbody tr:eq(' + i + ') td .amount').val()) {
+                amount = parseFloat($('table#report tbody tr:eq(' + i + ') td .amount').val());
+                total = total + amount;
+                //alert($('table#report tbody tr:eq(1) td:eq(1) input:text').val());
+            }
+            i++;
+        });
+        $('table#report tfoot span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+    
+      $('table#salary_structure_report input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#salary_structure_report tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#salary_structure_report tbody tr:eq(' + i + ') td:eq(1) input:text').val()) {
+                    amount = parseFloat($('table#salary_structure_report tbody tr:eq(' + i + ') td:eq(1) input:text').val());
+                    total = total + amount;
+                    //alert($('table#salary_structure_report tbody tr:eq(1) td:eq(1) input:text').val());
+                }
+                i++;
+            });
+            $('table#salary_structure_report span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+        });
+      
+      $('table#line_items_journal input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#line_items_journal tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#line_items_journal tbody tr:eq(' + i + ') td .amount').val()) {
+                    amount = parseFloat($('table#line_items_journal tbody tr:eq(' + i + ') td .amount').val());
+                    total = total + amount;
+                    //alert($('table#line_items_journal tbody tr:eq(1) td:eq(1) input:text').val());
+                }
+                i++;
+            });
+            $('table#line_items_journal span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+        });
+      
+      $('table#journal_report input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#journal_report tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#journal_report tbody tr:eq(' + i + ') td .amount').val()) {
+                    amount = parseFloat($('table#journal_report tbody tr:eq(' + i + ') td:eq(1) input:text').val());
+                    total = total + amount;
+                    //alert($('table#journal_report tbody tr:eq(1) td .amount').val());
+                }
+                i++;
+            });
+            $('table#journal_report span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+    });
+    
+    
+    //End of code
+    
+    /* Script is written by manjeet for Toggle Effect*/
+      $('tbody.man').hide();
+        $('thead#user_info').live('click', function(e){
+            $(this).next('tbody.man').toggle('slow');
+            e.stopProgration();
+        });
+      
+      /*End of toggle effect script*/
+});
+
+$(function(){
+    //$('#dashboard').dropdown()
+    /*$('#search_estimate_date_eq').datepicker();*/
+    /* Datepicker for Accounting functions Start*/
+    $("#company_customer_relationships_attributes_0_next_contact_date").datepicker();
+    $("#lead_customer_relationships_attributes_0_next_contact_date").datepicker();
+    $('#stock_wastage_voucher_voucher_date').datepicker();
+    $('#project_start_date').datepicker();
+    $('#project_end_date').datepicker();
+    $('#search_expense_date_gte').datepicker();
+    $('#search_expense_date_lte').datepicker();
+    $('#search_voucher_date_gte').datepicker();
+    $('#search_voucher_date_lte').datepicker();
+    $('#search_income_date_gte').datepicker();
+    $('#search_income_date_lte').datepicker();
+    $('#search_due_date_gte').datepicker();
+    $('#search_due_date_lte').datepicker();
+    $('#ledger_bank_transaction_date').datepicker();
+    $('#income_voucher_voucher_date').datepicker();
+    $('#income_voucher_income_date').datepicker();
+    $('#receipt_voucher_received_date').datepicker();
+    $('#receipt_voucher_voucher_date').datepicker();
+    $('#advance_receipt_voucher_received_date').datepicker();
+    $('#advance_receipt_voucher_voucher_date').datepicker();
+    $('#payment_voucher_voucher_date').datepicker();
+    $('#payment_voucher_payment_date').datepicker();
+    $('#tds_payment_voucher_payment_date').datepicker();
+    $('#purchase_bill_date').datepicker();
+    $('#purchase_record_date').datepicker();
+    $('#purchase_due_date').datepicker();
+    $('#expense_expense_date').datepicker();
+    $('#invoice_invoice_date').datepicker();
+    $('#invoice_due_date').datepicker();
+    $('#estimate_estimate_date').datepicker();
+    $('#purchase_order_record_date').datepicker();
+    $("#receive_cash_received_date").datepicker();
+    $("#deposit_transaction_date").datepicker();
+    $("#withdrawal_transaction_date").datepicker();
+    $("#journal_date").datepicker();
+    $("#credit_note_transaction_date").datepicker();
+    $("#debit_note_transaction_date").datepicker();
+    $("#saccounting_voucher_date").datepicker();
+    $("#payment_payment_date").datepicker();
+    $("#transfer_cash_transaction_date").datepicker();
+    $("#purchase_order_record_date").datepicker();
+    $("#start_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#end_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#for_date").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("#income_voucher_payment_detail_attributes_payment_date").datepicker();
+    $("#receipt_voucher_payment_detail_attributes_payment_date").datepicker(); 
+    $("#payment_voucher_payment_detail_attributes_payment_date").datepicker(); 
+    $("#stock_transfer_voucher_voucher_date").datepicker();
+    $("#stock_transfer_voucher_transfer_date").datepicker();
+    $("#stock_issue_voucher_voucher_date").datepicker();
+    $("#stock_receipt_voucher_voucher_date").datepicker();
+    $("#subscription_renewal_date").datepicker();
+    $("#account_accountable_attributes_date_of_incorporation").datepicker();
+    $("#account_birthday").datepicker();
+    $("#account_anniversary").datepicker();
+    $("#invoice_date").datepicker();
+    $("#next_renewal_date").datepicker();
+    $("#lead_lead_activities_attributes_0_record_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#lead_lead_activities_attributes_0_next_followup").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#cheque_transaction_date").datepicker();
+    $("#invoice_recursion_attributes_schedule_on").datepicker();
+    $("#invoice_from_date").live('focus', function () {
+      $(this).datepicker();
+    });
+    $("#invoice_to_date").live('focus', function () {
+      $(this).datepicker();
+    });
+   
+    $("#purchase_from_date").live('focus', function () {
+      $(this).datepicker();
+    });
+    $("#purchase_to_date").live('focus', function () {
+      $(this).datepicker();
+    });  
+
+    $('#cheque_payment_payment_date').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#card_payment_payment_date').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#internet_banking_payment_payment_date').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#campaign_start_date').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#campaign_end_date').live('focus', function () {
+            $(this).datepicker();
+    });
+     $('#effective_from_date').live('focus', function () {
+            $(this).datepicker();
+    });
+$('#debtor_date_of_incorporation').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#debtor_contacts_birthday').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#debtor_anniversary').live('focus', function () {
+            $(this).datepicker();
+    });
+    $('#payroll_execution_job_execution_date').live('focus', function () {
+            $(this).datepicker();
+    });
+    /*Accounting Datepicker End*/
+    
+    /* Datepicker For Payroll Function's start*/
+    // $('#timesheet-day').live('focus', function () {
+    //         $(this).datepicker();
+    //       });
+
+    $("#user_user_information_attributes_birth_date").datepicker();
+    $("#user_user_information_attributes_marriage_date").datepicker();
+    $("#user_user_information_attributes_passport_expiry_date").datepicker();
+    $("#user_user_salary_detail_attributes_date_of_joining").datepicker();
+    $("#user_user_salary_detail_attributes_date_of_leaving").datepicker();
+    $("#record_expense_expense_date").datepicker();
+    $("#contact_birthday").datepicker();
+    $("#contact_anniversary").datepicker();
+    $("#leave_request_start_date").datepicker();
+    $("#leave_request_end_date").datepicker();
+    $("#employee_date_of_joining").datepicker();
+    $("#employee_date_of_birth").datepicker();
+    $("#employee_wedding_day").datepicker();
+    $("#employee_passport_expiry_date").datepicker();
+    $("#salary_structure_effective_from_date").datepicker();
+    $("#asset_purchase_date").datepicker();
+    $("#company_asset_purchase_date").datepicker();
+    $("#holiday_holiday_date").datepicker();
+    $("#timesheet_start_date").datepicker();
+    $("#timesheet_end_date").datepicker();
+    $("#timesheet_record_date").datepicker();
+    $("#task_due_date").datepicker({ dateFormat: 'dd-mm-yy' });
+    $("#employee_goal_from_date").datepicker();
+    $("#employee_goal_to_date").datepicker();
+     $("#coupon_date_start").datepicker();
+     $("#coupon_date_end").datepicker();
+     $("#campaign_start_date").datepicker();
+     $("#campaign_end_date").datepicker();
+     $("#lead_next_call_date").datepicker();
+     $("#announcement_starts_at").datepicker();
+     $("#announcement_ends_at").datepicker();
+     $("#webinar_date").datepicker();
+     $("#profitbooks_workstream_release_date").datepicker({format: 'dd-mm-yyyy'});
+    /*Payroll Datepicker End*/
+
+});
+
+    
+// function for removing line items
+
+function remove_fields(link){
+    $(link).prev("input[type=hidden]").value = "1";
+    $(link).up(".fields").hide();
+}
+
+function add_fields(link, association, content){
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g")
+    $(link).up().insert({
+        before: content.replace(regexp, new_id)
+    });
+   }
+
+    function numbersOnly(e){
+          
+       //alert(e.which);
+    if (((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 110 || e.which == 190 || e.which == 16 || e.which == 9 || e.which == 37 || e.which == 39 || e.which == 46 )) {
+       // alert('alow'+e.which);
+        return true;
+    }
+    else {
+        return false;
+    }
+
+  }
+
+function balOnly(e){
+          
+       //alert(e.which);
+    if (((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 110 || e.which == 190 || e.which == 16 || e.which == 9 || e.which == 37 || e.which == 39 || e.which == 46 || e.which == 109 || e.which == 173 || e.which == 189 )) {
+       // alert('alow'+e.which);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function card_cheque_number(e){
+      // alert(e.which);
+    if ((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 9 || e.which == 16 || e.which == 37 || e.which == 39 || e.which == 46) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function alphaNumeric(e){
+  // alert(e.which);
+  if ((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 9 || e.which == 16 || e.which == 37 || e.which == 39 || e.which == 46){
+     return true;
+    }
+    else {
+        return false;
+    }
+}
+
+$(document).ready(function(){
+
+    /* Transaction Mode dynamic fields for cheque and credit card transaction. */
+    
+    
+   
+  if ($("input:radio[name=forgot]:checked").val() == 'username'){
+    $('#uname').hide();
+  }
+  else {
+   $('#cmpname').hide(); 
+  }
+  $("input:radio[name=forgot]").live('click', function(e){
+    if ($(this).val() == 'username'){
+    $('#uname').hide('slow');
+    $('#cmpname').show('slow');
+  }else if ($(this).val() == 'password'){
+    $('#uname').show('slow');
+    $('#cmpname').hide('slow');
+  }
+  });
+  
+  
+  
+  
+  // script for popup
+  $('#popupBoxClose').live('click', function() {      
+    unloadPopupBox();
+  });
+  
+  $('#container').click(function() {
+    unloadPopupBox();
+  });
+  
+  $('#close').live('click', function() {
+    unloadPopupBox();
+  });
+
+  function unloadPopupBox() { // TO Unload the Popupbox
+    $('#popup_box').fadeOut("slow");
+    $('#popup_box_fixed').fadeOut("slow");
+    $("#msg_box").remove();
+    $("#popup_box").remove();
+    $("#popup_box_fixed").remove();
+  }
+    
+    $("#add_new_model").live('click',function(e){
+  
+    $("body").append('<div id="popup_box"><div id="abc"></div></div>');
+    $("#abc").html('<%=image_tag "ajax-loade.gif" %>');
+    var left = e.pageX;
+    var top = e.pageY;
+    $("#popup_box").css({'left': left, 'top': top});
+    $('#popup_box').fadeIn("slow");
+    });
+
+    $("#mmodel").live('click',function(e){
+      $("body").append('<div id="popup_box_fixed"><div id="putHere"></div></div>');
+      $("#putHere").html('<%=image_tag "ajax-loade.gif"%>');
+      var winH = $(window).height();
+      var winW = $(window).width();
+      var top1 = winH/2;
+      var left = winW/2;
+      $("#popup_box_fixed").css({'left': left, 'top': top1});
+      $('#popup_box_fixed').fadeIn("slow");
+    });
+
+    $("#submit_customer").live("click",function(){
+    var name = $("#name").val();
+    
+    var email = $("#email").val();
+    var opening_balance = $("#opening_balance").val();
+    
+    var address_line1 = $("#address_line1").val();
+    var address_line2 = $("#address_line2").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var country = $("#country").val();
+    var postal_code = $("#postal_code").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_customer";
+    
+    $.ajax({
+    type: 'GET',
+    data: {name: name, email: email, opening_balance: opening_balance,
+           address_line1: address_line1, address_line2: address_line2,
+           city: city, state: state, country: country, postal_code: postal_code },
+    url : url
+    });
+  });
+  
+  
+    $("#submit_item").live("click",function(){
+    var name = $("#name").val();
+    var opening_balance = $("#opening_balance").val();
+    var inventoriable = $("input:radio[name=inventoriable]:checked").val();
+    var index = $("#row_index").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_item";
+    var description = $("#account_description").val();
+    var unit_rate = $("#unit_rate").val();
+    $.ajax({
+    type: 'GET',
+    data: {name: name, opening_balance: opening_balance,
+           inventoriable: inventoriable, index: index,
+           description: description, unit_rate: unit_rate },
+    url : url
+    });
+  });
+  $("#submit_tax").live("click",function(){
+    var name = $("#name").val();
+    var opening_balance = $("#opening_balance").val();
+    var auto_calculate_tax = $("input:radio[name=auto_calculate_tax]:checked").val();
+    var tax_rate = $("#tax_rate").val();
+    var tax = $("#tax_type").val();
+    var index = $("input:hidden[name=index]").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_tax";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, opening_balance: opening_balance,
+           auto_calculate_tax: auto_calculate_tax, tax: tax,
+           tax_rate: tax_rate, index: index },
+    url : url   });
+  });
+  $("#submit_payhead").live("click",function(){
+    var name = $("#name").val();
+    var type = $("#type").val();
+    var payslip_name = $("#payslip_name").val();
+    var affect_net_salary = $("#affect_net_salary").val();
+    var use_of_gratuity = $("#use_of_gratuity").val();
+    var index = $("input:hidden[name=index]").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_payhead";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, type: type,
+           payslip_name: payslip_name, use_of_gratuity: use_of_gratuity,
+           affect_net_salary: affect_net_salary, index: index },
+    url : url   });
+  });
+  
+  $("#submit_account").live("click",function(){
+    var index = $("#row_index").val();
+    var name = $("#name").val();
+    var account_head_id = $("#accountHead").val();
+    var opening_balance = $("#opening_balance").val();
+    var location = $("#location").val();
+    var account_number = $("#account_number").val();
+    var bank_name = $("#bank_name").val();
+    var tax = $("#tax_type").val();
+    var tax_rate = $("#tax_rate").val();
+    var entity_name = $("#entity_name").val();
+    var email = $("#email").val();
+    var address_line1 = $("#address_line1").val();
+    var address_line2 = $("#address_line2").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var inventoriable = $("input:radio[name=inventoriable]:checked").val();
+    var reseller_product = $("input:radio[name=reseller_product]:checked").val();
+    var depreciable = $("input:radio[name=depreciable]:checked").val();
+    var interest_applicable = $("input:radio[name=interest_applicable]:checked").val();
+    var interest_rate = $("#interest_rate").val();
+    var compounding = $("#compounding").val();
+    var capital_name = $("#capital_name").val();
+    var depreciation_rate = $("#depreciation_rate").val();
+    var description = $("#account_description").val();
+    var unit_rate = $("#unit_rate").val();
+    var data_account = $(this).attr('data-account');
+    //alert(unit_cost);
+    var url = "/"+$(this).attr('data-controller')+"/create_account";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, location:location, opening_balance: opening_balance,
+         account_head_id: account_head_id, account_number: account_number,
+         bank_name: bank_name, entity_name: entity_name, email: email,
+         address_line1: address_line1, address_line2: address_line2,
+         city: city, state: state, inventoriable: inventoriable, index: index,
+         interest_applicable: interest_applicable, interest_rate: interest_rate,
+         compounding: compounding, capital_name: capital_name, account: data_account,
+         depreciable: depreciable, depreciation_rate: depreciation_rate, tax: tax,
+         tax_rate: tax_rate, description: description, unit_rate: unit_rate,
+         reseller_product: reseller_product
+     },
+    url : url
+    });
+  });
+  
+    $("#accountHead").live('change',function() {
+    var account_head_id = $("#accountHead").val();
+    
+    $.ajax({
+      data: {account_head_id: account_head_id},
+      type: 'GET',
+      url : "/receipt_vouchers/account_partial"
+    });
+    });
+    
+
+});
+ $(document).ready(function(){
+  /* Script for notification bar*/ 
+  $("div.notifBarClose a").click(function(){
+  $('.notif-bar').fadeOut("slow");
+  $(".notif-bar").remove();
+  });
+   /* Script for transfering selected item from one dropdown to another */
+   $("#plan_id").change(function(){
+     $.ajax({
+       type: "GET",
+       url: "/admin/plans/get_role?plan_id="+$(this).val()
+     });
+   });
+   
+   $("#grant_role_id").live('change', function(){
+     $.ajax({
+       type: "GET",
+       url: "/admin/plans/get_right?role_id="+$(this).val()
+     });
+   });
+   
+  $("#to_right").live('click', function(){
+  $("#right option:selected").each(function(){
+    $("#grant").append("<option value="+$(this).val()+" selected=selected>"+$(this).text()+"</option>");
+    $("#right option[value="+$(this).val()+"]").remove();
+  });
+  });
+  
+  $("#to_left").live('click', function(){
+  $("#grant option:selected").each(function(){
+    $("#right").append("<option value="+$(this).val()+" selected=selected>"+$(this).text()+"</option>");
+    $("#grant option[value="+$(this).val()+"]").remove();
+  });
+  });
+
+
+/* ==============End============= */  
+ $('.rpl_msg').hide();
+  $('a#msg_info').click( function(e){
+      $('.rpl_msg').toggle('slow');
+      $('a#msg_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+ });
+
+
+ /* Togal for file upload and folder form. */
+   $('#file').live('click', function(e){
+     $('#form1').toggle('slow');
+     $('#form2').hide('slow');
+     e.stopProgration();
+   });
+   $('#folder').live('click', function(e){
+      $('#form1').hide('slow');
+     $('#form2').toggle('slow');
+     e.stopProgration();
+   });
+   
+$(document).ready(function() {
+  jQuery(".best_in_place").best_in_place()
+});
+
+// code to close a info box
+$('.closeable').each(function(){
+    $(this).prepend( 
+      $('<a></a>')
+        .attr({href: '#', title: 'Close'})
+        .addClass('close')
+        .text('x')
+        .click(function() {
+          $(this).parent().fadeOut();
+          return false;
+        })
+    );
+  });
+
+$(document).ready(function(){
+ 
+        // $(".slidingDiv").hide();
+        // $(".show_hide").show();
+ 
+    $('.show_hide').click(function(){
+    $(".slidingDiv").slideToggle();
+    });
+ 
+});

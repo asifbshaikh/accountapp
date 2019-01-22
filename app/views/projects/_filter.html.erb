@@ -1,0 +1,31 @@
+<form action='' class="form-horizontal">
+	<%= hidden_field_tag "id", @project.id %>
+<div class="col-sm-6">
+<div class="col-sm-2"> <strong>Show </strong></div>
+<div class="col-sm-8">
+<select name = "voucher" id ="project_filter" class="bg-focu form-control" >
+  <option>Please select</option>
+  <option value="invoice" <%= "selected='selected'" if params[:voucher]== "invoice"%>>Invoice</option>
+  <option value="expense" <%= "selected='selected'" if params[:voucher]== "expense"%> >Expense</option>
+  <option value="receipt" <%= "selected='selected'" if params[:voucher]== "receipt"%> >Received money</option>
+    <option value="purchase" <%= "selected='selected'" if params[:voucher]== "purchase"%> >Purchase</option>
+    <option value="task" <%= "selected='selected'" if params[:voucher]== "task"%> >Task</option>
+</select>
+</div>
+ <div class="col-sm-2"><input type="submit" value="Go" class="btn btn-success"/></div>
+</div>
+<div class="col-sm-6 text-right">
+	 <% if params[:voucher]== "invoice"%>
+		   Showing "Invoices" raised so far
+           <% elsif params[:voucher]=="expense"%>
+           Showing "Expenses" raised so far
+           <% elsif params[:voucher]=="receipt"%>
+           Showing "Received money" raised so far
+           <% elsif params[:voucher]=="purchase"%>
+           Showing "Purchases" raised so far
+           <% elsif params[:voucher]=="task"%>
+           Showing "Tasks" created so far
+          <% end %>
+	
+</div>	
+</form>

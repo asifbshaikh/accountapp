@@ -1,0 +1,29 @@
+<h1>Listing stock_wastage_line_items</h1>
+
+<table>
+  <tr>
+    <th>Stock wastage voucher</th>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Reason</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stock_wastage_line_items.each do |stock_wastage_line_item| %>
+  <tr>
+    <td><%= stock_wastage_line_item.stock_wastage_voucher_id %></td>
+    <td><%= stock_wastage_line_item.product_id %></td>
+    <td><%= stock_wastage_line_item.quantity %></td>
+    <td><%= stock_wastage_line_item.reason %></td>
+    <td><%= link_to 'Show', stock_wastage_line_item %></td>
+    <td><%= link_to 'Edit', edit_stock_wastage_line_item_path(stock_wastage_line_item) %></td>
+    <td><%= link_to 'Destroy', stock_wastage_line_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stock wastage line item', new_stock_wastage_line_item_path %>

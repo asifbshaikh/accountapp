@@ -1,0 +1,152 @@
+<%= render :partial => "shared/project_auto_complete" %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+				<div id="jHere"></div>
+				<%= render :partial => 'auto_calculate' %>
+				<%= form_for @expense, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+
+
+	      	<%= render "#{Expense::STATE[@expense.new_record?]}_options", :f=>f %>
+				  
+					<div class="form-group expense_exc_rate">
+						<div class="col-lg-2 text-right">
+							<label class="control-label-required">Exchange Rate In <%= @company.currency_code%>:</label>
+						</div>
+						<div class="col-lg-10">
+							<% if !@expense.payment_vouchers.blank? %>
+							  <%= number_with_precision @expense.exchange_rate, :precision=>2 %>
+								<%= hidden_field_tag "exchange_rate", @expense.exchange_rate %>
+							<% else %>
+					  	  <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :class=> "bg-focus form-control text-right", :style=>"width:120px;" %>
+							<% end %>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-lg-2 text-right">
+							<%= label_tag "expense_date", "Expense Record Date", :class=>"control-label-required" %>
+						</div>
+						<div class="col-sm-2">
+					    <%= f.text_field :expense_date, :class => 'bg-focus form-control', :style=>"width:120px;" %>
+						</div>
+						<% if @company.currency_code == 'INR' %>
+						
+					<div>
+					<%= f.check_box :reverse_charge, {:class=>"reverseCharge", :onclick=>"$(this).val(this.checked ? 1 : 0)"} %><label>&nbsp; Under reverse charge</label>
+					</div>
+					<% end %>
+					</div>
+					<div class="form-group" style="<%= 'display:none;' unless @expense.credit_expense? %>" id='due-date-block'>
+						<div class="col-lg-2 text-right">
+							<%= f.label :due_date, :class=>"control-label-required" %>
+						</div>&nbsp;
+						<div class="col-lg-10">
+					    <%= f.text_field :due_date, :class => 'bg-focus form-control', :style=>"width:120px;" %>
+						</div>
+					</div>
+					
+					<% if !@projects.blank? && !@company.plan.free_plan? %>
+						<div class="form-group">
+							<div class="col-lg-2 text-right">
+						  	<%= f.label "Select Project", :class => "control-label" %><br/>
+							</div>
+							<div class="col-lg-10">
+							  <input type="text" class="bg-focus form-control" name="project_id" style="width:15%;"  id="project" value='<%= (!@expense.project_id.blank?)? "#{@expense.project_name}" : ""%>' />
+							</div>
+						</div>
+					<% end %>
+					<div class='form-group'>	
+						<div class="col-lg-12">
+						  <table class="table table-striped b-t text-small" id="expense_line_items">
+							  <thead>
+								  <tr>
+									 <th width="33.3333%"><label class="control-label-required">Type of expense</label></th>
+									 <th width="34%"><label>Description</label></th>
+									 <th><label>Tax</label></th>
+									 <th class='text-right'><label  class="control-label-required">Amount(<span class="expense-currency"><%= @expense.currency %></span>)</label></th>
+									 <th width='5%'></th>
+								   </tr>
+							  </thead>
+							  <tbody>
+								  <% @expense.expense_line_items.each_with_index do |expense_line_item, index| %>
+								    <%= render "expense_line_items", :expense_line_item => expense_line_item, :index => index %>
+								  <% end %>
+									<tr id="row_link" valign="top" class="row-link-expense">
+										<td valign="top" colspan="5">
+											<%= link_to "+ Add new row",{:action => :add_row, :index => @expense.expense_line_items.size}, :class => "btn btn-white btn-sm " ,:remote => true %>
+										</td>
+									</tr>
+								  <tr>
+									 	<td>&nbsp;</td>
+									 	<td>&nbsp;</td>
+									 	<td align='right'>Total</td>
+									 	<td align='right'><span id = "total">00.00</span></td>
+									 	<td>&nbsp;</td>
+								  </tr>
+							    </tbody>
+						  </table>
+						</div>
+					</div>
+					<div class="form-group">
+	        	<div class="col-lg-12">
+						  <% unless @expense.new_record? || !@expense.uploaded_file_file_name? %>
+		        		<%= link_to truncate(@expense.file_name, :length => 30), @expense.uploaded_file.url(:original, false), :target=> :blank %>&nbsp;
+					      	(<%= number_to_human_size(@expense.file_size) %>)
+		          <% end %> 
+				      <% if @expense.new_record? || !@expense.uploaded_file_file_name? %> 
+				        <%= f.label "Attach a scanned proof (Image or PDF document)" %>
+				      <% else %>
+				        <%= f.label "Replace scanned proof (Image or PDF document)"%>
+				      <% end %>
+							  <%= f.file_field :uploaded_file, :class => "btn btn-white" %><%= hidden_field_tag "old_file_size", @expense.old_file_size %><br/>
+		    	    <% unless @expense.new_record? || !@expense.uploaded_file_file_name? %>
+		    	    	<div class='checkbox'>
+		    	    		<label class='checkbox-custom'>
+							      <input type="checkbox" name="expense[delete_uploaded_file]" value=1>
+							      <i class="icon-unchecked checked"></i>
+							      Remove file
+						      </label>
+		    	    	</div>
+						  <% end %>
+			      </div>
+		      </div>
+		      <div class="form-group">
+			      <div class="col-lg-5">
+			   	  	<label class='control-label'>Narration</label><br>
+					    <%= f.text_area :customer_notes, :rows =>4, :cols=>33, :class=>"bg-focus form-control" %>
+				    </div>
+				    <div class='col-lg-1'></div>
+				    <div class='col-lg-5'>
+					  <!-- 	<label class="control-label">Tags (Comma separated)</label><br>
+					    <%= f.text_area :tags, :rows =>4, :cols=>33, :class => "bg-focus form-control" %> -->
+				    </div>
+				  </div>
+			    <div class="form-group">
+				    <div class="col-lg-8 col-lg-offset-4">
+		          <%= f.submit "Save", :class => "btn btn-success" %> &nbsp; 
+		          <a class="btn btn-default" href="/expenses">Cancel</a>
+				    </div>
+				  </div>
+				<% end %>
+			</div>
+		</section>
+	</div>
+</div>
+
+<!-- .modal -->
+	<div id="modalPlace"></div>
+	<div id="modal-vendor" class="modal fade">
+		<%= render "vendors/popup_vendor_form", :selector=>"expense_account_id" %>
+	</div>
+	<div id="modal-add-new-account" class="modal fade">
+	  <%= render "shared/account_details", :account_heads => @payment_account_heads, :transaction_type => "payment" %>
+	</div>
+  <div id="modal3" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @tax_account_heads, :transaction_type => "tax" %>
+  </div>
+  <!-- / .modal -->
+  <script type="text/javascript"> 
+	  $("select#expense_account_id").select2();
+  </script>

@@ -1,0 +1,84 @@
+<div class="row">
+<div class="col-sm-6">
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Address & General Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+     <p><strong>Phone:</strong><%= @account.accountable.contact_number %></p>
+     <p><strong>Fax:</strong><%= @account.accountable.fax%></p>
+     <p><strong>Email:</strong><%= @account.accountable.email %></p>
+     <p><strong>Website:</strong><%= @account.accountable.website %></p>
+   </div>
+   <div class="col-sm-6">
+    <% if !@account.accountable.address.blank? %>
+    <p><strong>Billing Address: </strong> <%= simple_format(@account.accountable.address.address_line1) %></p>
+    <p><strong>Shipping Address: </strong> <%= simple_format(@account.accountable.address.address_line2) %></p>
+    <% end %>
+   </div>
+  </div>
+ </section>
+</div>
+
+<div class="col-sm-6">
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Tax Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>PAN :</strong> <%= @account.accountable.PAN%><br/><small>Permanent Account Number</small></p>
+    <p><strong>TAN :</strong> <%= @account.accountable.tan%><br/><small>Tax Account Number</small></p>
+    <p><strong>VAT TIN : </strong> <%=@account.accountable.vat_tin%><br /><small>Tax Identification No.</small></p>
+    <p><strong>CST : </strong> <%=@account.accountable.cst%><br /><small>Central Service Tax</small></p>
+   </div>
+   <div class="col-sm-6">
+   <p><strong>CIN :</strong> <%=@account.accountable.cin_code %><br /> <small>Challan Identification Number</small></p>
+   <p><strong>Excise registration number :</strong> <%=@account.accountable.excise_reg_no%></p>
+   <p><strong>Service tax registration number :</strong> <%=@account.accountable.service_tax_reg_no%></p>
+   <p><strong>Date of incorporation : </strong><%=@account.accountable.date_of_incorporation %></p>
+   </div>
+  </div>
+ </section>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-6">
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Bank Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>Bank Name: </strong> <%= @account.accountable.bank_name%></p> 
+    <p><strong>IFSC code: </strong> <%= @account.accountable.ifsc_code %><br/><small>Indian Financial System Code</small></p>
+    <p><strong>MICR code: </strong> <%= @account.accountable.micr_code %><br /> <small>Magnetic Ink Character Recognition</small></p>
+    <p><strong>BSR code:</strong> <%= @account.accountable.bsr_code %><br/><small>Basic Statistical Return</small></p>
+   </div>
+  </div>
+ </section>
+</div>
+<% if !@account.accountable.contacts.blank? %>
+<div class="col-sm-6">
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Contact Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <% @account.accountable.contacts.each_with_index do |contact, index| %>
+     <p class="text-center"><strong>Contact <%= index + 1 %></strong></p>
+     <p><strong>Name :</strong> <%= contact.first_name %><%= contact.last_name %></p>
+     <p><strong>Position :</strong> <%= contact.position %></p>
+     <p><strong>Mobile :</strong> <%= contact.mobile %></p>
+     <p><strong>Email : </strong> <%= contact.email %></p>
+     <p><strong>Date of birth :</strong><%= contact.birthday %></p>
+     <p><strong>Date of Anniversary : </strong> <%= contact.anniversary %></p>
+    <% end %>
+   </div>
+  </div>
+ </section>
+</div>
+<% end %>
+</div>

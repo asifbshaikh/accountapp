@@ -1,0 +1,121 @@
+<div class="row">
+  <div class="col-lg-7">
+    <div id="jHere"></div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => 'auto_calculate' %>
+        <%= form_for @reimbursement_note, :html => {:class => "form-horizontal"} do |f| %>
+          <%= render 'shared/form_error', :object => @reimbursement_note %>
+          <div class="form-group">
+            <% if @reimbursement_note.voucher_setting.custom_sequence? %>
+              <div class="col-lg-3 text-right">
+                <label class="control-label-required">Voucher Number</label>
+              </div>
+              <div class="col-lg-4">
+                <%= f.text_field :reimbursement_note_number, :class=>"form-control bg-focus", :style => "width:200px;" %>
+              </div>
+            <% else %>
+              <div class="col-lg-3 text-right">
+                <label class="control-label">Voucher Number</label>
+              </div>
+              <div class="col-lg-4">
+                <label class="control-label">
+                  <%= @reimbursement_note.reimbursement_note_number%><%= f.hidden_field :reimbursement_note_number %>
+                </label>
+              </div>
+            <% end %>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 text-right">
+              <%= f.label :Transaction_date,  :class=>"control-label-required"  %>
+            </div>
+            <div class="col-lg-4">
+              <%= f.text_field :transaction_date, :size => "14", :class => 'bg-focus form-control' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-3 text-right">
+              <label class="control-label-required">For Customer</label>
+            </div>
+            <div class="col-lg-4">
+              <div class="input-group">
+                <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, @reimbursement_note.from_account_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+              </div>
+              <span id ='from_acc_bal'></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3 text-right">
+              <label class="control-label">Detail</label>
+            </div>
+            <div class="col-lg-4">
+              <%= f.text_area :description, :rows => "3", :class=>"bg-focus form-control" %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="col-lg-10">
+              <table class="table table-striped b-t text-small" id="reimbursement_note_line_items">
+                <thead>
+                  <tr>
+                    <th width="30%"><label class="control-label-required">Type of expense</label></th>
+                    <th width="40%"><label class="control-label-required">Description</label></th>
+                    <th class='text-right' style="border-right-width:0px"><label  class="control-label-required">Amount</label></th>
+                    <th width="5%"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @reimbursement_note.reimbursement_note_line_items.each_with_index do |reimbursement_note_line_item, index| %>
+                    <%= render "reimbursement_note_line_items", :reimbursement_note_line_item => reimbursement_note_line_item, :index => index %>
+                  <% end %>
+                  <tr id="row_link" valign="top" class="row-link-expense">
+                    <td valign="top" colspan="5">
+                      <%= link_to "+ Add new row",{:action => :add_row, :index => @reimbursement_note.reimbursement_note_line_items.size}, :class => "btn btn-white btn-sm " ,:remote => true %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td align='right'>Total</td>
+                    <td align='right'><span id = "total">00.00</span></td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-7 col-lg-offset-3">
+              <%= f.submit "Save", :class=>"btn btn-success"%>
+              <%= link_to 'Cancel', reimbursement_notes_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+  <div class="col-lg-5">
+    <section class="panel">
+      <div class="panel-body text-small" >
+        <%= render :partial => 'instructions' %>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<!-- .modal -->
+<div id="modal-reimbursement-note-from-account" class="modal fade">
+  <%= render "shared/account_details", :account_heads => @reimbursement_account_heads, :transaction_type => "journal" %>
+</div>
+<div id="modal-reimbursement-note-to-account" class="modal fade">
+  <%= render('shared/customer_vendor_form', {:selector=>'reimbursement_note_to_account_id'}) %>
+</div>
+<!-- / .modal -->
+<script type="text/javascript">
+$("#reimbursement_note_from_account_id").select2();
+$("#reimbursement_note_expense_id").select2();
+</script>
+
+<script type="text/javascript">
+  $("select#expense_account_id").select2();
+</script>

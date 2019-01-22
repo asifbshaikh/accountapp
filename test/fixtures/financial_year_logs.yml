@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  financial_year_id: 1
+  activity_on: 2013-08-12 17:00:16
+  activity: 1
+  past_opening_balance: 9.99
+  past_closing_balance: 9.99
+  created_by: 1
+
+two:
+  company_id: 1
+  financial_year_id: 1
+  activity_on: 2013-08-12 17:00:16
+  activity: 1
+  past_opening_balance: 9.99
+  past_closing_balance: 9.99
+  created_by: 1

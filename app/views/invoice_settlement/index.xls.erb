@@ -1,0 +1,33 @@
+<div>
+  <table>
+  <tr><td align="center" colspan=8>Invoice Settlement for <%= (@account.blank?)? "All customers" : @account.name %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=8 align=center>Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td align="center" colspan=8><%= (params[:start_date].blank?)? @financial_year.start_date : params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td></tr>
+    <thead>
+      <tr>
+        <th>Voucher No.</th>
+        <th>Customer</th>
+        <th>Settled to</th>
+        <th>Due Date</th>
+        <th>Settled on</th>
+        <th>Settled by</th>
+        <th>Invoice amount</th>
+        <th>Settled amount</th>
+      </tr>
+     <%@invoices.each do|invoice|%>
+      <tr>
+     	<td><%=invoice.invoice_number%></td>
+   	  <td><%=invoice.customer_name%></td>
+   	  <td><%=invoice.settlement_account.name%></td>
+   	  <td><%=invoice.due_date%></td>
+   	  <td><%=invoice.updated_at.to_date %></td>
+   	  <td><%=invoice.created_by_user %></td>
+   	  <td align='right'><%= invoice.currency %> <%=invoice.total_amount%></td>
+   	  <td align='right'><%= invoice.currency %> <%=invoice.outstanding%></td>
+    </tr>
+    <%end%>
+    </thead>
+  </table>
+ </div>

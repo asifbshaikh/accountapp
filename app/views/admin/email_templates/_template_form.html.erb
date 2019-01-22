@@ -1,0 +1,26 @@
+<%= form_for @email_template, :url => ([:admin, @email_template]) do |f| %>
+  <%= render 'shared/form_error' , :object => @email_template %>
+  <table class="display stylized" width="100%">
+    <thead> 
+      <tr><th colspan="2">Enter template detail</th></tr>
+    </thead> 
+    <tbody> 
+      <tr>
+        <td width="25%"><%= f.label 'Template name' , :class => "required"%></td>
+        <td><%= f.text_field :template_name, :autofocus =>"autofocus" %></td>
+      </tr>
+      <tr>
+        <td width="25%"><%= f.label 'Header'%></td>
+        <td><%= f.text_area :header, :rows=>"4", :cols=>"30" %></td>
+      </tr>
+      </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          <button type="submit" class="btn btn-green btn-save">Save</button>&nbsp;
+          <a href= "/admin/email_templates" class="btn btn-cancel">Cancel</a>
+        </td>    
+      </tr>
+    </tfoot>
+  </table>
+<% end %>

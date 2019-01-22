@@ -1,0 +1,11 @@
+<% if @import_file.status== 0 %>
+setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/product_imports/preview?file_id="+"<%=@import_file.id%>"
+    });
+}, 10000);
+
+<% elsif @import_file.status==1 %>
+    window.location.href = "import_preview?file_id=<%= @import_file.id%>";
+<% end %>

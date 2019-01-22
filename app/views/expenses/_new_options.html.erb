@@ -1,0 +1,27 @@
+<div class='form-group'>
+  <div class="btn-group col-lg-6" data-toggle="buttons">
+    <label class="btn btn-sm btn-default <%= 'active' unless @expense.credit_expense? %>" id="option-cash-expense" title="" data-placement="bottom" data-toggle="tooltip" data-original-title=" Use this option to record expenses that you have already paid for using cash, cheque or any other payment method. For Example : Fuel Expenses, Hotel Expenses, etc.">
+    	<input type="radio" name='expense[credit_expense]' value="0" <%= 'checked' unless @expense.credit_expense? %> > <i class="icon-ok icon-large text-active"></i>Cash Expense
+    </label>
+    <label class="btn btn-sm btn-default <%= 'active' if @expense.credit_expense? %>" id="option-credit-expense" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to record expenses which needs to be paid at a later date. For example : Electricity Bill, Office Rent, etc. or also for booking expense for customer against reimbursement.">
+    	<input type="radio" name='expense[credit_expense]' value="1" <%= 'checked' if @expense.credit_expense? %> > <i class="icon-ok icon-large text-active"></i>Credit Expense
+    </label>
+  </div>
+</div>
+<%= render "shared/form_error", :object => @expense %>
+<%= render "voucher_number", :f=>f %>
+<div class="form-group">
+	<div class="col-lg-2 text-right">
+	  <%= label_tag :account_id, "#{@expense.credit_expense? ? 'Select Vendor/Customer' : 'Paid from Account'}", :class => 'control-label-required account-select-label'%>
+	</div>
+	<% if @expense.credit_expense? %>
+		<div class="col-lg-10" id='account-select'>
+    	<%= f.select(:account_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@vendor_accounts, :id, :name, @expense.account_id, :"currency"=>:get_currency), {:prompt => 'Type to select'},{:style => "width:210px;"}) %>
+    	<span id="expense-currency"><%= "Currency: #{@expense.currency}" if @expense.foreign_currency? %></span>
+  	</div>
+  <% else %>
+		<div class="col-lg-10" id='account-select'>
+    	<%= f.select(:account_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@from_accounts, :id, :name, @expense.account_id), {:prompt => 'Type to select'},{:style => "width:210px;"}) %>
+		</div>
+	<% end %>
+</div>

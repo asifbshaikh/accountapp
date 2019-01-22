@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  purchase_id: 1
+  created_by: 1
+  purchase_return_number: 1
+  account_id: 1
+  record_date: 2014-08-09
+  customer_notes: MyText
+  amount: 9.99
+  currency_id: 1
+  exchange_rate: 9.99
+
+two:
+  company_id: 1
+  purchase_id: 1
+  created_by: 1
+  purchase_return_number: 1
+  account_id: 1
+  record_date: 2014-08-09
+  customer_notes: MyText
+  amount: 9.99
+  currency_id: 1
+  exchange_rate: 9.99

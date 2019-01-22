@@ -1,0 +1,88 @@
+<section id="content">
+  <section class="main padder">
+
+    <div class='row'>
+      <div class='col-lg-3'>
+        <h2><i class="icon-file-text-alt text"></i> Billing Invoices</h2>        
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <a href="/admin/billing_invoices/index" class="btn btn-white btn-lg"><i class="icon-mail-reply"></i></a>
+        <%= link_to_pdf params %>
+      <p></p>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg" %>
+        <div class="row">
+          <div class='col-sm-5'>
+            <h4><%= @user.full_name%></h4><br/>
+		        <%= @billing_invoice.company.name %><br/>
+		        <%= raw address_info %><br/>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+                <header class="panel-heading">
+				<strong>Invoice Details</strong>
+				</header>
+              <div class="panel-body">
+                <div class="col-sm-12">
+                  <p>
+                    <strong> Invoice Number #: </strong><%= @billing_invoice.invoice_number%>
+                  </p>
+                  <p><strong> Invoice date: </strong><%= @billing_invoice.invoice_date.to_date%></p>
+                  <% if !@billing_invoice.payment_detail.blank? %>
+                   <p><strong> Payment mode: </strong><%= @billing_invoice.payment_detail.payment_mode %>
+                   <% if @billing_invoice.payment_detail.payment_mode == "Card" || @billing_invoice.payment_detail.payment_mode == "Internet Banking"%>
+                   (<strong>Reference :</strong><%=@billing_invoice.payment_detail.transaction_reference %>)
+                   <% end %>
+                   <% end %>
+                   </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="table-responsive row">
+        <table width="738" class="table table-striped" id="bill_show">
+          <thead>
+            <tr>
+              <th style=' width:60%;'><label class="required">Item</label></th>
+              <th style=' width:35%;text-align:right;'><label class="required" align="right">Amount</label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @billing_invoice.billing_line_items.each do |line_item| %>
+              <% if line_item.billing_type != 'coupon'%>
+                <tr>
+                  <td><%= line_item.line_item %>(Valid till <%= @billing_invoice.invoice_date.to_date + line_item.validity.to_i.months %>)</td>
+                  <td style='width:35%;text-align:right;'><%= @company.currency_code.html_safe %> <%= line_item.amount %></td>
+                </tr>
+            <% elsif line_item.billing_type == 'coupon' && line_item.amount =0 %>
+              <tr>
+                  <td><%= line_item.line_item %>(1 month extended validity)</td>
+                  <td style='width:35%;text-align:right;'></td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td class="ta-right" >Discount - Coupon code : <%= line_item.line_item %></td>
+                  <td align="right"><span id="discount"><%= @company.currency_code.html_safe %> <%= line_item.amount %></span></td>
+                  
+                </tr>
+              <% end %>
+            <% end %>  
+            <tr>
+              <td class="ta-right" style='background-color:#fff;'>Total</td>
+              <td align="right" style='background-color:#fff;'><span id = "total"><%= @company.currency_code.html_safe %> <%= @billing_invoice.amount %></span></td>
+              
+            </tr>
+          </tbody>
+          
+        </table>
+        </div>
+        
+      </div>
+    </section>
+  </section>
+</section>

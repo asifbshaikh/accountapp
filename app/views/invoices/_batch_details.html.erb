@@ -1,0 +1,5 @@
+<%= select_tag("invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][product_batch_id]", options_from_collection_for_select_with_data(@batches, :id, :batch_number, nil, {:"quantity"=> :quantity}), {:prompt=>"Type to select", :style => "width:200px;", :"data-index" => index.to_s, :"data-swd_index"=>swd_index.to_s}) %>
+<span id="batchqty" style="color:green;font-style:italic;"></span>
+<script>
+	$("#invoice_invoice_line_items_attributes_<%= index %>_sales_warehouse_details_attributes_<%= swd_index %>_product_batch_id").select2();
+</script>

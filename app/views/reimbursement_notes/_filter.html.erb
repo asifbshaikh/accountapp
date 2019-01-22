@@ -1,0 +1,15 @@
+<div class="panel panel-info data-filter" id = "filter">
+  <div class="panel-heading"><h4 class="panel-title" >Reimbursement Note Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="reimbursementnote-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="reimbursementnotevoucherno"></td>
+          <td class='text-right'><label>Date</label></td>
+          <td id="reimbursementnoteDate"></td>
+          <td width='10%' class='text-right'><label>Customer</label></td>
+          <td id="reimbursementnotefromacc" data-fromaccounts="<%= Account.reimbursement_note_from_accounts(@company.id) %>"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

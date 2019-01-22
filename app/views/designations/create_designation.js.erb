@@ -1,0 +1,14 @@
+$(".popup-error").remove();
+<% if @designation.errors.any?  %>
+	console.log("error");
+	$(".designation-notif").after("<%= escape_javascript render('shared/popup_form_error', {:object => @designation})%>");
+<% else %>
+	$(".deg_add").hide();
+	$(".deg_info").show();
+	$(".designation-info-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".designation-body").html("<%= escape_javascript render('designations/designations')%>");
+	fadeOutMessage();
+	console.log("success");
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

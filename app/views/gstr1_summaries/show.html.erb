@@ -1,0 +1,151 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-5">
+        <h2><i class="icon-file text"></i>GSTR-1 Summary</h2>
+      </div>
+
+      <div class="col-lg-7 m-t-large" align="right">
+        <%= link_to raw("<i class='icon-download-alt'> </i> Request Latest Summary"), gstr1_summaries_fetch_path(id: @gstr1_summary), class: "btn btn-info  btn-lg" %> &nbsp;      
+        <!--<a href="#" class="btn btn-success btn-lg "><i class="icon-upload-alt"> </i> File GSTR-1</a> &nbsp;-->
+        <a href="#" class="btn btn-default btn-lg "><i class="icon-info"> </i> </a> &nbsp;
+        <%= link_to raw("<i class='icon-reply'> </i>"), {controller: :gstr1_filings,  action: :show, id: @gstr1_summary.gstr_one.id}, class: "btn btn-default btn-lg" %>
+        <p></p>
+      </div>  
+    </div>
+    
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-heading bg-info">
+            Return Period <%=@gstr1_summary.return_period%>
+          </div>
+          <div class="panel-body  bg-lighter"> 
+            <div class="row text-small">
+              <div class="col-lg-1">
+              </div>
+              <div class="table-responsive col-lg-10">
+                <table class="table text-small">
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <th>Total Invoices</th>
+                      <th>Taxable Amount</th>
+                      <th>CGST</th>
+                      <th>SGST</th>
+                      <th>IGST</th>
+                      <th>Total Inclusive Of Taxes</th>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="border-top: none;">B2B Invoice</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td style="border-top: none;"><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <td>B2B Invoice - Amendment</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <td>B2C Invoice(Large)</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <td>B2C Invoice(Small)</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <td>Credit / Debit Note</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                    <tr>
+                      <td>Advance Receipts</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><a href="#" class="btn btn-white btn-sm">View</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Table ends -->
+            </div><!--"all projects" tab ends -->
+
+
+
+          </div>
+
+
+
+        </section>
+
+      </div>    
+      <!--invoice content-->
+      <section class="main padder">
+        <div class="row">
+          <!-- Table starts -->
+          <div class="col-lg-12">
+            <section class="panel">
+
+              <div class="panel-body"> 
+
+                <div class="row text-small">
+                  <div class="col-sm-8 m-b-mini">
+                  </div>
+
+
+                  <div class="table-responsive">
+                    <p> <br></p> 
+                  </div>
+                  <!-- Table ends -->
+                </div><!--"all projects" tab ends -->
+
+
+                
+              </div>
+
+
+
+            </section>
+
+          </div>  
+        </div></section>
+
+        <!-- Invoice Content ends -->
+      </div></section>
+    </section>

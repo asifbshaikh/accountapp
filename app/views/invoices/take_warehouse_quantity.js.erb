@@ -1,0 +1,44 @@
+$("#error_list li").remove();
+$("#popup_box_fixed input:text").css('border-color', '');
+var quantity = 0;
+var flag = true;
+<% if params[:warehouse_id].blank? %>
+	$("#error_list").append("<li>Please select warehouse and add quantity.</li>");
+  flag = false;
+<% else %>
+	<% @stocks.each_with_index do |stock, index| %>
+    $("#invoice_invoice_line_items_attributes_<%= params[:row_index]%>_sales_warehouse_details_attributes_<%= index %>_quantity").val('');
+    if($("#warehouse_at<%= stock.warehouse_id %>").attr("data-removable") == 'true' && !$("#warehouse_at<%= stock.warehouse_id %>").is(':checked')){
+      $("#invoice_invoice_line_items_attributes_<%= params[:row_index] %>_sales_warehouse_details_attributes_<%= index %>__destroy").val('1');
+    }
+		<% if params[:warehouse_id].include?(stock.warehouse_id.to_s) %>
+      <% if params['product_quantity_at'+stock.warehouse_id.to_s].blank? %>
+        $("#error_list li").remove();
+        $("#error_list").append("<li>Please add quantity.</li>");
+        $("#quantity_at_<%= stock.warehouse_id %>").css('border-color','red');
+        flag = false;
+      <% elsif params['product_quantity_at'+stock.warehouse_id.to_s].to_i <= 0 %>
+        $("#error_list li").remove();
+        $("#error_list").append("<li>Quantity must be greater than zero.</li>");
+        $("#quantity_at_<%= stock.warehouse_id %>").css('border-color','red');
+        flag = false;
+      <% elsif params['product_quantity_at'+stock.warehouse_id.to_s].to_i > params['avail_qty_at'+stock.warehouse_id.to_s].to_i %>
+        $("#error_list li").remove();
+        $("#error_list").append("<li>Quantity not available.</li>");
+        $("#quantity_at_<%= stock.warehouse_id %>").css('border-color','red');
+        flag = false;
+      <% else %>
+		    $("#invoice_invoice_line_items_attributes_<%= params[:row_index]%>_sales_warehouse_details_attributes_<%= index %>_quantity").val(<%= params['product_quantity_at'+stock.warehouse_id.to_s] %>);
+        $("#invoice_invoice_line_items_attributes_<%= params[:row_index]%>_sales_warehouse_details_attributes_<%= index %>_warehouse_id").val(<%= stock.warehouse_id %>);
+        quantity += parseFloat("<%= params['product_quantity_at'+stock.warehouse_id.to_s] %>");
+      <% end %>
+    <% end %>
+	<% end %>
+<% end %>
+
+if(flag){
+  $("#row<%= params[:row_index]%> #quantity").val(quantity);
+  $("#popup_box_fixed").fadeOut("slow");
+  cal();
+}
+

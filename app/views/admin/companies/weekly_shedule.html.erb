@@ -1,0 +1,92 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Weekly Schedule</h2>
+    </div>
+  </div><br/>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li class="active"><a href="#companies_weekly_shedule" data-toggle="tab"><i class="icon-building icon-large text-default"></i>Companies</a></li>
+                <li><a href="#leads_weekly_shedule" data-toggle="tab"><i class="icon-user icon-large text-default"></i>Leads</a></li>
+              </ul>
+            </header>
+          <div class="panel-body">
+              <div class="tab-content"> 
+                <div class="tab-pane active" id="companies_weekly_shedule">
+                <% if @weekly_companies_shedule.blank?%>
+                <%= render :partial => "shared/no_record" %>
+                <% else %>
+                  <div class="table-responsive row">
+                    <table id = "weekly_shedule_companies" class="table table-striped m-b-none text-small">
+                    <thead>
+                      <tr>
+                        <th>Company Name</th>
+                        <th>Owner</th>
+                        <th>Contact</th>
+                        <th>Contact Date</th>
+                        <th>Activity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% @weekly_companies_shedule.each do |comp_schedule|%>
+                    <tr>
+                      <td><%= comp_schedule.company.name%></td>
+                      <td><%= comp_schedule.company.users.first.full_name%></td>
+                      <td><%= comp_schedule.company.phone%></td>
+                      <td><%= comp_schedule.next_contact_date%></td>
+                      <td><%= CustomerRelationship.get_activity(comp_schedule.next_activity)%></td>
+                    </tr>
+                    <%end%>
+                    </tbody>
+                    </table>
+                  </div>
+                  <% end %>
+                </div>
+
+                <div class="tab-pane" id="leads_weekly_shedule">
+                <% if @weekly_leads_shedule.blank? %>
+                <%= render :partial => "shared/no_record" %>
+                <% else %>
+                  <div class="table-responsive row">
+                    <table id = "weekly_shedule_leads" class="table table-striped m-b-none text-small">
+                    <thead>
+                      <tr>
+                        <th>Lead Name</th>
+                        <th>Contact</th>
+                        <th>Contact Date</th>
+                        <th>Activity</th>
+                        <th>Assigned To</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <% @weekly_leads_shedule.each do |lead_activity|%>
+                    <tr>
+                      <td><%= lead_activity.lead.name%></td>
+                      <td><%= lead_activity.lead.mobile%></td>
+                      <td><%= lead_activity.next_followup%></td>
+                      <td><%= Lead.get_activity(lead_activity.next_activity)%></td>
+                      <td><%= lead_activity.lead.assigned_to_name%></td>
+                    </tr>
+                    <%end%>
+                    </tbody>
+                    </table>
+                  </div>
+                  <% end %>
+                </div>
+                
+            </div>
+                    
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>

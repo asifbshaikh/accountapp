@@ -1,0 +1,17 @@
+<%= form_for(@purchase_attachment) do |f| %>
+  <% if @purchase_attachment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_attachment.errors.count, "error") %> prohibited this purchase_attachment from being saved:</h2>
+
+      <ul>
+      <% @purchase_attachment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

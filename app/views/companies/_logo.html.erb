@@ -1,0 +1,11 @@
+<%= form_for @company, :html => {:multipart => true} do |f| %>
+<%= render 'shared/form_error', :object => @company %>
+  
+  <div class="field">
+    <%= f.label :logo, " Choose Company Logo:" %>&nbsp;  
+    <%= f.file_field :logo %>
+  </div>&nbsp;
+  <div class="actions">
+    <%= f.submit "Upload", :class =>"btn btn-green big"%>
+  </div>
+<% end %>

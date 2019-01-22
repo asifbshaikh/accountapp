@@ -1,0 +1,12 @@
+
+$(".popup-error").remove();
+
+<% if @cashfreefile.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/popup_form_error',{:object=>@cashfreefile})%>");
+<% else %>
+  $("div[id^='modal']").modal('hide');
+  window.location.reload()
+<% end %>
+
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Requesting...'>Request</button>");

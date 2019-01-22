@@ -1,0 +1,13 @@
+<% if !@company.plan.free_plan? %>
+<% if !@custom_field.custom_label1.blank? && !@purchase.custom_field1.blank? %>
+<p><strong><%= @custom_field.custom_label1 %>:</strong> <%= @purchase.custom_field1 %></p>
+<% end %>
+
+<% if !@custom_field.custom_label2.blank? && !@purchase.custom_field2.blank? %>
+<p><strong><%= @custom_field.custom_label2 %>:</strong> <%= @purchase.custom_field2 %></p>
+<% end %>
+
+<% if !@custom_field.custom_label3.blank? && !@purchase.custom_field3.blank? %>
+<p><strong><%= @custom_field.custom_label3 %>:</strong> <%= @purchase.custom_field3 %></p>
+<% end %>
+<% end %>

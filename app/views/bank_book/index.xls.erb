@@ -1,0 +1,73 @@
+<table>
+  <tr>
+  <td colspan=6 align=center ><b><%= @page_name %> for <%= (params[:account_id].blank?)? Account.find(@accounts.first.id).name : Account.find(params[:account_id]).name %></b></td></tr>
+ <% if !params[:branch_id].blank? %>
+<tr><td colspan=6 align=center>Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+ <% end %>
+  <tr><td colspan=6 align=center ><%= (params[:start_date].blank?)? @ledgers.first.transaction_date: params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td></tr>
+  <thead>
+    <tr>
+    	<th align='left'>Date</th>
+    	<th align='left'>Correspondence Account</th>
+    	<th align='left'>P a r t i c u l a r s</th>
+    	<th align='left'>Voucher No.</th>
+    	<th align="right">Debit</th>
+    	<th align="right">Credit</th>
+      <th align="right">Closing Balance</th>
+    </tr>
+  </thead>
+    <tr>
+        <td width ="9%"></td><td width ="18%"></td>
+        <td width ="20%"><b>Opening Balance</b></td><td width ="9%"></td>
+          <%
+            if !@opening_balance.blank? && @opening_balance > 0 %>
+
+            <td width ="15%" align="right"><b> <%= format_currency @opening_balance.abs %></b></td>
+            <td width ="15%"></td>
+            <td width ="20%"></td>
+                          
+          <% else %>
+            <td width ="15%"></td>
+            <td width ="15%" align="right"><b><%= format_currency @opening_balance.abs unless @opening_balance.blank? %></b></td>
+            <td width ="20%"></td>
+                          
+          <% end %>
+    </tr>
+  <tbody>
+	<%
+	debit = 0
+	credit = 0
+  if !@opening_balance.blank? && @opening_balance > 0
+      debit = @opening_balance
+  elsif !@opening_balance.blank?
+      credit = @opening_balance.abs
+  end
+	for ledger in @ledgers
+	%>
+    <tr>
+	    <td>
+        <%= ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+	      <% cur_acc = ledger.retrieve_corresponding_account%>
+      <td>
+        <%= (ledger.debit > 0)? "To":"By"%> 
+        <%= cur_acc.name %>
+      </td>
+    	<td><%= ledger.description%></td>
+    	<td><%= ledger.voucher_number %></td>
+    	<td align="right"><%= format_currency(ledger.debit) %></td>
+    	<td align="right"><%= format_currency ledger.credit %></td>
+    	<% debit += ledger.debit
+    	   credit += ledger.credit
+         closing_balance = debit - credit
+    	 %>
+       <td align="right"><%= format_currency closing_balance %></td>
+    </tr>
+	<% end %>
+  </tbody>
+	<tr>
+	  <td></td><td></td><td></td><td><b>Total</b></td>
+    <td align="right"><b><%= format_currency debit%></b></td>
+    <td align="right"><b><%= format_currency credit%></b></td>
+    <td align="right"><b><%= format_currency closing_balance%></b></td>
+	</tr>
+</table>

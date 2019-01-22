@@ -1,0 +1,23 @@
+<div id="card" style="display:none;">
+	<div id="user_info_div"><span class="basic_info">Enter Card Detail</span></div>
+
+	<table class="display stylized">		
+		<tbody>	
+			<tr>
+			    <td><label>Bank Name</label><br/>
+			    <%= text_field_tag 'card_payment[card_type]','', :size => "17"%> </td> 
+			 
+			    <td><label>Card number</label><br/>
+			    <%= text_field_tag 'card_payment[card_number]','',
+                               :onkeydown => "return card_cheque_number(event);", :maxlength => 16, :size => "17" %> </td>
+			  </tr>
+			  <tr>
+			    <td><label>Transaction date</label><br/>
+			    <%= text_field_tag 'card_payment[transaction_date]','', :size => "17" %> </td>
+			 
+			    <td><label>Trancsaction reference</label><br/>
+			    <%= text_field_tag 'card_payment[transaction_reference]','', :size => "17" %></td>
+			  </tr>
+		</tbody>
+	</table>
+</div>

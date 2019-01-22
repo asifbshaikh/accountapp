@@ -1,0 +1,62 @@
+
+<section id="content" class="content-sidebar bg-white">
+  <section id="content">
+    <section class="main padder">
+  <div class="row">
+    <div class="col-lg-7">
+           <h2>Custom Field Report</h2>
+    </div>
+    <div class="col-lg-5 m-t-large" align="right">
+    <% if !@vouchers.blank?  %>
+           <%= link_to image_tag('pdf.gif',:title=>"Export to PDF" , :class => 'icon'),url_for(:format => 'pdf',:start_date => params[:start_date], :end_date => params[:end_date],:voucher_type => params[:voucher_type],:custom_field=>params[:custom_field]), :class => "btn btn-white btn-lg", :target => "_blank"%>
+            <%= link_to image_tag('excel_icon.gif',:title=>"Export to XLS" ,:class => 'icon'), url_for(:format => 'xls',:start_date => params[:start_date], :end_date => params[:end_date], :voucher_type => params[:voucher_type],:custom_field=>params[:custom_field]), :class => "btn btn-white btn-lg",:target => "_blank"%>
+      <%end%>
+      <p></p>
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+      <section class="panel">
+        <div class="panel-body">
+          <header class="panel-heading">
+            <%= render :partial => "report_filter" %>
+          </header>
+          <% if @vouchers.blank? %>
+           <%= render :partial => "shared/no_record" %>
+          <% else %>
+           <%= render :partial => "report_header" %>
+           <div class="line line-dashed m-t-large"></div>
+          <div class="row">
+          <div class="col-lg-12">
+          <h4>Showing Reports For Custom Field:</h4>
+          </div>
+          <div class="col-lg-12">
+           <% if params[:voucher_type].blank? || params[:voucher_type]== "Invoice" %>
+           <%= render :partial=> "invoice"%>
+           <% elsif params[:voucher_type]=="Estimate"%>
+           <%= render :partial=> "estimate"%>
+           <% elsif params[:voucher_type]=="Purchase"%>
+           <%= render :partial => "purchase" %>
+           <% elsif params[:voucher_type]=="StockIssueVoucher" %>
+           <%= render :partial => "stock_issue_voucher" %>
+           <% elsif params[:voucher_type]=="StockReceiptVoucher" %>
+           <%= render :partial => "stock_receipt_voucher" %>
+           <% elsif params[:voucher_type]=="StockWastageVoucher" %>
+           <%= render :partial => "stock_wastage_voucher" %>
+           <% end %>
+             <hr>
+             <%= render :partial => "shared/report_footer" %>
+          </div>
+          </div>
+         <% end %>
+        </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>
+<!-- /.main -->
+
+</section>
+

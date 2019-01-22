@@ -1,0 +1,4 @@
+$("#row-loader").remove();
+$("#row_link").before('<%= escape_javascript render( "estimate_line_items",{ :estimate_line_item=> @estimate_line_item, :index => params[:index]} ) %>');
+$("#row_link").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');
+

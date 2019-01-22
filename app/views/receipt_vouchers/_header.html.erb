@@ -1,0 +1,12 @@
+<tr>
+    <th>Voucher Number</th>
+    <th>Voucher Date</th>
+    <th>Received from</th>
+    <th>Amount</th>
+    <th>Payment Mode</th>
+    <%if !@company.plan.free_plan? %>
+      <th>Under project</th>
+    <% end %>
+    <th>Actions</th>
+  </tr>
+

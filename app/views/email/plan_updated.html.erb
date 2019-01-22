@@ -1,0 +1,15 @@
+
+Hi <b><%= @user.first_name %></b>,
+<br/>
+<br/>
+  Your current plan has been updated to <b><%= @company.plan.display_name %> </b>and it is valid till
+  <b><%= @company.subscription.renewal_date.to_date %></b>
+
+<br/><br/>
+Thank you for using ProfiBooks. We look forward to a long relationship.
+<br/><br/>
+
+The ProfitBooks Team.
+<hr>
+Sent using <a href= "https://www.profitbooks.net" target = "_blank">ProfitBooks.net</a><br/>
+<a href= "https://www.profitbooks.net/home/pricing" target = "_blank">Create</a> your free account today and start managing office finances in a smarter way.

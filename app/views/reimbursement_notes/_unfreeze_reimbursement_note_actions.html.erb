@@ -1,0 +1,9 @@
+<a href="/reimbursement_notes/new" class="btn btn-success btn-lg"> + New Reimbursement</a>
+<% if @reimbursement_note.reimbursement_voucher_id.blank? && !@reimbursement_note.in_frozen_year? %>
+<div class="btn-group">
+  <button  onclick="location.href= '<%= edit_reimbursement_note_path(@reimbursement_note)%>'"; class="btn btn-info btn-lg" > <i class="icon-edit"> </i> Edit</button>
+</div>
+<% end %>
+<button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+<%= link_to raw('<i class="icon-print"> </i>'), reimbursement_note_path(@reimbursement_note, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), reimbursement_notes_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>

@@ -1,0 +1,30 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+    <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+       <!-- Left column/section -->
+       <section  class="column width6 first">
+            <p id="notice"><%= notice %></p>
+
+            <div class="column width3 first highlight">
+              <div id='user_info_div'><span class='basic_info'> Payhead Type Detail</span></div>
+                 <div class="field">
+                    <b>Name:</b>
+                    <%= @payhead_type.name %>
+                 </div>
+                 <div class="field">
+                   <b>Description:</b>
+                   <%= @payhead_type.description %>
+                 </div>&nbsp;
+                <div class="actions" >
+                   <%= link_to 'Edit', edit_payhead_type_path(@payhead_type),{:class=>"btn btn-green big" } %> &nbsp;
+                   <a href="/payhead_types" class="btn btn-green big">View List</a>
+               </div>
+            </div><br />&nbsp;
+           <!-- End of Left column/section -->
+        </section>
+      </div>
+		</div>

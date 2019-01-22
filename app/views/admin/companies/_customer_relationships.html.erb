@@ -1,0 +1,57 @@
+
+<div class='form' <%= "style='display:none;'" if flash[:error].blank? %>>
+  <%= form_for @company, :url=>[:admin, @company] do |f| %>
+    <%= hidden_field_tag "company[customer_relationships_attributes][0][created_by]", @current_user.id %>
+    <%= hidden_field_tag "company[customer_relationships_attributes][0][last_contact_date]", Time.zone.now.to_date %>
+    <div class="row">
+    <div class="col-lg-8">
+      <%= label_tag "notes", "Notes", :class => 'required' %><br />
+      <%= text_area_tag "company[customer_relationships_attributes][0][notes]", nil ,:class => 'form-control', :rows => 5 %>
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-lg-4">
+      <%= label_tag "next_contact_date", "Next contact date" %><br />
+      <%= text_field_tag "company[customer_relationships_attributes][0][next_contact_date]", nil , :class => "form-control"%>
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-lg-4">
+      <%= submit_tag "Create note", :class => "btn btn-success" %>
+    </div>
+
+  <% end %>
+</div>
+</div>
+
+<br /> 
+<% if @customer_relationships.blank? %>
+  <div class="box box-info">
+    Currently there are no customer relationships to show.
+  </div>
+<% else %>
+<div class="responsive row">
+<table class="table table-striped b-t">
+    <thead>
+    <tr>
+      <th width=55%>Notes</th>
+      <th>Last contact date</th>
+      <th>Next contact date</th>
+      <th>Created by</th>
+    </tr>
+    </thead>
+   <tbody>
+     <% @customer_relationships.each do |customer_relationship| %>
+      <tr>
+        <td><%= customer_relationship.notes %></td>
+        <td><%= customer_relationship.last_contact_date %></td>
+        <td><%= customer_relationship.next_contact_date %></td>
+        <td><%= SuperUser.find_by_id(customer_relationship.created_by).first_name unless customer_relationship.created_by.blank? %></td>
+      </tr>
+     <% end %>
+  </tbody>
+  </table>
+  </div>
+<% end %>

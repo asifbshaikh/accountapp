@@ -1,0 +1,133 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-10">
+          <h2><i class="icon-edit text"></i>Create New Billing Invoice</h2>
+      </div>
+      <div class="col-lg-2 m-t-large" align="right">
+      <a href="/admin/billing_invoices/index" class="btn btn-white btn-lg"><i class="icon-mail-reply"></i></a>
+      </div>
+      <p></p>
+    </div><br/>
+    
+    				<div class="row">
+					  <div class="col-lg-12">
+					    <section class="panel">
+					      <div class="panel-body">
+					      <%= render :partial => "/shared/flash_msg"%>
+					      	<%= form_tag(:action => 'create', :method => 'post') do %>
+					      		<%= hidden_field_tag 'company_id', '' %>
+					      		<div class="row">
+						      		<div class="col-lg-12">
+						      		<div class='form-group'>
+							            <div class="col-lg-3">
+							              <label>Company name *</label>
+										<%= select_tag "select2-option", options_from_collection_for_select(@companies,"id","name"), :class=> "cname", :prompt => "---------------Select----------" %>
+
+							              <!-- <input type='text' name='company_name' id="tags" class='cname form-control'> -->
+							            </div>
+							            <div class='col-lg-1'></div>
+							            <div class='col-lg-3'>
+							              <label>Invoice date *</label>
+							              <input type='text' name='invoice_date' id='invoice_date' value="<%= Time.zone.now.to_date %>" class="form-control" >
+							            </div>
+							            <div class='col-lg-1'></div>
+							            <div class='col-lg-3'>
+							              <label>Plan name</label>
+							              <span class='plan_name'></span><%= hidden_field_tag 'plan_name', '' %>
+							            </div>
+							          </div>
+							          </div>
+						          </div>
+
+						          <div class="row">
+						          	<div class="col-lg-12">
+						          	<div class='form-group'>
+						          		<div class="col-lg-3">
+							              <label>Next Renewal *</label>
+							              <input type='text' name='next_renewal_date' id='next_renewal_date' class="form-control">
+							            </div>
+							            <div class='col-lg-1'></div>
+							            <div class='col-lg-3'>
+							              <label>Plan Amount *</label>
+							              <input type='text' name='plan_amount' class='amount form-control'>
+							            </div>
+							            <div class='col-lg-1'></div>
+							            <div class='col-lg-3'>
+							              <label>Renewal date</label>
+							              <span class='renewal_date'></span><%= hidden_field_tag 'renewal_date', '' %>
+							            </div>
+							         </div>
+						          	</div>
+						          </div>
+
+						          <div class="row">
+						      		<div class="col-lg-12">
+						      		<div class='form-group'>
+							            <div class="col-lg-3">
+							              <label>Coupon code</label>
+							              <input type='text' name='coupon_code' class="form-control">
+							            </div>
+							            <div class='col-lg-1'></div>
+							            <div class='col-lg-3'>
+							              <label>Coupon amount</label>
+							              <input type='text' name='coupon_amount' class='amount form-control'>
+							            </div>
+							            
+							          </div>
+							          </div>
+						          </div><br/>
+
+						          <div class="col-lg-12">
+
+				                              <div class='col-lg-12'>
+				                                <%= label_tag "Payment_mode", "Payment mode" %>
+				                              </div>
+				                        <div class='form-group'>
+				                          <div class="row">
+				                            <div class='col-lg-12'>
+				                              <div class='form-group'>
+								          		<div class="col-lg-3">
+									              <input type='radio' name='payment_mode' value='cheque' > Cheque payment <br/>
+									              <label>Date</label>
+									              <input type='text' name='cheque_transaction_date' id='cheque_transaction_date' class="form-control"><br/>
+									              <label>Cheque no.</label>
+									              <input type='text' name='cheque_number' class="form-control"><br/>
+
+									            </div>
+									            
+									            <div class='col-lg-3'>
+									              <input type='radio' name='payment_mode' value='ibank' > Internet banking <br/>
+									              
+									              <label>Transaction reference</label>
+									              <input type='text' name='transaction_reference' class="form-control"><br/>
+									            </div>
+
+									            <div class='col-lg-3'>
+									              <input type='radio' name='payment_mode' value='cash' checked >Cash payment <br/>
+									              <label>Closed by</label>
+									              <%= select_tag ("closed_by", options_from_collection_for_select(@super_users, :id, :first_name), {:class => 'form-control'}) %><br/>
+						      						<%= text_area_tag 'notes','', :rows => 5, :cols => 50, :class => "form-control" %>
+									            </div>
+							         		</div>
+
+							         		<div class="form-group">
+							         		<div class="col-lg-4"></div>
+								            <div class="col-lg-8">
+								              <%= submit_tag 'Submit', :class => "btn btn-success" %> &nbsp; 
+								            </div>
+								          </div>
+				                             </div>
+				                            </div>
+				                           </div>
+				                          </div>
+				                        </div>
+						      <%end%>
+					      </div>
+					    </section>
+					  </div>
+					</div>
+
+
+  </section>
+</section>

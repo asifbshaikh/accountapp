@@ -1,0 +1,84 @@
+<script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for dep in @departments
+  	 	@data<<dep.name
+  	 	@data<<dep.description
+  	 	@data<<dep.status
+  	 	
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Organisation Settings &rarr;<span>Manage Department</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%=f.text_field :name_or_description_or_status_like, :id => "autocomplete" , :placeholder=>"search"%>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+    	<!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	<div id="tabs-all" class="highlight"><br />
+		        <%= render :partial => "shared/flash_msg"	%>
+               <div id="timesheet">
+                    <% if @departments.blank? %>
+                       	<%= render :partial => "shared/no_record" %>
+                     <% else %>
+                       <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "department", :collection => @departments %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                      </table>    
+                      <div class="clear">
+		          	        <div class="width3 column">
+		                       <%= paginate @departments %>
+		                    </div>
+		                  </div> 
+                    <% end %>
+               </div>
+          </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+     <aside class="column width2"><br />
+     <%= new_button "Create New Department", new_department_path %>
+          <div id="rightmenu">
+             <dl class="first">
+                 <dt><%= image_tag "help.png" %></dt>
+                 <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd> 
+                 <dd class="last">This page displays the list of all the departments. <br/>Click on name to view more details.</dd>
+             </dl>
+          </div></br>  
+    </aside>
+
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->
+
+
+

@@ -1,0 +1,17 @@
+<%= form_tag(:action => 'create', :controller => "/admin/customer_relationships") do |f| %>
+  <%= hidden_field_tag "customer_relationship[company_id]", @company.id %>
+  <%= hidden_field_tag "customer_relationship[created_by]", @current_user.id %>
+  <div class="field">
+    <%= label_tag "notes", "Notes", :class => 'required' %><br />
+    <%= text_area_tag "customer_relationship[notes]","", :class => 'half', :rows => 5 %>
+  </div>
+  
+  <div class="field">
+    <%= label_tag "next_contact_date", "Next contact date" %><br />
+    <%= text_field_tag "customer_relationship[next_contact_date]", nil %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= submit_tag "Create note", :class => "btn btn-green" %>
+  </div>
+<% end %>

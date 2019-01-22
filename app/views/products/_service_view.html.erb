@@ -1,0 +1,106 @@
+<div class='row'>
+  <div class='col-sm-6'>
+    <section class="panel">
+      <header class="panel-heading bg-info">
+        <strong><%= @product.name %></strong>
+      </header>
+      <div class="panel-body bg-lighter">
+        <p><strong>SAC Code:</strong><%= @product.hsn_code%></p>
+        <p><strong>Product Code:</strong><%=@product.product_code%></p>
+        <p><strong>Product Category:</strong><%=@product.tag_list.join(', ')%></p>
+        <p><strong>Description : </strong> <%= @product.description %></p>
+        <% if @product.type == 'SalesItem' %>
+          <p><strong>Sales Price (In <%= @company.currency_code%>) : </strong> <%= @product.sales_price %></p>
+          <p><strong>Income Account :</strong> <%= @product.income_account.name %></p>
+        
+        <% elsif @product.type == 'PurchaseItem' %>
+          <p><strong>Purchase Price (In <%= @company.currency_code%>) : </strong> <%= @product.purchase_price %></p>
+          <p><strong>Expense Account :</strong> <%=@product.expense_account.name %></p>
+        <% elsif @product.type == 'ResellerItem' %>
+          <p><strong>Sales Price (In <%= @company.currency_code%>) : </strong> <%= @product.sales_price %></p>
+          <p><strong>Income Account :</strong> <%= @product.income_account.name %></p>
+          <p><strong>Purchase Price (In <%= @company.currency_code%>) : </strong> <%= @product.purchase_price %></p>
+          <p><strong>Expense Account :</strong> <%= @product.expense_account.name %></p>
+        <% end %>
+      </div>
+    </section>
+  </div>
+    <div class='col-sm-6'>
+    <section class="panel">
+      <header class="panel-heading bg-light">
+        <% if @product.type == 'SalesItem' || @product.type=='ResellerItem' %>
+          <strong>Recently Sold</strong>
+        <% elsif @product.type == 'PurchaseItem' %>
+          <strong>Recently Purchased</strong>
+        <% end %>
+      </header>
+      <div>
+        <% if @product.type == 'SalesItem' || @product.type=='ResellerItem' %>
+          <% if @invoices.blank? %>
+          <br>
+          <div class="col-lg-12" align="center">
+            <div class="alert alert-info">
+              <h6><i class="icon-info-sign icon-small"></i> 
+                <strong>
+                  Product not sold.
+                </strong>
+              </h6>
+            </div>
+          </div>
+          <% else %>
+            <table class="table table-striped m-b-none text-small">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Quantity</th>
+                <th>Voucher#</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @invoices.each do |invoice| %>
+                <tr>
+                  <td><%= invoice.invoice_date%></td>
+                  <td><%= invoice.account.name %></td>
+                  <td><%= invoice.total_sold(@product.id) %></td>
+                  <td><%= link_to invoice.invoice_number, invoice_path(invoice) %></td>
+                  <td><%= invoice.invoice_line_items.by_product(@product.id).sum(:amount)%> <%=invoice.currency %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            </table>
+          <% end %>
+        <% elsif @product.type == 'PurchaseItem' %>
+          <% if @purchases.blank? %>
+            <div class="alert alert-info">
+              <i class="icon-info-sign icon-small"></i> 
+                <strong>
+                  Product not purchased.
+                </strong>
+            </div>
+          <% else %>
+            <table class="table table-striped m-b-none text-small">
+            <thead>
+              <tr>
+                <th>Vendor</th>
+                <th>Quantity</th>
+                <th>Voucher#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @purchases.each do |purchase| %>
+                <tr>
+                  <td><%= purchase.account.name %></td>
+                  <td><%= purchase.total_purchased(@product.id) %></td>
+                  <td><%= link_to purchase.purchase_number, purchase_path(purchase) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            </table>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>

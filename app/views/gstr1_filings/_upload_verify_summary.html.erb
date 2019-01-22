@@ -1,0 +1,65 @@
+
+<%= render :partial=> "shared/flash_msg"%>
+<thead>
+</thead>
+<div class="table-responsive col-lg-12">
+    <div class="row">
+      <div  class="col-sm-12 m-b-mini">
+        <p>This page shows all the transaction from the selected tax filing period. Please review these transactions and then post them directly to GSTN portal by clicking on 'Upload To GSTN' button.</p>
+
+        <p>Once you post these transactions, you can click on 'Verify' button to check the response from GSTN. You'll be able to see if there are any errors and the status of upload.</p>
+
+        <p>Please note that there could be some delay while fetching information from GSTN for verification. So, its recomendded to keep checking this periodically in case all the data is not displayed.</p>
+      </div>
+
+      <div class="btn-group col-sm-12 m-b-mini" data-toggle="buttons">
+        <label class="btn btn-sm btn-default">
+          <input type="radio" name="options" id="option1"> <i class="icon-large text-active"></i><a data-toggle="tab" href = "#transaction-tab">Transaction Summary</a>
+        </label>
+        <label class="btn btn-sm btn-default active">
+          <input type="radio" name="options" id="option2"><a data-toggle="tab" href="#hsn-tab">HSN/SAC Summary</a>
+        </label>
+        <label class="btn btn-sm btn-default active">
+          <input type="radio" name="options" id="option2"><a data-toggle="tab" href="#document-tab">Document Summary</a>
+        </label> 
+      </div> 
+    </div>
+
+   <div class="tab-content">
+   <div id="transaction-tab" class='tab-pane fade active in'>
+    <div class="row text-small">
+      <div class="col-sm-1 m-b-mini">
+       <div class="btn-group" id="btn-group" >
+        <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">All Invoices <span class="caret"></span></button>
+        <ul id ="myTab" class="dropdown-menu text-left" >
+          <li><%= link_to 'B2B Invoices', gstr1_filing_path(@gstr_one, :type =>'B2B') %></li>
+          <li><%= link_to 'B2CS Invoices', gstr1_filing_path(@gstr_one,:type =>'B2CS') %></li>
+          <li><%= link_to 'B2CL Invoices', gstr1_filing_path(@gstr_one,:type =>'B2CL') %></li>   
+          <li><%= link_to 'Credit Note/Debit Notes', gstr1_filing_path(@gstr_one,:type =>'CDNR') %></li>  
+          <li><%= link_to 'Advance Receipts', gstr1_filing_path(@gstr_one,:type =>'AR') %></li>  
+          <li><%= link_to 'NIL Rated, Exempted', gstr1_filing_path(@gstr_one,:type =>'NIL') %></li>  
+          <li><%= link_to 'Exports', gstr1_filing_path(@gstr_one,:type =>'EXP') %></li> 
+          <li class="divider"></li>
+           <li><%= link_to 'All Invoices', gstr1_filing_path(@gstr_one) %></li>            
+         </ul>
+       </div>
+     </div>
+   </div>
+   <div class="on-go-form">
+    <%= render :partial=> "fetch_data" %>
+  </div>
+  </div>
+  <div id="hsn-tab" class='tab-pane fade'>
+  <%= render :partial=> "hsn_summary" %>
+  </div>
+  <div id="document-tab" class='tab-pane fade'>
+    
+  </div>
+    </div>
+  <% if @show_modal %>
+  <div id="model1" class="modal fade">
+    <%= render "request_gross_values"%>
+  </div>
+  <% end %>
+
+</div>

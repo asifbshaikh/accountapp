@@ -1,0 +1,24 @@
+<tr>
+<td><%= link_to deleted_expense.voucher_number, deleted_expense %></td>
+ <%if !@company.plan.free_plan? %>
+<td><%= !deleted_expense.project_id.blank? ? deleted_expense.project_name : "Not available"%></td>
+<% end %>
+<td><%= deleted_expense.expense_date.strftime("%d-%m-%Y") %></td>
+<td><%= truncate(deleted_expense.account.name, :length =>20) unless deleted_expense.account.blank? %></td>
+<td><%= format_currency deleted_expense.amount %></td>
+	    <td><%= deleted_expense.created_by_user %></td>
+<td>
+<div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/expenses/<%= deleted_expense.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href= <%= "/expenses/restore_expense?id=#{deleted_expense.id}"%>  >Restore</a></li>
+             <li class="divider"></li>
+            <li><a href= <%= "/expenses/permanent_delete_expense?id=#{deleted_expense.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+          </ul>
+      </div>     
+
+</td>
+</tr>

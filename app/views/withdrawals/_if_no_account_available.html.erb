@@ -1,0 +1,14 @@
+		<% if @from_accounts.blank? && @to_accounts.blank?%>
+        <br /><div class="box box-warning">
+          Currently there are no from accounts and to accounts.
+                 Click to create <%= link_to " from account",{:action => :add_account, :transaction_type => 'bankacc'},:id => 'add_new_model',:remote => true %> and <%= link_to " to account",{:action => :add_account, :transaction_type => 'contra'},:id => 'add_new_model',:remote => true %> .
+        </div>
+      <% elsif @from_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no from accounts.Click to <%= link_to " create",{:action => :add_account, :transaction_type => 'bankacc'},:id => 'add_new_model',:remote => true %> one.
+        </div>
+      <% elsif @to_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no to accounts.Click to <%= link_to " create",{:action => :add_account, :transaction_type => 'contra'},:id => 'add_new_model',:remote => true %> one.
+        </div>
+      <% end %>

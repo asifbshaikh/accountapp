@@ -1,0 +1,11 @@
+Hello, Administrator
+
+Support is Received from User.
+
+Type:- "<%= @support.type %>"
+
+Details:- "<%= @support.details %>"
+
+Submitted by:- "<%= User.find(@support.submitted_by).first_name  %>"
+
+Company:- "<%= Company.find(@support.company_id).name  %>" 

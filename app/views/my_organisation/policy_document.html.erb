@@ -1,0 +1,56 @@
+<%= render :partial => "shared/page_title"%>
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	 <div id="tabs-all" class="highlight">
+              <%= render "shared/flash_msg" %>
+            <div id="tab3">
+          <ul id="tabnav">
+            <li class="tab1">
+              <a href=<%="/my_organisation/announcement"%>>Recent Announcements</a>
+            </li>
+            <li class="tab2">
+              <a href = <%="/my_organisation/holiday_list"%>>Holiday List</a>
+            </li>
+            <li class="tab3">
+              <a href=<%="/my_organisation/policy_document"%>>Policy Document</a>
+            </li>
+          </ul>
+        </div>
+        <div id="task_container">
+          <div class="clearfix"></div> 
+             <div id="policy_document">
+                    <% if @policy_documents.blank? %>
+                        <p class="no-policy_document"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                    <table class="display stylized" id="policy_document">
+		                  <thead id="example">   
+		                    <tr>  
+                           <th>File Name</th>  
+                           <th>Size</th>  
+                           <th>Modified</th> 
+                           <th>Action</th> 
+                       </tr>  
+		                  </thead>
+		                  <tbody>
+		                     <%= render :partial => "policy_document", :collection => @policy_documents%>
+		                  </tbody>
+		                  <tfoot>
+		                  	<tr>
+                          <td colspan="5"></td>
+                         </tr>
+		                  </tfoot>
+		               </table> 
+                              <%= paginate @policy_documents %>   
+                   <% end %>
+               </div>
+             </div>
+          </div><br />
+       </section>
+       <aside class="column width2"><br/>
+  <%= new_button("Upload New Document", new_policy_document_path)%>
+</aside>
+</div>
+</div>

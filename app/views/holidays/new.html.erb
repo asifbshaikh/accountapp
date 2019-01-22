@@ -1,0 +1,31 @@
+<!-- Page title -->
+ <div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Organisation Settings &rarr;<span>New Holiday</span></h1>
+	
+	</div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	   <div class="highlight">
+              <%= render 'form' %>
+           </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= list_button_white "View Holidays", holidays_path %>
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

@@ -1,0 +1,45 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Allocate Payment - <%= @adv_payment.voucher_number %></h2>
+      </div>     
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        <%= form_for @adv_payment, :url=>"/gstr_advance_payments/create_allocation", :method=>:post, :html=>{:class=>"form-horizontal"} do |f| %>
+          <%= hidden_field_tag "id", @adv_payment.id %>
+          <%= render "shared/form_error", :object=>@adv_payment %>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label>Vendor Name</label>
+            </div>
+            <div class="cols-lg-10"><%= @adv_payment.to_account_name %></div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label>Unallocated Amount</label>
+            </div>
+            <div class="cols-lg-10"><%= format_currency @adv_payment.unallocated_amount %></div>
+          </div>
+          <div class="line line-dashed m-t-large"></div>
+          <div class='form-group'>
+            <div class="col-lg-12">
+              <h4>Showing unpaid purchases for the selected vendor:</h4>
+            </div>
+            <div class="col-lg-12" id='purchaseDetails'>
+              <%= render "unpaid_purchases" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">                      
+            <%= f.submit "Save", :class=>"btn btn-success" %>
+              <%= link_to 'Cancel', gstr_advance_payments_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>

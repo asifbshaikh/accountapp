@@ -1,0 +1,22 @@
+  <tr>
+    <td class="title">
+    	<%= link_to truncate(account.name, :length => 25),account_path(account)%>
+    </td>
+    <td><%= link_to account.account_head.name, account_head_path(account.account_head.id) %></td>
+    <td><%= account.account_head.root.name %></td>
+    <td><%= account.created_by_user %></td>
+    <td>
+    <div class="btn-group" >
+      <button class="btn btn-white btn-sm" onclick="location.href='/accounts/<%= account.id %>'"; >View</button>
+      <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="<%= edit_account_path(account) %>">Edit</a></li>
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/accounts/<%= account.id%>" >Delete</a></li>
+         
+      </ul>
+  </div>
+    </td>
+  </tr>

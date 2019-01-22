@@ -1,0 +1,37 @@
+<%= form_for(@gstr1_summary) do |f| %>
+  <% if @gstr1_summary.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gstr1_summary.errors.count, "error") %> prohibited this gstr1_summary from being saved:</h2>
+
+      <ul>
+      <% @gstr1_summary.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_id %><br />
+    <%= f.number_field :company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :gstr_one_id %><br />
+    <%= f.number_field :gstr_one_id %>
+  </div>
+  <div class="field">
+    <%= f.label :summary_type %><br />
+    <%= f.text_field :summary_type %>
+  </div>
+  <div class="field">
+    <%= f.label :return_period %><br />
+    <%= f.text_field :return_period %>
+  </div>
+  <div class="field">
+    <%= f.label :chksum %><br />
+    <%= f.text_field :chksum %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

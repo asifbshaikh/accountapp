@@ -1,0 +1,10 @@
+ <% 
+ tax_account = tax_line_item_details.account
+ if !(tax_account.accountable_type=='DutiesAndTaxesAccounts' && tax_account.accountable.calculation_method==4 && tax_account.accountable.split_tax == 0) 
+ %>
+<tr valign="top">
+	<td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+	<td class="text-right" style="background:none;"><%= tax_line_item_details.account.name.chomp('on sales') %></td>
+  <td class="text-right" style="background:none;"><%= format_amount tax_line_item_details.get_invoiced_tax_amount%></td>
+</tr>
+<% end %>

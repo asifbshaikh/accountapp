@@ -1,0 +1,73 @@
+<!-- Page title -->
+<div id="pagetitle">
+    <div class="wrapper">
+        <h1>Timesheets &rarr; <span>Manage Tasks</span></h1>
+        <!-- Quick search box -->
+    </div>
+</div>
+<!-- End of Page title --><!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width6 first">
+            <br/>
+            <div id="tabs" class ="highlight">
+                <div id="tab4">
+                    <ul id="tabnav">
+                        <li class="tab1">
+                            <a href="/tasks">All</a>
+                        </li>
+                        <li class="tab2">
+                            <a href="/tasks/today">Today's</a>
+                        </li>
+                        <li class="tab3">
+                            <a href="/tasks/this_week">This Week</a>
+                        </li>
+                        <li class="tab4">
+                            <a href="/tasks/this_month">This Month</a>
+                        </li>
+                        <li class="tab5">
+                            <a href="/tasks/closed">Completed</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div id = "task_container">
+		 <% if @tasks.blank?%>
+		  <%= render :partial => "shared/no_record" %>
+		 <% else %>  
+		      <div class="box box-info">
+		        You have <b><%= @tasks.count %></b> tasks pending this month. Click on the task for details.
+			</div>
+		  <table class="display stylized" id="example">
+			<thead>
+			    <%= render :partial => "header" %>
+			</thead>
+			<tbody>
+			    <%= render :partial => "task", :collection => @tasks %>
+			</tbody>
+			<tfoot>
+			    <%= render :partial => "footer" %>
+			</tfoot>
+		    </table>
+		    <div id ="pagin">
+		       <%= paginate @tasks %>
+		    </div>
+			<% end %>	
+		</div>
+                <div class="clear">
+                    &nbsp;
+                </div>
+            </div><br/>
+        </section>
+        <!-- End of Left column/section --><!-- Right column/section -->
+        <aside class="column width2">
+             <%= render :partial => "task_form"%>
+        </aside>
+        <!-- End of Right column/section -->
+    </div>
+    <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

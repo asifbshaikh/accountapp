@@ -1,0 +1,7 @@
+<tr>
+    <td><%= link_to User.find(employee_goal.for_employee).first_name, employee_goal %></td>
+    <td><%= employee_goal.from_date.strftime("%d-%m-%Y") %></td>
+    <td><%= employee_goal.to_date.strftime("%d-%m-%Y") %></td>
+    <td><%= MasterObjective.find(employee_goal.goals).objective_name %></td>
+    <td><%= link_to 'Delete', employee_goal, :confirm => 'Are you sure?', :method => :delete,:class => "btn btn-gray" %></td>
+  </tr>

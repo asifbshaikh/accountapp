@@ -1,0 +1,27 @@
+<h1>Listing myfiles</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>User</th>
+    <th>Folder</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @myfiles.each do |myfile| %>
+  <tr>
+    <td><%= myfile.company_id %></td>
+    <td><%= myfile.user_id %></td>
+    <td><%= myfile.folder_id %></td>
+    <td><%= link_to 'Show', myfile %></td>
+    <td><%= link_to 'Edit', edit_myfile_path(myfile) %></td>
+    <td><%= link_to 'Destroy', myfile, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Myfile', new_myfile_path %>

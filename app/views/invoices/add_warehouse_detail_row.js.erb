@@ -1,0 +1,3 @@
+$("#row-loader").remove();
+$("#warehouse-detail-row-link-<%=params[:index]%>").before("<%= escape_javascript render 'sales_warehouse_details', :sales_warehouse_detail=>@sales_warehouse_detail, :index=>params[:index], :swd_index=>params[:swd_index] %>");
+$("#warehouse-detail-row-link-<%=params[:index]%>").replaceWith("<%= escape_javascript render 'add_warehouse_detail_link', :index=>params[:index], :swd_index=>params[:swd_index].to_i %>")

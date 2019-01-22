@@ -1,0 +1,74 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Leads</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <div class="btn-group" >
+          <button class="btn btn-success btn-lg"  onclick="location.href= '<%= new_admin_lead_path%>'";><i class="icon-plus"></i>Add New Record</button>
+        </div>
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a> 
+        <a href="<%= url_for(:format => 'xls') %> " class="btn btn-lg btn-white"  target = "_blank">
+          <%= image_tag "excel_icon.gif" ,:alt=>"Export to Excel", :title=>"Export to Excel" ,:class => "icon"%></a>
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial => "filter" %>
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-left">
+              <li class="active"><a href="#all_leads" data-toggle="tab"><i class="icon-share icon-large text-default"></i>All</a></li>
+              <li><a href="#unassigned_leads" data-toggle="tab"><i class="icon-user icon-large text-default"></i>Open</a></li>
+              <li><a href="#assigned_to_me" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>My leads</a></li>
+              <li><a href="#interested_leads" data-toggle="tab"><i class="icon-user icon-large text-default"></i>Interested</a></li>
+              <li><a href="#won_leads" data-toggle="tab"><i class="icon-user icon-large text-default"></i>Won Leads</a></li>
+              <li><a href="#lost_leads" data-toggle="tab"><i class="icon-user icon-large text-default"></i>Lost leads</a></li>
+              <li><a href="#junk_leads" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Junk leads</a></li>
+            </ul>
+          </header>
+          <div class="panel-body">
+            <%= render :partial => "shared/flash_msg" %>    
+            <div class="tab-content">
+              <div class="tab-pane active" id="all_leads">
+                <div class="table-responsive row">
+                  <table class="table table-striped b-t text-small" id="leads" data-source="<%= admin_leads_url(:format => 'json', :tab_ref => "all_leads") %>">
+                    <thead>
+                      <%= render :partial => "lead_header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot class="hidden">
+                      <%= render :partial => "lead_header" %> 
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="assigned_to_me">
+                <%= render :partial => "admin/leads/my_leads" %>
+              </div>
+              <div class="tab-pane" id="interested_leads">
+                <%= render :partial => "admin/leads/interested_leads" %>  
+              </div>
+              <div class="tab-pane" id="unassigned_leads">
+                <%= render :partial => "admin/leads/unassigned_leads" %>
+              </div>
+              <div class="tab-pane" id="lost_leads">
+                <%= render :partial => "admin/leads/lost_leads" %>
+              </div>
+              <div class="tab-pane" id="won_leads">
+                <%= render :partial => "admin/leads/won_leads" %>
+              </div>
+              <div class="tab-pane" id="junk_leads">
+                <%= render :partial => "admin/leads/junk_leads" %>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>    
+    </div>
+  </section>
+</section>

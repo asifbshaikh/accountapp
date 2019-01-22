@@ -1,0 +1,26 @@
+<% if !@custom_field.blank? %>
+<% if !@custom_field.custom_label1.blank? %>	
+<tr>
+	<td>
+		<%= f.label :custom_field1, "#{@custom_field.custom_label1}"%><br/>
+       <%= f.text_field :custom_field1_equals, :size => 14%>
+	</td>
+</tr>	
+<% end %>	
+<% if !@custom_field.custom_label2.blank? %>	
+<tr>
+	<td>
+		<%= f.label :custom_field2, "#{@custom_field.custom_label2}"%><br/>
+       <%= f.text_field :custom_field2_equals, :size => 14%>
+	</td>
+</tr>
+<% end %>	
+<% if !@custom_field.custom_label3.blank? %>	
+<tr>
+	<td>
+		<%= f.label :custom_field3, "#{@custom_field.custom_label3}"%><br/>
+       <%= f.text_field :custom_field3_equals, :size => 14%>
+	</td>
+</tr>
+<% end %>	
+<% end %>

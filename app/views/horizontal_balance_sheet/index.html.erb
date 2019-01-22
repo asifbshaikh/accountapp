@@ -1,0 +1,286 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Balance Sheet</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        <%= link_to_pdf params %>
+        <%= link_to_xls params %>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "filter" %>
+            <% if false %>
+              <br />
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+              <%= render :partial => "header" %><br />
+              <div class="table-responsive row">
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th colspan="2">Liabilities</th>
+                      <th class="text-right">as at <%= @balance_sheet.balance_sheet_date %></th>
+                      <th colspan="2">Assets</th>
+                      <th class="text-right">as at <%= @balance_sheet.balance_sheet_date %></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <b><%= link_to "Capital Account", "/trial_balance/group_summary_report?transaction_type=CapitalAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.capital_account_balance)%></b></td>
+                      <td>
+                        <b><%= link_to "Fixed Assets", "/trial_balance/group_summary_report?transaction_type=FixedAsset&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.fixed_asset_account_balance) %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><b>Reserves And Surplus</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_reserves_and_surplus) %></b>
+                      </td>
+                      <td>
+                        <b><%= link_to "Investments", "/trial_balance/group_summary_report?transaction_type=InvestmentAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency @balance_sheet.investment_account_balance %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <%= link_to "Reserves And Surplus", "/trial_balance/group_summary_report?transaction_type=ReservesAndSurplusAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %>
+                      </td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.reserves_and_surplus_account_balance) %>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <% if (@balance_sheet.profit_and_loss) >= 0 %>
+                      <tr>
+                        <td><b>Profit and Loss Account</b></td>
+                        <td></td>
+                        <td class="text-right"><b><%= format_currency(@balance_sheet.profit_and_loss) %></b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Opening Balance</td>
+                        <td class="text-right"><%= format_currency @balance_sheet.opening_profit_loss %></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <a href='/horizontal_profit_and_loss/index'>Current Period</a>
+                        </td>
+                        <td class="text-right"><%= format_currency @balance_sheet.current_profit_loss %></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    <% end %>
+                    <tr>
+                      <td><b><%= link_to "Loan Accounts", "/trial_balance/group_summary_report?transaction_type=LoanAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.loan_account_balance) %></b>
+                      </td>
+                      <td><b>Current Assets</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_current_assets) %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><b><%= link_to "Secured Loan Accounts", "/trial_balance/group_summary_report?transaction_type=SecuredLoanAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.secured_loan_account_balance) %></b>
+                      </td>
+                      <td><%= link_to "Bank Accounts", "/trial_balance/group_summary_report?transaction_type=BankAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}" , :target => "_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.bank_account_balance) %>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b><%= link_to "Unsecured Loan Accounts", "/trial_balance/group_summary_report?transaction_type=UnsecuredLoanAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.unsecured_loan_account_balance) %></b>
+                      </td>
+                      <td><%= link_to "Cash Accounts", "/trial_balance/group_summary_report?transaction_type=CashAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}" , :target => "_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.cash_account_balance)  %>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b>Current Liabilities</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_current_liability) %></b>
+                      </td>
+                      <td><%= link_to "Customers (Debtors)", "/trial_balance/group_summary_report?transaction_type=SundryDebtor&end_date=#{@end_date}&start_date=#{params[:start_date]}" , :target => "_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.sundry_debtor_account_balance) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td><%= link_to "Vendors (Creditors)", "/trial_balance/group_summary_report?transaction_type=SundryCreditor&end_date=#{@end_date}&start_date=#{params[:start_date]}" , :target => "_blank" %></td>
+                      <td class="text-right" >
+                        <%= format_currency(@balance_sheet.sundry_creditor_account_balance) %>
+                      </td><td></td>
+                      <td><%= link_to "Deposit", "/trial_balance/group_summary_report?transaction_type=DepositAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}" , :target => "_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.deposit_account_balance)  %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td><%= link_to "Duties and Taxes", "/trial_balance/group_summary_report?transaction_type=DutiesAndTaxesAccounts&end_date=#{@end_date}&start_date=#{params[:start_date]}", :target=>"_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.duties_and_taxes_account_balance)%>
+                      </td><td></td>
+                      <td><%= link_to "Loans and Advances", "/trial_balance/group_summary_report?transaction_type=LoansAdvancesAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}", :target=>"_blank" %></td>
+                      <td class='text-right'>
+                        <%= format_currency(@balance_sheet.loan_and_advance_account_balance) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td><%= link_to "Provisions", "/trial_balance/group_summary_report?transaction_type=ProvisionAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}", :target=>"_blank" %></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.provision_account_balance) %>
+                      </td><td></td>
+                      <td>Closing Stock</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.inventory_valuation) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td><%= link_to "Other Current Liability", "/trial_balance/group_summary_report?transaction_type=CurrentLiability&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank"%></td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.current_liabilities_account_balance) %>
+                      </td><td></td>
+                      <td>Other Current Assets</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.total_other_current_assets) %>
+                      </td><td></td>
+                    </tr>
+
+
+                    <% if @balance_sheet.suspense_account_balance < 0 %>
+                      <tr>
+                        <td><b><%= link_to "Suspense Account", "/trial_balance/group_summary_report?transaction_type=SuspenseAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.suspense_account_balance) %></b>
+                        </td>
+                        <td></td><td></td><td></td>
+                      </tr>
+                    <% elsif @balance_sheet.suspense_account_balance >= 0%>
+                      <tr>
+                        <td></td><td></td><td></td>
+                        <td><b><%= link_to "Suspense Account", "/trial_balance/group_summary_report?transaction_type=SuspenseAccount&end_date=#{@end_date}&start_date=#{params[:start_date]}",:target=>"_blank" %></b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.suspense_account_balance) %></b>
+                        </td>
+                      </tr>
+                    <% end %>
+
+                    <% if (@balance_sheet.profit_and_loss) < 0 %>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Profit and Loss Account</b></td>
+                        <td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.profit_and_loss.abs) %></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Opening Balance</td>
+                        <td class="text-right"><%= format_currency @balance_sheet.opening_profit_loss.abs %></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <a href='/horizontal_profit_and_loss/index'>Current Period</a>
+                        </td>
+                        <td class="text-right"><%= format_currency @balance_sheet.current_profit_loss %></td><td></td>
+                      </tr>
+                    <% end %>
+                    <% if @balance_sheet.deferred_tax_account_balance >= 0 %>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Deferred Tax Asset</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.deferred_tax_account_balance) %></b>
+                        </td>
+                      </tr>
+                    <% elsif @balance_sheet.deferred_tax_account_balance < 0 %>
+                      <tr>
+                        <td><b>Deferred Tax Asset</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.deferred_tax_account_balance.abs) %></b>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    <%end%>
+                    <tr>
+                      <td><b>Difference in opening balance</b></td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_opening_balance) %></b>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="2"><b>Total</b></td>
+                      <td class="text-right"><b><%= format_currency(@balance_sheet.total_liabilities) %></b></td>
+                      <td colspan="2"><b>Total</b></td>
+                      <td class="text-right"><b><%= format_currency(@balance_sheet.total_assets) %></b></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <footer class="row">
+                <%= render "shared/report_footer"%>
+              </footer>
+            </div>
+          </section>
+        <!-- Table ends -->
+        <%end%>
+      </div>
+    </div>
+  </section>
+</section>

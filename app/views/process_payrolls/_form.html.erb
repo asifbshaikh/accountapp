@@ -1,0 +1,40 @@
+<%= form_for(@process_payroll) do |f| %>
+ <%= render 'shared/form_error', :object => @process_payroll %>
+
+ <table class = "display stylized full"> 
+   <thead> 
+     
+         <td colspan = 4>
+           <%= f.label "For Month:" %>
+           <%= ProcessPayroll.get_month(params[:month]) %>
+          <%= hidden_field_tag "process_payroll[month]", params[:month]%>
+        </td>
+      </tr>
+      <tr>
+        <th><%= f.label "Users/Employees" %></th>
+        <th><%= f.label :attendance %></th>
+      </tr>
+   </thead> 
+   <tbody>
+     <%@users.each do |user|%>
+     <tr>
+       <td>
+         <%= user.full_name %>
+         <%= hidden_field_tag "process_payroll[user_id][]", user.id %>
+       </td>
+       <td>
+        <%= text_field_tag "process_payroll[attendance][]", 30, :size => "7" %>
+       </td>
+     </tr>
+     <% end %>
+   </tbody>
+   <tfoot>
+    <tr>
+     <td colspan = 4>
+        <%= f.submit "Save & continue", :class => "btn btn-green btn-save"%>&nbsp;
+        <a href="/process_payrolls/month_view" class="btn btn-cancel">Cancel</a>
+     </td>
+    </tr>
+   <tfoot>
+  </table>
+<% end %>

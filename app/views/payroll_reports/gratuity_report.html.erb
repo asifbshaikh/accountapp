@@ -1,0 +1,88 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+            &nbsp;&nbsp;
+            <% if @user_depts.blank? %>
+                   <%= render :partial => "shared/no_record" %>
+           <% else %>
+            
+            	<p align="right">
+			      <a href="/payroll_reports/gratuity_report.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	  <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+            <div class='highlight'>
+                <div id='report_header' align='center'>
+                    <span class='company_name'><%= @company.name %></span>
+                    <br>
+                    <span class='report_title'>
+                        <u>
+                           Gratuity Summery
+                        </u>
+                    </span><br>
+                    For all Employee<br>
+                    As on 31-mar-2011
+                </div>
+                <hr>
+                <br>
+                
+                <table class = "zebra-sriped" border = 0 align = center width=100%>
+                    <thead>
+                    <tr>
+                        <th class='width3'>
+                            <span class='char_spacing'>Particulars</span>
+                        </th>
+                        <th>
+                            Date of Joining
+                        </th>
+                        <th>
+                            Date of Leaving
+                        </th>
+                        <th>
+                            Gratuity Eligible Salary
+                        </th>
+                        <th>
+                            Gratuity Amount
+                        </th>
+                        
+                    </tr>
+                    </head>
+                    <tbody>
+                        <% for dept in @departments %>
+                        	<% @user_dept = User.find_all_by_department_id(dept.id) %>
+                        	<% if @user_dept.count > 0%>
+	                        	<tr><td><b><%= dept.name %></b></td><td></td><td></td><td></td><td></td></tr>
+	                        	<% for user_dept in @user_dept%>
+	                        		<tr>
+	                        		<td class='par textindent1'>  <%= user_dept.first_name  %> <%= user_dept.last_name %></td><td>
+	                        			<% if UserSalaryDetail.find_by_user_id(user_dept.id).date_of_joining %>
+	                        				<%= UserSalaryDetail.find_by_user_id(user_dept.id).date_of_joining %>
+	                        			<% else %>
+	                        				<span class = 'light'><i>Not available</i></span>
+	                        			<% end %>	
+	                        		</td><td></td><td></td><td></td></tr>
+	                        	<% end %>
+                        	<% end %>
+                        <% end %>
+                        <tbody>
+                        <tfoot>
+                            <tr><td></td><td></td><td></td><td><hr><b>Grant Total</b><hr></td><td><hr><b>12345</b><hr></td></tr>
+                        </tfoot>
+                        </table>
+                        
+                        <hr>
+                        <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+                       
+                    </div>
+                     <% end %>
+                </section>
+                &nbsp;
+                <!-- End of Left column/section -->
+                <!-- End of Left column/section -->
+            </div>
+            <!-- End of Wrapper -->
+            </div>

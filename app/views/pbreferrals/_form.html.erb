@@ -1,0 +1,30 @@
+<%= form_for @pbreferral,:html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @pbreferral %>
+<div class="col-sm-8">
+<!--section class="panel">
+  <div class="panel-body"-->
+  <h4>Invite your friend & get 3 months extension to your subscription!</h4>
+  <small>Your friend will get a coupon worth 1 month of free susbscription. When he/she subscribes to any of the ProfitBooks plans, we will reward you with 3 months of extension. Good part is, there is no limit to free extension you can earn. </small>
+    <p>
+     <%= text_field_tag "referral_emails",nil,:class=>"bg-focus form-control", :placeholder=>"Type comma separated email address to send invitation to multiple friends" %>
+    </p>
+    
+  <button class="btn btn-sm btn-success" type='submit'  data-loading-text="Processing...">
+  Send Invitation</button>
+
+  <!--/div>
+</section-->
+</div>
+<div class="col-sm-4">
+<section class="panel text-center">
+  <div class="panel-body bg-lighter">
+      <div class="h4 text-success">Your subscription extended so far</div>
+      <div class="line m-l m-r"></div>
+      <h4 class="text-info">
+      <strong><%= @current_user.earnings.blank? ? 0 : @current_user.earnings %> </strong>
+      Months
+      </h4>
+  </div>
+</section>
+</div>
+<% end %>

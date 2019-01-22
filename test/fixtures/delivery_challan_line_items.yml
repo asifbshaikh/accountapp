@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  delivery_challan_id: 1
+  product_id: 1
+  quantity: 9.99
+  description: MyText
+
+two:
+  delivery_challan_id: 1
+  product_id: 1
+  quantity: 9.99
+  description: MyText

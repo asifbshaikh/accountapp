@@ -1,0 +1,35 @@
+<table class="table table-striped b-t" id="line_items">
+  <thead>
+    <tr>
+      <th>Account</th>
+      <th>Debit</th>
+      <th>Credit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>For Employee: <strong><%= user.full_name%></strong></td>
+      </tr> 
+      <% @payroll_accounts_details.each do |payhead_detail| %>   
+        <tr>
+          <% if payhead_detail.user_id == user.id %>
+            <td><%= Payhead.find(payhead_detail.payhead_id).payhead_name%></td>
+            <td><%= format_currency(payhead_detail.amount) %></td>
+            <td>-</td>
+          <% end %>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= Account.find(@payroll_execution_job.account_id).name %></td>
+        <td>-</td>
+        <td><%= format_currency(@payroll_accounts_details.where(:user_id => user.id).sum(:amount)) %></td>
+      </tr>
+    <% end %>
+    <tr>
+    <td></td>
+    <td><strong><%= format_currency(@payroll_accounts_details.sum(:amount)) %></strong></td>
+    <td><strong><%= format_currency(@payroll_accounts_details.sum(:amount)) %></strong></td>
+    </tr>
+  </tbody>
+</table>

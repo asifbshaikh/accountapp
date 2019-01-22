@@ -1,0 +1,18 @@
+ 
+<%= a.fields_for :payment_detail do |t| %> 
+  <div class='form-group'>
+<div class='col-lg-2 text-right'><p></p><strong><span class="badge bg-primary">Internet Banking Payment</span></strong></div>
+    <div class='col-lg-2'>
+	    <%= t.label :bank_name, :class=>'control-label' %>
+	    <%= t.text_field :bank_name, :class=>"form-control bg-focus" %>
+    </div>
+    <div class='col-lg-2'>
+  	  <%= t.label :Payment_date, :class => "control-label-required" %>
+  	  <%= t.text_field :payment_date, :class=>"form-control bg-focus" %>
+    </div>
+  	<div class='col-lg-2'>
+ 	    <%= t.label :transaction_reference, :class=>'control-label' %>
+ 	    <%= t.text_field :transaction_reference, :class=>"form-control bg-focus" %>
+    </div>
+  </div>
+<% end %>

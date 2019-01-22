@@ -1,0 +1,69 @@
+  <section id="content">
+    <section class="main padder">
+    <div class="row">
+       <div class="col-lg-3">
+        <h2><i class="icon-group text"></i> Manage Payroll</h2>
+        </div>
+      <div class="col-lg-9 m-t-large" align="right">
+      <a href="/payroll_details/index" class="btn btn-white btn-lg"><i class="icon-reply"> </i> Go back</a>
+      <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+      <p></p>
+    </div>
+    </div>
+    <%= render :partial=>"acc_auto_complete" %>
+    <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial => "shared/flash_msg"%>
+          <%= form_tag :action=> "process_payroll" do  %>
+              <h4>Running payroll for <%= Attendance.get_month(params[:month])%> <%= (params[:month].to_i < @financial_year.start_date.month ? @financial_year.end_date.year : @financial_year.start_date.year) %></h4>
+              <div class="wizard clearfix">
+              <ul class="steps">
+                <li data-target="#step1" ><span class="badge">1</span>Enter Attendance &amp; Variable Pay</li>
+                <li data-target="#step2" class="active"><span class="badge  badge-info">2</span>Review Information</li>
+                <li data-target="#step3"><span class="badge">3</span>Result</li>
+              </ul>
+            </div>
+            <p></p>
+            <div class="row">
+              <div class="col-lg-2 text-right"><label class="control-label">Account to pay from: </label></div>
+              <div class="col-lg-3">
+                <% if @accounts.blank? %>
+                  <div class ="box box-info">Please <a href="/accounts/new">create</a> an account for payroll processing</div>
+                <% else %>
+                  <input type="text" name="account_name" size ="14" placeholder = "Type a letter to search" id="p_acc" class="bg-focus form-control" value='<%= (
+                  !@payroll_execution_job.blank? && !@payroll_execution_job.account_id.blank?)? "#{@company.accounts.find(@payroll_execution_job.account_id).name}" : "" %>' />
+                  <span id="to_acc_bal"></span>
+                <% end %>
+              </div>
+                <div class="col-lg-2 text-right">
+                <label class="control-label">Payroll Schedule Date</label>
+                </div>
+                <div class="col-lg-2">
+                <input type="text" name="execution_date" size ="14" class="bg-focus form-control" id = "payroll_execution_job_execution_date"
+                value='<%= params[:execution_date].blank? ? Time.zone.now.to_date : params[:execution_date]  %>' />
+                </div>
+            </div>
+
+                <div class="col-lg-12">
+                  <%= render "attendances/attendance_details"%>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-9 col-lg-offset-3">
+                  <% if @payroll_detail.status == 0 && %>
+                    <%= hidden_field_tag "month", @month %>
+                    <%= hidden_field_tag "company_id", @company.id %>
+                    <%= submit_tag 'Process payroll', :class=>"btn btn-success" %>&nbsp;
+                  <% end %>
+                  <a href="/payroll_details/index" class="btn btn-white">Back</a>
+                  </div>
+               </div>
+               <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </section>

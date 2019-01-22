@@ -1,0 +1,107 @@
+<% if @salary_structure.blank? %>
+   <div class="text-center">
+    <h6><i class="icon-info-sign icon-large"></i> 
+    <strong>
+        Salary structure not defined for this month. <%= link_to "Define Now", "/salary_structures/new?user_id=#{@user.id}", :class=>"btn btn-default"%>
+    </strong>
+  </h6>
+  </div> 
+ <% else %>
+<div class="row">
+ <div class="col-sm-12"><br/>
+<div class="col-lg-6">
+<div class="row">
+  <div class="col-xs-12">
+  <section class="panel text-center">
+      <div class="panel-body">
+       <p><strong>Effective From Date: </strong><%=@salary_structure.effective_from_date %></p>
+        <div class="line m-l m-r"></div>
+        <p><i class="icon-calendar"> </i> Created on <%= @salary_structure.created_at.to_date %> by <%= User.find(@salary_structure.created_by).full_name %></p>
+        <% if !@users_salary.blank?%>
+          <a href=<%= "/salary_slip/detail?user_id=#{@user.id}&month=#{@users_salary.first.month.strftime("%Y-%m")}"%>  target="_blank" class="btn btn-info btn-sm"><i class="icon-edit"></i>View Salary Slip</a>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+</div>
+<div class="col-sm-6">
+     <section class="panel">
+      <header class="panel-heading">
+       <strong>Salary Structure History</strong>
+      </header>
+      <div class="panel-body">
+       <% if @salary_structure_histories.blank? %>
+        <%= render :partial => "shared/no_record"%>
+       <% else %>
+       <div class="table-responsive row">
+       <table class="table table-striped m-b-none text-small">
+        <tbody>
+          <%= render :partial=>"/salary_structure_histories/salary_structure_history", :collection=>@salary_structure_histories%>
+        </tbody>
+      </table>
+       </div>
+       <a href=<%= "/salary_structure_histories?user_id=#{@user.id}"%> class="btn btn-info btn-sm">View More</a>
+       <% end %>
+      </div>
+     </section>
+    </div>
+</div>
+</div>
+<div class="line line-dashed m-t-large"></div>
+  <div class="col-sm-12">
+ <div class="sal_stru">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Current Salary Structure</strong><span class="pull-right"><a href="#" id='sal_stru_edit' title="Edit salary Structure" class="btn btn-white btn-sm"><i class="icon-edit"></i></a></span>
+  </header>
+  <div class="">
+    
+     <table class="table table-striped m-b-none text-small ">
+   <thead>
+     <tr>
+       <th>Payhead</th>
+       <th>Payhead type</th>
+       <th class="text-right">Amount</th>
+     </tr>
+   </thead>
+   <tbody>
+     <% for salary_structure_line_item in @salary_structure.salary_structure_line_items %>
+      <% if salary_structure_line_item.amount > 0 %>
+     <tr>
+       <td>
+        <%= salary_structure_line_item.payhead.payhead_name %>
+       </td>
+       <td>
+         <%= salary_structure_line_item.payhead.payhead_type %>
+       </td>
+       <td class="text-right">
+        <%= format_currency salary_structure_line_item.amount %>
+       </td>
+     </tr>
+     <% end %>
+     <% end %>
+     <tr>
+       <td colspan="2" class="text-right"><strong>Total</strong></td>
+       <td class="text-right"><strong><%= format_currency (@salary_structure.total_amount) %></strong></td>
+     </tr>
+   </tbody>
+  </table>
+  </div>
+ </section>
+ </div>
+ <div class="edit_sal_stru">
+   <section class="panel">
+  <header class="panel-heading">
+   <strong>Edit Salary Structure</strong><span class="pull-right"><a href="#" title="Back" id ="back_stru" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/salary_structures/edit_form" %>
+  </div>
+ </section>
+ </div>
+</div>
+  <% end %>
+
+ 
+  

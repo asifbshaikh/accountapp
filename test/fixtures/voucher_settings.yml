@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  voucher_number_strategy: 1
+  prefix: MyString
+  suffix: MyString
+  voucher_type: 1
+
+two:
+  company_id: 1
+  voucher_number_strategy: 1
+  prefix: MyString
+  suffix: MyString
+  voucher_type: 1

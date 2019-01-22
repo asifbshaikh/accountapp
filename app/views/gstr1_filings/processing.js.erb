@@ -1,0 +1,13 @@
+<% if  @gstr_one.processing? %>
+  setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/gstr1_filings/processing?id=<%= @gstr_one.id %>"
+    });
+  }, 5000);
+<% else %>
+	setTimeout(function(){
+    $( ".loader" ).val("<strong> The GSTR-1 upload is complete. Redirecting you......</strong>");
+    window.location.href = "/gstr1_filings/<%= @gstr_one.id %>";
+  }, 3000);
+<% end %>

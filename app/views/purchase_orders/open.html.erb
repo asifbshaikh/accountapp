@@ -1,0 +1,97 @@
+  <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for purchase_order in @purchase_orders
+      @data<<purchase_order.purchase_order_number
+      @data<<purchase_order.record_date
+        @data<<purchase_order.purchase_order_line_items.sum(:amount)
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+ <!-- Page title -->
+  <div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Expenses &rarr;<span>Purchase Orders</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/purchase_orders/open" do |f| %>
+    <%=f.text_field :purchase_order_number_or_record_date_or_purchase_order_line_items_amount_equals , :id =>"autocomplete", :placeholder =>"search" %>
+    <%end%>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">
+     <!--  <p>Feeling lost? Do an <a href="estimate_advsearch.html" class="nyroModal">Advanced Search</a></p> -->
+      <div class="highlight">      
+        <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/purchase_orders">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/purchase_orders/open">Open</a>
+                    </li>
+                    <li class="tab3">
+                        <a href="/purchase_orders/closed">Closed</a>
+                    </li>
+                    <li class="tab4">
+                  <a href="/purchase_orders/deleted_purchase_order">Deleted</a>
+              </li>
+                    
+                </ul>
+            </div>
+        <div id="task_container">
+        <div id="tabs-all">
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <% if @purchase_orders.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+           <% else %>
+          <table class="display stylized" id="example">
+            <thead>
+              <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+                <%= render :partial => "purchase_order_details", :collection => @purchase_orders %>
+            </tbody>
+            <tfoot>
+               <%= render :partial => "footer" %>
+            </tfoot>
+          </table>
+          <% end %>
+          <div class="clear">&nbsp;</div>
+        </div>
+       </div> 
+     </div>
+    </section>
+    <!-- End of Left column/section -->
+  </div>
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <p class="leading"><a href="/purchase_orders/new" class="btn btn-special btn-green"><img SRC="images/add.png" class="icon" alt=""/>New Purchase Order</a></p>
+    <!-- <p class="leading"><a href="/purchases" class="btn btn-special btn-gray"><img SRC="images/add.png" class="icon" alt=""/>Create from Old Purchses</a></p> -->
+   <div id="rightmenu">
+            <dl class="first">
+              <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+              <dd><a href="/helps/6" class="nyroModal">Help</a></dd>
+              <dd class="last">If you are a new user, you should read "Getting started"</dd>              
+            </dl>
+     </div><br/>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

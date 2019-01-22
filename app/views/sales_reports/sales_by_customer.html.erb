@@ -1,0 +1,42 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+   <section class="column width6 first"><br/>
+      <div class='highlight'>
+       <%= render :partial => "header" %><br />
+           <table class = "zebra-sriped" border = 0 align = center width=100%>
+              <thead>
+                <tr>
+                  <th>Customer name</th> 
+                  <th>Invoice count</th>
+                  <th>Sales</th>
+                  <th>Saled with tax</th>
+                </tr>
+              </thead>
+              <tbody>
+            		   <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   </tr>                 	
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+           </table><hr>
+           <%= render :partial => "shared/report_footer" %>
+        
+       </div><br/>
+     </section>
+        <!-- End of Left column/section -->
+    </div>
+    <!-- End of Wrapper -->
+</div>

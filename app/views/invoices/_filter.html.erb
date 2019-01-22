@@ -1,0 +1,34 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Invoice Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="invoice-filter">
+      <tbody>
+        <tr>
+          <td><label>Invoice no</label></td>
+          <td id="invoiceno"></td>
+          <td ><label><%= @company.label.customer_label%></label></td>
+          <td id="customer" data-customer="<%= Account.company_contacts(@company.id) %>"></td>
+           <td><label>Create Date</label></td>
+          <td id="createDate"></td>
+        
+        </tr>
+        <tr>
+          <td><label>Status</label></td>
+          <td id="status"></td>
+          <td><label>Project</label></td>
+          <td id="project" class='purchase_project' data-projects="<%= Project.company_projects(@company.id) %>"></td>
+           <td><label>Due Date</label></td>
+          <td id="dueDate"></td>
+        </tr>
+
+           <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><label>Amount</label></td>
+          <td id= "amount"> 
+          </td>
+        </tr>
+          </tbody>
+    </table>
+</div>

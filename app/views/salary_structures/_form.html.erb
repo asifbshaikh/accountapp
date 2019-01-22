@@ -1,0 +1,74 @@
+<%= render :partial=>"/salary_structures/auto_calculate"%>
+<%= form_for @salary_structure, :html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @salary_structure %>
+<%= hidden_field_tag 'total_paid', params[:total_paid].blank? ? 0 : params[:total_paid] %>
+
+<%= hidden_field_tag "user_id", params[:user_id] %>
+<%= hidden_field_tag "salary_structure[for_employee]", @salary_structure.for_employee %>
+    <div class="row">
+     <div class="col-lg-7"></div>
+       <div class="col-lg-2">
+        <label class="control-label-required">Effective from date</label>
+       </div>
+       <div class="col-lg-3">
+        <%= f.text_field :effective_from_date , :class=>"form-control" %>
+        </div>
+    </div>
+    <div class="row"><br/>
+       <table class="table table-striped b-t" id="salary_structure_line_items" style="">
+          <thead>
+             <tr>
+               <th><label class="control-label-required">Pay Head</label></th>
+               <th><label class="control-label">Payhead Type</label></th>
+               <th class="text-center"><label class="control-label-required">Amount</label></th>
+               <th></th>
+              </tr>
+          </thead>
+         <tbody>
+         <% index = 0 %>
+          <% @salary_structure.salary_structure_line_items.each do |line_item| %>
+            <tr id="row<%= index %>">
+              <td><strong><%= line_item.payhead.payhead_name%></strong>
+              <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][payhead_id]", line_item.payhead.id %>
+              <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][id]", line_item.id %>
+              <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][_destroy]" %>
+              </td>
+              <td><strong><%= line_item.payhead.payhead_type %></strong></td>
+              <td class="text-right">
+              <%= text_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][amount]", line_item.amount ,:class=>"form-control text-right",:id => 'amount', :onkeydown => "return numbersOnly(event);", :maxlength => 10, :style=>"width:50%; float:right;", :"data-payhead_type"=> line_item.payhead.payhead_type %>
+              </td>
+              <td><%= link_to "<i class='icon-remove'></i>".html_safe, {:action => :remove_line_item, :index => index, :line_item_id => line_item.id}, :class => "btn btn-danger btn-sm", :id => 'cancel', :remote => true %></td>
+            </tr>
+            <% index += 1%>
+          <% end %>
+          <% @payheads.each  do |payhead|%>
+            <tr>
+              <td><strong><%= payhead.payhead_name%></strong>
+              <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][payhead_id]", payhead.id %>
+              </td>
+              <td><strong><%= payhead.payhead_type %></strong></td>
+              <td class="text-right">
+              <%= text_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][amount]", 0.0,:class=>"form-control text-right",:id => 'amount', :onkeydown => "return numbersOnly(event);", :maxlength => 10, :style=>"width:50%; float:right;", :"data-payhead_type"=> payhead.payhead_type %>
+              </td>
+            </tr>
+            <% index += 1%>
+          <% end %>
+           <tr>
+              <td></td>
+              <td class="text-right"><strong>Total</strong></td>
+              <td class="text-right">
+                <strong><%= @company.currency_code%> <span id = "total">00.00</span></strong>
+             </td>
+             <td></td>
+            </tr>
+         </tbody>
+         </table>
+      </div>
+     
+  <div class="form-group">
+        <div class="col-lg-7 col-lg-offset-5">                      
+         <%= f.submit "Save", :class=> "btn btn-success" %>&nbsp;
+          <%= link_to " Cancel", users_path, :class => 'btn btn-white' %>
+        </div>
+      </div>
+    <% end %>

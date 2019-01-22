@@ -1,0 +1,11 @@
+<tr class='row<%= index %>'>
+  <td><%= text_field_tag "warehouse[product_batches_attributes][#{index}][quantity]", @product_batch.quantity, :class => 'amount' %>
+    <%= hidden_field_tag "warehouse[product_batches_attributes][#{index}][id]", @product_batch.id %>
+    <%= hidden_field_tag "warehouse[product_batches_attributes][#{index}][warehouse_id]", @product_batch.warehouse_id %>
+    <%= hidden_field_tag "warehouse[product_batches_attributes][#{index}][company_id]", @company.id %>
+  </td>
+  <td><%= text_field_tag "warehouse[product_batches_attributes][#{index}][batch_number]", @product_batch.batch_number, :style => 'width:100px', :maxlength => 30 %></td>
+  <td><%= text_field_tag "warehouse[product_batches_attributes][#{index}][manufacture_date]", @product_batch.manufacture_date, :style => 'width:80px', :class => 'mfd_date', "data-index" => index %></td>
+  <td><%= text_field_tag "warehouse[product_batches_attributes][#{index}][expiry_date]", @product_batch.expiry_date, :style => 'width:80px', :class => 'exp_date', "data-index" => index %></td>
+  <td><%= text_field_tag "warehouse[product_batches_attributes][#{index}][reference]", @product_batch.reference, :style => 'width:80px', :maxlength => 50 %></td>
+</tr>

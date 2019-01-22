@@ -1,0 +1,48 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-3">
+       <h2><i class="icon-file text"></i>Journal Entry</h2>
+        </div>
+        <div class="col-lg-9 m-t-large" align="right">
+          <div class="btn-group">
+          <button  onclick="location.href= '<%= new_journal_path%>'"; class="btn btn-success btn-lg" > <i class="icon-plus"> </i> Add New Record</button>
+          <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to raw('<i class="icon-cloud-upload"> </i>Import Journals '), journal_imports_path %></li>
+          </ul>
+        </div>
+      <a href="#" class="btn btn-white btn-lg" id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+          <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+          <%= render :partial=> "filter" %>
+          <%= render :partial=> "shared/flash_msg"%>
+            <div class="table-responsive row">
+              <table id="journals" class="table table-striped m-b-none text-small" data-source ="<%= journals_url(:format=>'json') %>" >
+                <thead>
+                  <%= render :partial => "header" %>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "footer" %>
+                </tfoot>
+              </table>
+            </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

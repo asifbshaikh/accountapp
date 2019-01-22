@@ -1,0 +1,19 @@
+<tr id="row<%= index %>" valign="top" >
+   <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][id]",salary_structure_line_item.id%>
+   <%= hidden_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][_destroy]"%>     
+ <td valign="top" width="80%">
+     <select id="salary_structure_salary_structure_line_items_attributes_<%= index %>_payhead_id" class="half" name="salary_structure[salary_structure_line_items_attributes][<%= index %>][payhead_id]">
+     <% @payheads.each do |payhead| %>
+          <option value="<%= payhead.id %>" data-payhead ="<%= payhead.payhead_type %>" <%= "selected='selected'" if salary_structure_line_item.payhead_id == payhead.id %> >
+             <%= payhead.payhead_name %>
+          </option>
+       <% end %>
+     </select>
+     <%= text_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][payhead_id]", payhead.id %>
+
+ </td>
+ <td class="ta-right" width="20%">
+  <%= text_field_tag "salary_structure[salary_structure_line_items_attributes][#{index}][amount]", salary_structure_line_item.amount, :class => 'half', :id => 'amount', :onkeydown => "return numbersOnly(event);", :max => 5, :size => 5%>
+ </td>
+
+</tr>					

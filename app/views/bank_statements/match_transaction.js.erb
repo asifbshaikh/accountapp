@@ -1,0 +1,38 @@
+$("#modal1").html("<%= escape_javascript(render 'transactions') %>");
+$('#deposit_transaction_date').datepicker({format: 'dd-mm-yyyy'});
+$('#withdrawal_transaction_date').datepicker({format: 'dd-mm-yyyy'});
+$('#income_voucher_income_date').datepicker({format: 'dd-mm-yyyy'});
+$('#expense_expense_date').datepicker({format: 'dd-mm-yyyy'});
+$("#other_income_div").click(function(){
+    $("#msg").remove();
+    $(".popup-error").remove();
+    $("#add_receipt").hide("slow");
+    $("#add_other_income").slideToggle("slow");
+  });
+$("#receipt").click(function(){
+    $("#msg").remove();
+    $(".popup-error").remove();
+    $("#add_other_income").hide("slow");
+    $("#add_receipt").slideToggle("slow");
+  });
+$("#payment").click(function(){
+    $("#msg").remove();
+    $(".popup-error").remove();
+    $("#add_other_expense").hide("slow");
+    $("#add_payment").slideToggle("slow");
+  });
+$("#other_expense").click(function(){
+    $("#msg").remove();
+    $(".popup-error").remove();
+    $("#add_payment").hide("slow");
+    $("#add_other_expense").slideToggle("slow");
+  });
+
+// rendering payment mode form
+$(".inc_transaction_type").click(function(){
+    var ttype = $(this).attr("data-ttype")
+    $.ajax({
+      type: 'GET',
+      url: "/bank_statements/payment_mode?mode="+ttype
+    });
+}); 

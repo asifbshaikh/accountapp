@@ -1,0 +1,31 @@
+<h1>Listing customer_relationships</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Notes</th>
+    <th>Last contact date</th>
+    <th>Next contact date</th>
+    <th>Created by</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @customer_relationships.each do |customer_relationship| %>
+  <tr>
+    <td><%= customer_relationship.company_id %></td>
+    <td><%= customer_relationship.notes %></td>
+    <td><%= customer_relationship.last_contact_date %></td>
+    <td><%= customer_relationship.next_contact_date %></td>
+    <td><%= customer_relationship.created_by %></td>
+    <td><%= link_to 'Show', customer_relationship %></td>
+    <td><%= link_to 'Edit', edit_customer_relationship_path(customer_relationship) %></td>
+    <td><%= link_to 'Destroy', customer_relationship, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Customer relationship', new_customer_relationship_path %>

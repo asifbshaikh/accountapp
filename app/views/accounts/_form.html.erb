@@ -1,0 +1,58 @@
+<!-- <script type="text/javascript" src="/javascripts/account.js"></script> -->
+<%= form_for @account, :html=>{:class=>"form-horizontal"}  do |f| %>
+	<%= render 'shared/form_error' , :object => @account %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+         <%= f.label 'Account name' , :class => "control-label-required"%>
+         </div>
+        <div class="col-lg-3">
+          <%= f.text_field :name, :autofocus =>"autofocus", :maxlength => 50, :size => 30, :class=>"bg-focus form-control" %>
+          <small>The name you want to call this account.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+           <%= f.label "Account group", :class => "control-label-required" %>
+         </div>
+        <div class="col-lg-3">
+          <%= f.collection_select(:account_head_id, @account_heads, :id, :name, {:prompt => 'Type to Select'},{:id =>'accountHeadSelect', :style => "width:265px;"}) %>
+        </div>
+      </div>
+
+     <div class="form-group">
+      <div class="col-lg-2 text-right">
+        <%= label_tag "start_date", 'Effective date', :class=>"control-label-required" %>
+      </div>
+      <div class="col-lg-3">
+        <%= f.text_field :start_date, :class=>"bg-focus form-control" %>
+      </div>
+    </div>
+     <div class="form-group open_balance" id="open_balance">
+      <div class="col-lg-2 text-right">
+        <%= f.label :opening_balance, :class=>"control-label" %>
+      </div>
+      <div class="col-lg-3">
+        <%= f.text_field :opening_balance, :onkeydown => "return balOnly(event);", :maxlength => "18", :class=>"bg-focus form-control text-right", :style=>"width:120px;" %><small>Enter negative amount for credit opening balance.</small>
+      </div>
+    </div>
+    <% if !@account_head.blank? %>
+    	<%= render :partial => "#{@account_head.root.name.downcase.gsub(/\s+|\(|\)|\//, "")}", :locals => {:f => f}  %>
+    <% end %>
+    <div class="form-group">
+          <div class="col-lg-7 col-lg-offset-3">
+            <button type="submit" class="btn btn-sm btn-success btnsave">Save Account</button>
+            <%= link_to 'Cancel', accounts_path, :class => "btn btn-default" %>
+          </div>
+      </div>
+  </div>
+    </section>
+  </div>
+</div>
+<% end %>
+<script type="text/javascript">
+   $('#accountHeadSelect').select2();
+</script>

@@ -1,0 +1,20 @@
+ 
+
+          <% sentence = "#{estimate_history.description}" 
+          if sentence.match(/created/) || sentence.match(/added/)
+          i_cls = 'icon-plus'
+        elsif sentence.match(/updated/)
+          i_cls = 'icon-edit'
+        elsif sentence.match(/printed/)
+          i_cls = 'icon-print'
+        elsif sentence.match(/sent/)
+          i_cls = 'icon-envelope'
+          end%>
+
+           <!--Invoice History -->
+          <tr>
+            <td>
+            <span><i class='<%= i_cls%>'></i></span> <a> <%= estimate_history.record_date%></a> Estimate <%= estimate_history.description %> by <%= User.find(estimate_history.created_by).full_name%>
+            </td>
+          </tr>
+  

@@ -1,0 +1,33 @@
+<h1>Listing blog_authors</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Author user name</th>
+    <th>Hashed password</th>
+    <th>Salt</th>
+    <th>Email</th>
+    <th>Bio</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @blog_authors.each do |blog_author| %>
+  <tr>
+    <td><%= blog_author.name %></td>
+    <td><%= blog_author.author_user_name %></td>
+    <td><%= blog_author.hashed_password %></td>
+    <td><%= blog_author.salt %></td>
+    <td><%= blog_author.email %></td>
+    <td><%= blog_author.bio %></td>
+    <td><%= link_to 'Show', blog_author %></td>
+    <td><%= link_to 'Edit', edit_blog_author_path(blog_author) %></td>
+    <td><%= link_to 'Destroy', blog_author, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Blog author', new_blog_author_path %>

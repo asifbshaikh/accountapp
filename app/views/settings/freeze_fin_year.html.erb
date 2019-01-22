@@ -1,0 +1,38 @@
+<section id="content" class="content-sidebar bg-white">
+    <section class="main">
+      <ul class="nav nav-tabs m-b-none no-radius">
+      <li><a href="#company_profile" data-toggle="tab">Basic Info</a></li>
+        <li><a href="#invstg" data-toggle="tab">Invoice </a></li>
+        <% if !@company.plan.free_plan?  %>
+        <li><a href="#payroll" data-toggle="tab">Payroll </a></li>
+        <li><a href="#inventory" data-toggle="tab">Inventory </a></li>
+        <li><a href="#customfield" data-toggle="tab">Custom Fields/Preferences</a></li>
+        <% end %>
+        <li class="active"><a href="#fin_year" data-toggle="tab">Financial Years</a></li>
+      </ul>
+      <div class="tab-content">
+      <%= render "shared/flash_msg" %>
+        <div class="tab-pane " id="company_profile">
+          <%= render :partial=> "basic_details" %>
+        </div>
+        <div class="tab-pane" id="invstg">
+         <%= render :partial=>"invoice_setting"%>
+        </div>
+        <div class="tab-pane" id="payroll">
+          <%= render :partial => "payroll"%>
+        </div>
+        <div class="tab-pane" id="inventory">
+          <%= render :partial => "inventory_setting"%>
+        </div>
+        <div class="tab-pane" id="customfield">
+          <%= render :partial => "custom_field" %>
+        </div>
+         <div class="tab-pane active" id="fin_year">
+          <%= render :partial => "financial_year" %>
+        </div>
+      </div>
+    </section>
+    <!-- /.sidebar -->
+  </section>
+
+

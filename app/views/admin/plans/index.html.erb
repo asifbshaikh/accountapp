@@ -1,0 +1,35 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> 
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+ <!-- Wrapper -->
+  <!-- Left column/section -->
+  <div class="wrapper">
+    <section class ="column width6 first"><br/>
+      <div id="tabs" class ="highlight">
+        <!-- End of Left column/section -->
+        <%= form_tag :action => :grant do %>
+          <table class="display stylized">
+          <tr>
+            <td width="50%"><label class ="required" >Select plan </label><br />
+            <%= collection_select ("plan", :id , @plans, :id, :display_name, :class => "full") %></td>
+            <td width="50%"><label class="required">Select role </label><br />
+            <div id="newRole"></div>
+            <%= render "role" %></td>	
+          </tr>
+          </table>
+          <div id="newRight"></div>
+          <%= render "right" %>
+          <tr>
+            <td colspan=3>
+              <%= submit_tag "Grant", :class => "btn" %>
+            </td>
+          </tr>
+        <% end %>
+        <!-- End of Left column/section -->
+      </div><br />
+   </section>
+  </div>
+</div>
+

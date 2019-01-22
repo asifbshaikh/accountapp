@@ -1,0 +1,24 @@
+<% if !@custom_field.blank? && !@company.plan.free_plan? %>
+	<div class='form-group'>
+	  <% if !@custom_field.custom_label1.blank? %>	
+			<div class='col-lg-3'>
+				<label class='control-label'> <%= @custom_field.custom_label1 %></label>
+				<%= text_field_tag "purchase[custom_field1]", "#{@purchase.custom_field1.blank? ? @custom_field.default_value1 : @purchase.custom_field1}", :class =>'form-control bg-focus' %>
+			</div>
+			<div class='col-lg-1'></div>
+	  <% end %>	
+		<% if !@custom_field.custom_label2.blank? %>	
+			<div class='col-lg-3'>
+				<label class='control-label'> <%= @custom_field.custom_label2 %></label>
+				<%= text_field_tag "purchase[custom_field2]", "#{@purchase.custom_field2.blank? ? @custom_field.default_value2 : @purchase.custom_field2}", :class =>'form-control bg-focus' %>
+			</div>
+			<div class='col-lg-1'></div>
+		<% end %>	
+	  <% if !@custom_field.custom_label3.blank? %>	
+			<div class='col-lg-3'>
+				<label class='control-label'> <%= @custom_field.custom_label3 %></label>
+				<%= text_field_tag "purchase[custom_field3]", "#{@purchase.custom_field3.blank? ? @custom_field.default_value3 : @purchase.custom_field3}", :class =>'form-control bg-focus' %>
+			</div>
+	  <% end %>	
+	</div>
+<% end %>

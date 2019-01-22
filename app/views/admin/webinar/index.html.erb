@@ -1,0 +1,66 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Webinar Registration</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    
+    <p></p>
+    </div>
+  </div>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+            <% if @webinars.blank? %>
+          <br />
+          <%= render :partial => "shared/no_record" %>
+              <% else %>
+                    
+            <div class="table-responsive row">
+              <table id="webinars" class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th>Sr. No.</th>
+                    <th>Name</span></th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Webinar Date</th>
+                    <th>City</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+            
+                  <% @webinars.each_with_index do |webinar, index| %>
+                  <tr>
+                    <td><%= index+1 %></td>
+                    <td><%= webinar.name %></td>
+                    <td><%= webinar.email %></td>
+                    <td><%= webinar.phone %></td>
+                    <td><%= webinar.date %></td>
+                    <td><%= webinar.city %></td>
+                    <td><%= webinar.detail %></td>
+                  </tr>
+                  <%end%>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="7"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>    
+</div>
+</section>
+</section>

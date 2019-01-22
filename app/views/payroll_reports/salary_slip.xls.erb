@@ -1,0 +1,240 @@
+<div id="page" >
+    <!-- Wrapper -->
+    <div class="wrapper" align="center">
+        <!-- Left column/section -->
+        <section class="column width8 first" >
+            &nbsp;&nbsp;
+           
+		<div class='highlight'>
+			<div id='report_header' align="center">
+				<span class='company_name'><%= @company.name %></span><br>
+				<span class='report_title'><u>Salary Slip</u></span><br>
+				<span class='report_month'>April-2010</span>
+			</div><hr>	
+            <div class='title_name' align=center>
+                <%= @current_user.first_name  %> <%= @current_user.last_name%>
+            </div>
+            <div class='width4 left' >
+                <table class='zebra-sriped' width=100% border=1 >
+                	<thead>
+                		<tr><th colspan=2>Personal Details</th></tr>
+                	</thead>
+                    <tr>
+                        <td>
+                            Employee No.
+                        </td>
+                        <td>
+                            <b>: <%= @current_user.id %></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Designation
+                        </td>
+                        <td>
+							<b>: <% if @designation.nil?||@designation.blank? %>
+							<span class = 'light'><i>Not available</i></span>
+							<% else %>
+							 <%= Designation.find(@current_user.designation_id).title %>
+							<% end %> 
+							 </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Location
+                        </td>
+                        <td>
+                            <b>: <% if @user_salary_details.nil? %>
+							<span class = 'light'><i>Not available</i></span>
+							<% else %>
+							 <%= @user_salary_details.work_location %>
+							<% end %> 
+							 </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date of Joining
+                        </td>
+                        <td>
+                            <%if @user_salary_details.nil? %>
+								<b>: <span class='light'><i>Not available</i></span></b>
+							<% else %>
+								<b>: </b><%= @user_salary_details.date_of_joining %></b>
+							<% end %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class='width4 right'>
+                <table class ='zebra-sriped' border="1" width=100% >
+					<thead>
+						<tr><th colspan=2>Bank Details</th></tr>
+					</thead>
+                    <tr>
+                        <td>
+                            Bank Details
+                        </td>
+                        <td>
+                            
+							<%if @user_salary_details.bank_name %>
+								<b>: <%= @user_salary_details.bank_name%>nk</b>
+							<% else %>
+								<b>: <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+							
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Income Tax No.(PAN)
+                        </td>
+                        <td>
+							<%if @user_salary_details.PAN %>
+								<b>: <%= @user_salary_details.PAN %></b>
+							<% else %>
+								<b>: <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            PF Account No.
+                        </td>
+                        <td>
+							<%if @user_salary_details.PF_account_number %>
+								<b>: <%= @user_salary_details.PF_account_number %></b>
+							<% else %>
+								<b>: <span class='light'><i>Not available</i></span></b>
+							<% end %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ESI Number
+                        </td>
+                        <td>
+							<%if @user_salary_details.EPS_account_number %>
+								<b>: <%= @user_salary_details.EPS_account_number %></b>
+							<% else %>
+								<b>: <span class='light'><i>Not available</i></span></b>
+							<% end %>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <table class = "zebra-sriped" border = 1 align = center width=100%>
+                <thead>
+                <tr>
+                    <th>
+                        Earnings
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Deductions
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                </tr>
+                </head>
+                <tbody>
+                	<% earning_arr = []
+				    earning_amount_arr = []
+				    deduction_arr = []
+				    deduction_amount_arr = []
+					count = 0
+					total_earning = 0
+					total_deduction = 0
+					%>
+          	<% for salary in @salary_structures %>
+          		<% if salary.pay_head_type == 1 %>
+				        <% earning_arr << Payhead.find(salary.pay_head).payhead_name %>
+				        <% earning_amount_arr << salary.amount %>
+				        <% total_earning +=salary.amount %>
+			        <% else %>
+				        <% deduction_arr << Payhead.find(salary.pay_head).payhead_name %>
+				        <% deduction_amount_arr << salary.amount %>
+				        <% total_deduction +=salary.amount %>
+			        <% end %>
+		        <% end %>
+					  
+					  <% if !earning_arr.nil? && earning_arr.length > deduction_arr.length%>
+						  <% count = earning_arr.length %>
+					  <% elsif !deduction_arr.nil? %>
+						 <% count = deduction_arr.length %>
+				  	<% end %>
+					
+					<% if count > 0%>
+					<% for i in 0..(count - 1) %>
+						<tr>
+							<% if !earning_arr[i].nil? %>
+								<td><%= earning_arr[i] %></td><td><span class='WebRupee'>Rs</span><%= earning_amount_arr[i] %></td>
+							<% else %>
+								<td></td><td></td>
+							<% end %>
+							
+							<% if !deduction_arr[i].nil?%>
+								<td><%= deduction_arr[i] %></td><td><span class='WebRupee'>Rs</span><%= deduction_amount_arr[i] %></td>
+							<% else %>
+								<td></td><td></td>
+							<% end %>
+						</tr>
+					<% end %>
+                    </tbody>
+                        <tfoot>
+                        	<tr>
+                        <td>
+                            <hr><b>Total Earning Amount</b><hr>
+                        </td>
+                        <td><hr>
+                            <b><span class='WebRupee'>Rs</span><%= total_earning %></b><hr>
+                        </td>
+                        <td>
+                            <hr><b>Total Deduction Amount</b><hr>
+                        </td>
+                        <td>
+                           <hr> <b><span class='WebRupee'>Rs</span><%= total_deduction %></b><hr>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <b>Net Amount</b>
+                                    <hr>
+                                </td>
+                                <td>
+                                    <b><span class='WebRupee'>Rs</span><%= (total_earning - total_deduction) %></b>
+                                    <hr>
+                                </td>
+                            </tr>
+                        </tfoot>
+                        </table>
+                        <br>
+                        <p>
+                            Amount<span class = 'light'> in words</span>
+                        </p>
+                        <p>
+                            INR TWELW THOUSAND THREE HUNDRES FORTYFIVE
+                        </p>
+						<% else %>
+							</table>
+						<% end %>
+                        <p align=right>
+                            Authorised Signatory
+                        </p>
+						<hr>
+						<p>22 United apartment,2407 East street,camp, Pune(MH. pin:411001</p>
+						</div>
+                    </section>&nbsp;&nbsp;
+                    <!-- End of Left column/section -->
+                    <!-- End of Left column/section -->
+                    </div>
+                    <!-- End of Wrapper -->
+                </div>

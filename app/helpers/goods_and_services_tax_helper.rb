@@ -1,0 +1,2 @@
+module GoodsAndServicesTaxHelper
+end

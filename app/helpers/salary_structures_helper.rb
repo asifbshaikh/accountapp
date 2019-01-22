@@ -1,0 +1,4 @@
+module SalaryStructuresHelper
+  
+
+end

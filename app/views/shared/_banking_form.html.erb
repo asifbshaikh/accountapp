@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading text-right">
+        <ul class="nav nav-tabs pull-left">
+          <li class="<%='active' if ['withdrawals', 'banking'].include?(@current_controller) %>">
+            <a href="#withdraw" data-toggle="tab" >
+              <i class="icon-share icon-large text-default"></i>
+              Withdraw Cash
+            </a>
+          </li>
+          <li class="<%='active' if 'deposits' == @current_controller %>">
+            <a href="#deposit" data-toggle="tab">
+              <i class="icon-download-alt icon-large text-default"></i>
+              Deposit
+            </a>
+          </li>
+          <li  class="<%='active' if 'transfer_cashes' == @current_controller %>">
+            <a href="#transfer-cash" data-toggle="tab">
+              <i class="icon-exchange icon-large text-default"></i>
+              Transfer Cash
+            </a>
+          </li>
+        </ul>
+      </header>
+      <div class="panel-body">
+        <div class="tab-content">
+          <div id='withdraw' class="tab-pane fade <%='active in' if ['withdrawals', 'banking'].include?(@current_controller) %>">
+            <%= render "withdrawals/form" %>
+          </div>
+          <div id='deposit' class="tab-pane fade <%='active in' if 'deposits' == @current_controller %>">
+            <%= render "deposits/form" %>
+          </div>
+          <div id='transfer-cash' class="tab-pane fade <%='active in' if 'transfer_cashes' == @current_controller %>">
+            <%= render "transfer_cashes/form" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

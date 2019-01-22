@@ -1,0 +1,64 @@
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+				<% if false %>
+					<%= render :partial => "shared/no_record" %>
+				<% else %>
+			
+			<div class='highlight'>
+				<div id='report_header' align="center">
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Trial Balance </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+			
+				<table class = "zebra-sriped"  border = 1 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width5'><span class='char_spacing'>Particulars</span></th>
+							<th align="right"> Debit</th>
+							<th align="right"> Credit</th>
+						</tr>
+						</head>
+						<tbody>
+							<% for acc_head in @account_heads %>
+								<tr><td><b><%= acc_head.name %></b></td><td></td><td></td></tr>
+								<% @accounts = Account.find_all_by_account_head_id(acc_head.id)%>
+								<% for acc in @accounts%>
+									<tr><td class = 'textindent1'><%= acc.name%></td>
+										<% amount = acc.closing_balance 
+										if amount <= 0 %>
+											<td align="right"><%=  -1*amount %></td>
+											<td align="right"><%=  00 %></td>
+										<% else %>
+											<td align="right"><%=  00 %></td>
+											<td align="right"><%=  amount %></td>
+										<% end %>
+									</tr>
+								<% end %>
+							<% end %>
+						</tbody>
+						<tfoot>
+							<tr><td><b><span class="char_spacing">Grand Total</span></b></td><td align="right"><b><%=  @total_debit %></b></td><td align="right"><b><%=  @total_credit %></b></td></tr>
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+&nbsp; 

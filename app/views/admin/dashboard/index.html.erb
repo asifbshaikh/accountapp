@@ -1,0 +1,58 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3>Welcome, <a href= <%= "/users/#{@current_user.id}" %> ><%= @current_user.first_name.capitalize%></a></h3>
+          <%= (session[:last_login_at].blank?)? "":"Your last login was on #{session[:last_login_at]  }"%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-7">
+          <h2><i class="icon-bar-chart text"></i>Today's</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left" id="leads_tabs">
+                <li class="active"><a href="#my_activities" data-toggle="tab"><i class="icon-list icon-large text-default"></i>My Activities</a></li>
+
+                <li><a href="#todays_leads" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Team's Activities</a></li>
+
+                <li><a href="#todays_demo" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Today's Demo</a></li>
+
+                <li><a href="#upcoming_leads" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Upcoming Activities</a></li>
+
+                <li><a href="#past_leads" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Past Due Date</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <%= render :partial=> "shared/flash_msg"%>
+              <div class="tab-content">
+                <div class="tab-pane active" id="my_activities">
+                  <%= render :partial=> "admin/dashboard/my_activity" %>
+                </div>
+
+                <div class="tab-pane" id="todays_leads">
+                  <%= render :partial=> "admin/dashboard/today" %>
+                </div>
+
+                <div class="tab-pane" id="todays_demo">
+                  <%= render :partial=> "admin/dashboard/demo" %>
+                </div>
+
+                <div class="tab-pane" id="upcoming_leads">
+                  <%= render :partial => "admin/dashboard/upcoming" %>
+                </div>
+
+                <div class="tab-pane" id="past_leads">
+                  <%= render :partial => "admin/dashboard/past" %>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </section>

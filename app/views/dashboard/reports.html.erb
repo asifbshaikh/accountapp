@@ -1,0 +1,62 @@
+<%= render :partial => "shared/page_title"%>
+  <!-- Page content -->
+  <div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+      <section class="column width8 first"></br>
+        <div class="highlight">
+        	<%= render "shared/flash_msg"%>
+        <div id='user_info_div'><span class='basic_info'>All Reports</span></div>
+            <div class="colgroup leading">
+            <div class="column width4 first">
+              <h4>Invoice reports</h4>
+              <hr/>
+              <ul>
+                <li><%= link_to 'Invoice Aging', "#" %></li>
+              </ul>
+            </div>
+           <div class="column width4">
+              <h4>Sales reports</h4>
+              <hr/>
+              <ul>
+                <li><%= link_to 'Sales By Customer', sales_reports_sales_by_customer_path %></li>
+                <li><%= link_to 'Sales By Item',  sales_reports_sales_by_item_path %></li>
+              </ul>
+             </div>
+          </div>
+
+          <div class="colgroup leading">
+            <div class="column width4 first">
+              <h4>Expense reports</h4>
+              <hr/>
+            </div>
+            <div class="column width4">
+              <h4>Tax Reports</h4>
+              <hr/>
+            </div>
+          </div>
+          <div class="clear">&nbsp;</div>
+          </div><br />
+        </section>
+        <!-- End of Left column/section -->
+
+      <!-- Right column/section -->
+      <!-- <aside class="column width2"><br/>
+        <div class="highlight"> 
+          <table class="display stylized">
+            <thead>
+              <tr><th>Recent Activities</th></tr>
+            </thead>
+            <tbody>
+              <%= render :partial => 'dashboard/workstream', :collection => @workstreams %>  
+              <tr><td align = "right"><%= link_to "more", workstreams_path %></td></tr>				
+            </tbody>
+          </table>
+        </div><br/>
+      </aside>
+       --><!-- End of Right column/section -->
+		</div>
+		<!-- End of Wrapper -->
+	</div>
+	<!-- End of Page content -->

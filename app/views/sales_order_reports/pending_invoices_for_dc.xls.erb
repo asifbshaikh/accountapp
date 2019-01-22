@@ -1,0 +1,35 @@
+<table>
+  <tr><td colspan=6 align=center>Pending Invoices For Delivery Challan</td></tr>
+  <tr><td colspan=6 align=center><%= (@customer.blank?)? "All customers" : @customer.name %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center">Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= (params[:start_date].blank?)? @financial_year.start_date : params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td></tr>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Sales Order</th>
+      <th>Delivery Challan</th>
+      <th>Unbilled Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% prev_date = nil 
+      voucher_no = nil
+      amt = nil
+   %>
+   <% @delivery_challans.each do |dc|%>
+   <tr>
+     <td><%= (dc.voucher_date == prev_date) ? " " : dc.voucher_date %></td>
+     <td><%=  (dc.sales_order.voucher_number == voucher_no) ? " ": dc.sales_order.voucher_number%></td>
+     <td><%= dc.voucher_number %></td>
+     <td><%= (dc.sales_order.unbilled_amount == amt) ? " ": dc.sales_order.unbilled_amount %></td>
+      <% 
+       prev_date = dc.voucher_date 
+       voucher_no = dc.sales_order.voucher_number 
+       amt = dc.sales_order.unbilled_amount 
+       %>
+   </tr>
+   <% end %>
+  </tbody>
+</table>

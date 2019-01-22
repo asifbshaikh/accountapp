@@ -1,0 +1,12 @@
+<% if !@entries_valid%>
+  $('.alert-danger').remove();
+   $(".error-place1").after("<div class='alert alert-danger invoice-setting-notif'> Unable to create link, you have to provide any one of the email address and phone number.</div>")
+  $(".btnsave1").remove();
+  $(".save-btn1").after("<button class='btnsave1 btn btn-sm btn-success' type='submit'  data-loading-text='Generating...'>Generate</button>");
+<% else %>
+  $("div[id^='modal']").modal('hide');
+  window.location.reload()
+    $(".btnsave1").remove();
+  $(".save-btn1").after("<button class='btnsave1 btn btn-sm btn-success' type='submit'  data-loading-text='Generating...'>Generate</button>");
+<% end %>
+

@@ -1,0 +1,79 @@
+ <script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for emp_goal in @employee_goals
+  	 	@data<<emp_goal.from_date
+  	 	@data<<emp_goal.to_date
+  	 	@data<<emp_goal.for_employee
+  	 	@data<<emp_goal.goals
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+ <!-- Page title -->
+  <div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Performance Management  &rarr;<span>Goals for employee</span></h1>
+		<%= form_for @search, method = "get" do |f| %>
+		<%=f.text_field :from_date_or_to_date_or_for_employee_or_goals_equals, :id => "autocomplete", :placeholder=>"search" %>
+		<%end%>
+	</div>
+<!-- End of Page title -->
+
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	  <div id="tabs-all" class="highlight">
+		        <%= render :partial => "shared/flash_msg"	%>
+               <div id="timesheet">
+       	        <% if @employee_goals.blank? %>
+                   <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                <% else %>
+                  <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "employee_goal", :collection => @employee_goals %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                        </table>  
+                        <div class="column width3 first">  
+                          <%= paginate @employee_goals %>
+                      </div>
+              <% end %>
+          </div>
+          </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+           <a href="/employee_goals/new" class="btn btn-special btn-green btn-green-new">&nbsp; Create new goal </a>
+         <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/27" class="nyroModal">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

@@ -1,0 +1,91 @@
+<section id="content">
+  <section class="main padder">
+    <!-- Page title -->
+    <div class='row'>
+      <div class='col-lg-4'>
+        <!-- Page name -->
+        <h2><i class="icon-file-text-alt text"></i>View Stock Wastage</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-plus"> </i> Add New Record'), new_stock_wastage_voucher_path, :class => 'btn btn-success btn-lg' %>
+        <% unless @stock_wastage_voucher.in_frozen_year? %>
+          <div class="btn-group">
+            <%= link_to raw('<i class="icon-edit"> </i> Edit'), edit_stock_wastage_voucher_path(@stock_wastage_voucher), :class => 'btn btn-info btn-lg' %>
+            <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span><i></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to raw('<i class="icon-trash"> </i>Delete this voucher'), stock_wastage_voucher_path(@stock_wastage_voucher), :method => "delete", :confirm => "Are you sure?" %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+        <%= link_to_pdf params %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), stock_wastage_vouchers_path, :class => 'btn btn-default btn-lg' %>
+      </div>
+    </div>
+    <!-- Pger title end -->
+    <p></p>
+
+    <section class='panel'>
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg"%>
+        <!-- voucher details  -->
+        <div class='row'>
+          <div class='col-sm-5'>
+            <h4>Stock wastage voucher </h4>
+          </div>
+          <div class='col-sm-7'>
+            <!-- Right details -->
+            <section class="panel">
+              <div class="panel-body">
+              <p><strong>Voucher Number:</strong><%=@stock_wastage_voucher.voucher_number%></p>
+                <p><strong>Voucher Date :</strong><%= @stock_wastage_voucher.voucher_date.to_date %></p>
+                <p><strong><%= @company.label.warehouse_label%>: </strong><%= @stock_wastage_voucher.warehouse.name %></p>
+                <% if !@custom_field.blank? %>
+                 <%= render :partial => "custom_field_details" %>
+                <% end %>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="icon-calendar"> </i>Created on <%=@stock_wastage_voucher.created_at.strftime("%d-%m-%Y") %> by <%= @stock_wastage_voucher.created_by_user %>
+                  </div>
+                </div>
+              </footer>
+            </section>  
+            <!-- end left detals -->
+          </div>
+        </div>
+        <!-- voucher details end -->
+
+        <div class='row'>
+          <div class='col-lg-12'>
+            <!-- Line item details -->
+            <table  class="table table-striped b-t text-small">
+              <thead>
+                <tr>
+                  <th >Product</th>
+                  <th >Remark</th>
+                  <th >Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial =>"stock_wastage_line_item_details", :collection => @stock_wastage_voucher.stock_wastage_line_items %>
+              </tbody>
+              <tfoot><tr><td colspan=3></td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+        <% if !@stock_wastage_voucher.description.blank? %>
+          <div class='row'>
+            <div class="col-lg-6">
+              <label>Details:</label>
+              <%= @stock_wastage_voucher.description %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>

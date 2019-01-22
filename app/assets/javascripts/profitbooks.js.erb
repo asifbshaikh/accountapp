@@ -1,0 +1,1809 @@
+$(document).ready(function(){
+  // to load payment form dynamically
+  var paymentType=$("input[type='radio'][name='payment_voucher[voucher_type]']:checked").val();
+  $("#option-advance").click(function(){
+    if(paymentType!="1"){
+      $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+      $.ajax({
+        type: "GET",
+        url: "/payment_vouchers/load_form?form_type=advance_payment"
+      });
+    }
+    paymentType="1";
+  });
+
+  $("#option-against-vouchers").click(function(){
+    if(paymentType!="0"){
+      $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+      $.ajax({
+        type: "GET",
+        url: "/payment_vouchers/load_form?form_type=against_vouchers"
+      });
+    }
+    paymentType="0";
+  });
+
+  $("#option-other").click(function(){
+    if(paymentType!="2"){
+      $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+      $.ajax({
+        type: "GET",
+        url: "/payment_vouchers/load_form?form_type=other_payment"
+      });
+    }
+    paymentType="2";
+  });
+  // End of payment form load
+
+//for adding load setting page tab
+//This code is written by Ashish Shal Date-21-01-2017 for setting page
+
+$("#basic-setting").click(function(){
+      $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=basic_details"
+      });
+  });
+
+$("#invoice-setting").click(function(){
+       $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=invoice_setting"
+      });
+  });
+
+$("#custom-setting").click(function(){
+     $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=custom_field"
+      });
+  });
+
+$("#inventory-setting").click(function(){
+     $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=inventory_setting"
+      });
+  });
+
+$("#payroll-setting").click(function(){
+     $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=payroll"
+      });
+  });
+
+$("#branch-setting").click(function(){
+   $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>'); 
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=branch_details"
+      });
+  });
+
+$("#pg-setting").click(function(){
+    $(".on-go-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"> <div class="cssload-loading"><i></i><i></i><i></i></div></div><div class="modal-backdrop fade in"></div>');  
+      $.ajax({
+        type: "GET",
+        url: "/settings/load_form?form_type=instamojo_settings"
+      });
+  });
+
+// load setting end 
+
+  // to change between cash and credit expense form
+  $("#option-cash-expense").live("click", function(){
+    $('#account-select').html('<%=image_tag "ajax-loader.gif" %>')
+    $("#due-date-block").hide();
+    $(".expense_exc_rate").hide();
+    $.ajax({
+      type: 'GET',
+      data: {option: 'cash'},
+      url: '/expenses/account_select'
+    });
+  });
+
+  $("#option-credit-expense").live("click", function(){
+    $('#account-select').html('<%=image_tag "ajax-loader.gif" %>')
+    $("#due-date-block").show();
+    $.ajax({
+      type: 'GET',
+      data: {option: 'credit'},
+      url: '/expenses/account_select'
+    });
+  });
+
+
+$("#option-payslip_signatory-enable").live("click", function(){
+    $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-payslip_signatory-disable").css('background-color','#f5f6f7');
+    $("#option-payslip_signatory-disable").css('color','#657483');
+
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_payslip_signatory: '1'},
+      url: 'enable_payslip_signatory'
+    });
+  });
+
+
+$("#option-payslip_signatory-disable").live("click", function(){
+    $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-payslip_signatory-enable").css('background-color',' #f5f6f7');
+    $("#option-payslip_signatory-enable").css('color','#657483');
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_payslip_signatory: '0'},
+      url: 'enable_payslip_signatory'
+    });
+  });
+
+
+  // to change between yes and no in Instamojo for Invoices
+  $("#option-instamojo-enable").live("click", function(){
+    $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-instamojo-disable").css('background-color','#f5f6f7');
+    $("#option-instamojo-disable").css('color','#657483');
+
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_gateway: '1'},
+      url: 'enable_gateway'
+    });
+  });
+
+  $("#option-instamojo-disable").live("click", function(){
+    $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-instamojo-enable").css('background-color',' #f5f6f7');
+    $("#option-instamojo-enable").css('color','#657483');
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_gateway: '0'},
+      url: 'enable_gateway'
+    });
+  });
+
+
+  // to change between yes and no in CashFree for Invoices
+  $("#option-cashfree-enable").live("click", function(){
+     $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-cashfree-disable").css('background-color',' #f5f6f7');
+    $("#option-cashfree-disable").css('color','#657483');
+    $.ajax({
+      type: 'GET',
+      data: {enable_cashfree: '1'},
+      url: 'enable_gateway'
+    });
+  });
+
+  $("#option-cashfree-disable").live("click", function(){
+ $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-cashfree-enable").css('background-color',' #f5f6f7');
+    $("#option-cashfree-enable").css('color','#657483');
+    $.ajax({
+      type: 'GET',
+      data: {enable_cashfree: '0'},
+      url: 'enable_gateway'
+    });
+  });
+
+
+
+  // $("#option-against-vouchers").live("click", function(){
+  //   $('#account-select').html('<%=image_tag "ajax-loader.gif" %>')
+  //   $.ajax({
+  //     type: 'GET',
+  //     data: {option: 'against_voucher'},
+  //     url: '/payment_vouchers/account_select'
+  //   });
+  // });
+
+  $("input[name$='date]']").css('width', '120px')
+ // toggle receipt voucher forms
+  $("#optionIncomeVoucher").live('click', function(){
+    $(".new-receipt-form").hide();
+    $(".new-income-form").show();
+    $("input:hidden[name=option]").val('other_income');
+  });
+
+  $("#optionAdvanceReceipt").live('click',function(){
+    $(".mult-receipt-data").hide();
+    $(".new-receipt-form").show();
+    $(".adv-receipt-data").show();
+    $(".new-income-form").hide();
+    $("input:hidden[name=option]").val('adv_receipt');
+    $("#receipt_voucher_advanced").val("1");
+  })
+  $("#optionMultiReceipt").live('click', function(){
+    $(".new-income-form").hide();
+    $(".new-receipt-form").show();
+    $(".mult-receipt-data").show();
+    $(".adv-receipt-data").hide();
+    $("input:hidden[name=option]").val('multi_receipt');
+    $("#receipt_voucher_advanced").val("0");
+  });
+  // showing loader to customer/vendor change on receipt_vouchers/new
+  $("#receipt_voucher_from_account_id").live('change', function(){
+    $("#invoiceDetails").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %></div></div>');
+    $("#receipt-save").addClass("disabled");
+  });
+
+  $("#payment_voucher_to_account_id").live('change', function(){
+    if(paymentType=="0"){
+      $("#voucher-details").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %></div></div>');
+      $("#payment-save").addClass("disabled");
+    }
+  });
+
+  // to show loader on approve/reject link
+  $("a#request-ar").live('click', function(){
+   var id = $(this).attr('data-id');
+   $("td.leave"+id).html('<%= image_tag "ajax-loade.gif", :class => "loader"%>');
+   console.log(id)
+  });
+
+  // to show loader while finding matching transactions
+  $(".find_match").live('click', function(){
+   $("div.modal-body").html('<%= image_tag "ajax-loade.gif", :class => "loader"%> <strong>Finding...</strong>');
+  });
+
+ // disabling save button on submit
+  $("input:submit").attr("data-loading-text",'Processing...');
+
+
+  // Javascript to enable link to tab
+  var hash = document.location.hash;
+  var prefix = "tab_";
+  if (hash) {
+    $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+  }
+
+  // Change hash for page-reload
+  $('.nav-tabs a').on('shown', function (e) {
+      window.location.hash = e.target.hash.replace("#", "#" + prefix);
+  });
+
+  // // rendering custom fields
+  // $("#custom-field-enable-voucher").change(function(){
+  //   var customFieldId = $(this).val();
+  //   if(customFieldId!='')
+  //     var object = $.parseJSON($("#custom-field-enable-voucher option:selected").attr('data-custom_fields'));
+  //     console.log("#best_in_place_custom_field_"+object['custom_field']['id']+"_custom_label1");
+  //     $("td#custom_label1").html('<td><span id="best_in_place_custom_field_'+object["custom_field"]["id"]+'_custom_label1" class="best_in_place" data-html-attrs="{"maxlength":30,"class":"bg-focus form-control"}" data-type="input" data-nil="<span class ="variable_item">Click here to add content</span> " data-attribute="custom_label1" data-object="custom_field" data-url="/custom_fields/'+object["custom_field"]["id"]+'">'+object["custom_field"]["custom_label1"]+'</span></td>');
+  // });
+
+  // Populating same billing address
+  var shippingAddress;
+  if($("input:checkbox[name=same_address]").is(":checked")){
+    shippingAddress = $("#customer_addresses_attributes_1_address_line1").val();
+    var address = $("#customer_addresses_attributes_0_address_line1").val();
+    var city = $("#customer_addresses_attributes_0_city").val();
+    var state = $("#customer_addresses_attributes_0_state").val();
+    var state_code = $("#customer_addresses_attributes_0_state_code").val();
+    var country = $("#customer_addresses_attributes_0_country").val();
+    var postal_code = $("#customer_addresses_attributes_0_postal_code").val();
+    $("#customer_addresses_attributes_1_address_line1").val(address);
+    $("#customer_addresses_attributes_1_city").val(city);
+    $("#customer_addresses_attributes_1_state").val(state);
+    $("#customer_addresses_attributes_1_state_code").val(state_code);
+    $("#customer_addresses_attributes_1_country").val(country);
+    $("#customer_addresses_attributes_1_postal_code").val(postal_code);
+  }
+
+
+  $("input:checkbox[name=same_address]").live("click", function(){
+    if($("input:checkbox[name=same_address]").is(":checked")){
+      shippingAddress = $("#customer_addresses_attributes_1_address_line1").val();
+      var address = $("#customer_addresses_attributes_0_address_line1").val();
+      var city = $("#customer_addresses_attributes_0_city").val();
+      var state = $("#customer_addresses_attributes_0_state").val();
+      var state_code = $("#customer_addresses_attributes_0_state_code").val();
+      var country = $("#customer_addresses_attributes_0_country").val();
+      var postal_code = $("#customer_addresses_attributes_0_postal_code").val();
+
+      $("#customer_addresses_attributes_1_address_line1").val(address);
+      $("#customer_addresses_attributes_1_city").val(city);
+      $("#customer_addresses_attributes_1_state").val(state);
+      $("#customer_addresses_attributes_1_state_code").val(state_code);
+      $("#customer_addresses_attributes_1_country").val(country);
+      $("#customer_addresses_attributes_1_postal_code").val(postal_code);
+    }else{
+      $("#customer_addresses_attributes_1_address_line1").val(address);
+      $("#customer_addresses_attributes_1_city").val(city);
+      $("#customer_addresses_attributes_1_state").val(state);
+      $("#customer_addresses_attributes_1_state_code").val(state_code);
+      $("#customer_addresses_attributes_1_country").val(country);
+      $("#customer_addresses_attributes_1_postal_code").val(postal_code);
+    }
+  });
+
+  var vendorShippingAddress;
+  if($("input:checkbox[name=v_same_address]").is(":checked")){
+    var address = $("#vendor_addresses_attributes_0_address_line1").val();
+    $("#vendor_addresses_attributes_1_address_line1").val(address);
+  }
+
+  $("input:checkbox[name=v_same_address]").live("click", function(){
+    if($("input:checkbox[name=v_same_address]").is(":checked")){
+      vendorShippingAddress = $("#vendor_addresses_attributes_1_address_line1").val();
+      var address = $("#vendor_addresses_attributes_0_address_line1").val();
+      $("#vendor_addresses_attributes_1_address_line1").val(address);
+    }else{
+      $("#vendor_addresses_attributes_1_address_line1").val(vendorShippingAddress);
+    }
+  });
+
+  // showing current voucher number strategy for selected voucher
+  var strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+  if(strategy){
+    if(strategy['voucher_number_strategy']==0){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_0").attr("checked", "checked")
+    }else if(strategy['voucher_number_strategy']==2){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").attr("checked", "checked")
+    }else{
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_1").attr("checked", "checked")
+
+      $("#prefix").val(strategy['prefix']);
+      $("#suffix").val(strategy['suffix']);
+      $("#starting_sequence").val(strategy['voucher_sequence']);
+      if(parseInt(strategy['voucher_sequence']) > 0){
+        // $("#starting_sequence").attr('readonly', 'readonly');
+      }else{
+        // $("#starting_sequence").removeAttr('readonly');
+      }
+    }
+  }
+
+  $(".voucher_type_select").change(function(){
+    strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+    if(strategy['voucher_number_strategy']==0){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_0").attr("checked", "checked")
+      $("#strategy_1").removeClass('checked');
+      $("#strategy_2").removeClass('checked');
+      $("#strategy_0").addClass('checked');
+
+      $("#prefix").val("");
+      $("#suffix").val("");
+      $("#starting_sequence").val("");
+      // $("#starting_sequence").removeAttr('readonly');
+    }else if(strategy['voucher_number_strategy']==2){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").attr("checked", "checked")
+      $("#strategy_1").removeClass('checked');
+      $("#strategy_0").removeClass('checked');
+      $("#strategy_2").addClass('checked');
+
+      $("#prefix").val("");
+      $("#suffix").val("");
+      $("#starting_sequence").val("");
+    }else{
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_1").attr("checked", "checked")
+      $("#strategy_0").removeClass('checked');
+      $("#strategy_2").removeClass('checked');
+      $("#strategy_1").addClass('checked');
+
+      $("#prefix").val(strategy['prefix']);
+      $("#suffix").val(strategy['suffix']);
+      $("#starting_sequence").val(strategy['voucher_sequence']);
+      if(parseInt(strategy['voucher_sequence']) > 0){
+        // $("#starting_sequence").attr('readonly', 'readonly');
+      }else{
+        // $("#starting_sequence").removeAttr('readonly');
+      }
+    }
+  });
+
+
+  $("#strategy_1_label").click(function(){
+    $("#prefix").val(strategy['prefix']);
+    $("#suffix").val(strategy['suffix']);
+    $("#starting_sequence").val(strategy['voucher_sequence']);
+
+    // if(parseInt(strategy['voucher_sequence']) > 0){
+    //   $("#starting_sequence").attr('readonly', 'readonly');
+    // }else{
+    //   $("#starting_sequence").removeAttr('readonly');
+    // }
+  });
+
+  $("#strategy_0_label, #strategy_2_label").click(function(){
+    $("#prefix").val("");
+    $("#suffix").val("");
+    $("#starting_sequence").val("");
+
+    // $("#starting_sequence").removeAttr('readonly');
+  });
+
+
+// script to display customer notes and terms and conditions on few voucher settings
+$(".voucher_type_select").change(function(){
+    strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+    if($.inArray(strategy['voucher_type'], [1,5,6,20]) >= 0){
+      $(".cntc").show();
+      $("#customer_notes").val(strategy['customer_notes']);
+      $("#terms_and_conditions").val(strategy['terms_and_conditions']);
+    }else{
+      $(".cntc").hide();
+    }
+  });
+
+// script to display custom fields on few voucher settings
+$(".voucher_type_select").change(function(){
+    strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+    cstm_fld = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-customfield'));
+
+    if($.inArray(strategy['voucher_type'], [1,5,15,16,18]) >= 0){
+      $(".customField").show();
+      $("#custom_label1").val(cstm_fld['custom_label1']);
+      $("#custom_label2").val(cstm_fld['custom_label2']);
+      $("#custom_label3").val(cstm_fld['custom_label3']);
+      $("#default_value1").val(cstm_fld['defaulstrategyt_value1']);
+      $("#default_value2").val(cstm_fld['default_value2']);
+      $("#default_value3").val(cstm_fld['default_value3']);
+      $("#cstmfld_status").val(cstm_fld['status']);
+       if(cstm_fld['status'] == false){
+        $("#cstmfld_status_0").attr("checked", "checked")
+        $("#cstmfld_status_1").removeAttr("checked")
+        $("#status_0").addClass('checked');
+        $("#status_1").removeClass('checked');
+       }else{
+        $("#cstmfld_status_0").removeAttr("checked")
+        $("#cstmfld_status_1").attr("checked", "checked")
+        $("#status_0").removeClass('checked');
+        $("#status_1").addClass('checked');
+       }
+
+    }else{
+      $(".customField").hide();
+    }
+  });
+
+// custom field for selected voucher
+
+ var strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+ var cstm_fld = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-customfield'));
+   if(strategy && $.inArray(strategy['voucher_type'], [1,5,15,16,18]) >= 0){
+      $(".customField").show();
+      $("#custom_label1").val(cstm_fld['custom_label1']);
+      $("#custom_label2").val(cstm_fld['custom_label2']);
+      $("#custom_label3").val(cstm_fld['custom_label3']);
+      $("#default_value1").val(cstm_fld['default_value1']);
+      $("#default_value2").val(cstm_fld['default_value2']);
+      $("#default_value3").val(cstm_fld['default_value3']);
+      $("#cstmfld_status").val(cstm_fld['status']);
+      if(cstm_fld['status'] == false){
+        $("#cstmfld_status_0").attr("checked", "checked")
+        $("#cstmfld_status_1").removeAttr("checked")
+        $("#status_0").addClass('checked');
+        $("#status_1").removeClass('checked');
+       }else{
+        $("#cstmfld_status_0").removeAttr("checked")
+        $("#cstmfld_status_1").attr("checked", "checked")
+        $("#status_0").removeClass('checked');
+        $("#status_1").addClass('checked');
+       }
+    }else{
+      $(".customField").hide();
+    }
+
+
+  //  for toggling  between customer vendor form
+  if($("#contact_head_customer").is(":checked")){
+    $(".vendor-form").hide();
+    $(".customer-form").show();
+  }
+  if($("#contact_head_vendor").is(":checked")){
+    $(".customer-form").hide();
+    $(".vendor-form").show();
+  }
+
+  $(".customerbtn").live('click', function(){
+    $(".vendor-form").hide();
+    $(".customer-form").show();
+  });
+
+  $(".vendorbtn").live('click', function(){
+    $(".customer-form").hide();
+    $(".vendor-form").show();
+  });
+  // to face out messages after 5 seconds
+  setTimeout(function(){
+    $("div.alert-success").fadeOut(3000, function () {
+    $("div.alert-success").remove();
+        });
+  }, 3000);
+
+/*
+* This function shows the graphs after tab change in inventory dashbaotd
+*/
+ $('#inv-dash-tab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.sparkline_display_visible();
+  });
+
+/*
+* This function shows the graphs after tab change in inventory dashbaotd
+*/
+ $('#money-tab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.sparkline_display_visible();
+  });
+
+  // For changing financial year
+  $("div.select_year select").change(function(){
+    var year = $(this).val();
+    $.ajax({
+      type: 'GET',
+      url: "/dashboard/set_session?session_id="+year
+    });
+  });
+
+  $('.war_add').hide();
+  $('a#add_war').click( function(e){
+    $('.war_info').hide();
+    $('.war_add').show();
+  });
+  $('a#bck_war').click( function(e){
+    $('.war_add').hide();
+    $('.war_info').show();
+  });
+
+  // for adding instamojo keys
+
+  $('.key_add').hide();
+  $('a#add_key').click( function(e){
+    $('.key-info-body').hide();
+    $('.key_add').show();
+  });
+  $('a#bck_key').click( function(e){
+    $('.key_add').hide();
+    $('.key-info-body').show();
+  });
+// for adding CashFree keys
+
+   $('.cashfree_key_add').hide();
+  $('a#cashfree_add_key').click( function(e){
+    $('.cfkey-info-body').hide();
+    $('.cashfree_key_add').show();
+  });
+  $('a#bck_key').click( function(e){
+    $('.cashfree_key_add').hide();
+    $('.cfkey-info-body').show();
+  });
+
+
+  // removing value on cancel in purchase reference field from popup
+  $(".btncan").live("click", function(){
+    $("#purchase_id_auto_complete").val('');
+    $("div#modal-purchase-ref").modal('hide');
+  });
+
+// for showing and hiding recursion form on invoice
+  if($("#recursive_0").is(":checked")){
+    $("tr.recursiveForm").hide();
+  }
+
+  $("input:radio[name=recursive]").live('click', function(){
+      if($(this).val() == 1){
+      $("#invoice_recursion_attributes_status").val("true");
+      $("tr.recursiveForm").show();
+    }else{
+      $("#invoice_recursion_attributes_status").val("false");
+      $("tr.recursiveForm").hide();
+    }
+  });
+// removing linked tax
+$("#tax-close-btn").live('click', function(){
+  var index = $(this).attr('data-index');
+  $("#txrow"+index).remove();
+});
+//Script to copy billing address into shipping address
+$('#same').live("click",function(){
+    if($('#same').attr('checked')){
+        //alert('hi');
+      $('#shipping_add').val($('#billing_add').val());
+     };
+    });
+
+$(".waiting").live('click', function(){
+  $(".old-p").remove();
+  $("#waiting").html('<%= image_tag "ajax-loade.gif", :class => "loader"%>');
+});
+
+// script for popup removing red border when click on save buton
+  $(".account-name").live('keyup', function(){
+    $(".account-name").css('border-color', '');
+  });
+  $(".account-start-date").live('focusout', function(){
+    $(".account-start-date").css('border-color', '');
+  });
+  $(".account-head").live('change', function(){
+    $(".account-head").css('border-color', '');
+  });
+  $("#duties_tax_rate").live('keyup', function(){
+    if($(this).val()){
+      $("span#tax_rate").text('');
+      $("#duties_tax_rate").css("border-color", "");
+    }
+  });
+  $("#email").live('keyup', function(){
+    $("span#email").text('');
+    $("#email").css("border-color", "");
+  });
+// script for adding new row
+$("tr#row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#row_link td a").attr('href') != '#'){
+    $("tr#row_link").before('<tr id="row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#row_link td a").attr('href', '#'); // disable link
+    $("tr#row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+$("tr#shipping_row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#shipping_row_link td a").attr('href') != '#'){
+    $("tr#shipping_row_link").before('<tr id="shipping-row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#shipping_row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#shipping_row_link td a").attr('href', '#'); // disable link
+    $("tr#shipping_row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+
+
+$("tr#discount_row_link td a").live('click', function(e){
+  // alert($(".display tr:first > td").length );
+  if($("tr#discount_row_link td a").attr('href') != '#'){
+    $("tr#discount_row_link").before('<tr id="discount-row-loader"><td colspan=8  align=center><%= image_tag "ajax-loade.gif", :class => "loader" %></td></tr>');
+    $("tr#discount_row_link td a").attr('onclick', 'return false'); // disable link
+    $("tr#discount_row_link td a").attr('href', '#'); // disable link
+    $("tr#discount_row_link td a").css('text-decoration', 'none');
+  }
+  e.stopProgration();
+});
+
+// script for search invoice filter
+// $('#invoice_amount').live('change', function(e){
+//   var val = $('#invoice_amount').val();
+//   var fdate = $('input:text[name=from_date]').val();
+//   var tdate = $('input:text[name=to_date]').val();
+//   $.ajax({
+//     type: 'get',
+//     data: {invoice_amount: val, from_date: fdate, to_date: tdate},
+//     url: '/receipt_vouchers/search_invoice'
+//   });
+// });
+
+// script for search invoice
+$("input:radio[name=invoice]").live('click', function(){
+  $('#invoice_id_auto_complete').val($(this).val());
+  $('#invoice_id_auto_complete').focus();
+  $('#invoice_id_auto_complete').focusout();
+
+});
+
+// script for search purchase filter
+// $('#purchase_amount').live('change', function(e){
+//   var val = $('#purchase_amount').val();
+//   var fdate = $('input:text[name=from_date]').val();
+//   var tdate = $('input:text[name=to_date]').val();
+//   $.ajax({
+//     type: 'get',
+//     data: {purchase_amount: val, from_date: fdate, to_date: tdate},
+//     url: '/payment_vouchers/search_purchase'
+//   });
+// });
+/*autocompete off for complete app */
+$("input:text").attr('autocomplete','off');
+
+// $('#example').tablesorter();
+
+   $('.data-filter').hide();
+   $('a#use_filter').click(function(e){
+   $('div.data-filter').toggle('slow',function(){
+      if ($('img.show_image').attr("src") == '<%= image_tag "sort_desc.png"%>')
+         $('img.show_image').attr('src','<%= image_tag "sort_asc.png"%>');
+      else
+         $('img.show_image').attr('src','<%= image_tag "sort_desc.png" %>');
+     }
+     );
+     e.stopProgration();
+   });
+
+   //sharebox function end
+
+   //Script for animated footer
+  $('#animated').each(function () {
+        $(this).hover(function () {
+            $(this).stop().animate({
+                opacity: 0.9
+            }, 400);
+        }, function () {
+            $(this).stop().animate({
+                opacity: 0.0
+            }, 200);
+        });
+    });
+ //  End of script for animated footer
+
+
+    /* task_links using AJAX */
+$('#tabnav a').click(function(e){
+        var url = $(this).attr('href');
+            url = url + ' #task_container';
+        $('#task_container').html('<div align="center"><%= image_tag "loader.gif"%><div>').load(url, function(respons, status, xhr, t){
+            var msg = "Sorry but there was an error: ";
+            if (status == "error" && xhr.status == 404) {
+                $('#task_container').html("<b>" + msg + ' ' + xhr.status + "</b>" + '  Unable to reach to the link');
+                t.stopProgration();
+            }
+            else
+                if (status == "error" && xhr.status == 0) {
+                    $('#task_container').html("<b>" + msg + '  ' + xhr.status + "</b>" + '  Unable to reach to the server');
+                    t.stopProgration();
+                }
+        });
+    $('ul#tabnav li a').css('background-color', '#999');
+    $(this).css('background-color', '#2A7AD2');
+        e.preventDefault();
+    });
+
+  $('#pagin a').live('click', function(e){
+        var url = $(this).attr('href');
+            url = url + ' #task_container';
+        $('#task_container').html('<div align="center"><%= image_tag "loader.gif" %><div>').load(url, function(respons, status, xhr, t){
+            var msg = "Sorry but there was an error: ";
+            if (status == "error" && xhr.status == 404) {
+                $('#task_container').html("<b>" + msg + ' ' + xhr.status + "</b>" + '  Unable to reach to the link');
+                t.stopProgration();
+            }
+            else
+                if (status == "error" && xhr.status == 0) {
+                    $('#task_container').html("<b>" + msg + '  ' + xhr.status + "</b>" + '  Unable to reach to the server');
+                    t.stopProgration();
+                }
+        });
+        e.preventDefault();
+    });
+
+    //This code is written by Manjeet for calculating total amount for invoices
+
+
+
+    $('table#line_items_estimate input:text').live('keyup', function(e){
+        var i = 0;
+        total = 0;
+        var total_discount = 0;
+        var tax = 0;
+        $('table#line_items_estimate tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var discount = 1;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                $('table#line_items_estimate span#discount').text(x.toFixed(2));
+                if ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(4) input:text').val()) {
+                    var discount = ($('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(4) input:text').val() / 100);
+                    x = (qut * unitCost) * discount;
+                }
+                amount = (qut * unitCost) - x;
+                $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(5) input:text').val(amount.toFixed(2));
+                total = total + amount;
+                total_discount = total_discount + x;
+            }
+            else {
+                $('table#line_items_estimate tbody tr:eq(' + i + ') td:eq(5) input:text').val('');
+            }
+             if ($('table#line_items_estimate tbody tr:eq(' + i + ') td #tax').val()){
+              tax += parseFloat($('table#line_items_estimate tbody tr:eq(' + i + ') td #tax').val())
+              // alert(tax);
+            }
+            i++;
+        });
+        total =  total + tax ;
+        $('table#line_items_estimate span#discount').text(total_discount.toFixed(2));
+        $('table#line_items_estimate span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+
+       $('table#line_items_purchase input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        var tax = 0 ;
+        $('table#line_items_purchase tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                amount = (qut * unitCost);
+                $('table#line_items_purchase tbody tr:eq(' + i + ') td:eq(5) input:text').val(amount.toFixed(2));
+                total = total + amount;
+            }
+            if ($('table#line_items_purchase tbody tr:eq(' + i + ') td #tax').val()){
+              tax += parseFloat($('table#line_items_purchase tbody tr:eq(' + i + ') td #tax').val())
+              // alert(tax);
+            }
+            i++;
+        });
+        total =  total + tax ;
+        $('table#line_items_purchase span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+
+    $('table#line_items_purchase_order input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#line_items_purchase_order tbody tr').each(function(){
+            var qut = 0;
+            var unitCost = 0;
+            var amount = 0;
+            var x = 0;
+            if ($('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(2) input:text').val() && $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(3) input:text').val()) {
+                var qut = $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(2) input:text').val();
+                var unitCost = $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(3) input:text').val();
+                amount = (qut * unitCost);
+                $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(4) input:text').val(amount.toFixed(2));
+                total = total + amount;
+            }
+            else {
+                $('table#line_items_purchase_order tbody tr:eq(' + i + ') td:eq(4) input:text').val('');
+            }
+            i++;
+        });
+        $('table#line_items_purchase_order span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+
+    $('table#line_items_saccounting input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#line_items_saccounting tbody tr').each(function(){
+            var amount = 0;
+            if ($('table#line_items_saccounting tbody tr:eq(' + i + ') td .amount').val()) {
+                amount = parseFloat($('table#line_items_saccounting tbody tr:eq(' + i + ') td .amount').val());
+                total = total + amount;
+                //alert($('table#line_items_saccounting tbody tr:eq(1) td:eq(1) input:text').val());
+            }
+            i++;
+        });
+        $('table#line_items_saccounting span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+
+    $('table#report input:text').live('keyup', function(e){
+        var i = 0;
+        var total = 0;
+        $('table#report tbody tr').each(function(){
+            var amount = 0;
+            if ($('table#report tbody tr:eq(' + i + ') td .amount').val()) {
+                amount = parseFloat($('table#report tbody tr:eq(' + i + ') td .amount').val());
+                total = total + amount;
+                //alert($('table#report tbody tr:eq(1) td:eq(1) input:text').val());
+            }
+            i++;
+        });
+        $('table#report tfoot span#total').text(total.toFixed(2));
+        e.stopProgration();
+        e.preventDefault();
+    });
+
+      $('table#salary_structure_report input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#salary_structure_report tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#salary_structure_report tbody tr:eq(' + i + ') td:eq(1) input:text').val()) {
+                    amount = parseFloat($('table#salary_structure_report tbody tr:eq(' + i + ') td:eq(1) input:text').val());
+                    total = total + amount;
+                    //alert($('table#salary_structure_report tbody tr:eq(1) td:eq(1) input:text').val());
+                }
+                i++;
+            });
+            $('table#salary_structure_report span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+        });
+
+      $('table#line_items_journal input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#line_items_journal tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#line_items_journal tbody tr:eq(' + i + ') td .amount').val()) {
+                    amount = parseFloat($('table#line_items_journal tbody tr:eq(' + i + ') td .amount').val());
+                    total = total + amount;
+                    //alert($('table#line_items_journal tbody tr:eq(1) td:eq(1) input:text').val());
+                }
+                i++;
+            });
+            $('table#line_items_journal span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+        });
+
+      $('table#journal_report input:text').live('keyup', function(e){
+            var i = 0;
+            var total = 0;
+            $('table#journal_report tbody tr').each(function(){
+                var amount = 0;
+                if ($('table#journal_report tbody tr:eq(' + i + ') td .amount').val()) {
+                    amount = parseFloat($('table#journal_report tbody tr:eq(' + i + ') td:eq(1) input:text').val());
+                    total = total + amount;
+                    //alert($('table#journal_report tbody tr:eq(1) td .amount').val());
+                }
+                i++;
+            });
+            $('table#journal_report span#total').text(total.toFixed(2));
+            e.stopProgration();
+            e.preventDefault();
+    });
+
+
+    //End of code
+
+    /* Script is written by manjeet for Toggle Effect*/
+      $('tbody.man').hide();
+        $('thead#user_info').live('click', function(e){
+            $(this).next('tbody.man').toggle('slow');
+            e.stopProgration();
+        });
+
+      $('div.man').hide();
+        $('header#user_info').live('click', function(e){
+            $(this).next('div.man').toggle('slow');
+            e.stopProgration();
+        });
+
+      /*End of toggle effect script*/
+});
+
+$(function(){
+
+    /*$('#search_estimate_date_eq').datepicker({format: 'dd-mm-yyyy'});*/
+    /* Datepicker for Accounting functions Start*/
+    $("#company_customer_relationships_attributes_0_next_contact_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#lead_customer_relationships_attributes_0_next_contact_date").datepicker({format: 'dd-mm-yyyy'});
+    $('#stock_wastage_voucher_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#project_end_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_expense_date_gte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_expense_date_lte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_voucher_date_gte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_voucher_date_lte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_income_date_gte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_income_date_lte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_due_date_gte').datepicker({format: 'dd-mm-yyyy'});
+    $('#search_due_date_lte').datepicker({format: 'dd-mm-yyyy'});
+    $('#ledger_bank_transaction_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#income_voucher_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#income_voucher_income_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#receipt_voucher_received_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#receipt_voucher_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#advance_receipt_voucher_received_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#advance_receipt_voucher_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#payment_voucher_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#payment_voucher_payment_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_bill_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_record_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_due_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_bdate').datepicker({format: 'dd-mm-yyyy'});
+    $('#expense_expense_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#expense_due_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#invoice_invoice_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#invoice_due_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#estimate_estimate_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_order_record_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_order_due_date').datepicker({format: 'dd-mm-yyyy'});
+    $("#receive_cash_received_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#deposit_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#withdrawal_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#journal_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#credit_note_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#gst_credit_note_gst_credit_note_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#debit_note_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#reimbursement_note_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#saccounting_voucher_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#payment_payment_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#tds_payment_voucher_payment_detail_attributes_payment_date").datepicker({format: 'dd-mm-yyyy'});
+    $('#tds_payment_voucher_payment_date').datepicker({format: 'dd-mm-yyyy'});
+    $("#transfer_cash_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#start_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#end_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#assigned_start_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#assigned_end_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#completed_start_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#completed_end_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#for_date").datepicker({ format: 'dd-mm-yyyy'});
+    $("#income_voucher_payment_detail_attributes_payment_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#receipt_voucher_payment_detail_attributes_payment_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#payment_voucher_payment_detail_attributes_payment_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#stock_issue_voucher_voucher_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#stock_receipt_voucher_voucher_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#stock_transfer_voucher_transfer_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#subscription_renewal_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#account_accountable_attributes_date_of_incorporation").datepicker({format: 'dd-mm-yyyy'});
+    $("#account_birthday").datepicker({format: 'dd-mm-yyyy'});
+    $("#account_anniversary").datepicker({format: 'dd-mm-yyyy'});
+    $("#invoice_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#next_renewal_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#lead_lead_activities_attributes_0_record_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#lead_lead_activities_attributes_0_next_followup").datepicker({format: 'dd-mm-yyyy'});
+    $("#cheque_transaction_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#invoice_recursion_attributes_schedule_on").datepicker({format: 'dd-mm-yyyy'});
+    $("#customer_incorporated_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#vendor_incorporated_date").datepicker({format: 'dd-mm-yyyy'});
+    $('#sales_order_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#delivery_challan_voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#bank_statement_start_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#bank_statement_end_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#deposit[transaction_date]').datepicker({format: 'dd-mm-yyyy'});
+    $('#as_on_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#account_starts_from').datepicker({format: 'dd-mm-yyyy'});
+     $('#voucher_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#purchase_return_record_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#invoice_return_record_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#account_start_date').datepicker({format: 'dd-mm-yyyy'});
+    $('#vendor-start-date').datepicker({format: 'dd-mm-yyyy'});
+    $('#sales_order_po_date').datepicker({format: 'dd-mm-yyyy'});
+    $("#invoice_from_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $("#account_end_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $("#invoice_to_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $("#payment_voucher_payment_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $("#project_start_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+
+    $("#purchase_from_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $("#purchase_to_date").live('focus', function () {
+      $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+
+    $('#cheque_payment_payment_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#card_payment_payment_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#internet_banking_payment_payment_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#campaign_start_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#campaign_end_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+     $('#effective_from_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+$('#debtor_date_of_incorporation').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#debtor_contacts_birthday').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#debtor_anniversary').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    $('#payroll_execution_job_execution_date').live('focus', function () {
+            $(this).datepicker({format: 'dd-mm-yyyy'});
+    });
+    /*Accounting Datepicker End*/
+
+    /* Datepicker For Payroll Function's start*/
+    // $('#timesheet-day').live('focus', function () {
+    //         $(this).datepicker({format: 'dd-mm-yyyy'});
+    //       });
+    $("#balance_sheet_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#user_user_information_attributes_birth_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#user_user_information_attributes_marriage_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#user_user_information_attributes_passport_expiry_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#user_user_salary_detail_attributes_date_of_joining").datepicker({format: 'dd-mm-yyyy'});
+    $("#user_user_salary_detail_attributes_date_of_leaving").datepicker({format: 'dd-mm-yyyy'});
+    $("#record_expense_expense_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#contact_birthday").datepicker({format: 'dd-mm-yyyy'});
+    $("#contact_anniversary").datepicker({format: 'dd-mm-yyyy'});
+    $("#leave_request_start_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#leave_request_end_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#employee_date_of_joining").datepicker({format: 'dd-mm-yyyy'});
+    $("#employee_date_of_birth").datepicker({format: 'dd-mm-yyyy'});
+    $("#employee_wedding_day").datepicker({format: 'dd-mm-yyyy'});
+    $("#employee_passport_expiry_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#salary_structure_effective_from_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#asset_purchase_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#company_asset_purchase_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#holiday_holiday_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#timesheet_start_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#timesheet_end_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#timesheet_record_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#task_due_date").datepicker({ format: 'dd-mm-yyyy'});
+    $("#employee_goal_from_date").datepicker({format: 'dd-mm-yyyy'});
+    $("#employee_goal_to_date").datepicker({format: 'dd-mm-yyyy'});
+     $("#coupon_date_start").datepicker({format: 'dd-mm-yyyy'});
+     $("#coupon_date_end").datepicker({format: 'dd-mm-yyyy'});
+     $("#campaign_start_date").datepicker({format: 'dd-mm-yyyy'});
+     $("#campaign_end_date").datepicker({format: 'dd-mm-yyyy'});
+     $("#lead_next_call_date").datepicker({format: 'dd-mm-yyyy'});
+     $("#announcement_starts_at").datepicker({format: 'dd-mm-yyyy'});
+     $("#announcement_ends_at").datepicker({format: 'dd-mm-yyyy'});
+     $("#profitbooks_workstream_release_date").datepicker({format: 'dd-mm-yyyy'});
+
+
+    /*Payroll Datepicker End*/
+
+});
+
+
+// function for removing line items
+
+function remove_fields(link){
+    $(link).prev("input[type=hidden]").value = "1";
+    $(link).up(".fields").hide();
+}
+
+function add_fields(link, association, content){
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g")
+    $(link).up().insert({
+        before: content.replace(regexp, new_id)
+    });
+   }
+
+    function numbersOnly(e){
+
+       // alert(e.which);
+    if (((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 110 || e.which == 190 || e.which == 16 || e.which == 9 || e.which == 37 || e.which == 39 || e.which == 46 )) {
+       // alert('alow'+e.which);
+        return true;
+    }
+    else {
+        return false;
+    }
+
+  }
+
+function balOnly(e){
+
+       // alert(e.which);
+    if (((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 110 || e.which == 190 || e.which == 16 || e.which == 9 || e.which == 37 || e.which == 39 || e.which == 46 || e.which == 109 || e.which == 173 || e.which == 45 || e.which == 189 )) {
+       // alert('alow'+e.which);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function card_cheque_number(e){
+      // alert(e.which);
+    if ((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 9 || e.which == 16 || e.which == 37 || e.which == 39 || e.which == 46) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function alphaNumeric(e){
+  // alert(e.which);
+  if ((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 9 || e.which == 16 || e.which == 37 || e.which == 39 || e.which == 46){
+     return true;
+    }
+    else {
+        return false;
+    }
+}
+
+$(document).ready(function(){
+
+    /* Transaction Mode dynamic fields for cheque and credit card transaction. */
+ $(".pwd").live('click', function(){
+    $('.un').show();
+    $('.cm').hide();
+  });
+  $(".unm").live('click', function(){
+    $('.un').hide();
+    $('.cm').show();
+  });
+
+
+
+  if ($("input:radio[name=forgot]:checked").val() == 'username'){
+    $('#uname').hide();
+  }
+  else {
+   $('#cmpname').hide();
+  }
+  $("input:radio[name=forgot]").live('click', function(e){
+    if ($(this).val() == 'username'){
+    $('#uname').hide('slow');
+    $('#cmpname').show('slow');
+  }else if ($(this).val() == 'password'){
+    $('#uname').show('slow');
+    $('#cmpname').hide('slow');
+  }
+  });
+
+
+  $(".sdl").live('click', function(){
+    $('.un').toggle();
+    $('.cm').hide();
+  });
+  $(".sin").live('click', function(){
+    $('.un').hide();
+    $('.cm').toggle();
+  });
+
+
+
+  if ($("input:radio[name=sord]:checked").val() == 'sodlc'){
+    $('#dlcso').hide();
+  }
+  else {
+   $('#soinv').hide();
+  }
+  $("input:radio[name=sord]").live('click', function(e){
+    if ($(this).val() == 'sodlc'){
+    $('#dlcso').hide('slow');
+    $('#soinv').show('slow');
+  }else if ($(this).val() == 'soinvoice'){
+    $('#dlcso').show('slow');
+    $('#soinv').hide('slow');
+  }
+  });
+
+
+
+
+  // script for popup
+  $('#popupBoxClose').live('click', function() {
+    unloadPopupBox();
+  });
+
+  $('#container').click(function() {
+    unloadPopupBox();
+  });
+
+  $('#close').live('click', function() {
+    unloadPopupBox();
+  });
+
+  function unloadPopupBox() { // TO Unload the Popupbox
+    $('#popup_box').fadeOut("slow");
+    $('#popup_box_fixed').fadeOut("slow");
+    $("#msg_box").remove();
+    $("#popup_box").remove();
+    $("#popup_box_fixed").remove();
+  }
+
+    $("#add_new_model").live('click',function(e){
+    $("body").append('<div id="popup_box"><div id="abc"></div></div>');
+    $("#abc").html('<%=image_tag "ajax-loade.gif" %>');
+    var left = e.pageX;
+    var top = e.pageY;
+    $("#popup_box").css({'left': left, 'top': top});
+    $('#popup_box').fadeIn("slow");
+    });
+
+    $("#mmodel").live('click',function(e){
+      $("body").append('<div id="popup_box_fixed"><div id="putHere"></div></div>');
+      $("#putHere").html('<%=image_tag "ajax-loade.gif"%>');
+      var winH = $(window).height();
+      var winW = $(window).width();
+      var top1 = winH/2;
+      var left = winW/2;
+      $("#popup_box_fixed").css({'left': left, 'top': top1});
+      $('#popup_box_fixed').fadeIn("slow");
+    });
+
+    $("#submit_customer").live("click",function(){
+    var name = $("#name").val();
+
+    var email = $("#email").val();
+    var opening_balance = $("#opening_balance").val();
+
+    var address_line1 = $("#address_line1").val();
+    var address_line2 = $("#address_line2").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var country = $("#country").val();
+    var postal_code = $("#postal_code").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_customer";
+
+    $.ajax({
+    type: 'GET',
+    data: {name: name, email: email, opening_balance: opening_balance,
+           address_line1: address_line1, address_line2: address_line2,
+           city: city, state: state, country: country, postal_code: postal_code },
+    url : url
+    });
+  });
+
+
+    $("#submit_item").live("click",function(){
+    var name = $("#name").val();
+    var opening_balance = $("#opening_balance").val();
+    var inventoriable = $("input:radio[name=inventoriable]:checked").val();
+    var index = $("#row_index").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_item";
+    var description = $("#account_description").val();
+    var unit_rate = $("#unit_rate").val();
+    $.ajax({
+    type: 'GET',
+    data: {name: name, opening_balance: opening_balance,
+           inventoriable: inventoriable, index: index,
+           description: description, unit_rate: unit_rate },
+    url : url
+    });
+  });
+  $("#submit_tax").live("click",function(){
+    var name = $("#name").val();
+    var opening_balance = $("#opening_balance").val();
+    var auto_calculate_tax = $("input:radio[name=auto_calculate_tax]:checked").val();
+    var tax_rate = $("#tax_rate").val();
+    var tax = $("#tax_type").val();
+    var index = $("input:hidden[name=index]").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_tax";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, opening_balance: opening_balance,
+           auto_calculate_tax: auto_calculate_tax, tax: tax,
+           tax_rate: tax_rate, index: index },
+    url : url   });
+  });
+  $("#submit_payhead").live("click",function(){
+    var name = $("#name").val();
+    var type = $("#type").val();
+    var payslip_name = $("#payslip_name").val();
+    var affect_net_salary = $("#affect_net_salary").val();
+    var use_of_gratuity = $("#use_of_gratuity").val();
+    var index = $("input:hidden[name=index]").val();
+    var url = "/"+$(this).attr('data-controller')+"/create_payhead";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, type: type,
+           payslip_name: payslip_name, use_of_gratuity: use_of_gratuity,
+           affect_net_salary: affect_net_salary, index: index },
+    url : url   });
+  });
+
+  $("#submit_account").live("click",function(){
+    var index = $("#row_index").val();
+    var name = $("#name").val();
+    var account_head_id = $("#accountHead").val();
+    var opening_balance = $("#opening_balance").val();
+    var location = $("#location").val();
+    var account_number = $("#account_number").val();
+    var bank_name = $("#bank_name").val();
+    var tax = $("#tax_type").val();
+    var tax_rate = $("#tax_rate").val();
+    var entity_name = $("#entity_name").val();
+    var email = $("#email").val();
+    var address_line1 = $("#address_line1").val();
+    var address_line2 = $("#address_line2").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var inventoriable = $("input:radio[name=inventoriable]:checked").val();
+    var reseller_product = $("input:radio[name=reseller_product]:checked").val();
+    var depreciable = $("input:radio[name=depreciable]:checked").val();
+    var interest_applicable = $("input:radio[name=interest_applicable]:checked").val();
+    var interest_rate = $("#interest_rate").val();
+    var compounding = $("#compounding").val();
+    var capital_name = $("#capital_name").val();
+    var depreciation_rate = $("#depreciation_rate").val();
+    var description = $("#account_description").val();
+    var unit_rate = $("#unit_rate").val();
+    var data_account = $(this).attr('data-account');
+    //alert(unit_cost);
+    var url = "/"+$(this).attr('data-controller')+"/create_account";
+    $.ajax({
+    type: 'GET',
+    data: {name: name, location:location, opening_balance: opening_balance,
+         account_head_id: account_head_id, account_number: account_number,
+         bank_name: bank_name, entity_name: entity_name, email: email,
+         address_line1: address_line1, address_line2: address_line2,
+         city: city, state: state, inventoriable: inventoriable, index: index,
+         interest_applicable: interest_applicable, interest_rate: interest_rate,
+         compounding: compounding, capital_name: capital_name, account: data_account,
+         depreciable: depreciable, depreciation_rate: depreciation_rate, tax: tax,
+         tax_rate: tax_rate, description: description, unit_rate: unit_rate,
+         reseller_product: reseller_product
+     },
+    url : url
+    });
+  });
+
+    $("#accountHead").live('change',function() {
+      $(".subP").remove();
+      $(".open-balance").after('<div class="loader text-center"><%=image_tag "ajax-loader.gif" %></div>');
+      $(".btnsave").attr('class', 'btn btn-sm btn-success btnsave disabled'); // disable button
+      var account_head_id = $(this).val();
+
+      $.ajax({
+        data: {account_head_id: account_head_id},
+        type: 'GET',
+        url : "/receipt_vouchers/account_partial"
+      });
+    });
+
+    // account head render
+    $("#accountHeadSelect").change(function() {
+      // alert('hi');
+      $(".gradeU").remove();
+      $(".open_balance").after('<div class="loader text-center form-group"><div class="col-lg-2 text-right"></div><div class="col-lg-3"><%=image_tag "ajax-loader.gif" %></div></div>');
+      $(".btnsave").attr('class', 'btn btn-sm btn-success btnsave disabled'); // disable button
+      // $("#submit_acc").css('text-decoration', 'none');
+
+      var account_head_id = $("#accountHeadSelect").val();
+      $.ajax({
+        type: 'GET',
+        url : "/accounts/account_partial?account_head_id="+account_head_id,
+        success: function(partial){
+          $("#open_account").insertAfter(partial);
+        },
+      });
+
+    });
+});
+ $(document).ready(function(){
+  /* Script for notification bar*/
+  $("div.notifBarClose a").click(function(){
+  $('.notif-bar').fadeOut("slow");
+  $(".notif-bar").remove();
+  });
+   /* Script for transfering selected item from one dropdown to another */
+   $("#plan_id").change(function(){
+     $.ajax({
+       type: "GET",
+       url: "/admin/plans/get_role?plan_id="+$(this).val()
+     });
+   });
+
+   $("#grant_role_id").live('change', function(){
+     $.ajax({
+       type: "GET",
+       url: "/admin/plans/get_right?role_id="+$(this).val()
+     });
+   });
+
+  $("#to_right").live('click', function(){
+  $("#right option:selected").each(function(){
+    $("#grant").append("<option value="+$(this).val()+" selected=selected>"+$(this).text()+"</option>");
+    $("#right option[value="+$(this).val()+"]").remove();
+  });
+  });
+
+  $("#to_left").live('click', function(){
+  $("#grant option:selected").each(function(){
+    $("#right").append("<option value="+$(this).val()+" selected=selected>"+$(this).text()+"</option>");
+    $("#grant option[value="+$(this).val()+"]").remove();
+  });
+  });
+
+
+/* ==============End============= */
+ $('.rpl_msg').hide();
+  $('a#msg_info').click( function(e){
+      $('.rpl_msg').toggle('slow');
+      $('a#msg_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+$('.edt_bsc_info').hide();
+  $('a#edt_info').click( function(e){
+      $('.edt_bsc_info').toggle('slow');
+      $('.bsc_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+
+  $('a#back').click( function(e){
+      $('.bsc_info').toggle('slow');
+      $('.edt_bsc_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+  $('.dep_add').hide();
+  $('a#add_dep').click( function(e){
+      $('.dep_add').toggle('slow');
+      $('.dep_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_dep').click( function(e){
+      $('.dep_info').toggle('slow');
+      $('.dep_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('.deg_add').hide();
+  $('a#add_deg').click( function(e){
+      $('.deg_add').toggle('slow');
+      $('.deg_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_deg').click( function(e){
+      $('.deg_info').toggle('slow');
+      $('.deg_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('.hld_add').hide();
+  $('a#add_hld').click( function(e){
+      $('.hld_add').toggle('slow');
+      $('.hld_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_hld').click( function(e){
+      $('.hld_info').toggle('slow');
+      $('.hld_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('.lvtp_add').hide();
+  $('a#add_lvtp').click( function(e){
+      $('.lvtp_add').toggle('slow');
+      $('.lvtp_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_lvtp').click( function(e){
+      $('.lvtp_info').toggle('slow');
+      $('.lvtp_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+$('.edt_logo').hide();
+  $('a#add_logo').click( function(e){
+      $('.edt_logo').toggle('slow');
+      $('.company_logo').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_logo').click( function(e){
+      $('.company_logo').toggle('slow');
+      $('.edt_logo').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+// user avatar toggle
+$('.edt_avatar').hide();
+  $('a#add_avatar').click( function(e){
+      $('.edt_avatar').toggle('slow');
+      $('.user_avatar').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+  // code segment added for user screen on 2 Aug,2016
+  $('.edit_picture').hide();
+  $('a#add_picture').click( function(e){
+     $('.remove_picture').hide();
+      $('.edit_picture').toggle('slow');
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+   $('.remove_picture').hide();
+  $('a#rem_picture').click( function(e){
+    $('.edit_picture').hide();
+      $('.remove_picture').toggle('slow');
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+
+
+$('a#bck_avatar').click( function(e){
+      $('.user_avatar').toggle('slow');
+      $('.edt_avatar').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+// leave req toggle
+$('.leave_req_add').hide();
+  $('a#add_leave_req').click( function(e){
+      $('.leave_req_add').toggle('slow');
+      $('.leave_req_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_leave_req').click( function(e){
+      $('.leave_req_info').toggle('slow');
+      $('.leave_req_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+// leave card toggle
+$('.leave_card_add').hide();
+$('a#add_leave_card').click( function(e){
+  $('.leave_card_add').toggle('slow');
+  $('.leave_card_info').hide();
+});
+$('a#bck_leave_card').click( function(e){
+  $('.leave_card_info').toggle('slow');
+  $('.leave_card_add').hide();
+});
+
+
+// user detail toggle
+$('.user_detail_add').hide();
+$('a#add_user_detail').click( function(e){
+  $('.user_detail_add').show();
+  $('.user_detail_info').hide();
+});
+$('a#bck_user_detail').click( function(e){
+  $('.user_detail_info').show();
+  $('.user_detail_add').hide();
+});
+
+
+
+
+// title form toggle
+$('.vttl_add').hide();
+  $('a#add_vttl').click( function(e){
+      $('.vttl_add').toggle('slow');
+      $('.vttl_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_vttl').click( function(e){
+      $('.vttl_info').toggle('slow');
+      $('.vttl_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+
+// sal stru req toggle
+$('.edit_sal_stru').hide();
+  $('a#sal_stru_edit').click( function(e){
+      $('.edit_sal_stru').toggle('slow');
+      $('.sal_stru').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#back_stru').click( function(e){
+      $('.sal_stru').toggle('slow');
+      $('.edit_sal_stru').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+// tax toggle
+if($("#sales").is(":checked")){
+    $('.sales-info').show();
+  }else{
+    $('.sales-info').hide();
+  }
+
+  if($("#purchase").is(":checked")){
+    $('.purchase-info').show();
+  }else{
+    $('.purchase-info').hide();
+  }
+
+  $('#sales').live('click', function(){
+    if($("#sales").is(":checked")){
+      $('.sales-info').show();
+    }else{
+      $('.sales-info').hide();
+    }
+  });
+
+  $('#purchase').live('click', function(){
+    if($("#purchase").is(":checked")){
+      $('.purchase-info').show();
+    }else{
+      $('.purchase-info').hide();
+    }
+  });
+
+ });
+
+
+ /* Togal for file upload and folder form. */
+   $('#file').live('click', function(e){
+     $('#form1').toggle('slow');
+     $('#form2').hide('slow');
+     e.stopProgration();
+   });
+   $('#folder').live('click', function(e){
+      $('#form1').hide('slow');
+     $('#form2').toggle('slow');
+     e.stopProgration();
+   });
+
+$(document).ready(function() {
+  jQuery(".best_in_place").best_in_place()
+});
+
+// code to close a info box
+$('.closeable').each(function(){
+    $(this).prepend(
+      $('<a></a>')
+        .attr({href: '#', title: 'Close'})
+        .addClass('close')
+        .text('x')
+        .click(function() {
+          $(this).parent().fadeOut();
+          return false;
+        })
+    );
+  });
+
+$(document).ready(function(){
+
+        // $(".slidingDiv").hide();
+        // $(".show_hide").show();
+
+    $('.show_hide').click(function(){
+    $(".slidingDiv").slideToggle();
+    });
+
+});
+
+function fadeOutMessage(){
+  setTimeout(function(){
+      $("div.alert-success").fadeOut(3000, function () {
+      $("div.alert-success").remove();
+    });
+  }, 3000);
+}
+
+function loaderImg(){
+  '<%= image_tag "ajax-loade.gif", :class => "loader" %>'
+}

@@ -1,0 +1,63 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+   <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class = "column width6 first">&nbsp;&nbsp;
+      <div class="column width6 first highlight">
+          <div id='user_info_div'><span class='basic_info'>Ledger Entry Detail</span></div>&nbsp;
+          <table>
+						<tr>
+						  <td><b>Voucher number:</b></td>
+						  <td><%= @ledger.voucher_number %></td>
+						</tr>
+						
+						<tr>
+						  <td><b>Voucher type:</b></td>
+						  <td><%= @ledger.voucher_type %></td>
+						</tr>
+						<tr>
+						  <td><b>Account:</b></td>
+						  <td><%= Account.find(@ledger.account_id).name %></td>
+						</tr>
+						
+						<tr>
+						  <td><b>Transaction date:</b></td>
+						  <td><%= @ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+						</tr>
+						
+						<tr>
+						  <td><b>Debit:</b></td>
+						  <td><%= format_currency @ledger.debit %></td>
+						</tr>
+						
+						<tr>
+						  <td><b>Credit:</b></td>
+						  <td><%= format_currency @ledger.credit %></td>
+						</tr>
+						
+						
+						<tr>
+						  <td><b>Created by:</b></td>
+						  <td><%= User.find(@ledger.created_by).first_name %></td>
+						</tr>
+						
+						
+						<tr>
+						  <td><b>Description:</b></td>
+						  <td><%= @ledger.description %></td>
+						</tr>
+				</table>  &nbsp;
+			  <div class="actions" >
+             
+              <a href="/ledgers" class="btn btn-green big">Back</a>
+        </div> 
+      </div>
+    </section>&nbsp;
+       <!-- End of Left column/section -->
+  </div>
+
+</div>   

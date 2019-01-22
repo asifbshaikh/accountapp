@@ -1,0 +1,3 @@
+$(".old-data").remove();
+$(".data-here").after("<%= escape_javascript render 'product_select_tag', :index => params[:index] %>");
+$("#row_link").attr('data-warehouse_id', '<%= params[:warehouse_id] %>');

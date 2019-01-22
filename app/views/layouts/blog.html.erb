@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+  <head>
+    <%= render :partial => "/home/meta_tags" %>
+    <!-- ////////////////////////////////// -->
+    <!-- //     Retina Bookmark Icon     // -->
+    <!-- ////////////////////////////////// -->
+    <!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>    
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+
+    <!--Start of Zopim Live Chat Script-->
+    <%= render :partial => "/home/zopim_chat_and_google_analytics"%>
+    <!-- End Load google Analytics -->
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script type="text/javascript">
+//<![CDATA[
+  (function() {
+    var shr = document.createElement('script');
+    shr.setAttribute('data-cfasync', 'false');
+    shr.src = '//dsms0mj1bbhn4.cloudfront.net/assets/pub/shareaholic.js';
+    shr.type = 'text/javascript'; shr.async = 'true';
+    shr.onload = shr.onreadystatechange = function() {
+      var rs = this.readyState;
+      if (rs && rs != 'complete' && rs != 'loaded') return;
+      var apikey = 'fd298775a96bfdf99ebff5b42ab7490d';
+      try { Shareaholic.init(apikey); } catch (e) {}
+    };
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(shr, s);
+  })();
+//]]>
+</script>
+  </head>
+  <body>
+    <div id="main-wrapper">
+      <!-- header start here -->
+      <%= render :partial=> "home/header" %>
+      <!-- header end here -->
+      <!-- page title start here -->
+      <section id="special-content-wrapper">
+        <div class="row pagetitle">
+          <div class="seven columns">
+            <h2>Profitbooks Blog</h2>
+            <h6>The place where we talk about our product, design, accounting practices and sometimes about ourselves.</h6>
+          </div>
+          <div class="five columns">
+            <div id="breadcrumb">
+              <ul>
+                <a href="www.profitbooks.net/home/pricing" class="simpleBTN green large">Get started for FREE</a>
+              </ul>
+            </div>  
+          </div>
+        </div>
+      </section>
+      <!-- page title end here -->
+    
+      <!-- content section start here -->
+      <section id="content-wrapper">
+        <%= yield %>
+      </section>
+      <!-- content section end here -->
+      <!-- content section end here -->
+      <!-- footer section start here -->
+      <%= render :partial=> "home/footer" %>
+      <!-- footer section end here -->
+    </div>
+    <script>$('#noscript').remove();</script>
+  </body>
+</html>

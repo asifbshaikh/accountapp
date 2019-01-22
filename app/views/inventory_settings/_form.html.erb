@@ -1,0 +1,34 @@
+<%= form_for(@inventory_setting) do |f| %>
+  <% if @inventory_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@inventory_setting.errors.count, "error") %> prohibited this inventory_setting from being saved:</h2>
+
+      <ul>
+      <% @inventory_setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="box info">
+      <div class="field">
+        <label class='checkbox'>
+          <%= f.check_box :purchase_effects_inventory %>
+          Inventory is affected on entry of purchase voucher.
+        </label>
+      </div>
+      This setting changes how the inventory if effected. Incase set to effected on entry of purchase voucher the inventory of
+      the purchased items increases when the purchase voucher is passed. Incase this setting is not set, the inventory of items
+      is NOT effected with the purchase voucher. The inventory is increased when the goods are received by the Stock Receipt voucher
+      at the Warehouse.
+    </div>
+    <!--
+  <div class="field">
+    <%= f.label :inventory_model %><br />
+    <%= f.text_field :inventory_model %>
+  </div>
+-->
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-green btn-special'%>
+  </div>
+<% end %>

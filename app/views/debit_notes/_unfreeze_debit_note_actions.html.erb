@@ -1,0 +1,5 @@
+<a href="/debit_notes/new" class="btn btn-success btn-lg"> + Add New Record</a>
+
+<%= render "#{DebitNote::WRITE_STATUS[@debit_note.read_only]}_debit_note_actions" %>
+<%= link_to raw('<i class="icon-print"> </i>'), debit_note_path(@debit_note, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>  
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), debit_notes_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>

@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Purchase return:</b>
+  <%= @purchase_return_line_item.purchase_return_id %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%= @purchase_return_line_item.account_id %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @purchase_return_line_item.quantity %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%= @purchase_return_line_item.unit_price %>
+</p>
+
+<p>
+  <b>Tax:</b>
+  <%= @purchase_return_line_item.tax %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @purchase_return_line_item.amount %>
+</p>
+
+<p>
+  <b>Line type:</b>
+  <%= @purchase_return_line_item.line_type %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @purchase_return_line_item.product_id %>
+</p>
+
+<p>
+  <b>Tax account:</b>
+  <%= @purchase_return_line_item.tax_account_id %>
+</p>
+
+<p>
+  <b>Discount percent:</b>
+  <%= @purchase_return_line_item.discount_percent %>
+</p>
+
+<p>
+  <b>Warehouse:</b>
+  <%= @purchase_return_line_item.warehouse_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_purchase_return_line_item_path(@purchase_return_line_item) %> |
+<%= link_to 'Back', purchase_return_line_items_path %>

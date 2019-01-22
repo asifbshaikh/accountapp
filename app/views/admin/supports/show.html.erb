@@ -1,0 +1,92 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+  <div id="page">
+   <!-- Wrapper -->
+     <div class="wrapper">
+   <!-- Left column/section -->
+         <section class="column width6 first "></br>
+            <div class="highlight">
+          <%= render :partial => "shared/flash_msg"	%>
+          <div class="column width6 first">
+             <!-- <div id='user_info_div'><span class='basic_info'>Withdrawal Cash Details</span></div> -->
+             <table class="display stylized" id="act_details">
+				<thead>
+					<tr>
+	                  <th colspan="2">Suport ticket Details</th>
+					</tr>
+			    </thead>
+	            <tbody>
+	                  <tr>
+               	 <td colspan="2"><label>Subject:</label> <%= @support.subject %></td>
+               </tr>
+                <% @replies.each do |reply|%>
+                  <tr>
+                    <td colspan ="2" wrap>
+                      <label> Sent by # on <%= reply.created_at %> </label><br/>
+                       <%= simple_format(reply.description)%>
+                    </td>
+                  </tr>
+                <%end%>
+                 <%if @support.status_id !=2 %>
+                   <tr>
+                      <td width = "12%">
+                       <a href ="#" class = "btn btn-green" id ="msg_info">Post reply</a>
+                      </td>
+                     <td align = "left" id ="close_ticket">
+                         <%= form_tag('/admin/supports/close_ticket') do %>
+                            <%= hidden_field_tag "ticket_number", @support.ticket_number%>
+                           <%= submit_tag 'Close ticket', :class=> "btn btn-cancel" %>
+                                <% end %>
+                             </td>
+	                  </tr>
+                   <% end %>
+                   <tr class="rpl_msg"> 
+                    <td>
+                    <%= form_for @reply, :url => ([:admin, @reply]) do |f| %>
+		        <%= hidden_field_tag "support[subject]", @support.subject %>
+		        <%= hidden_field_tag "support[ticket_number]", @support.ticket_number %>
+                        <%= hidden_field_tag "support[company_id]", @support.company_id %>
+		         <%= hidden_field_tag "support[assigned_to]", @support.created_by %>
+	                  
+                        <% if @replies.blank? %> 
+		          <%= hidden_field_tag "support[reply_id]", @support.id %>
+		        <% else %>
+		          <%= hidden_field_tag "support[reply_id]", @replies.last.id %>
+		        <% end %>
+		        <table >
+	                  <tr>
+		            <td>
+		              <label>Reply message</label><br/>
+		              <%= f.text_area :description,:rows => "3", :cols=> "30" %>
+		            </td>
+	                  </tr>
+	                  <tr>
+		             <td><%= f.submit 'Reply', :class => "btn btn-green"%></td>
+	                  </tr>
+			</table>	
+	                  <% end %>
+                    </td>
+	                  </tr>
+	            </tbody>
+	        </table> 
+	        </div>&nbsp;
+          </div></br>
+         </section>
+          <!-- End of Left column/section -->
+         <!-- Right column/section -->
+		  	<aside class="column width2"><br />
+		     <a href="/admin/supports" class="btn btn-special btn-green "><img src ="/images/white_icon/ic_list.png" class ="icon"/> View support tickets</a>
+		    <!-- <div id="rightmenu">
+				  	<dl class="first">
+					  	<dt><%= image_tag 'help.png', :width=>"16", :height=>"16" %></dt>
+							<dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>
+							<dd class="last">Read the Introduction to Accounts in help</dd>							
+						</dl>
+					</div>--><br />
+		  	</aside>
+		  	<!-- End of Right column/section -->
+       </div>    
+ </div>

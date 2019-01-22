@@ -1,0 +1,63 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">
+      <br/>
+      <div class="highlight">
+        <%= render :partial => "filter" %>
+        <%= form_for :product, :url => update_multiple_ledgers_path, :html => { :method => :put } do |form| %>
+          <br/>
+          <% if @ledgers.blank? %>
+          	<%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table width="738" class="display stylized full" id="report" style="">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Corresponding a/c</th>
+                  <th>Description</th>
+                  <th class="ta-right">Debit</th>
+                  <th class="ta-right">Credit</th>
+                  <th>Date as per bank</th>
+                </tr>
+              </thead>
+              <tbody>
+              	<% for ledger in @ledgers %>
+                  <tr valign="top">
+                    <%= hidden_field_tag "ledger_ids[]", ledger.id %>
+                    <td valign="top" ><%= ledger.transaction_date%></td>
+                    <td class="ta-left"><%= Account.find(ledger.retrieve_corresponding_account).name%></td>
+                    <td ><%= ledger.description %></td>
+                    <td class="ta-right" ><%= format_currency ledger.debit %></td>
+                    <td class="ta-right" ><%= format_currency ledger.credit %></td>
+                    <td class="ta-left"><%= text_field_tag "ledger_bank_transaction_date", Time.zone.now %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td  colspan="6">
+                    <%= submit_tag "Reconcile record", :class => "btn btn-green" %>
+                    <!--<a href= <%= "/bank_reconciliation/update_multiple?id=#{ledger.id}" %> class = "btn btn-green">Reconcile records</a>-->
+		                <a href= "#" data_type = "resrt" class ="btn btn-gray">Cancel</a>
+		              </td>
+                </tr>
+              </tfoot>
+            </table>
+            <br/>
+          <% end %>
+          <br/>
+        <% end %>
+       <!-- </form> -->
+      </div>
+    </section>
+    <!-- End of Left column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

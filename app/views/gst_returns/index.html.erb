@@ -1,0 +1,116 @@
+<section id="content">
+  <section class="main padder">  
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file-text-alt text"></i>GST Return Filing</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <a href="#" class="btn btn-default btn-lg "><i class="icon-info"> </i> </a>
+        <p></p>
+      </div>  
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-8">
+        <section class="panel">
+          <header class="panel-heading bg-light">
+            <i class="icon-list icon-download-alt text-default"></i> Manage Your GST Returns
+          </header>
+          <div class="panel-body">
+            <div class="row text-small">
+              <div class="col-sm-7">
+                <h5>GST Returns Summary</h5>
+              </div>
+              <div class="col-sm-5 text-right">
+                <div class="btn-group text-left">
+                  <button class="btn btn-xs btn-white dropdown-toggle" data-toggle="dropdown">Select month<span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                  <% (@gst_start_month..@gst_end_month).each do |month| %>
+                    <li class="selected"><%= link_to Date::MONTHNAMES[month], gst_returns_path(:month => month)%></li>
+                  <% end %>  
+                  </ul>
+                </div>
+                <p></p>
+              </div>
+            </div>
+            <!-- New section GST Returns summary -->
+            <section class="panel">
+              <header class="panel-heading">
+                <%= display_return_month %>
+              </header>
+              <section class="panel-body">
+                <article class="media">
+                  <div class="pull-left thumb-small">
+                    <span class="icon-stack">
+                      <i class="icon-circle text-danger icon-stack-base"></i>
+                      <i class="icon-tasks icon-light"></i>
+                    </span>
+                  </div>
+                  <div class="media-body">
+                    <div class="pull-right media-mini text-center text-muted">
+                      <strong class="h4">10</strong><br>
+                      <small class="label bg-light">October</small>
+                    </div>
+                    <%= link_to "GSTR-1", gstr1_filing_path(@gst_returns.gstr_one), :class=>"h4"%>
+                    <small class="block">Invoices <span class="badge bg-primary"><%=@gst_returns.gstr_one.gstr_one_items.count%></span>
+                     Uploaded <span class="badge bg-success"><%=@gst_returns.gstr_one.gstr_one_items.where(:status => 1).count%></span> 
+                     Pending <span class="badge bg-inverse"><%=@gst_returns.gstr_one.gstr_one_items.where("status in (0,2)").count%></span></small>
+                  </div>
+                </article>
+                <div class="line pull-in"></div>
+
+                <article class="media">
+                  <div class="pull-left thumb-small">
+                    <span class="icon-stack">
+                      <i class="icon-circle text-danger icon-stack-base"></i>
+                      <i class="icon-file icon-light"></i>
+                    </span>
+                  </div>
+                  <div class="media-body">
+                    <div class="pull-right media-mini text-center text-muted">
+                      <strong class="h4">30</strong><br>
+                      <small class="label bg-light">November</small>
+                    </div>
+                  
+                     <%= link_to "GSTR-2", gstr2_filing_path(@gst_returns.gstr_two), :class=>"h4"%>
+                    <strong class="block"><span class="label label-primary">NOT STARTED</span></strong>
+                    <small class="block">Coming soon!</small>
+                  </div>
+                </article>
+                <div class="line pull-in"></div>
+                <article class="media disabled">
+                  <div class="pull-left thumb-small">
+                    <span class="icon-stack">
+                      <i class="icon-circle text-warning icon-stack-base"></i>
+                      <i class="icon-star icon-light"></i>
+                    </span>
+                  </div>
+                  <div class="media-body">
+                    <div class="pull-right media-mini text-center text-muted">
+                      <strong class="h4">11</strong><br>
+                      <small class="label bg-light">December</small>
+                    </div>
+                    <a href="#" class="h4 text-success">GSTR 3</a>
+                    <small class="block">Comng soon!</small>
+                  </div>
+                </article>
+              </section>
+            </section>
+          </div>
+        </section>  
+      </div>
+      <div class="col-lg-4">
+        <section class="panel">
+          <header class="panel-heading">
+            <i class="icon icon-info text-default"></i> How It works
+          </header>
+          <div class="panel-body">
+            <div class="row text-small">
+              <div class="col-sm-7">Help</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

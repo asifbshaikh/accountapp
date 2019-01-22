@@ -1,0 +1,105 @@
+<section id="content">
+    <section class="main padder">
+
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>
+        <%= @page_name%></h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+    <% if !@ledgers.blank? %>
+    <%= link_to_pdf params %>
+    <%= link_to_xls params %>
+     <%end%>
+    <p></p>
+    </div>
+
+  </div>
+
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+          <%= render :partial => "filter" %>
+        <% if @ledgers.blank? || @account.blank? %>
+          <br />
+          <%= render :partial => "shared/no_record" %>
+              <% else %>
+                    <div class="row">
+                      <div class="col-lg-8">
+                      <b><%= @page_name%></b>
+                      <br />
+                            <%= render "shared/duration" %>
+                    </div>
+                    <div class="col-lg-4" align="right">
+                      <span class="xsmall light">Account name : </span>
+                      <br />
+                      <span class="large"><b><%= @account.name%></b></span>
+                    </div>
+                  </div><br />
+                    <% account = @account.id %>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+              <tr>
+              <th width ="6%"> Date </th>
+              <th width ="18%">Customer </th>
+              <th width ="12%">Currency</th>
+              <th width ="9%"> Voucher Number </th>
+              <th width ="9%"> Type </th>
+              <th class="text-right" width ="23%"> Gain </th>
+              <th class="text-right" width ="23%"> Loss </th>
+            </tr>
+          </thead>
+                <tbody>
+              <%
+              debit = 0
+              credit = 0
+              prev_date = nil
+              @ledgers.each do |ledger| %>
+              <tr>
+                <td width ="6%"><%= (ledger.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+                <% prev_date = ledger.transaction_date.strftime("%d-%m-%Y")
+                acc = Account.find(ledger.retrieve_corresponding_account) %>
+                <td width ="18%"><%= ((ledger.debit > 0)? "To":"By") unless ledger.debit.blank? %>
+                <%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : (link_to acc.name, "/account_books_and_registers/ledger?account_id=#{acc.id}")%>
+                </td>
+                <td width ="12%"><%= acc.get_currency %></td>
+                <td width ="9%">
+                 <% if ledger.voucher_type != "Salary" %>
+                 <%= link_to truncate(ledger.voucher_number, :length=> 14), ledger.voucher %>
+                 <% else %>
+                 <%= truncate(ledger.voucher_number, :length=> 14)%>
+                 <% end %>
+                 </td>
+                <td width ="9%"><%= truncate(ledger.voucher_type, :length =>15) %></td>
+                <td align="right" width ="23%"><%= format_currency(ledger.credit) %></td>
+                <td align="right" width ="23%"><%= format_currency ledger.debit %></td>
+                <%
+                debit += ledger.credit
+                credit += (ledger.debit.blank? ? 0 : ledger.debit)
+                 %>
+              </tr>
+              <% end %>
+              <tr>
+                <td width ="6%"></td><td width ="18%"></td><td width ="12%"></td><td width ="9%"></td><td width ="9%"><b>Total</b></td><td width ="23%" class = 'border_up' align="right"><b><%= format_currency debit%></b></td><td width ="23%" class = 'border_up' align="right"><b><%= format_currency credit%></b></td>
+              </tr>
+
+           </tbody>
+              </table>
+            </div>
+            <footer class="row">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>
+</div>
+</section>
+</section>
+
+

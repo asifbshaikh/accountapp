@@ -1,0 +1,53 @@
+  <section id="content">
+    <div class="main padder">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 m-t-large">
+        <br>
+        <p align="center"><%= image_tag 'logo.png', :alt => 'Login to Profitbooks', :disposition => 'inline' %></p>
+          <section class="panel">
+            <header class="panel-heading text-center">
+              Forgot Username/Password
+            </header>
+           <form method="post" action="/login/check_password" accept-charset="UTF-8"  class="form-horizontal panel-body"> 
+             <%= render :partial=>"shared/flash_msg"%>
+             <div class="block">
+              <div class="btn-group" data-toggle="buttons" >
+                <label class="btn btn-sm btn-default pwd <%= (params[:forgot].blank? || params[:forgot] == 'password')? 'active' : ''%>">
+                <input type="radio" name='forgot' value="password" <%='checked=checked' if params[:forgot].blank? || params[:forgot] == 'password'%> >
+                <i class="icon-ok icon-large text-active"></i>Forgot Password
+                </label>
+                
+                <label class="btn btn-sm btn-default unm <%= (params[:forgot] == 'username')? 'active' : ''%>">
+                <input type="radio" name='forgot' value="username" <%= 'checked=checked' if params[:forgot] == 'username' %> >
+                <i class="icon-ok icon-large text-active"></i>Forgot Username
+                </label>
+              </div>
+              </div>
+               <div class="block un" id='uname'>
+                <label class="control-label-required"> Username </label>
+                 <%= text_field_tag 'username',params[:username], :class =>'bg-focus form-control' %>
+              </div>
+              <div class="block">
+                <label class="control-label-required">Email</label>
+                <%= text_field_tag :email, params[:email],:class =>'bg-focus form-control'%>
+              </div>
+              <div class="block cm" id = 'cmpname'>
+                <label class="control-label-required"> Company Name</label>
+                 <%= text_field_tag 'company_name',params[:company_name], :class=>'bg-focus form-control'%> 
+              </div>
+              <div class="block">
+              <%= show_simple_captcha :label => "Human Authentication" %>
+              </div>
+              <a href="/login/index" class="pull-right m-t-mini"><small>Back to login</small></a>
+              <span class="loading" style="display: none;">Please wait..</span>
+               <input type="submit" name="submit" class="btn btn-success" id="buttonsend" value="Submit" />
+              <div class="line line-dashed"></div>
+              <p class="text-muted text-center"><small>Do not have an account?</small></p>
+              <a href="www.profitbooks.net/home/pricing" class="btn btn-white btn-block">Create an account</a>
+              
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>

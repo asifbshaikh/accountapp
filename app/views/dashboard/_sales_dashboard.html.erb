@@ -1,0 +1,101 @@
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- Top 5 Receivables  -->
+        <section class="panel">
+          <header class="panel-heading">
+            <span class="hidden-sm">Top 5 unpaid invoices</span>
+          </header>
+          <div class="tab-content">
+            <div class="tab-pane active" id="amount-1">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th width="45%">Customer</th>
+                    <th class="text-right" width="35%">Value</th>
+                    <th width="20%">Overdue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= display_receivables(@receivables, "day") %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div><!-- Top 5 Receivables ends -->
+
+      <div class="col-lg-6">
+        <section class="panel">
+          <header class="panel-heading">Invoices by Status</header>
+          <% if @invoice_counts.blank?%>
+            <div class="col-lg-12" align="center"><%= render :partial => "/shared/no_record" %></div>
+          <% else %>
+            <div class="panel-body text-center">
+              <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="[<%= inv_count_colors_array(@invoice_counts.keys) %>]">
+                <%= @invoice_counts.values.join(",") %>
+              </div>
+              <div class="line pull-in"></div>
+              <div class="text">
+                Invoice Status:&nbsp;
+                <% @invoice_counts.each_pair do |key, value| %>
+                  <span class="badge bg-<%=inv_count_class key %>"><%= value %> <%= Invoice::STATUS[key.to_s] %> </span>&nbsp;
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </section>
+      </div>
+    </div>
+  <!-- Row to show payables and expense pie chart ends -->
+</div>
+<!-- End of col8 -->
+  <div>
+    <div class="col-lg-4">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if !@todays_birthday_guys.blank? || @holidays_this_week.count != 0%>
+            <section class="panel bg-info">
+              <div class="panel-body">
+                <% if !@todays_birthday_guys.blank?%>
+                  <% @todays_birthday_guys.each do |user| %>
+                    <p>
+                      <i class="icon-bell"></i>
+                      <%= user.full_name%>'s Birthday Today!
+                    </p>
+                  <%end%>
+                <%end%>
+                <%if @holidays_this_week.count != 0%>
+                  <% @holidays_this_week.each do |h|%>
+                    <p>
+                      <i class="icon-bell"></i>
+                      <%= h.holiday  %>
+                      <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small>
+                    </p>
+                  <%end%>
+                <%end%>
+              </div>
+            </section>
+          <%end%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12"><!-- Recent Activity start -->
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="hidden-sm">Recent Activities</span>
+            </header>
+            <div class="panel-body">
+              <!--Recent Activities -->
+              <%= render :partial => 'dashboard/workstream', :collection => @workstreams %><br>
+              <a href="/workstreams" class="btn btn-info"> View All Activities</a>
+            </div>
+          </section>
+        </div><!-- / Recent Activity end -->
+      </div>
+
+    </div> <!-- Col4 ends -->
+  </div>
+</div>

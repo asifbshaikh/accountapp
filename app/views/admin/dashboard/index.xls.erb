@@ -1,0 +1,31 @@
+<table>
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Mobile</th>
+                  <th>Email</th>
+                  <th>Channel</th>
+                  <th>Next Contact Date</th>
+                  <th>Create Date</th>
+                  <th>Status</th> 
+                </tr>
+              </thead>
+<% @leads.each do |lead|%>
+              <tr>
+                <td><%= lead.name %></td>
+                <td><%= lead.mobile %></td>
+                <td><%= lead.email %></td>
+                <td><%= lead.channel_name%></td>
+                <td><%= lead.next_call_date %></td> 
+                <td><%= lead.created_at.to_date %></td>       
+                <td><%= lead.get_status %></td>
+              </tr>
+<% end %>
+              <tbody>
+                
+              </tbody>
+              <tfoot>
+                
+              </tfoot>
+           
+              </table>

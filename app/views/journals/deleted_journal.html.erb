@@ -1,0 +1,93 @@
+  <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for journal in @journals
+      @data<<journal.voucher_number
+      @data<<journal.date
+        @data<<journal.journal_line_items.sum(:amount)
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+<!-- Page title -->
+ <div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Journal &rarr;<span>Journal Entry List</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/journals/deleted_journal" do |f| %>
+    <%=f.text_field :voucher_number_or_date_or_journal_line_items_amount_equals, :id =>"autocomplete" , :placeholder=>"search"%>
+    <%end%>
+  </div>
+</div>
+
+
+
+ <!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	<div class="highlight">
+            <%= render "shared/flash_msg" %>
+         <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/journals">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/journals/deleted_journal">Deleted</a>
+                    </li>
+                </ul>
+            </div> 
+           <div id = "task_container">  
+         <div id="tabs-all">
+               <div class="colgroup">
+                   <div class="width3 column first"> </div>
+               </div>
+               <div class="clearfix"></div>
+               
+         <div id="journal_index">
+               <% if @journals.blank? %>
+                  <p class="no-journal"><%= render :partial => "shared/no_record" %></p>
+               <% else %>
+                <table class="display stylized" id="example">
+                  <thead>   
+                    <%= render :partial => "header" %>
+                  </thead>
+                  <tbody>
+                    <%= render :partial => "deleted_journal", :collection => @journals %>
+                  </tbody>
+                  <tfoot>
+                    <%= render :partial => "footer" %>
+                  </tfoot>
+                </table>  
+		               <%= paginate @journals %>
+                <div class="clear">
+&nbsp;		        </div>  
+               <% end %>
+             </div>     
+            </div>
+          </div>
+       </div></br>
+       </section>
+      <!-- End of Left column/section -->
+      <!-- Right column/section -->
+       <aside class="column width2"><br />
+       	<a href="/journals/new" class="btn btn-special btn-green btn-green-new"><img alt="" SRC="/images/add.png" class ="icon"> Add new journal entry</a>
+            <div id="rightmenu">
+                  <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/13" class="nyroModal">Help</a></dd>
+                       <dd class="last">This page displays the list of juornal entries. <br/>Click on voucher number to view more details.<br/></dd>
+                  </dl>
+            </div><br />
+       </aside>
+      <!-- End of Right column/section -->
+   </div>
+  <!-- End of Wrapper -->
+</div>

@@ -1,0 +1,26 @@
+<tr id="row<%= index %>" valign="top" >
+	<%= hidden_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][id]",stock_receipt_line_item.id%>
+	<td valign="top" colspan =2 >
+		<%= select_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(Product.where(:company_id => @company.id, :inventory => true), :id, :name,stock_receipt_line_item.product_id,{:"batch_enable"=>:batch_enable} ), :include_blank => true,:"data-placeholder" => "Select product", :"data-index" => index, :class=>"receipt-quantity", :style=>'width:29%;display:inline;'  %>
+		<% if !stock_receipt_line_item.product.blank? && stock_receipt_line_item.product.batch_enable? %>
+			<div class='receipt-batch-details' style='display:inline;'>
+				<%= hidden_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][product_batch_attributes][id]", stock_receipt_line_item.product_batch.id %>
+				<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][product_batch_attributes][batch_number]", stock_receipt_line_item.product_batch.batch_number, :class => 'form-control bg-focus', :placeholder => "Batch number", :style=>'width:25%;display:inline;' %>
+				<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][product_batch_attributes][manufacture_date]", stock_receipt_line_item.product_batch.manufacture_date, :style=>'width:17%;display:inline;', :placeholder => "Mfd.date", :class => 'mfd-select form-control bg-focus', :"data-date_index" => index %>
+				<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][product_batch_attributes][expiry_date]", stock_receipt_line_item.product_batch.expiry_date, :style=>'width:17%;display:inline;', :placeholder => "Exp.date", :class => 'exp-select form-control bg-focus', :"data-date_index" => index %>
+			</div>
+		<% end %>
+	</td>
+	<td class="text-right">
+		<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][unit_rate]",stock_receipt_line_item.unit_rate, :onkeydown => "return numbersOnly(event);", :size => 3, :maxlength => 8, :class =>'form-control bg-focus text-right' %>
+	</td>
+	<td class="text-right">
+		<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{index}][quantity]",stock_receipt_line_item.quantity, :id => 'quantity', :onkeydown => "return numbersOnly(event);", :size => 3, :maxlength => 10, :class =>'form-control bg-focus text-right' %>
+	</td>
+	<td class="text-right">
+		<%= link_to "<i class='icon-remove'></i>".html_safe, {:controller=>:stock_receipt_vouchers, :action => :remove_line_item, :index => index}, :class => "btn btn-danger", :title => "Remove", :remote => true %>
+	</td>
+</tr>
+<script type="text/javascript"> 
+  $("#stock_receipt_voucher_stock_receipt_line_items_attributes_<%= index %>_product_id").select2();
+</script>

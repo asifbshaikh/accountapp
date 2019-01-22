@@ -1,0 +1,81 @@
+<script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for salary in @salary_structures
+  	 	@data<<salary.for_employee
+  	 	@data<<salary.effective_from_date
+  	 	# @data<<salary.payhead
+  	 	# @data<<salary.payhead_type
+  	 	
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Payroll &rarr;<span>Salary Structure</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%=f.text_field :for_employee_or_effective_from_date_equals, :id => "autocomplete" , :placeholder=>"search"%>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+    <!-- Left column/section -->
+      <section class="column width6 first"></br>
+       <div id="tabs" class="highlight">
+            <%= render :partial => "shared/flash_msg"	%>
+               <div id="timesheet">
+                <% if @salary_structures.blank? %>
+                   <p class="no-contacts">
+                   	<%= render :partial => "shared/no_record" %></p>
+                <% else %>
+                  <table class="display stylized" id="example">
+	                  <thead>   
+	                    <%= render :partial => "header" %>
+	                  </thead>
+	                  <tbody>
+	                     <%= render :partial => "salary_structure", :collection => @salary_structures %>
+	                  </tbody>
+	                  <tfoot>
+	                    <%= render :partial => "footer" %>
+	                  </tfoot>
+                 </table> 
+                 <div class="clear">
+          	      <div class="width3 column">
+                      <%= paginate @salary_structures %>
+                  </div>
+                </div> 
+               <% end %>
+           </div>
+      </div><br />
+     </section>
+  <!-- End of Left column/section -->
+ 
+  <!-- Right column/section -->
+    <aside class="column width2"></br>
+      <%= new_button "New Salary Structure", new_salary_structure_path %>
+      <p><%= list_button_black 'View All Payheads', payheads_path %></p>
+      <div id="rightmenu">
+      <dl class="first">
+          <dt><%= image_tag "help.png" , :alt => 'help', :class=>'icon'%></dt>
+          <dd><a href="#" class="nyroModal">Help</a></dd>
+          <dd class="last">This page dispalys the list of salary structures.<br/>Click on employee name to view more details.</dd>              
+      </dl>
+    </div><br />
+     
+    </aside>
+  <!-- End of Right column/section -->
+   </div>
+</div>
+

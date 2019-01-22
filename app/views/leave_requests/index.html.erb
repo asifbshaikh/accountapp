@@ -1,0 +1,155 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+         <h2><i class="icon-file text"></i>Leave Requests</h2>
+       </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial=> "shared/flash_msg"%>
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-left">
+             <li class="active"><a href="#leave_req" data-toggle="tab"><i class="icon-plane icon-large text-default"></i>Awaiting Approval</a></li>
+             <li><a href="#leave_card" data-toggle="tab"> <i class="icon-list-alt icon-large text-default"></i> Approved</a></li>
+             <li><a href="#req_leave" data-toggle="tab"> <i class="icon-list-alt icon-large text-default"></i> Rejected</a></li>
+           </ul>
+         </header>
+         <div class="panel-body">
+          <div class="tab-content">
+            <div class="tab-pane active" id="leave_req">
+              <% if @approval_requests.blank? %>
+                <div class="alert alert-info">
+                  <h6><i class="icon-info-sign icon-large"></i>
+                    <strong>There are no leave requests for approval. You have dedicated, hard working people who don't take leaves working for you!</strong>
+                  </h6>
+                </div>
+              <% else %>
+              <div id="leave-notif"></div>
+              <table class="table table-striped m-b-none text-small ">
+                <thead>
+                  <tr>
+                    <th>Requested by</th>
+                    <th>Reason </th>
+                    <th> Leave Type </th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Days</th>
+                    <th>Contact During Leave</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 <% @approval_requests.each do |leave_request| %>
+                 <tr id="leave-tr<%= leave_request.id %>">
+                  <td><%= User.find(leave_request.user_id).first_name %></td>
+                  <td><%= leave_request.reason_for_leave%></td>
+                  <td><%= LeaveType.find(leave_request.leave_type_id).leave_type %> </td>
+                  <td><%= leave_request.start_date %></td>
+                  <td><%= leave_request.end_date %></td>
+                  <td><%= leave_request.no_of_days_on_leave %></td>
+                  <td><%= leave_request.contact_during_leave %></td>
+                  <td class="leave<%= leave_request.id %>">
+                    <%= link_to '<i class="icon-thumbs-up"></i>'.html_safe, {:controller => :leave_approval, :action => :approve, :id => leave_request.id}, :remote => true, :title=>"Approve", :id=>"request-ar", :"data-id"=>leave_request.id %>
+                    <%= link_to '<i class="icon-thumbs-down"></i>'.html_safe, "#modal#{leave_request.id}", :"data-toggle"=>"modal", :title=>"Reject", :"data-id"=>leave_request.id %>
+                    <div id="modal<%= leave_request.id %>" class="modal fade">
+                      <%= render "leave_approval/reject_form", :leave_request=> leave_request %>
+                    </div>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% end %>
+          </div>
+          <div class="tab-pane" id="leave_card">
+           <div id='leaveApproved'>
+             <% if @approved_leave_requests.blank? %>
+                <div class="alert alert-info">
+                  <h6><i class="icon-info-sign icon-large"></i>
+                    <strong>There are no approved leave requests!</strong>
+                  </h6>
+                </div>
+             <% else %>
+             <table class="table table-striped m-b-none text-small ">
+               <thead>
+                 <tr>
+                   <th>Requested by</th>
+                   <th>Reason </th>
+                   <th> Leave Type </th>
+                   <th>Start Date</th>
+                   <th>End Date</th>
+                   <th>Days</th>
+                   <th>Contact During Leave</th>
+                   <th>Action</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <% @approved_leave_requests.each do |leave_request| %>
+                 <tr>
+                  <td><%= User.find(leave_request.user_id).first_name %></td>
+                  <td><%= leave_request.reason_for_leave%></td>
+                  <td><%= LeaveType.find(leave_request.leave_type_id).leave_type %> </td>
+                  <td> <%= leave_request.start_date %> </td>
+                  <td><%= leave_request.end_date %></td>
+                  <td><%= leave_request.no_of_days_on_leave %></td>
+                  <td><%= leave_request.contact_during_leave %></td>
+                  <td class='leave<%= leave_request.id %>'><%= link_to 'Revoke', {:controller=> "leave_requests", :action => :revoke, :id => leave_request.id}, :remote => true, :id=>"request-ar", :'data-id'=> leave_request.id %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% end %>
+          </div>
+
+
+        </div>
+
+        <div class="tab-pane" id="req_leave">
+          <% if @rejected_leave_requests.blank? %>
+            <div class="alert alert-info">
+              <h6><i class="icon-info-sign icon-large"></i>
+                <strong>There are no rejected leave requests.</strong>
+              </h6>
+            </div>
+         <% else %>
+         <table class="table table-striped m-b-none text-small ">
+          <thead>
+            <tr>
+             <th>Requested by</th>
+             <th>Reason </th>
+             <th> Leave Type </th>
+             <th>Start Date</th>
+             <th>End Date</th>
+             <th>Days</th>
+             <th>Contact During Leave</th>
+             <th>Action</th>
+           </tr>
+         </thead>
+         <tbody>
+           <% @rejected_leave_requests.each do |leave_request| %>
+           <tr>
+            <td><%= User.find(leave_request.user_id).first_name %></td>
+            <td><%= leave_request.reason_for_leave%></td>
+            <td><%= LeaveType.find(leave_request.leave_type_id).leave_type %> </td>
+            <td> <%= leave_request.start_date %></td>
+            <td><%= leave_request.end_date %></td>
+            <td><%= leave_request.no_of_days_on_leave %></td>
+            <td><%= leave_request.contact_during_leave %></td>
+            <td><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/leave_requests/<%= leave_request.id%>" title="Delete" ><i class="icon-trash"></i></a></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% end %>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+</div>
+</section>
+</section>
+
+

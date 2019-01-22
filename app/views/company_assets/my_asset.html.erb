@@ -1,0 +1,93 @@
+<script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for company_asset in @company_assets
+  	 	@data<<company_asset.asset_tag
+  	 	@data<<company_asset.description
+  	 	@data<<company_asset.purchase_date
+  	 	
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+
+<!-- Page Title-->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Self Service &rarr;<span>My Assets</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		   <%=f.text_field :asset_tag_or_description_or_purchase_date_equals, :id =>"autocomplete", :placeholder=>"search" %>
+		<%end%>
+	</div>
+</div>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+        <div id="tabs-all" class="highlight">
+             <div class="colgroup">
+                <div class="width3 column first"> </div>
+              </div>
+              <div class="display stylized"></div>
+             <div class="clearfix"></div>
+             <div id="timesheet">
+                    <% if @company_assets.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                       <table class="display stylized" id="example">
+                          <thead>   
+                            <tr>
+							    <%= render :partial => "header1" %>
+							</tr>
+                          </thead>
+                          <tbody>
+                      <%= render :partial => "my_asset", :collection => @company_assets %>
+						  </tbody>
+                          <tfoot>
+                            <tr>
+                                <%= render :partial => "footer" %>
+                            </tr>
+                          </tfoot>
+                        </table>    
+                        <div class="clear">
+		          	      <div class="width3 column">
+		                      <%= paginate @company_assets %>
+		                  </div>
+		                </div> 
+                    <% end %>
+               </div>
+      
+        </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+               <%= show_button_white("View Profile", "/users/#{@current_user.id}")%>
+     <div id="rightmenu">
+                 <dl class="first">
+                       <dt><%= image_tag 'help.png', :alt=>'help', :class=> 'icon'%></dt>
+                      <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>  
+                       <dd class="last">This page displays the list of all the assets.</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->
+
+
+

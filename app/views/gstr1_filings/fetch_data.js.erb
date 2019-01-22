@@ -1,0 +1,15 @@
+
+$(".info-form").html('<%= escape_javascript render "fetch_info" %>');
+$(".on-go-form").html('<%=image_tag "ajax-loader.gif" %>')
+$(".on-go-form").html('<%= escape_javascript render "fetch_data" %>');
+
+  var gstr1Table = $('#gstr2').dataTable({
+      sDom: "<'row'<'col-sm-2'f><'col-sm-4'>r>t<'row'<'col-sm-3'l><'col-sm-4'i><'col col-sm-5'p>>",
+      sPaginationType: "full_numbers",
+      iDisplayLength:50,
+      bFilter: false,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#gstr2').data('source')
+      })
+  gstr1Table.fnFilterOnReturn();

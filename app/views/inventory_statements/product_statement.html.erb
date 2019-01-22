@@ -1,0 +1,146 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Product Statement</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <% if !@products.blank?  %>
+        <%= link_to_pdf params %>
+        <%= link_to_xls params %>
+         <%end%>
+        <p></p>
+      </div>
+    </div>
+
+  	<%= render :partial => "product_filter" %>
+    <div class="row">
+    <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <% if @product.blank? %>
+              <br />
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+              <div class="row">
+                <div class="col-lg-8">
+                  <% if !@branch_id.blank? %>
+                    <p><%= display_branch(@branch_id) %></p>
+                  <% end %>
+                  <p><b><%= @product.name %></b></p>
+                  <p>Showing details from <%= @start_date %> to <%= @end_date %></p>
+                </div>
+                <div class="col-lg-4" align="right">
+                  <span class="large">
+                    <p>Net Quantity <%= format_amount(@stocks_data.net_quantity)   %></p>
+                    <p>Net Profit/Loss <%= number_with_precision Product.net_total(@product, @start_date,@end_date,@branch_id), :precision=>2 %></p>
+                  </span>
+                </div>
+              </div>
+              <p></p>
+              <% if @product.type=="ResellerItem" || @product.type=="PurchaseItem" %>
+              <div class="row">
+                <div class="col-sm-12"><h4>Purchase Summary</h4></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8">
+                  <section class="panel">
+                    <div>
+                      <table class="table table-striped m-b-none text-small">
+                        <thead>
+                          <tr>
+                            <th>Purchase Voucher#</th>
+                            <th>Vendor Name</th>
+                            <th>Date</th>
+                            <th class="text-right">Unit Price (<%= @company.currency_code %>)</th>
+                            <th class="text-right">Quantity</th>
+                            <th class="text-right">Total (<%= @company.currency_code %>)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @purchase_line_items.each do |line_item| %>
+                            <% purchase=line_item.purchase %>
+                            <tr>
+                              <td><%= link_to purchase.purchase_number, purchase %></td>
+                              <td><%= purchase.vendor.name %></td>
+                              <td><%= purchase.record_date %></td>
+                              <td class="text-right"><%= format_amount line_item.unit_rate%></td>
+                              <td class="text-right"><%= number_with_precision line_item.quantity, :precision=>2 %></td>
+                              <td class="text-right"><%= format_amount line_item.amount %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <div class="panel-heading bg-mygreen">
+                      Purchase Summary
+                    </div>
+                    <div class="panel-body">
+                      <p>Total Purchased <%= format_currency  @stocks_data.purchase_amount %></p>
+                      <p>Avg. Unit Price <%= format_currency @stocks_data.average_purchase_price %></p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <% end %>
+              <% if @product.type=="ResellerItem" || @product.type=="SalesItem" %>
+              <div class="row">
+                <div class="col-sm-12"><h4>Sales Summary</h4></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-8">
+                  <section class="panel">
+                    <div>
+                      <table class="table table-striped m-b-none text-small">
+                        <thead>
+                          <tr>
+                            <th>Invoice#</th>
+                            <th>Customer Name</th>
+                            <th>Date</th>
+                            <th class="text-right">Unit Price (<%= @company.currency_code %>)</th>
+                            <th class="text-right">Quantity</th>
+                            <th class="text-right">Total (<%= @company.currency_code %>)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @invoice_line_items.each do |line_item| %>
+                            <% invoice=line_item.invoice %>
+                            <tr>
+                              <td><%= link_to invoice.invoice_number, invoice %></td>
+                              <td><%= invoice.customer_name %></td>
+                              <td><%= invoice.invoice_date %></td>
+                              <td class="text-right"><%= number_with_precision line_item.item_cost, :precision=>(line_item.item_cost == line_item.item_cost.round(2) ? 2 : 4) %></td>
+                              <td class="text-right"><%= number_with_precision line_item.quantity, :precision=>2 %></td>
+                              <td class="text-right"><%= format_amount (line_item.item_cost*line_item.quantity) %></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+                </div>
+                <div class="col-lg-4">
+                  <section class="panel">
+                    <div class="panel-heading bg-mygreen">
+                      Sales Summary
+                    </div>
+                    <div class="panel-body">
+                      <p>Total Invoiced <%= format_currency @stocks_data.sales_amount %></p>
+                      <p>Avg. Unit Price <%= format_currency @stocks_data.average_sales_price %></p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <% end %>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

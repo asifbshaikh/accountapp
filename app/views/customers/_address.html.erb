@@ -1,0 +1,89 @@
+ <%= form_for(@customer, :html => {:class => "m-b-none form-horizontal"}, :remote=>true) do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Billing/Shipping Address</h4>
+        </div>
+    <div class="modal-body scroll-y" style="max-height:500px;">
+      <div class="errorSection"></div>
+          <h4>Billing Address</h4>
+          <div class="line m-l m-r"></div>
+          <%= f.fields_for :addresses, @billing_address do |ba| %>
+            <div class='row'>
+              <div class="col-lg-5">
+                <%= ba.label :address_line1, "Billing address", :class=>'control-label' %>
+                <%= ba.text_area :address_line1, :class=>'form-control bg-focus', :rows=>4 %>
+                <%= ba.hidden_field :address_type %>
+              </div>
+              <div class='col-lg-7'>
+                <div class="row">
+                  <div class='col-lg-6'>
+                    <%= ba.label :city, :class=>'control-label' %>
+                    <%= ba.text_field :city, :class=>'form-control bg-focus' %>
+                  </div>
+                  <div class='col-lg-6'>
+                    <%= ba.label :state, :class=>'control-label' %>
+                    <%= ba.text_field :state, :class=>'form-control bg-focus' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class='col-lg-6'>
+                    <%= ba.label :country, :class=>'control-label' %>
+                    <%= ba.text_field :country, :class=>'form-control bg-focus' %>
+                  </div>
+                  <div class='col-lg-6'>
+                    <%= ba.label :postal_code, :class=>'control-label' %>
+                    <%= ba.text_field :postal_code, :class=>'form-control bg-focus' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <h4>Shipping Address</h4>
+          <div class="line m-l m-r"></div>
+          <%= f.fields_for :addresses, @shipping_address do |sa| %>
+            <div class='row'>
+              <div class="col-lg-5">
+                  <label class="same_address">
+                  <input id="same_address" value="1" type="checkbox" name="same_address">
+                    Same as billing
+                  </label>
+                <br />
+                <%= sa.label :address_line1, "Shipping address", :class=>'control-label' %>
+                <%= sa.text_area :address_line1, :class=>'form-control bg-focus', :rows=>4 %>
+                <%= sa.hidden_field :address_type %>
+              </div>
+              <div class='col-lg-7'>
+                <div class="row">
+                  <div class='col-lg-6'>
+                    <%= sa.label :city, :class=>'control-label' %>
+                    <%= sa.text_field :city, :class=>'form-control bg-focus' %>
+                  </div>
+                  <div class='col-lg-6'>
+                    <%= sa.label :state, :class=>'control-label' %>
+                    <%= sa.text_field :state, :class=>'form-control bg-focus' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class='col-lg-6'>
+                    <%= sa.label :country, :class=>'control-label' %>
+                    <%= sa.text_field :country, :class=>'form-control bg-focus' %>
+                  </div>
+                  <div class='col-lg-6'>
+                    <%= sa.label :postal_code, :class=>'control-label' %>
+                    <%= sa.text_field :postal_code, :class=>'form-control bg-focus' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <div class="modal-footer">
+        <div class='save-btn'></div>
+          <button class="btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+      </div>
+    </div>
+        <% end %>
+      

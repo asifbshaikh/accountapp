@@ -1,0 +1,22 @@
+<div class="block subP">
+  <label class="control-label">Email</label>
+  <%= text_field_tag 'debtor[email]','', :id=>'email', :class=>'form-control' %><span id="email"></span>
+</div>
+<div class="block subP">
+  <label class="control-label">Billing Address</label><br><small>(Provide fields like: city, state, country and pin etc.)</small>
+  <%= text_area_tag 'debtor[address_attributes][address_line1]','',:rows=> 3, :cols => 25, :id => "billing_add", :class=>'form-control' %>
+
+</div>
+<!-- <div class="block subP">
+  <label class="control-label">Shipping Address</label><br/><small>(Provide fields like: city, state, country and pin etc.)</small>
+  <div class="checkbox">
+    <label class="checkbox-custom">
+    <input type="checkbox" name="checkboxA" checked="checked" value="0" id="same">
+    <i class="icon-unchecked"></i>
+    Same as billing address
+  </label>
+  </div>
+  <%= text_area_tag 'debtor[address_attributes][address_line2]','',:rows=> 3, :cols => 25, :id=>"shipping_add", :class=>'form-control' %>
+</div> -->
+
+

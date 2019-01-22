@@ -1,0 +1,21 @@
+<tr>
+	<td><%= link_to deleted_other_income.income_date.strftime("%d-%m-%Y"), income_voucher_path(deleted_other_income) %></td>
+	<td><%= deleted_other_income.voucher_number %></td>
+	<td><%= truncate(deleted_other_income.from_account_name, :length => 20) %></td>
+	<td><%= format_currency deleted_other_income.amount %></td>
+	<td><%= deleted_other_income.payment_detail.payment_mode unless deleted_other_income.payment_detail.blank?  %></td>
+	<td>
+   <div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/income_vouchers/<%= deleted_other_income.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href= <%= "/income_vouchers/restore_other_income?id=#{deleted_other_income.id}"%>  >Restore</a></li>
+             <li class="divider"></li>
+            <li><a href= <%= "/income_vouchers/permanent_delete_other_income?id=#{deleted_other_income.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+          </ul>
+      </div>     
+
+	</td>
+</tr>

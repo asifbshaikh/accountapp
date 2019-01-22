@@ -1,0 +1,74 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-3">
+          <h2><i class="icon-file text"></i>Auditor</h2>
+        </div>
+        <div class="col-lg-9 m-t-large" align="right" >
+          <button class="btn btn-success btn-lg dropdown-toggle" title="Add Auditor" data-toggle="modal" data-target='#modal1'>
+            <span class="dropdown-label"><i class="icon-plus"></i> Add Auditor</span>  
+          </button>
+          <p></p> 
+         </div> 
+      </div>        
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+                <%= render :partial=> "shared/flash_msg"%>
+              <div class="table-responsive row">
+                <table id="auditors" class="table table-striped m-b-none text-small" data-source="<%= auditors_url(:format => 'json') %>" >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if !@auditors.blank? %>
+                      <% @auditors.each do |auditor| %>
+                        <tr>
+                          <td><%= auditor.full_name %></td>
+                          <td><%= auditor.username %></td>
+                          <td><b>Accepted</b></td>
+                          <td class="text-right"><%= link_to '<i class="icon-trash"></i>'.html_safe, auditor, :confirm => 'Are you sure?', :class=>"btn btn-default btn-sm", :title=>"Delete",:method => 'delete' %></td>
+                        </tr>
+                      <% end %>
+                    <% end %>
+                    <% if !@invitation_details.blank? %>
+                     <% @invitation_details.each do |invit_d| %>
+                        <% if invit_d.status_id == 0%>
+                          <tr>
+                            <td><%= invit_d.name %></td>
+                            <td><%= invit_d.email %></td>
+                            <td><%= invit_d.get_status %></td>
+                            <td class="text-right">
+                              <%= link_to '<i class="icon-envelope-alt"></i>'.html_safe, "/auditors/resend_invitation?id=#{invit_d.id}", :class => "btn btn-default btn-sm", :title=>"Resend Invtation" %>&nbsp;
+                              <%= link_to '<i class="icon-trash"></i>'.html_safe, invit_d, :confirm => 'Are you sure?', :method => 'delete', :class=>"btn btn-default btn-sm", :title=>"Delete"%></td>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </tbody>
+                  <tfoot>
+                    <tr style="visibility:hidden">
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+  <div id="modal1" class="modal fade">
+    <%= render "add_auditor_form" %>
+  </div>

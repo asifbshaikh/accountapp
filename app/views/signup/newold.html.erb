@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Register with ProfitBooks today and try all the accounting features free for a month! It helps you manage invoicing, expenses, banking transactions, taxes and more. " />
+    <meta name="keywords" content="accounting software, invoicing, expenses, payroll" />
+    <title>Register and try ProfitBooks free for 15 days!</title>
+
+
+  <!-- ////////////////////////////////// -->
+  <!-- //     Retina Bookmark Icon     // -->
+  <!-- ////////////////////////////////// -->
+  <!-- //        Favicon Files         // -->
+  <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <!-- //      Stylesheets Files       // -->
+  <%= stylesheet_link_tag 'app/bootstrap.css' %>
+  <%= stylesheet_link_tag 'app/font-awesome.min.css' %>
+  <%= stylesheet_link_tag 'app/style.css' %>
+  <%= javascript_include_tag 'login' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tag %>
+  <% if Rails.env.production? %>
+  <%= render :partial => "shared/analytics" %>
+  <% end %>
+</head>
+<body>
+  <section id="content">
+   <div class="col-lg-5"></div>
+   <div class="col-lg-3" align="left">
+
+    <br><br>
+    <% if params[:payment_id].present? && params[:payment_request_id] .present? && !@pay_details.blank?%>
+    <% params[:plan]= 'Trial' %>
+    <div class="panel panel-success bg-lighter">
+     <div class="panel-heading text-center"> <i class="icon-ok-sign icon-large"></i> <strong>Thank You! <br>Your transaction with Instamojo was successful.</strong></div>
+     <div class="block ">
+      <br>
+      <p> &nbsp;&nbsp;<strong > Payment id: </strong><%= params[:payment_id] %></p>
+      <p>&nbsp;&nbsp;<strong> Towards: </strong><%= Company.find_by_id(@company.id).name %></p>
+      <p>&nbsp;&nbsp;<strong> Purpose: </strong><%=@pay_details.purpose %></p>
+      <p>&nbsp;&nbsp;<strong> Amount: </strong><%=@pay_details.amount + " INR" %></p>
+    </div>
+  </div>
+  <% end %>
+  <% if params[:cf_source].present? && params[:plan].present? && !@cashfreedetails.blank?%>
+  <% if @cashfreedetails.tx_status=='SUCCESS' %>
+  <div class="panel panel-success bg-lighter">
+   <div class="panel-heading text-center"> <i class="icon-ok-sign icon-large"></i> <strong>Thank You! </strong> <br>Your transaction for the amount of <%= @cashfreedetails.order_amount%> against the invoice with Order Id: <%=@cashfreedetails.order_id %> with CashFree was successful. The Transaction Reference Number is<strong> <%=@cashfreedetails.reference_id %></strong>. </div>
+ </div>
+ <% else %>
+ <div class="panel panel-danger bg-lighter">
+   <div class="panel-heading text-center"> <i class="icon-remove-sign icon-large"></i> <strong>Sorry!</strong><br>Your transaction with CashFree was not successful.</div>
+ </div>
+
+ <% end %>
+ <% end %>
+</div>
+<div class="col-lg-4"></div>
+<div class="main padder bg-white">
+  <div class="row">
+    <div class="col-lg-4 col-lg-offset-1  m-t-large">
+      <p align="left">
+       <a href="/home/index"><%= image_tag 'profitbooks-logo.png',:alt=>"ProfitBooks - Online Accounting and Payroll Management Software",:class=>"retina", :disposition=>"inline" %></a>
+     </p>
+     <section class="panel bg-lighter">
+      <header class="panel-heading text-center bg-light">
+        Get started with ProfitBooks in less than a minute
+      </header>
+      <%= render :partial=> "shared/flash_msg"%>
+      <%= form_for @company, :url => {:action=>:create}, :html=> {:class=>"form-horizontal panel-body"} do |f|%>
+      <% if @company.errors.any? %>
+      <div class="alert alert-danger">
+       <h6>Uh-oh! You have <%= pluralize(@company.errors.count, "error") %>
+        <ol>
+          <% @company.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ol></h6>
+      </div>
+      <% end %>
+      <%= hidden_field_tag 'plan', params[:plan] %>
+      <%= hidden_field_tag 'token', params[:token] %>
+      <%= hidden_field_tag 'id', params[:id] %>
+      <!-- seting company country id in hidden tag -->
+      <%= f.hidden_field :country_id, :value => Company.get_default_country.to_s %>
+      <!-- country id set in above line -->
+
+      <div class="row block">
+        <div class="col-lg-6">
+          <label class="control-label-required">Company Name</label>
+          <%= f.text_field :name, :class=>"form-control", autofocus: true%>
+          <small class="text-muted">minimum 4 characters</small>
+        </div>
+        <div class="col-lg-6">
+          <label class="control-label-required">Email</label>
+          <%= f.text_field :email, :placeholder =>"email@example.com", :class=>"form-control" %>
+          <small class="text-muted">valid email address</small>
+        </div>
+      </div>
+        <div class="block">
+          <p>
+            By registering, you agree to the <a href="http://www.profitbooks.net/terms-and-conditions/" target="_new">Terms</a> and
+            <a href="http://www.profitbooks.net/privacy-policy/" target="_new">Privacy policy</a>
+          </p>
+        </div>
+        <div align="center">
+         <button type="submit" class="btn btn-success btn-lg">Start Your 15-day Trial</button></div>
+         <div class="line line-dashed"></div>
+         <p class="text-muted text-center"><small>Already have an account?</small>
+          <a href="https://www.profitbookshq.com/login/index">Sign in</a></p>
+          <p class="text-muted text-center"><small>Call us on +91 84 85 86 3000 in case you need any assistance</small></p>
+          <% end %>
+        </section>
+      </div>
+      <div class="col-lg-6  m-t-large"><br/><br/>
+        <h2>Join over thousands of businesses who trust ProfitBooks for managing their finances.</h2><br>
+        <h4>During Free Trial, You can:<h4>
+          <p><i class="icon-ok "></i> Evaluate all the features with real business data</p>
+          <p><i class="icon-ok "></i> Create beautiful invoices</p>
+          <p><i class="icon-ok "></i> Record expenses and banking transactions</p>
+          <p><i class="icon-ok "></i> Manage inventory</p>
+          <p><i class="icon-ok "></i> Add employees and run payroll</p>
+          <p><i class="icon-ok "></i> View insighful reports and do lot more..</p>
+          <br><br>
+          <section class="panel-body chat-list">
+            <article id="chat-id-1" class="chat-item media arrow arrow-left">
+              <a href="#" class="pull-left thumb-small avatar"><%= image_tag "vinodh.jpg", :alt=>"", :class=>"img-circle"%></a>
+              <section class="media-body">
+                <div class="panel bg-lighter m-b-none">
+                  <div class="panel-body">
+                    "It doesn't require major accounting skills to understand ProfitBooks and can be used by anyone. The ease with which we can pull out Balance Sheet, Trial Balance, Profit &amp; Loss statements is my favorite feature. Highly Recommended."
+                  </div>
+                </div>
+                <small class="text-muted">Mr. Vinodh, <a href="http://www.endotechsolar.com" target="_new">EndotechSolar.com</a></small>
+              </section>
+            </article>
+          </section>
+        </div><!-- End of second column -->
+      </div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="footer bg-white">
+    <div class="text-center bg-white clearfix">
+      <p>
+        <small>&copy; ProfitBooks Solutions Pvt Ltd.</small><br>
+      </p>
+    </div>
+  </footer>
+  <!-- / footer -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="js/app.js"></script>
+  <script src="js/app.plugin.js"></script>
+  <script src="js/app.data.js"></script>
+</body>

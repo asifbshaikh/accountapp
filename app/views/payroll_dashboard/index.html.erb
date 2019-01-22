@@ -1,0 +1,125 @@
+<!-- Page title -->
+<div id="pagetitle">
+	<div class="wrapper">
+		<h1>Dashboard</h1>
+		<!-- Quick search box -->
+	</div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+ <div class="wrapper">
+ <!-- Left column/section -->
+ <section class="column width6 first"><br />
+  <div class="column width6 first highlight">
+  <%= render :partial => "shared/flash_msg"%>
+  <div class="colgroup leading">
+   <div class="column width3 first">
+    <h3>Welcome, <a href= <%= "/users/#{@current_user.id}" %> ><%= @current_user.first_name %></a></h3>
+	<%= (session[:last_login_at].blank?)? "":"Your last login was on #{session[:last_login_at]}"%>
+   </div>
+   <div class="column width3">
+    <h4>Notification</h4>
+    <p><% if @notifications.blank? %>
+          <div class="">You don't have any notification today.</div>
+       <% else %>
+       <% end %>
+    </p>
+  </div>
+ </div>
+ <div class="colgroup leading">
+   <div class="column width3 first">
+     <h4>Tasks: <a href="/tasks"><%= @tasks.count%></a></h4><hr/>
+     <table class="no-style full">
+       <tbody>
+          <tr>
+            <td>Tasks for today</td>
+            <td class="ta-right"><a href="/tasks/today"><%= @tasks.today.count%></a></td>
+            <td class="ta-right"></td>
+          </tr>
+          <tr>
+            <td>Tasks for this week</td>
+            <td class="ta-right"><a href="/tasks/this_week"><%= @tasks.this_week.count %></a></td>
+            <td class="ta-right"></td>
+          </tr>
+	  <tr>
+	    <td>Tasks for this month</td>
+	    <td class="ta-right"><a href="/tasks/this_month"><%= @tasks.this_month.count %></a></td>
+	    <td class="ta-right"></td>
+	  </tr>
+       </tbody>
+     </table>
+   </div>
+   <div class="column width3 ">
+     <h4>Upcoming Holidays</h4><hr/>
+     <table class="no-style full">
+	<tbody>
+	  <% if !@holidays.blank? %>
+	   <% for holiday in @holidays %>
+           <tr>
+	    <td><%= holiday.holiday  %></td>
+	    <td class="ta-right"><%= holiday.holiday_date %></td>
+           </tr>
+	   <% end %>
+	  <% else %>
+	   <div>0 holidays.
+      <% if @current_user.owner? %>
+       <a href="/holidays/new">Want to add new holidays</a>
+     <% end %>
+     </div>
+	  <% end %>
+	</tbody>
+     </table>
+    </div>
+  </div>
+  </div><br />&nbsp;
+ </section>
+		<!-- End of Left column/section -->
+		<!-- Right column/section -->
+		<aside class="column width2">
+      <% if @current_user.roles[0].name != "Employee" %>
+      <br/>
+     <div class="highlight"> 
+      <table class="display stylized">
+        <thead>
+          <tr><th>Workstream</th></tr>
+        </thead>
+        <tbody>
+	<% @workstreams.each do |workstream| %>
+          <tr>
+            <td><span class='<%= "label label-#{workstream.action_code}" %>' >
+                     <%= workstream.action_code%></span>&nbsp;<%= workstream.action%>
+                   <span class = "worklog"> by 
+                        <%= workstream_user(workstream.user_id) %> on <%= workstream.action_time %>
+                   </span>
+                  
+                  </td>
+          </tr>
+       <% end %>
+         <tr><td align = "right"><%= link_to "more", workstreams_path %></td></tr>				
+        </tbody>
+      </table>
+      </div><br />
+      <% else %>
+        <div id="rightmenu">
+        <dl class="first">
+          <dt><!-- <img width="16" height="16" alt="" SRC="/images/help.png" class = "icon" > -->
+          </dt>
+          <dd>
+            <dd><a href="#"> Welcome to ProfitBooks!</a></dd>
+          </dd>
+          <dd class="last">
+          Visit <a href="http://connect.profitbooks.in/" target="_blank">ProfitBooks Connect</a> for tutorials on how to use the application. 
+          </dd>
+        </dl>
+      
+      <% end %>
+      </div><br />
+           
+	</aside>
+		<!-- End of Right column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

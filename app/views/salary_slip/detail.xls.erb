@@ -1,0 +1,101 @@
+				<table>
+				<tr><td align="center" colspan="4"><b><%= @page_name%></b></td></tr>
+				<tr><td align="center" colspan="4">For <%= @month.strftime("%B-%Y")%></td></tr>
+ 				<tr><td align="center" colspan="4"><b>Employee Name :<%= @user.full_name %></b></td></tr>
+                <thead>
+				  <tr>
+				  	<th colspan="2" width ="50%">Personal Details</th>
+				  	<th colspan="2" width ="50%">Bank Details</th>
+				  </tr>
+			    </thead>
+                <tbody>
+		          <tr>
+				   <td> Employee No. </td>
+				   <td>: <%= @user_salary_details.employee_no unless @user_salary_details.blank? %></td>
+				   <td> Bank Name </td>
+	     		   <td>: <%=(@user_salary_details.blank?)? 'Not available' : @user_salary_details.bank_name %></td>
+				  </tr>
+				  <tr>
+				   <td> Designation </td>
+				   <td>: <%= (@designation.blank?)? "Not available": @designation.title   %></td>
+				   <td> Income Tax No.(PAN)</td>
+	    		   <td>: <%=(@user_salary_details.blank?)? 'Not available' : @user_salary_details.PAN %></td>
+		          </tr>
+				  <tr>
+				   <td> Location </td>
+				   <td>: <%= (@user_salary_details.blank?)? 'Not available':@user_salary_details.work_location %></td>
+				   <td> PF Account No. </td>
+	    		   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.PF_account_number %></td>
+		          </tr>
+				  <tr>
+				   <td> Date of Joining </td>
+				   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.date_of_joining %></td>
+				   <td> ESI Number </td>
+	     		   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.EPS_account_number %></td>
+				  </tr>
+				  <tr>
+				   <td> Attendance </td>
+				   <td>: <%= @attendance.days_absent.to_i %> days absent</td><td></td><td></td>
+				  </tr>
+		        </tbody>
+              </table>
+              <hr>
+     <table class="table table-striped b-t text-small"%>
+	<thead>
+	  <tr>
+	    <th width ="25%"> Earnings </th>
+	    <th align="right" width ="25%"> Amount </th>
+	    <th width ="25%"> Deductions </th>
+	    <th align="right" width ="25%"> Amount </th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% for i in 0..(@count - 1) %>
+	   <tr>
+	    <td><%= (!@earning_arr[i].nil?)? @earning_arr[i] : '' %></td>
+            <td align="right"><%= (!@earning_amount_arr[i].nil?)? format_currency(@earning_amount_arr[i]) : '' %></td>
+	    <td><%= (!@deduction_arr[i].nil?)? @deduction_arr[i] :'' %></td>
+            <td align="right"><%= (!@deduction_amount_arr[i].nil?)? format_currency(@deduction_amount_arr[i]) : '' %></td>
+	   </tr>
+	 <% end %>
+	</tbody>
+	<tfoot>
+	   <tr>
+	     <td>
+		<hr>
+		<b>Total Earning Amount</b>
+		<hr>
+		</td>
+		<td align="right">
+		<hr>
+		<b><%= format_currency(@total_earning) %></b>
+		<hr>
+		</td>
+		<td>
+		<hr>
+		<b>Total Deduction Amount</b>
+		<hr>
+		</td>
+		<td align="right">
+		<hr>
+		<b><%= format_currency @total_deduction %></b>
+		<hr>
+	     </td>
+	   </tr>
+	   <tr>
+		<td></td>
+		<td></td>
+		<td><b>Net Amount</b>
+		<hr>
+		</td>
+		<td align="right"><b><%=  format_currency(@total_earning - @total_deduction) %></b>
+		<hr>
+		</td>
+	  </tr>
+	</tfoot><br>
+	  <tr><td></td></tr>
+	  <tr><td></td></tr>
+	  <tr><td></td></tr>
+	  <tr><td></td></tr>
+      <tr><td align="right" colspan="4"><b>Authorised Signatory</b></td></tr><hr>
+      </table>

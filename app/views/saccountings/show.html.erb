@@ -1,0 +1,117 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> View Simple Accounting Entry </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <a href="/journals/new" data-toggle="tooltip" data-placement="top" title="You will be redirected to journal voucher to add new record but you can still access your old records from here." class="btn btn-success btn-lg"><i class='icon-plus'></i> Add New Record</a>
+        <% unless @saccounting.in_frozen_year? %>
+          <div class="btn-group">
+           <button class="btn btn-info btn-lg" onclick="location.href= '<%= edit_saccounting_path(@saccounting)%>'"; > <i class="icon-edit"> </i> Edit</button>
+            <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span><i></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to raw('<i class="icon-trash"> </i>Delete '), saccounting_path(@saccounting), :method => "delete", :confirm => "Are you sure?" %></li>
+              <li class="divider"></li>
+            </ul>
+          </div>
+        <% end %>
+        <%= link_to raw('<i class="icon-print"> </i>'), saccounting_path(@saccounting, :format => 'pdf'), :class => 'btn btn-white btn-lg' %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), saccountings_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial=>"/shared/flash_msg"%>
+        <div class="row">
+          <!-- Invoice First section -->
+          <div class="col-sm-5">
+            <h4><strong><%= @saccounting.account.name %></strong></h4>
+          </div>
+          <!-- Invoice second section -->
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p>
+                    <strong> Voucher Number: </strong><%= @saccounting.voucher_number %>
+                  </p>
+                  <p><strong> Voucher Date: </strong> <%= @saccounting.voucher_date %></p>
+                  <p><strong> Amount: </strong> <%= format_currency @saccounting.amount %></p>
+                </div>
+                <!-- Invoice basic details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@saccounting.created_at.to_date.strftime("%d-%m-%Y") %> by <%= @saccounting.created_by_user %></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <tr>
+                  <th width="70%">From account</th>
+                    <th width="10%"></th>
+                  <th width = "20%" class="ta-center">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+            <% for sacc in @saccounting.saccounting_line_items %>
+              <tr>
+              <td width = "70%" ><%= Account.find(sacc.from_account_id).name %></td>
+              <td width="10%"></td>
+              <td width = "20%" class="ta-center"><%= format_currency sacc.amount %></td>
+              </tr>
+            <% end %>
+              <tr>
+                <td width="70%"></td>
+                <td width = "10%"><b>Total</b></td>
+                <td width = "20%" class="ta-center">
+                  <b><%= format_currency @saccounting.amount %></b>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+      <div class="row">
+          <%if !@saccounting.description.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Description</label><br/>
+              <%= breaking_word_wrap(@saccounting.description)%>
+            </p>
+          </div>
+          <% end %>
+          <% if !@saccounting.tags.blank? %>  
+          <div class="col-sm-6">
+            <p>
+              <label for="productvendor">Tags</label><br/>
+              <%= breaking_word_wrap(@saccounting.tags) %>
+            </p>
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+
+
+  
+       

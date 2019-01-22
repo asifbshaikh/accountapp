@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  product_id: 1
+  financial_year_id: 1
+  opening_stock_valuation: 9.99
+  closing_stock_valuation: 9.99
+
+two:
+  company_id: 1
+  product_id: 1
+  financial_year_id: 1
+  opening_stock_valuation: 9.99
+  closing_stock_valuation: 9.99

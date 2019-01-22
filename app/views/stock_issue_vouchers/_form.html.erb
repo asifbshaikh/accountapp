@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for(@stock_issue_voucher, :html=>{:class=>'form-horizontal'}) do |f| %>
+        	<%= render 'shared/form_error' , :object => @stock_issue_voucher %>
+          <div class='form-group'>
+            <div class='col-lg-3'>
+              <% if @stock_issue_voucher.voucher_setting.custom_sequence? %>
+                <%= f.label "voucher_number", :class=>'control-label-required'%>
+                <%= f.text_field :voucher_number, :class=>'form-control bg-focus', :style=>"width:200px;" %>  
+              <% else %>
+            	 <%= f.label :voucher_number %> : <%= @stock_issue_voucher.voucher_number %>
+               <%=f.hidden_field :voucher_number %>
+              <% end %>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-3'>
+              <%= f.label "voucher_date", :class=>'control-label-required'%>
+              <%= f.text_field :voucher_date, :class=>'form-control bg-focus' %>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-3' colspan=2>
+              <%= f.label "warehouse-id" , "#{@company.label.warehouse_label}", :class =>"control-label-required" %><br/>
+              <%= f.collection_select(:warehouse_id, @company.warehouses, :id, :name, 
+              {:prompt => "Select Warehouse"},{:style=>'width:220px;'}) %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <%= render :partial=>"stock_issue_vouchers/custom_field" , :locals =>{:f=> f}%>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-12'>
+              <table  class="table table-striped b-t text-small issue-line" id="line_items"  >
+                <thead>
+                  <tr>
+                    <th colspan ="2" width="60%"><label class="required">Product</label></th>
+                    <th align="right" width='10%'><label class="required">Quantity</label></th>
+                    <th align="right" width='5%'>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @stock_issue_voucher.stock_issue_line_items.each_with_index do |stock_line_item, index| %>
+                    <%= render "stock_issue_vouchers/stock_issue_line_items", :stock_issue_line_item => stock_line_item, :index => index %>
+                  <% end %>
+                  <tr id="issue_row_link" valign="top">
+                    <td valign="top" colspan="8"> <%= link_to " + Add New Row", { :controller=>:stock_issue_vouchers, :action => :add_row, :index => @stock_issue_voucher.stock_issue_line_items.size }, :remote => true, :class => "btn btn-white btn-sm" %> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-lg-6'>
+              <%= f.label :details, :class=>'control-label' %>
+              <%= f.text_area :details, :cols => 70, :rows => 5, :class => 'form-control bg-focus' %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-4">
+              <%= f.submit :value => 'Save', :class=>"btn btn-success" %>&nbsp;
+              <%= link_to "Cancel", stock_issue_vouchers_path(), :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#stock_issue_voucher_warehouse_id").select2();
+</script>

@@ -1,0 +1,64 @@
+<!-- Page title -->
+<!--<%= render 'shared/page_title'%>-->
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+   <!-- Wrapper -->
+  <div class="wrapper">
+   <!-- Left column/section -->
+    <section  class="column width6 first highlight">
+       <p id="notice"><%= notice %></p>
+       <div class="column width3 first">
+         <fieldset>
+         <legend>Payment Details : </legend><p>
+         <table width="80%" cellpadding="2" cellspacing="2">
+         		<tr>
+              <th align="left">Payment date:</th>
+              <td align= "left"><%= @payment.payment_date %></td>
+            </tr>
+            <tr>
+              <th align="left">Amount:</th>
+              <td align="left"><%= format_amount(@payment.amount) %>Rs</td>
+            </tr>
+            <tr>
+              <th align="left"> Payment mode:</th>
+              <td align="left"><%= @payment.payment_mode %></td>
+            </tr>
+            <tr>
+					 	  <th align="left">Bill ref:</th>
+							<td align="left"><%= @payment.bill_ref %></td>
+						</tr>
+				 </table>
+				 </fieldset>
+       </div>
+       <div class="column width3 ">
+         <fieldset>
+				 <table width="80%" cellpadding="2" cellspacing="2"> 
+            <tr>
+              <th align="left">From account:</th>
+              <td align= "left"> <%= Account.find(@payment.from_account_id).name %></td>
+            </tr>
+            <tr>
+              <th align="left">Paid to account:</th>
+              <td align= "left"> <%= Account.find(@payment.paid_to_account_id).name %></td>
+            </tr>
+            <!--<tr>
+              <th align="left">Send notification:</th>
+              <td align="left"><%= @payment.send_notification %></td>
+            </tr>-->
+						<tr>
+              <th align="left">Desceription:</th>
+              <td align= "left"><%= @payment.description %></td>
+            </tr>
+         </table> 
+         <p >
+            <%= link_to 'Edit', edit_payment_path(@payment),{:class=>"btn btn-green big" } %> &nbsp;
+            <a href="/payments" class="btn btn-green big">View History</a>
+         </p>
+         </fieldset>
+       </div>
+      <!-- End of Left column/section -->
+    </section>
+  </div>
+</div>	

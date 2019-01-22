@@ -1,0 +1,20 @@
+ 
+<%= a.fields_for :payment_detail do |t| %>   
+  <div class='form-group'>
+  	<div class='col-lg-2 text-right'><p></p><strong><span class="badge bg-primary">Cheque Payment</span></strong></div>
+    <div class='col-lg-3'>
+	    <%= label_tag "cheque_number", "Check number" , :class=>'control-label' %>
+	    <%= t.text_field :account_number, :onkeydown => "return card_cheque_number(event);",  :maxlength => 6, :class=>"form-control bg-focus" %>
+		</div>
+		<div class='col-lg-3'>
+	  	<%= label_tag "bank_name", "Bank name", :class=>'control-label' %>
+	    <%= t.text_field :bank_name, :class=>"form-control bg-focus" %>
+		</div>
+		<div class='col-lg-3'>
+		  <%= t.label :payment_date, :class => "control-label-required" %>
+		  <%= t.text_field :payment_date, :class=>"form-control bg-focus"%>
+		</div>
+		
+  </div>
+	
+<% end %>

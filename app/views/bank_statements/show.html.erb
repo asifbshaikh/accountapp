@@ -1,0 +1,134 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-8">
+       <h2><i class="icon-building text"></i><%= @account.name%></h2>
+        </div>
+        <div class="col-lg-4 m-t-large" align="right">
+        <a data-method="delete" href=  "/bank_statements/<%= @bank_statement.id%>" data-confirm = "Are you sure?" class= "btn btn-danger">Delete statement</a>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), bank_statements_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        </div>  
+      </div>
+      <p></p>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-4">
+              <section class="panel">
+              <header class="panel-heading text-center"><span class="badge bg-success"><strong>Balance as per ProfitBooks</strong></header>
+              <div class="panel-body" align="center">
+                <div class="h3 m-t-mini">
+                <%= @company.currency_code%> <%= @account_balance%>
+               </div>
+              </span></div>
+
+              
+              </section>
+            </div>
+            <div class="col-lg-4">
+              <section class="panel">
+              <% bank_statement_balance = @bank_statement_line_items.blank? ? 0 : @bank_statement_line_items.last.account_balance %>
+              <header class="panel-heading text-center"><span class="badge bg-info"><strong>Balance as per Bank Satement</strong></header>
+              <div class="panel-body" align="center">
+                <div class="h3 m-t-mini">
+                  <%= @company.currency_code%> <%= bank_statement_balance %>
+                </div>
+
+              </span></div>
+              </section>
+            </div>
+            <div class="col-lg-4">
+              <section class="panel">
+              <header class="panel-heading text-center"><span class="badge bg-danger"><strong>Difference</strong></header>
+              <div class="panel-body" align="center">
+                <div class="h3 m-t-mini">
+                <%= @company.currency_code%> <%= @account_balance - bank_statement_balance%>
+               </div>
+              </span></div>
+              </section>
+            </div>
+          </div>
+
+          <section class="panel">
+            <div class="panel-body">
+            <% if @bank_statement_line_items.blank? %>  
+              <div class="alert alert-info">
+                <h6><i class="icon-info-sign icon-large"></i> 
+                  <strong>
+                    Bank statement not mapped,delete this statement and upload it again.
+                  </strong>
+                </h6>
+              </div>
+            <% else %>
+              <div class="table-responsive row">
+                <table class="table text-small">
+                <thead>
+                  <tr>
+                    <th style="width:100px;">Date</th>
+                    <th class="text-right">Amount (<%= @company.currency_code%>)</th>
+                    <th>Credit/Debit</th>
+                    <th style="width:400px;">Description</th>
+                    <th>Status</th>
+                    <th>Find Match</th>
+                  </tr>
+                 </thead>
+                <tbody>
+                  <% @bank_statement_line_items.each_with_index do |bsli,index|%>
+                  <%if bsli.status == 1%>
+                  <tr class="bg-light">
+                  <%else%>
+                 <tr>
+                 <%end%>
+                  <td>
+                  <%= bsli.date%>
+                  </td>
+                  <td align="right">
+                  <%= number_with_precision(bsli.amount, :precision => 2)%>
+                  </td>
+                  <td>
+                    <%= bsli.get_credit_debit%>
+                  </td>
+                  <td>
+                  <%= bsli.description%>
+                  </td>
+                  <td>
+                    <%if bsli.status == 1%>
+                  <span><i class="icon-ok-circle icon-large"></i></span>
+                  <%end%>
+                  <%= bsli.get_status%>
+                  </td>
+
+                  <td>
+                  <%if bsli.status == 0 && bsli.amount!=0 %>
+                  <button class="btn btn-success btn-sm dropdown-toggle find_match" title="Find Match" data-toggle="modal" href="#modal1" data-amount="<%= bsli.amount%>" data-account="<%= @bank_statement.account_id%>" data-date="<%= bsli.date%>" data-transaction="<%= bsli.id%>" data-transaction-type="<%= bsli.credit_debit_indicator%>">Find Match</button>
+                  <%end%>
+                  </td>
+                 </tr>
+                 <%end%>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+              </div>
+            <% end %>
+            </div>
+          </section>
+        </div>
+
+      </div>
+   </section>
+  </section>
+  <div id="modal1" class="modal fade">
+    <div class="modal-dialog" id='prev_data'>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Find Transaction</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body scroll-y scroll-x" style='max-height:400px; padding: 10px;'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

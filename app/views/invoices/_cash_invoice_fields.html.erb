@@ -1,0 +1,114 @@
+<%= f.hidden_field :due_date %>
+<div class="col-lg-5">
+  <% if (@company.plan.smb_plan? || @company.plan.trial_plan?) && !@voucher_titles.blank? %>
+    <div class="row">
+      <p>
+        <label class="col-lg-4 control-label">Invoice Title</label>
+        <div class="col-lg-8">
+          <%= collection_select(:invoice, :voucher_title_id, @voucher_titles, :id, :voucher_title, {:prompt => true}, :class=>'form-control') %>
+        </div>
+      </p>
+    </div>
+  <% end %>
+  <div class="row">
+    <p>
+      <div class="col-lg-4 text-right">
+        <label class="control-label"><%= @company.label.customer_label %></label>
+      </div>
+      <div class="col-lg-8">
+        <input type="text" name="invoice[cash_customer_name]" class="bg-focus form-control" size="10" 
+        id="cash_customer_auto_complete" value='<%= (!@invoice.cash_customer_name.blank?)? "#{@invoice.cash_customer_name}" : "" %>' />
+        <span id='to_acc_bal'></span>
+      </div>
+    </p>
+  </div>
+  <div class="row">
+    <p><label class="col-lg-4 control-label">Mobile</label>
+      <div class="col-lg-8">
+        <%= f.text_field :cash_customer_mobile ,:class => 'bg-focus form-control', :id =>"cash_customer_mobile",:onkeydown => "return numbersOnly(event);", :maxlength=> 12, :size=> "10"%>
+      </div>
+    </p>
+  </div>
+  <div class="row"> 
+    <p>
+      <label class="col-lg-4 control-label">Email</label>
+      <div class="col-lg-8">
+        <%= f.text_field :cash_customer_email ,:class => 'bg-focus form-control', :id =>"cash_customer_email", :size=> "10"%>
+      </div>
+    </p>
+  </div>
+  <% if @invoice.gst_invoice? %>
+    <div class="row"> 
+      <p>
+        <label class="col-lg-4 control-label">Customer GSTIN</label>
+        <div class="col-lg-8">
+          <%= f.text_field :cash_customer_gstin ,:class => 'bg-focus form-control', :id =>"cash_customer_gstin", :size=> "15", :maxlength=>15%>
+        </div>
+      </p>
+    </div>
+
+    <br/>
+    <div class="row">
+      <div class="col-lg-4">
+        <label class="control-label">Place of supply</label> 
+      </div>  
+      <div class="col-lg-8">
+        <%= collection_select(:invoice, :place_of_supply, @states, :state_code, :name, {:prompt => true},{:state_code=>"select2-option", :style=>"width:200px;"}) %>
+      </div>
+    </div>
+
+    <br/>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">Export invoice</label>
+    </div>  
+    <div class="col-lg-8">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-sm btn-white<%= ' active' if @invoice.export_invoice? %> Yes">
+          <%= radio_button_tag "invoice[export_invoice]", 1, @invoice.export_invoice? %>
+          <i class="icon-ok icon-large text-active"></i>
+          Yes
+        </label>
+        <label class="btn btn-sm btn-white<%= ' active' if !@invoice.export_invoice? %> No">
+          <%= radio_button_tag "invoice[export_invoice]", 0, !@invoice.export_invoice? %>
+          <i class="icon-ok icon-large text-active"></i>
+          No
+        </label>
+      </div>
+    </div>
+  </div>
+  <% end %>  
+</div>
+
+<div class="col-lg-3">
+  <div class="row">
+      <div class="col-lg-4 text-right">
+        <label class="control-label">Invoice #</label>
+      </div>
+      <div class="col-lg-8">
+        <% if @company.invoice_setting.free_format? %>
+        <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+        <% else %>
+        <label class="control-label"><%= @invoice.invoice_number%><%= f.hidden_field :invoice_number %></label>
+        <% end %>
+      </div>
+  </div>
+  <div class="row">
+    <p>
+      <label class="col-lg-4 control-label-required"><br/>Date </label>
+      <div class="col-lg-8">
+        <%= f.text_field :invoice_date, :size => "10", :class => 'bg-focus form-control' %>
+      </div>
+    </p>
+  </div>
+  <div class="row"> 
+    <p>
+      <label class="col-lg-4 control-label-required"><br/>Account</label>
+      <div class="col-lg-8">
+        <%= f.select(:account_id, options_from_collection_for_select(@to_accounts, :id, :name, @invoice.account_id), {:include_blank => 'Type to select'},{:style => "width:200px;"}) %>
+        <span id='to_acc_bal'></span><br/>
+        <small>(Select a cash account you want to receive money)</small>
+      </div>
+    </p>
+  </div>
+</div>

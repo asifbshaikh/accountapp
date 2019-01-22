@@ -1,0 +1,84 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div id="tabs-all" class="highlight">
+        <%= render :partial => "shared/flash_msg"  %>
+        <div id="timesheet">
+          <% if @leave_cards.blank? %>
+            <%= render :partial => "shared/no_record", :locals=> {:message => "Your leave card is not yet created! Please contact your admin." }%>
+          <% else %>
+           <div class="clearfix leading">
+          <div class="column width3 first">
+             <h3>Hi, <a href= <%= "/users/#{params[:user_id]}" %> ><%= User.find(params[:user_id]).full_name%></a></h3>
+          </div>
+          <div class="column width3">
+            <p class="box">
+              <label for="Year">Year #: <%= @leave_cards[0].card_year %><br/>
+              <label>Leave entitled this year:</label> <%= User.find(params[:user_id]).user_total_leave_count %> <br/>
+              <label>Leave consumed this year:</label> <%= User.find(params[:user_id]).user_utilized_leave_count %> <br/>
+              <label>Leave balance:</label> <%= User.find(params[:user_id]).user_pending_leave_count %> <br/> 
+            </p> 
+            </div>
+          </div>
+       
+            <table class="display stylized" id="example">
+              <thead>
+                <tr>
+                  <th>Leave Type</th>
+                  <th>Total Leaves</th>
+                  <th>Leaves used</th>
+                  <th>Leaves pending</th>
+                </tr>                       
+              </thead>
+              <tbody>
+              <%= render :partial => "leave_cards", :collection => @leave_cards %>  
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td><b>Total</b></td>
+                  <td><b><%= User.find(params[:user_id]).user_total_leave_count %></b></td>
+                  <td><b><%= User.find(params[:user_id]).user_utilized_leave_count %></b></td>
+                  <td><b><%= User.find(params[:user_id]).user_pending_leave_count %></b></td>
+                </tr>                        
+              </tfoot>
+            </table>
+            <div class="column width3 ">
+              <%= paginate @leave_cards %>
+            </div>
+          <% end %>
+        </div>
+      </div><br />
+    </section>
+    <!-- End of Left column/section --><!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= new_button "Apply For Leave", new_leave_request_path %>
+      <% if @current_user.owner? %>
+       <p><%= list_button_black "View All Leave Cards", leave_cards_path %></p>
+      <% end %>
+      <p>
+      <%= show_button "View Leave Dashboard", leave_requests_dashboard_path %>
+      </p> 
+      <!-- <div id="rightmenu">
+        <dl class="first">
+          <dt>
+            <%= image_tag "help.png" %>
+          </dt>
+          <dd>
+            <a href="#" class="nyroModal">Help</a>
+          </dd>
+          <dd class="last">
+            This page displays the list of all the leave types.<br/>Click on leave type to view m,ore deatils.
+          </dd>
+        </dl>
+      </div><br /> -->
+    </aside>
+<!-- End of Right column/section -->
+  </div>
+<!-- End of Wrapper -->
+</div>

@@ -1,0 +1,5 @@
+<%= remote_form_for(@message,
+               :url => remote_tag_update_message_path(@message)
+               :update => "tags")do |f|%>
+<%= f.text_field :tag_list ,:size => 50 %>
+<% end %>			   

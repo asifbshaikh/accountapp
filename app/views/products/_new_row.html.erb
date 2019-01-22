@@ -1,0 +1,10 @@
+<tr class="row<%= index %>">
+  <td><%= select_tag("warehouse_at#{index}", options_from_collection_for_select( @warehouses, :id, :name), :class=>'form-control') %>
+  <%= hidden_field_tag "row_index[]", index %>
+  </td>
+  <td><%= text_field_tag "quantity_at#{index}", nil, :class => 'form-control text-right' %></td>
+<td><%= text_field_tag "price_at#{index}", nil, :class => 'form-control amount' %></td>
+  <td><%= text_field_tag "batch_number_at#{index}", nil, :class=>'form-control' %></td>
+  <td><%= text_field_tag "mfd_at#{index}", nil, :class => 'form-control mfd_date', "data-index" => index %></td>
+	<td><%= text_field_tag "exp_at#{index}", nil, :class => 'form-control exp_date', "data-index" => index %></td>
+</tr>

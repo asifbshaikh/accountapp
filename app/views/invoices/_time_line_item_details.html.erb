@@ -1,0 +1,14 @@
+<tr>
+  <td><%= time_line_item_details.item_name %></td>
+  <td colspan="2"><%= breaking_word_wrap(time_line_item_details.description, :line_width=> 20)%></td>
+  <td class="text-right"><%= number_with_precision time_line_item_details.quantity, :precision=>2 %></td>
+  <td class="text-right"><%= time_line_item_details.unit_rate %></td>
+  <% if @invoice.discount>0 %>
+  <td class="text-right"><%= number_with_precision time_line_item_details.discount_percent, :precision=>2 %></td>
+  <% end %>
+  <% if @invoice.tax>0 %>
+    <td><%= applied_taxes(time_line_item_details) %></td>
+    <td class = "text-right"><%= format_amount time_line_item_details.tax_amount %></td>
+  <% end %>
+  <td class="text-right"><%= format_amount time_line_item_details.amount%></td>
+</tr>

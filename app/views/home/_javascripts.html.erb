@@ -1,0 +1,45 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="/vendor/assets/javascripts/home/jquery.easing-1.3.min.js"></script>
+<script src="/vendor/assets/javascripts/home/camera.min.js"></script>
+<script src="/vendor/assets/javascripts/home/tooltip.js"></script>
+<script src="/vendor/assets/javascripts/home/superfish.js"></script>
+<script src="/vendor/assets/javascripts/home/tinynav.min.js"></script>
+<script src="/vendor/assets/javascripts/home/jquery.fancybox.js?v=2.0.6"></script>
+<script src="/vendor/assets/javascripts/home/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="/vendor/assets/javascripts/home/jquery.ui.totop.min.js"></script>
+<script src="/vendor/assets/javascripts/home/ddaccordion.js"></script>
+<script src="/vendor/assets/javascripts/home/jquery.twitter.js"></script>
+<script src="/vendor/assets/javascripts/home/jflickrfeed.min.js"></script>
+<script src="/vendor/assets/javascripts/home/faq-functions.js" ></script>
+<script src="/vendor/assets/javascripts/home/theme-functions.js"></script>
+<script src="/vendor/assets/javascripts/home/jquery.retina.js"></script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('.post-slide').camera({   
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>

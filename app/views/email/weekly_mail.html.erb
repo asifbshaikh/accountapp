@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Facebook sharing information tags -->
+<meta property="og:title" content="*|MC:SUBJECT|*">
+
+<title>*|MC:SUBJECT|*</title>
+</head>
+<body>
+<div class="bodycontainer">
+<div class="maincontent">
+<table width=100% cellpadding=0 cellspacing=0 border=0 class="message">
+<tr>
+<td colspan=2>
+<table width=100% cellpadding=12 cellspacing=0 border=0>
+<tr>
+<td>
+<div style="overflow: hidden;">
+<font size=-1>
+<u></u>
+<div style="margin:0;padding:0">
+<div style="background-color:#fff!important">
+<br>
+<br>
+<table width="600" align="center" cellpadding="0" cellspacing="0">
+<tr>
+   <td>
+      <table width="600" cellpadding="0" cellspacing="0">
+         <tr>
+            <td width="4" height="5">
+               
+            </td>
+            <td width="592" style="border-top:1px solid #ccc;font-size:1px;line-height:1px"> </td>
+            <td width="4">
+               
+            </td>
+         </tr>
+      </table>
+   </td>
+</tr>
+<tr>
+   <td style="border-left:1px solid #ccc;border-right:1px solid #ccc">
+      <table width="598" cellpadding="0" cellspacing="0">
+         <tr>
+            <td style="padding:15px 0 20px 20px">
+               <a href="http://profitbooks.net" target="_blank"><img align="left" alt="" src="http://gallery.mailchimp.com/5227907b4a4a05cfaddef0749/images/ProfitBooks_new_Logo.png" width="175" style="max-width:175px;padding-bottom:0;display:inline!important;vertical-align:bottom;border:0;line-height:100%;outline:none;text-decoration:none;min-height:auto!important">
+</a>
+            </td>
+            <td style="padding:0 20px 20px 0;text-align:right;vertical-align:bottom">
+               <table align="right" cellpadding="0" cellspacing="0" >
+                  <tr>
+                     <td height="28" style="padding-left:10px;padding-right:10px" valign="middle">
+                        
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <table width="598" cellpadding="0" cellspacing="0" style="background-color:#0383dd">
+         <tr>
+            <td height="5" style="font-size:1px;line-height:1px"> </td>
+         </tr>
+      </table>
+      <table width="598" cellpadding="0" cellspacing="0">
+         <tr>
+            <td style="padding-right:20px;padding-left:20px;line-height:20px;font-size:14px;font-family:Arial,Helvetica,sans-serif">
+               <br>
+               <h1 style="font-family:Arial,Helvetica,sans-serif;font-size:20px;color:#000!important;line-height:20px;padding-bottom:5px;margin:0">Hi <%= @user.first_name %>,</h1>
+               <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:normal;color:#777!important;line-height:16px;padding:0 0 20px 0;margin:0 0 20px 0;border-bottom:1px solid #e5e5e5">Here is the summary of your business last week: <%= @date.to_date.beginning_of_week.strftime("%d %b")%> - <%= @date.to_date.end_of_week.strftime("%d %b %Y") %> </h2>
+               <table cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Total income last week:</td>
+                                    </tr>
+                                 </table>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="line-height:22px;font-size:22px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;padding:8px 10px 4px;border-top:1px solid #f3faff;background-color:#ffffff">
+                                          <%= @income %>
+                                          <span style="font-size:12px">INR</span><br>
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td width="20">
+                     </td>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Total expense last week:</td>
+                                    </tr>
+                                 </table>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="line-height:22px;font-size:22px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;padding:8px 10px 4px;border-top:1px solid #f3faff;background-color:#ffffff">
+                                          <%= @expense %>
+                                          <span style="font-size:12px">INR</span><br>
+                                       </td>
+                                    </tr>
+                                 </table>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+               <br>
+               <br>
+
+<table cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Invoices due this week:</td>
+                                    </tr>
+                                 </table>
+<table width="270" cellpadding="0" cellspacing="0" style="background-color:#ffffff;padding:5px 10px 8px">
+                                <% if !@receivable_hash.nil? && !@receivable_hash.blank?
+counter = 1 
+@receivable_hash.sort.reverse.each do |key, value|
+if counter >= 5
+break
+end %>
+<tr>
+<td>
+<%= value %>
+</td>
+<%
+if key > 0
+suffix = " Dr"
+elsif key < 0
+suffix = " Cr"
+end
+%>
+<td class="ta-right"><%=  key.abs %><%= suffix %></td>
+</tr>
+<% counter += 1
+end 
+else %>
+<div class="">0 invoices</div> 
+<% end %>
+                                 </table>
+
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td width="20">
+                     </td>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Payables as on:<span style="font-size:14px"><%= @date.to_date.end_of_week.strftime("%d %b %Y") %></span></td>
+                                    </tr>
+                                 </table>
+<table width="270" cellpadding="0" cellspacing="0" style="background-color:#ffffff;padding:5px 10px 8px">
+                                     <% if !@payable_hash.blank?
+counter =1
+@payable_hash.sort.reverse.each do |key, value|
+if counter >= 5
+break
+end
+%>
+<tr>
+<td><%= truncate(value, :length => 20) %>
+</td>
+<%
+if key > 0
+suffix = " Dr"
+elsif key < 0
+suffix = " Cr"
+end
+%>
+<td class="ta-right"><%=  key.abs %><%= suffix %></td>
+</tr>
+<% counter += 1
+end
+else %>
+<div class="">0 payables</div>
+<%  end %>
+                                 </table>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+
+<br/>
+<br/>
+
+<table cellpadding="0" cellspacing="0">
+                  <tr>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Bank Bal. as on:<span style="font-size:14px"><%= @date.to_date.end_of_week.strftime("%d %b %Y") %></span></td>
+                                    </tr>
+                                 </table>
+                                 <table width="270" cellpadding="0" cellspacing="0" style="background-color:#ffffff;padding:5px 10px 8px">
+                                     <%if !@bank_hash.nil? && !@bank_hash.blank?
+counter = 1
+@bank_hash.sort.reverse.each do |key, value|
+if counter >= 5 
+break 
+end %>
+<tr>
+<td><%= truncate(value, :length => 20) %>
+</td>
+<%
+if key > 0
+suffix = " Dr"
+elsif key < 0
+suffix = " Cr"
+end
+%>
+<td class="ta-right"><%=  key.abs %><%= suffix %></td>
+</tr>
+<% counter += 1 
+end 
+else %>
+<div class="">0 bank accounts</div>
+<% end %>
+                                 </table>
+
+
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td width="20">
+                     </td>
+                     <td width="270" valign="top">
+                        <table width="270" cellpadding="0" cellspacing="0" style="background-color:#dceeff">
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <table width="270" cellpadding="0" cellspacing="0" >
+                                    <tr>
+                                       <td style="font-size:20px;border-bottom:1px solid #bad8f0;font-family:Arial,Helvetica,sans-serif;padding:5px 10px 8px">Cash Bal. as on:<span style="font-size:14px"><%= @date.to_date.end_of_week.strftime("%d %b %Y") %></span></td>
+                                    </tr>
+                                 </table>
+                                 <table width="270" cellpadding="0" cellspacing="0" style="background-color:#ffffff;padding:5px 10px 8px">
+                                   <%if !@cash_hash.nil? && !@cash_hash.blank?
+counter = 1
+@cash_hash.sort.reverse.each do |key, value|
+if counter >= 5 
+break 
+end %>
+<tr>
+<td><%= truncate(value, :length => 20) %>
+</td>
+<%
+if key > 0
+suffix = " Dr"
+elsif key < 0
+suffix = " Cr"
+end
+%>
+<td class="ta-right"><%=  key.abs %><%= suffix %></td>
+</tr>
+<% counter += 1 
+end 
+else %>
+<div class="">0 cash accounts</div>
+<% end %>
+                                 </table>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td height="5">
+
+</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+         
+<br/><br/>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse">
+<tbody>
+<tr>
+<td style="padding-top:0;padding-right:18px;padding-bottom:18px;padding-left:18px;border-collapse:collapse" valign="top" align="center">
+<table border="0" cellpadding="0" cellspacing="0" style="border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-right-radius:5px;border-bottom-left-radius:5px;background-color:#78c234;border-collapse:collapse">
+<tbody>
+<tr>
+<td align="center" valign="middle" style="font-family:Arial;font-size:16px;padding:15px;border-collapse:collapse">
+<a title="Login to your account" href="http://profitbooks.us5.list-manage.com/track/click?u=5227907b4a4a05cfaddef0749&amp;id=be16c103a2&amp;e=50444687d8" style="font-weight:bold;letter-spacing:-0.5px;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;word-wrap:break-word!important" target="_blank">Login to your account</a>
+</td>
+</tr>
+</tbody>
+</table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">                                   
+          <tr>
+              <td valign="top" width="350" style="border-collapse: collapse;">
+                  <div style="color: #707070;font-family: Arial;font-size: 12px;line-height: 125%;text-align: left;">With regards,<br>
+The ProfitBooks Team<br>
+-------------------------------------<br>
+<a href="https://www.profitbooks.net" target="_blank">www.ProfitBooks.net</a><br>
+<br>
+<small>You are receiving this email because you are registered with ProfitBooks.If you are not aware of this, please ignore this email.</small>
+</div>
+              </td>
+              
+          </tr>
+          
+      </table>
+</td>
+         </tr>
+      </table>
+   </td>
+</tr>
+<tr>
+   <td>
+      <table width="600" cellpadding="0" cellspacing="0">
+         <tr>
+            <td width="4">
+
+</td>
+            <td width="592" style="border-bottom:1px solid #ccc;font-size:1px;line-height:1px"> </td>
+            <td width="4">
+
+</td>
+         </tr>
+      </table>
+   </td>
+</tr>
+</table>
+
+</div>
+</div>
+</font>
+</div>
+</table>
+</table>
+</div>
+</div>
+</body>
+</html>

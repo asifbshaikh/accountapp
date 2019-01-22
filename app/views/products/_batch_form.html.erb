@@ -1,0 +1,18 @@
+<form action = '/products/record_batch_details' data-remote='true' method="post">
+  <div class="modal-dialog" style='width:700px;'>
+    <div class="modal-content">
+      <div class='modal-header'>
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Add batches</h4>
+      </div>
+      <div class='modal-body y-scroll modalbody<%= row_index %>' style='max-height:500px;'>
+        <%= render('modal_body.html.erb', {:product=>product, :row_index=>row_index})%>
+      </div>
+      <div class='modal-footer'>
+        <div class='save-btn'></div>
+          <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>

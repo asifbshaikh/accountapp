@@ -1,0 +1,51 @@
+<table>
+  <tr><td colspan=6 align=center>Product Wise Pending/Unexecuted Order</td></tr>
+  <tr><td colspan=6 align=center><%= @product.name %> (Avalable stock: <%= @product.stocks.sum(:quantity)%>)</td></tr>
+<% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center">Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= (params[:start_date].blank?)? @financial_year.start_date : params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td></tr>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Sales Order</th>
+        <th>Customer</th>
+        <th>Quantity</th>
+        <th>Executed</th>
+        <th>Unexecuted</th>
+      </tr>
+    </thead>
+    <tbody>
+       <% total_quantity = 0
+          total_delivered_quantity = 0
+          total_remaining_quantity = 0 
+          prev_date = nil
+          so_no = nil
+       %>
+           
+        <% @sales_order_line_items.each do |line_item|%>
+        <% so = line_item.sales_order %>
+       <tr>
+         <td><%= (so.voucher_date == prev_date) ? " " : so.voucher_date %></td>
+         <% prev_date = so.voucher_date %>
+         <td><%= (so.voucher_number == so_no) ? " " : so.voucher_number%></td>
+         <% so_no = so.voucher_number %>
+         <td><%= so.customer_name%></td>
+         <td><%= line_item.quantity%></td>
+         <td><%= line_item.delivered_quantity%></td>
+         <td><%= line_item.remaining_quantity%></td>
+       </tr>
+       <% total_quantity += line_item.quantity
+          total_delivered_quantity += line_item.delivered_quantity
+          total_remaining_quantity += line_item.remaining_quantity 
+          %>
+       <% end %> 
+    </tbody>
+      <tr>
+        <td colspan="2"></td>
+        <td class="text-right"><b>Total</b></td>
+        <td><b><%= total_quantity %></b></td>
+        <td><b><%= total_delivered_quantity %></b></td>
+        <td><b><%= total_remaining_quantity %></b></td>
+      </tr>
+</table>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @customer_relationship.company_id %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @customer_relationship.notes %>
+</p>
+
+<p>
+  <b>Last contact date:</b>
+  <%= @customer_relationship.last_contact_date %>
+</p>
+
+<p>
+  <b>Next contact date:</b>
+  <%= @customer_relationship.next_contact_date %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @customer_relationship.created_by %>
+</p>
+
+
+<%= link_to 'Edit', edit_customer_relationship_path(@customer_relationship) %> |
+<%= link_to 'Back', customer_relationships_path %>

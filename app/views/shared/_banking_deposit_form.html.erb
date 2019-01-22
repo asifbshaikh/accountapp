@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading text-right">
+        <ul class="nav nav-tabs pull-left">
+          <li class="<%='active' if ['deposits', 'banking'].include?(@current_controller) %>">
+            <a href="#deposit" data-toggle="tab">
+              <i class="icon-download-alt icon-large text-default"></i>
+              Deposit
+            </a>
+          </li>
+        </ul>
+      </header>
+      <div class="panel-body">
+          <div class=="tab-content">
+            <%= render "deposits/form" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+

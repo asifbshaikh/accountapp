@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<%= render :partial => "meta_tags" %>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- //      Stylesheets Files       // -->
+<%= render :partial =>"stylesheets"%>
+<!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial => "zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('.post-slide').camera({   
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial => "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Simple Yet Powerful Features.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                   <a href="/home/pricing" class="simpleBTN green large">Get started for FREE</a>
+
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+        <div class="row">              
+            <div class="three columns">         
+                <aside>
+                    <h5><a href="/home/features_accounting">Easy Accounting</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Simple Invoicing, Bank Transactions, Taxation, Financial Reports and much more..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5>Payroll Management</h5>
+                    <ul class="sidebar-list">
+                        <li>Employee Management, Salary Processing, Leave &amp; Holidays Management, Company Announcements..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_managers">For Managers</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Roles Based Access, Projects, Ability to Invite Auditors, Powerful Reporting, Complete Control..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_team">For Team Members</a></h5>
+                    <ul class="sidebar-list"><li>Internal Messaging, Tasks &amp; Notes, Document Management with Dropbox Integration..</li>
+                    </ul>
+                </aside>                        
+            </div> <!-- three column ends -->
+            <div class="nine columns">           
+                <!-- blog post 1 -->
+                <div class="blog-post">
+                  <div class="row">                  
+                        <div class="twelve columns">
+                            <div class="post-content">
+                                <h3>Payroll processing with peace of mind !</h3> 
+                                <ul class="post-info">
+                                    <li>Say goodbye manual work and save time during monthly payroll processing with ProfitBooks </li>                                 
+                                </ul>           
+                                <p><%= image_tag 'screens/payroll.png', :alt=> 'Payroll Processing, Employee self service (ProfitBooks - Online accounting and payroll management software)',
+                                :align=>'left' %><h4>Feature packed minus complexities</h4>ProfitBooks lets you create salary structure of each and every employee. You can finish Payroll Processing in minutes and not in days! All you have to do is to press few buttons. Salary slips are generated for all the employees. <br><br>Go paperless with ProfitBooks. Save information of all your employees at one place. Record when they left, when they joined and when is their birthday !</p>  
+                                <p><br></p>
+                                <p><%= image_tag 'screens/HRMS.png', :alt=>'HRMS features (ProfitBooks - Online accounting and payroll management software)', :align=>'right'%><h4>Your HR buddy</h4>Manage employee leaves, designations, departments, employee timesheets and various other things easily. You can also manage company assets and assign them to an employee.<br><br>ProfitBooks lets you publish company announcements, upload policy documents, maintain holiday list and much more.</p>
+                              <p align="center"><br><br><a href="/home/pricing" class="simpleBTN green large">Made up your mind? Get started for FREE</a></p>
+                            </div><!-- post content ends -->
+                        </div><!-- twelve column ends -->
+                    </div><!-- row ends -->   
+                </div><!-- blog post ends -->
+                            
+          </div><!-- nine columns ends -->
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+</div>
+<script>$('#noscript').remove();</script>
+</body></html>

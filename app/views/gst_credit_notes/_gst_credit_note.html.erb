@@ -1,0 +1,33 @@
+ <tr>
+    <td>
+    <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="
+       <p><strong> Transaction Date: </strong> <%= credit_note.transaction_date %></p>
+        <p><strong> Credit for: </strong> <%= credit_note.to_account_name %></p>
+                      <p><strong> Credit Account of: </strong> <%= credit_note.from_account_name %></p>
+                      <p><strong> Amount: </strong> <%= format_currency credit_note.amount %></p>
+                        <p>
+                         <% if !credit_note.description.blank? %>
+                          <strong> Description: </strong> 
+                          <%= breaking_word_wrap(credit_note.description)%>
+                          <% end %>
+                        </p>
+                      <p>
+                      <strong> Created by:</strong> <%= User.find(credit_note.created_by).full_name %>
+                      </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'><%= credit_note.credit_note_number %></a></td>
+    <td><%= credit_note.transaction_date.strftime("%d-%m-%Y") %></td>
+    <td><%= truncate(Account.find(credit_note.from_account_id).name, :length =>20) %></td>
+    <td><%= truncate(Account.find(credit_note.to_account_id).name, :length => 20) %></td>
+    <td><%= format_currency credit_note.amount %></td>
+		
+    <td><div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='<%= edit_credit_note_path(credit_note)%>'"; >Edit</button>
+          <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/credit_notes/<%= credit_note.id%>" >Delete</a></li>
+          </ul>
+      </div></td>
+  </tr>

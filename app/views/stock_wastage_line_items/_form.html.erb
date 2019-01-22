@@ -1,0 +1,33 @@
+<%= form_for(@stock_wastage_line_item) do |f| %>
+  <% if @stock_wastage_line_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stock_wastage_line_item.errors.count, "error") %> prohibited this stock_wastage_line_item from being saved:</h2>
+
+      <ul>
+      <% @stock_wastage_line_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :stock_wastage_voucher_id %><br />
+    <%= f.text_field :stock_wastage_voucher_id %>
+  </div>
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.text_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :reason %><br />
+    <%= f.text_area :reason %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

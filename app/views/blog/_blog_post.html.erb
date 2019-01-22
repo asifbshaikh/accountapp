@@ -1,0 +1,19 @@
+<div class="blog-post">
+  <div class="row">                    
+  <div class="twelve columns">
+      <div class="post-content">
+        <span itemprop="name"><h4><a href="/blog/<%= blog_post.slug%>"><%= blog_post.title %></a></h4> </span>
+        <ul class="post-info">
+          <li>
+           Posted by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= blog_post.author%> </span></span> on <%= blog_post.created_at.strftime("%e %B, %Y")  %> In :<span itemprop="articleSection"> <%= link_to blog_post.category, blog_category_blog_posts_url(blog_post.blog_category_id)%></span>
+          </li> 
+        </ul> 
+        <p>
+        <span itemprop="articleBody"><%= raw summarize(blog_post.content, 250) %>
+        </span><br/>
+        <span><a href="/blog/<%= blog_post.slug%>">(Read More)</a></span>
+        </p>
+      </div>
+    </div>
+  </div>   
+</div>

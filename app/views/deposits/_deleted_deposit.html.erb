@@ -1,0 +1,20 @@
+<tr class="gradeB">
+	<td colspan="3"><%= link_to deleted_deposit.transaction_date.strftime("%d-%m-%Y"), deleted_deposit %></td>
+	<td><%= deleted_deposit.voucher_number %></td>
+	<td><%= truncate(Account.find(deleted_deposit.from_account_id).name, :length =>20) %></td>
+	<td><%= truncate(Account.find(deleted_deposit.to_account_id).name, :length => 20) %></td>
+	<td><%= deleted_deposit.amount %></td>
+	<td>
+		<div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/deposits/<%= deleted_deposit.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/deposits/restore_deposit?id=#{deleted_deposit.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/deposits/permanent_delete_deposit?id=#{deleted_deposit.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+	</td>
+</tr>

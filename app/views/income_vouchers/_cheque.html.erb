@@ -1,0 +1,15 @@
+<div id='remIt'>
+<div class='col-lg-3'>
+<%= text_field_tag 'cheque_payment[account_number]',"#{params[:cheque_payment][:account_number] unless params[:cheque_payment].blank? }", 
+:onkeydown => "return card_cheque_number  (event);",  :maxlength => 6, :class=>"form-control bg-focus", :placeholder => "Cheque Number" %>
+</div>
+<div class='col-lg-3'>
+<%= text_field_tag 'cheque_payment[bank_name]',"#{params[:cheque_payment][:bank_name] unless params[:cheque_payment].blank?}",:class=>"form-control bg-focus", :placeholder => "Bank Name" %>
+</div>
+<div class='col-lg-3'>
+<%= text_field_tag 'cheque_payment[payment_date]',"#{params[:cheque_payment][:payment_date] unless params[:cheque_payment].blank? }", :class=>"form-control bg-focus", :placeholder => "Cheque Date" %>
+</div>
+<!-- <div class='col-lg-2'>
+<%= text_field_tag 'cheque_payment[branch]',"#{params[:cheque_payment][:branch] unless params[:cheque_payment].blank? }", :class=>"form-control bg-focus", :placeholder => "Branch" %>
+</div> -->
+</div>

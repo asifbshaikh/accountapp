@@ -1,0 +1,65 @@
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Contact &rarr;<span>Contact List</span></h1>
+		<%= form_for @search, method = "get" do |f| %>
+		<%= f.text_field :first_name_or_last_name_or_contact_category_or_email_or_account_or_mobile_or_phone1_or_phone2_like,  :type => :input, :nil => "Click me to add content!"%>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+      
+	  <!-- Left column/section -->
+      <section class="column width6 first">
+      <div id="tabs">
+         <div id="tabs-today">
+            <div class="colgroup">
+               <div class="width3 column first"> </div>
+            </div>
+            <div class="clearfix"></div>
+            
+		    <div id="contact_index">
+                <% if @contacts.blank? %>
+                   <p class="no-contacts"><%= render :partial => "shared/no_record" %></p>
+                <% else %>
+				   <p>Click on the contact name  to view detail.</p>
+                  <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "contact", :collection => @contacts %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "header" %>
+                          </tfoot>
+                        </table> 
+                <% end %>
+           </div>
+         <div class="clear">&nbsp;</div>
+		 <div align="right"><%= paginate @contacts %></div>
+        </div><br />
+      </div>
+     </section>
+  <!-- End of Left column/section -->
+ 
+  <!-- Right column/section -->
+    <aside class="column width2">
+       <p class="leading"><a href="/contacts/new" class="btn btn-special btn-green"><img SRC="images/add.png" class="icon" alt=""/>Add new Contact</a></p>
+      <div id="rightmenu">
+		  <dl class="first">
+		      <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+			  <dd><a href="#">Help</a></dd>
+			  <dd class="last">If you are a new user, you should read "Getting started"</dd>							
+		  </dl>
+	  </div><br />
+     
+    </aside>
+  <!-- End of Right column/section -->
+   </div>
+</div>
+

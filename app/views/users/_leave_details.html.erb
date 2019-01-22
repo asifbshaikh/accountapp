@@ -1,0 +1,36 @@
+
+<% if !@company.plan.free_plan? %>
+<div class="row">
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <% if @current_user.owner? || @current_user.hr? %>
+  <div class="col-sm-12">
+    <div class="leave_card_info">
+      <section class="panel">
+        <header class="panel-heading"><strong>Leave Card for Year <%= Time.zone.now.year %></strong>
+          <span class="pull-right"><a href="#" title="New Leave Card" id ="add_leave_card" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</a></span>
+        </header>
+        <div class="">
+            <div class="leave-card-error"></div>
+            <div class="leaveCardPlace"></div>
+            <%= render "leave_cards/leave_cards_details" %>
+        </div>
+      </section>
+    </div>
+    <div class="leave_card_add">
+      <section class="panel">
+        <header class="panel-heading">
+          <strong>New Leave Card</strong><span class="pull-right"><a href="#" title="Back" id ="bck_leave_card" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+        </header>
+        <div class="panel-body">
+          <%= render :partial=>"/leave_cards/form" %>
+        </div>
+      </section>
+    </div>
+  </div>
+<% end %>
+
+</div>    
+  </div>
+<% end %>

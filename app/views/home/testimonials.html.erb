@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ProfitBooks.net - Online Accounting & Payroll Management Software for small business</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Stylesheets Files       // -->
+<!-- ////////////////////////////////// -->
+<%= render :partial=> "stylesheets"%>  
+<!-- ////////////////////////////////// -->
+<!-- //     Google Webfont Files     // -->
+<!-- ////////////////////////////////// -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //        Favicon Files         // -->
+<!-- ////////////////////////////////// -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Javascript Files        // -->
+<!-- ////////////////////////////////// -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="javascripts/jquery.easing-1.3.min.js"></script>
+<script src="javascripts/tooltip.js"></script>
+<script src="javascripts/superfish.js"></script>
+<script src="javascripts/tinynav.min.js"></script>
+<script src="javascripts/jquery.fancybox.js?v=2.0.6"></script>
+<script src="javascripts/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="javascripts/jquery.ui.totop.min.js"></script>
+<script src="javascripts/ddaccordion.js"></script>
+<script src="javascripts/jquery.twitter.js"></script>
+<script src="javascripts/jflickrfeed.min.js"></script>
+<script src="javascripts/faq-functions.js" ></script>
+<script src="javascripts/theme-functions.js"></script>
+<script>
+//Footer Equal Height
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+$(document).ready(function() {
+  equalHeight($(".footer-column, .footer-logo"));
+});
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <!-- logo start here -->
+      <div id="logo">
+          <a href="/home/index"><img src="/images/logo.png" alt="ProfitBooks - Online Accounting and Payroll Management Software"/></a>
+          
+        </div>
+        <!-- logo end here -->
+        
+        <!-- top information start here -->
+        <div id="top-info">
+          <ul>
+              <li>
+                  <p>Hotline services</p>
+                    <img src="/images/top_info1.png" alt="" /><br/>
+                    <p class="info-text">0444 5648 91011</p>
+                </li>
+                <li>
+                  <p>Customer email</p>
+                    <img src="/images/top_info2.png" alt="" /><br/>
+                    <p class="info-text">cs@endymion.net</p>
+                </li>
+            </ul>
+        </div>
+        <!-- top information end here -->
+        
+        <div id="mainmenu-wrapper">
+          <!-- mainmenu start here -->
+            <nav id="mainmenu">
+                <ul id="menu">
+                    <li class="dropdown"><a href="/home/index">Home</a>
+                        <ul> 
+                            <li><a href="index-layout2.html"><span>-</span> home layout 2</a></li>
+                            <li><a href="index-layout3.html"><span>-</span> home layout 3</a></li>
+                            <li><a href="index-layout4.html"><span>-</span> home layout 4</a></li>      
+                        </ul>
+                    </li>
+                    <li><a href="/home/about">How Its Useful</a></li>
+                    <li><a href="/home/services">Pricing & Signup</a></li>
+                    <li class="dropdown"><a href="#">Common Questions</a>
+                        <ul> 
+                            <li><a href="portfolio-2col.html"><span>-</span> portfolio 2 column</a></li>
+                            <li><a href="portfolio-3col.html"><span>-</span> portfolio 3 column</a></li>
+                            <li><a href="portfolio-4col.html"><span>-</span> portfolio 4 column</a>
+                              <ul> 
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a>
+                                      <ul> 
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>      
+                                        </ul>
+                                    </li>     
+                                </ul>
+                            </li>     
+                      </ul>
+                  </li>
+                    <li class="dropdown"><a href="#">Partners</a>
+                      <ul> 
+                            <li><a href="blog-right-sidebar.html"><span>-</span> blog right sidebar</a></li>
+                            <li><a href="blog-left-sidebar.html"><span>-</span> blog left sidebar</a></li>
+                            <li><a href="single-right-sidebar.html"><span>-</span> single right sidebar</a></li> 
+                            <li><a href="single-left-sidebar.html"><span>-</span> single left sidebar</a></li>    
+                      </ul>
+                  </li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li class="dropdown selected"><a href="#">Pages</a>
+                        <ul> 
+                            <li><a href="column.html"><span>-</span> column page</a></li>
+                            <li><a href="tables.html"><span>-</span> table page</a></li>
+                            <li><a href="button-list.html"><span>-</span> button &amp; list page</a></li>
+                            <li><a href="/home/icons"><span>-</span> glyphicons page</a></li>
+                            <li><a href="/home/typhography"><span>-</span> typhography page</a></li>
+                            <li><a href="/home/testimonials"><span>-</span> testimonials page</a></li>  
+                            <li><a href="/home/pricing"><span>-</span> pricing page</a></li>
+                            <li><a href="/home/faq"><span>-</span> faq page</a></li>
+                            <li><a href="/home/features_team"><span>-</span> team page</a></li>
+                            <li><a href="/home/services-layout2"><span>-</span> services layout alt</a></li>
+                            <li><a href="contact-layout2.html"><span>-</span> contact layout alt</a></li>
+                            <li><a href="/home/sitemap"><span>-</span> sitemap page</a></li>
+                            <li><a href="fullwidth.html"><span>-</span> fullwidth page</a></li>
+                            <li><a href="/home/404"><span>-</span> 404 page</a></li>                             
+                      </ul>
+                  </li>
+              </ul>
+            </nav>
+            <!-- mainmenu end here -->
+            
+            <!-- top socials start here -->
+            <div id="top-socials">
+                <ul class="socials-list">
+                    <li><a href="#" title="facebook" class="tooltip"><img src="/images/socials/facebook.png" alt="" /></a></li>
+                    <li><a href="#" title="twitter" class="tooltip"><img src="/images/socials/twitter.png" alt="" /></a></li>
+                    <li><a href="#" title="dribbble" class="tooltip"><img src="/images/socials/dribbble.png" alt="" /></a></li>
+                    <li><a href="#" title="google+" class="tooltip"><img src="/images/socials/google+.png" alt="" /></a></li>
+                    <li><a href="#" title="rss" class="tooltip"><img src="/images/socials/rss.png" alt="" /></a></li>
+                </ul>
+            </div>
+            <!-- top socials end here -->
+        </div>
+    </header>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Testimonials.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <ul>
+                        <li><a href="/home/index">home</a></li>
+                        <li><a href="#">pages</a></li>
+                        <li class="current-page"><a href="#">testimonials</a></li>
+                    </ul>
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">      
+            <div class="six columns">
+            
+                <!-- begin of testimonials 1 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>I searched all over and looked at many different company websites to decide which one to use and yours was by far the best. The designs are amazing.</p>
+                        </blockquote>                                                         
+                    </div>
+                    <div class="clear"></div>                                                                      
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people1.jpg" alt="" />                                                                      
+                </div>
+              <div class="testi-name">Jake Wood<br/><span class="company-name">Silver Arrow Corp</span></div>                                      
+                
+                <!-- begin of testimonials 2 -->                                       
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>Endymion are always helpful if we ever have a problem, with no faults or interruptions in the service. Overall, we are happy. Keep up the good work.</p>
+                        </blockquote>                              
+                    </div>                        
+                    <div class="clear"></div>                                                                     
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people2.jpg" alt="" />                                              
+                </div>                    
+              <div class="testi-name">Mario Benneti<br/><span class="company-name">North Star Inc</span></div>
+                
+                <!-- begin of testimonials 3 -->                                       
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>What a great organisation you are!!! That just has to be the fastest support reply I have ever experienced. I am a happy bunny again. Thank you so much.</p>
+                        </blockquote>                              
+                    </div>                        
+                    <div class="clear"></div>                                                                     
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people3.jpg" alt="" />                                              
+                </div>                    
+                <div class="testi-name">Don Kuzenko<br/><span class="company-name">Gold Coast Industries</span></div>                  
+                
+          </div>
+            
+            <div class="six columns">                 
+                <!-- begin of testimonials 4 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>Having worked with Endymion for a number of years now. They are constantly moving with the times and taking us with them, You can only admire that. </p>
+                        </blockquote>                              
+                    </div>                        
+                    <div class="clear"></div>                                                                     
+              </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people4.jpg" alt="" />                                              
+                </div>
+              <div class="testi-name">Mark Gomarah<br/><span class="company-name">SpaceShip Ltd</span></div>                    
+                
+                <!-- begin of testimonials 5 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>Endymion provides pre-eminent customer service and I would recommend them to any progressive companies seeking a robust, reliable and state-of-the-art solution.</p>
+                        </blockquote>                              
+                    </div>                        
+                    <div class="clear"></div>                                                                     
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people5.jpg" alt="" />                                              
+                </div>
+              <div class="testi-name">Sarah Waterson<br/><span class="company-name">Fuel &amp; Jack Corp</span></div>
+                
+                <!-- begin of testimonials 6 -->                                       
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>Endymion is by far the best company I have used to handle my Web site and software development needs. They are responsive, professional and attentive.</p>
+                        </blockquote>                              
+                    </div>                        
+                    <div class="clear"></div>                                                                     
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <img src="/images/sample_images/testi-people6.jpg" alt="" />                                              
+                </div>                    
+                <div class="testi-name">Kari Hirvi<br/><span class="company-name">Creative Cow Inc</span></div>
+                
+          </div>          
+      </div>          
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <footer>
+      <div class="footer-logo">
+            <img src="/images/logo_footer.png" alt="" />
+            <p>Endymion, Inc.<br/>A web design studio in Jakarta, Indonesia.<br/>Copyright &copy; 2013. All rights reserved</p>
+        </div>
+        <div class="footer-column">
+          <h6>Ready to get started ?</h6>
+            <p>Fill out our simple <span class="title-green">step-by-step Project Planner</span> to get the ball rolling.</p>
+        </div>
+        <div class="footer-column">
+          <h6>Be a Socials</h6>            
+            <div class="social-footer">
+                <!--[if IE]>
+                    <iframe id="facebookIframe-single" 
+                        src="http://www.facebook.com/plugins/like.php?href=http://www.indonez.com/&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light" 
+                        style="border:none; overflow:hidden; width:200px; height:45px;" 
+                        allowTransparency="true">
+                    </iframe>
+                <![endif]-->
+                <!--[if !IE]>-->
+                    <iframe id="facebookIframe-single" 
+                        src="http://www.facebook.com/plugins/like.php?href=http://www.indonez.com/&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;colorscheme=light" 
+                        style="border:none; overflow:hidden; width:200px; height:45px;" >
+                    </iframe>
+                <!--<![endif]-->
+            </div>
+            
+            <div class="social-footer">
+            <a href="https://twitter.com/indoneztheme" class="twitter-follow-button" data-show-count="false">Follow @indoneztheme</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </div>
+            
+        </div>
+        <div class="footer-column">
+          <h6>Corporate resources</h6>
+            <ul class="footer-list-link">
+              <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Carrer</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Legal</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </footer>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

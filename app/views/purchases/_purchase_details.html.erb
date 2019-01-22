@@ -1,0 +1,28 @@
+<tr class="gradeB">
+  <td><%= link_to purchase_details.purchase_number, purchase_details %></td>
+  <td><%= truncate(purchase_details.vendor_name, :length =>20) %></td>
+  <td><%= purchase_details.due_date.strftime("%d-%m-%Y") %></td>
+  <td ><%= format_currency purchase_details.amount %></td>
+  <td> <%= purchase_details.get_status %></td>
+  <%if !@company.plan.free_plan? %>
+    <td><%= !purchase_details.project_id.blank? ? purchase_details.project_name : "Not assigned" %></td>
+  <% end %>  
+  <td>
+    <div class="btn-group" style="float: right;">
+      <button class="btn btn-white btn-sm" onclick="location.href='/purchases/<%= purchase_details.id %>'"; >View</button>
+      <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu pull-right">
+        <li><a href="<%= edit_purchase_path(purchase_details) %>">Edit</a></li>
+        <li><a href="<%= purchase_path(purchase_details, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+        <% if purchase_details.status_id == 0 %>
+        <li><a href=<%="/payment_vouchers/new?purchase_id=#{purchase_details.id}"%>>Make Payment</a></li>
+        <% end %>
+         <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/purchases/<%= purchase_details.id%>">Delete</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>
+

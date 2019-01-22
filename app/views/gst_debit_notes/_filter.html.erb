@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id = "filter">
+  <div class="panel-heading"><h4 class="panel-title" >GST Debit Note Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="gstdebitnote-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="gstdebitnotevoucherno"></td>
+          <td class='text-right'><label>Date</label></td>
+          <td id="gstdebitnoteDate"></td>
+          <td width='10%' class='text-right'><label>Customer name</label></td>
+          <td id="gstdebitnotefromacc" data-fromaccounts="<%= Account.debit_note_to_accounts(@company.id) %>"></td>
+        </tr>
+        <tr>
+          <td width='10%' class='text-right'><label>Status</label></td>
+          <td id="status"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="gstdebitnoteamount"></td>
+          
+        </tr>
+      </tbody>
+    </table>
+</div>  

@@ -1,0 +1,12 @@
+<tr>
+	<td><%= link_to "#{lead.name}", admin_lead_path(lead.id) %></td>
+	<td><%= lead.mobile %></td>
+	<td><%= lead.lead_activities.last.record_date unless lead.lead_activities.last.blank? %></td>
+	<td><%= lead.next_call_date %>
+	<% if lead.channel_name == "New signup"%>
+	<td>Company</td>
+	<%else%>
+	<td>Lead</td>
+	<%end%>	
+	<td><%= lead.channel_name %></td>
+</tr>

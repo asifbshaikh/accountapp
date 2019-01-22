@@ -1,0 +1,11 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Reports</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right"></div>
+    </div>
+    <%= render :partial=> "#{@current_user.role_name.downcase.tr(" ","_")}_reports"%>
+  </section>
+</section>

@@ -1,0 +1,32 @@
+<%= form_for(@organisation_announcement) do |f| %>
+<%= render 'shared/form_error', :object => @organisation_announcement %>
+<table class="display stylized" id="act_details" >
+    <div id='user_info_div'><span class='basic_info'>Enter Announcement</span></div>
+ <tbody> 
+    <tr> 
+      <td>
+        <%= f.label "Title", :class=>"required" %><br />
+	<%= f.text_field :title,:autofocus =>"autofocus" %>
+      </td>
+    </tr>
+     <tr>
+	<td>
+          <%= f.label "Announcement", :class=>"required" %><br>
+          <%= f.text_area :announcement, :rows=>8, :cols=> 70 %>
+        </td>            
+     </tr>
+  </tbody>
+  <tfoot>
+        <tr>
+          <td>
+           <button type="submit" class="btn btn-green btn-save">Submit</button>&nbsp;
+            <%= link_to "Cancel", organisation_announcements_path, :class => "btn btn-cancel" %>&nbsp;
+            <% unless @organisation_announcement.new_record?%>
+            <%=  link_to "Delete", @organisation_announcement, :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-gray" %>
+            <% end %>     
+         </td>
+         </tr>
+   </tfoot>
+  
+  </table>
+<% end %>

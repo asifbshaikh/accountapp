@@ -1,0 +1,105 @@
+<section id="content">
+  <section class="main padder">
+  	<div class="row">
+	   	<div class="col-lg-5">
+        <h2><i class="icon-file text"></i>GSTR-2A Filing</h2>
+		  </div>	
+		  <div class="col-lg-7 m-t-large" align="right">     
+				<a href="#" class="btn btn-default btn-lg "><i class="icon-info"> </i> </a> &nbsp;<a href="#" class="btn btn-default btn-lg "><i class="icon-reply"> </i> </a>
+				<p></p>
+		  </div>	
+		</div>
+		<div class="row"><!-- Table starts -->
+	    <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-heading"> 
+            <ul class="nav nav-tabs pull-left">
+              <li class="active"><a href="#all"><i class="icon-file-text icon-large text-default"></i>View Your Purchases</a></li>
+              <li><a href="#"><i class="icon-cloud-download icon-large text-default"></i>View GSTR 2A</a></li>
+              <li><a href="GST-GSTR2-missmatch.html"><i class="icon-check text-default"></i>Match &amp; Reconcile</a></li>
+              <li><a href="#"><i class="icon-align-left icon-large text-default"></i>ITC Summary</a></li>
+              <li><a href="#"><i class="icon-cloud-upload icon-large text-default"></i>Upload To GSTN</a></li>
+            </ul>
+          </div>
+          <div class="panel-body"> 
+            <div class="row">
+              <div class="col-sm-12 m-b-mini">
+                <p>These purchases are recorded in ProfitBooks but not reflecting in the list uploaded by your supplier on GSTN portal. You can decide what to do with them by clicking on action buttons. </p>
+                Total Records<label class="label bg-info m-l-mini">12</label> 
+              </div>
+              <div><a href="/gstr2as/upload"><i class="btn btn-info btn-xs dropdown-toggle">request</i></a></div>
+              
+            </div>
+            <div class="row">
+			        <div class="table-responsive">
+                <p> <br></p> 
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th><input name="checkboxA" type="checkbox"></th>
+                      <th>Purchase Number</th>
+                      <th>Supplier Name</th>
+                      <th>Date</th>
+                      <th>Purchase Amount</th>
+                      <th>Total Items</th>
+                      <th>Total Taxes</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><i class="icon icon-ok text-success"></i></td>
+                      <td><div class="btn-group">
+                        <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Delete From ProfitBooks</a></li>
+                            <li><a href="#">Missed by supplier</a></li>
+                          </ul>
+                        </div></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>			 <!-- Table ends -->
+              </div><!--"all projects" tab ends --> 
+		        </div>
+          </section>
+        </div>
+        <!-- .modal -->
+        <div id="modal" class="modal fade">
+          <form class="m-b-none">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+                  <h4 class="modal-title" id="myModalLabel">Set Monthly Sales Target </h4>
+                </div>
+                <div class="modal-body">          
+                  <div class="block">
+                    <text>Just enter the sales target you want to achieve every month and ProfitBooks will show a progress bar everytime you see the invoces screen. </text>
+                  </div>      
+                  <div class="block">
+                    <text>This target will reset every month. You can view the month-wise achievements in the Reports section. </text>
+                  </div>        
+                  <div class="block">
+                    <label class="control-label">Edit Monthly Target (Currency Code)</label>
+                    <input class="form-control" placeholder="Post title" value="50,000" type="text">
+                  </div>
+                <div>
+                  <button type="button" class="btn btn-success" data-loading-text="Publishing...">Save Target</button>
+                </div>        
+              </div>
+            </div><!-- /.modal-content -->  
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,47 @@
+<tr id="row<%= index %>" valign="top" class='pur_line'>
+  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][warehouse_id]",purchase_line_item.warehouse_id%>		
+  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][id]",purchase_line_item.id%>
+  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][type]", purchase_line_item.type, :value => "PurchaseLineItem" %>
+  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][_destroy]" %>
+  <td style="padding-left:0" id='item-td'>
+    <% if (defined?(@purchase) && @purchase.original_purchase.draft?) || purchase_line_item.new_record? %>
+      <%= select_tag "purchase[purchase_line_items_attributes][#{index}][product_id]", options_from_collection_for_select(@to_accounts, :id, :name,:selected => purchase_line_item.product_id ), :include_blank => true,:"data-placeholder" => "Choose a product", :"data-index" => index , :style=>"width:150px;"%>
+    <% else %>
+      <%= purchase_line_item.product.name %>
+    <% end %>
+    <%= hidden_field_tag "index", index %>
+  </td>
+  <td>
+    <%= text_area_tag "purchase[purchase_line_items_attributes][#{index}][description]",purchase_line_item.description, :class => "form-control bg-focus", :id => 'description',:rows =>1, :cols => 10 %>
+  </td>
+
+  <td>
+    <%= text_field_tag "purchase[purchase_line_items_attributes][#{index}][quantity]",purchase_line_item.quantity, :class => "form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);", :id => 'quantity', :maxlength => 18, 'data-index' => index %>
+  </td>
+  <td>
+    <%= text_field_tag "purchase[purchase_line_items_attributes][#{index}][unit_rate]",purchase_line_item.unit_rate, :class => 'form-control bg-focus text-right', :id => 'unit_cost', :onkeydown => "return numbersOnly(event);", :maxlength => 18 %>
+  </td>
+  <td>
+    <%= text_field_tag "purchase[purchase_line_items_attributes][#{index}][discount_percent]", purchase_line_item.discount_percent, :class => 'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);", :id => 'discount' %>
+  </td>
+  <td valign="top" id='tax-td'>
+    <% purchase_line_item.purchase_taxes.each_with_index do |tax, tax_index| %>
+      <div class='row' id="tax-<%=index%>-<%=tax_index%>" style=<%="display:none;" if tax_index==1 %>>
+        <div class="col-sm-12">
+         <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_taxes_attributes][#{tax_index}][id]", tax.id %>
+          <%= select_tag "purchase[purchase_line_items_attributes][#{index}][purchase_taxes_attributes][#{tax_index}][account_id]", options_from_collection_for_select_with_data(Account.get_purchase_taxes(@company.id), :id, :purchase_tax_name,tax.account_id,{:"linked" => :linked_purchase }), :include_blank => true, :class => "form-control bg-focus", :style => "width: 150px;" %><p></p>
+        </div>
+      </div>
+    <% end %>
+    <a id="add-tax" data-index="<%=index%>" style="cursor:pointer;"><i> + apply another tax</i></a>
+  </td>
+  <td align='right'>
+    <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][amount]", purchase_line_item.amount, :id => 'total' %>
+   <span id="amount">0.0</span>
+  </td>
+  <td style="padding-right:0"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => purchase_line_item.id},:class=> "btn btn-danger", :id => 'cancel', :remote => true%></td>
+</tr>
+
+<script type="text/javascript"> 
+  $("#purchase_purchase_line_items_attributes_<%= index %>_product_id").select2();
+</script>

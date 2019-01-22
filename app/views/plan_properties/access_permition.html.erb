@@ -1,0 +1,44 @@
+<!-- Page title -->
+<div id="pagetitle">
+    <div class="wrapper">
+      <h1>Access Permition</h1>
+    </div>
+  </div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+    <!-- Left column/section -->
+        <section class="column width6 first"><br />
+        	<div class="highlight"><br>
+            <div class="box box-error">Uh-oh! feature not available!</div>
+            <div class="box box-error-msg">
+              This feature is not available in you plan, please upgrade your plan to use this feature. <br/>To upgrade your plan please visit our <a href = "/billing/index" >billing page</a>.
+            </div>
+            <div>
+              <br/><%= link_to "Go Back", :back, :class => "btn btn-green" %>
+            </div>
+          </div><br />  
+         </section>
+        <!-- End of Left column/section -->
+    <!-- Right column/section -->
+        <aside class="column width2">
+           <div id="rightmenu">
+        <dl class="first">
+          <dt><!-- <img width="16" height="16" alt="" SRC="/images/help.png" class = "icon" > -->
+          </dt>
+          <dd>
+            <dd><a href="#"> Hi <%= @current_user.first_name  %>!</a></dd>
+          </dd>
+          <dd class="last">
+          You are subscribed to <%= @company.plan.display_name %> plan. <a href ="/billing/index">Click</a> to upgrade your plan so that you can use new features. <br><br>Visit <a href="http://connect.profitbooks.in/" target="_blank">ProfitBooks Connect</a> for tutorials on how to use the application. 
+          </dd>
+        </dl>
+      </div><br />
+      <a href ="/dashboard/index" class ="btn btn-special btn-gray"><img src="/images/black_icon/ic_left.png" class="icon" alt = "Back to dashboard" >Go back to dashboard</a>
+        </aside>
+       <!-- End of Right column/section -->
+    </div>
+</div>
+<!-- End of Page content -->

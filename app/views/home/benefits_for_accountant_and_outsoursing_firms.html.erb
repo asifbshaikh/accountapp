@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Grow Your Practice With ProfitBooks. ProfitBooks provides free tools to chartered accountants and outsourcing firms to manage their clients. Save time and provide better service." />
+<meta name="keywords" content="accounting software, invoicing, expenses" />
+<title>Organise Your Practice. Say Goodbye to Data Transfer Hassles. </title>
+
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- //      Stylesheets Files       // -->
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial =>"zopim_chat_and_google_analytics"%>
+<!-- End Load google Analytics -->
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('.post-slide').camera({   
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+   <%= render :partial=>"header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="twelve columns">
+                <h1>Grow your practice with ProfitBooks</h1>
+        <p>ProfitBooks is redefining the business of accounting by connecting advisors with their clients in the cloud.</p>
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+   <!-- content section start here -->
+    <section id="content-wrapper">
+      <div class="row">              
+            <div class="twelve columns">
+              <p><h4>Provide more value to your clients and grow your business with ProfitBooks.</h4></p> 
+              <p>Being professional in Accounts and Finance, you always strive to give quality services. ProfitBooks offers a modern way to manage your practice in cloud. It brings you and your clients on the same page.</p>
+
+        <p>With ProfitBooks, your clients can invite you with a simple mail and you can review their books sitting from the comfort of your office.</p>
+        <p>Watch 1min video below to see how it works. </p>
+       </div> 
+       </div> 
+     
+      <div class="row">              
+            <div class="six columns">
+              <p><h4> Benefits </h4>
+        <ul class="check"> 
+        <li> Collaborate anytime anywhere with your clients.</li>
+        <li> Save time with detailed financial reports.</li>
+        <li> Review client's books from the comfort of your office.</li>
+        <li> Track errors easily with in-built audit trail.</li>
+        <li> Manage multiple clients from single login.</li>
+        <li> Avoid version mismatch as no software installation is required.</li>
+        <li> Special discounts for you and your clients.</li>
+        <li> Certification and training from ProfitBooks.</li>
+        </ul>
+        </p>
+       </div>        
+            <div class="six columns">
+              <p><br><iframe width="480" height="315" src="https://www.youtube.com/embed/9Inmze_bmXk?rel=0" frameborder="0" allowfullscreen></iframe>
+        </p>
+       </div> 
+       </div> 
+      
+        <div class="row mobile3row-content">
+          <div class="four columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-swap"></span>
+                </div>
+                <h5>No More Data Transfer Hassles</h5>
+        <p>Don't waste your precious time in importing/exporting data files from client's systems. Review their books sitting from the comfort of your office.
+        </p>
+            </div>
+          <div class="four columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-mail"></span>
+                </div>
+                <h5>Break Geographical Boundaries</h5>
+        <p>Expand the scope of your services beyond your existing location. Serve you clients no matter if they are from Delhi, Bangalore or New York! Be a modern practitioner.
+        </p>
+            </div>
+          <div class="four columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-tick"></span>
+                </div>
+                <h5>Organise Your Practice</h5>
+        <p>ProfitBooks is FREE for advisors. You can invoice your clients, provide comments on the transactions, manage projects and much more..
+        </p>
+            </div>
+        </div>
+        <!-- testimonial start -->
+        
+        <div class="row">
+          <div class="six columns">
+              <!-- testimonials 1 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>ProfitBooks is amazing time saver. I no longer waste time in visiting client's place and doing tax calculations on excel. Rather than reviewing client data once in 4-5 months, I can check it every week as there are no import/export hassles.</p>
+                        </blockquote>                                                         
+                    </div>
+                    <div class="clear"></div>                                                                      
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                    <%= image_tag "nikhil.jpg", :alt=>"Accountants recommend ProfitBooks"%>
+                </div>
+                <div class="testi-name">CA Nikhil Sabadra<br/><span class="company-name">Partner, CALSN and Co.<br><br></span></div>
+            </div>
+      <div class="six columns">
+      <h4 class="title-line"><span>Lets have a meeting</span></h4>
+      <p>
+      <%= render :partial =>"flash_message"%>
+            <form action="new_contact" id="contactform2"> 
+              <fieldset> 
+              <label>Name <em>*</em></label>                           
+              <input type="text" name="name" class="textfield" id="name" value="" /> 
+              <label>E-mail <em>*</em></label> 
+              <input type="email" name="email" class="textfield" id="email" value="" /> <label>Mobile Number<em>*</em></label>
+              <input type="text" onkeydown="return numbersOnly(event);" maxlength="13"  name="contact" id="contact" value="" />
+              <input id="message" type="hidden" value="benefits for accountants and outsourcing firms screen contact" name="message">
+            <div class="clear"></div> 
+              <label>&nbsp;</label>
+              <input type="submit" name="submit" class="simpleBTN blue large"  value="Submit" />
+              <span class="loading" style="display: none;">Please wait..</span>
+              <div class="clear"></div>
+              </fieldset> 
+          </form>
+          </p>
+      </div>
+        </div>
+            
+               
+         
+    </section>
+    <!-- content section end here -->
+ <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+</div>
+<script>$('#noscript').remove();</script>
+</body></html>

@@ -1,0 +1,2 @@
+module SalaryStructureHistoriesHelper
+end

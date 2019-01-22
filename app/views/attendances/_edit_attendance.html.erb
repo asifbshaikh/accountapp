@@ -1,0 +1,27 @@
+<div id="prev_data">
+<div class='titleBar'>
+  <div id="popupHeading">Update attendance</div> 
+  <a id="popupBoxClose" class="btn btn-red">x</a>
+</div><br/>
+  <%= form_for @attendance , :html => {:remote=> true} do |f| %>
+  <%= hidden_field_tag  "id" ,@attendance.id %>
+  <%= hidden_field_tag  "company_id" ,@company.id %>
+  <%= hidden_field_tag "month", @attendance.month.month %>
+  <table class="display stylized">
+    <tbody>
+           <tr>
+            <td class="field"><%= f.label "New Date :", :class => "required" %></td>
+            <td> <%= f.text_field :days_present, :size => 5 %></td>
+          </tr> 
+    </tbody>
+    <tfoot>
+          <tr>
+            <td colspan = "2">
+             <%= f.submit "Submit", :class => "btn btn-green" %>&nbsp;
+            </td>
+          </tr>
+    </tfoot>
+  </table> 
+<% end %>
+
+</div>

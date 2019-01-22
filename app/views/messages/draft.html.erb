@@ -1,0 +1,51 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class="column width6 first">
+      <div id="tabs">
+        <%= render "tabs"%>
+       <% if @messages.blank? %>
+         <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+       <% else %>
+          <%= render :partial => "shared/flash_msg"	%>
+           <div id="tabs-all"> 
+             <table class="display stylized" id="example">
+                <thead>   
+                  <%= render :partial => "header" %>
+                </thead>
+                <tbody>
+                   <%= render :partial => 'message', :collection => @messages%>
+                </tbody>
+                <tfoot>
+                  <tr><td colspan="6"></td></tr>  
+                </tfoot>
+             </table>    
+            <%= paginate @messages %>
+          </div>
+        <% end %>
+      </div>
+     </section>
+   <!-- End of Left column/section -->
+   <!-- Right column/section -->
+   <aside class="column width2">
+      <p ><%= link_to 'Create New Message', new_message_path,:class=>"btn btn-special btn-green" %></p>
+      <div id="rightmenu">
+         <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+             <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd>
+             <dd class="last">You can send messages to your colleagues.</dd>
+         </dl>
+       </div>
+    </aside>
+   <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+

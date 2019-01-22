@@ -1,0 +1,29 @@
+<table>
+  <tr><td colspan=6 align=center><%= @page_name %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center">Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center>As on <%= (params[:for_date].blank?) ? Time.zone.now.to_date : params[:for_date] %></td></tr>
+   <thead>
+      <tr>
+        <th width ="25%">Product</th>
+        <th width ="36%"><span class='char_spacing'>Particulars</span></th>
+        <th width ="12%">Unit of measure</th>
+        <th width="15%">Available Quantity</th>
+        <th width="12%">Reorder Level</th>
+       </tr>
+    </thead>
+    <tbody>
+       <% @products.each do |product| %> 
+        <% if !product.blank? && product.inventoriable? && !product.reorder_level.blank? && product.reorder_level >= product.quantity %>
+        <tr>
+          <td width="25%"><%= product.name %></td>
+          <td width="36%"><%= product.description %></td>
+          <td width ="12%" align = "center"><%= product.unit_of_measure %></td>
+          <td width="15%" align="center"><%= product.quantity %></td>
+          <td width="12%" align ="center"><%= product.reorder_level %></td>
+        </tr>
+        <% end %>
+        <% end %>
+    </tbody>
+</table>

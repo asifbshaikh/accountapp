@@ -1,0 +1,37 @@
+<!-- <form action="/invoices/instamojo_payment" method="post" class="" data-remote='true' > -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Upload</small></h4>
+      </div>
+      <div class="modal-body">
+      <div class='alert alert-danger'>
+        <i class="icon-ban-circle icon-large"></i><%= flash[:error]%></h6>
+      </div>
+     <div  class="otp-request-form" >
+     <%= form_tag({:action => :update_gross_values, :controller => "/gstr1_filings"}) do |f| %>
+                    <%= hidden_field_tag :id, @gstr_one.id%>
+                    <div class="block">
+                      <label class="control-label"> GSTIN: <%= "#{@company.GSTIN}" %> </label> 
+                    </div>
+                    <div class="block">
+                      <label class="control-label">Aggregate turnover in last financial year </label>
+                      <input type="text" name="fy_gross_turnover" class="bg-focus form-control" id="fy_gross_turnover" value="0"/> 
+                    </div>
+                    <div class="block">
+                      <label class="control-label">Aggregate turnover April 2017 to June 2017</label>
+                      <input type="text" name="qtr_gross_turnover" class="bg-focus form-control" id="qtr_gross_turnover" value="0"/> 
+                    </div>
+                     <div class="text-center">
+                      <div class='save-btn1'></div>
+                        <button  class=" btnsave1 btn btn-sm btn-success" type='submit'  data-loading-text="Generating....">Proceed to Upload</button>
+                      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+      <% end %>
+      </div>
+</div>
+</div>
+</div>
+
+<!-- </form> -->

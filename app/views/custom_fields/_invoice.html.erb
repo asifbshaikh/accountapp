@@ -1,0 +1,35 @@
+<table class="table table-striped b-t">
+    <thead>
+      <tr>
+        <th>Sr. No.</th>
+        <th>Invoice #</th>
+        <th><%= @company.label.customer_label%></th>
+        <th>Invoice Date</th>
+        <th>Amount</th>
+        <th><%= @custom_field.custom_label1 %></th>
+        <th><%= @custom_field.custom_label2 %></th>
+        <th><%= @custom_field.custom_label3 %></th>
+       </tr>
+    </thead>
+    <tbody>
+      <% @vouchers.each_with_index do |invoice, index|%>
+       <% if !invoice.custom_field1.blank? || !invoice.custom_field2.blank? || !invoice.custom_field3.blank? %>
+       <tr>
+          <td align="center"><%= index+1 %></td>
+          <td><%= link_to "#{invoice.invoice_number}", invoice %></td>
+          <td><%= invoice.customer_name %></td>
+          <td><%= invoice.invoice_date %></td>
+          <td><%= format_amount(invoice.total_amount) %></td>
+          <td><%= invoice.custom_field1 unless @custom_field.custom_label1.blank? %></td>
+          <td><%= invoice.custom_field2 unless @custom_field.custom_label2.blank? %></td>
+          <td><%= format_amount(invoice.custom_field3) unless @custom_field.custom_label3.blank? %></td>
+       </tr>
+       <% end %>
+      <% end %>
+    </tbody>
+    <tfoot>
+       <tr>
+        <td colspan="8"></td>
+      </tr>
+    </tfoot>
+ </table>

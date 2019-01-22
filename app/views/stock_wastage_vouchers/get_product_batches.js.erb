@@ -1,0 +1,6 @@
+$(".loader").remove();
+<% if @product_batches.blank? %>
+	$("<i style='color:red;' id='qty-notif'>Stock not available.</i>").appendTo(".wastage-line #row<%= params[:index] %> td:eq(0)");
+<% else %>
+	$("<%= escape_javascript render :partial => 'stock_wastage_vouchers/batch_select' %>").appendTo(".wastage-line #row<%= params[:index] %> td:eq(0)");
+<% end %>	

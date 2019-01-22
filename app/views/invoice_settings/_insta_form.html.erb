@@ -1,0 +1,32 @@
+<%= form_for('paysetting',:url =>{:action => :instamojo_settings, :controller => "/invoice_settings"}, :html=>{:class=>'form-horizontal', :remote=>true}) do |f| %>
+  <div class='errorPlace'></div>
+  <div class='form-group'>
+    <div class='col-lg-1'></div>
+    <%= hidden_field_tag  "id" ,@company.id %>
+    <div class='col-lg-5'>
+      <%=  label_tag 'bankacc', "Bank Account", :class=>'control-label' %>
+      <%= select_tag("account_id", options_from_collection_for_select(@company.accounts.where(:accountable_type=>"BankAccount") , :id, :name),:class=>'form-control bg-focus')%>
+    </div>
+    <div class='col-lg-5'>
+      <%= label_tag 'apikey', "Private API Key:", :class=>'control-label' %>
+      <%= f.text_field :apikey,:maxlength => 32, :class=>'form-control bg-focus' %>
+    </div>
+  </div>
+  <div class='form-group'>
+    <div class='col-lg-1'></div>
+    <div class='col-lg-5'>
+      <%= label_tag 'authkey', "Private Auth Token:", :class=>'control-label' %>
+      <%= f.text_field :authkey,:maxlength => 32, :class=>'form-control bg-focus' %>
+    </div>
+    <div class='col-lg-5'>
+      <%= label_tag 'saltkey', "Private Salt:", :class=>'control-label' %>
+      <%= f.text_field :saltkey, :maxlength => 32, :class => "form-control bg-focus" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-4">
+      <div class='save-btn'></div>
+      <%= f.submit "Save", :class => "btn btn-success btnsave", :"data-loading-text"=>"Saving..." %> &nbsp; 
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,71 @@
+ <!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>User  &rarr; <span> Settings</span></h1>
+      <!-- Quick search box -->
+      <form action="" method="get">
+          <input class="" type="text" id="q" name="q" />
+      </form>
+    </div>
+</div>
+<!-- End of Page title -->
+ 
+ <!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first">
+           <div class="colgroup leading">
+		          <h3>Hi, <a href="#"><%= session[:name]%></a></h3>
+				        <h4>Your settings are here...</h4>		
+							
+							<div class="column width3 first">
+										<p><h4>Account settings</h4></p>
+										 
+					            <ul>
+										     <li><a href="#">User Profile</a></li>
+										     <li><a href="/users/profile_image">Profile Image</a></li>
+										     <li><a href="#">Import/Export</a></li>
+										     <li><a href="#">Delete Account</a></li>
+												 
+											</ul>
+	              </div>
+								
+								<div class="column width3 ">
+							      <p><h4>HRM settings</h4></p>
+										 <ul>
+                         <li><a href="/assets">Assets</a></li>
+							       	   <li><a href="/departments">Departments</a></li>
+                         <li><a href="/holidays">Holidays</a> </li>
+												 <li><a href="/jobs">Job Title</a></li>
+                         <li><a href="/leaves">Leave Types</a></li>
+							       </ul>
+							  </div>
+								
+								<div class="column width3 first">
+                    <p><h4>Administration</h4></p>
+                     <ul>
+                         
+                         <li><a href="/pay_grades">Pay Grades</a></li>
+                         <li><a href="/paygrades/new">Define PayGrades</a></li>
+                         <li><a href="/organisation_announcements">Create Announcement</a></li>
+                         <li><a href="/employees/new">Create an Employee</a></li>
+												 <li><a href="/leave_requests/new">Create Leave Request</a></li>
+                         <li><a href="/salary_structures/new">Create Salary Structure </a></li>
+                     </ul>
+                </div>
+		
+		<div class="column width3">
+                   <p><h4>Performance Management</h4></p>
+                     <ul>
+                         <li><a href="/master_objectives">Master Objectives </a></li>
+                         <li><a href="/employee_goals">Goals for Employees</a></li>
+                     </ul>
+                </div>
+	      </section>
+      <!-- End of Left column/section -->
+    </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

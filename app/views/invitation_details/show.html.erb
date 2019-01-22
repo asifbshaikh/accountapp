@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @invitation_detail.company_id %>
+</p>
+
+<p>
+  <b>Sent by:</b>
+  <%= @invitation_detail.sent_by %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @invitation_detail.email %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%= @invitation_detail.token %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @invitation_detail.status_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_invitation_detail_path(@invitation_detail) %> |
+<%= link_to 'Back', invitation_details_path %>

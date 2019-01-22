@@ -1,0 +1,54 @@
+<script >
+  function numbersOnly(e){
+          
+       //alert(e.which);
+    if (((e.which > 47 && e.which < 58) || (e.which > 95 && e.which < 106) || e.which == 8 || e.which == 110 || e.which == 190 || e.which == 16 || e.which == 9 || e.which == 37 || e.which == 39 || e.which == 46 )) {
+       // alert('alow'+e.which);
+        return true;
+    }
+    else {
+        return false;
+    }
+
+  }
+    
+</script>
+<%= form_for(@webinar) do |f| %>
+<%= render 'shared/form_error', :object => @webinar %>
+<%= hidden_field_tag "webinar[date]", Time.zone.now.to_date %>
+  <div class="field">
+    <label>Name <em>*</em></label>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <label>E-mail <em>*</em></label>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <label>Phone <em>*</em></label>
+    <%= f.text_field :phone, :onkeydown => "return numbersOnly(event);" %>
+  </div>
+ <!--  <div class="field"><br/>
+    <label>Date <em>*</em></label>
+     <select name="webinar[date]">
+        <option value="2013-10-18">Friday Oct 18 2013</option>
+        <option value="2013-10-22">Tuesday Oct 22 2013</option>
+        <option value="2013-10-25">Friday Oct 25 2013</option>
+        <option value="2013-10-29">Tuesday Oct 29 2013</option>
+        <option value="2013-11-12">Tuesday Nov 12 2013</option>
+        <option value="2013-11-15">Friday Nov 15 2013</option>
+        <option value="2013-11-19">Tuesday Nov 19 2013</option>
+    </select>
+  </div> -->
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :detail, "Brief information about your business" %><br />
+    <%= f.text_area :detail %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Register", :class=>"simpleBTN green large" %>
+  </div>
+<% end %>

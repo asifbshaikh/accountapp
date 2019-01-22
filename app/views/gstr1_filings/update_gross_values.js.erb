@@ -1,0 +1,15 @@
+<% if @save_success%>
+$("#modal1").remove();
+  <% redirect_to gstr1_filing_path(:id => @gstr_one) %>
+<% else %>
+$(".error-place1").after("<div class='alert alert-danger invoice-setting-notif'>Please provide valid values</div>")
+$(".btnsave1").remove();
+$(".save-btn1").after("<button class='btn btn-sm btn-success btnsave1' type='submit'  data-loading-text='Generating...'>Generate</button>");
+setTimeout(function(){
+  $("div.alert-danger").fadeOut(6000, function () {
+  $("div.alert-danger").remove();
+      });
+}, 2000);
+
+<% end %>
+

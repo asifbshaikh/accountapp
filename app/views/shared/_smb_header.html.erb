@@ -1,0 +1,129 @@
+  <!-- Header -->
+  <!-- Top navigation -->
+  <%= render :partial=> "shared/user_and_company_title"%>
+  <!-- End of Top navigation -->
+  <!-- nav -->
+  <% unless @current_user.owner? && @company.basic_details_required? %>
+  <nav id="nav" class="nav-primary bg-green hidden-xs nav-vertical">
+    <ul class="nav" data-spy="affix" data-offset-top="50">
+      <% if @current_user.employee? %>
+        <%= render "shared/employee_header" %>
+      <% else %>
+        <% if !@current_user.inventory_manager? %>
+          <li class="dropdown-submenu <%=tab_selection 'income' %>">
+            <a href="#" id="income_menu_tour"><i class="icon-money icon-xlarge"></i><span>Income</span></a>
+            <ul class="dropdown-menu <%=tab_selection 'income' %>">
+              <li><%= link_to 'Invoices', invoices_path %></li>
+              <li><%= link_to "Receipts", receipt_vouchers_path %></li>
+              <li><%= link_to "Advance Receipts",:controller =>:gstr_advance_receipts, :action=>:index%></li>
+              <li><%= link_to "#{@company.label.estimate_label}", :controller => :estimates, :action => :index %></li>
+              <li><%= link_to 'Sales Order', :controller =>:sales_orders, :action => :index %></li>
+              <% if @company.indian_company? %>
+                <li><%= link_to 'GST Credit Note', :controller => :gst_credit_notes, :action => :index %></li>
+              <% end %>
+              <li><%= link_to 'Customers', customers_path %></li>
+            </ul>
+          </li>
+        <% end %>
+        <li class="dropdown-submenu <%=tab_selection 'expenses'%>">
+          <a href="#" id="expenses_menu_tour"><i class="icon-credit-card icon-xlarge"></i><span>Expenses</span></a>
+          <ul class="dropdown-menu">
+            <% if !@current_user.inventory_manager? %>
+              <li><%= link_to "Record Expenses", :controller => :expenses, :action => :index %></li>
+            <% end %>
+            <li><%= link_to "Record Purchases", :controller => :purchases, :action => :index %></li>
+            <li><%= link_to 'Purchase Orders', purchase_orders_path %></li>
+            <% if @company.indian_company? %>
+              <li><%= link_to "Advance Payments",:controller =>:gstr_advance_payments, :action=>:index%></li>
+            <% end %>
+            <% if !@current_user.inventory_manager? %>
+              <li><%= link_to 'Make Payments', payment_vouchers_path %></li>
+              <% if @company.indian_company? %>
+                <li><%= link_to 'GST Debit Note', :controller => :gst_debit_notes, :action => :index %></li>
+              <% end %>
+              <li><%= link_to 'Vendors', vendors_path %></li>
+            <% end %>
+          </ul>
+        </li>
+        <% if !@current_user.inventory_manager? %>
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="/banking/index" id="banking_menu_tour"><i class="icon-building icon-xlarge"></i><span>Banking</span></a>
+          </li>
+          <li class="dropdown-submenu <%= tab_selection 'accounting'%>">
+            <a href="#" id="accounting_menu_tour"><i class="icon-book icon-xlarge"></i><span>Accounting</span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Chart of Accounts', accounts_path %></li>
+              <li><%= link_to 'Taxes', "/duties_and_taxes/index" %></li>
+              <li class="dropdown-submenu"><a href="#">Journal Entry</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Journal Entry", :controller => :journals, :action => :index %></li>
+                  <li><%= link_to 'Debit Note' , :controller => :debit_notes, :action => :index %></li>
+                  <li><%= link_to 'Credit Note' , :controller => :credit_notes, :action => :index %></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a href="#">Reimbursements</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Reimbursement Voucher' , :controller => :reimbursement_notes, :action => :index %></li>
+                  <li><%= link_to 'Reimbursement Receipt' , :controller => :reimbursement_vouchers, :action => :index %></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu"><a href="#">Reimbursements</a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Reimbursement Voucher' , :controller => :reimbursement_notes, :action => :index %></li>
+                  <li><%= link_to 'Reimbursement Receipt' , :controller => :reimbursement_vouchers, :action => :index %></li>
+                </ul>
+              </li>
+              <% if !@company.saccountings.blank?%>
+                <li><%= link_to 'Simple Accounting Entry' , :controller => :saccountings, :action => :index %></li>
+              <% end %>
+              <li><%= link_to 'Projects', projects_path %></li>
+              <li><%= link_to 'Auditors', auditors_path %></li>
+            </ul>
+          </li>
+        <% end %>
+        <li class="dropdown-submenu <%=tab_selection 'inventory' %>">
+          <a href="#"><i class="icon-tags icon-xlarge"></i><span><%= @company.inventory_label %></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Products/Services", :controller => :products, :action => :index %></li>
+            <li class="dropdown-submenu">
+              <a href="#">Manage Stock</a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Issue for Production", stock_issue_vouchers_path %></li>
+                <li><%= link_to "Receive for Sales", stock_receipt_vouchers_path %></li>
+                <li><%= link_to "Record Transfer", stock_transfer_vouchers_path %></li>
+                <li><%= link_to "Record Wastage", stock_wastage_vouchers_path %></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <% if (@current_user.owner? || @current_user.accountant?) && @company.currency_code == 'INR' %>
+          <li class="dropdown-submenu <%=tab_selection 'gstr' %>">
+            <a href="#"id="gstr_menu_tour"><i class="icon-inr icon-xlarge"></i><span>GST</span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "GST Returns", gst_returns_path%></li>
+              <li><%= link_to "GSTR 3B", gstr3b_reports_path %></li>
+            </ul>
+          </li>
+        <% end %>
+        <% if @current_user.owner? || @current_user.hr? %>
+          <li class="dropdown-submenu <%=tab_selection 'payroll' %>">
+            <a href="#"id="payroll_menu_tour"><i class="icon-group icon-xlarge"></i><span>Employees</span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Employees", users_path %></li>
+              <li><%= link_to "Manage Payroll", users_manage_payroll_path %></li>
+              <li><%= link_to "Leave Requests", leave_requests_path %></li>
+              <li><%= link_to "Timesheets", timesheets_path %></li>
+            </ul>
+          </li>
+        <% end %>
+        <% if !@current_user.staff? %>
+          <li class="dropdown-submenu <%= tab_selection 'reports' %>">
+            <a href="/account_books_and_registers/reports"><i class="icon-bar-chart icon-xlarge"></i><span>Reports</span></a>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
+<!-- / nav -->
+  <!-- End of Header -->

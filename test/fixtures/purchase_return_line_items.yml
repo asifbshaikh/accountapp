@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  purchase_return_id: 1
+  account_id: 1
+  quantity: 9.99
+  unit_price: 9.99
+  tax: false
+  amount: 9.99
+  line_type: MyString
+  product_id: 1
+  tax_account_id: 1
+  discount_percent: 9.99
+  warehouse_id: 1
+
+two:
+  purchase_return_id: 1
+  account_id: 1
+  quantity: 9.99
+  unit_price: 9.99
+  tax: false
+  amount: 9.99
+  line_type: MyString
+  product_id: 1
+  tax_account_id: 1
+  discount_percent: 9.99
+  warehouse_id: 1

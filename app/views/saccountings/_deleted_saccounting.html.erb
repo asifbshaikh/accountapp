@@ -1,0 +1,22 @@
+
+ 
+<tr>
+    <td><%= link_to deleted_saccounting.voucher_number, deleted_saccounting %></td>
+    <td><%= deleted_saccounting.voucher_date.strftime("%d-%m-%Y") %></td>
+    <td><%= deleted_saccounting.to_account_name %></td>
+    <td><%= format_currency deleted_saccounting.amount %></td>
+    <td><%= deleted_saccounting.created_by_user %></td>
+    <td>
+	  <div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/saccountings/<%= deleted_saccounting.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/saccountings/restore_saccounting?id=#{deleted_saccounting.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/saccountings/permanent_delete_saccounting?id=#{deleted_saccounting.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+    </td>
+</tr>

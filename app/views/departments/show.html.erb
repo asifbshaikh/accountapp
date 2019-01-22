@@ -1,0 +1,57 @@
+<!-- Page title -->
+<%= render "shared/page_title"%> <!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class="column width6 first"></br>
+       <div class="highlight">
+	<%= render :partial => "shared/flash_msg"%>
+       <table class="display stylized" id="act_details">
+	 <thead>
+	   <tr><th colspan="2">Department Details</th></tr>
+	 </thead>
+	 <tbody>	
+	   <tr>
+	     <td colspan ="2">
+               <label>Name:</label>
+	       <%= @department.name %>
+             </td>
+	  </tr>
+	  <tr>
+	     <td colspan ="2">
+               <label>Description:</label>
+	       <%= breaking_word_wrap(@department.description) %>
+             </td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+              <label>Status:</label>
+	      <%= @department.status %>
+            </td>
+	  </tr>
+	 </tbody>
+	 <tfoot>
+	    <tr>
+	      <td colspan="2">	
+		<%= link_to 'Edit', edit_department_path(@department),{:class=>"btn btn-green" } %> 
+    <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "" class="btn" >Delete</a>
+		<a href="/departments" class="btn">Back</a>
+	      </td>
+	    </tr>
+	 </tfoot>	
+       </table>
+      </div><br />
+    </section>
+  <!-- End of Left column/section -->
+<!-- Right column/section -->
+  <aside class="column width2"><br />
+    <%= new_button "Create New Department", new_department_path %>
+    <p><%= list_button_black "View Departments", departments_path %></p>
+</p>
+    
+  </aside>
+	  <!-- End of Right column/section -->
+	</div>
+</div>

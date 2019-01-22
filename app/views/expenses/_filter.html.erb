@@ -1,0 +1,25 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title">Expense filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="expense-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="expensenumber"></td>
+          <td width='10%' class='text-right'><label>Paid From</label></td>
+          <td id="expaccount" data-expacc="<%= Account.expense_from_accounts(@company.id) %>"></td>
+          <td width='10%' class='text-right'><label>Expense date</label></td>
+          <td id="expdate"></td>
+        </tr>
+        <tr>
+          <td class='text-right'><label>Project</label></td>
+          <td id="project" data-projects="<%= Project.company_projects(@company.id) %>"></td>
+          <!-- <td class='text-right'><label>Created By</label></td>
+          <td id="expcreatedby" data-creater="<%= User.company_users(@company.id) %>"></td> -->
+          <td class='text-right'><label>Expense Type</label></td>
+          <td id="exptype" data-exptype="<%= Expense.get_expense_type(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="expamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

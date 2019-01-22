@@ -1,0 +1,12 @@
+<% if !@announcements.blank? %>
+<div class ="slidingDiv">
+  <a href="#" class ="show_hide close" title="Close">x</a>
+    <% @announcements.each do |announcement| %>
+      <%= div_for announcement do %>
+        <ul>
+          <li><%= announcement.message %></li>
+        </ul>
+      <% end %>
+    <% end %>
+ </div>
+<% end %>

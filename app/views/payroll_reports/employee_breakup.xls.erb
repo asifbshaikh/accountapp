@@ -1,0 +1,292 @@
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width6 first">
+            &nbsp;
+           
+		<div class='highlight'>
+			<div id='report_header' align='center'>
+				
+				<span class='company_name'><%= Company.find(@company).name%></span>
+				<p>22 Unifed apartment'
+				2407 East street,
+				camp, Pune(MH).
+				pin:411001</p>
+				<span class='report_title'><u>Breakup Of Employee</u></span><br>
+				<span class='report_month'>1-April-2010 to 31-March-2011</span>
+			</div><hr>	
+	       
+            <div class='title_name1' align=center>
+                Employee:<%= @users.first_name %> <%= @users.last_name %>
+            </div>
+			
+				<h3> Particulars </h3>
+				<h3 align=right> 
+				 <table  width=500>
+                   <tr><th ROWSPAN=4><th COLSPAN=4>Transactions</th></th>
+                   <th ROWSPAN=4>Closing<br>Balance</th>
+                   <tr><th><i>Debit</i></th><th><i>credit</i></th>
+                 </table>
+				</h3> 
+			
+			
+            <table class = "zebra-sriped" border = 0 align = center width=100%>
+            	
+                <thead>
+               <tr>
+                   <hr>
+                   
+               </tr>
+				
+                </thead>
+			
+                <tbody>
+                	
+                    <tr>
+                        <td class=width3>
+                         <h3>Current Liabilities</h3>
+                        </td>
+                        <td align = right>
+                           <h3>56556757</h3><hr>
+                        </td>
+                        <td align = right>
+                          <h3>6646646</h3><hr>
+                        </td>
+                       <td align = right>
+                           <h3>895656577</h3><hr>
+                        </td>
+						
+                    </tr>
+					
+                    <tr>
+                        <td>
+                           Administration Charges@1.1%
+                       </td>
+                        <td align = right>
+                           56656
+                        </td>
+                        <td align = right>
+                         56556
+                        </td>
+                       <td align = right>
+                           
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           EDLI Admin Charges@0.01%
+                       </td>
+                        <td align = right>
+                           13 
+                        </td>
+                        <td align = right>
+                          13
+                        </td>
+                       <td align = right>
+                           
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                          EDLI Contribution
+                       </td>
+                        <td align = right>
+                           130
+                        </td>
+                        <td align = right>
+                          130
+                        </td>
+                       <td align = right>
+                         
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           Employee's Voluntary PF
+                       </td>
+                        <td align = right>
+                          76868
+                        </td>
+                        <td align = right>
+                        78686
+                        </td>
+                       <td align = right>
+                           786868
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           Employee PF Contribution@12%
+                       </td>
+                        <td align = right>
+                        465465
+                        </td>
+                        <td align = right>
+                          564646
+                        </td>
+                       <td align = right>
+                         5646546
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           PF Payable
+                       </td>
+                        <td align = right>
+                           6757
+                        </td>
+                        <td align = right>
+                          567
+                        </td>
+                       <td align = right>
+                            5656
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           Professional Tax
+                       </td>
+                        <td align = right>
+                           137
+                        </td>
+                        <td align = right>
+                          134
+                        </td>
+                       <td align = right>
+                            333
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           Salary Payable
+                       </td>
+                        <td align = right>
+                         6757657
+                        </td>
+                        <td align = right>
+                          56757
+                        </td>
+                       <td align = right>
+                           567577
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           TDS
+                       </td>
+                        <td align = right>
+                           56464
+                        </td>
+                        <td align = right>
+                          45646
+                        </td>
+                       <td align = right>
+                        456465
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                           <h3>Indirect Expenses</h3>
+                       </td>
+                        <td align = right>
+                           <h3>9545646</h3><hr>
+                        </td>
+                        <td align = right>
+                         
+                        </td>
+                       <td align = right>
+                            <h3>9987777777</h3><hr>
+                        </td>
+						
+                    </tr>
+                        <%for user_payhead in @payhead %>
+                          <%for sal_str_user in @user_in_sal_stru %>
+                           <%if sal_str_user.pay_head == user_payhead.id %>
+						    <tr>
+						     <td><%=user_payhead.payhead_name%></td>
+				             <td>
+                               <%= sal_str_user.amount %>
+                              </td><td></td>
+                              <td>
+                               <%= sal_str_user.amount %>
+                              </td>
+                             </tr>
+                           <%end %>
+                        <%end %>
+                      <%end %>
+					  <tr>
+                        <td>
+                           <h3>Direct Expenses</h3>
+                       </td>
+                        <td align = right>
+                           <h3>9545646</h3>
+                        </td>
+                        <td align = right>
+                         
+                        </td>
+                       <td align = right>
+                            <h3>9987777777</h3>
+                        </td>
+						
+                    </tr>
+					  
+					  
+					  
+					    <%@payhead=Payhead.find_all_by_under("Direct Expenses")%>	  
+                        <%for user_payhead in @payhead %>
+						
+                          <%for sal_str_user in @user_in_sal_stru %>
+						   
+                           <%if sal_str_user.pay_head == user_payhead.id %>
+						  
+                             <tr>
+                              <td>
+                               <%= user_payhead.payhead_name %>
+                              </td>
+                              <td>
+                               <%= sal_str_user.amount %>
+                              </td>
+                              <td>
+                              </td>
+                              <td>
+                               <%= sal_str_user.amount %>
+                              </td>
+                             </tr>
+                           <%end %>
+                        <%end %>
+                      <%end %>
+					
+					 </tbody>
+                       <tfoot>
+                           
+						   <td><hr><h2>Grant Total:</h2><hr></td>
+						   <td></td><td></td>
+						   <td><hr><h2>98989898970</h2><hr></td>
+                        </tfoot>
+                        </table>
+              
+						
+						<hr>	
+            
+           
+                        <br>
+                        <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+						
+                    </section>
+                    <!-- End of Left column/section -->
+                    <!-- End of Left column/section -->
+                    </div>
+                    <!-- End of Wrapper -->
+                </div>&nbsp;

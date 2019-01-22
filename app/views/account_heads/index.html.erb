@@ -1,0 +1,46 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h2><i class="icon-file text"></i>Account Groups</h2>
+        </div>
+        <div class="col-lg-8 m-t-large" align="right">
+          <a href="/account_heads/new" class="btn btn-success btn-lg"> <i class="icon-plus"></i> New Account Group</a>
+          <a href="/accounts" class="btn btn-white btn-lg"> <i class="icon-list"></i> Accounts</a>
+          <a href="#" class="btn btn-white btn-lg" id="use_filter"><i class="icon-filter"></i></a>
+          <p></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <%= render :partial => "shared/flash_msg" %>
+            <%= render :partial=>"filter"%>
+            <div class="table-responsive">
+              <table id="account_heads" class="table table-striped m-b-none text-small" data-source ="<%= account_heads_url(:format => "json") %>" >
+                <thead>
+                  <tr>
+                    <th>Group Name</th>
+                    <th>Parent Group</th>
+                    <th>Created By</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr style="visibility:hidden">
+                    <th>Group Name</th>
+                    <th>Parent Group</th>
+                    <th>Created By</th>
+                    <th>Actions</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+

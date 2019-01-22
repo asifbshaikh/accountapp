@@ -1,0 +1,14 @@
+$(".popup-error").remove();
+<% if @leave_type.errors.any?  %>
+	console.log("error");
+	$(".leave-type-notif").after("<%= escape_javascript render('shared/popup_form_error', {:object => @leave_type})%>");
+<% else %>
+	$(".lvtp_add").hide();
+	$(".lvtp_info").show();
+	$(".leave-type-info-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".leave-type-body").html("<%= escape_javascript render('leave_types/leave_types')%>");
+	fadeOutMessage();
+	console.log("success");
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

@@ -1,0 +1,14 @@
+<%= f.fields_for :usernote do |note| %>
+  <table class="display stylized" id="act_details">
+     <div id='user_info_div' ><span class='notes'>Notes</span></div>
+     <tbody>
+     	   <tr>
+            <td>
+               <%= note.hidden_field :user_id%>
+                <%= note.label :notes %><br/>
+               <%= note.text_area :notes, :rows=>"3", :cols=>"73"%>
+            </td> 
+     	   </tr>
+     </tbody>
+  </table>
+ <% end %>

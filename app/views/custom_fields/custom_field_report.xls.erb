@@ -1,0 +1,199 @@
+<% if params[:voucher_type].blank? || params[:voucher_type]== "Invoice" %>
+        <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Invoice #</th>
+                  <th><%= @company.label.customer_label%></th>
+                  <th>Invoice Date</th>
+                  <th>Amount</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |invoice, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= invoice.invoice_number %></td>
+                    <td><%= invoice.customer_name %></td>
+                    <td><%= invoice.invoice_date %></td>
+                    <td><%= invoice.total_amount %></td>
+                    <td><%= invoice.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                    <td><%= invoice.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                    <td><%= invoice.custom_field2 unless @custom_field.custom_label3.blank?%></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="7"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% elsif params[:voucher_type]=="Estimate"%>
+         <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th><%= @company.label.estimate_label%> #</th>
+                  <th><%= @company.label.customer_label%></th>
+                  <th><%= @company.label.estimate_label%> Date</th>
+                  <th>Amount</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |estimate, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= estimate.estimate_number %></td>
+                    <td><%= estimate.customer_name %></td>
+                    <td><%= estimate.estimate_date %></td>
+                    <td><%= estimate.total_amount %></td>
+                  <td><%= estimate.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                  <td><%= estimate.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                  <td><%= estimate.custom_field2 unless @custom_field.custom_label3.blank?%></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="7"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% elsif params[:voucher_type]=="Purchase"%>
+         <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Purchase #</th>
+                  <th>Vendor</th>
+                  <th>Purchase Date</th>
+                  <th>Amount</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |purchase, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= purchase.purchase_number %></td>
+                    <td><%= purchase.vendor_name %></td>
+                    <td><%= purchase.record_date %></td>
+                    <td><%= purchase.total_amount %></td>
+                  <td><%= purchase.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                  <td><%= purchase.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                  <td><%= purchase.custom_field2 unless @custom_field.custom_label3.blank? %></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="7"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% elsif params[:voucher_type]=="StockIssueVoucher" %>
+         <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Voucher #</th>
+                  <th>Voucher Date</th>
+                  <th>Warehouse</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label3%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |stock, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= stock.voucher_number %></td>
+                    <td><%= stock.voucher_date %></td>
+                    <td><%= stock.stock_issued_voucher %></td>
+                    <td><%= stock.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                    <td><%= stock.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                    <td><%= stock.custom_field3 unless @custom_field.custom_label3.blank?%></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="6"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% elsif params[:voucher_type]=="StockReceiptVoucher" %>
+         <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Voucher #</th>
+                  <th>Voucher Date</th>
+                  <th>Warehouse</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label3%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |stock, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= stock.voucher_number %></td>
+                    <td><%= stock.voucher_date %></td>
+                    <td><%= stock.warehouse.name %></td>
+                    <td><%= stock.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                    <td><%= stock.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                    <td><%= stock.custom_field3 unless @custom_field.custom_label3.blank?%></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="6"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% elsif params[:voucher_type]=="StockWastageVoucher" %>
+         <table class = "zebra-sriped" border = 0 align = center width="100%" >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Voucher #</th>
+                  <th>Voucher Date</th>
+                  <th>Warehouse</th>
+                  <th><%= @custom_field.custom_label1%></th>
+                  <th><%= @custom_field.custom_label2%></th>
+                  <th><%= @custom_field.custom_label3%></th>
+                 </tr>
+              </thead>
+              <tbody>
+                <% @vouchers.each_with_index do |stock, index|%>
+                 <tr>
+                    <td align="center"><%= index+1 %></td>
+                    <td><%= stock.voucher_number %></td>
+                    <td><%= stock.voucher_date %></td>
+                    <td><%= stock.warehouse.name %></td>
+                    <td><%= stock.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+                    <td><%= stock.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+                    <td><%= stock.custom_field3 unless @custom_field.custom_label3.blank?%></td>
+                 </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="6"></td>
+                </tr>
+              </tfoot>
+           </table>
+<% end %>

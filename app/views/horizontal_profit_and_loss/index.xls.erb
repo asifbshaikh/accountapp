@@ -1,0 +1,147 @@
+<table>
+  <tr>
+    <td colspan=4 align="center"><b>Profit and Loss</b></td>
+  </tr>
+  <tr>
+    <td colspan=4 align="center"><%= @profit_loss.start_date %> to <%= @profit_loss.end_date %></td>
+  </tr>
+  <thead>
+    <tr>
+      <th align='left'>E x p e n s e</th>
+      <th align="right">
+        <%= @profit_loss.start_date %> to <%= @profit_loss.end_date %>
+      </th>
+      <th align='left'>I n c o m e </th>
+      <th align="right">
+        <%= @profit_loss.start_date %> to <%= @profit_loss.end_date %>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <table  border="0" align="center" width="100%">
+          <tbody>
+            <tr>
+              <td align="left"><b>Opening Stock</b></td><td></td>
+              <td align='right'>
+              <b><%= format_currency(@profit_loss.opening_stock_valuation)%></b>
+              </td>
+            </tr>
+            <tr>
+              <td align="left"><b>Direct Expenses</b></td><td></td>
+              <td align="right">
+              <b><%= format_currency(@profit_loss.direct_expenses)%></b>
+              </td>
+            </tr>
+            <% @direct_expense_with_sub_heads.each do |account_head| %>
+              <tr>
+                <td align="left">
+                  <%= account_head.name %>
+                </td>
+                <td align="right">
+                  <%= format_currency @desh_hash[account_head] %>
+                </td>
+                <td></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td align="left"><b>Indirect Expenses</b></td><td></td>
+              <td align="right">
+                <b><%= format_currency(@profit_loss.indirect_expenses)%></b>
+              </td>
+            </tr>
+            <% @indirect_expense_with_sub_heads.each do |account_head| %>
+              <tr>
+                <td align="left">
+                  <%= account_head.name %>
+                </td>
+                <td align="right">
+                  <%= format_currency @iewsh_hash[account_head.id] %>
+                </td>
+                <td></td>
+              </tr>
+            <% end %>
+            <% if @net_profit >= 0 %>
+              <tr>
+                <td align="left"><b><span class='char_spacing'>Net Profit</span></b></td>
+                <td></td>
+                <td align="right">
+                <b><%= format_currency(@profit_loss.profit_and_loss)%></b>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </td>
+      <td colspan="2">
+        <table border="0" align="center" width="100%">
+          <tbody>
+            <tr>
+              <td align="left"><b>Direct Incomes</b></td>
+              <td></td>
+              <td align="right">
+                <b><%= format_currency(@profit_loss.direct_income)%></b>
+              </td>
+            </tr>
+            <% @direct_income_with_sub_heads.each do |account_head| %>
+              <tr>
+                <td align="left">
+                  <%= account_head.name %>
+                </td>
+                <td align="right">
+                  <%= format_currency(clean_output(-1*@diwsh_hash[account_head.id]))%>
+                </td>
+                <td></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td align="left"><b>Indirect Incomes</b></td>
+              <td></td>
+              <td align="right">
+              <b><%= format_currency(@profit_loss.indirect_income) %></b>
+              </td>
+            </tr>
+            <% @indirect_income_with_sub_heads.each do |account_head| %>
+              <tr>
+                <td align="left">
+                  <%= account_head.name %>
+                </td>
+                <td align="right">
+                  <%= format_currency(clean_output(-1*@iiwsh_hash[account_head.id]))%>
+                </td>
+                <td></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td align="left"><b>Stock in hand</b></td>
+              <td></td>
+              <td align="right">
+                <b><%= format_currency(@profit_loss.inventory_valuation)%></b>
+              </td>
+            </tr>
+            <% if @net_profit < 0 %>
+              <tr>
+                <td align="left"><b>Net Loss</b></td>
+                <td></td>
+                <td align="right">
+                  <b><%= format_currency(@net_profit.abs)%></b>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+  <tr>
+    <td align="right"><b>T o t a l</b></td>
+    <td align="right">
+      <b><%= format_currency(@profit_loss.total_expenses)%></b>
+    </td>
+    <td align="right"><b>T o t a l</b></td>
+    <td align="right">
+      <b><%= format_currency(@profit_loss.total_income)%></b>
+    </td>
+  </tr>
+</table>

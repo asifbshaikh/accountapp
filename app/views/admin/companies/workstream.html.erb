@@ -1,0 +1,76 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h3>Recent Activities</h3>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            
+                          <header class="panel-heading">
+                            <ul class="nav nav-tabs pull-left">
+                             <!-- <li class="active"><a href="#all" data-toggle="tab"><i class="icon-list icon-large text-default"></i>All</a></li> -->
+                              <li class="active"><a href="#rec_act" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Recent Activities</a></li>
+                              <!-- <li><a href="#details" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Details</a></li>
+
+
+                              <li><a href="#pay_done" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Payments Done by Company</a></li> -->
+
+                            </ul>
+                          </header>
+                      <div class="panel-body">
+                      <%= render :partial=> "shared/flash_msg"%>
+                        <div class="tab-content"> 
+                        <div class="tab-pane active" id="rec_act">
+                                
+                            <div class="table-responsive row">
+                                  <table id="comp_acts" class="table table-striped m-b-none text-small" data-source="<%= admin_companies_workstream_url(:format => 'json', :tab_ref => "from_admin_company", :id => @company.id) %>">
+                                    <thead>
+                                      <tr>
+										<th>Recent Activities</th>
+									  </tr>
+                                    </thead>
+                                    <tbody>
+                                      
+                                    </tbody>
+                                  </table>
+                                </div>
+                              
+                            
+                          </div>
+
+                          <div class="tab-pane" id="details">
+                              
+                                <div class="table-responsive row">
+                                  <table id="all" class="table table-striped m-b-none text-small">
+                                    <thead>
+                                      
+                                    </thead>
+                                    <tbody>
+                                      
+                                    </tbody>
+                                  </table>
+                                </div>
+                              
+                          </div><br/>
+                          
+
+
+                              
+                          </div>
+                          
+                      </div>
+                    
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>
+
+

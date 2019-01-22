@@ -1,0 +1,13 @@
+<%= f.hidden_field :credit_expense %>
+<%= render "shared/form_error", :object => @expense %>
+<%= render "voucher_number", :f=>f %>
+<div class="form-group">
+	<div class="col-lg-2 text-right">
+    <%= label_tag :account_id, "#{@expense.credit_expense? ? 'Vendor/Customer Name' : 'Paid from Account'}", :class => 'control-label-required account-select-label'%>
+  </div>
+ <div class="col-lg-10" id='account-select'>
+		<%= f.hidden_field :account_id %>
+		<%= @expense.account.name %><p></p>
+		<%= raw("<strong>Currency:</strong> #{@expense.currency}") if @expense.foreign_currency? %>
+	</div>
+</div>

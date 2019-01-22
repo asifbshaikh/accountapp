@@ -1,0 +1,91 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-8">
+            <h2><i class="icon-edit text"></i>Billing/Upgrade</h2>
+        </div>
+        <div class="col-lg-4 m-t-large" align="right">
+        <a href="/billing_history/index" class="btn btn-white "><i class="icon-list"> </i>    Billing History</a>
+        <!-- <a href="/billing/paid">paid</a> -->
+          <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+     <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <%= render "shared/flash_msg" %>
+          <div class="panel-body">
+            <%= render :partial =>"auto_calculate"%>
+            <%= render "shared/form_error", :object => @billing_invoice unless @billing_invoice.blank? %>
+            <div class="form-group">
+            <div class="col-lg-12">
+            <h3>Hello <a href= <%= "/users/#{@current_user.id}" %> ><strong><%= @current_user.first_name%></strong></a>!</h3>
+             You are subscribed to <strong><%= @company.plan.display_name %></strong> plan with <%= @company.plan.free_plan? ? 'single user' : "#{@company.subscription.allocated_user_count} users" %> <%= @company.plan.free_plan? ? "" : " and it valid till #{@company.subscription.renewal_date.to_date}" %>.You can send request to upgrade your plan.
+            </div>
+            </div>
+              <div class="line line-dashed m-t-large"></div>
+               <%= form_tag "/billing/upgrade" ,:class =>"form-horizontal" do %>
+               <div class="col-lg-8">
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-lg-4"><label class="control-label">Select Plan</label></div>
+                    <div class="col-lg-8">
+                      <select name="plan_name" style='width: 80%;' id='plan-name' class="bg-focus form-control">
+                        <option value=''>Select plan</option>
+                        <% if !@company.plan.trial_plan? %>
+                          <option value="<%= @company.plan.name %>" amount='<%= (@company.plan.price) %>'>Renew current plan</option>
+                        <% end %>
+                        <% unless @upgradable_plans.blank? %>
+                          <% @upgradable_plans.each do |plan| %>
+                            <option value="<%= plan.name %>" amount="<%= (plan.price) %>"><%= plan.display_name %></option>
+                          <% end %>
+                        <% end %>
+                      </select>
+                     </div>
+                  </div>
+                  </div>
+                  <div class='plan-property'>
+                    <%= render "plan_property" %>
+                  </div>
+
+                <div class="row">
+                <div class="form-group">
+                  <div class="col-lg-4">
+                    <label class="control-label">Final Total</label>
+                   </div>
+                   <div class="col-lg-8">
+                    <p><b>INR <span id ='order-total'></span></b>
+                    (GST @ 18% [Maharashtra (CGST 9% + SGST 9%)/ IGST 18%])  
+                   </div>
+                  </div>
+                </div>
+                </div>
+                 
+                <div class="form-group">
+                  <div class='column last col-lg-4'>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <section class="panel">
+                        <header class="panel-heading"><strong>Plan details</strong></header>
+                        <div class="panel-body">
+                        <div id='data'></div>
+                          <%= render "#{@company.plan.name.downcase}_plan_details" %>
+                        </div>
+                      </section>
+                      </div>
+                    </div>  
+                  </div>
+                  </div>
+              
+                <div class="form-group">
+                 <div class="col-lg-9 col-lg-offset-3">                      
+                  <input type="submit" value='Proceed to payment' class="btn btn-success"/>
+                 </div>
+                 </div>
+               <% end %>
+          </div>
+          </section>
+        </div>
+    </div>
+    </section>
+  </section>

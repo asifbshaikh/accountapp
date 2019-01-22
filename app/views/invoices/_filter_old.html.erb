@@ -1,0 +1,84 @@
+<script>
+  $(document).ready(function() {
+  	'<% 
+    @data_hash1 = {}
+     for invoice in @invoices
+      @data_hash1[invoice.invoice_number] = invoice.id
+     end
+     %>'
+    data_hash1 = '<%= @data_hash1.keys.join(',')%>'.split(',');
+    $("input#invoice_id_auto_complete").autocomplete({
+      source: data_hash1
+  });
+  
+	'<% 
+  	@data_hash2 = {}
+  	 for acc in @to_accounts
+  	 	@data_hash2[acc.name] = acc.id
+  	 end
+  	 %>'
+  	data_hash2 = '<%= @data_hash2.keys.join(',')%>'.split(',');
+    $("input#to_account_auto_complete").autocomplete({
+    	source: data_hash2
+	});
+	
+  '<% 
+    @data_hash3 = {}
+     for customer in @cash_customers
+      @data_hash3[customer.cash_customer_name] = customer.id
+     end
+     %>'
+    data_hash3 = '<%= @data_hash1.keys.join(',')%>'.split(',');
+    $("input#cash_customer_auto_complete").autocomplete({
+      source: data_hash3
+   });
+    
+	
+	});
+</script>
+<%= render :partial => "shared/project_autocomplete" %>
+<%= form_for @search, :method => "get" do |f| %>
+  <tr>
+  	<td>
+     <%= f.label :invoice_number, "Invoice Number :"%><br/>
+     <%= f.text_field :invoice_number_equals, :id=>"invoice_id_auto_complete", :placeholder => "Press <space> to search", :size => 14 %>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+     <%= f.label :account_name, "#{ @company.label.customer_label } :"%><br/>
+     <%= f.text_field :account_name_equals, :id=>"to_account_auto_complete", :placeholder => "Press <space> to search", :size => 14 %>
+  	</td>
+  </tr>
+ <% if !@projects.blank?%>
+<tr>
+    <td>
+     <%= f.label :project_name, "Project :"%><br/>
+     <%= f.text_field :project_name_equals, :id=>"project_auto_complete", :placeholder => "Press <space> to search", :size => 14 %>
+    </td>
+  </tr>
+<% end %>
+  <tr>
+     <td>
+        <%= f.label :invoice_status_id, "Status :"%><br/>
+        <%= f.select(:invoice_status_id_equals, {'Unpaid'=>0,'Draft'=>2,'Paid'=>1}, :prompt => true) %>
+    </td>		
+	</tr> 
+	 <tr>
+     <td>
+       <%= f.label :invoice_line_items_amount_gte, "Amount :" %><br/>
+       <%= f.text_field :invoice_line_items_amount_gte, :size => 4 %>-
+       <%= f.text_field :invoice_line_items_amount_lte, :size => 4 %>
+    </td>		
+	</tr> 
+	<tr>
+     <td>
+       <%= f.label :due_date_gte, "Date :" %><br/>
+       <%= f.text_field :due_date_gte, :size => 4 %>-
+       <%= f.text_field :due_date_lte, :size => 4 %>
+    </td>		
+	</tr> 
+	<%= render :partial => "custom_field_filter", :locals => {:f =>f} %>
+	<tr><td><%= f.submit "Go", :class => "btn btn-green" %></td></tr>    	
+	
+ <%end%>

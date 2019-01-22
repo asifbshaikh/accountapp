@@ -1,0 +1,33 @@
+<%= render :partial => "shared/page_title" %><!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+<div class="wrapper">
+<!-- Left column/section -->
+<section class="column width6 first"></br>
+	<div class="highlight">
+	<%= render "form"%>
+  </div><br />
+  </section>
+  <!-- End of Left column/section -->
+<!-- Right column/section -->
+ <aside class="column width2"><br />
+      <a href="/custom_fields/show" class="btn btn-special btn-green btn-green-new"><img src ="/images/white_icon/ic_list.png" alt = "view custom fields"class ="icon" /> view custom fields</a>
+
+ <!--   <p><a href=<%= "/invoices/new?cash_invoice=#{true}" %> class="btn btn-special btn-green btn-green-new"><img src ="/images/add.png" alt = "Add new invoice"class ="icon" /> Create cash invoice</a></p>
+	<p>
+    <a href="/invoices", class = "btn btn-special btn-gray btn-email-index "><img src ="/images/black_icon/ic_list.png" alt="invoice list" class ="icon" /> View invoices</a>
+	</p>   -->  
+<div id="rightmenu">
+       <dl class="first">
+          <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+          <dd><%= link_to 'Help', "", :class=>"nyroModal" %></dd>  
+          <dd class="last">You can add maximum 3 custom fields of your choice.<br>Saved custom fields will appear on your voucher create screen.</dd>
+       </dl>
+   </div><br />
+</aside>
+<!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

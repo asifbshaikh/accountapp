@@ -1,0 +1,76 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Allocate Receipts - <%= @receipt_voucher.voucher_number %></h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), receipt_vouchers_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+    	<%= render :partial => 'receipt_vouchers/auto_calculate' %>
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        	<%= form_for @receipt_voucher, :html=>{:class => "form-horizontal"} do |f| %>
+        		<%= hidden_field_tag "back_action", params[:back_action].blank? ? @current_action : params[:back_action] %>
+        		<%= hidden_field_tag "project_id", @receipt_voucher.project.name unless @receipt_voucher.project.blank? %>
+        		<%= render 'shared/form_error', :object => @receipt_voucher %>
+        		<div class='form-group'>
+        			<div class='col-lg-2 text-right'>
+      					<%= label_tag "Money Received From" %>
+        			</div>
+        			<div class='col-lg-2'>
+        				<%= @receipt_voucher.from_account_name %>			
+        			</div>
+        		</div>
+  		  		<div class='form-group'>
+  		  			<div class='col-lg-2 text-right'>
+  							<%= label_tag "Unallocated Amount" %>
+  		  			</div>
+  		  			<div class='col-lg-2'>
+			    			<%= @receipt_voucher.currency%> <%= @receipt_voucher.unallocated_amount %>	
+  		  			</div>
+  		  		</div>
+  		  		<% if !@receipt_voucher.unallocated_tds_amount.blank? && @receipt_voucher.unallocated_tds_amount >0 %>
+	  		  		<div class='form-group'>
+	  		  			<div class='col-lg-2 text-right'>
+	  							<%= label_tag "Unallocated TDS Amount" %>
+	  		  			</div>
+	  		  			<div class='col-lg-2'>
+				    			<%= @receipt_voucher.currency%> <%= @receipt_voucher.unallocated_tds_amount %>	
+	  		  			</div>
+	  		  		</div>
+	  		  	<% end %>
+            <% if @receipt_voucher.exchange_rate != 0 %>
+  		  		<div class='form-group'>
+              <div class='col-lg-2 text-right'>
+                <label>Exchange Rate in <%= @company.currency_code%></label>
+              </div>
+              <div class='col-lg-2' id ="exch_rate" data-exchrate= "<%= @receipt_voucher.exchange_rate%>">
+                <%= @receipt_voucher.exchange_rate %>  
+                <%= hidden_field_tag "exchange_rate", @receipt_voucher.exchange_rate %>
+              </div>
+            </div>
+            <% end %>
+            <div class="line line-dashed m-t-large"></div>
+  		  		<div class='form-group'>
+			  		  <div class="col-lg-12">
+			  		    <h4>Showing unpaid invoiced for the selected customer:</h4>
+			  		  </div>
+			  		  <div class="col-lg-12" id='invoiceDetails'>
+		  		      <%= render "receipt_vouchers/unpaid_to_be_allocate_invoices" %>
+			  		  </div>
+			  		</div>
+  		  		<div class="form-group">
+  		  		  <div class="col-lg-9 col-lg-offset-3">                      
+  		  		    <button type="submit" class="btn btn-success">Save</button>
+  		  		    <%= link_to 'Cancel', receipt_vouchers_path, :class => "btn btn-default" %>
+  		  		  </div>
+  		  		</div>
+        	<% end %>
+      </div>
+    </section>
+  </section>
+</section>

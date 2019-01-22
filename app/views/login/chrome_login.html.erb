@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Login to ProfitBooks</title>
+  <meta name="description" content="Login to your ProfitBooks account">
+  <meta name="keywords" content="Login to ProfitBooks, login, profitbooks, access profitbooks, signin to profitbooks, profitbooks login">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'app' %>
+    <%= javascript_include_tag 'login' %>
+    <%= csrf_meta_tag %>
+
+</head>
+<body>
+ <section id="content">
+    <div class="main padder">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 m-t-large">
+        <br>
+        <p align="center"><%= image_tag 'logo.png', :alt => 'Login to Profitbooks', :disposition => 'inline' %></p>
+          <section class="panel">
+            <header class="panel-heading text-center">
+              Chrome app login
+            </header>
+             <form method="post" action="/login/authenticate" accept-charset="UTF-8"  class="form-horizontal panel-body"> 
+             <%= render :partial=>"shared/flash_msg"%>
+              <div class="block">
+                <label class="control-label">Username</label>
+                 <input type="text" name="username" class="bg-focus form-control" id="username" value=""  placeholder="Username"/> 
+              </div>
+              <div class="block">
+                <label class="control-label">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password" class="bg-focus form-control" value="">
+              </div>
+              <a href="/login/forgot_pass" class="pull-right m-t-mini"><small>Forgot password?</small></a>
+              <span class="loading" style="display: none;">Please wait..</span>
+               <input type="submit" name="submit" class="btn btn-success" id="buttonsend" value="Sign in" />
+              <div class="line line-dashed"></div>
+              <p class="text-muted text-center"><small>Do not have an account?</small></p>
+              <a href="www.profitbooks.net/home/pricing" class="btn btn-white btn-block">Create an account</a>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder clearfix">
+      <p>
+        <small>&copy; ProfitBooks Solutions Pvt. Ltd. <a href="/home/privacy_poli">Privacy Policy.</a></small><br><br>
+        <p align="center"><%= image_tag 'comodo_secure_100x85_transp.png'%></p>
+      </p>
+    </div>
+  </footer>
+  <!-- / footer -->
+    <script src="js/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="js/app.js"></script>
+  <script src="js/app.plugin.js"></script>
+  <script src="js/app.data.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#batch").live('click', function(){
+      $("body").append('<div id="popup_box_fixed"><div id="putHere"></div></div>');
+      $("#putHere").html('<%= image_tag "ajax-loade.gif" %>');
+      var winH = $(window).height();
+      var winW = $(window).width();
+      var top1 = winH/2;
+      var left = winW/2;
+      $("#popup_box_fixed").css({'left': left, 'top': top1, 'overflow':'auto'});
+      $('#popup_box_fixed').fadeIn("slow");
+    });
+  });
+</script>
+<%= render 'shared/page_title'%> <!-- Page content -->
+<div id='container'>
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+        <%= render :partial => "shared/flash_msg"%>
+        <div class="column width3 first">
+          <p>
+            <label for="warehouse_name"> <%= @company.label.warehouse_label %> name:<h4><%= @warehouse.name %></h4></label><br/> 
+            <label for="warehouse_manager">Manager: <%=@warehouse.manager %></label>
+            <br/>
+          </p> 
+        </div>
+        <div class="column width3">
+          <p class="box">
+            <label for="warehouse_address">Address: <%=@warehouse.address %></label>
+            <br/>
+            <label for="warehouse_address_city">City: <%=@warehouse.city %></label>
+            <br/>
+            <label for="warehouse_address_pincode">Pin code: <%=@warehouse.pincode %></label>
+            <br/>
+            <label for="warehouse_address_phone">Phone: <%=@warehouse.phone %></label>
+          </p> 
+        </div>
+        <div class ="column width6 first">
+        <% if @stocks.blank? %>
+         <div class = "box box-info">Currently their are no product in this warehouse</div> 
+       <% else %> 
+         <table class="display stylized full" id ="act_details" >
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th></th>
+                <th class ="ta-center">Available Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @stocks.each_with_index do |stock, index| %>
+              <% pwds = PurchaseWarehouseDetail.get_batch_hold_records(@company.id, stock.product, @warehouse.id) %>
+              <tr id='row<%= index %>'>
+                <td><%= stock.product.name %></td>
+                <td></td>
+                <td class="ta-center" id='qty'>
+                <%= stock.quantity %>
+                <% if @company.plan.is_inventoriable? && stock.product.batch_enable? && pwds.size > 0 %>
+                  <span class="label label-updated"><%= pwds.size %> batches unallocated</span>
+                <% end %>
+                </td>
+                <td id='link'>
+                <% if @company.plan.is_inventoriable? && stock.product.batch_enable? && pwds.size > 0 %>
+                  <%= link_to "Add batch details", {:controller => :warehouses, :action => :new_batch_detail, :product_id => stock.product.id, :warehouse_id=> @warehouse.id, :index => index }, :remote => true, :id => 'batch' %>
+                <% else %>
+                  <%= link_to "View product", stock.product %>
+                <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+            <tfoot>   
+              <tr>
+                <td></td>
+                <td class = "ta-right">Total</td>
+                <td class ="ta-center"><%= @warehouse.stocks.sum(:quantity) %></td>
+                <td></td>
+                </tr>
+            </tfoot>
+          </table>
+          <%= paginate @stocks %>
+         <% end %>
+        </div>
+        <table class="display stylized">
+          <tfoot>
+           <tr>
+            <td>
+             <a href = <%= edit_warehouse_path(@warehouse) %> class = "btn btn-green"> Edit </a>&nbsp;
+             <a href="/warehouses" class="btn">Back</a>
+            </td>
+           </tr>
+          </tfoot>
+        </table>
+      </div><br/>
+    </section>
+		<!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= new_button("Add #{ @company.label.warehouse_label }", new_warehouse_path)%>
+      <p>
+        <%= list_button_black("View All #{ @company.label.warehouse_label }", warehouses_path)%>
+      </p>
+    </aside>
+		<!-- End of Right column/section -->
+	</div>
+</div>
+</div>

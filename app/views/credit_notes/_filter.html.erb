@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id = "filter">
+  <div class="panel-heading"><h4 class="panel-title" >Credit Note Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="creditnote-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="creditnotevoucherno"></td>
+          <td class='text-right'><label>Date</label></td>
+          <td id="creditnoteDate"></td>
+          <td width='10%' class='text-right'><label>From Account</label></td>
+          <td id="creditnotefromacc" data-fromaccounts="<%= Account.credit_note_from_accounts(@company.id) %>"></td>
+        </tr>
+        <tr>
+          <td width='10%' class='text-right'><label>To Account</label></td>
+          <td id="creditnotetoacc" data-toaccounts="<%= Account.credit_note_to_accounts(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="creditnoteamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

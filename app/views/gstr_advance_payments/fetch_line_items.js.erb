@@ -1,0 +1,75 @@
+// $('.on-go-form-<%= params[:id]%>').html('<%= escape_javascript render "allocate_line_item_details",:line_item_details => @line_item_details %>');
+
+//     $("#select_warehouse").live('click', function(){
+//       var warehouse_id = $("input:radio[name=warehouse_id]:checked").val();
+//       var product_quantity = $("#quantity_at_"+warehouse_id).val();
+//       var avail_qty = parseFloat($("#quantity_at_"+warehouse_id).attr('data-quantity'));
+//       var index = $("#row_index").val();
+//     if(!product_quantity || !warehouse_id || avail_qty < product_quantity){
+//       $("#error li").remove();
+//       if(!warehouse_id){
+//       $("#error").append("<li>Please select warehouse.</li>");
+//       }
+//       if(!product_quantity){
+//       $("#error").append("<li>Please enter quantity.</li>");
+//       }
+//       if(avail_qty < product_quantity){
+//         $("#error").append("<li>Insufficient quantity in selected warehouse.</li>");
+//       }
+//     }else{
+//         $.ajax({
+//           data: {warehouse_id: warehouse_id, product_quantity: product_quantity, index: index},
+//           url: "/purchases/take_warehouse_quantity"
+//         });
+//       }
+//     });
+
+//   cal();
+
+//   $('table#unpaid-vouchers input:text').live('keyup', function(e){
+
+//     cal();
+//     e.preventDefault(); 
+//   });
+
+  
+//   // $("table#purchase_line_items select#purchase_tax_item").live('change', function(e){
+//   //  cal();
+//  //    e.preventDefault();
+//   // });
+//   $("table#line_items select#other_charge_dropdown").live('change', function(e){
+//     cal();
+//     e.preventDefault();
+//   });
+//  //  $("table#purchase_line_items select#purchase_tax_item").live('keyup', function(e){
+//   //  cal();
+//  //    e.preventDefault();
+//   // });
+  
+
+//   function cal(){
+  	
+//   };
+
+
+<script>
+	$(document).ready(function(){
+		cal();
+		$("table#unpaid-vouchers input:text").live('keyup', function(e){
+			cal();
+			e.preventDefault();
+		});
+	});
+
+	function cal(){
+		var totalAmount=0;
+		$("table#unpaid-vouchers tbody tr").find('input:checkbox:checked',function(i,tr)){
+			var amount=0;
+			amount=parseFloat($("table#unpaid-vouchers tr:eq("+i+") td:eq(5) input:text").val());
+			if(amount){
+				totalAmount += amount;
+			}
+		});
+		$("span#total-amount").text(totalAmount.toFixed(2));
+	}
+</script>

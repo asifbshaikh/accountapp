@@ -1,0 +1,15 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i><%= @sales_order.status == 4 ? "New" : "Edit"%> Sales Order </h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), sales_orders_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a>-->        
+        <p></p>
+        </div>  
+      </div>
+      <%= render :partial=> "form" %>
+    </section>
+  </section>

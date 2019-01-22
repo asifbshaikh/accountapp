@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<%= render :partial => "meta_tags" %>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed' %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial=> "zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial=> "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Affordable Pricing Plans</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <a href="/home/pricing" class="simpleBTN white large">View Indian Prices in Rs.</a>
+
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+            <div class="twelve columns">
+                <div class="row">
+                  <div class="twelve columns pricing-wrapper">
+                        <h4 class="low-bottom">Start with a 30 day risk free trial. We are sure you'll love ProfitBooks.</h4>
+                        <p>Get started in less than 60 seconds, no payment required!</p>
+                        
+                        <!-- begin of pricing column1 -->
+                    <div class="pricing-column green-pr  feature-package">
+                            <h5 class="pricing-button">All plans include</h5>
+                                               
+                            <ul class="pricing-feature">
+                                <li>Complete Financial Accounting</li>
+                                <li>Payroll with ESS</li>
+                                <li>Multi-User Support</li>
+                                <li>Unlimited Invoicing</li>
+                                <li>Taxation and Reports</li>
+                                <li>Project and Time Management</li>
+                                <li>Role Based Access</li>
+                                <li>Ability to Invite an Auditor</li>
+                                <li>Internal Messaging</li>
+                                <li>Document Management with Dropbox Integration</li>
+                            </ul>                    
+                    </div>
+                        
+                        <!-- begin of pricing column2 -->
+                        <div class="pricing-column green-pr">
+                            <h5 class="pricing-title">Professional</h5>
+                            <div class="pricing-price">
+                                <h1>&#36;15</h1>
+                                <p>Per Month<br/>Complete Accounting &amp; Taxation</p> 
+                            </div>                    
+                            <ul class="pricing-feature">
+                                <li>Includes 10 Free Users</li>
+                                <li>Complete accounting solution for small business with invoicing and taxation</li>
+                                <li>Perfect for service based businesses, CAs, lawyers, advertising agencies and independent professionals</li>
+                            </ul>                    
+                        </div>
+                        <!-- begin of pricing column3 -->
+                        <div class="pricing-column green-pr">
+                            <h5 class="pricing-title">SMB</h5>
+                            <div class="pricing-price">
+                                <h1>&#36;24 </h1>
+                                <p>Per Month<br/>Accounting with Inventory</p> 
+                            </div>                    
+                            <ul class="pricing-feature">
+                                <li>With 10 users</li>
+                                <li>Inventory management, Warehouse management, Product serialization </li>
+                                <li>Specially designed for re-sellers, manufacturers and shop owners or for any business dealing in physical products</li>
+                            </ul>                    
+                      </div>
+                        
+                      <!-- begin of pricing column4 -->
+                      <div class="pricing-column green-pr">
+                          <h5 class="pricing-title">Enterprise</h5>
+                          <div class="pricing-price">
+                              <h1>&#36;45 </h1>
+                              <p>Per Month<br/>Complete Accounting &amp; Payroll</p> 
+                          </div>                    
+                          <ul class="pricing-feature">
+                              <li>With 10 users</li>
+                              <li>Multiple branch support with all the goodies of Professional and SMB plan</li>
+                              <li>Best for businesses having bigger teams distributed at multiple locations. Includes detailed analytics.</li>
+                          </ul>                    
+                    </div>
+					
+                        <div class="signup-column">                   
+                            <ul class="signup-text">
+                                <li>We also offer a FREE plan with limited features. After a month, your account will be automatically converted into the free account which you can keep as long as you want!</li>
+								<li align="center"><a href="/signup/new?plan=Trial" class="simpleBTN green large">Try ProfitBooks free for a month</a>
+                            </li>
+                            </ul>  
+						</div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="twelve columns mobile-margin-top">
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="twelve columns">
+                    <h5 class="title-line"><span>Frequently Asked Questions</span></h5>
+                  </div>
+                  <div class="four columns">
+                    <p><strong>What is the billing cycle?</strong><br>
+                    We currently bill Indian users annually. International users can pay monthly. We also offer discounts on 2yr, 3yr and longer term plans. Please contact us.
+                    </p>
+                    </div>
+                  <div class="four columns">
+                    <p><strong>Can I add additional Users?</strong><br>
+                    Yes, you can. Every additional user will cost $2 per month. You can add as many users as you want in addition to free users.
+                    </p>                    
+                  </div>
+                  <div class="four columns">
+                    <p><strong>What kind of payments do you accept?</strong><br>
+                    We currently accept payments via Credit Cards, Debit Cards and Net Banking (Only for India). Please contact us in case you want to use Cheques or Bank Transfers.
+                    </p>
+                    </div>
+                	<div class="four columns">
+                    <p><strong>Do you offer discounts for startups?</strong><br>
+                    Yes! We love startups! You just need to meet the eligibility criteria (Annual revenue less than 1Cr). Please contact us to know more.
+                    </p>
+                    </div>
+                	<div class="four columns">
+                    <p><strong>Can I keep my data if I quit?</strong><br>
+                    Its your data and the ownership will always remain with you. In case decide to quit, you can export all the data anytime in excel format. 
+                    </p>
+                    </div>
+                	<div class="four columns">
+                    <p><strong>How long I can use the Free plan?</strong><br>
+                    As long as you want! There will be few restrictions though. Like, you can manage 5 clients at max and it will be single user.
+                    </p>
+                    </div>
+                	<div class="twelve columns">
+                    <p ><strong>Call us on +91 84 85 86 3000 for assistance.</strong> Check our <a href="faq.html">FAQ</a> page in case you have more questions.
+                    </p>
+                    </div>
+                </div>
+            </div>        
+        </div>          
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

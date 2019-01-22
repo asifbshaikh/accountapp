@@ -1,0 +1,63 @@
+<%= stylesheet_link_tag 'style' %>
+<%= javascript_include_tag 'jquery-1.6.4.min.js', 'popup-layout' %>
+<script type="text/javascript">
+	//window.onload = function(){
+      //  opener.document.body.disabled=true;
+    //}
+
+    function makeSelection(frm, id) {
+      if(!frm || !id)
+        return;
+      var elem = frm.elements[id];
+      if(!elem)
+        return;
+      var val = elem.value;
+      opener.targetElement.value = val;
+      this.close();
+      frm.submit();
+    }
+    
+    
+    $(document).ready(function(){
+		$('#saveBtn').attr('disabled', 'disabled');
+		$('#account_name').keyup(function(){
+		if($('#account_name').val()){
+			$('#saveBtn').removeAttr('disabled');
+		}else{
+		$('#saveBtn').attr('disabled', 'disabled');}
+		});
+    });
+</script>
+<body style="background-color:white;">
+<div id="page">
+  <section class='width5'>
+    <div class='highlight'>
+      <h3>Enter account details</h2>
+	 <% form_tag (:action => :create, :validate => true, :html => {:id =>'frm', :name => 'frm'}) do %>
+	 <%= hidden_field_tag 'account[account_head_id]', @company.account_heads.find_by_name('Sundry Debtors').id %>
+	 <table class="display stylized" width="100%">
+	    <thead> 
+		<tr><th colspan="2">New Account</th></tr>
+	    </thead> 
+	    <tbody> 
+		<tr>
+		<td width="25%"><%= label_tag :account_name, 'Account name', :class => "required"%></td>
+		<td><%= text_field_tag 'account[name]',nil, :autofocus =>"autofocus", :id => 'account_name' %><br/>
+		<small>The name you want to call this account.</small></td>
+		</tr>
+	    </tbody>
+	   <tfoot>
+	     <tr>
+	      <td colspan="2">
+	       <input type='button' value="Save" id="saveBtn" class ="btn btn-green" onclick="makeSelection(this.form, 'account[name]');">
+	       <input type='button' value="Cancel" class ="btn btn-gray" onclick="window.close();">
+	      </td>
+              </tr>
+	   </tfoot>
+	</table>
+        <% end %>
+   </div>
+  </section>
+	
+</div>
+</body>

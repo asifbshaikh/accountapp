@@ -1,0 +1,44 @@
+<!-- Page title -->
+<%= render "shared/page_title"%> 
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<%= render "shared/flash_msg" %> 
+		<!-- Left column/section -->
+		<section class="column width6 first">
+			<div class="clearfix"></div>
+			<div id="receipt_voucher_list">
+				
+				<table class="display stylized" id="example">
+					<thead>
+						<%= render :partial => "header" %>
+					</thead>
+					<tbody>
+						<%= render :partial => "help", :collection => @helps%>
+					</tbody>
+					<tfoot>
+						<%= render :partial => "footer" %>
+					</tfoot>
+				</table>
+				<div id ="pagin">
+					<%= paginate @helps %>
+				</div>
+			</div>
+<!-- 			<a href  = "http://rsgroup.lvh.me:3000/dashboard/index">Back -->
+		</section>
+		<!-- End of Left column/section -->
+		<!-- Right column/section -->
+		<aside class="column width2">
+			<p >
+				
+				<%= link_to "New Help",new_help_path, :class => "btn btn-green big"%>
+			<%= link_to "Back","http://rsgroup.lvh.me:3000/dashboard/index",:class=> "btn btn btn-green big" %>
+				</p>
+		</aside>
+		<!-- End of Right column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

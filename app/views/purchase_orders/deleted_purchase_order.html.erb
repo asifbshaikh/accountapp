@@ -1,0 +1,104 @@
+  <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for purchase_order in @purchase_orders
+      @data<<purchase_order.purchase_order_number
+      @data<<purchase_order.record_date
+        @data<<purchase_order.purchase_order_line_items.sum(:amount)
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+ <!-- Page title -->
+  <div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Expenses &rarr;<span>Purchase Orders</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/purchase_orders/deleted_purchase_order" do |f| %>
+    <%=f.text_field :purchase_order_number_or_record_date_or_purchase_order_line_items_amount_equals , :id =>"autocomplete", :placeholder =>"search" %>
+    <%end%>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+    	<div class="highlight">
+     <%= render :partial => "shared/flash_msg"%>
+      <div id="tab1">
+          <ul id="tabnav">
+              <li class="tab1">
+                  <a href="/purchase_orders">All</a>
+              </li>
+              <li class="tab2">
+                  <a href="/purchase_orders/open">Open</a>
+              </li>
+              <li class="tab3">
+                  <a href="/purchase_orders/closed">Closed</a>
+              </li>
+              <li class="tab4">
+                  <a href="/purchase_orders/deleted_purchase_order">Deleted</a>
+              </li>
+              
+          </ul>
+      </div>
+        <div id="task_container">
+        <div id="tabs-all">
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <% if @purchase_orders.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+           <% else %>
+          <table class="display stylized" id="example">
+            <thead>
+              <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+                <%= render :partial => "deleted_purchase_order", :collection => @purchase_orders %>
+            </tbody>
+            <tfoot>
+               <%= render :partial => "footer" %>
+            </tfoot>
+          </table>
+               <%= paginate @purchase_orders %>
+          <div class="clear">
+&nbsp;          </div>
+          <% end %>
+        </div>
+       </div> 
+     </div></br>
+    </section>
+    <!-- End of Left column/section -->
+  
+  <!-- Right column/section -->
+  <aside class="column width2"><br />
+    <a href="/purchase_orders/new" class="btn btn-special btn-green btn-green-new"><img src = "/images/add.png"  alt = "add" class ="icon"/> New purchase order</a>
+    
+	 <div id="rightmenu">
+           <dl class="first">
+					<dt><img width="16" height="16" alt="" SRC="/images/help.png" class = "icon" >
+					</dt>
+					<dd>
+						<dd><a href="#">Help</a></dd>
+					</dd>
+					<dd class="last">
+					This page displays the list of purchase orders.<br/>Click on the purchase order number to view more details.<br/><br/>
+					</dd>
+				</dl>
+     </div><br/>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

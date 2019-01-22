@@ -1,0 +1,54 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <!-- Left column/section -->
+  <br/>
+  <div class="wrapper">
+    <section class ="column width6 first">
+      <div class ="highlight">
+        <%= render :partial => "shared/flash_msg" %>
+         <% if @email_templates.blank? %>
+          <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table class="display stylized" id="act_details">
+              <thead>
+                <tr>
+                  <th><label>Template name</label></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= @email_templates.each do |template|%>
+                <tr>
+                  <td><%= link_to "#{template.template_name}", "/admin/email_templates/#{template.id}" %></td>
+                  <td> <a href= <%= edit_admin_email_template_path(template.id)%> class="btn btn-green">Edit</a></li>  
+                       
+                   </td>
+                </tr> 
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr><td colspan=2></td></tr>
+              </tfoot>
+            </table>
+                <%= paginate @email_templates %>
+          <% end %>
+        
+          <div class="clear">
+            &nbsp;
+        </div>
+     </div>
+    <br />
+      <!-- End of Left column/section -->
+  </section>
+    <!-- Right column/section -->
+      <aside class="column width2">
+       <%= new_button("Add New Template", new_admin_email_template_path)%>
+          <!-- <a href="/admin/email_templates/send_weekly_email" >send</a> -->
+        <br/>
+      </aside>
+  </div>
+</div>
+

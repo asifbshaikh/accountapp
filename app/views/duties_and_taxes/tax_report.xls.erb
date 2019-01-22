@@ -1,0 +1,44 @@
+<table>
+  <tr><td colspan=6 align=center >Tax Summary Report </td></tr>
+  <tr><td colspan=6 align=center >For Duration :<%= @start_date %> To <%= @end_date %></td></tr>
+  <thead>
+    <tr>
+      <th width ="9%"> Voucher Date </th>
+      <th width ="9%"> Voucher No </th>
+      <th width ="15%"> Account </th>
+      <th align="right" width ="15%"> Total Voucher Value (<%= @company.currency_code%>)</th>
+      <th width ="30%"> Tax Applied </th>
+      <th align="right" width ="13%"> Total Tax Value (<%= @company.currency_code%>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ledgers.each do |ledger|%>
+      <% curresponding_account = Account.find_by_id(ledger.retrieve_corresponding_account) %>
+      <tr>
+        <td><%= ledger.transaction_date %></td>
+        <td><%= ledger.voucher_number %></td>
+        <td><%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : curresponding_account.name %></td>
+        <td align="right">
+          <%= number_with_precision(voucher_amount=ledger.voucher.total_amount, :precision=>2) %>
+        </td>
+        <td><%= ledger.account.name %></td>
+        <td align="right"><%= number_with_precision(tax_amount=ledger.debit + ledger.credit, :precision=>2 ) %></td>
+        <% @tax_hash["#{ledger.account.name}"]+=tax_amount %>
+      </tr>
+    <% end %>
+    <% @tax_hash.each do |key, value| %>
+      <% if value > 0 %>
+        <tr>
+          <td colspan="4"></td>
+          <td align="right"><strong><%= key %> :</strong></td>
+          <td align="right"><strong><%= number_with_precision(value, :precision=>2)%></strong></td>
+        </tr>
+      <% end %>
+    <% end %>
+    <tr>
+      <td colspan="4"></td>
+      <td align="right"><strong>Total Tax :</strong></td>
+      <td align="right"><strong><%= (@ledgers.sum(:debit) + @ledgers.sum(:credit)) %></strong></td>
+    </tr>
+  </tbody>
+</table>

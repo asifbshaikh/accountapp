@@ -1,0 +1,39 @@
+<div class="column width4 first">
+            <p>
+            <% if !@company.pan.blank? || !@company.tin.blank? || !@company.VAT_no.blank? || !@company.CST_no.blank? || !@company.service_tax_reg_no.blank? 
+              %>  
+            <label for="productcat"> Tax Details :</label> <br/>
+            <% end %>
+            <% if !@company.pan.blank? %>  
+            <label for="productcat">PAN #:</label><%= @company.pan%><br/>
+            <% end %>
+            <% if !@company.tin.blank? %>  
+            <label for="productcat">TIN #:</label><%= @company.tin%><br/>
+            <% end %>
+            <% if !@company.VAT_no.blank? %>  
+            <label for="productcat">VAT #:</label><%= @company.VAT_no%><br/>
+            <% end %>
+            <% if !@company.CST_no.blank? %>  
+            <label for="productcat">CST #:</label><%= @company.CST_no%><br/>
+            <% end %>
+            <% if !@company.service_tax_reg_no.blank? %>  
+            <label for="productcat">SERVICE TAX #:</label><%= @company.service_tax_reg_no%>
+            <% end %>
+          </p>
+          </div>
+         <% if !@invoice.cash_invoice?%>
+          <div class="column width2 ">
+         <% if @invoice.account.accountable_type == "SundryDebtor" && !@invoice.account.accountable.contacts.blank? %>
+          <% @invoice.account.accountable.contacts.last(3).each_with_index do |contact, index| %>
+             <p>
+              <label>Vendor Contact Details:</label><br/>
+              <label>Contact <%= index + 1 %></label><br>
+              <label>Name:</label> <%= contact.first_name %> <%= contact.last_name %><br>
+              <label>Position:</label><%= contact.position %><br>
+              <label>Email:</label> <%= contact.email %><br>
+              <label>Mobile:</label><%= contact.mobile %>
+             </p> 
+            <% end %>
+          <% end %>  
+          </div>
+          <% end %>

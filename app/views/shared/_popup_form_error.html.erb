@@ -1,0 +1,9 @@
+<% if object.errors.any? %>
+  <div class="alert alert-danger popup-error">
+    <ol>
+      <% object.errors.full_messages.each do |msg| %>
+        <strong><li><%= msg.html_safe %></li></strong>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

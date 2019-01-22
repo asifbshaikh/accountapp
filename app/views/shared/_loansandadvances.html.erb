@@ -1,0 +1,28 @@
+<div class="block subP">
+  <label class='control-label'>Interest bearing deposit</label>
+  <div class='radio'>
+    <label class="radio-custom">
+      <input type="radio" checked="checked" name="advance[interest_applicable]" value='1'>
+      <i class="icon-circle-blank checked"></i>
+      Yes
+    </label>
+  </div>
+  <div class='radio'>
+    <label class="radio-custom">
+      <input type="radio" name="advance[interest_applicable]" value='0'>
+      <i class="icon-circle-blank"></i>
+      No
+    </label>
+  </div>
+</div>
+</div>
+<div class="block subP">
+  <label class='control-label'>Interest rate</label>
+  <%= text_field_tag 'advance[interest_rate]','', :class=>'form-control' %> 
+</div>
+<div class="block subP">
+  <label class='control-label'>Compounding Type</label>
+  <%= select_tag 'advance[compounding]',options_for_select([['Daily'],['Monthly'],['Quarterly'],['Yearly'],['Payout']]), :class=>'form-control' %> 
+</div>
+
+

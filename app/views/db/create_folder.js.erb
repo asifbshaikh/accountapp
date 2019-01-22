@@ -1,0 +1,18 @@
+<% if request.method != 'POST'%>
+  $(".prev_data").remove();
+  $("#putHere").after("<%= escape_javascript render :partial =>  'folder_form' %>");
+  var h = $("#popup_box_fixed").height();
+  var w = $("#popup_box_fixed").width();
+  var windH = $(window).height();
+  var windW = $(window).width();
+  var left = (windW - w)/2;
+  var top1 = (windH - h)/2;
+  $("#popup_box_fixed").css({'left': left, 'top': top1});
+  $('#popup_box_fixed').fadeIn("slow");
+<% else %>
+  <% if @response %>
+    location.reload();
+  <% else %>
+    $('span.no-filename').text('File name can not be blank.');
+  <% end %>
+<% end %>

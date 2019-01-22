@@ -1,0 +1,16 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Reimbursement Receipt Filter</h4></div>
+    <table class="table table-striped m-b-none text-small rimbvoucher-filter" id="rimbvoucher-filter">
+      <tbody>
+        <tr>
+          <td><label>Voucher no</label></td>
+          <td id="rimbvouchervoucherno"></td>
+          <td><label>Date</label></td>
+          <td id="rimbvouchervoucherdate"></td>
+          <td><label><%= @company.label.customer_label%></label></td>
+          <td id="rimbvoucherfromacc" data-fromaccounts="<%= Account.reimbursement_note_from_accounts(@company.id) %>
+          "></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

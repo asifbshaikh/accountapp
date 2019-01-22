@@ -1,0 +1,2 @@
+<%= (params[:start_date].blank?) ? @financial_year.start_date : params[:start_date].to_date %> To
+<%= (params[:end_date].blank?) ? ((Time.zone.now.to_date > @financial_year.end_date)? @financial_year.end_date : Time.zone.now.to_date) : params[:end_date].to_date %>

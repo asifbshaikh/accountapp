@@ -1,0 +1,24 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file text"></i>Issued for Production</h2>
+      </div>
+
+      <div class="col-lg-8 m-t-large" align="right">
+        <%= link_to "<i class='icon-plus'></i> Add New Record".html_safe, new_stock_issue_voucher_path, :class =>'btn btn-success btn-lg' %>
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "shared/flash_msg"%>
+            <%= render 'stock_issue_vouchers/stock_issue_voucher_details' %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

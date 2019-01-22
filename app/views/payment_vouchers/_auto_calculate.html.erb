@@ -1,0 +1,28 @@
+<script>
+	$(document).ready(function(){
+		cal();
+		$("table#unpaid-vouchers input:text").live('keyup', function(e){
+			cal();
+			e.preventDefault();
+		});
+	});
+
+	function cal(){
+		var totalAmount=0;
+		var totalTDSAmount=0;
+		$("table#unpaid-vouchers tbody tr").each(function(i, tr){
+			var amount=0;
+			var tds_amount=0;
+			tds_amount=parseFloat($("table#unpaid-vouchers tr:eq("+i+") td:eq(4) input:text").val());
+			amount=parseFloat($("table#unpaid-vouchers tr:eq("+i+") td:eq(5) input:text").val());
+			if(amount){
+				totalAmount += amount;
+			}
+			if(tds_amount){
+				totalTDSAmount+=tds_amount;
+			}
+		});
+		$("span#total-amount").text(totalAmount.toFixed(2));
+		$("span#total-tds-amount").text(totalTDSAmount.toFixed(2));
+	}
+</script>

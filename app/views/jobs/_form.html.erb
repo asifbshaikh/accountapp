@@ -1,0 +1,26 @@
+<%= form_for(@job) do |f| %>
+   <%= render 'shared/form_error', :object => @job %>
+   <table width="738" class="stylized full" id="report" style="">
+				  <tr>
+				     <td colspan="3"><%= f.label :title, :class=>"required" %></td>
+						 <td colspan="3"><%= f.label :status, :class=>"required" %></td>  
+          </tr>
+					<tr>  
+						 <td colspan="3"><%= f.text_field :title %></td> 
+             <td colspan="3"><%= f.select(:status, [['Active'],['Inactive']],:prompt => true) %></td>
+					</tr>
+			<tbody>
+			    <tr>
+	             <td colspan="5"><%= f.label :description, :class=>"required" %><br /></td>
+	         </tr>
+					 <tr>    
+							 <td colspan="5"><%= f.text_area :description, :rows=> 3, :cols=> 70  %></td>
+	         </tr>
+			</tbody>			
+										
+	 </table>
+	 <div >
+	     <button type="submit" class="btn btn-green big"> Save</button>&nbsp;
+       <button type="reset" class="btn  btn-gray big">Cancel</button>&nbsp;
+	 </div>
+<% end %>

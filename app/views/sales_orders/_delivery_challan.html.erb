@@ -1,0 +1,40 @@
+<div class="block un" id='dlcso' style="display:none">
+<% if @delivery_challans.blank? %>
+<%= render :partial=>"shared/no_record"%>
+<% else %>
+<section class="panel row">
+<header class="panel-heading">
+Delivery Challans
+</header>
+<div class="table-responsive">
+  <table class="table table-striped b-t text-small">
+    <thead>
+      <%= render "delivery_challans/header"%>
+    </thead>
+    <tbody>
+    <% @delivery_challans.each do |dc|%>
+      <tr>
+        <td><%= link_to dc.voucher_number, delivery_challan_path(dc) %></td>
+        <td><%= dc.total_quantity%></td>
+        <td><%= dc.voucher_date%></td>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-white dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to raw('View PDF'), delivery_challan_path(dc, :format => 'pdf'), :target=>"_blank" %> 
+              </li>
+              <li>
+                <%= link_to "Delete", dc, :confirm=>"Are you sure?", :method=>"delete" %>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+</section>
+<% end %>
+</div>

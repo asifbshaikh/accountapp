@@ -1,0 +1,15 @@
+<tr>
+    <td><%= link_to support.ticket_number, admin_support_path(support.id) %></td>
+    <td><%= truncate(support.subject, :length => 20) %></td>
+    <td><%= support.created_date %></td>
+<td>
+    	<% if support.status_id == 0 %>
+       Unanswered
+    	<% elsif support.status_id == 1 %>
+       Answered
+     <% else %>
+       Closed
+    	<% end %>
+    </td>
+        <td>    <a href =<%= "/admin/supports/permanent_delete?ticket_number=#{support.ticket_number}"%> class ='btn btn-gray' data-confirm="Are you sure?" >Delete</a></td>
+  </tr>

@@ -1,0 +1,177 @@
+<script>
+  $(document).ready(function(){
+    var xhr;
+    cal();
+    $("#rb1").live('click', function(e){
+      cal();
+    });
+    $("#rb2").live("keyup",function(){
+      cal();
+    });
+
+    $("#plan_amount").live("keyup", function(){
+      cal();
+    });
+
+    $("#validity").live("change", function(){
+      cal();
+    });
+// earning balance adjustment code commented
+  // $("#earbal").live("keyup", function(){
+  //     cal();
+  //   });
+
+    $("#plan-name").change(function(){
+      var plan = $(this).val();
+
+      $.ajax({
+        type: 'get',
+        data: {plan_name: plan},
+        url: '/billing/plan_details'
+      });
+    });
+
+    $("#coupon_code").live("keyup", function(){
+      
+      if(xhr && xhr.readystate != 4){
+            xhr.abort();
+      }
+
+      $("#code-search").html("<div class='imgbox'><img src='/assets/loader.gif'/> Searching...</div>");
+      var code = $(this).val();
+      var planAmount = $("select[name=plan_name] option:selected").attr('amount');
+       if(planAmount != null){
+        planAmount = parseFloat(planAmount);
+        var validity =  parseFloat($('select[name=validity] option:selected').val());
+        planAmount = validity * planAmount;
+      }
+      if($("input:text[name=additional_users]").val()){
+        var users = parseFloat($("input:text[name=additional_users]").val());
+        planAmount += (users * 45);
+      }
+      xhr = $.ajax({
+        type: 'get',
+        data: {coupon_code: code, order_total: planAmount,coupon_validity: validity},
+        url: '/billing/get_coupon'
+      });
+    });
+  
+  $("#apply_coupon").live("click", function(){
+    var order_total = $('#amount').val();
+    var coupon_code = $('#coupon_code').val();
+    if (coupon_code != ''){
+    $.ajax({
+      type: 'get',
+      data: {order_total: order_total, coupon_code: coupon_code},
+      url: '/billing/apply_coupon'
+    });
+    }
+  });
+
+ $("#apply_earning").live("click", function(){
+    var order_total = $('#amount').val();
+    var earning = parseFloat($("input:hidden[name=earning]").val());
+    if (earning > 0){
+    $.ajax({
+      type: 'get',
+      data: {order_total: order_total, earning: earning},
+      url: '/billing/apply_earning'
+    });
+    }
+  });
+
+
+  $("#renewBtn").live('click', function(){
+    $('tr.xyz').remove();
+    $('span.plan_h').text('Renew your subscription');
+    $("table#man tbody tr:last").after("<tr><td><b>Plan name : </b><%= @company.plan.display_name %> - &#8377; <%= @company.plan.price * 12 %> annually</td></tr>");
+    $("table#man tbody tr:last").after("<input type='hidden' name='plan_name' value=<%= @company.plan.name%> amount=<%= @company.plan.price * 12 %>>");
+    cal();
+  });
+});
+function cal(){
+      var plan = $("select[name=plan_name] option:selected").val();
+      var planAmount = $("select[name=plan_name] option:selected").attr('amount');
+      // calculating validity and discount
+     
+      var validity = 0;
+      if(plan != ''){
+        ;console.log(plan)
+        if(plan=='PWYW'){
+          planAmount = parseFloat($("input:text[name=plan_amount]").val());
+          if(planAmount == null)
+            planAmount=0;
+          console.log(planAmount);
+          validity = 12
+        }else{
+          validity = parseFloat($('#validity').val());
+        }
+      }else{
+        validity = "<%= @company.subscription.end_date.to_date - Time.zone.now.to_date %>";
+        validity = parseFloat(validity)/30;
+      }
+      var validityDiscount = parseFloat($('select[name=validity] option:selected').attr('amount'));
+      var userPack = $("input:text[name=additional_users]").val();
+      if($("input:text[name=additional_users]").val()){
+        var userAmount = parseFloat(userPack)*45.0*validity;
+        $("#user_pack").val(userPack);
+      }
+      var total = 0;
+      if(planAmount != null){
+        planAmount = parseInt(planAmount) * parseFloat(validity);
+      }else if($("input:hidden[name=plan_name]").attr('amount')){
+        planAmount = parseFloat($("input:hidden[name=plan_name]").attr('amount'));
+      }
+      else{
+        planAmount = 0;
+      } 
+  
+      if(userAmount != null){
+        userAmount = parseFloat(userAmount);
+      }else{
+        userAmount = 0;
+      }
+
+      total =  planAmount;
+      
+      discount = 0;
+      if(validityDiscount > 0){
+        discount = total * (parseFloat(validityDiscount) / 100 )
+      }
+      total = total + userAmount - discount;
+      grossTotal = total;
+      discount = 0;
+      if(($("#rb2").attr('coupontype') == 'Fixed Amount') && total > 0){
+        discount = parseFloat($("#rb2").attr('figure'));
+      } else if($("#rb2").attr('coupontype') == 'Percentage' && total > 0){
+        discount = total * (parseFloat($("#rb2").attr('figure')) / 100 );
+      }
+      if(total > discount){
+        total = total - discount;
+        total+=(total/100*18); //gst tax 18 % changed from 14% service tax + 0.5% cess!!
+      }
+
+// earning balance adjustment code commented     
+      // var refBalance = $("input:text[name=earning]").val();
+      // console.log(refBalance)
+      // var totalrefBal = parseFloat("<%= @current_user.earnings%>");
+      // console.log(totalrefBal)
+      // if($("input:text[name=earning]").val()){
+      //   if (refBalance > 0){
+      //     total = total- parseFloat(refBalance);
+      //   }
+      // }
+      //    if(refBalance > totalrefBal){
+      //     alert("Entered balance should not be greater than total referral balance");
+      //     $("input:text[name=earning]").val(' ');
+      //    }
+      
+      $("#coupon_amt").val(discount);
+      $("span#user_amount").text(" " + userAmount + " annually");
+      if(total > 0 ){
+        $('span#order-total').text(total);
+        $('span#gross-total').text(grossTotal);
+      }
+      $("#amount").val(total);
+}
+</script>

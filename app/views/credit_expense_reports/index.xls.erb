@@ -1,0 +1,44 @@
+<table>
+	<tr>
+		<td align="center" colspan="6"> <strong>Outstanding Expenses</strong> </td>
+	</tr>
+	<tr><td colspan=6 align=center>Outstanding for <%= (@account.blank?)? "All vendors" : @account.name %></td></tr>
+	<% if !params[:branch_id].blank? %>
+		<tr>
+			<td colspan=6 align=center>Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan=6 align=center><%= (params[:start_date].blank?)? @financial_year.start_date : params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td>
+	</tr>
+	<thead>
+		<tr>
+			<th>Voucher</th>
+			<th>Due date</th>
+			<th>Vendor</th>
+			<th align="right">Expense Amount(<%= @company.currency_code %>)</th>
+			<th align="right">Outstanding(<%= @company.currency_code %>)</th >
+			<th align="right">Overdue by days</th >
+		</tr>
+	</thead>
+	<tbody>
+		<% @expenses.each do |expense| %>							
+			<tr>
+				<td><%= expense.voucher_number %></td>
+				<td><%= expense.expense_date %></td>
+				<td><%= expense.account.name %></td>
+				<td align="right"><%= expense_report_amount(expense) %></td>
+				<td align="right"><%= expense_report_outstanding(expense) %></td >
+				<td align="right"><%= distance_of_time_in_words(expense.due_date, Time.zone.now.to_date) %></td >
+			</tr>
+		<% end %>
+		<tr>
+			<td></td>
+			<td></td>
+			<td align="right"><strong>Grand Total</strong></td>
+			<td align="right"><strong><%= expense_report_total_amount %></strong></td >
+			<td align="right"><strong><%= expense_report_total_outstanding %></strong></td >
+			<td></td>
+		</tr>
+	</tbody>
+</table>

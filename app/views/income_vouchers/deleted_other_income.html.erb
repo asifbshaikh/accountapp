@@ -1,0 +1,91 @@
+ <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for income_voucher in @income_vouchers
+      @data<<income_voucher.voucher_number
+      @data<<income_voucher.from_account_name
+      @data<<income_voucher.income_date
+      @data<<income_voucher.amount
+      @data<<income_voucher.payment_detail.type
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+ <!-- Page title -->
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Income &rarr;<span>Deleted Other Income</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/income_vouchers/deleted_other_income" do |f| %>
+    <%=f.text_field :voucher_number_or_amount_or_income_date_or_payment_detail_type_equals, :id => "autocomplete", :placeholder=>"search" %>
+    <%end%>
+  </div>
+</div>
+<!-- Page Title End -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"><br />
+        <div class="highlight">
+         <%= render :partial => "shared/flash_msg"	%>
+         <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/income_vouchers">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/income_vouchers/deleted_other_income">Deleted</a>
+                    </li>
+                </ul>
+            </div> 
+        <div class="clearfix"></div>
+           <div id = "task_container">
+            <div id="income_voucher_list">
+              <% if @income_vouchers.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+              <% else %>
+                <table class="display stylized" id="example">
+                  <thead>   
+                    <%= render :partial => "header" %>
+                  </thead>
+                  <tbody>
+                    <%= render :partial => "deleted_other_income", :collection => @income_vouchers%>
+                  </tbody>
+                  <tfoot>
+                    <%= render :partial => "footer" %>
+                  </tfoot>
+                </table> 
+                <div class="clear">
+	          	   <div class="width3 column">
+	                 <%= paginate @income_vouchers %>
+	               </div>
+               </div>   
+              <% end %>
+            </div>
+           </div>
+     </div><br />
+      </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2"><br />
+       	<a href="/income_vouchers/new" class="btn btn-special btn-green btn-green-new">&nbsp; Add new income</a>
+           <div id="rightmenu">
+                 <dl class="first">
+                       <dt><%= help_icon %></dt>
+                       <dd><a href="/helps/3" class="nyroModal">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

@@ -1,0 +1,99 @@
+<section id="content">
+    <section class="main padder">
+
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Sundry Creditor</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+    <% if !@ledgers.blank? %>
+    <%= link_to_pdf params %>
+    <%= link_to_xls params %>
+     <%end%>
+    <p></p>
+    </div>
+  </div>
+
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+              <%= render :partial => "shared/filter" %>
+            <% if @ledgers.blank? || @accounts.blank? %>
+          <br />
+          <%= render :partial => "shared/no_record" %>
+              <% else %>
+                    <%= render :partial => "shared/report_header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                   <th width = "9%">Date</th>
+                   <th width = "20%">Correspondence Account</th>
+                   <th width = "24%"><span class='char_spacing'>Particulars</span></th>
+                   <th width = "9%">Type</th>
+                   <th width = "19%" class="text-right" >Debit</th>
+                   <th width = "19%" class="text-right" >Credit</th>
+                  </tr>
+               </thead>
+                <tbody>
+                  <%debit = 0
+                  credit = 0
+                  prev_date = nil
+                 for ledger in @ledgers %>
+                    <tr>
+                      <% if !ledger.retrieve_corresponding_account.nil? %>
+                    <td width = "9%"><%= ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+                    <td title = '<%= Account.find(ledger.retrieve_corresponding_account).name %>' width ="20%">
+                    <%= (ledger.debit > 0)? "To":"By"%>
+                    <%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : (link_to Account.find(ledger.retrieve_corresponding_account).name, "/account_books_and_registers/ledger?account_id=#{Account.find(ledger.retrieve_corresponding_account).id}")%></td>
+                    <td title = '<%= ledger.description %>' width ="24%"><%= ledger.description %></td>
+                    <td title = '<%= ledger.voucher_type %>' width = "9%"><%= ledger.voucher_type %></td>
+                    <td width = "19%" align = "right" ><%= format_currency(ledger.debit) %></td>
+                    <td width = "19%" align = "right" ><%= format_currency ledger.credit %></td>
+                    <%debit += ledger.debit
+                      credit += ledger.credit
+                         end
+                          %>
+                    </tr>
+                     <% end %>
+                    <tr>
+                      <td width ="9%"></td>
+                      <td width ="20%"></td>
+                      <td width ="24%"></td>
+                      <td width ="9%"></td>
+                      <td width ="19%" class = 'border_up' align ="right"><b><%= format_currency debit%></b></td>
+                      <td width ="19%" class = 'border_up' align ="right"><b><%= format_currency credit%></b></td>
+                    </tr>
+                    <tr>
+                      <td width ="9%"></td>
+                      <td width ="20%"></td>
+                      <td width ="24%"><b>Closing Balance</b></td>
+                      <td width ="9%"></td>
+                      <td width ="19%"></td>
+                      <td width ="19%" class = 'border_down' align ="right"><b><%= format_currency closing_balance = debit - credit%></b></td>
+                    </tr>
+                    <tr>
+                      <td width ="9%"></td>
+                      <td width ="20%"></td>
+                      <td width ="24%"></td>
+                      <td width ="9%"></td>
+                      <td width ="19%" class = 'border_down' align ="right"><b><%= format_currency debit%></b></td>
+                      <td width ="19%" class = 'border_down' align ="right"><b><%= format_currency(credit + closing_balance) %></b></td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="row">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>
+
+   </section>
+  </section>

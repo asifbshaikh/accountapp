@@ -1,0 +1,19 @@
+           
+   <%   debit = 0
+		credit = 0
+		prev_date = nil
+		for deleted_ledger_entry in @ledgers
+    %>
+	 <tr class="gradeU <%=cycle('even','odd')%>">
+    <td><%=  (deleted_ledger_entry.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": deleted_ledger_entry.transaction_date.strftime("%d-%m-%Y")%></td><% prev_date = deleted_ledger_entry.transaction_date.strftime("%d-%m-%Y")%>
+    <td><a href=<%= "/accounts/#{Account.find(deleted_ledger_entry.account_id).id}"%>><%= Account.find(deleted_ledger_entry.account_id).name  %></a></td>
+    <td><%= deleted_ledger_entry.voucher_type %></td>
+    <td><%= format_currency deleted_ledger_entry.debit %></td>
+    <td><%= format_currency deleted_ledger_entry.credit %></td>
+    <td><%= User.find(deleted_ledger_entry.created_by).first_name  %></td>
+    	<td><%= link_to 'Restore' %>
+    	&nbsp; <%= link_to image_tag("/images/black_icon/ic_delete.png"), deleted_ledger_entry, :confirm => "Are you sure?", :method => "delete", :title =>"Delete " %>
+    	</td>
+  </tr>
+   
+	<% end %>

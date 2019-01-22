@@ -1,0 +1,11 @@
+
+$(".popup-error").remove();
+<% if @purchase_line_item.errors.any? %>
+  $(".errorSection").after("<%= escape_javascript render('shared/popup_form_error', {:object => @purchase_line_item})%>")
+<% else %>
+window.location.reload();
+ alert(" ITC Details added succesfully");
+$("div[id^='myModal']").modal('hide');
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit' data-loading-text='Saving...'>Save</button>");

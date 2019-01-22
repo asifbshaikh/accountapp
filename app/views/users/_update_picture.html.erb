@@ -1,0 +1,9 @@
+<%= form_for @user , :html => {:multipart => true} do |f|%>
+<div class="col-sm-12">
+  <%= f.file_field :avatar, :class=>"btn btn-white" %><%= hidden_field_tag "old_file_size", @user.old_file_size %>
+  <%= submit_tag "Submit", :class => "btn btn-success" %>&nbsp;
+ <%= hidden_field_tag 'row_index', params[:index] %>
+ 
+</div>
+
+<% end %>

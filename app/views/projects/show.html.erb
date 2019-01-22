@@ -1,0 +1,297 @@
+<section id="content">
+  <section class="main padder">
+    <div class='row'>
+      <div class='col-lg-5'>
+        <h2><i class="icon-tasks text"></i><%= @project.name %></h2>
+      </div>
+      <div class="col-lg-7 m-t-large" align="right">
+        <div class="btn-group">
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-plus"></i> New &nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu text-left" align="left">
+            <li><%= link_to 'Task',"#modal1", :"data-toggle"=>"modal" %></li>
+            <li><a href="/invoices/new?project_id=<%= @project.id %>">Invoice</a></li>
+            <li><a href="/receipt_vouchers/new?project_id=<%= @project.id %>">Receipt</a></li>
+            <li><a href="/expenses/new?project_id=<%= @project.id %>">Expense</a></li>
+            <li><a href="/purchases/new?project_id=<%= @project.id %>">Purchase</a></li>
+            <li><a href="/purchase_orders/new?project_id=<%= @project.id %>">Purchase Order</a></li>
+            <li><a href="/sales_orders/new?project_id=<%= @project.id %>">Sales Order</a></li>
+            <li><a href="/journals/new?project_id=<%= @project.id %>">Journal</a></li>
+          </ul>
+        </div>
+        <%= back_link(@project) %>
+      </div>
+    </div>
+    <p> </p>
+    <div class="row">
+      <div class="col-sm-3">
+        <section class="panel bg-info">
+          <div class="panel-body">
+            <p><i class="icon-calendar"></i>Start Date:
+              <%= @project.start_date %></p>
+            <p><i class="icon-calendar"></i>End Date:
+              <%= @project.end_date %></p>
+            <p>Status: <%= @project.get_status %></p>
+            <p>Estimated Cost:<%= format_currency @project.estimated_cost %></p>
+            <p>Description: <%= @project.description %></p>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-xs-3 bg-info padder">
+            <div class="h3 m-t-mini"><%= total_invoices_amt(@project)%></div>
+            <p>Total Invoices</p>
+          </div>
+          <div class="col-xs-3 bg-warning padder">
+            <div class="h3 m-t-mini"><%= total_expenses_amt(@project)%></div>
+            <p>Total Expenses</p>
+          </div>
+          <div class="col-xs-3 bg-success padder">
+            <div class="h3 m-t-mini"><%= total_receipts_amt(@project) %></div>
+            <p>Total Receipts</p>
+          </div>
+          <div class="col-xs-3 bg-primary padder">
+            <div class="h3 m-t-mini"><%= total_purchases_amt(@project) %></div>
+            <p>Total Purchases</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left" id="projViewTabs">
+               <li class="active"><a href="#proj-task-tab" data-toggle="tab">Tasks</a></li>
+               <li><a href="#proj-invoices-tab" data-toggle="tab">Invoices</a></li>
+               <li><a href="#proj-receive-money-tab" data-toggle="tab">Receipts</a></li>
+                <li><a href="#proj-expenses-tab" data-toggle="tab">Expenses</a></li>
+                <li><a href="#proj-purchase-tab" data-toggle="tab">Purchases</a></li>
+                <li><a href="#proj-purchase-order-tab" data-toggle="tab">Purchase Orders</a></li>
+                <li><a href="#proj-sales-order-tab" data-toggle="tab">Sales Orders</a></li>
+                <li><a href="#proj-journals-tab" data-toggle="tab">Journals</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="proj-task-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-Task" class="table table-striped b-t text-small" data-source="<%= tasks_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th>Task Description</th>
+                          <th>Due Date</th>
+                          <th>Assigned to</th>
+                          <th>Created by</th>
+                          <th>Priority</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th>Task Description</th>
+                          <th>Due Date</th>
+                          <th>Assigned to</th>
+                          <th>Creatrd by</th>
+                          <th>Priority</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-invoices-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-invoices" class="table table-striped b-t text-small" data-source="<%= invoices_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Invoice</th>
+                          <th width="20%">Customer</th>
+                          <th width="20%">Due date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Purchase number</th>
+                          <th width="20%">Vendor name</th>
+                          <th width="20%">Due date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                     </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-receive-money-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-receipt-vouchers" class="table table-striped b-t text-small" data-source="<%= receipt_vouchers_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Voucher</th>
+                          <th width="20%">Received from</th>
+                          <th width="20%">Voucher date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Payment mode</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Voucher</th>
+                          <th width="20%">Received from</th>
+                          <th width="20%">Voucher date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Payment mode</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-expenses-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-expenses" class="table table-striped b-t text-small" data-source="<%= expenses_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width='20%'>Voucher</th>
+                          <th width='20%'>Paid from</th>
+                          <th width='20%'>Expenses date</th>
+                          <th width='20%'>Amount</th>
+                          <th width='20%'>Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Voucher</th>
+                          <th width="20%">Paid from</th>
+                          <th width="20%">Expenses Date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-purchase-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-purchases" class="table table-striped b-t text-small" data-source="<%= purchases_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Purchase number</th>
+                          <th width="20%">Vendor name</th>
+                          <th width="20%">Due Date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Purchase number</th>
+                          <th width="20%">Vendor name</th>
+                          <th width="20%">Due date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-purchase-order-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-purchase-orders" class="table table-striped b-t text-small" data-source="<%= purchase_orders_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Purchase order#</th>
+                          <th width="20%">Vendor name</th>
+                          <th width="20%">Record date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Purchase order#</th>
+                          <th width="20%">Vendor name</th>
+                          <th width="20%">Record date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="proj-sales-order-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-sales-orders" class="table table-striped b-t text-small" data-source="<%= sales_orders_url(:format => 'json', :project => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Sales order#</th>
+                          <th width="20%">Customer name</th>
+                          <th width="20%">Record date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Sales order#</th>
+                          <th width="20%">Customer name</th>
+                          <th width="20%">Record date</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane" id="proj-journals-tab">
+                  <div class="table-responsive row">
+                    <table id="proj-journals" class="table table-striped b-t text-small" data-source="<%= journals_url(:format => 'json', :project_id => @project.id) %>" >
+                      <thead>
+                        <tr>
+                          <th width="20%">Voucher number#</th>
+                          <th width="20%">Date</th>
+                          <th width="20%">Account</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                        <tr style="visibility:hidden">
+                          <th width="20%">Voucher number#</th>
+                          <th width="20%">Date</th>
+                          <th width="20%">Account</th>
+                          <th width="20%">Amount</th>
+                          <th width="20%">Created by</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render :partial=>"tasks/new_task_form"%>
+ </div>

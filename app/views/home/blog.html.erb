@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>ProfitBooks.net - Online Accounting & Payroll Management Software for small business</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Stylesheets Files       // -->
+<!-- ////////////////////////////////// -->
+<%= render :partial =>"stylesheets"%>
+  
+<!-- ////////////////////////////////// -->
+<!-- //     Google Webfont Files     // -->
+<!-- ////////////////////////////////// -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //        Favicon Files         // -->
+<!-- ////////////////////////////////// -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Javascript Files        // -->
+<!-- ////////////////////////////////// -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="javascripts/jquery.easing-1.3.min.js"></script>
+<script src="javascripts/camera.min.js"></script>
+<script src="javascripts/tooltip.js"></script>
+<script src="javascripts/superfish.js"></script>
+<script src="javascripts/tinynav.min.js"></script>
+<script src="javascripts/jquery.fancybox.js?v=2.0.6"></script>
+<script src="javascripts/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="javascripts/jquery.ui.totop.min.js"></script>
+<script src="javascripts/ddaccordion.js"></script>
+<script src="javascripts/jquery.twitter.js"></script>
+<script src="javascripts/jflickrfeed.min.js"></script>
+<script src="javascripts/faq-functions.js" ></script>
+<script src="javascripts/theme-functions.js"></script>
+<script src="javascripts/jquery.retina.js"></script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('.post-slide').camera({   
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <!-- logo start here -->
+      <div id="logo">
+          <a href="/home/index"><img src="/images/logo.png" alt="ProfitBooks - Online Accounting and Payroll Management Software" class="retina"/></a>
+          
+        </div>
+        <!-- logo end here -->
+        
+        <!-- top information start here -->
+        <div id="top-info">
+          <ul>
+              <li>
+                  <p>Call us to know more</p>
+                    <img src="/images/top_info1.png" alt="" class="retina" /><br/>
+                    <p class="info-text">+91 84 85 86 3000</p>
+                </li>
+                <li>
+                  <p>Already Registered ?</p>
+                    <p class="info-text"><a href="https://www.profitbookshq.com/login/index">Login to your account</a></p>
+                </li>
+            </ul>
+        </div>
+        <!-- top information end here -->
+        
+        <div id="mainmenu-wrapper">
+          <!-- mainmenu start here -->
+            <nav id="mainmenu">
+                <ul id="menu">
+                    <li class="dropdown"><a href="/home/index">Home</a>
+                        <ul> 
+                            <li><a href="/home/index-layout2.html"><span>-</span> home layout 2</a></li>
+                            <li><a href="/home/index-layout3.html"><span>-</span> home layout 3</a></li>
+                            <li><a href="/home/index-layout4.html"><span>-</span> home layout 4</a></li>      
+                        </ul>
+                    </li>
+                  <li><a href="/home/about">How Its Useful</a></li>
+                  <li><a href="/home/services">Pricing & Signup</a></li>
+                    <li class="dropdown"><a href="#">Common Questions</a>
+                      <ul> 
+                            <li><a href="portfolio-2col.html"><span>-</span> portfolio 2 column</a></li>
+                            <li><a href="portfolio-3col.html"><span>-</span> portfolio 3 column</a></li>
+                            <li><a href="portfolio-4col.html"><span>-</span> portfolio 4 column</a>
+                              <ul> 
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a></li>
+                                    <li><a href="#"><span>-</span> dropdown level 2</a>
+                                      <ul> 
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>
+                                            <li><a href="#"><span>-</span> dropdown level 3</a></li>      
+                                        </ul>
+                                    </li>     
+                                </ul>
+                            </li>     
+                      </ul>
+                  </li>
+                    <li class="dropdown selected"><a href="#">Blog</a>
+                      <ul> 
+                            <li><a href="blog-right-sidebar.html"><span>-</span> blog right sidebar</a></li>
+                            <li><a href="blog-left-sidebar.html"><span>-</span> blog left sidebar</a></li>
+                            <li><a href="single-right-sidebar.html"><span>-</span> single right sidebar</a></li> 
+                            <li><a href="single-left-sidebar.html"><span>-</span> single left sidebar</a></li>    
+                      </ul>
+                  </li>
+                  <li><a href="/home/contact">Contact</a></li>
+                    <li class="dropdown"><a href="#">Pages</a>
+                      <ul> 
+                            <li><a href="column.html"><span>-</span> column page</a></li>
+                            <li><a href="tables.html"><span>-</span> table page</a></li>
+                            <li><a href="button-list.html"><span>-</span> button &amp; list page</a></li>
+                            <li><a href="/home/icons.html"><span>-</span> glyphicons page</a></li>
+                            <li><a href="/home/typhography.html"><span>-</span> typhography page</a></li>
+                            <li><a href="/home/testimonials.html"><span>-</span> testimonials page</a></li>  
+                            <li><a href="/home/pricing"><span>-</span> pricing page</a></li>
+                            <li><a href="/home/faq"><span>-</span> faq page</a></li>
+                            <li><a href="/home/team"><span>-</span> team page</a></li>
+                            <li><a href="/home/services-layout2.html"><span>-</span> services layout alt</a></li>
+                            <li><a href="contact-layout2.html"><span>-</span> contact layout alt</a></li>
+                            <li><a href="/home/sitemap"><span>-</span> sitemap page</a></li>
+                            <li><a href="/home/fullwidth.html"><span>-</span> fullwidth page</a></li>
+                            <li><a href="/home/404"><span>-</span> 404 page</a></li>                             
+                      </ul>
+                  </li>
+              </ul>
+            </nav>
+            <!-- mainmenu end here -->
+            
+            <!-- top socials start here -->
+            <div id="top-socials">
+                <ul class="socials-list">
+                    <li><a href="#" title="facebook" class="tooltip"><img src="/images/socials/facebook.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="twitter" class="tooltip"><img src="/images/socials/twitter.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="dribbble" class="tooltip"><img src="/images/socials/dribbble.png" alt="" class="retina" /></a></li>
+                    <li><a href="#" title="google+" class="tooltip"><img src="/images/socials/google+.png" alt="" class="retina" /></a></li>
+                    
+                </ul>
+            </div>
+            <!-- top socials end here -->
+        </div>
+    </header>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Our Blog.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <ul>
+                        <li><a href="/home/index">home</a></li>
+                        <li class="current-page"><a href="#">blog</a></li>
+                    </ul>
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+            <div class="eight columns">           
+                
+                <!-- blog post 1 -->
+                <div class="blog-post">
+                  <div class="row">                    
+                      <div class="two columns">
+                            <div class="post-date">                                   
+                                <h3>18</h3>
+                                <p>Jan '13</p>
+                            </div>
+                            <div class="post-type">
+                                <img src="/images/post_type_img.png" alt="" class="retina" />
+                            </div>
+                            <div class="socials-share">
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="indoneztheme">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script> 
+                            </div>
+                        </div>
+                        
+                        <div class="ten columns">
+                            <div class="post-content">
+                              <div class="post-slide">
+                                    <div data-src="/images/sample_images/blog-post1.jpg"></div>
+                                    <div data-src="/images/sample_images/blog-post2.jpg"></div>
+                                    <div data-src="/images/sample_images/blog-post3.jpg"></div>
+                                </div>
+                                <h4><a href="single-right-sidebar.html">Perspiciatis unde omnis error sit voluptatem</a></h4> 
+                                <ul class="post-info">
+                                    <li>By : <a href="#">Don Kuzenko</a></li> 
+                                    <li>In : <a href="#">Artistic</a>, <a href="#">Photography</a>, <a href="#">Elegant</a>, <a href="#">Classic</a></li>                           
+                                    <li>Comments : <a href="#">27</a></li>                                    
+                                </ul>           
+                                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit In ut pharetra sem. Mauris ipsum eros sagittis eu posuere at, vulputate et lectus fusce consectetur sem eget neque porttitor commodo. Nunc mauris velit tristique eu vehicula faucibus tempus non purus volutpat volutpat hasellus egestas consectetur est ut viverra.</p>
+                                <a class="continue-btn">Continue Reading</a>
+                            </div>
+                        </div> 
+                        
+                    </div>   
+                </div>
+                
+                <!-- blog post 2 -->
+                <div class="blog-post">
+                  <div class="row">                    
+                      <div class="two columns">
+                            <div class="post-date">                                   
+                                <h3>11</h3>
+                                <p>Jan '13</p>
+                            </div>
+                            <div class="post-type">
+                                <img src="/images/post_type_txt.png" alt="" class="retina" />
+                            </div>
+                            <div class="socials-share">
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="indoneztheme">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script> 
+                            </div>
+                        </div>
+                        
+                        <div class="ten columns">
+                            <div class="post-content">                                
+                                <span class="link-more">                               
+                                  <a href="single-right-sidebar.html"><img src="/images/sample_images/blog-post4.jpg" alt="" class="fade" /></a>
+                                </span> 
+                                <h4><a href="single-right-sidebar.html">Consectetur est viverra pretium odio morbilla</a></h4> 
+                                <ul class="post-info">
+                                    <li>By : <a href="#">Don Kuzenko</a></li> 
+                                    <li>In : <a href="#">Artistic</a>, <a href="#">Photography</a>, <a href="#">Elegant</a>, <a href="#">Classic</a></li>                           
+                                    <li>Comments : <a href="#">13</a></li>                                    
+                                </ul>           
+                                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit In ut pharetra sem. Mauris ipsum eros sagittis eu posuere at, vulputate et lectus fusce consectetur sem eget neque porttitor commodo. Nunc mauris velit tristique eu vehicula faucibus tempus non purus volutpat volutpat hasellus egestas consectetur est ut viverra.</p>
+                                <a class="continue-btn">Continue Reading</a>
+                          </div>
+                        </div> 
+                        
+                    </div>   
+                </div>
+                
+                <!-- blog post 3 -->
+                <div class="blog-post">
+                  <div class="row">                    
+                      <div class="two columns">
+                            <div class="post-date">                                   
+                                <h3>8</h3>
+                                <p>Jan '13</p>
+                            </div>
+                            <div class="post-type">
+                                <img src="/images/post_type_vd.png" alt="" class="retina" />
+                            </div>
+                            <div class="socials-share">
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-via="indoneztheme">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script> 
+                            </div>
+                        </div>
+                        
+                        <div class="ten columns">
+                            <div class="post-content">                                
+                                <iframe src="http://player.vimeo.com/video/56340850" width="517" height="291" seamless></iframe>
+                    <h4><a href="single-right-sidebar.html">Quis autem velum reprehenderit qui voluptate</a></h4> 
+                                <ul class="post-info">
+                                    <li>By : <a href="#">Don Kuzenko</a></li> 
+                                    <li>In : <a href="#">Artistic</a>, <a href="#">Photography</a>, <a href="#">Elegant</a>, <a href="#">Classic</a></li>                           
+                                    <li>Comments : <a href="#">5</a></li>                                    
+                                </ul>           
+                                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit In ut pharetra sem. Mauris ipsum eros sagittis eu posuere at, vulputate et lectus fusce consectetur sem eget neque porttitor commodo. Nunc mauris velit tristique eu vehicula faucibus tempus non purus volutpat volutpat hasellus egestas consectetur est ut viverra.</p>
+                                <a class="continue-btn">Continue Reading</a>
+                            </div>
+                        </div> 
+                        
+                    </div>   
+                </div>         
+                
+                <!-- begin of pagination -->
+                <div class="blog-pagination">
+                    <div class="pages blogpages">
+                        <span class="pageof">Page 1 of 3</span><a href="#" class="current">1</a><a href="#">2</a><a href="#">3</a><a href="#">&raquo;</a>
+                    </div>
+                </div>
+                <!-- end of pagination -->            
+            </div>
+                    
+            <div class="four columns">         
+                <aside>
+                    <h5>Categories</h5>
+                    <ul class="sidebar-list">
+                        <li><a href="#">National News</a></li>                    
+                        <li><a href="#">World of Sport</a></li>                                
+                        <li><a href="#">Travel &amp; Accomodation</a></li>
+                        <li><a href="#">Technology News</a></li>
+                        <li><a href="#">Entertainment</a></li>
+                    </ul>
+              </aside>
+                
+                <aside>
+                    <h5>Popular Posts</h5>
+                    <ul class="popular-list">
+                        <li>
+                            <img src="/images/sample_images/blog-post1.jpg" alt="" />                                          
+                            <p class="popular-title"><a href="single.html">Perspiciatis unde omnis error sit voluptatem</a></p>                        
+                            <p class="comment-count"><a href="single.html">27 Comments</a></p>   
+                        </li>
+                        <li>
+                            <img src="/images/sample_images/blog-post4.jpg" alt="" />                                                
+                            <p class="popular-title"><a href="single.html">Consectetur est viverra pretium odio morbilla</a></p>                        
+                            <p class="comment-count"><a href="single.html">13 Comments</a></p>        
+                        </li>
+                        <li>
+                            <img src="/images/sample_images/blog-post5.jpg" alt="" />                                                
+                            <p class="popular-title"><a href="single.html">Quis autem velum reprehenderit qui voluptate</a></p>                        
+                            <p class="comment-count"><a href="single.html">5 Comments</a></p>         
+                        </li>                     
+                    </ul>
+                </aside>
+                
+              <aside>
+                    <h5>Tab for Sidebar</h5>
+            <ul class="tabs_blog">                        
+                        <li><a href="#comments">Comments</a></li>
+                        <li><a href="#archives">Archives</a></li>
+                        <li><a href="#text">Text only</a></li>                 
+                </ul>
+                  <div class="tab_container_blog">
+                      <div id="comments" class="tab_content_blog">                            
+                          <ul class="comments-list">
+                              <li>
+                                  <div class="author-img"><img src="/images/sample_images/author.jpg" alt="" /></div>
+                                  <p class="comment-info">15 minutes ago by <a href="#">Jenglot</a> on</p>
+                                  <p class="title-with-comment"><a href="#">Architecto beatae vitare dictasunt explicabo</a></p>
+                              </li>
+                              <li>
+                                  <div class="author-img"><img src="/images/sample_images/author.jpg" alt="" /></div>
+                                  <p class="comment-info">20 minutes ago by <a href="#">Markus</a> on</p>
+                                  <p class="title-with-comment"><a href="#">Exercitationem ullam corporisipi laboriosam</a></p>
+                              </li>
+                              <li>
+                                  <div class="author-img"><img src="/images/sample_images/author.jpg" alt="" /></div>
+                                  <p class="comment-info">40 minutes ago by <a href="#">Andrew</a> on</p>
+                                  <p class="title-with-comment"><a href="#">Reprehenderit voluptate essequam molestiae</a></p>
+                              </li>
+                          </ul>                                   
+                      </div>
+                        
+                      <div id="archives" class="tab_content_blog">                            
+                          <ul class="archive-list">
+                              <li><p class="month-arch"><a href="#">May 2012</a></p><p class="post-count"><a href="#">8 post</a></p></li>
+                              <li><p class="month-arch"><a href="#">June 2012</a></p><p class="post-count"><a href="#">12 post</a></p></li>
+                              <li><p class="month-arch"><a href="#">July 2012</a></p><p class="post-count"><a href="#">4 post</a></p></li>
+                              <li><p class="month-arch"><a href="#">August 2012</a></p><p class="post-count"><a href="#">10 post</a></p></li>
+                          </ul>                                  
+                      </div>              
+                                                            
+                      <div id="text" class="tab_content_blog">                                                
+                          <p>Lorem ipsum dolor amet, consectetur adipite scinelit vestibulum vel quam sitare amet odio ultricies dapbus acer vitae augue duis nulla nunc dignissim</p>                                                                 
+                      </div>                                                                  
+                  </div>
+              </aside>
+                
+                <aside>
+                    <h5>Flickr Widget</h5>
+                    <ul id="flck-thumb" class="thumbs"><li class="no-image"></li></ul>
+                </aside>
+                
+                <aside>
+                    <h5>Tags Cloud</h5>
+                    <div class="tag-cloud">                        
+                        <a title="Link title" href="#">indonesia</a>
+                        <a title="Link title" href="#">jquery</a>
+                        <a title="Link title" href="#">design</a>
+                        <a title="Link title" href="#">responsive</a>
+                        <a title="Link title" href="#">themeforest</a>
+                        <a title="Link title" href="#">clean</a>
+                        <a title="Link title" href="#">minimalist</a>
+                        <a title="Link title" href="#">great</a>                         
+                        <a title="Link title" href="#">css 3</a>
+                        <a title="Link title" href="#">camera slide</a>
+                        <a title="Link title" href="#">corporate</a>
+                        <a title="Link title" href="#">html 5</a>                                         
+                    </div>
+                </aside>        
+          </div>
+      </div>         
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial =>"footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

@@ -1,0 +1,218 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i> Sales Order Invoice</h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+        </div>  
+      </div>
+
+
+<div class="row">
+<div class="col-lg-12">
+  <section class="panel">
+    <div class="panel-body">
+      <div id="jHere"></div>
+      <%= render :partial => "shared/project_auto_complete" %>
+      <%= render :partial => "shared/customer_auto_complete" %>
+      <%= render :partial => "auto_calculate" %>
+      <%= form_for @invoice, :html => {:class => "form-horizontal"} do |f| %>
+      <%= f.hidden_field :financial_year_id %>
+      <%= hidden_field_tag 'hidden_quantity[]' %>
+      <%= render 'shared/form_error', :object => @invoice %>
+      <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+      <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+      <%= hidden_field_tag 'discount', params[:discount].blank? ? 0 : params[:discount] %>
+      <%= f.hidden_field :so_invoice%>
+      <%= f.hidden_field :project_id %>
+       <div class="form-group">
+        <%= hidden_field_tag "invoice[invoice_status_id]", 0 %>
+        <div class="col-lg-4">
+          <div class="row">
+            <label class="col-lg-4 control-label-required"><%= @company.label.customer_label %> Name</label>
+            <div class="col-lg-8">
+              <%= @invoice.customer_name %>
+              <% if @invoice.foreign_currency? %>
+                <p></p>
+                <label>Invoice Currency:</label>  <%= @invoice.currency %>
+              <% end %>
+              <%=f.hidden_field :account_id, :value => @invoice.account_id %>
+              <% if @invoice.foreign_currency? %>
+                <p></p>
+                <label class="control-label">Exchange Rate</label>
+                <%= @invoice.exchange_rate %>
+                <%=f.hidden_field :exchange_rate, :value => @invoice.exchange_rate %>
+              <% end %>
+              
+            </div>
+          </div>
+          <div class="row">
+            <p>
+              <label class="col-lg-4 control-label">Invoice Title</label>
+              <div class="col-lg-8">
+              <%= collection_select(:invoice, :voucher_title_id, @voucher_titles, :id, :voucher_title, {:prompt => true}, :style=>"width:200px;") %>
+              </div>
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 text-right">
+              <label class="control-label">Address</label>
+            </div>
+            <div class="col-lg-8">
+              <div id="address"></div>
+              <%= render("customer_address_with_modal", :billing_address=>@billing_address, :shipping_address=>@shipping_address ) %>
+            </div>
+          </div>
+         
+            <% if @invoice.gst_invoice? %>
+                <div class="row">
+                <div class="col-lg-4 text-right">
+                    <label class="control-label-required">Place of supply</label>
+                    </div> 
+                     <div class="col-lg-8">
+                  <div class="input-group">
+                  <%= @invoice.place_of_supply_state %>
+                  </div>
+                     </div>
+                </div>
+              <% end %>
+           
+        </div>
+
+        <div class="col-lg-4">
+        <div class="row">
+          <p>
+             <label class="col-lg-4 control-label-required"><br/>Invoice #</label>
+             <div class="col-lg-8">
+              <% if @company.invoice_setting.free_format? %>
+                <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+              <% else %>
+                <label class="control-label"><%= @invoice.invoice_number%><%= f.hidden_field :invoice_number %></label>
+              <% end %>
+              </div>
+           </p>
+         </div>
+         <div class="row">
+          <p>
+              <label class="col-lg-4 control-label-required"><br/>Date </label>
+              <div class="col-lg-8">
+              <%= f.text_field :invoice_date, :size => "10", :class => 'bg-focus form-control' %>
+              </div>
+            </p>
+         </div>
+         <div class="row"> 
+         <p>
+           <label class="col-lg-4 control-label">Due On </label>
+            <div class="col-lg-8">
+            <%= f.text_field :due_date, :size => "10", :class => 'bg-focus form-control' %>
+            </div>
+          </p>
+         </div>
+         <div class="row"> 
+         <p>
+            <label class="col-lg-4 control-label">PO Ref #</label>
+            <div class="col-lg-8">
+            <%= f.text_field :po_reference, :size => "10", :class=> 'bg-focus form-control' %>
+            </div>
+          </p>
+         </div>
+        </div>
+        
+        <div class="col-lg-4">
+        <div class="row">
+        <p>
+          <% if !@projects.blank? && !@company.plan.free_plan? %>
+            <label class="col-lg-7 control-label">Project</label>
+            <div class="col-lg-5">
+           <input type="text" class ="bg-focus form-control" name="project_id" id="project" value='<%= (!@invoice.project_id.blank?)? "#{@invoice.project_name}" : "" %>' size="10" />
+            </div>
+        <% end %>
+        </p>
+        </div>
+        <%= render :partial=>"custom_field" %>
+       </div>
+       </div>
+       
+           <div class="form-group">
+            <div class="col-lg-12">
+    <table class="table table-striped b-t" id="line_items" width="100%">
+    <thead>
+      <tr>
+       <th style=' width:19%;'>
+         <label class="required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+        </th>
+        <th style=' width:19%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+        <th style=' width:12%;'><label class = "required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></label></th>
+        <th style=' width:12%;'><label class="required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+        <th style=' width:11%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+        <th style=' width:11%;'>Tax</th>
+        <th style=' width:22%;text-align:right;'><label class="required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %></label></th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @invoice.invoice_line_items.each_with_index do |invoice_line_item, index| %>
+          <%= render "sales_order_to_invoice_line_item", :invoice_line_item => invoice_line_item, :index => index %>
+        <% end %>
+      <tr>
+        <td style='background-color:#fff;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Sub total</td>
+         <td align="right" style='background-color:#fff;'> <%= number_with_precision @invoice.sub_total, :precision=>2 %></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+        <tr>
+        <tr>
+               <td style='background-color:#fff;border:none;' colspan='5'>&nbsp;</td>
+           <td class="ta-right" style='background-color:#fff;'>Discount</td>
+           <td align="right" style='background-color:#fff;'><%= number_with_precision @invoice.discount, :precision=>2 %></td>
+           <td style='background-color:#fff;'></td>
+              </tr>
+        <tr>
+           <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Total tax</td>
+         <td align="right" style='background-color:#fff;'><%= number_with_precision @invoice.tax, :precision=>2 %></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+      <tr>
+        <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+        <td class="ta-right" style='background-color:#fff;'><label>Total</label></td>
+        <td align="right" style='background-color:#fff;'><label> <%= number_with_precision @invoice.total_amount, :precision=>2 %></label></td>
+        <td style='background-color:#fff;'></td>
+      </tr>
+    </tbody>
+    </table>
+   
+           </div>
+           </div>
+        
+            <div class="form-group">
+              <div class="col-lg-5">
+              <label class="control-label">Customer Notes</label>
+                <%= text_area_tag "invoice[customer_notes]", "#{@invoice.customer_notes.blank? ? @company.customer_note : @invoice.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %></div>
+              <div class="col-lg-2"></div>
+              <div class="col-lg-5">
+              <label class="control-label">Terms and Conditions</label>
+                <%= text_area_tag "invoice[terms_and_conditions]", "#{@invoice.terms_and_conditions.blank? ? @company.terms_and_conditions : @invoice.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %><br/>
+              </div>
+            </div>
+
+          
+            <div class="form-group">
+              <div class="col-lg-8 col-lg-offset-4"> 
+               <%= hidden_field_tag 'sales_order_id', @sales_order.id %>
+              <%= hidden_field_tag "so_invoice", params[:so_invoice] %>
+              <%= f.submit "Generate Invoice", :class=>'btn btn-success' %>
+              <%= link_to 'Cancel', "/sales_orders/#{@sales_order.id}", :class => "btn btn-default", :confirm=>"#{'This invoice will be added to draft. Do you want leave this page?' if @invoice.original_invoice.draft?}" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+  </section>
+</section>
+<script type="text/javascript"> 
+  $("#invoice_voucher_title_id").select2();
+  $("#invoice_place_of_supply").select2();
+</script>

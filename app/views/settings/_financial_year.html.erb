@@ -1,0 +1,37 @@
+<div class="col-sm-12"><br/>
+ <h4><i class="icon-calendar"> </i> Your financial year ends at <strong><%= @financial_year.end_date.strftime("%d-%B") %></strong></h4>
+ <section class="panel">
+  <header class="panel-heading">
+    <strong>Financial Years Setting</strong><span class="pull-right">
+  </header>
+  <div class="">
+ <% if @financial_years.blank? %>
+ <%= render :partial => "shared/no_record" %>
+ <% else %>
+  <table class="table table-striped m-b-none text-small ">
+  <thead>
+    <tr>
+      <th><label>Financial year</label></th>
+      <th><label>Period</label></th>
+      <th><label>Action</label></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @financial_years.each do |financial_year| %>
+    <tr>
+      <td><%= financial_year.year.name %></td>
+      <td><%= financial_year.get_period %></td>
+      <td>
+      <%= link_to image_tag('white_ic_lock.png', :class => 'icon') + "Freeze Financial Year", {:action => :freeze_year, :id => financial_year.id}, :confirm => "Are you sure?\nOnce the selected financial year is frozen, you won't be able to make changes to the entries passed for that financial year.", :class => "btn btn-success #{'disabled' if financial_year.freeze? || (!financial_year.get_previous_year.blank? && !financial_year.get_previous_year.freeze?) }", :method => :post %>
+          <%= link_to image_tag('black_ic_unlock.png', :class => 'icon') + "Unfreeze Financial Year", {:action => :unfreeze_fin_year, :id => financial_year.id }, :confirm => "Are you sure?", :class => "btn btn-white #{'disabled' if !financial_year.freeze? || (!financial_year.get_next_year.blank? && financial_year.get_next_year.freeze? )}", :method => :post %>
+          </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+  </div>
+ </section>
+</div>
+
+

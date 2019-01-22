@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+<title>ProfitBooks - Online Accounting and Payroll Application</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="accouting, payroll, online accounting, indian accounting application" />
+<meta name="description" content="ProfitBooks is an Online Accounting and Payroll Application" />
+<meta name="copyright" content="&copy; 2012 The Nextwave Technologies. All rights reserved." />
+<link rel="shortcut icon" href="images/icons/favicon.html" type="image/x-icon" />
+<!-- Load Jquery -->
+<script src="/javascripts/homepagejs/jquery.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- for IE6 i'm sorry but there is too much wrong with it, needs warning at least, you can disable it by deleting this load. -->
+<script src="/javascripts/homepagejs/jquery.badBrowser.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- ALL jQuery Tools. jQuery library -->
+<script src="/javascripts/homepagejs/jquery.tools.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- Load Pretty Photo -->
+<link rel="stylesheet" href="stylesheets/homepagecss/jquery.prettyPhoto.css" type="text/css" media="screen" />
+<script src="/javascripts/homepagejs/jquery.prettyPhoto.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load Captify -->
+<script src="/javascripts/homepagejs/jquery.captify.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load Jquery Twitter -->
+<script src="/javascripts/homepagejs/jquery.tweet.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load some small custom scripts -->
+<script src="/javascripts/homepagejs/custom.js" type="text/javascript"></script>
+<!-- End Load -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/all.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/stylesheets/homepagecss/laptop.css" type="text/css"  media="screen" />
+<link rel="stylesheet" href="/stylesheets/homepagecss/monitor.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/stylesheets/homepagecss/phone.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/stylesheets/homepagecss/tablet.css" type="text/css" media="screen" />
+<!-- Load Main Stylesheets and Default Color and Style -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style.css" type="text/css" media="screen" />
+<!-- IMPORTANT: This line above is the generic style, should be left alone -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style-green.css" type="text/css" media="screen" title="green" />
+<!-- IMPORTANT: This line above is the line that sets wich style you use by default, after you select wich you like to use, plug it in the line above the disable the style switcher, to do that either read the documentation or folow the note below refering to this -->
+<!-- End Load -->
+<!-- NOTE: Uncomment this following comment if you want to hide Style Switcher -->
+<style type="text/css">
+.style-switcher {
+	display:none !important;
+}
+</style>
+<!-- Load Main Enhancements Stylesheet border radius, transparency, shadows and such things -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style-enhance.css" type="text/css" media="screen" />
+<!-- End Load -->
+</head>
+<body>
+<!-- start top -->
+<div class="top">
+  <div class="full-width rel">
+    <div class="one-third">
+      <div class="logo"><a href="https://profitnext.net"><img src="/images/misc/logo.png" alt="ProfitNext.com" /></a></div>
+    </div>
+    <div class="two-third">
+      <div class="rel">
+        <div class="abs utility">Already registered? 
+           <% if "session[:superadmin]" %>
+           <a href="https://www.profitboohq.com/login/index">Sign in</a>
+           <% else %>
+           <a href="">Sign out</a>
+          <% end %>
+       </div>
+      </div>
+      <div class="mainmenu">
+         <ul>
+	    <li><a href="/home/index"><span>Home</span></a></li>
+	    <li><a href="/home/features"><span>Features</span></a></li>
+	    <li><a href="/home/pricing"><span>Pricing</span></a></li>
+	    <li class="active"><a href="/home/faq"><span>FAQ</span></a></li>
+	    <li><a href="/home/contact"><span>Contact</span></a></li>
+         </ul>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- end top -->
+<!-- start middle -->
+<div class="middle">
+  <!-- start inner -->
+  <div class="inner">
+    <!-- IE 6 Needs this -->
+    <div class="full-width">
+      <div class="two-third">
+        <h1>ProfitBooks Blog</h1>
+        <p>
+          <!-- faq accordion -->
+        </p>
+         <div class="accordion-faq">
+ 	  <table>
+	    <% @posts.each do |post| %>
+	     <tr>
+	       <td> <span class="current"><%= link_to post.title, post %></span><br/>
+	       <div class="pane" style="display:block"> <%= post.content %></div></td>
+	      </tr>
+	     <% end %>
+	  </table>
+         </div>
+        </div>      
+    <!-- end faq accordion -->
+    
+      <div class="one-third">
+        
+        <div class="outer-rounded-box">
+          <div class="inner-rounded-box-filled-grey clearfix">
+            <div class="icon-to-left"><img src="/images/icons/info_32.png" width="24" height="24" alt="" /></div>
+            <h3>Need more information?</h3>
+            <p>If you still can't make a decision and need more information about the product, please <span class="highlight2"> <a href="contact.html">get in touch with us</a></span>. We would be delighted to help you.</p>
+            <p>Give us an opportunity to address all your queries.</p>
+            
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <!-- end inner -->
+</div>
+<!-- end middle -->
+<!-- start footer -->
+<div class="footer">
+ <!-- <div class="footer-big">
+    <div class="full-width">
+      <div class="one-fourth footer-panel">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="features.html">ProfitBooks Features</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="contact.html">Help and Support</a></li>
+        </ul>
+      </div>
+      <div class="one-fourth footer-panel">
+        <h3>Latest Tweets</h3>
+        <div class="tweet">
+          <!--  -->
+       <!-- </div>
+      </div>
+      <div class="one-fourth footer-panel">
+        <h3>Useful Information</h3>
+        <ul>
+          <li><a href="#">Become a partner</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms and Conditions</a></li>
+        </ul>
+      </div>
+      <div class="one-fourth footer-panel">
+        <h3>Social Connect</h3>
+        <ul class="social">
+          <li><a href="#" class="twitter">Twitter</a></li>
+          <li class="last"><a href="#" class="facebook">Facebook</a></li>
+          <!--
+          <li><a href="#" class="flickr">Flickr</a></li>
+          <li class="last"><a href="#" class="youtube">YouTube</a></li>
+          -->
+         <!-- <li>
+            <!-- &nbsp; -->
+<!--          </li>
+          <li class="last">-->
+            <!-- &nbsp; -->
+         <!-- </li>
+        </ul>
+        <div class="clear"></div>
+        <div class="rel mt10">
+          <!-- Uncomment these for facebook and twitter Buttons, also edit URLs according to yours -->
+          <!--
+               <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
+               <a href="http://twitter.com/share?url=http%3A%2F%2Fwww.bogdanrosu.com%2Fthemeforest%2Fapptastik%2Fphp%2F" class="twitter-share-button">Tweet</a>
+
+               <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.bogdanrosu.com%2Fthemeforest%2Fapptastik%2Fphp%2F&amp;layout=button_count&amp;show_faces=false&amp;width=88&amp;action=like&amp;font=arial&amp;colorscheme=dark&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+                -->
+       <!-- </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>-->
+  <div class="footer-small">
+    <div class="full-width">
+      <div class="one-half left"> &copy; 2012 ProfitBooks.net. All rights reserved.&nbsp; <a href="/home/terms_of_service">Terms of service</a>&nbsp;&nbsp; <a href="/home/privacy_policy">Privacy policy</a></div>
+      
+      <div class="one-half right"> A product by <a href="http://thenextwave.in" target="_blank">The Nextwave Technologies</a>. </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<!-- end footer -->
+<!-- execute cufon for IE flickering -->
+<script type="text/javascript"> Cufon.now(); </script>
+<!-- end cufon execute -->
+<!-- Load google Analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27005400-1']);
+  _gaq.push(['_setDomainName', 'profitbooks.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- End Load google Analytics -->
+
+</body>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+</html>

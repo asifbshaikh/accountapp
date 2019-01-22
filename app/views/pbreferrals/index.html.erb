@@ -1,0 +1,46 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-3">
+       <h2><i class="icon-envelope-alt text"></i>Refer a friend</h2>
+        </div>
+        <div class="col-lg-9 m-t-large" align="right">
+       <%= link_to raw('<i class="icon-mail-reply"> </i>'), dashboard_index_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+            <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+         <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+             <div class="row">
+             <div class="col-lg-12">
+              <%= render :partial=>"form" %>
+              </div>
+              </div> 
+              <div class="row"><br/>
+              <header class="panel-heading">Referral Status</header>
+              <div class="col-lg-12">
+              <div class="table-responsive row">
+                <table id="pbreferrals" class="table table-striped m-b-none text-small" data-source ="<%= pbreferrals_url(:format => "json") %>" >
+                <thead>
+                  <%= render :partial => "header" %>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "footer" %>
+                </tfoot>
+              </table>
+              </div>
+              </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

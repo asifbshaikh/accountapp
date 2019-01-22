@@ -1,0 +1,81 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+       <h2><i class="icon-bar-chart text"></i>Employee Breakup</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+       <%= render :partial => "shared/payroll_report_dropdown" %>
+       <% if !Salaries.where(:company_id => @company.id).blank? %>
+       <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+       <% end%>
+       <% if !Salaries.where(:company_id => @company.id).blank? %>
+       <%= link_to_pdf params %>
+       <%= link_to_xls params %>
+       <%end%>
+       <p></p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+          <% if !Salaries.where(:company_id => @company.id).blank? %>
+            <%= render :partial => "employee_breakup_filter" %>
+            <% end%>
+            <% if Salaries.where(:company_id => @company.id).blank? %>
+             <%= render :partial => "shared/no_record" %>
+            <% else %>
+             <%= render :partial => "breakup_header" %>
+             <div class="table-responsive ">
+              <table class="table table-striped b-t text-small">
+              <thead>
+                <tr>
+                  <th>Payheads</th>
+                  <% @months.uniq!.each do |m|%>
+                  <th>
+                  <%= m.strftime("%b-%y")%>
+                  </th>
+                  <%end%>
+                  <th class="text-right">Total (<%= @company.currency_code %>)</th>
+               </tr>
+              </thead>
+                <tbody>
+                    <% @payheads.each do |p|%>
+                <% @total = 0 %>
+                     <tr>
+                      <td><a href="#" data-toggle="tooltip" data-placement="top" title="<%=p.payhead_name%>"><%= truncate("#{p.payhead_name}", :length =>10)%></a></td>
+                    <% @months.each do |m|%>
+
+                    <%str = "#{m.strftime("%Y-%m")}"+"-01"
+                    @date1 = Date.parse(str)%>  
+                      <% salary = Salaries.where("payhead_id = ? and user_id = ? and company_id = ? and month between ? and ?",p.id,@user_id,@company.id,@date1.beginning_of_month, @date1.end_of_month)%>
+                  <td align="right">
+                  <% if salary.blank?%>
+                   <%= (0.00)%>
+                   <%else%>
+                   <% salary.each do |s|%>
+                   <%= (s.amount)%>
+                   <% @total += s.amount %>
+                    <%end%>
+                    </td>
+                  <%end%>
+                <%end%>
+                <td align="right"><%= (@total) %></td>
+                   </tr>
+                  <%  end%>
+                </tbody>
+              </table>
+            </div>
+             <footer class="">
+              <%= render "shared/report_footer"%>
+            </footer>
+           <%end%>
+          </div>
+      </section>
+      </div>    
+    </div>
+  </section>
+</section>
+

@@ -1,0 +1,55 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Effective From</th>
+      <th>Opening Balance</th>
+      <th>Currency</th>
+      <th>Contact Number</th>
+      <th>Email</th>
+      <th>Website</th>
+      <th>GSTN id</th>
+      <th>PAN</th>
+      <th>TAN</th>
+      <th>Tax reg no</th>
+      <th>VAT TIN</th>
+      <th>CST Registration Number</th>
+      <th>CIN</th>
+      <th>Excise reg no</th>
+      <th>Service tax reg no</th>
+      <th>LBT registration</th>
+      <th>Credit days</th>
+      <th>Credit Limit</th>
+      <th>Address</th>
+      </tr>
+  </thead>
+  <tbody>
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= customer.name %></td>
+        <td><%= customer.account.start_date %></td>
+        <td><%= customer.account.opening_balance %></td>
+        <td><%= customer.currency %></td>
+        <td><%= customer.contact_number %></td>
+        <td><%= customer.email %></td>
+        <td><%= customer.website %></td>
+        <% if @company.country_id == 93 %>
+          <td><%= customer.gstn_id %></td>
+          <td><%= customer.pan %></td>
+        <%else%>
+          <td><%= customer.tax_reg_no %></td>
+        <%end%>        
+        <td><%= customer.tan %></td>
+        <td><%= customer.vat_tin %></td>
+        <td><%= customer.cst_reg_no %></td>
+        <td><%= customer.cin %></td>
+        <td><%= customer.excise_reg_no %></td>
+        <td><%= customer.service_tax_reg_no %></td>
+        <td><%= customer.lbt_registration_number %></td>
+        <td><%= customer.credit_days %></td>
+        <td><%= customer.credit_limit %></td>
+        <td><%=address(customer)%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

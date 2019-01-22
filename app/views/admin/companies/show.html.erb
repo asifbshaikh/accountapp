@@ -1,0 +1,202 @@
+  <section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-building"></i> <%= @company.name %> </h2>
+    </div>
+      <div class="col-lg-5 m-t-large" align="right">
+      <% if @company.lead_company.blank?%>
+      <button class="btn btn-success btn-lg" title="Add Activity" data-toggle="modal" data-target='#modal3'><span class="dropdown-label"><i class="icon-plus"> </i>Activity</span></button>
+      <% end %>
+      <button class="btn btn-white btn-lg" title="Email" data-toggle="modal" 
+      data-target='#modal2'><span class="dropdown-label"><i class="icon-envelope"></i>Email</span></button>
+      <% if @current_user.role == "Admin"%>
+    <%= link_to raw('<i class="icon-mail-reply"> </i>'), admin_companies_path, :class => 'btn btn-white btn-lg' %>
+    <% end %>
+      <p></p>
+    </div>  
+  </div>
+      
+      <div class="row">
+      <!-- Address section -->
+        <div class="col-sm-3">
+        <% if !@company.lead_company.blank?%>
+          <section class="panel bg-info">
+            <div class="panel-body">
+        <p><strong>Assigned To: </strong><%= best_in_place @company.lead_company.lead, :assigned_to, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :select, :collection => SuperUser::list_user_options, :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%></p>
+        <p><strong>Status: </strong>
+        <% if @company.lead_company.lead.stage == 2 %>
+        <%= best_in_place @company.lead_company.lead, :trial_status, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :select, :collection => [[1, "Interested"], [2, "Might buy"],[3, "Not Interested"],[4,"On Hold"],[5,"Junk Registration"]], :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%>
+        <% elsif @company.lead_company.lead.stage == 3 %>
+        <%= best_in_place @company.lead_company.lead, :paid_status, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :select, :collection => [[1, "Active"], [2, "Inactive"],[3, "Low Activity"],[4,"Expired"]], :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%>
+        <% end %>
+        </p>
+      </div><!-- panel body ends--> 
+      </section>
+        <% end %>
+          <section class="panel bg-light">
+            <div class="panel-body">
+        <p><strong><%= @owner.join(" , ") %></strong></p>
+        <p><i class="icon-phone"> </i> <%= @company.phone %></p>
+        <p><i class="icon-envelope-alt"> </i> <%= @company.users.first.email %> </p>
+        <p>Registered on <%= @company.activation_date.strftime("%d %b %Y") %></p>
+        <% days_remaining = (@company.subscription.renewal_date.to_date - Time.zone.now.to_date).to_i%>
+        <p>Days until expiry : <%= days_remaining < 0 ? "Expired" : days_remaining %> </p>
+        <p><%= @company.plan.display_name %> Plan, <%=@company.subscription.utilized_user_count  %> Users</p>
+        <p>URL: <%= @company.subdomain %> </p>
+        <p>Renewal date : <%= @company.subscription.renewal_date.to_date %></p>
+        <% if @company.subscription.status == "Paid"%>
+        <p><hr><strong>Payment Details</strong></p>
+        <p>Amount paid: <i class="icon-inr"></i> <%= @company.subscription.amount%></p>
+        <p>Date: <%= @company.subscription.updated_at.to_date.strftime("%d %b %Y")%></p>
+        <%elsif !@company.lead_company.blank? %>
+        <p><hr><strong>Other Details</strong></p>
+        <p> Source : <%= best_in_place @company.lead_company.lead, :source, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :textarea, :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%></p>
+        <p> Estimated Revenue : <%= best_in_place @company.lead_company.lead, :estimated_revenue, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :input, :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%></p>
+        <p>Plan Of Interest : <%= best_in_place @company.lead_company.lead, :plan_of_interest, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :select, :collection => [[1, "Professional"], [2, "SMB"],[3, "Enterprise"],[4,"CA Partner"],[5,"Sales & Distribution"] ], :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%></p>
+        <p> Probability % : <%= best_in_place @company.lead_company.lead, :probability, :path => "/admin/leads/#{@company.lead_company.lead.id}", :type => :input, :nil => '<span class ="variable_item"> Click here to add content </span>', :html_attrs => {:class=>"bg-focus form-control"}%></p>
+        <%end%>
+        
+      </div><!-- panel body ends--> 
+      </section>
+      </div><!-- Address section ends-->
+      
+    <div class="col-lg-9">
+    <div class="row">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li class="active"><a href="#all" data-toggle="tab"><i class="icon-list icon-large text-default"></i>Activities</a></li>
+                <li><a href="#emails" data-toggle="tab"><i class="icon-envelope icon-large text-default"></i>Emails</a></li>
+                <li><a href="#notes" data-toggle="tab"><i class="icon-edit icon-large text-default"></i>Notes</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+              <%= render "shared/flash_msg" %>              
+                <div class="tab-pane active" id="all">
+                
+        <div class="table-responsive">
+              <table class="table table-striped m-b-none text-small" id="company_activities">
+                <thead>
+                  <tr>
+                    <th>Due Date</th>
+                    <th>Time</th>
+                    <th>Activity</th>
+                    <th>Time spent</th>
+                    <th>Outcome</th>
+                    <th>Activity Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   <% @incomplete_lead_activities.each do |lead_activity| %>
+                  <tr>
+                    <td><%= lead_activity.next_followup.to_date unless lead_activity.next_followup.blank? %></td>
+                    <td><%= lead_activity.next_follow_up_time%></td>
+                    <td><%= Lead.get_activity(lead_activity.next_activity) unless lead_activity.next_activity.blank?%></td>
+                    <td><%= lead_activity.time_spent %></td>
+                    <td><%= lead_activity.outcome %></td>
+                    <td>
+                      <%= lead_activity.activity_status? ? "Completed" : "Pending" %>
+                    </td>
+                    </tr>
+                   <% end %>
+                   <% @complete_lead_activities.each do |lead_activity| %>
+                  <tr>
+                    <td><%= lead_activity.next_followup.to_date unless lead_activity.next_followup.blank? %></td>
+                    <td><%= lead_activity.next_follow_up_time%></td>
+                    <td><%= Lead.get_activity(lead_activity.next_activity) unless lead_activity.next_activity.blank?%></td>
+                    <td><%= lead_activity.time_spent %></td>
+                    <td><%= lead_activity.outcome %></td>
+                    <td>
+                      <%= lead_activity.activity_status? ? "Completed" : "Pending" %>
+                    </td>
+                    </tr>
+                   <% end %>
+                </tbody>
+              </table>
+            </div>
+      
+                </div><!--"all projects" tab ends -->
+        
+                <div class="tab-pane" id="emails">
+                  <div class="table-responsive">
+              <table class="table table-striped m-b-none text-small" id="company_emails">
+                <thead>
+                  <tr>
+                    <th width="25%">Email</th>
+                    <th>Subject</th>
+                    <th>Template</th>
+                    <th>Sent Time</th>
+                    <th>Sent By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   <% @company_emails.each do |company_email| %>
+                  <tr>
+                    <td>
+                    <%= company_email.email%></td>
+                    <td><%= company_email.subject %></td>
+                    <td><%= company_email.template_name%></td>
+                    <td><%= company_email.created_at %></td>
+                    <td><%= SuperUser.find(company_email.created_by).full_name %></td>
+                    </tr>
+                   <% end %>
+                </tbody>
+              </table>
+            </div>
+            </div>
+            <div class="tab-pane" id="notes">
+            <%= render :partial=>"company_notes"%>
+            </div>
+          </div>
+          </div>
+        </section>
+        <% if @current_user.role == "Admin"%>
+        <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li class="active"><a href="#update_company_status" data-toggle="tab"><i class="icon-edit icon-large text-default"></i>Update Company Status</a></li>
+                <li><a href="#update_renewal_date" data-toggle="tab"><i class="icon-edit icon-large text-default"></i>Update renewal date</a></li>
+                <li><a href="#upgrade_plan" data-toggle="tab"><i class="icon-edit icon-large text-default"></i>Upgrade Plan</a></li>
+                <li><a href="#reset_password" data-toggle="tab"><i class="icon-edit icon-large text-default"></i>Resend welcome email</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="update_company_status">
+                <%= render "update_status" %>
+                </div>
+        
+                <div class="tab-pane" id="update_renewal_date">
+                  <%= render "update_renewal" %>
+                </div>
+                <div class="tab-pane" id="upgrade_plan">
+                  <%= render "upgrade_plan"%>
+                </div>
+                <div class="tab-pane" id="reset_password">
+                  <%= render "reset_user_password"%>
+                </div>
+              </div>
+              </div>
+        </section>
+        <%end%>
+      </div> <!-- row ends -->
+        </div>
+        
+        
+
+    </div>    
+   </section>
+  </section>
+  <div id="modal1" class="modal fade">
+    <%= render "complete_company_activity" %>
+  </div>
+  <div id="modal2" class="modal fade">
+    <%= render "email_form" %>
+  </div>
+  <div id="modal3" class="modal fade">
+     <%= render "add_activity" %>
+  </div>
+  

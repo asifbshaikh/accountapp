@@ -1,0 +1,28 @@
+<tr class="gradeU even">
+  <% if @company.plan.is_inventoriable? %>
+    <td><label>Enable inventory for this account</label></td>
+    <td>	
+      <%=radio_button_tag 'sales[inventoriable]', '1',true,{ :tabindex=>'4'}  %>Yes &nbsp;
+     	<%=radio_button_tag 'sales[inventoriable]', '0', false,{ :tabindex=>'5'} %> No
+    </td>
+  <% else %> 
+    <%= hidden_field_tag "sales[inventoriable]",'0'%>
+  <% end %>
+</tr>
+<tr class="gradeU odd">
+  <td><label>Buying cost</label></td>
+  <td>
+  <%= text_field_tag 'sales[unit_cost]','',:maxlength => "8", :onkeydown => "return numbersOnly(event);",:size => 30, :class => "amount" %> 
+   </td>
+</tr><br/>
+<tr class="gradeU even">
+  <td><label>Selling cost</label></td>
+  <td>
+  <%= text_field_tag 'sales[sell_cost]','',:maxlength => "8", :onkeydown => "return numbersOnly(event);",:size => 30, :class => "amount" %> 
+   </td>
+</tr><br/>
+<tr class="gradeU odd">
+    <td><label>Description</label></td>
+    <td><%= text_area_tag 'sales[description]','' %> </td>
+</tr>
+

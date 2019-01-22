@@ -1,0 +1,10 @@
+                <tr>
+                  <td><%= channel.channel_name %></td>
+                  <td id="channel<%= channel.id%>"><%= channel.status %></td>
+                  <td>
+                  	<%= link_to '<i class="icon-trash"></i>'.html_safe, admin_channel_path(channel), :confirm => 'Are you sure?', :method => :delete%> |
+                    <%= link_to_if channel.active?, 'Mark inactive', {action: :inactive_channel, id: channel.id}, remote: true %>
+                    <%= link_to_if !channel.active?, 'Mark active', {action: :active_channel, id: channel.id}, remote: true %>
+                  </td>
+                </tr>
+

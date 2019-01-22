@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @webinar.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @webinar.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @webinar.phone %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @webinar.date %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @webinar.city %>
+</p>
+
+<p>
+  <b>Detail:</b>
+  <%= @webinar.detail %>
+</p>
+
+
+<%= link_to 'Edit', edit_webinar_path(@webinar) %> |
+<%= link_to 'Back', webinars_path %>

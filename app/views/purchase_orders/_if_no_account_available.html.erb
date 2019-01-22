@@ -1,0 +1,13 @@
+<% if @from_accounts.blank? && @to_accounts.blank?%>
+  <br /><div class="box box-warning">
+    Currently there are no vendor accounts and purchase accounts. Click to create  <%= link_to " vendor",{:action => :add_account, :transaction_type => 'vendor'},:id => 'add_new_model',:remote => true %> and <%= link_to "purchase",{:action => :add_account, :transaction_type => 'item'},:id => 'add_new_model',:remote => true %> account.
+  </div>
+<% elsif @from_accounts.blank? %>
+  <br /><div class="box box-warning">
+    Currently there are no vendor accounts.Click to create  <%= link_to " vendor",{:action => :add_account, :transaction_type => 'vendor'},:id => 'add_new_model',:remote => true %> account.
+  </div>
+<% elsif @to_accounts.blank? %>
+  <br /><div class="box box-warning">
+    Currently there are no purchase accounts.<%= link_to "purchase",{:action => :add_account, :transaction_type => 'item'},:id => 'add_new_model',:remote => true %> account.
+  </div>
+<% end %>

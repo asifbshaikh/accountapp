@@ -1,0 +1,66 @@
+<div id="container">
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+	 <%= render :partial => "shared/flash_msg"%>
+       
+      <% if @process_payrolls.blank?%>
+         <%= render :partial => "shared/no_record"%>
+      <% else %>
+	<table class = "display stylized full">
+	  <thead>
+             <tr>
+               <td>For month: <%= ProcessPayroll.get_month(params[:month])%></td>
+             </tr>
+             <tr>
+               <th>For employee</th>
+               <th>Attendance</th>
+             </tr>
+          </thead>
+          <tbody>
+             <% for pp in @process_payrolls %>
+             <tr>
+                <td><%= User.find(pp.user_id).full_name%></td>
+                <td><%= pp.attendance%></td>
+             </tr>
+             <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan =4>
+                <a href='<%="/process_payrolls/request_payroll"%>' class="btn btn-green">Process payroll</a>&nbsp;
+                <a href="/process_payrolls/month_view" class="btn btn-cancel">Back</a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+       <% end %>
+      </div><br />
+    </section>
+    <!-- End of Left column/section -->
+     <!-- Right column/section -->
+        <aside class="column width2"></br>
+          <a href="/process_payrolls/month_view" class="btn btn-special btn-green btn-green-index"><img src = "/images/white_icon/ic_list.png" alt = "list" class = "icon"/> View payrolls</a>
+        <div id="rightmenu">
+         <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+             <dd><%= link_to 'Help', "/#", :class=>"nyroModal" %></dd>
+             <dd class="last">This page displays the detailed payroll for selected month with all employees attendance.<br/></dd>
+         </dl>
+       </div><br />
+      </aside>
+       <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+
+</div>

@@ -1,0 +1,76 @@
+<div class="modal-dialog" id='prev_data' style="length:100%;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+      <h4 class="modal-title" id="myModalLabel">Find Transaction</h4>
+    </div>
+    <div class="modal-body">
+<div class="modal-body scroll-y scroll-x" style='max-height:400px; padding: 10px;'>
+<div class="errorSection1"></div>
+<% if @transactions.blank?%>
+  <div id="msg"><%= render :partial => "shared/no_record" %></div>
+  <div class="row">
+  <div class="col-lg-12">
+  <% if @transaction_type == "true"%>
+    <button id="receipt" class="btn btn-sm btn-info m-b-small"><i class="icon-plus"></i>Add Receipt</button>
+    <button id="other_income_div" class="btn btn-sm btn-info m-b-small"><i class="icon-plus"></i>Add Other Income</button>
+
+    <div id="add_other_income" style="display:none;">
+      <%= render :partial => "other_income_form"%>
+    </div>
+    <div id="add_receipt" style="display:none;">
+      <%= render :partial => "receipt_form"%>
+    </div>
+    <% else %>
+    <button id="payment" class="btn btn-sm btn-info m-b-small"><i class="icon-plus"></i>Add Payment</button>
+    <button id="other_expense" class="btn btn-sm btn-info m-b-small"><i class="icon-plus"></i>Add Expense</button>
+        <div id="add_payment" style="display:none;">
+          <%= render :partial => "payment_form"%>
+        </div>
+        <div id="add_other_expense" style="display:none;">
+          <%= render :partial => "other_expense_form"%>
+        </div>
+    <% end %>
+  </div>
+  </div>
+ 
+<%else%>
+<form action="select_transaction" method="post" class="" data-remote='true' enctype=multipart/form-data >
+<%= hidden_field_tag "id", @transaction_id %>
+
+  <table class='table table-striped b-t text-small'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Date</th>
+      <th>Credit</th>
+      <th>Debit</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @transactions.each do |transaction|%>
+      <tr>
+        <td><input type='radio' name='trans_id' data-amount="" data-customer="" value=<%= transaction.id%>></td>
+        <td><%= transaction.transaction_date%></td>
+        <td><%= transaction.debit%></td>
+        <td><%= transaction.credit%></td>
+        <td><%= transaction.description%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  
+  <div class="row">
+    <div class="col-lg-7 col-lg-offset-4">
+    <div class='save-btn'></div>
+        <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Submit</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+    </div>
+    </form>
+    <%end%>
+</div>
+</div>
+</div>
+</div>

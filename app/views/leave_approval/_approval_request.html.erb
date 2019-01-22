@@ -1,0 +1,21 @@
+<tr id="lr<%= approval_request.id%>">
+    <td ><%= link_to truncate(approval_request.reason_for_leave, :length => 40), approval_request %></td>
+    <td><%= approval_request.leave_type.leave_type %></td>
+    <td><%= approval_request.start_date.strftime("%d-%m-%Y") %></td>
+    <td><%= approval_request.end_date.strftime("%d-%m-%Y") %></td>
+    <td><%= approval_request.contact_during_leave %></td>
+    <td>
+      <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/leave_approval/<%= approval_request.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        
+        <li><%= link_to 'Approve', {:controller => :leave_approval, :action => :approve, :id => approval_request.id}, :remote => true %></li>
+        
+        <li><%= link_to 'Reject', edit_leave_approval_path(approval_request), :remote => true %></li>
+        
+      </ul>
+    </div>
+    </td>
+  </tr>

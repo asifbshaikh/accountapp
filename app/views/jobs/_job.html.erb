@@ -1,0 +1,7 @@
+  <tr>
+    
+    <td><%= link_to job.title, job, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+    <td><%= truncate(job.description, :length => 20) %></td>
+    <td><%= job.status %></td>
+    <td><%= link_to 'Delete', job, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>

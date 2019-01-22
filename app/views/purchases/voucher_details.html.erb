@@ -1,0 +1,50 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first "><br />
+     <div class=" column width6 first highlight"> 
+  <%= render :partial => "shared/flash_msg"%>
+        <div class="clearfix leading">
+          </div>
+          <div class="column width6 first">
+            <table  class="display stylized full" id="report" style="">
+              <thead>
+                <tr>
+                  <th width='30%'>Item</th>
+                  <th width='20%'>Unit Cost</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @purchase.purchase_line_items.each_with_index do |line_item, index| %>
+                  <tr>
+                    <td><%= line_item.product.name %></td>
+                    <td><%= line_item.unit_rate %></td>
+                    <td><%= line_item.quantity %>&nbsp; <%= link_to "Select warehouse","" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>&nbsp; 
+    </section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+     <aside class="column width2"><br />
+      
+        <a class="btn btn-special btn-green" href= "/purchases/new " ><img src ="/images/add.png" alt="Add new purchase" class ="icon" />Add new purchase</a>
+        <p>
+      <a href="/purchases" class="btn btn-special btn-gray"><img src = "/images/black_icon/ic_list.png" alt = "list" class = "icon"/> View purchases</a>
+        </p>     
+     </aside>
+    <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

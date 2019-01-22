@@ -1,0 +1,19 @@
+<tr id="row-<%= index %>-<%= pwd_index %>">
+	<td>	
+		<%= select_tag("purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][warehouse_id]", options_from_collection_for_select_with_data(@warehouses, :id, :name, purchase_warehouse_detail.warehouse_id), {:prompt=>"Type to select", :style => "width:300px;"}) %>
+		<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][_destroy]" %>
+		<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][company_id]", @company.id %>
+		<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][product_id]", purchase_warehouse_detail.product_id %>
+		<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][product_batch_id]", purchase_warehouse_detail.product_batch_id %>
+
+	</td>
+	<td>
+		<%= text_field_tag "purchase[purchase_line_items_attributes][#{index}][purchase_warehouse_details_attributes][#{pwd_index}][quantity]", purchase_warehouse_detail.quantity, :class=>"form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);" %>
+	</td>
+	<td>
+		<%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_warehouse_detail_row, :index => index, :pwd_index=>pwd_index},:class=> "btn btn-danger", :id => 'cancel', :remote => true%>
+	</td>
+</tr>
+<script>
+	$("#purchase_purchase_line_items_attributes_<%= params[:index] %>_purchase_warehouse_details_attributes_<%=params[:pwd_index]%>_warehouse_id").select2();
+</script>

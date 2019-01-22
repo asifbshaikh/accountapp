@@ -1,0 +1,39 @@
+<script>
+  $(document).ready(function(){
+// var payhead_type = 'Earning';
+	 cal();
+        $('table#salary_structure_line_items input:text').live('keyup', function(e){
+		cal();
+                e.preventDefault();
+	});
+	
+	$("table#salary_structure_line_items #cancel").live('click', function(e){
+		setTimeout(function(){cal();}, 1500);
+                e.preventDefault();
+	});
+	
+  });
+	function cal(){
+	var i = 0;
+	var total = 0;
+	$('table#salary_structure_line_items tbody tr').each(function(){
+		
+		var amount = 0;
+                   var selected = $(this).find('option:selected	');
+		  //alert(payhead);
+    if ($('table#salary_structure_line_items tbody tr:eq(' + i + ') #amount').val()) {
+			var amount = parseFloat($('table#salary_structure_line_items tbody tr:eq(' + i + ') #amount').val());
+			var payhead = $('table#salary_structure_line_items tbody tr:eq(' + i + ') #amount').attr('data-payhead_type');
+      if (payhead == 'Earnings'){
+			  total = total + amount;
+			}else{
+			  total = total - amount;
+			}
+			i++;
+		} 
+	});
+	$('input[name=total_paid]').val(total);
+	$('table#salary_structure_line_items span#total').text(total.toFixed(2));
+	$('table#salary_structure_line_items span#total').text(parseFloat($('input[name=total_paid]').val()).toFixed(2));
+	}
+</script>

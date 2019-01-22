@@ -1,0 +1,19 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title">Filter</h4></div>
+  <form action = '' class="form-horizontal" method="get" data-validate="parsley">
+    <div class="form-group"><br/>
+      <div class="col-lg-2"></div>
+      <% if @company.plan.enterprise_plan? && @current_user.owner? %>
+        <div class="col-lg-2">
+          <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), :include_blank => 'Select branch',:class =>"form-control")  %>
+        </div>
+      <% end %>
+      <div class="col-lg-2">
+        Balance sheet as on date<%= text_field_tag :balance_sheet_date, params[:balance_sheet_date], :placeholder => "As on date", :size => "8",:class =>"form-control" %>
+      </div>
+      <div class="col-lg-2">
+        <input type="submit" value="Search" class="btn btn-success"/>
+      </div>
+    </div>
+  </form>
+</div>

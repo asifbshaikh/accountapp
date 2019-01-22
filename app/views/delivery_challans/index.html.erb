@@ -1,0 +1,36 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file text"></i>Delivery Challans</h2>
+      </div>
+
+      <div class="col-lg-8 m-t-large" align="right">
+      <!--  <%= link_to raw('<i class="icon-plus"></i> Create Sales Order'), "sales_orders/new", :class =>'btn btn-success btn-lg' %> -->
+        <!--<%= link_to raw('<i class="icon-mail-reply"> </i>'), products_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>-->
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+             <%= render :partial => "shared/flash_msg"%>
+            <div class="table-responsive">
+            <table class="table table-striped b-t text-small" id="delivery_challans" data-source="<%= delivery_challans_url(:format => 'json') %>">
+              <thead>
+                <%= render "header"%>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+               <%= render "footer" %>
+              </tfoot>
+            </table>
+          </div> 
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,15 @@
+ <section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-10">
+          <h2><i class="icon-edit text"></i>EditCoupon</h2>
+      </div>
+      <div class="col-lg-2 m-t-large" align="right">
+      <%= link_to raw('<i class="icon-mail-reply"> </i>'), admin_coupons_path, :class => 'btn btn-white btn-lg' %>
+      </div>
+      <p></p>
+    </div><br/>
+    <%= render :partial=> "shared/flash_msg"%>
+    <%= render "form"%>
+  </section>
+</section>

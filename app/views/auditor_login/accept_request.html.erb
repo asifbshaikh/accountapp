@@ -1,0 +1,29 @@
+
+ <!-- End of Page content -->
+ <section id="content">
+    <div class="main padder">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 m-t-large">
+        <br>
+        <%= image_tag 'logo.png', :alt => 'Login to Profitbooks', :disposition => 'inline' %>
+        </p>
+          <section class="panel">
+            <header class="panel-heading text-center">
+              Accepting request for <%= @company.name %>
+            </header>
+            <div class="panel-body">
+         <%= form_tag :action => :accept_request, :html=>{:class=>"form-horizontal panel-body"} do %>
+             <%= render "shared/flash_msg"%>  
+         <%= hidden_field_tag 'company_id', @company.id %>
+         <%= hidden_field_tag 'token', @invitation_detail.token %>
+         <label class = "control-label-required"> Enter Password </label><br />
+         <%= password_field_tag 'password', nil, :class=> "form-control" %><br /><br />
+         <%= submit_tag 'Accept', :class => 'btn btn-success' %>
+         <%= link_to 'Decline', "/auditor_login/decline_request?token=#{params[:token]}", :class => 'btn btn-default' unless @invitation_detail.status_id == 2 %>
+       <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>

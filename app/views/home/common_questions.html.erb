@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ProfitBooks is an online accounting software for small businesses. It helps you manage invoicing, expenses, banking transactions, taxes and more. Start today!" />
+<meta name="keywords" content="accounting software, invoicing, expenses" />
+<title>Common Questions Regarding ProfitBooks. Know About Online Accounting, Data Security, Tally Migration, Payments.</title>
+
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href='<%= image_path "apple-icon.png"%>'/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial =>"zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial => "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Frequently asked questions.</h2>                
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+            <div class="twelve columns">
+                <div class="row">
+                  <div class="eight columns mobile-margin-top">
+                        <!-- begin of FAQ 1 -->
+                  <div class="ask">What is ProfitBooks?</div>
+                        <div class="question">
+                            <p>ProfitBooks is an online accounting and payroll management software for small businesses. It helps you organize your office finances and keeps track of all activities related to your business. It also complies with managerial accounting standards. It comes hides the complex accounting terminologies and presents a very easy to understand user interface which anyone in your organization can understand. </p><p>Since this is an online application, no software needs to be installed on your computer. All your financial data is kept securely on our servers rather than on your computer giving you access your data from anywhere, anytime. Even if your computer is damaged, lost, or stolen, your data is safe and secure.</p>
+                           <p>ProfitBooks aims to replace different softwares used in the office with one powerful application.</p>
+                                               
+                        </div>
+                        
+                        <!-- begin of FAQ 2 -->                            
+                      <div class="ask">What about data privacy and security?</div>
+                        <div class="question">
+                            <p>Your data is much safer at ProfitBooks than at your office or home computer. ProfitBooks is hosted on state of the art infrastructure with redundancy which means, if one site goes down, application will be accessible from another site automatically. Hourly backups are taken to protect the application data. We have team of IT experts who continuously monitor the servers.</p><p>ProfitBooks uses 256bit encryption which is similar to bank level security to protect the data transfer from hackers.We have also acquired SSL security certificate from leading authority COMODO. </p>
+                             <div class="clear"></div>
+                        </div>
+                        
+                        <!-- begin of FAQ 3 -->                            
+                      <div class="ask">Do you provide phone or email support?</div>
+                        <div class="question">
+                            <p>Of course we do! Our support is available on call from 9am to 7pm everyday throughout the year.</p>
+              <p> You can also send an email to support@profitbooks.net. If you are a registered user, you can contact us from the application itself by clicking on the '?' icon on the top menu bar.</p>
+              <p>We aim to respond queries within the same business day.</p>
+                        </div>
+                        
+                        <!-- begin of FAQ 4 -->                           
+                      <div class="ask">I want to migrate from Tally, can you help?</div>
+                        <div class="question">
+                            <p>Sure! We would love yo have you on board. Our support staff and experienced accountants can help you switch from Tally. Good decision by the way ;-)</p>
+                        </div>
+                        
+                        <!-- begin of FAQ 5 -->                      
+                      <!--div class="ask">How long I can use the free plan?</div>
+                        <div class="question">                       
+                        <p>You can use it as long as you want. You can upgrade anytime to the paid plans whenever you are ready.</p>
+                      </div-->
+                            <div class="clear"></div>
+                        
+                        
+                        <!-- begin of FAQ 6 -->                            
+                    <div class="ask">I don't want to pay on monthly/yearly basis, what are my options?</div>
+                      <div class="question">
+                          <p>In India, our banking rules do not allow merchants to charge credit cards automatically on monthly basis and it becomes very difficult for us to manually track and collect the payment on monthly basis. That’s why we collect payments on annual basis.</p>
+              <p>Based on your country, we provide good discounts on long terms plans (2yr, 3ys, 5yr). Please <a href="contact.html">get in touch with us.</a> for more details.</p>
+                           <div class="clear"></div>
+                      </div>
+                        
+                        
+                        <!-- begin of FAQ 6 -->                            
+                    <div class="ask">Am I bound to use ProfitBooks forever?</div>
+                      <div class="question">
+                          <p>ProfitBooks is a pay as you go service. So you are not bound by a contract or commitment to stay subscribed. If you decide to stop using the service, you can export your data and keep it.</p>
+                           <div class="clear"></div>
+                      </div>
+                        
+                        
+                        <!-- begin of FAQ 6 -->                            
+                    <div class="ask">Do you have any offline solution?</div>
+                      <div class="question">
+                          <p>We strongly believe that cloud accounting is the future. Doing business online has number of benefits like anytime anywhere access, data security, real-time synchronisation, etc.</p>
+              <p>Considering this, we only provide an online solution. Give it a try, we are confident that you would like it.</p>
+                           <div class="clear"></div>
+                      </div>
+                        
+                        <!-- begin of FAQ 6 -->                            
+                    <div class="ask">Do you offer to discounts to startups or NGOs?</div>
+                      <div class="question">
+                          <p>Yes! We love startups. If you business is less than 2yrs old, we offer 25% discount on Professional and SMB plans. Same applies to NGOs.</p>
+              <p>You will need to submit few necessary documents. Please contact us for more details.</p>
+                           <div class="clear"></div>
+                      </div>
+                                                
+                  </div>
+                    
+                    <div class="four columns">            
+                        <aside>
+                            <h5>Need more information?</h5>
+                            <ul class="advantage-list">
+                                <li>
+                                  <div class="general-icon2 img-left">
+                                        <span aria-hidden="true" class="icon-speech-bubble-left-2"></span>
+                                    </div>
+                                    <p>If you need more information about the product, please <a href="contact.html">get in touch</a> with us.We would be happy to help you.</p>
+                                </li>   
+                                <li>
+                                  <div class="general-icon2 img-left">
+                                        <span aria-hidden="true" class="icon-headphones"></span>
+                                    </div>
+                                    <p>Call us on <strong> +91 84 85 86 3000</strong> and talk to our friendly support team.</p>
+                                </li>      
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>        
+        </div>          
+         
+    </section>
+    <!-- content section end here -->
+    
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

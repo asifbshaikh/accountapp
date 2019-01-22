@@ -1,0 +1,63 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Expenses Report</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+       <!--  <a href="filter" class="btn btn-white btn-lg " id="use_filter"><i class="icon-filter"></i></a> -->
+        <% if !@expenses.blank?  %>
+         <%= link_to_pdf params %>
+         <%= link_to_xls params %>
+        <%end%>
+      </div>
+    </div>
+      <%= render "report_filter" %>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render "shared/flash_msg" %><br />
+           &nbsp;<span class="xxsmall light">Duration: <%= @start_date %> To <%= @end_date %></span>
+          <div class="table-responsive">
+            <table class="table table-striped b-t text-small">
+             <thead>
+                  <tr>
+                    <th class="text-left" width="7%">Sr. No.</th>
+                    <th class="text-center">Voucher number</th>
+                    <th class="text-center">Expense date</th>
+                    <th class="text-center">Expense</th>
+                    <th class="text-center">Paid From</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Created by</th>
+                    <th class="text-center">Amount</th>
+                  </tr>             
+             </thead>
+              <tbody>
+             <% sum = 0 %>
+              <% @expenses.each_with_index do | expense, index | %>
+                 <% sum += expense.total_amount %>
+               <tr>
+               <td align="center"><%= index+1 %></td>
+                <td><%= link_to expense.voucher_number, expense %></td>
+                <td><%= expense.expense_date.strftime("%d-%m-%Y") %></td>
+                <td><%= expense.expense_line_items[0].account.name%></td>
+                <td><%= truncate(expense.account.name, :length =>20) unless expense.account.blank? %></td>
+                <td><%=content_tag(:span, expense.status, :class => "label #{expense_status_badge expense.status}")%></td>
+                <td><%= expense.created_by_user %></td>
+                <td align="right"><%= format_currency expense.total_amount %></td>
+            </tr>
+               <% end %>
+                <tr><td colspan = 13 rowspan = 2 align=right>
+               <b>Total Expenses <%= format_currency sum %></b>
+              </td></tr> 
+              </tbody>
+              <tfoot>
+                <%= render :partial => "footer" %>
+              </tfoot>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

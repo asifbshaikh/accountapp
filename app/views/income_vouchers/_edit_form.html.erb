@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-sm-12">
+    <section class="panel">
+    <div class="panel-body">
+    <%= form_for @income_voucher,:html => {:class => "form-horizontal"} do |f| %>
+   <%= render 'shared/form_error', :object => @income_voucher %>          
+   
+        <%= render "income_vouchers/voucher_number", :f=> f %>
+          
+
+            <div class="row">
+              <div class="col-sm-2 text-right">
+                <label class="control-label control-label-required">
+                Money received from </label>
+              </div>
+              <div class="col-lg-3">
+              <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@other_income_from_accounts, :id, :name, @income_voucher.from_account_id), {:prompt=>"Type for select"}, {:style=>"width:200px;"} )%>
+              </div>
+               <div class="col-lg-3"><span id="other_income_from_acc_bal"></span></div>
+          </div>
+          
+          
+          <div class="row">
+          <div class="col-lg-2 text-right"><br />
+            <label class="control-label control-label-required">Deposit to account </label>
+          </div>
+          <div class="col-lg-3"><br />
+          <%= f.select(:to_account_id, options_from_collection_for_select_with_add_new(@other_income_to_accounts, :id, :name, @income_voucher.to_account_id), {:prompt=>"Type for select"}, {:style=>"width:200px;"} )%>
+          </div>
+           <div class="col-lg-3"><span id="other_income_to_acc_bal"></span></div>
+          </div>
+          <div class="row">
+             <div class="col-lg-2 text-right"><br/>
+             <%= f.label :Received_date,  :class=>"control-label-required"  %>
+             </div>
+             <div class="col-lg-3"><br/>
+              <%= f.text_field :income_date, :size => "10", :class => 'bg-focus form-control' %>
+             </div>
+          </div>
+        
+        <div class='row'>
+            <div class='col-lg-2 text-right'><br/>
+              <%= label_tag "amount", "Amount", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'><br/>
+              <%= f.text_field :amount, :size => "10", :onkeydown => 'return numbersOnly(event);',:maxlength => "18", :class=>'form-control bg-focus text-right' %>
+            </div>
+          </div>
+          
+
+
+<input type="hidden" name="source" id="source" value="income_edit"/>
+ <%= hidden_field_tag :voucher_id, @income_voucher.id %>
+<!---------------------------------------------->	  
+        
+ 	<%= render :partial => "#{@payment_detail.type.to_s.downcase.gsub(/\s+/, "")}_edit", :locals =>  {:a => f} %>
+     
+<!---------------------------------------------------------------->
+ 
+     <div class='row'>
+            <div class='col-lg-2 text-right'><br/>
+              <%= label_tag "description", "Description", :class=>'control-label' %>
+            </div>
+            <div class='col-lg-4'><br/>
+              <%= f.text_area :description, :rows => 3, :cols => 58, :class=>'form-control bg-focus' %>
+            </div>
+          </div>            
+          <div class="row">
+            <div class="col-lg-9 col-lg-offset-3"><br/>                      
+              <button type="submit" class="btn btn-success">Save</button>
+              <%= link_to 'Cancel', income_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+    <% end %>
+      </div>
+
+    </section>
+  </div>
+</div>
+
+    <div id='modal-other-income-to-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @other_income_to_account_heads, :transaction_type=>'contra' %>
+</div>
+<div id='modal-other-income-from-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @other_income_from_account_heads, :transaction_type=>'receipt' %>
+</div>

@@ -1,0 +1,96 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h2><i class="icon-file text"></i>Product Import</h2>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-lg-6">
+        <section class="panel">
+          <div class="panel-body">
+            <%= form_for ImportFile.new,:url => "/product_imports/upload", :html => {:onsubmit =>"return checkForm(this); return false;",:multipart => true, :class => "form-horizontal"} do |f| %>
+            <%= f.hidden_field :created_by, :value => @current_user.id %>
+            <%= f.hidden_field :company_id, :value => @company.id %>
+            <%= f.hidden_field :item_type, :value => 1 %>
+            <%= f.hidden_field :status, :value => 0%>
+          <div class="row">
+            <div class="col-lg-12">
+             <div class="col-lg-4">
+              <%= label_tag "select_file", "Select file", :class => "control-label-required"%>
+              </div>
+               <div class="col-lg-8">
+              <%= f.file_field :file, :class=>"btn btn-white", :onchange=>"check_file()" %>
+              </div>
+              </div>
+          </div><br>
+          <div class="col-lg-12 col-lg-offset-3">
+              <%= submit_tag "Import",:id => "import_file", :class => "btnsave btn btn-sm btn-success" %>
+          </div>
+            <% end %>
+          <div class="col-lg-12">
+          <p class="icon-lightbulb icon-large"><strong>Tips :</strong></p>
+          <ul>
+          <li>Please download sample file here. <a href="/file.csv"><u>Download</u></a></li>
+          <li>If product is not inventoriable then warehouse,quantity,batch no.,unit price and reorder level fields leave blank.</li>
+          <li>If product is not batch enabled then batch no. field leave blank.</li>
+          <li>If product is only sales item then fill sales price and income account. If product is reseller item then fill sales price and income account as well as purchase price and expense account. If product is purchase item then fill only purchase price and expense account.</li>
+          <li>Fill exact same name of warehouses,income accounts and expense accounts as per your ProfitBooks account. If the name not found in your account then the new warehouse or income account or expense account will create automatically.</li>
+          </ul>
+          </div>
+          </div>
+        </section>
+      </div>
+
+        <div class="col-lg-6">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <div class="row">
+              <div class="col-lg-6">
+              <strong>Uploaded files</strong>
+              </div>
+            </div>
+              <div class="table-responsive row">
+                <table class="table table-striped m-b-none text-small" id="product_imports" data-source="<%= product_imports_url(:format => 'json') %>">
+                <thead>
+                  <th>File Name</th>
+                  <th>Created Date</th>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+  <script type="text/javascript">
+  function check_file(){
+    str=document.getElementById('import_file_file').value.toUpperCase();
+    suffix=".CSV";
+    if(str.indexOf(suffix, str.length - suffix.length) == -1){
+    alert('File type not allowed,\nAllowed file: *.csv');
+    document.getElementById('import_file_file').value='';
+    }
+  }
+  function checkForm(f)
+{
+    if (f.elements['import_file_file'].value == "")
+    {
+        alert("Please select file !");
+        $(".btnsave").remove();
+        $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Import</button>");
+        return false;
+    }
+    else
+    {
+        f.submit();
+        return false;
+    }
+}
+</script>

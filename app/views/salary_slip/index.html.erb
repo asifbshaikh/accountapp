@@ -1,0 +1,63 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Salary Slip List</h2>
+    </div>
+    <div class="col-lg-5 m-t-large pull-right" align="right">
+     <a class="btn btn-white btn-lg" title="Back" href="/users"><i class="icon-group"> </i>Employees</a>
+    <p></p>
+    </div>
+  </div>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+            
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                    <tr>
+                       <th width="10%">Sr. No.</th>
+                       <th width="15%">Employee No.</th>
+                       <th>Employee name</th>
+                       <th>Designation</th>
+                       <th>Joining Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% i = 1 %>
+                    <% @users.each do |user| %>
+                    <tr>
+                   <td><%= i %></td>
+                    <% unless user.user_salary_detail.blank? %>
+                   <td><%= user.user_salary_detail.employee_no.blank? ? "Not available" : user.user_salary_detail.employee_no %></td>
+                   <td><%= link_to user.full_name, "/salary_slip/detail?user_id=#{user.id}" %></td>
+                   <td><%= user.designation.title unless user.designation.blank? %></td>
+                   <td><%= user.user_salary_detail.date_of_joining unless user.user_salary_detail.date_of_joining.blank? %></td>
+                   <% else %>
+                   <td colspan="4">  Work Details for <%= link_to user.full_name, "/salary_slip/detail?user_id=#{user.id}" %> not available. Please update from user profile or <%= link_to "click", edit_user_path(user.id)%> here to add work info.</td>
+                    </tr>
+                    <% end %>
+                    <% i+=1 %>
+                    <% end %>
+                </tbody>
+              </table>
+              
+            </div>
+            <footer class="panel-footer">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      
+        </div>    
+</div>
+</section>
+</section>
+
+   

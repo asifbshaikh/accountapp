@@ -1,0 +1,29 @@
+<tr valign="top">
+  <td><%= line_item_details.item_name %><br/>
+      <% if line_item_details.product.inventory? && line_item_details.purchase.gst_purchase? %>
+      HSN: 
+      <% elsif !line_item_details.product.inventory? && line_item_details.purchase.gst_purchase %>
+      SAC: 
+      <% end %>
+      <%= "#{line_item_details.product.hsn_code}" if line_item_details.product.hsn_code.present? %>
+  </td>
+  <td ><%= line_item_details.description%></td>
+  <td align="right"><%= number_with_precision line_item_details.quantity, :precision=>2 %> <%= line_item_details.product.unit_of_measure %></td>
+  <td class="text-right"><%= number_with_precision line_item_details.item_cost, :precision=>(line_item_details.item_cost == line_item_details.item_cost.round(2) ? 2 : 4) %></td>
+  <td align="right"><%= number_with_precision line_item_details.discount_percent, :precision=>2  %></td>
+ <td align="right"><%= format_amount(line_item_details.amount)  %> </td>
+ 
+ 
+<!-- <td align="right" data-toggle="modal" data-target=<%="#myModal#{line_item_details.id}" %> id="my" >
+         <!--  <%= link_to "Add ITC Details" %> -->
+        <!--  <button type="button" class="btn btn-link"><i class="icon-edit">Add ITC Details</i></button>
+ </td> --> 
+ 
+</tr> 
+
+<div id=<%="myModal#{line_item_details.id}"%> class="modal fade" role="dialog" value="line_item_details.id">
+  <div class="modal-dialog">
+  <%= render "add_itc_details",:purchase_line_items => line_item_details,
+            :collection => line_item_details  %>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<section id="content">
+    <section class="main padder">
+
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Stock Wastage Register</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+    <% if !@stock_wastage_vouchers.blank?  %>
+    <%= link_to_pdf params %>
+    <%= link_to_xls params %>
+     <%end%>
+    <p></p>
+    </div>
+  </div>
+
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+              <%= render :partial => "filter" %>
+            <% if @stock_wastage_vouchers.blank? %>
+                    <br />
+                    <%= render :partial => "shared/no_record" %>
+                    <% else %>
+                    <%= render :partial => "header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Voucher number</th>
+                    <%= render :partial=> "custom_field_header"%>
+                    <th><%= @company.label.warehouse_label %></th>
+                    <th>Product</th>
+                    <th>Particulars</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% total_quantity = 0
+                    @stock_wastage_vouchers.each do |swv| %>
+                    <% quantity = 0
+                    swv.stock_wastage_line_items.each do |line_item| %>
+                  <tr>
+                    <td><%= swv.voucher_date.to_date %></td>
+                    <td><%= link_to "#{swv.voucher_number}", swv %></td>
+                    <% if !@custom_field.blank? %>
+
+                    <% if (!@custom_field.custom_label1.blank? && !swv.custom_field1.blank?) || (!@custom_field.custom_label1.blank? && swv.custom_field1.blank?) %>
+                     <td><%= swv.custom_field1 %></td>
+                    <% end %>
+
+                    <% if (!@custom_field.custom_label2.blank? && !swv.custom_field2.blank?) || (!@custom_field.custom_label2.blank? && swv.custom_field2.blank?) %>
+                    <td><%= swv.custom_field2 %></td>
+                    <% end %>
+
+                    <% if (!@custom_field.custom_label3.blank? && !swv.custom_field3.blank?) || (!@custom_field.custom_label3.blank? && swv.custom_field3.blank?) %>
+                     <td><%= swv.custom_field3 %></td>
+                    <% end %>
+                    <% end %>
+                    <td><%= swv.warehouse.name %></td>
+                    <td><%= line_item.product.name %></td>
+                    <td><%= line_item.reason %></td>
+                    <td align="center"><%= line_item.quantity %></td>
+                    </tr>
+                    <% quantity += line_item.quantity %>
+                    <% end %>
+                    <% total_quantity += quantity %>
+                    <% end %>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <% if !@custom_field.blank? %>
+                    <% if !@custom_field.custom_label1.blank?  %>
+                    <td></td>
+                    <% end %>
+                    <% if !@custom_field.custom_label2.blank?  %>
+                    <td></td>
+                    <% end %>
+                    <% if !@custom_field.custom_label3.blank?  %>
+                    <td></td>
+                    <% end %>
+                    <% end %>
+                    <td align="center"><b>Total Quantity</b></td>
+                    <td class = 'border_down'align="center">
+                    <b><%= total_quantity %></b>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="row">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>
+</div>
+</section>
+</section>
+
+

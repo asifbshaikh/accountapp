@@ -1,0 +1,3 @@
+$(".row<%= params[:index].to_i - 1 %>").after("<%= escape_javascript render('new_row',{:index => params[:index]}) %>");
+$(".link_row<%= params[:index].to_i - 1%>").remove();
+$(".row<%= params[:index] %>").after("<%= escape_javascript render('add_row_link',{:index => params[:index]}) %>");

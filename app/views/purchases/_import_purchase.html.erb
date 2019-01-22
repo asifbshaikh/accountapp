@@ -1,0 +1,31 @@
+
+   <div class="col-lg-12 col-lg-offset-4">
+               <table class="table table-bordered b-t" id="export_invoice_items">
+               <thead>
+                <tr>
+                  <th>
+                   <label>Bill of Entry Number</label>
+                  </th>
+                  <th ><label>Bill of value </label></th>
+                  <th><label>Bill of Entry Date</label></th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr >
+            <td >
+          <input class="bg-focus form-control" id="purchase_bnum" name="purchase[boe_num]" size="30" style="width: 120px;" value="<%= @purchase.boe_num %>" autocomplete="off"  onkeydown ="return numbersOnly(event);" maxlength = "7">
+            </td>
+            <td>
+            <div class="col-lg-5">
+        <input class="bg-focus form-control" id="purchase_bvalue" name="purchase[boe_value]" size="30" style="width: 120px;" value="<%= @purchase.boe_value %>" autocomplete="off"  onkeydown ="return numbersOnly(event);" maxlength = "7">
+        </div>
+             </td>
+            <td>
+                 <input class="bg-focus form-control" id="purchase_bdate" name="purchase[boe_date]" size="30" style="width: 120px;" autocomplete="off" type="text" value="<%= @purchase.boe_date %>">
+            </td>
+          </tr>
+              </tbody>
+            </table>
+            </div>
+
+ 

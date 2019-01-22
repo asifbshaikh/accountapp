@@ -1,0 +1,31 @@
+<h1>Listing custom_fields</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Voucher type</th>
+    <th>Custom label1</th>
+    <th>Custom label2</th>
+    <th>Custom label3</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @custom_fields.each do |custom_field| %>
+  <tr>
+    <td><%= custom_field.company_id %></td>
+    <td><%= custom_field.voucher_type %></td>
+    <td><%= custom_field.custom_label1 %></td>
+    <td><%= custom_field.custom_label2 %></td>
+    <td><%= custom_field.custom_label3 %></td>
+    <td><%= link_to 'Show', custom_field %></td>
+    <td><%= link_to 'Edit', edit_custom_field_path(custom_field) %></td>
+    <td><%= link_to 'Destroy', custom_field, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Custom field', new_custom_field_path %>

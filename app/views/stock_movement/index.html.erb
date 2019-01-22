@@ -1,0 +1,104 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+   <section class="column width8 first"><br/>
+      <%= render :partial=>"filter" %>
+      <div class='highlight'>
+           <% if @products.blank? %>
+              <%= render :partial=>"shared/no_record"%>
+           <% else %>
+           <%= render :partial => "header" %><br />
+           <table class = "zebra" border = 0 align = center width=100% >
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Product</th>
+                  <th align="center">Unit of Measurement</th>
+                  <th align="center">Opening Stock</th>
+                  <th align="center">Stock Inward</th>
+                  <th align="center">Stock Outward</th>
+                  <th align="center">Closing Stock</th>
+                  <th align="center">Reorder Level</th>
+                  <!--<th align="center">Value(Based on Avg. Cost)</th>-->
+                 </tr>
+              </thead>
+              <tbody>
+                <% @products.each_with_index do |product, index|%>
+                <tr>
+                  <td><%= index+1%></td>
+                  <td>
+                   <b><%= product.name %></b>
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td><%= stock.warehouse.name %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b>Total</b></td></tr>
+                    </table>
+                   </td>
+                  <td align="center"><%= product.unit_of_measure%></td>
+                  <td align="center" >
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td><%= stock.opening_stock %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b><%= product.stocks.sum(:opening_stock)%></b></td></tr>
+                    </table>
+                  </td>
+                  <td align="center" >
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td>
+                         <%= stock.inward_stock(params, @company, @current_user, @financial_year) %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b></b></td></tr>
+                    </table>
+                  </td>
+                  <td align="center" >
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td>
+                        <%= stock.outward_stock(params, @company, @current_user, @financial_year) %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b></b></td></tr>
+                    </table>
+                  </td>
+                  <td align="center" >
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td>
+                        <%= stock.closing_stock %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b><%= product.stocks.sum(:closing_stock)%></b></td></tr>
+                    </table>
+                  </td>
+                  <td align="center"><%= product.reorder_level %></td>
+                    <!-- <td></td> -->
+                </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="5"></td>
+                </tr>
+              </tfoot>
+           </table><hr>
+           <%= render :partial => "shared/report_footer" %>
+          <% end %>
+       </div><br/>
+     </section>
+        <!-- End of Left column/section -->
+    </div>
+    <!-- End of Wrapper -->
+</div>

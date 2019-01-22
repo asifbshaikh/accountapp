@@ -1,0 +1,76 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+					<%= render :partial => "shared/no_record" %>
+				<% else %>
+			<% if true %>
+			<p align="right">
+			<a href="/vertical_balance_sheet/index.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	<a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+			<% end %>
+			<div class='highlight'>
+				<div id='report_header'>
+					<div class="header-left">
+						<span class="large"><%= @page_name%></span>
+						<br />
+						<span class="xxsmall light">1Apr2011 to 31March2012</span> 
+					</div>
+				</div>
+				<br>
+				
+				<table class = "zebra-sriped"  border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width5'><span class='char_spacing'>Particulars</span></th>
+							<th align="right" colspan="2">  1-Apr-2011 to 31-Mar-2012</th>
+						</tr>
+						</head>
+						<tbody>
+							<tr><td><b><u><span class = 'char_spacing'>Sources of Fund :</span></u></b></td><td></td><td></td></tr>
+							<tr><td><b>Capital Account</b></td><td></td><td align="right"><b><%= format_currency @total_capital_amount %></b></td></tr>
+							<tr><td><b>Profit and Loss Accounts</b></td><td></td><td align="right"><b><%= format_currency(@nett_profit) %></b></td></tr>
+							<tr><td><b>Loan Accounts</b></td><td></td><td align="right"><b><%= format_currency(@total_loan_amount) %></b></td></tr>
+							<tr><td><b>Secured Loan Accounts</b></td><td></td><td align="right"><b><%= format_currency(@total_secured_loan_amount) %></b></td></tr>
+							<tr><td><b>Unsecured Loan Accounts</b></td><td></td><td align="right"><b><%=  format_currency(@total_unsecured_loan_amount)%></b></td></tr>
+							<tr><td><b>Sundry Creditors</b></td><td></td><td align="right"><b><%= format_currency @total_sundry_creditor_amount %></b></td></tr>
+							<tr><td><b>Duties and Taxes</b></td><td></td><td align="right"><b><%= format_currency @total_duties_and_taxes_amount %></b></td></tr>
+							<tr><td><b>Provisions</b></td><td></td><td align="right"><b><%= format_currency @total_provision_amount %></b></td></tr>
+							<% if @total_suspense_amount > 0 %>
+							<tr><td><b>Suspense Accounts</b></td><td></td><td align="right"><b><%= format_currency @total_suspense_amount %></b></td></tr>
+							<% end %>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td></td><td class='border_down border_up'align="right"><b><%= format_currency(@total_liabilities) %></b></td></tr>
+							<tr><td><b><u><span class = 'char_spacing'>Application of Fund :</span></u></b></td><td></td><td></td></tr>
+							<tr><td><b>Fixed Assets</b></td><td></td><td align="right"><b><%= format_currency(@total_fixed_asset_amount) %></b></td></tr>
+							<tr><td><b>Investments</b></td><td></td><td align="right"><b><%= format_currency(@total_investment_amount) %></b></td></tr>
+							<tr><td><b>Bank Accounts</b></td><td></td><td align="right"><b><%= format_currency(@total_bank_amount) %></b></td></tr>
+							<tr><td><b>Cash Accounts</b></td><td></td><td align="right"><b><%= format_currency(@total_cash_amount) %></b></td></tr>
+							<tr><td><b>Sundry Debtors</b></td><td></td><td align="right"><b><%= format_currency(@total_sundry_debtor_amount) %></b></td></tr>
+							<tr><td><b>Deposits</b></td><td></td><td align="right"><b><%= format_currency(@total_deposit_amount) %></b></td></tr>
+							<tr><td><b>Loans and Advances</b></td><td></td><td align="right"><b><%= format_currency(@total_loan_and_advance_amount) %></b></td></tr>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td></td><td class='border_down border_up'align="right"><b><%= format_currency(@total_assets) %></b></td></tr>
+							<% if @total_suspense_amount < 0 %>
+							<tr><td><b>Suspense Accounts</b></td><td></td><td align="right"><b><%= format_currency @total_suspense_amount %></b></td></tr>
+							<% end %>
+						</tbody>
+						<tfoot>
+							
+						</tfoot>
+				</table>
+				
+				<hr>
+				<%= render :partial => "shared/report_footer" %>
+			</div>
+			<% end %>
+		</section>
+		&nbsp;&nbsp;
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+ 

@@ -1,0 +1,118 @@
+<div class="row">
+<%= form_for @branch, :html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @branch %>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Basic Information</div>
+    <br>
+ <div class="form-group">
+  <div class="col-lg-3 col-lg-offset-3">
+    
+     <%= f.label :name, :class => 'control-label-required' %>
+    
+    
+     <%= f.text_field :name, :class=>"bg-focus form-control" %>
+    
+  </div>
+  <div class="col-lg-3">
+
+      <%= f.label :phone, :class=>"control-label" %>
+    
+
+    <%= f.text_field :phone,:class=>"bg-focus form-control", :onkeydown => "return numbersOnly(event);", :maxlength => 15%>
+    
+  </div>
+  </div>
+  <div class="form-group">
+  <div class="col-lg-3 col-lg-offset-3">
+    
+      <%= f.label :fax, :class=>"control-label" %>
+   
+    <%= f.text_field :fax,:class=>"bg-focus form-control", :onkeydown => "return numbersOnly(event);", :maxlength => 15 %>
+  </div>
+ </div>
+ </div>
+
+
+
+  <%= f.fields_for :address do |a| %>
+  
+   <div class="panel panel-default">
+    <div class="panel-heading">Address Deatils</div>
+    <br>
+  <div class="form-group">
+   <div class="col-lg-3 col-lg-offset-3">
+    
+      <%= a.label :address_line1, :class=>"control-label" %>
+    
+      <%= a.text_field :address_line1,:class=>"bg-focus form-control" %>
+  </div>
+  <div class="col-lg-3 ">
+      <%= a.label :address_line2, :class=>"control-label" %>
+     <%= a.text_field :address_line2,:class=>"bg-focus form-control" %>
+    
+  </div>
+  </div>
+  <div class="form-group">
+  <div class="col-lg-3 col-lg-offset-3">
+    
+      <%= a.label :country, :class=>"control-label" %>
+      
+      <%= a.text_field :country,:class=>"bg-focus form-control" %>
+    
+  </div>
+    <div class="col-lg-3 ">
+     
+      <%= a.label :state, :class=>"control-label" %>
+      
+     
+       <%= a.text_field :state,:class=>"bg-focus form-control" %>
+     
+    </div>
+    </div>
+     <div class="form-group">
+    <div class="col-lg-3 col-lg-offset-3">
+      
+       <%= a.label :city, :class=>"control-label" %>
+      
+      <%= a.text_field :city,:class=>"bg-focus form-control" %>
+      
+    </div>
+    <div class="col-lg-3 ">
+    
+      <%= a.label :postal_code, :class=>"control-label" %>
+    
+      
+      <%= a.text_field :postal_code,:maxlength=>6,:class=>"bg-focus form-control" , :onkeydown => "return numbersOnly(event);" %>
+    
+     </div>
+  </div>
+  
+  <% end %>
+
+    
+    
+     
+<div class="panel panel-default">
+    <div class="panel-heading">Tax Information</div>
+    <br>
+  <div class="form-group">
+  <div class="col-lg-3 col-lg-offset-3">
+      <%= f.label :GSTN, "GSTN ID",:class=>"control-label" %>
+      <%= f.text_field :gstin,:class=>"bg-focus form-control" %>
+    </div>
+ </div>
+  </div>
+  </div>
+
+   
+
+      <div class="form-group">
+      <div class="col-lg-7 col-lg-offset-5">        
+        <%= f.submit 'Save', :class=>"btn  btn-success" %>
+        <a href="/settings/show#branch" class="btn btn-default">Cancel</a>
+      </div>
+      </div>
+</div>
+</div>
+<% end %>

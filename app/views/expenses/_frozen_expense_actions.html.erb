@@ -1,0 +1,11 @@
+<div class="btn-group">
+  <%= link_to raw('<i class="icon-edit"> </i> Edit'), edit_expense_path(@expense), :class => 'btn btn-info btn-lg' %>
+  <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span><i></i>
+  </button>
+  <ul class="dropdown-menu">
+    <li><%= link_to raw('<i class="icon-trash"> </i>Delete this expense'), expense_path(@expense), :method => "delete", :confirm => "Are you sure?" %></li>
+    <li class="divider"></li>
+    <li><%= copy_button("Copy Into New", "/expenses/copy_expense?id=#{@expense.id}") %></li>
+  </ul>
+</div>

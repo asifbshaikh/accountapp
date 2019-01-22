@@ -1,0 +1,58 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class="column width6 first "><br />
+      <div class="highlight"> 
+        <%= render :partial => "shared/flash_msg"	%>
+          <!--    <div id='user_info_div'><a href=""><span class='basic_info'>Basic Info</span></a></div> -->
+          <table class="display stylized" id="act_details">
+            <thead>
+              <tr>
+                <th colspan="2"> Basic Info</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label>Username:</label></td>
+                <td><%= @auditor.username %></td>
+                
+              </tr>
+              <tr>
+                <td><label>Full name:</label></td>
+                <td><%= @auditor.full_name %></td>
+                 
+              </tr>
+              <tr>
+                <td><label>Role</label></td>
+                <td>Auditor</td>
+               </tr>
+          </tbody>
+
+        </table>
+      
+        <!-- <div class="action">
+        <%= link_to 'Edit Profile', edit_auditor_path(@auditor),{:class=>"btn btn-green" } %>&nbsp;
+        <a href="/users" class="btn btn-gray">Back</a>
+        </div> -->
+      </div></br>
+    </section>
+    <!-- Right column/section -->
+	  <aside class="column width2"><br/>
+        <a href= <%= edit_auditor_path(@auditor) %> class="btn btn-special btn-green "><img src ="/images/edit.png" alt ="Edit profile" class ="icon" /> Edit Profile</a>
+	     <!-- <div id="rightmenu">
+	         <dl class="first">
+	           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+	            <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>
+	             <dd class="last">If you are a new user, you should read "Getting started"</dd>
+	         </dl>
+	       </div>--><br />
+	    </aside>
+	   <!-- End of Right column/section -->
+    </div>
+</div>

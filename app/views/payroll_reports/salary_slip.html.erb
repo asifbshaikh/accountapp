@@ -1,0 +1,161 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<br />
+			<%= render :partial => 'filter'%>
+			<br>
+			<% if @salaries.nil? || !@salaries.blank?%>
+			<p align="right">
+				<a href=<%= "/payroll_reports/salary_slip.pdf?month=#{params[:month]}&year=#{params[:year]}" %> class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+				<a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+			</p>
+			<br />
+			<div class='highlight'>
+				<div id='report_header'>
+					<span class='company_name'><%= @company.name %></span>
+					<br>
+					<span class='report_title'><u>Salary Slip</u></span>
+					<br>
+					<span class='report_month'><%= (params[:month].nil?)? @months[Time.zone.now.to_date.month] : @months[params[:month].to_i]%>-<%= (params[:year].nil?)? Time.zone.now.to_date.year : params[:year]%></span>
+				</div>
+				<hr>
+				<div class='title_name' align=center>
+					<%= @current_user.first_name  %> <%= @current_user.last_name%>
+				</div>
+				<div class='width4 left'>
+					<table class='zebra-sriped' width=100% border=0>
+						<thead>
+							<tr>
+								<th colspan=2>Personal Details</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="width1"> Employee No. </td>
+							<td><b>: <%= @current_user.id %></b></td>
+						</tr>
+						<tr>
+							<td> Designation </td>
+							<td><b>: <% if !@designation.nil?||!@designation.blank? %> 
+							             <span class = 'light'><i>Not available</i></span> 
+							         <% else %>
+							             <%= Designation.find(@current_user.designation_id).title %>
+							        <% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Location </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.work_location %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Date of Joining </td>
+							<td> <%if @user_salary_details.nil? %> <b>: <span class='light'><i>Not available</i></span></b> <% else %> <b>: </b><%= @user_salary_details.date_of_joining %></b>
+							<% end %> </td>
+						</tr>
+					</table>
+				</div>
+				<div class='width4 right'>
+					<table class ='zebra-sriped' width=100% >
+						<thead>
+							<tr>
+								<th colspan=2>Bank Details</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="width1"> Bank Details </td>
+							<td><b>:<%=(@user_salary_details.bank_name)? @user_salary_details.bank_name : ''%></b></td>
+						</tr>
+						<tr>
+							<td> Income Tax No.(PAN) </td>
+							<td> <%if @user_salary_details.PAN %> <b>: <%= @user_salary_details.PAN %></b> <% else %> <b>: <span class='light'><i>Not available</i></span></b> <% end %> </td>
+						</tr>
+						<tr>
+							<td> PF Account No. </td>
+							<td> <%if @user_salary_details.PF_account_number %> <b>: <%= @user_salary_details.PF_account_number %></b> <% else %> <b>: <span class='light'><i>Not available</i></span></b> <% end %> </td>
+						</tr>
+						<tr>
+							<td> ESI Number </td>
+							<td> <%if @user_salary_details.EPS_account_number %> <b>: <%= @user_salary_details.EPS_account_number %></b> <% else %> <b>: <span class='light'><i>Not available</i></span></b> <% end %> </td>
+						</tr>
+					</table>
+				</div>
+				<table class = "zebra-sriped" border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th> Earnings </th>
+							<th align="right"> Amount </th>
+							<th> Deductions </th>
+							<th align="right"> Amount </th>
+						</tr>
+						</head>
+						<tbody>
+							<% for i in 0..(@count - 1) %>
+							<tr>
+								<td><%= (!@earning_arr[i].nil?)? @earning_arr[i] : '' %></td><td align="right"><%= (!@earning_amount_arr[i].nil?)? format_currency(@earning_amount_arr[i]) : '' %></td>
+								<td><%= (!@deduction_arr[i].nil?)? @deduction_arr[i] :'' %></td><td align="right"><%= (!@deduction_amount_arr[i].nil?)? format_currency(@deduction_amount_arr[i]) : '' %></td>
+							</tr>
+							<% end %>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>
+								<hr>
+								<b>Total Earning Amount</b>
+								<hr>
+								</td>
+								<td align="right">
+								<hr>
+								<b><%= format_currency(@total_earning) %></b>
+								<hr>
+								</td>
+								<td>
+								<hr>
+								<b>Total Deduction Amount</b>
+								<hr>
+								</td>
+								<td align="right">
+								<hr>
+								<b><%= format_currency @total_deduction %></b>
+								<hr>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td><b>Net Amount</b>
+								<hr>
+								</td>
+								<td align="right"><b><%= format_currency(@total_earning - @total_deduction) %></b>
+								<hr>
+								</td>
+							</tr>
+						</tfoot>
+				</table>
+				<br>
+				<p>
+					Amount<span class = 'light'> in words</span>
+				</p>
+				<p>
+					INR TWELW THOUSAND THREE HUNDRES FORTYFIVE
+				</p>
+				</table>
+				<p align=right>
+					Authorised Signatory
+				</p>
+				<hr>
+				<p>
+					22 United apartment,2407 East street,camp, Pune(MH. pin:411001
+				</p>
+			</div>
+			<% else %>
+			<%= render :partial => "shared/no_record" %>
+			<% end %>
+		</section>
+		&nbsp;&nbsp; <!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

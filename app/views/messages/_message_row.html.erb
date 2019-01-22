@@ -1,0 +1,10 @@
+<% @messages.each do |message| %>
+<tr class="gradeB">
+  <td class="title" colspan="3">
+	   <a href="#" class="nyroModal"><%= link_to truncate(message.subject, :length => 20) ,message_path(message) %></a>
+	</td>
+	<td><%= truncate(message.description, :length => 20) %></td>
+  <td><%= message.created_at  %></td>
+  <td><%= message.created_user %></td>
+</tr>
+ <% end %>			   

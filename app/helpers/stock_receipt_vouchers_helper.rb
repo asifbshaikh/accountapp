@@ -1,0 +1,2 @@
+module StockReceiptVouchersHelper
+end

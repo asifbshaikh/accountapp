@@ -1,0 +1,29 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Purchase Orders</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= link_to "<i class='icon-plus'></i> New Purchase Order".html_safe, new_purchase_order_path, :class => 'btn btn-success btn-lg' %>
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial => "shared/flash_msg"%>
+          <div class="table-responsive">
+            <table class="table table-striped m-b-none text-small" id="purchase-orders" data-source="<%= purchase_orders_path(:format=>'json')%>">
+              <thead>
+                <%= render :partial => "header" %>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

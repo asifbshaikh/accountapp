@@ -1,0 +1,34 @@
+<!-- <footer id="bottom">
+ <div class="wrapper-footer">
+     <div class="one-half left">  Copyright &copy; 2013 ProfitBooks.net.</div>
+     <div class="one-half right">  You are subscribed to the <%= @company.plan.display_name %> plan.
+      <% if @current_user.owner? %>
+     | <a href='/billing/index' >Billing/Upgrade</a>
+      <% end %>
+
+    |<a href="/feedbacks/new" class = "nyroModal">Feedback</a>
+
+  </div>
+ </div>
+</footer>
+<! End of Page footer -->
+<footer id="footer">
+    <div class="text-center padder clearfix">
+      <p>
+   <% if !@company.basic_details_required? && !@current_user.auditor? %>
+        <small>&copy; You are subscribed to the <%= @company.plan.display_name %> plan.
+        <% if @current_user.owner? %>Click <a href='/billing/index' >Billing/Upgrade</a> to upgrade your plan.
+      <% end %>
+</small><br><br>
+        <!-- <a href="http://twitter.com/profitbookslive" class="btn btn-xs btn-circle btn-twitter"><i class="icon-twitter"></i></a>
+        <a href="http://www.facebook.com/profitbooks" class="btn btn-xs btn-circle btn-facebook"><i class="icon-facebook"></i></a>
+        <a href="https://plus.google.com/102964411717263296476/posts" class="btn btn-xs btn-circle btn-gplus"><i class="icon-google-plus"></i></a> -->
+      <% end %>
+      </p>
+    </div>
+<!--
+    <div>
+      <a href="https://mixpanel.com/f/partner"><img src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
+    </div>
+-->
+  </footer>

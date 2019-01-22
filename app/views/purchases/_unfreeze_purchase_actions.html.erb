@@ -1,0 +1,11 @@
+<% if !@current_user.auditor? %>
+  <% if @purchase.status_id == 0 %>
+  	<button class="btn btn-success btn-lg dropdown-toggle" data-toggle="modal" data-target='#modal-make-payment'>
+  	<span class="dropdown-label"><i class="icon-ok-circle"></i> Make Payment</span>  
+  	</button>
+  	<button class="btn btn-white btn-lg dropdown-toggle" title="Settle Purchase" data-toggle="modal" data-target="#modal-settlement"><span class="dropdown-label"><i class="icon-adjust"></i></span></button> 
+  <% end %>
+  <%= render "#{Purchase::RETURN_STATUS[@purchase.has_return_any?]}_purchase_actions" %>
+<% end %>
+<%= link_to raw('<i class="icon-print"> </i>'), purchase_path(@purchase, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), purchases_path, :class => 'btn btn-default btn-lg' %>

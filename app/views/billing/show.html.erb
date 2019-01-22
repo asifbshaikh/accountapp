@@ -1,0 +1,137 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i>Billing Invoice Detail</h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a> -->
+      </div>  
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-5">
+           <h4><strong> Customer Name: </strong> <br/><%= @current_user.full_name%></h4>
+          </div>
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p><strong> Invoice Number: </strong><%= @billing_invoice.invoice_number%></p>
+                  <p><strong> Company Name: </strong> <%= @company.name %></p>
+                  <p><strong> Address: </strong> <%=raw address_info %></p>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Invoice Date <%= @billing_invoice.invoice_date%>
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <div class="col-lg-12">
+          <table class="table table-striped b-t text-small">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Amount</th>
+              </tr>
+            </thead> 
+            <tbody> 
+              <% calculated_amount = 0%>
+              <% @billing_invoice.billing_line_items.each do |line_item| %>
+
+              <% if line_item.billing_type != 'coupon'%>
+              <tr>
+                <td><%= line_item.line_item %>(Valid for <%= line_item.get_validity %>)</td>
+                <% calculated_amount += line_item.amount %>
+                <td><span id="discount"><%= format_currency line_item.amount %></span></td>
+              </tr>
+
+              <% elsif line_item.billing_type ='referral_earning' %>
+
+              <tr>
+                <td><%= line_item.line_item %> (1 month extended validity) </td>
+                <td style='background-color:#fff;'><span id = "discount"><%=  format_currency line_item.amount%></span></td>
+                <td>
+                </td>
+              </tr>
+              <tr> 
+                <td style='background-color:#fff;'>Sub Total</td>
+                <td><span id="tax"><%=format_currency calculated_amount - line_item.amount %></span></td>
+              </tr>
+              <tr> 
+                <td style='background-color:#fff;'>(GST @ 18% / Service tax @ 14% + Swachh Bharat Cess @ 0.5%)</td>
+                <td><span id="tax"><%=format_currency (calculated_amount -line_item.amount) * 0.145 %></span></td>
+              </tr>
+          <% else %>
+          <tr>
+            <td>Discount - Coupon code : <%= line_item.line_item %></td>
+            <td><%= format_currency line_item.amount %></td>
+          </tr>
+          <% end %>
+          <% end %>
+          <!-- did migration for adding column named state to companies table then manually entered state in company teslapower THIS IS WRONG-->
+
+          <%
+          state="" 
+          if @company.address.present?
+            if @company.address.state.present?
+              state = @company.address.state.downcase
+            end   
+          end
+          %>    
+
+          <% if state == "maharastra" || state == 'maharashtra' %>
+          <tr>
+            <td style='background-color:#fff;'>CGST</td>
+            <td style='background-color:#fff;'><%= format_currency ((@billing_invoice.amount - @billing_invoice.amount/1.18))/2%></td>
+          </tr>
+          <tr>
+            <td style='background-color:#fff;'>SGST</td>
+            <td style='background-color:#fff;'><%= format_currency ((@billing_invoice.amount - @billing_invoice.amount/1.18))/2%></td>
+          </tr>
+
+          <% else %>
+          <tr>
+            <td style='background-color:#fff;'>IGST</td>
+            <td style='background-color:#fff;'><%= format_currency (@billing_invoice.amount - @billing_invoice.amount/1.18)%></td>
+          </tr>
+          <% end %>
+
+          <tr>
+            <td style='background-color:#fff;'>Total</td>
+            <td style='background-color:#fff;'><strong id = "total"><%= format_currency @billing_invoice.amount%></strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-group">
+        <div class="col-lg-8 col-lg-offset-4">                      
+          <%= form_tag "#{@gateway.gateway_url}" do %>
+          <input type="hidden" name="merchantId" value="<%=@gateway.vanity_url%>"/>
+          <input type="hidden" name="orderAmount" value="<%=@billing_invoice.amount%>"/>
+          <input type="hidden" name="currency" value="INR"/>
+          <input type="hidden" name="merchantTxnId" value="<%= @merchantTxnId%>"/>
+          <input type="hidden" name="secSignature" value="<%= @encryptedVal%>"/>
+          <input type="hidden" name="returnUrl" value="<%=@responseURL%>"/>
+          <input type="hidden" name="firstName" value="<%=@current_user.first_name%>" />
+          <input type="hidden" name="lastName" value="<%= @current_user.last_name%>" />
+          <input type="hidden" name="email" value="<%= @current_user.email%>" />
+          <input type="hidden" name="phoneNumber" value="<%= @company.phone%>" />
+          <input type="submit" value="Proceed to payment" name="submit" class = "btn btn-success" />
+          <a href="/billing/index" class="btn btn-white">Cancel</a>
+          <% end %> 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+</section>

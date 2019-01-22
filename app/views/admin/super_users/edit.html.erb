@@ -1,0 +1,24 @@
+<!-- Page Title-->
+<%= render :partial=> "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">
+    	<div class="highlight">
+        <%= render "shared/flash_msg"%>
+        <%= render "form"%>
+      </div><br />
+    </section>
+      <!-- End of Left column/section -->
+    <!-- Right column/section -->
+<aside class="column width2"><br />
+      <%= list_button_white("View User List", admin_super_users_path)%>   
+</aside>
+  <!-- End of Right column/section -->
+ </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

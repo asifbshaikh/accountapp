@@ -1,0 +1,114 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Group Summary Report</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <% if !@accounts.blank? %>
+        <%= link_to_pdf params %>
+        <%= link_to_xls params %>
+        <% end %>
+        <% branch = params[:branch_id].blank? ? @current_user.branch_id : params[:branch_id].to_i %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), "/horizontal_balance_sheet/index?branch_id=#{branch}", :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="col-lg-4">
+                  <span class="xsmall light">Account group : </span>
+                  <span class="large"><b><%= params[:transaction_type] %></b></span><br/>
+                  <span class="xxsmall light">
+                    <%= render "shared/duration" %>
+                  </span>
+                </div>
+              </div>
+            </div><br/>
+            <% if @accounts.blank? %>
+              <%= render :partial=>"shared/no_record" %>
+            <% else %>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th> Particulars</th>
+                    <th class="text-right"> Opening Balance </th>
+                    <th class="text-right"> Debit</th>
+                    <th class="text-right"> Credit</th>
+                    <th class="text-right"> Closing Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_debit = 0
+                  total_credit = 0
+                  total_closing_balance = 0
+                  total_opening_balance = 0
+                  @accounts.each do |account|
+                    debit = 0
+                    credit = 0
+                    %>
+                    <tr>
+                      <td class='textindent1'><%= link_to (account.name),  "/account_books_and_registers/ledger?account_id=#{account.id}" %></td>
+                      <%
+                      opening_balance = 0
+                      opening_balance = account.opening_balance_on_date(@start_date)
+                      total_opening_balance += opening_balance
+                      sufix=''
+                      if opening_balance < 0
+                        sufix = " Cr"
+                        opening_balance = opening_balance.abs
+                      elsif opening_balance > 0
+                        sufix = " Dr"
+                      end
+                      %>
+                      <td align="right" width = "19%"><%= format_currency opening_balance %><%= sufix %></td>
+                      <% credit = Ledger.by_branch(branch).ledgers_in_current_year(@company,account.id, @start_date, @end_date).sum(:credit)
+                      debit = Ledger.by_branch(branch).ledgers_in_current_year(@company,account.id, @start_date, @end_date).sum(:debit)
+                      total_credit += credit
+                      total_debit += debit
+                      closing_balance = 0
+                      #@closing_balance = account.get_closing_balance(@current_user, @company.id, @financial_year, params[:end_date], branch)
+                      closing_balance = account.balance_on_date(@end_date)
+                      total_closing_balance += closing_balance
+                      if closing_balance < 0
+                        sufix = " Cr"
+                        closing_balance = closing_balance.abs
+                      elsif closing_balance > 0
+                        sufix = " Dr"
+                      end
+                      %>
+                      <td align="right" width = "20%"><%= format_currency debit %></td>
+                      <td align="right" width = "20%"><%= format_currency credit %></td>
+                      <td align="right" width = "21%"><%= format_currency closing_balance %><%= sufix %></td>
+                    </tr>
+                    <% end %>
+
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td><b>Grand Total</b></td>
+                      <td align="right"><b><%= format_currency (total_opening_balance) %></b></td>
+                      <td align="right"><b><%= format_currency total_debit %></b></td>
+                      <td align="right"><b><%= format_currency total_credit %></b></td>
+                      <td align="right"><b><%= format_currency total_closing_balance %></b></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <% end %>
+              <footer class="row">
+                <%= render "shared/report_footer"%>
+              </footer>
+            </div>
+          </section>
+          <!-- Table ends -->
+        </div>
+      </div>
+    </section>
+  </section>

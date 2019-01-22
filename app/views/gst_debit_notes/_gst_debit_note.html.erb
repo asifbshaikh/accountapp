@@ -1,0 +1,33 @@
+ <tr>
+    <td>
+    <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="
+       <p><strong> Transaction Date: </strong> <%= debit_note.transaction_date %></p>
+        <p><strong> Debit for: </strong> <%= debit_note.to_account_name %></p>
+                      <p><strong> Debit Account of: </strong> <%= debit_note.from_account_name %></p>
+                      <p><strong> Amount: </strong> <%= format_currency debit_note.amount %></p>
+                        <p>
+                         <% if !debit_note.description.blank? %>
+                          <strong> Description: </strong> 
+                          <%= breaking_word_wrap(debit_note.description)%>
+                          <% end %>
+                        </p>
+                      <p>
+                      <strong> Created by:</strong> <%= User.find(debit_note.created_by).full_name %>
+                      </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'><%= debit_note.debit_note_number %></a></td>
+    <td><%= debit_note.transaction_date.strftime("%d-%m-%Y") %></td>
+    <td><%= truncate(Account.find(debit_note.from_account_id).name, :length =>20) %></td>
+    <td><%= truncate(Account.find(debit_note.to_account_id).name, :length => 20) %></td>
+    <td><%= format_currency debit_note.amount %></td>
+		
+    <td><div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='<%= edit_debit_note_path(debit_note)%>'"; >Edit</button>
+          <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/debit_notes/<%= debit_note.id%>" >Delete</a></li>
+          </ul>
+      </div></td>
+  </tr>

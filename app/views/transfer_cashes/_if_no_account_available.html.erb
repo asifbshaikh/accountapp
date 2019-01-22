@@ -1,0 +1,14 @@
+		<% if @from_accounts.blank? && @to_accounts.blank?%>
+        <br /><div class="box box-warning">
+          Currently there are no transferred from accounts and transferred to accounts.
+                 Click to create <%= link_to " transferred from",{:action => :add_account, :transaction_type => 'transferacc'},:id => 'add_new_model',:remote => true %> and <%= link_to " transferred to",{:action => :add_account, :transaction_type => 'contra'},:id => 'add_new_model',:remote => true %> account.
+        </div>
+      <% elsif @from_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no transferred from accounts.Click to <%= link_to " create",{:action => :add_account, :transaction_type => 'transferacc'},:id => 'add_new_model',:remote => true %> one.
+        </div>
+      <% elsif @to_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no transferred to accounts.Click to <%= link_to " create",{:action => :add_account, :transaction_type => 'contra'},:id => 'add_new_model',:remote => true %> one.
+        </div>
+      <% end %>

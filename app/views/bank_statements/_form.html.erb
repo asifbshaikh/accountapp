@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col-lg-6">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for @bank_statement, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+          <%= f.hidden_field :created_by, :value => @current_user.id %>
+          <%= f.hidden_field :company_id, :value => @company.id %>
+          <div class='form-group'>
+            <div class='col-lg-4 text-right'>
+  <%= f.label :date, "Statement Date", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-4'>
+            <a title="" data-placement="top" data-toggle="tooltip" data-original-title="This is date from which you want to import transactions.">
+                <%= text_field_tag "bank_statement[start_date]",'', :placeholder => "Start date", :size => "4", :class => "form-control"%>
+            </div>
+            <div class='col-lg-4'>
+            <a title="" data-placement="top" data-toggle="tooltip" data-original-title="This is date up to which you want to import transactions.">
+                <%= text_field_tag "bank_statement[end_date]",'',:placeholder => "End date", :size => "4", :class => "form-control"%></a>
+            </div>
+            </div>
+
+            <div class='form-group'>
+            <div class='col-lg-4 text-right'>
+            
+              <%= f.label :account_id, "Source Bank Format", :class => "control-label-required" %>
+            </div>
+
+            <div class='col-lg-4'>
+            <a title="" data-placement="top" data-toggle="tooltip" data-original-title="This is the bank's statement format, if your format not listed then select 'Other' option. If you are selecting 'Other' option then please make changes in your statement file as per sample file. You can download sample file from 'How it works!'">
+              <select name = 'bank_id' id="bank_id" style="width:165px;" >
+                <option value = '1' selected="selected" >State Bank Of India</option>
+                <option value = '2'>ICICI-Saving Account</option>
+                <option value = '9'>ICICI-Current Account </option>
+                <option value = '3'>HDFC</option>
+                <option value = '4'>Corporation Bank</option>
+                <option value = '8'>Axis Bank</option>
+                <option value = '5'>Bank of India</option>
+                <option value = '7'>Other Banks       (Check Sample)</option>
+              </select></a>
+            </div>
+        
+            </div>
+            <div class="form-group">
+              <div class='col-lg-4 text-right'>
+              <%= f.label :bank_name, "Target Bank Account", :class => "control-label-required" %>
+            </div>
+             <div class='col-lg-4'>
+            <a title="" data-placement="top" data-toggle="tooltip" data-original-title="This is your account in ProfitBooks.">
+                <%= collection_select(:bank_statement, :account_id, @accounts, :id, :name,{:prompt => "---Select Account---"},{:style => "width:165px"}) %></a>
+            </div>
+
+
+            </div>
+            <div class='form-group'>
+            <div class='col-lg-4 text-right'>
+              <%= f.label :file, "Select File", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-4'>
+                <%= f.file_field :file, :class=>"btn btn-white" %><br>
+                <a href="/sample_csv.csv">Download Sample File</a>
+            </div>
+           
+            </div>
+
+            <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-4">
+                <%= submit_tag "Import", :class => "btn btn-success" %>
+            </div>
+            </div>
+            <%end%>
+          </div>
+    </section>
+  </div> <!-- First clmn ends -->
+  <div class="col-lg-6">
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-sm-12">
+        <h4>This screen lets you import the bank statements in ProfitBooks. Once its imported, you can reconcille the transactions to keep your books in order.</h4>
+    <!-- statement Reconcillation Order Flow -->
+        <div class="timeline">
+          <article class="timeline-item active">
+              <div class="timeline-caption">
+                <div class="panel bg bg-light">
+                  <h4>How it works <br> </h4>
+                </div>
+              </div>
+          </article>
+          <article class="timeline-item">
+              <div class="timeline-caption">
+                <div class="panel arrow arrow-left">
+                  <span class="timeline-icon"><i class="icon-file-text time-icon"></i></span>
+                  <span class="timeline-date">Get statement from your bank</span>
+                  <h5>
+                    Go to your bank's website and export the statement - preferebly in CSV format. 
+                  </h5>            
+                </div>
+              </div>
+          </article>
+          <article class="timeline-item alt">
+              <div class="timeline-caption">                
+                <div class="panel arrow arrow-right">
+                  <span class="timeline-icon"><i class="icon-upload-alt time-icon bg-success"></i></span>
+                  <span class="timeline-date">Import the statement in ProfitBooks</span>
+                  <h5>Specify the date range and bank account name on left. Select the pre-configured format from the dropdown. If your bank is not listed there, select 'Others' to upload CSV. You can make changes according to the sample file  <a href="/sample_csv.csv">Download File</a>. Select the file and click on Upload.
+                  </h5>
+                </div>
+              </div>
+          </article>          
+          <article class="timeline-item">
+              <div class="timeline-caption">                
+                <div class="panel arrow arrow-left">
+                  <span class="timeline-icon"><i class="icon-refresh time-icon bg-info"></i></span>
+                  <span class="timeline-date">Reconcille Transactions</span>
+                  <h5>If the transaction on statement matches with ProfitBooks transaction, click on reconcile. You can add income or expense transactions in ProfitBooks if required.
+                  </h5>
+                </div>
+              </div>
+          </article>
+          <div class="timeline-footer"><a href="#"><i class="icon-check time-icon inline-block bg-primary"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Done!
+      </div>
+        </div>
+        <!-- Flow ends --> 
+        <h5>Thats it! You can view the bank reconcilliation reports from <a href="/account_books_and_registers/reports">Reports</a> screen </h3>
+      </div>
+      
+    <div class="col-sm-6">
+    <!-- Place for video -->
+        </div>    
+      </div>
+      </div>
+      
+    </section>
+  </div>
+  
+  </div>
+  <script type="text/javascript">
+   $('#bank_statement_account_id').select2();
+   $('#bank_id').select2();
+</script>

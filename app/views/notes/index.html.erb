@@ -1,0 +1,56 @@
+ <!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Notes &rarr;<span>Note List</span></h1>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+	  <!-- Left column/section -->
+     <section class="column width6 first"><br />
+       <div class="highlight">
+        <%= render :partial => "shared/flash_msg" %>
+          <div id="tabs-all">
+              <div class="colgroup">
+                 <div class="width3 column first"> </div>
+              </div>
+              <div class="clearfix"></div>
+               <div id="note">
+                      <% if @notes.blank? %>
+                          <p class="no-notes"><%= render :partial => "shared/no_record" %></p>
+                      <% else %>
+                          <table class="display stylized" id="example">
+                             <thead>
+                          <%= render :partial => "header" %>
+                     </thead>
+                     <tbody>
+                          <%= render :partial => "note", :collection => @notes %>
+                     </tbody>
+                     <tfoot>
+                        </tr><td colspan="5"></td></tr>  
+                     </tfoot>
+                         </table>
+                         <%= paginate @notes %>
+                      <% end %>
+              </div>   
+          </div>
+       </div> 
+     <br/>
+     </section>							
+    <!-- End of Left column/section -->
+  
+    <!-- Right column/section -->
+     <aside class="column width2"><br />
+       
+       <%= new_button("Add New Note", new_note_path)%>
+       <%= render :partial => "tag_display"%>
+     </aside>
+     <!-- End of Right column/section -->
+   </div>
+   <!-- End of Wrapper -->
+ </div>
+<!-- End of Page content -->

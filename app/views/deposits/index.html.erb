@@ -1,0 +1,44 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-3">
+       <h2><i class="icon-file text"></i>Deposit Cash</h2>
+        </div>
+        <div class="col-lg-9 m-t-large" align="right">
+          <a href="/deposits/new" class="btn btn-success btn-lg"> + Deposit Cash</a>
+          <a href="#" class="btn btn-white btn-lg " id="use_filter"><i class="icon-filter"></i> Filter </a>
+          <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+        <%= render :partial=> "filter" %>
+          <section class="panel">
+            <header class="panel-heading">
+              DataTables 
+              <i class="icon-info-sign text-muted" data-toggle="popover" data-html="true" data-placement="top" data-content="" title="" data-trigger="hover" data-original-title="Help"></i> 
+            </header>
+            <div class="table-responsive">
+             <% if @deposits.blank? %>   
+             <%= render :partial => "shared/no_record"%>
+             <% else %>
+              <table id="deposits" class="table table-striped m-b-none text-small" data-source ="<%= deposits_url(:format => "json") %>" >
+              <thead>
+                <%= render :partial => "header" %>
+              </thead>
+              <tbody>
+                <%= render :partial => "deposit", :collection => @deposits %>
+              </tbody>
+              <tfoot>
+                <%= render :partial => "footer" %>
+              </tfoot>
+               </table>
+               <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

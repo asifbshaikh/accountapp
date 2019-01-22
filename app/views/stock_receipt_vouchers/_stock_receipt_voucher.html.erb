@@ -1,0 +1,22 @@
+<tr class="gradeU">
+  <td><%= link_to stock_receipt_voucher.voucher_date, stock_receipt_voucher %></td>
+  <td><%= stock_receipt_voucher.voucher_number %></td>
+  <td><%= stock_receipt_voucher.stock_received_warehouse %></td>
+  <td><%= truncate(stock_receipt_voucher.details, :length => 20) %></td>
+  <td><%= stock_receipt_voucher.created_by_user %></td>
+  <td>
+    <div class="btn-group" style="float: right;">
+      <button class="btn btn-white btn-sm" onclick="location.href='/stock_receipt_vouchers/<%= stock_receipt_voucher.id %>'"; >View</button>
+      <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu pull-right">
+        <li><a href="<%= edit_stock_receipt_voucher_path(stock_receipt_voucher) %>">Edit</a></li>
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/stock_receipt_vouchers/<%= stock_receipt_voucher.id%>" >Delete</a></li>
+         
+      </ul>
+    </div>
+  </td>
+</tr>
+

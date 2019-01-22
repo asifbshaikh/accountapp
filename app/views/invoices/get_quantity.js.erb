@@ -1,0 +1,7 @@
+$('table#tableQty tbody tr:eq(<%= params[:row] %>) #resp-qty').html('<%= !@stock.blank? ? @stock.quantity : 0 %>'); //instead html() may be append()
+
+<% if @stock.blank? || @stock.quantity <= 0 %>
+	$('table#tableQty tbody tr:eq(<%= params[:row] %>) input[name=qty]').attr('disabled', 'disabled');
+<% else %>
+	$('table#tableQty tbody tr:eq(<%= params[:row] %>) input[name=hidden_quantity]').attr('value', '<%= @stock.quantity %>');
+<% end %>

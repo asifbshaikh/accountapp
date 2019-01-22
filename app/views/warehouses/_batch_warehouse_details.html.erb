@@ -1,0 +1,33 @@
+<div id="prev_data">
+  <div class='titleBar'><div id="popupHeading">Add batch details</div> <a id="popupBoxClose" class="btn btn-red">x</a></div>
+  <ul id='error'></ul>
+  <form action = '/warehouses/record_batch_warehouse_details' data-remote='true' method="post">
+    <%= hidden_field_tag "warehouse_id", @warehouse.id %>
+    <%= hidden_field_tag "product_id", @product.id %>
+    <%= hidden_field_tag "index", params[:index] %>
+  <table class="display stylized full" id ="act_details" width = 80% >
+    <tr>
+      <th><label> Reference</label></th>
+      <th><label>Quantity</label></th>
+      <th><label class='required'>Batch no.</label> </th>
+      <th><label> Mfd.date</label></th>
+      <th><label> Exp.date</label></th>
+      <th></th>
+    </tr>
+    <% @purchase_warehouse_details.each_with_index do |pwd, index|%>
+      <tr class='row<%= index %>'>
+        <td><%= pwd.purchase_line_item.purchase.purchase_number %><%= hidden_field_tag "product[product_batches_attributes][#{index}][reference]", pwd.purchase_line_item.purchase.purchase_number %></td>
+        <td align='right'><%= pwd.quantity %><%= hidden_field_tag "product[product_batches_attributes][#{index}][quantity]", pwd.quantity %>
+          <%= hidden_field_tag "product[product_batches_attributes][#{index}][warehouse_id]", pwd.warehouse_id %>
+          <%= hidden_field_tag "product[product_batches_attributes][#{index}][company_id]", @company.id %>
+          <%= hidden_field_tag "purchase_warehouse_id_at#{index}", pwd.id %>
+        </td>
+        <td><%= text_field_tag "product[product_batches_attributes][#{index}][batch_number]", "", :style => 'width:100px', :maxlength => 30 %></td>
+        <td><%= text_field_tag "product[product_batches_attributes][#{index}][manufacture_date]", "", :style => 'width:80px', :class => 'mfd_date', "data-index" => index %></td>
+        <td><%= text_field_tag "product[product_batches_attributes][#{index}][expiry_date]", "", :style => 'width:80px', :class => 'exp_date', "data-index" => index %></td>
+      </tr>
+  </table>
+  <%= submit_tag "Select", :class => 'btn btn-green' %>
+  <%= link_to 'Cancel',"", :id => 'close', :class => 'btn', :remote => true %>
+  </form>
+</div>

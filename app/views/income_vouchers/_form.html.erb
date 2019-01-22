@@ -1,0 +1,96 @@
+<%= render :partial => 'income_vouchers/auto_complete' %>
+<%= form_for @income_voucher,:html => {:class => "form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @income_voucher %>
+<%= hidden_field_tag "option", params[:option] %>              
+<%= render "income_vouchers/voucher_number", :f => f %>
+         
+<div class="form-group">
+  <div class="col-sm-2 text-right">
+    <label class="control-label control-label-required">Money received from </label>
+  </div>
+  <div class="col-lg-3">
+  <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, @income_voucher.from_account_id), {:prompt=>"Type for select"}, {:style=>"width:200px;"} )%>
+  </div>
+  <div class="col-lg-3"><span id="other_income_from_acc_bal"></span></div>
+</div>
+          
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+     <label class="control-label control-label-required">Deposit to account </label>
+    </div>
+    <div class="col-lg-3">
+      <%= f.select(:to_account_id, options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, @income_voucher.to_account_id), {:prompt=>"Type for select"}, {:style=>"width:200px;"} )%>
+    </div>
+    <div class="col-lg-3"><span id="other_income_to_acc_bal"></span></div>
+  </div>
+  <div class="form-group">
+     <div class="col-lg-2 text-right">
+     <%= f.label :Received_date,  :class=>"control-label-required"  %>
+     </div>
+     <div class="col-lg-3">
+      <%= f.text_field :income_date, :size => "10", :class => 'bg-focus form-control' %>
+     </div>
+  </div>
+  
+  <div class='form-group'>
+    <div class='col-lg-2 text-right'>
+      <%= label_tag "amount", "Amount", :class => "control-label-required" %>
+    </div>
+    <div class='col-lg-3'>
+      <%= f.text_field :amount, :size => "10", :onkeydown => 'return numbersOnly(event);',:maxlength => "18", :class=>'form-control bg-focus text-right sm-input' %>
+    </div>
+    </div>
+          
+      <input type="hidden" name="source" id="source" value="income"/>
+  
+  <div class="form-group">
+    <div class="col-sm-2 text-right">
+      <label class="control-label control-label-required">Receipt mode </label>
+    </div>
+    <div class="btn-group col-lg-10" data-toggle="buttons" >
+       <label class="btn btn-sm btn-default inc_transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+          <%= radio_button_tag 'transaction_type','cash' %>
+          <i class=""></i>Cash
+        </label>
+        <label class="btn btn-sm btn-default inc_transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+          <%= radio_button_tag "transaction_type",'cheque' %>
+          <i class=""></i>Cheque
+        </label>
+        <label class="btn btn-sm btn-default inc_transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+          <%= radio_button_tag "transaction_type",'card'%>
+          <i class=""></i>Credit/Debit Card
+        </label>
+        <label class="btn btn-sm btn-default inc_transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+          <%= radio_button_tag "transaction_type",'ibank' %>
+          <i class=""></i>Internet Banking
+        </label>
+    </div>
+  </div>  
+  <div class="form-group">
+    <div class='col-lg-2'></div>
+    <div class="oinc"></div>
+    <%= render :partial => "#{params[:transaction_type]}" unless @payment_detail.blank? || params[:transaction_type].blank? %>
+	</div>
+	
+  <div class='form-group'>
+   <div class='col-lg-2 text-right'>
+    <%= label_tag "description", "Description", :class=>'control-label' %>
+   </div>
+   <div class='col-lg-4'>
+    <%= f.text_area :description, :rows => 3, :cols => 58, :class=>'form-control bg-focus' %>
+   </div>
+ </div>            
+  <div class="form-group">
+    <div class="col-lg-9 col-lg-offset-3">                      
+      <button type="submit" class="btn btn-success">Save</button>
+      <%= link_to 'Cancel', income_vouchers_path, :class => "btn btn-default" %>
+    </div>
+  </div>
+<% end %>
+
+  <div id='modal-other-income-to-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @other_income_to_account_heads, :transaction_type=>'contra' %>
+</div>
+<div id='modal-other-income-from-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @other_income_from_account_heads, :transaction_type=>'receipt' %>
+</div>

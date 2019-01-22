@@ -1,0 +1,98 @@
+<div id='container'>
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page" >
+  <!-- Wrapper -->
+  
+  <div class="wrapper" >
+    <!-- Left column/section -->
+    <section class="column width6 first"><br />
+      <div class="highlight">
+        <%= render :partial=> "shared/flash_msg"%>
+        <table class="display stylized" id="act_details">
+          <thead>
+            <tr>
+              <th colspan="2">Invoice Number : </th>
+            </tr>
+          </thead>
+          <tbody> 
+            <tr>
+              <td><label  class="required" for="productcat">Customer Name</label><br/>
+              </td>
+              <td><label Invoice_date,  class="required"  ><br/>
+              </td>
+            </tr>
+            <tr>
+              <td><label 'Purchase Order Reference'><br/>
+              <td><label Due_date,  class="required"><br/>
+            </tr>
+            <tr>
+              <td colspan="2" style="background-color:#fff; border-bottom: none;">
+                <table id="line_items"  width=100%>
+                  <thead>
+                    <tr>
+                      <th style=' width:19%;'><label class="required">Item</label></th>
+                      <th style=' width:19%;'>Description</th>
+                      <th style=' width:12%;'><label class = "required">Qty</label></th>
+                      <th style=' width:12%;'><label class="required">Unit Cost</label></th>
+                      <th style=' width:11%;'>Discount %</th>
+                      <th style=' width:22%;text-align:right;'><label class="required" align="right">Amount</label></th>
+                      <th style=' width:5%;'> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="row_link" valign="top">				    
+                      <td valign="top" colspan="7"></td>
+                    </tr>
+                    <tr>
+                      <td style='background-color:#fff; border-bottom:none;' colspan='4'>&nbsp;</td>
+                      <td class="ta-right" style='background-color:#fff;'>Discount</td>
+                      <td align="right" style='background-color:#fff;'><span class="WebRupee">&#8377;</span><span id="discount">0.00</span></td>
+                      <td style='background-color:#fff;'></td>
+                    </tr>
+                    <tr>
+                      <td style='background-color:#fff; border-bottom:none;' colspan='4'>&nbsp;</td>
+                      <td class="ta-right" style='background-color:#fff;'>Total</td>
+                      <td align="right" style='background-color:#fff;'><span class="WebRupee">&#8377;</span><span id = "total">0.00</span></td>
+                      <td style='background-color:#fff;'></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">
+               <submit "Save" class = "btn btn-green btn-save" > 
+            </tr>
+          </tfoot>
+        </table>
+      <br />
+    	</div><br />
+	</section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+		<aside class="column width2">
+			<div id="rightmenu">
+				<dl class="first">
+    <dt><%= image_tag 'help.png', :class=>'icon', :alt=>'Help' %></dt>
+					<dd>
+						<dd><a href="#">Help</a></dd>
+					</dd>
+					<dd class="last">
+						Press 'space bar' on yor key board to autosearch customers.
+					</dd>
+				</dl>
+			</div><br />
+		</aside>
+		 <!-- End of Right column/section -->
+  
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+</div>

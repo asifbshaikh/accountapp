@@ -1,0 +1,60 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+       <%= render :partial => "shared/flash_msg"%>
+      <div id="tabs">
+        <div id="tab1">
+          <ul id="tabnav">
+            <li class="tab1"><a href="/messages/support_ticket">Support tickets</a></li>
+            <li class="tab2"><a href="/messages/deleted">Deleted</a></li>
+          </ul>
+        </div>
+       <div id="task_container">
+           <div id="tabs-all"> 
+       <% if @messages.blank? %>
+         <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+       <% else %>
+             <table class="display stylized" id="example">
+                <thead>   
+                  <%= render :partial => "header" %>
+                </thead>
+                <tbody>
+                   <%= render :partial => 'support_ticket', :collection => @messages%>
+                </tbody>
+                <tfoot>
+                   <%= render :partial => "footer" %> 
+                </tfoot>
+             </table>    
+            <%= paginate @messages %>
+        <% end %>
+          </div>
+         </div> 
+        </div>
+       </div></br>
+     </section>
+   <!-- End of Left column/section -->
+   <!-- Right column/section -->
+   <aside class="column width2"><br/>
+   <a href="/messages/new?message_type=3&subject=New support ticket&ticket_number=<%='TKT'+Time.now.to_i.to_s%>" class="btn btn-special btn-green "><img src = "/images/add.png" class ="icon"/>Create new ticket</a>
+        <p><a href="/messages" class="btn btn-special btn-gray "><img src = "/images/black_icon/ic_list.png" class ="icon"/>View messages</a></p>
+   <div id="rightmenu">
+         <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+             <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>
+             <dd class="last">This page displays the list of notification and system messages.</dd>
+         </dl>
+       </div><br />
+    </aside>
+   <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

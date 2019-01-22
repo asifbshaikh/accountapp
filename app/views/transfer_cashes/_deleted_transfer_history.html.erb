@@ -1,0 +1,21 @@
+<tr>
+	<td><%= link_to deleted_transfer_history.transaction_date.strftime("%d-%m-%Y"), deleted_transfer_history, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+	<td> <%= deleted_transfer_history.voucher_number %></td>
+	<td><%= truncate(Account.find(deleted_transfer_history.transferred_from_id).name, :length =>20) %></td>
+	<td><%= truncate(Account.find(deleted_transfer_history.transferred_to_id).name, :length =>20) %></td>
+	<td><%= format_currency deleted_transfer_history.amount %></td>
+	<td>
+		
+    <div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/transfer_cashes/<%= deleted_transfer_history.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/transfer_cashes/restore_transfer_history?id=#{deleted_transfer_history.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/transfer_cashes/permanent_delete_transfer_history?id=#{deleted_transfer_history.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+	</td>
+</tr>

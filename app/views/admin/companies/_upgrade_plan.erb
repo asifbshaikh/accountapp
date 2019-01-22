@@ -1,0 +1,32 @@
+<div class="update_plan" <%= "style='display:none;'" if flash[:error].blank? %>>
+ <%= form_tag(:action => :upgrade_plan, :controller => "/admin/companies") do |f| %>
+        <%= hidden_field_tag  "id" ,@company.id %>
+          <table class="display stylized" id="company_table">
+              <thead>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td><%= label_tag "plan_id", "Select plan" %></td>
+                    <td>
+                <%= select_tag "subscription[plan_id]", options_from_collection_for_select(@plans, "id", "display_name"), :class => "form-control" %><br/>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><%= label_tag "renewal_date", "Valid till", :class => "required" %></td>
+                    <td>
+                      <%= text_field_tag "subscription[renewal_date]", @company.subscription.renewal_date.to_date, :class => "form-control" %><br/>
+                    </td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                    <tr>
+                      <td colspan = "2">
+                       <%= submit_tag "Update plan", :class => "btn btn-success" %>&nbsp;
+                       
+                      </td>
+                    </tr>
+              </tfoot>
+          </table>
+          <% end %>
+ 
+</div>

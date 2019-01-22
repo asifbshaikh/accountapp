@@ -1,0 +1,39 @@
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Entity name</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[entity_name]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU odd">
+	  <div class="col-lg-2 text-right"><label class="control-label">Loan Type</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[loan_type]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Interest rate</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[interest_rate]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU odd">
+	  <div class="col-lg-2 text-right"><label class="control-label">Details</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[details]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Entity Address Line 1</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[address_attributes][address_line1]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Entity Address Line 2</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[address_attributes][address_line2]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">City</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[address_attributes][city]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">State</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'unsecured[address_attributes][state]','',:size => 3,:class=>"bg-focus form-control" %></div>
+</div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Pin code</label></div>
+    <div class="col-lg-3">
+    <%= text_field_tag 'unsecured[address_attributes][postal_code]','', :maxlength => "6", :onkeydown => "return numbersOnly(event);", :size => "30",:class=>"bg-focus form-control" %>
+    </div>
+</div>
+

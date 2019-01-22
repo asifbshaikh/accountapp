@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="You've been logged out from your account." />
+<meta name="keywords" content="accounting software, invoicing, expenses, payroll" />
+<title>Logged Out</title>
+
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>    
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'login' %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".fancybox").fancybox();
+  });
+</script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial=> "home/zopim_chat_and_google_analytics"%>
+<!-- End Load google Analytics -->
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial=> "header"%>
+    <!-- header end here -->
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="twelve columns">
+                <h1>You've been logged out from your account!</h1>                
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+      
+    
+    <!-- content section start here -->
+<section id="content-wrapper">
+     <div class="row">
+          <div class="twelve ">
+                  <div class="row">
+                        <div class="six columns">
+                            <h5><span class="title-green">Share your experience with us</span></h5>
+                            <p>
+
+                              <form action="user_feedback" id="contactform2"> 
+                                  <fieldset> 
+                                 <!--  <label>E-mail <em>*</em></label> 
+                                  <input type="email" name="email" class="textfield" id="email" value="" /> 
+                                    <label for="commentsText">Comments<em>*</em></label> -->
+                                  <textarea name="message" id="message" class="textarea" cols="2" rows="4"></textarea>
+
+                                  <div class="clear"></div> 
+                                  <label>&nbsp;</label>
+                                  <input type="submit" name="submit" class="simpleBTN blue large"  value="Submit" />
+                                  <span class="loading" style="display: none;">Please wait..</span>
+                                  <div class="clear"></div>
+                                  </fieldset> 
+                              </form>
+                            </p>               
+                
+                        </div>
+                        <div class="six columns">
+            <h5>Like us on Facebook</h5>
+                            <!-- Facebook starts -->
+              <iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofitbooks&amp;width=550&amp;height=558&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=true&amp;show_border=true&amp;appId=288284458002361" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:400px; height:558px;" allowTransparency="true"></iframe>
+                            <!-- Facebooks ends -->
+                      </div>
+                  </div>
+                
+            </div>
+        </div>
+  </section>  
+        <!-- content section end here -->
+
+    
+  <!-- footer section start here -->
+    <%= render :partial=>"home/footer"%>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

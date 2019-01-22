@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  phone_number: MyString
+  fax: MyString
+  email: MyString
+  website: MyString
+  pan: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst_reg_no: MyString
+  cin: MyString
+  excise_Reg_no: MyString
+  service_tax_reg_no: MyString
+  incorporated_date: 2013-11-17
+  credit_days: 1
+  credit_limit: 9.99
+
+two:
+  company_id: 1
+  phone_number: MyString
+  fax: MyString
+  email: MyString
+  website: MyString
+  pan: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst_reg_no: MyString
+  cin: MyString
+  excise_Reg_no: MyString
+  service_tax_reg_no: MyString
+  incorporated_date: 2013-11-17
+  credit_days: 1
+  credit_limit: 9.99

@@ -1,0 +1,204 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i>Converted From Estimate</h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+        </div>  
+      </div>
+
+
+<div class="row">
+<div class="col-lg-12">
+  <section class="panel">
+    <div class="panel-body">
+      <div id="jHere"></div>
+      <%= render :partial => "shared/project_auto_complete" %>
+      <%= render :partial => "auto_calculate" %>
+      <%= form_for @invoice, :html => {:class => "form-horizontal"} do |f| %>
+      <%= hidden_field_tag 'hidden_quantity[]' %>
+      <%= render 'shared/form_error', :object => @invoice %>
+      <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+      <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+      <%= hidden_field_tag 'discount', params[:discount].blank? ? 0 : params[:discount] %>
+ 
+       <div class="form-group">
+        <%= hidden_field_tag "invoice[invoice_status_id]", 0 %>
+        <div class="col-lg-4">
+             <label class="control-label-required"><%= @company.label.customer_label %> Name</label>
+              <div class="input-group">
+                <input type="text" class ="bg-focus form-control" name="account_id"  id="to_account_auto_complete" value='<%= (!@invoice.account_id.blank?)? "#{@company.accounts.find(@invoice.account_id).name}" : ""%>' />
+                <div class="input-group-btn">
+              <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#modal1'>
+                <span class="dropdown-label"><i class="icon-plus"></i></span>  
+              </button>
+            </div>
+            </div>
+            <span id='to_acc_bal'></span>
+        </div>
+
+        <div class="col-lg-4">
+        <div class="row">
+          <p>
+             <label class="col-lg-4 control-label-required"><br/>Invoice #</label>
+             <div class="col-lg-8">
+              <% if @company.invoice_setting.free_format? %>
+                <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+              <% else %>
+                <label class="control-label"><%= @invoice.invoice_number%><%= f.hidden_field :invoice_number %></label>
+              <% end %>
+              </div>
+           </p>
+         </div>
+         <div class="row">
+          <p>
+              <label class="col-lg-4 control-label-required"><br/>Date </label>
+              <div class="col-lg-8">
+              <%= f.text_field :invoice_date, :size => "10", :class => 'bg-focus form-control' %>
+              </div>
+            </p>
+         </div>
+         <div class="row"> 
+         <p>
+           <label class="col-lg-4 control-label">Due On </label>
+            <div class="col-lg-8">
+            <%= f.text_field :due_date, :size => "10", :class => 'bg-focus form-control' %>
+            </div>
+          </p>
+         </div>
+         <div class="row"> 
+         <p>
+            <label class="col-lg-4 control-label">PO Ref #</label>
+            <div class="col-lg-8">
+            <%= f.text_field :po_reference, :size => "10", :class=> 'bg-focus form-control' %>
+            </div>
+          </p>
+         </div>
+        </div>
+        
+        <div class="col-lg-4">
+        <div class="row">
+        <p>
+          <% if !@projects.blank? && !@company.plan.free_plan? %>
+            <label class="col-lg-7 control-label">Project</label>
+            <div class="col-lg-5">
+           <input type="text" class ="bg-focus form-control" name="project_id" id="project" value='<%= (!@invoice.project_id.blank?)? "#{@invoice.project_name}" : "" %>' size="10" />
+            </div>
+        <% end %>
+        </p>
+        </div>
+        <%= render :partial=>"custom_field" %>
+       </div>
+       </div>
+       
+           <div class="form-group">
+            <div class="col-lg-12">
+    <table class="table table-striped b-t" id="line_items" width="100%">
+    <thead>
+      <tr>
+       <th style=' width:19%;'>
+         <label class="required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+        </th>
+        <th style=' width:19%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+        <th style=' width:12%;'><label class = "required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></label></th>
+        <th style=' width:12%;'><label class="required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+        <th style=' width:11%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+        <th style=' width:11%;'>Tax</th>
+        <th style=' width:22%;text-align:right;'><label class="required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %></label></th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @invoice.invoice_line_items.each_with_index do |invoice_line_item, index| %>
+        <%= render "estimate_to_invoice_item", :invoice_line_item => invoice_line_item, :index => index %>
+        <% end %>
+       <% @invoice.shipping_line_items.each_with_index do |shipping_line_item, shipping_index| %>
+          <%= render "shipping_line_items", :shipping_line_item => shipping_line_item, :shipping_index => shipping_index %>
+          <% end %>
+       <% if @invoice.shipping_line_items.blank? %>
+        <tr id="shipping_row_link" valign="top">           
+          <td valign="top" colspan="8">                                           
+             <%= link_to "+ Add other charge",{:action => :add_shipping_row}, :class => 'btn btn-white btn-sm',:remote => true %> 
+         </td>
+       </tr>
+       <% end %>
+          
+          
+      <tr>
+        <td style='background-color:#fff;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Sub total</td>
+         <td align="right" style='background-color:#fff;'> <span id="inv-total">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+        <tr>
+        <tr>
+               <td style='background-color:#fff;border:none;' colspan='5'>&nbsp;</td>
+           <td class="ta-right" style='background-color:#fff;'>Discount</td>
+           <td align="right" style='background-color:#fff;'><span id="discount">0.00</span></td>
+           <td style='background-color:#fff;'></td>
+              </tr>
+        <tr>
+           <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+         <td class="ta-right" style='background-color:#fff;'>Total tax</td>
+         <td align="right" style='background-color:#fff;'><span id="tax-amount">0.00</span></td>
+         <td style='background-color:#fff;'></td>
+        </tr>
+      <tr>
+        <td style='background-color:#fff; border-bottom:none;border:none;' colspan='5'>&nbsp;</td>
+        <td class="ta-right" style='background-color:#fff;'><label>Total</label></td>
+        <td align="right" style='background-color:#fff;'><label> <span id = "total">0.00</span></label></td>
+        <td style='background-color:#fff;'></td>
+      </tr>
+    </tbody>
+    </table>
+   
+           </div>
+           </div>
+        
+            <div class="form-group">
+              <div class="col-lg-5">
+              <label class="control-label">Customer Notes</label>
+                <%= text_area_tag "invoice[customer_notes]", "#{@invoice.customer_notes.blank? ? @company.customer_note : @invoice.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %></div>
+              <div class="col-lg-2"></div>
+              <div class="col-lg-5">
+              <label class="control-label">Terms and Conditions</label>
+                <%= text_area_tag "invoice[terms_and_conditions]", "#{@invoice.terms_and_conditions.blank? ? @company.terms_and_conditions : @invoice.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %><br/>
+              </div>
+            </div>
+
+          
+            <div class="form-group">
+              <div class="col-lg-8 col-lg-offset-4"> 
+               <%= hidden_field_tag 'estimate_id', @estimate.id %>
+              <%= hidden_field_tag "cash_invoice", params[:cash_invoice] %>
+              <%= f.submit "Save", :class=>'btn btn-success' %>
+              <%= link_to 'Cancel', "/estimates/#{@estimate.id}", :class => "btn btn-default" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+    </section>
+  </section>
+  <!-- .modal -->
+  <div id="modal1" class="modal fade">
+    <%= render "customers/popup_customer_form", :selector=>"invoice_account_id" %>
+  </div>
+  <div id="modal2" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @sales_account_heads, :transaction_type => "item" %>
+  </div>
+  <div id="modal3" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @tax_account_heads, :transaction_type => "tax" %>
+  </div>
+  <!-- / .modal -->
+
+
+
+
+      
+   
+        
+            
+         

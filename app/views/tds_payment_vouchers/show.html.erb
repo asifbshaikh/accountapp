@@ -1,0 +1,144 @@
+<section id="content">
+  <section class="main padder">
+ <!-- Page title -->
+    <div class="row">
+      <div class="col-lg-6">
+          <h3><i class="icon-file-text-alt text"></i>TDS Payment Voucher</h3>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <a href="/tds_payment_vouchers/new" class="btn btn-success btn-lg"><i class="icon-plus"></i> Add New Record</a>
+        <div class="btn-group">
+          <button  onclick="location.href= '<%= edit_tds_payment_voucher_path(@tds_payment_voucher)%>'"; class="btn btn-info btn-lg" > <i class="icon-edit"> </i> Edit</button>
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to raw('<i class="icon-trash"> </i>Delete '), tds_payment_voucher_path(@tds_payment_voucher),  :method => "delete", :confirm => "Are you sure?" %></li>
+          </ul>
+        </div>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), tds_payment_vouchers_path, :class => 'btn btn-default btn-lg' %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg" %>
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-5">
+           <h4><strong> Nature of Payment: </strong> <br/><%= Account.find(@tds_payment_voucher.tds_account_id).name %></h4>
+          </div>
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <div class="col-sm-6">
+                  <p>
+                  <strong>Tax Deduction Account No.: </strong><%=@tds_payment_voucher.tan_no%>
+                  <p/>
+                  <p>
+                  <strong>Challan No.: </strong> <%=@tds_payment_voucher.challan_no%> 
+                  </p>
+                  <p>
+                  <strong>Assessment Year : </strong> <%= FinancialYear.find(@tds_payment_voucher.assessment_year).year.name %>
+                  </p>
+                  <p>
+                  <strong>Amount   : </strong> <%= format_currency  @tds_payment_voucher.amount%></p>
+                </div>
+                <div class="col-sm-6">
+                  <p>
+                  <strong>Bank Name   : </strong> <%= Account.find(@tds_payment_voucher.account_id).name %>
+                  </p>
+                  <p>
+                    <strong>CIN NO.   : </strong> <%=  @tds_payment_voucher.cin_no %>
+                  <p/>
+                  <p>
+                  <strong>BSR Code : </strong> <%=  @tds_payment_voucher.bsr_code %>
+                  </p> 
+                </div>
+              </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-6"><i class="icon-calendar"> </i> 
+                Payment Date: <%=@tds_payment_voucher.payment_date %> 
+                </div>
+                <div class="col-sm-6">
+                <i class="icon-suitcase"> </i>   Payment Mode:  <%= @tds_payment_voucher.payment_detail.payment_mode %></div>
+              </div>
+            </footer>
+          </section>
+        </div>
+      </div>
+    </div>
+      <div class="table-responsive">
+        <table width="50%" class="table table-striped b-t text-small">
+          <thead>
+            <tr>
+              <!-- <th>To account</th> -->
+              <th>Payment Method</th>
+              <th>Payment date</th>
+              <th class="text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @tds_payment_voucher.payment_detail.payment_mode %></td>
+              <td><%= @tds_payment_voucher.payment_date %></td>
+              <td align="right"><%= format_currency @tds_payment_voucher.amount%></td>
+            </tr>
+          </tbody>  
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td align="right"><b>Total : <%= format_currency @tds_payment_voucher.amount%></b></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div><br/>
+        <table class="table table-striped b-t text-small" id="report">
+           <% if @tds_payment_voucher.payment_detail.type == ChequePayment%>
+              <p>&nbsp;&nbsp;&nbsp;<b>Cheque details:</b></p>
+          <thead>
+              <tr>
+                <th>Cheque number</th>
+                <th>Cheque date</th>
+                <th>Bank name</th>
+                <th>Branch</th>
+              </tr>
+          </thead> 
+          <tbody>  
+            <tr>
+              <td>
+              <%= @tds_payment_voucher.payment_detail.account_number %></td>
+              <td><%= @tds_payment_voucher.payment_detail.payment_date.strftime("%d-%m-%Y")%></td>
+              <td><%= @tds_payment_voucher.payment_detail.bank_name %></td>
+              <td><%= @tds_payment_voucher.payment_detail.branch %></td>
+            </tr>
+          </tbody>
+            <% elsif @tds_payment_voucher.payment_detail.type == InternetBankingPayment%>
+           <p>&nbsp;&nbsp;&nbsp;<b>Internet banking details:</b></p>
+           <thead>
+              <tr>
+                <th>Transaction Date</th>
+                <th>Bank name</th>
+                <th>Transaction Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= @tds_payment_voucher.payment_detail.payment_date.strftime("%d-%m-%Y")%></td>
+                <td><%= @tds_payment_voucher.payment_detail.bank_name %></td>
+                <td><%= @tds_payment_voucher.payment_detail.transaction_reference%></td>
+              </tr>
+            </tbody>
+            <% end %>
+          </table>
+          <% if !@tds_payment_voucher.description.blank? %>
+            <div>
+                &nbsp;&nbsp;&nbsp;<label>Description:</label><br/>
+                &nbsp;&nbsp;&nbsp;<%= breaking_word_wrap(@tds_payment_voucher.description) %>
+            </div><br/>
+          <% end %>
+        </section>
+  </section>
+</section>

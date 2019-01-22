@@ -1,0 +1,139 @@
+ <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render "shared/flash_msg" %><br />
+           &nbsp;<span class="xxsmall light">Duration: <%= @start_date %> To <%= @end_date %></span>
+          <div class="table-responsive">
+            <table class="table table-striped b-t text-small">
+             <thead>
+                  
+                  <tr strong style="font-size:12px;">
+                    <th width="5%">Sr.No</th>
+                    <th width ="15%">Customer Name</th>
+                    <th width ="8%">Invoice No.</th>
+                    <th width ="9%">Invoice Date</th>
+                    <th width ="10%">Outstatnding Amount(<%=(@company.currency_code)%>)</th>.
+                    <th width ="10%">1-30 days</th>
+                    <th width ="10%">31-60 days</th>
+                    <th width ="10%">61-90 days</th>
+                    <th width ="10%">91-180 days</th>
+                    <th width ="10%">More Than 180 days</th>
+                  </tr>           
+             </thead>
+              <tbody>
+                    
+                    <% count = 0 %> <% count30 = 0%> <% count60 = 0%> <% count90 = 0%> <% count180 = 0%> <% count181 = 0%> <%total_outstanding =0%> <%total_outstanding30 =0%> <%total_outstanding60 =0%><%total_outstanding90=0%> <%total_outstanding180 =0%> <%total_outstanding181 =0%><%precentage=0%><%precentage1=0%><%precentage2=0%><%precentage3=0%><%precentage4=0%>
+                    <% @invoice.each do |invoice|%>
+                    <% outstanding_days = (Time.zone.now.to_date - invoice.invoice_date) %>
+                    <tr>
+                    <td><%= count +=1%></td>
+                    <td><%=invoice.customer_name %></td>
+                    <td><%=invoice.invoice_number%></td>
+                    <td><%=invoice.invoice_date%></td>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}" %></td>
+                     <% total_outstanding +=invoice.outstanding %> 
+                    <%if outstanding_days <=30  %>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}" %></td>
+                    <%total_outstanding30 += invoice.outstanding%>
+                    <% count30 +=1%>
+                    <% else %>
+                    <td></td>
+                    <% end %>
+
+                   <%if outstanding_days >30 && outstanding_days <= 60 %>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}"  %></td>
+                    <%total_outstanding60 += invoice.outstanding%>
+                    <% count60 +=1%>
+                    <% else %>
+                    <td></td>
+                    <% end %>
+
+                   <%if outstanding_days >60 && outstanding_days <= 90 %>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}"%></td>
+                    <%total_outstanding90 += invoice.outstanding%>
+                    <% count90 +=1%>
+                     <% else %>
+                    <td></td>
+                    <% end %>
+
+                    <%if outstanding_days >90 && outstanding_days <= 180 %>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}"%></td>
+                    <%total_outstanding180 += invoice.outstanding%>
+                    <% count180 +=1%>
+                    <% else %>
+                    <td></td>
+                    <% end %>
+
+                    <%if outstanding_days >180 %>
+                    <td align="right"><%="#{format_amount(invoice.outstanding)}"  %></td>
+                    <%total_outstanding181 += invoice.outstanding%>
+                    <% count181 +=1%>
+                    <% else %>
+                    <td></td>
+                     <% end %>
+                    <%end%>
+                  </tr>
+                <tr class="blank_row">
+                  <td bgcolor="#FFFFFF" colspan="10">&nbsp;</td>
+              </tr>
+                   <tr>
+                     <td></td>
+                     <td></td>
+                     <td colspan="2">Total No. of Invoices </td>
+                     <td align="right"><%=count%></td>
+                     <td align="right"><%=count30%></td>
+                     <td align="right"><%=count60%></td>
+                     <td align="right"><%=count90%></td>
+                     <td align="right"><%=count180%></td>
+                     <td align="right"><%=count181%></td>
+                   </tr>
+                   <tr style="font-weight:bold">
+                     <td></td>
+                     <td></td>
+                     <td colspan="2"> Total Amount</td>
+                     <td align="right"><%="#{format_amount(total_outstanding)}"%></td>
+                     <td align="right"><%="#{format_amount(total_outstanding30)}"%></td>
+                     <td align="right"><%="#{format_amount(total_outstanding60)}"%></td>
+                     <td align="right"><%="#{format_amount(total_outstanding90)}"%></td>
+                     <td align="right"><%="#{format_amount(total_outstanding180)}"%></td>
+                     <td align="right"><%="#{format_amount(total_outstanding181)}"%></td>
+                    </tr>
+                     <tr style="font-weight:bold">
+                     <td></td>
+                     <td></td>
+                     <% if total_outstanding30 > 0%> 
+                     <%percentage = (total_outstanding30/total_outstanding)*100%>
+                     <%end%>
+
+                      <% if total_outstanding60 > 0%>
+                     <%percentage1 = (total_outstanding60/total_outstanding)*100%>
+                      <%end%>
+
+                      <% if total_outstanding90 > 0%> 
+                     <%percentage2 = (total_outstanding90/total_outstanding)*100%>
+                    <%end%>
+
+                     <% if total_outstanding180 > 0%>
+                     <%percentage3 = (total_outstanding180/total_outstanding)*100%>
+                     <%end%>
+
+                      <% if total_outstanding181 > 0%> 
+                     <%percentage4 = (total_outstanding181/total_outstanding)*100%>
+                     <%end%>
+                     <td colspan="2">Percentage</td>
+                     <td></td>
+                     <td align="right"><%= "#{number_with_precision(percentage, :precision=>2)}%" %></td>
+                     <td align="right"><%="#{number_with_precision(percentage1, :precision=>2)}%"%></td>
+                     <td align="right"><%="#{number_with_precision(percentage2, :precision=>2)}%"%></td>
+                     <td align="right"><%="#{number_with_precision(percentage3, :precision=>2)}%"%></td>
+                     <td align="right"><%="#{number_with_precision(percentage4, :precision=>2)}%"%></td>
+                     </tr>
+                </tbody>
+              <tfoot>
+                <%= render :partial => "footer" %>
+              </tfoot>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>

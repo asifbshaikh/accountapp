@@ -1,0 +1,18 @@
+<div class="content-box highlight" id="form1" style="display: none">
+      <header>
+        <h3>Upload File</h3>
+      </header>
+      <section>
+        <%= form_for :myfile, :url => {:action=>:create}, :html => {:multipart => true} do |f| %>
+          
+          <div class="field">
+            <%= f.label :uploaded_file, "Choose File" %><br />
+            <%= f.file_field :uploaded_file,:autofocus =>"autofocus", :size => "15" %>
+          </div>
+          <%= f.hidden_field :folder_id %>  &nbsp;
+          <div class="actions">
+            <%= f.submit "Upload", :class=>"btn btn-green btn-green"%>&nbsp;
+          </div>
+        <% end %>
+     </section>
+</div> 

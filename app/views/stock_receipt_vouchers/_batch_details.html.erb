@@ -1,0 +1,7 @@
+<% if @product.batch_enable? %>
+	<div class='receipt-batch-details' style='display:inline;'>
+		<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{params[:index]}][product_batch_attributes][batch_number]", "", :style => 'width:25%;display:inline;', :placeholder => "Batch number", :class=>'form-control bg-focus' %>
+		<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{params[:index]}][product_batch_attributes][manufacture_date]", "", :style => 'width:17%;display:inline;', :placeholder => "Mfd.date", :"data-date_index" => params[:index], :class=>'form-control bg-focus mfd-select' %>
+		<%= text_field_tag "stock_receipt_voucher[stock_receipt_line_items_attributes][#{params[:index]}][product_batch_attributes][expiry_date]", "", :style => 'width:17%;display:inline;', :placeholder => "Exp.date", :"data-date_index" => params[:index], :class=>'form-control bg-focus exp-select' %>
+	</div>
+<% end %>

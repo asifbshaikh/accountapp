@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  name: MyString
+  email: MyString
+  pan: 
+  sales_tax_no: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst: 
+  excise_reg_no: MyString
+  service_tax_reg_no: MyString
+  website: MyString
+
+two:
+  company_id: 1
+  name: MyString
+  email: MyString
+  pan: 
+  sales_tax_no: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst: 
+  excise_reg_no: MyString
+  service_tax_reg_no: MyString
+  website: MyString

@@ -1,0 +1,86 @@
+<table>
+	<tr>
+		<td colspan="5" align="center">Product Statement</td>
+	</tr>
+
+	<tr>
+		<td colspan="5" align="center">Showing details from <%= @start_date %> to <%= @end_date %></td>
+	</tr>
+	<tr>
+		<th colspan="5" align="left"><%= @product.name %></th>
+	</tr>
+	<% if @product.type=="ResellerItem" || @product.type=="PurchaseItem" %>
+		<tr>
+			<td colspan="5">Total Purchased <%= format_currency @stocks_data.purchase_amount %></td>
+		</tr>
+		<tr>
+			<td colspan="5">Average Purchase Unit Price <%= format_currency @stocks_data.average_purchase_price %></td>
+		</tr>
+	<% end %>
+	<% if @product.type=="ResellerItem" || @product.type=="SalesItem" %>
+		<tr>
+			<td colspan="5">Total Invoiced <%= format_currency @stocks_data.sales_amount %></td>
+		</tr>
+		<tr>
+			<td colspan="5">Average Invoice Unit Price <%= format_currency @stocks_data.average_sales_price %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td colspan="5">Net Quantity <%= number_with_precision @stocks_data.net_quantity, :precision=>2 %></td>
+	</tr>
+	<tr>
+		<td colspan="5">Net Profit/Loss <%= number_with_precision Product.net_total(@product,@start_date,@end_date,@branch_id) %></td>
+	</tr>
+	<% if @product.type=="ResellerItem" || @product.type=="PurchaseItem" %>
+		<thead>
+			<tr>
+				<th colspan="5" align="left">Purchase Summary</th>
+			</tr>
+			<tr>
+				<th>Purchase Voucher#</th>
+				<th>Vendor Name</th>
+				<th>Date</th>
+				<th>Unit Price (<%= @company.currency_code %>)</th>
+				<th>Quantity</th>
+				<th>Total (<%= @company.currency_code %>)</th>
+			</tr>
+		</thead>
+		<% @purchase_line_items.each do |line_item| %>
+	    <% purchase=line_item.purchase %>
+	    <tr>
+	      <td><%= purchase.purchase_number %></td>
+	      <td><%= purchase.vendor.name %></td>
+	      <td><%= purchase.record_date %></td>
+	      <td align="right"><%= number_with_precision line_item.unit_rate, :precision=>2 %></td>
+	      <td align="right"><%= number_with_precision line_item.quantity, :precision=>2 %></td>
+	      <td align="right"><%= format_amount line_item.amount %></td>
+	    </tr>
+	  <% end %>
+	 <% end %>
+	 <% if @product.type=="ResellerItem" || @product.type=="SalesItem" %>
+	  	<thead>
+	  		<tr>
+	  			<th colspan="5" align="left">Sales Summary</th>
+	  		</tr>
+	  		<tr>
+	  			<th>Invoice#</th>
+	  			<th>Customer Name</th>
+		        <th>Date</th>
+		        <th align="right">Unit Price (<%= @company.currency_code %>)</th>
+		        <th align="right">Quantity</th>
+		        <th align="right">Total (<%= @company.currency_code %>)</th>
+	  		</tr>
+	  	</thead>
+	  	<% @invoice_line_items.each do |line_item| %>
+	      <% invoice=line_item.invoice %>
+	      <tr>
+	        <td><%= invoice.invoice_number %></td>
+	        <td><%= invoice.customer_name %></td>
+	        <td><%= invoice.invoice_date %></td>
+	        <td align="right"><%= number_with_precision line_item.item_cost, :precision=>(line_item.item_cost == line_item.item_cost.round(2) ? 2 : 4) %></td>
+	        <td align="right"><%= number_with_precision line_item.quantity, :precision=>2 %></td>
+	        <td align="right"><%= format_amount (line_item.item_cost*line_item.quantity) %></td>
+	      </tr>
+	    <% end %>
+	  <% end %>
+</table>

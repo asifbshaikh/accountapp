@@ -1,0 +1,76 @@
+<div class="col-lg-5">
+  <div class="row">
+    <label class="col-lg-4 control-label"> Invoice Title </label>
+    <div class="col-lg-8 text-left">
+      <label class="control-label"><%= @invoice.invoice_title %> </label>
+      <%= f.hidden_field :voucher_title_id %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 text-right">
+      <label class="control-label"><%= @company.label.customer_label %></label>
+    </div>
+    <div class="col-lg-8">
+      <label class="control-label"><%= @invoice.cash_customer_name %></label>
+      <%= f.hidden_field :cash_customer_name %>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label">Mobile</label>
+    <div class="col-lg-8">
+      <label class="control-label"><%= @invoice.cash_customer_mobile %></label>
+      <%= f.hidden_field :cash_customer_mobile %>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label">Email</label>
+    <div class="col-lg-8">
+    <label class="control-label"><%= @invoice.cash_customer_email %></label>
+    <%= f.hidden_field :cash_customer_email %>
+    </div>
+  </div>
+  <% if @invoice.gst_invoice? %>
+  <div class="row">
+    <label class="col-lg-4 control-label">Customer GSTIN</label>
+    <div class="col-lg-8">
+    <label class="control-label"><%= @invoice.cash_customer_gstin %></label>
+    <%= f.hidden_field :cash_customer_gstin %>
+    </div>
+  </div>
+  <% end %>
+</div>
+<div class="col-lg-3">
+  <div class="row">
+      <div class="col-lg-4 text-right">
+        <label class="control-label">Invoice #</label>
+      </div>
+      <div class="col-lg-8">
+        <% if @company.invoice_setting.free_format? %>
+          <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+        <% else %>
+          <label class="control-label">
+            <%= @invoice.invoice_number%>
+            <%= f.hidden_field :invoice_number %>
+          </label>
+        <% end %>
+      </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label">Date</label>
+    <div class="col-lg-8">
+      <label class="control-label">
+        <%= @invoice.invoice_date %>
+        <%= f.hidden_field :invoice_date %>
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-lg-4 control-label">Account</label>
+    <div class="col-lg-8 text-left">
+      <label class="control-label">
+        <%= @invoice.account.name %>
+        <%= f.hidden_field :account_id %>
+      </label>
+    </div>
+  </div>
+</div>

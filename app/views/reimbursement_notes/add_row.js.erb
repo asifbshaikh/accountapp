@@ -1,0 +1,4 @@
+$("#row-loader").remove();
+$("#row_link").before('<%= escape_javascript render( "reimbursement_note_line_items",{ :reimbursement_note_line_item=> @reimbursement_note_line_item, :index => params[:index]} ) %>');
+$("#row_link").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');
+

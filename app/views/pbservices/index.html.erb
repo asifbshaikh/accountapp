@@ -1,0 +1,59 @@
+ <section id="content">
+   <div class="error-place"> </div>
+    <section class="main padder">
+      <div class="row">
+       <div class="col-lg-9">
+        <h2><i class="icon-check text" align="left"></i> Bookkeeping & Legal Compliance</h2>
+       </div> 
+
+        <div class="col-lg-3" align="right">
+        <br/>
+              <%= link_to raw("<i class='icon-phone'></i>Call Me, I'm Interested"),"/pbservices/mail_request", :class=>'btn btn-success btn-lg' %>
+        <br/>
+        <br/>
+        </div>
+          <div class="col-lg-9">
+            <p><h4>Not getting time to keep your accounts in order? Confused with legalities of running a business?</h4></p>
+            <p><h5>Now, there is a smarter way - ProfitBooks has partnered with best bookkeeping and compliance service providers in India.</h5></p> 
+            <p><h5>You can outsource your accounting work to these companies and focus on growing your business.</h5></p>
+            <br />
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <section class="panel">
+                <header class="panel-heading bg-white" align="center"><strong><%= image_tag  "complyguru-logo.png" %> </strong></header>
+                <div class="panel-body  bg-lighter">
+                  <h5>Comply Guru Team consists of professional bookkeepers led by CA Nikhil Sabadra. This team of expert accountants is serving hundereds of small businesses since 15+ years. Think of them as your cloud accountant!</h5>
+                  <br/>
+                  <h5>Get help with:</h5>
+                  <h5><i class="icon-check"></i> Day To Day Bookeeping - Just email the documents & relax.</h5>
+                  <h5><i class="icon-check"></i> Service Tax Calculation & Return Filing </h5>
+                  <h5><i class="icon-check"></i> TDS Calculation & Return Filing </h5>
+                  <h5><i class="icon-check"></i> ROC Compliances </h5>
+                </div>
+              </section>
+            </div>
+            <div class="col-lg-6">
+              <section class="panel">
+                <header class="panel-heading bg-white" align="center"><strong> <%= image_tag  "legal_raasta_logo.png" %></strong></header>
+                <div class="panel-body  bg-lighter">
+                 <h5>LegalRaasta currently has a network of 100+ professionals including experienced Chartered Accountants, Company Secretaries, Lawyers, Cost Accountants, Chartered Engineers and Bankers.</h5>
+                 <br/>
+                 <h5>Get help with:</h5>
+                 <h5><i class="icon-check"></i> Company Registration (Pvt Ltd, LLP, etc)</h5>
+                 <h5><i class="icon-check"></i> Trademark, Copyright or Patent Filing </h5>
+                 <h5><i class="icon-check"></i> FSSAI Food License, Trade License & IEC Registration </h5>
+                 <h5><i class="icon-check"></i> ISO Registration </h5>
+               </div>
+             </section>
+           </div>
+         </div>
+  </section>
+</section>
+
+              <script>
+              <% if @mail_request==1 %>
+              $(".error-place").after("<div class='alert alert-success invoice-setting-notif'> Your request for book keeping and legal services has been forwarded and our executive will reach you soon</div>")
+              <% end %>
+              </script>

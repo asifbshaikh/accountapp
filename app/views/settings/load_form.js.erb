@@ -1,0 +1,485 @@
+$(".on-go-form").html('<%= escape_javascript render :partial=>"#{params[:form_type]}" %>');
+
+
+//for adding load setting page tab
+//This code is written by Ashish Shal Date-21-01-2017 for setting page
+
+// for payroll details
+
+$('.dep_add').hide();
+  $('a#add_dep').click( function(e){
+      $('.dep_add').toggle('slow');
+      $('.dep_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_dep').click( function(e){
+      $('.dep_info').toggle('slow');
+      $('.dep_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+$('.deg_add').hide();
+  $('a#add_deg').click( function(e){
+      $('.deg_add').toggle('slow');
+      $('.deg_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_deg').click( function(e){
+      $('.deg_info').toggle('slow');
+      $('.deg_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('.hld_add').hide();
+  $('a#add_hld').click( function(e){
+      $('.hld_add').toggle('slow');
+      $('.hld_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_hld').click( function(e){
+      $('.hld_info').toggle('slow');
+      $('.hld_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+$('.lvtp_add').hide();
+  $('a#add_lvtp').click( function(e){
+      $('.lvtp_add').toggle('slow');
+      $('.lvtp_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_lvtp').click( function(e){
+      $('.lvtp_info').toggle('slow');
+      $('.lvtp_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+$("#option-payslip_signatory-enable").live("click", function(){
+    $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-payslip_signatory-disable").css('background-color','#f5f6f7');
+    $("#option-payslip_signatory-disable").css('color','#657483');
+
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_payslip_signatory: '1'},
+      url: 'enable_payslip_signatory'
+    });
+  });
+
+
+$("#option-payslip_signatory-disable").live("click", function(){
+    $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-payslip_signatory-enable").css('background-color',' #f5f6f7');
+    $("#option-payslip_signatory-enable").css('color','#657483');
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_payslip_signatory: '0'},
+      url: 'enable_payslip_signatory'
+    });
+  });
+
+// For adding Basic detail
+
+$('.edt_logo').hide();
+  $('a#add_logo').click( function(e){
+      $('.edt_logo').toggle('slow');
+      $('.company_logo').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_logo').click( function(e){
+      $('.company_logo').toggle('slow');
+      $('.edt_logo').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+// title form toggle
+$('.vttl_add').hide();
+  $('a#add_vttl').click( function(e){
+      $('.vttl_add').toggle('slow');
+      $('.vttl_info').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+$('a#bck_vttl').click( function(e){
+      $('.vttl_info').toggle('slow');
+      $('.vttl_add').hide();
+      $('#close_ticket').hide();
+    // e.stopProgration();
+        });
+
+
+// custom field for selected voucher
+
+ var strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+ var cstm_fld = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-customfield'));
+   if(strategy && $.inArray(strategy['voucher_type'], [1,5,15,16,18]) >= 0){
+      $(".customField").show();
+      $("#custom_label1").val(cstm_fld['custom_label1']);
+      $("#custom_label2").val(cstm_fld['custom_label2']);
+      $("#custom_label3").val(cstm_fld['custom_label3']);
+      $("#default_value1").val(cstm_fld['default_value1']);
+      $("#default_value2").val(cstm_fld['default_value2']);
+      $("#default_value3").val(cstm_fld['default_value3']);
+      $("#cstmfld_status").val(cstm_fld['status']);
+      if(cstm_fld['status'] == false){
+        $("#cstmfld_status_0").attr("checked", "checked")
+        $("#cstmfld_status_1").removeAttr("checked")
+        $("#status_0").addClass('checked');
+        $("#status_1").removeClass('checked');
+       }else{
+        $("#cstmfld_status_0").removeAttr("checked")
+        $("#cstmfld_status_1").attr("checked", "checked")
+        $("#status_0").removeClass('checked');
+        $("#status_1").addClass('checked');
+       }
+    }else{
+      $(".customField").hide();
+    }
+
+// to change between yes and no in Instamojo for Invoices
+  $("#option-instamojo-enable").live("click", function(){
+    $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-instamojo-disable").css('background-color','#f5f6f7');
+    $("#option-instamojo-disable").css('color','#657483');
+
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_gateway: '1'},
+      url: 'enable_gateway'
+    });
+  });
+
+  $("#option-instamojo-disable").live("click", function(){
+    $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-instamojo-enable").css('background-color',' #f5f6f7');
+    $("#option-instamojo-enable").css('color','#657483');
+
+    $.ajax({
+      type: 'GET',
+      data: {enable_gateway: '0'},
+      url: 'enable_gateway'
+    });
+  });
+
+// to change between yes and no in CashFree for Invoices
+  $("#option-cashfree-enable").live("click", function(){
+     $(this).css('background-color','#89cb4e');
+    $(this).css('color','#fff');
+    $("#option-cashfree-disable").css('background-color',' #f5f6f7');
+    $("#option-cashfree-disable").css('color','#657483');
+    $.ajax({
+      type: 'GET',
+      data: {enable_cashfree: '1'},
+      url: 'enable_gateway'
+    });
+  });
+
+  $("#option-cashfree-disable").live("click", function(){
+ $(this).css('background-color','#FF8585');
+    $(this).css('color','#fff');
+    $("#option-cashfree-enable").css('background-color',' #f5f6f7');
+    $("#option-cashfree-enable").css('color','#657483');
+    $.ajax({
+      type: 'GET',
+      data: {enable_cashfree: '0'},
+      url: 'enable_gateway'
+    });
+  });
+// for adding instamojo keys
+
+  $('.key_add').hide();
+  $('a#add_key').click( function(e){
+    $('.key-info-body').hide();
+    $('.key_add').show();
+  });
+  $('a#bck_key').click( function(e){
+    $('.key_add').hide();
+    $('.key-info-body').show();
+  });
+// for adding CashFree keys
+
+   $('.cashfree_key_add').hide();
+  $('a#cashfree_add_key').click( function(e){
+    $('.cfkey-info-body').hide();
+    $('.cashfree_key_add').show();
+  });
+  $('a#bck_key').click( function(e){
+    $('.cashfree_key_add').hide();
+    $('.cfkey-info-body').show();
+  });
+
+
+$(document).ready(function() {
+  jQuery(".best_in_place").best_in_place()
+});
+
+// for adding Warehouse
+
+ $('.war_add').hide();
+  $('a#add_war').click( function(e){
+    $('.war_info').hide();
+    $('.war_add').show();
+  });
+  $('a#bck_war').click( function(e){
+    $('.war_add').hide();
+    $('.war_info').show();
+  });
+
+
+
+  // showing current voucher number strategy for selected voucher
+  var strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+  if(strategy){
+    if(strategy['voucher_number_strategy']==0){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_0").attr("checked", "checked")
+    }else if(strategy['voucher_number_strategy']==2){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").attr("checked", "checked")
+    }else{
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_1").attr("checked", "checked")
+
+      $("#prefix").val(strategy['prefix']);
+      $("#suffix").val(strategy['suffix']);
+      $("#starting_sequence").val(strategy['voucher_sequence']);
+      if(parseInt(strategy['voucher_sequence']) > 0){
+        // $("#starting_sequence").attr('readonly', 'readonly');
+      }else{
+        // $("#starting_sequence").removeAttr('readonly');
+      }
+    }
+  }
+
+  $(".voucher_type_select").change(function(){
+    strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+    if(strategy['voucher_number_strategy']==0){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_0").attr("checked", "checked")
+      $("#strategy_1").removeClass('checked');
+      $("#strategy_2").removeClass('checked');
+      $("#strategy_0").addClass('checked');
+
+      $("#prefix").val("");
+      $("#suffix").val("");
+      $("#starting_sequence").val("");
+      // $("#starting_sequence").removeAttr('readonly');
+    }else if(strategy['voucher_number_strategy']==2){
+      $("#voucher_number_strategy_1").removeAttr("checked")
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").attr("checked", "checked")
+      $("#strategy_1").removeClass('checked');
+      $("#strategy_0").removeClass('checked');
+      $("#strategy_2").addClass('checked');
+
+      $("#prefix").val("");
+      $("#suffix").val("");
+      $("#starting_sequence").val("");
+    }else{
+      $("#voucher_number_strategy_0").removeAttr("checked")
+      $("#voucher_number_strategy_2").removeAttr("checked")
+      $("#voucher_number_strategy_1").attr("checked", "checked")
+      $("#strategy_0").removeClass('checked');
+      $("#strategy_2").removeClass('checked');
+      $("#strategy_1").addClass('checked');
+
+      $("#prefix").val(strategy['prefix']);
+      $("#suffix").val(strategy['suffix']);
+      $("#starting_sequence").val(strategy['voucher_sequence']);
+      if(parseInt(strategy['voucher_sequence']) > 0){
+        // $("#starting_sequence").attr('readonly', 'readonly');
+      }else{
+        // $("#starting_sequence").removeAttr('readonly');
+      }
+    }
+  });
+
+
+  $("#strategy_1_label").click(function(){
+     $("#strategy_1").addClass('checked');
+     $("#strategy_0").removeClass('checked');
+      $("#strategy_2").removeClass('checked');
+
+    $("#prefix").val(strategy['prefix']);
+    $("#suffix").val(strategy['suffix']);
+    $("#starting_sequence").val(strategy['voucher_sequence']);
+  });
+
+  $("#strategy_0_label").click(function(){
+    $("#strategy_0").addClass('checked');
+    $("#strategy_1").removeClass('checked');
+    $("#strategy_2").removeClass('checked');
+
+    $("#prefix").val("");
+    $("#suffix").val("");
+    $("#starting_sequence").val("");
+  });
+
+   $("#strategy_2_label").click(function(){
+    $("#strategy_2").addClass('checked');
+     $("#strategy_0").removeClass('checked');
+      $("#strategy_1").removeClass('checked');
+    $("#prefix").val("");
+    $("#suffix").val("");
+    $("#starting_sequence").val("");
+  });
+
+
+//Show these fields in report
+
+$("#status_0_label").click(function(){
+    $("#status_0").addClass('checked');
+    $("#status_1").removeClass('checked');
+    $("#prefix").val("");
+    $("#suffix").val("");
+    $("#starting_sequence").val("");
+ });
+
+ $("#status_1_label").click(function(){
+    $("#status_1").addClass('checked');
+    $("#status_0").removeClass('checked');
+    $("#prefix").val(strategy['prefix']);
+    $("#suffix").val(strategy['suffix']);
+    $("#starting_sequence").val(strategy['voucher_sequence']);
+});
+
+
+
+// script to display customer notes and terms and conditions on few voucher settings
+$(".voucher_type_select").change(function(){
+    strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+    if($.inArray(strategy['voucher_type'], [1,5,6,20]) >= 0){
+      $(".cntc").show();
+      $("#customer_notes").val(strategy['customer_notes']);
+      $("#terms_and_conditions").val(strategy['terms_and_conditions']);
+    }else{
+      $(".cntc").hide();
+    }
+  });
+
+
+// custom field for selected voucher
+
+ var strategy = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-strategy'));
+ var cstm_fld = jQuery.parseJSON($(".voucher_type_select option:selected").attr('data-customfield'));
+   if(strategy && $.inArray(strategy['voucher_type'], [1,5,15,16,18]) >= 0){
+      $(".customField").show();
+      $("#custom_label1").val(cstm_fld['custom_label1']);
+      $("#custom_label2").val(cstm_fld['custom_label2']);
+      $("#custom_label3").val(cstm_fld['custom_label3']);
+      $("#default_value1").val(cstm_fld['default_value1']);
+      $("#default_value2").val(cstm_fld['default_value2']);
+      $("#default_value3").val(cstm_fld['default_value3']);
+      $("#cstmfld_status").val(cstm_fld['status']);
+      if(cstm_fld['status'] == false){
+        $("#cstmfld_status_0").attr("checked", "checked")
+        $("#cstmfld_status_1").removeAttr("checked")
+        $("#status_0").addClass('checked');
+        $("#status_1").removeClass('checked');
+       }else{
+        $("#cstmfld_status_0").removeAttr("checked")
+        $("#cstmfld_status_1").attr("checked", "checked")
+        $("#status_0").removeClass('checked');
+        $("#status_1").addClass('checked');
+       }
+    }else{
+      $(".customField").hide();
+    }
+
+//Holiday date picker
+
+$("#holiday_holiday_date").datepicker({format: 'dd-mm-yyyy'});
+
+ //end 
+
+ // All PDF templates code
+
+ $("#classic-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/classic.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#modern1-preview").click(function(){
+   $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/modern1.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#thermal-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/thermal.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+
+ $("#tabular-temp-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/tabular.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#SMB-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/smb.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#professional-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/professional.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#fix_table-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/retail.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+ $("#minimalist-preview").click(function(){
+  $(".image-form").html('<div id="modal1" class="modal fade in" aria-hidden="false" style="display: block;"><div class="modal-dialog"><div class="modal-content" id="modal-screen"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon-remove" id="form-dismiss"></i></button><br></div><div class="modal-body"><iframe src="/images/screens/minimalist.pdf" width=550 height=600></iframe></div></div></div></div></div><div class="modal-backdrop fade in"></div>');
+    $(".image-form").show();
+    $(".image-form").click(function() {
+    $(".image-form").hide();
+})
+  });
+
+
+//code end
+
+

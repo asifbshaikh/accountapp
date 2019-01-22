@@ -1,0 +1,60 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Reconciliation  Report</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a> 
+    <p></p>
+    </div>
+  </div>
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+              <%= render :partial => "report_filter" %>
+              <% if @unreconciled_transactions.blank? %>
+              <br />
+              <%= render :partial => "shared/no_record" %>
+              <% else %>
+              <%= render :partial => "report_header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width="6%">Sr. No</th>
+                    <th width ="9%">Date</th>
+                    <th width ="35%">Description</th>
+                    <th width ="24%" class="text-right">Credit (<%=@company.currency_code%>)</th>
+                    <th width="24%" class="text-right">Debit (<%=@company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% count = 1%>
+                <% @unreconciled_transactions.each do |transaction|%>
+                <tr>
+                  <td><%= count%></td>
+                  <td><%= transaction.transaction_date%></td>
+                  <td><%= transaction.description%></td>
+                  <td align="right"><%= transaction.credit%></td>
+                  <td align="right"><%= transaction.debit%></td>
+                </tr>
+                  <% count += 1%>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+            <footer class="row">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>    
+</div>
+</section>
+</section>

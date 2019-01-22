@@ -1,0 +1,8 @@
+<% if !@current_user.auditor? %>
+	<% if !@invoice_return.invoice.gst_invoice? %>
+  		<%= render "#{InvoiceReturn::ALLOCATION_STATUS[@invoice_return.is_credit_note_allocated?]}_invoice_return_actions"%>
+  	<% else %>
+  		<%= render "#{InvoiceReturn::ALLOCATION_STATUS[@invoice_return.is_gst_credit_note_allocated?]}_invoice_return_actions"%>
+  	<% end %>	
+<% end %>
+<%= render "frozen_invoice_return_actions" %>

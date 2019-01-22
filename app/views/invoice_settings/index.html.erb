@@ -1,0 +1,28 @@
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Invoice sequence</th>
+    <th>Invoice no strategy</th>
+    <th>Invoice prefix</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invoice_settings.each do |invoice_setting| %>
+  <tr>
+    <td><%= invoice_setting.company_id %></td>
+    <td><%= invoice_setting.invoice_sequence %></td>
+    <td><%= invoice_setting.invoice_no_strategy %></td>
+    <td><%= invoice_setting.invoice_prefix %></td>
+    <td><%= link_to 'Show', invoice_setting %></td>
+    <td><%= link_to 'Edit', edit_invoice_setting_path(invoice_setting) %></td>
+    <td><%= link_to 'Destroy', invoice_setting, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invoice setting', new_invoice_setting_path %>

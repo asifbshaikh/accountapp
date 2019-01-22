@@ -1,0 +1,14 @@
+<tr>
+  <th><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></th>
+  <th colspan ="2"><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+  <th class="text-right"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Quantity" %></th>
+  <th class="text-right"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></th>
+  <% if @invoice.discount != 0 %>
+    <th class="text-right"><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount%" %></th>
+  <% end %>
+  <% if @invoice.tax != 0 %>
+    <th>Tax Rate</th>
+    <th class="text-right">Tax Amount</th>
+  <% end %>
+  <th class="text-right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %>(<%= @invoice.currency%>)</th>
+</tr>

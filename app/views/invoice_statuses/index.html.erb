@@ -1,0 +1,25 @@
+<h1>Listing invoice_statuses</h1>
+
+<table>
+  <tr>
+    <th>Status</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invoice_statuses.each do |invoice_status| %>
+  <tr>
+    <td><%= invoice_status.status %></td>
+    <td><%= invoice_status.description %></td>
+    <td><%= link_to 'Show', invoice_status, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+    <td><%= link_to 'Edit', edit_invoice_status_path(invoice_status) %></td>
+    <td><%= link_to 'Delete', invoice_status, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invoice status', new_invoice_status_path %>

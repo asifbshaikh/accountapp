@@ -1,0 +1,76 @@
+<%= render "auto_calculate" %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for @purchase_advance,:html=>{:class=>'form-horizontal'} do |f| %>
+          
+          <%= f.hidden_field :voucher_date %>
+          <%= render 'shared/form_error', :object => @purchase_advance %>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label class="control-label">Voucher Number</label>
+            </div>
+            <div class="col-lg-2" style='margin-bottom:0;margin-top:0;padding-top:7px;'>
+              <%= @purchase_advance.voucher_number %>
+              <%= f.hidden_field :voucher_number %>
+            </div>
+          </div>
+          <div class="on-go-form">
+            <%= render "advance_payment_form" %>
+          </div>
+
+          <input type="hidden" name="source" id="source" value="payment"/>
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+            <%= label_tag "payment_mode", "Payment Mode", :class=>'control-label-required' %>
+            </div>
+            <div class='col-lg-10'>
+              <div class="btn-group" data-toggle="buttons" >
+                <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+                <%= radio_button_tag 'transaction_type','cash' %>
+                <i class="icon-ok icon-large text-active"></i>Cash
+                </label>
+                <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+                <%= radio_button_tag "transaction_type",'cheque' %>
+                <i class="icon-ok icon-large text-active"></i>Cheque
+                </label>
+                <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+                <%= radio_button_tag "transaction_type",'card'%>
+                <i class="icon-ok icon-large text-active"></i>Credit/Debit Card
+                </label>
+                <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+                <%= radio_button_tag "transaction_type",'ibank' %>
+                <i class="icon-ok icon-large text-active"></i>Internet Banking
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-2'></div>
+            <div class="pmnt"></div>
+            <%= render :partial => "#{params[:transaction_type]}" unless @payment_detail.blank? || params[:transaction_type].blank? %> 
+          </div>
+                     
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">                      
+            <%= f.submit "Save", :class=>"btn btn-success", :id=>"payment-save" %>
+              <%= link_to 'Cancel', purchase_advances_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %> 
+      </div>
+    </section>
+  </div>
+</div>
+<div id='modal-payment-to-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @to_account_heads, :transaction_type=>'paid_to' %>
+</div>
+<div id='modal-payment-from-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @from_account_heads, :transaction_type=>'paid_from' %>
+</div>
+<script type="text/javascript"> 
+  $("#purchase_advance_from_account_id").select2();
+  $("#purchase_advance_to_account_id").select2();
+  $("#purchase_advance_tds_account_id").select2();
+</script>

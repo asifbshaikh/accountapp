@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  gsp_id: 1
+  action: MyString
+  txn: MyString
+  payload: MyText
+  : 
+  sent_time: 2017-09-03 11:12:39
+
+two:
+  company_id: 1
+  gsp_id: 1
+  action: MyString
+  txn: MyString
+  payload: MyText
+  : 
+  sent_time: 2017-09-03 11:12:39

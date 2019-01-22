@@ -1,0 +1,42 @@
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Invoices &rarr;<span>Custom fields</span></h1>
+    </div>
+</div>
+<!-- Page content -->
+<div id="page" >
+  <!-- Wrapper -->
+  
+  <div class="wrapper" >
+    <!-- Left column/section -->
+    <section class="column width6 first"><br />
+     <div class="highlight">
+     	<%= render :partial => "shared/flash_msg" %>
+       <%= render :partial => "custom_field_form" %>
+     </div><br />
+	</section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+		<aside class="column width2"><br />
+			<a href="/invoices" class="btn btn-special btn-green btn-green-index"><img src ="/images/white_icon/ic_list.png" class ="icon"/> View invoices</a>
+			<div id="rightmenu">
+				<dl class="first">
+					<dt><img width="16" height="16" alt="" SRC="/images/help.png">
+					</dt>
+					<dd>
+						<dd><a href="#">Help</a></dd>
+					</dd>
+					<dd class="last">
+					  Set the name of the custom fields you want to add in invoice
+					</dd>
+				</dl>
+			</div><br />
+		</aside>
+		 <!-- End of Right column/section -->
+  
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+</div>
+

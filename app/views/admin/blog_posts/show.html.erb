@@ -1,0 +1,42 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+          <h2><i class="icon-edit text"></i>View Post</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+      <a href="<%=edit_admin_blog_post_path(@blog_post)%>" class="btn btn-white btn-lg" title="Edit"><i class="icon-edit"></i></a>
+      <a href="/admin/blog_posts" class="btn btn-white btn-lg" title="Back"><i class="icon-mail-reply"></i></a>
+      <p></p>
+      </div>  
+    </div>
+ <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+         <%= render :partial => "shared/flash_msg"%>
+          <div class="panel-body">
+             <h1><%= @blog_post.title %></h1>
+          <p>
+            <b>by </b>
+            <%= @blog_post.author %> |
+            <b>Status:</b>
+            <%= @blog_post.blog_status %> |
+            <b>View count:</b>
+            <%= @blog_post.view_count %>|
+            <b>Category :</b>
+            <%= @blog_post.category%>
+          </p>
+          <p>
+            <b>Description:</b>
+            <%= raw(@blog_post.description)%>
+          </p>
+          <p>
+            <b>Content:</b>
+            <%= raw(@blog_post.content) %>
+          </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

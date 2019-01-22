@@ -1,0 +1,142 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Payment Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <a href="/payment_vouchers/new" class="btn btn-success btn-lg"><i class='icon-plus'></i>New Payment Voucher</a>
+        <% unless @payment_voucher.in_frozen_year? %>
+          <div class="btn-group">
+            <button  onclick="location.href= '<%= edit_payment_voucher_path(@payment_voucher)%>'"; class="btn btn-info btn-lg" > <i class="icon-edit"> </i> Edit</button>
+            <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span><i></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to raw('<i class="icon-trash"> </i>Delete '), payment_voucher_path(@payment_voucher), :method => "delete", :confirm => "Are you sure?" %></li>
+            </ul>
+          </div>
+        <% end %>
+        <%= link_to raw('<i class="icon-print"> </i>'), payment_voucher_path(@payment_voucher, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target =>"_blank" %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), payment_vouchers_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg" %>
+        <div class='row'>
+          <div class='col-sm-6'>
+            <!-- Right details -->
+            <section class="panel">
+              <header class="panel-heading bg-light">
+                <strong> Money paid to <%= @payment_voucher.to_account_name %></strong>
+              </header>
+              <div class="panel-body">
+                <div class="col-sm-7">
+                <p><strong>Voucher #: </strong> <%=@payment_voucher.voucher_number%></p>
+
+                <p><strong>Payment Date :</strong> <%=@payment_voucher.payment_date %></p>
+
+                <p><strong>Paid From :</strong> <%=  @payment_voucher.from_account_name%> </p>
+
+                <p><strong> Amount :</strong> <%= @payment_voucher.currency_code%> <%= format_amount(@payment_voucher.amount)%> </p>
+
+                <% if !@payment_voucher.tds_account_id.blank? && !@payment_voucher.tds_amount.blank? %>
+                  <p><strong>TDS Amount :</strong> <%= format_currency @payment_voucher.tds_amount %></p>
+                  <p><strong>TDS Section :</strong> <%= Account.find(@payment_voucher.tds_account_id).name %></p>
+                <% end %>
+                </div>
+                <div class="col-sm-5">
+                  <p><strong> Currency :</strong> <%=  @payment_voucher.currency_code %> </p>
+                  <% if @payment_voucher.exchange_rate != 0%>
+                  <p><strong>Exchange Rate :</strong> <%=  @payment_voucher.exchange_rate %> </p>
+                  <% end %>
+                  <% if @payment_voucher.advanced? %>
+                    <p><strong>Unallocated Amount : </strong> <%= @payment_voucher.currency_code %> <%= format_amount(@payment_voucher.unallocated_amount)%></p>
+                    <% if !@payment_voucher.tds_amount.blank? && @payment_voucher.tds_amount > 0 %>
+                      <p><strong>Unallocated TDS Amount : </strong><%= @payment_voucher.currency_code %> <%= format_amount(@payment_voucher.unallocated_tds_amount) %></p>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="icon-calendar"> </i>Created on <%=@payment_voucher.created_at.strftime("%d-%m-%Y") %> by <%= @payment_voucher.created_by_user %>
+                  </div>
+                  <div class="col-sm-6">
+                    <i class="icon-suitcase"> </i>   Payment Mode:  <%= @payment_voucher.payment_detail.payment_mode %>
+                  </div>
+                </div>
+              </footer>
+            </section>  
+            <!-- end left detals -->
+          </div>
+          <% unless @payment_voucher.other_payment? %>
+            <div class='col-sm-6'>
+              <div class="panel">
+                <header class="panel-heading">
+                  <div class="row">
+                    <div class='col-lg-6 text-left'>Payment Allocation History</div>
+                    <div class='col-lg-6 text-right'>
+                      <% if @payment_voucher.advanced? && @payment_voucher.unallocated_amount > 0 %>
+                        <%= link_to "<i class='icon-sitemap'> </i>Allocate To Purchases/Expenses".html_safe, {:controller=>:payment_vouchers, :action=> :allocate, :id=>@payment_voucher.id }, :class=>"btn btn-sm btn-info" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </header>
+                <div class=''>
+                  <% if @payment_voucher.purchases_payments.blank? && @payment_voucher.expenses_payments.blank? %>
+                    <%= render "shared/no_record" %>
+                  <% else %>
+                    <table class="table table-striped m-b-none text-small">
+                      <thead>
+                        <tr>
+                          <th>Voucher No.</th>
+                          <% unless @payment_voucher.tds_amount.blank? || @payment_voucher.tds_amount <=0 %>
+                            <th class='text-right'>TDS Deducted(<%= @payment_voucher.currency %>)</th>
+                          <% end %>
+                          <th class='text-right'>Paid Amount(<%= @payment_voucher.currency %>)</th>
+                        </tr>
+                      </thead>  
+                      <tbody>
+                        <% @payment_voucher.purchases_payments.each do |purchase_payment| %>
+                          <tr>
+                            <td><%= link_to purchase_payment.purchase.purchase_number, purchase_payment.purchase %></td>
+                            <% unless @payment_voucher.tds_amount.blank? || @payment_voucher.tds_amount <=0 %>
+                              <td class='text-right'><%= format_amount(purchase_payment.tds_amount) %></td>
+                            <% end %>
+                            <td class='text-right'><%= format_amount(purchase_payment.amount)%></td>
+                          </tr>
+                        <% end %>
+                        <% @payment_voucher.expenses_payments.each do |expense_payment| %>
+                          <tr>
+                            <td><%= link_to expense_payment.expense.voucher_number, expense_payment.expense %></td>
+                            <% unless @payment_voucher.tds_amount.blank? || @payment_voucher.tds_amount <=0 %>
+                              <td class='text-right'><%= format_amount(expense_payment.tds_amount)%></td>
+                            <% end %>
+                            <td class='text-right'><%= format_amount(expense_payment.amount) %></td>
+                          </tr>
+                        <% end %>
+                        <% if @payment_voucher.advanced? %>
+                          <tr>
+                            <td class='text-right'><strong>Total</strong></td>
+                            <% unless @payment_voucher.tds_amount.blank? || @payment_voucher.tds_amount <=0 %>
+                              <td class='text-right'><strong><%= format_amount (@payment_voucher.expenses_payments.sum(:tds_amount) + @payment_voucher.purchases_payments.sum(:tds_amount))%></strong></td>
+                            <% end %>
+                            <td class='text-right'> <strong><%= format_amount(@payment_voucher.expenses_payments.sum(:amount) + @payment_voucher.purchases_payments.sum(:amount)) %></strong></td>
+                          </tr>
+                        <% end %>
+                      </tbody>            
+                    </table>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>

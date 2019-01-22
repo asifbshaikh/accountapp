@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>ProfitBooks Accounting Software</title>
+    <meta name="description" content="Register with ProfitBooks accounting software. Create invoices, track expenses and generate tax reports in few clicks.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'app/bootstrap.css' %>
+    <%= stylesheet_link_tag 'app/font-awesome.min.css' %>
+    <%= stylesheet_link_tag 'app/plugin.css' %>
+    <%= stylesheet_link_tag 'app/style.css' %>
+    <%= stylesheet_link_tag 'app/landing.css' %>
+    <%= javascript_include_tag 'login' %>
+    <%= javascript_include_tag 'application' %>
+    <%= csrf_meta_tag %>
+    <!--[if lt IE 9]>
+      <script src="js/ie/respond.min.js"></script>
+      <script src="js/ie/html5.js"></script>
+    <![endif]-->
+    <!--Intercom Acquire Starts -->
+    <script>
+window.intercomSettings = {
+  app_id: "402c2c9d003ab5c965babf93ec504bed456a7bc4"
+};
+    </script>
+    <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/402c2c9d003ab5c965babf93ec504bed456a7bc4';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+    <!-- Start of Async HubSpot Analytics Code -->
+    <script type="text/javascript">
+(function(d,s,i,r) {
+  if (d.getElementById(i)){return;}
+  var n=d.createElement(s),e=d.getElementsByTagName(s)[0];
+  n.id=i;n.src='//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/1827620.js';
+  e.parentNode.insertBefore(n, e);
+})(document,"script","hs-analytics",300000);
+    </script>
+    <!-- End of Async HubSpot Analytics Code -->
+  </head>
+  <body data-spy="scroll" data-target="#header" class="landing">
+    <!-- InstaMojo & CashFree rendering options start -->
+    <% if params[:payment_id].present? && params[:payment_request_id] .present? && !@pay_details.blank?%>
+      <% params[:plan]= 'Trial' %>
+      <div class="panel panel-success bg-lighter">
+        <div class="panel-heading text-center"> <i class="icon-ok-sign icon-large"></i> <strong>Thank You! <br>Your transaction with Instamojo was successful.</strong></div>
+        <div class="block ">
+          <br>
+          <p> &nbsp;&nbsp;<strong > Payment id: </strong><%= params[:payment_id] %></p>
+          <p>&nbsp;&nbsp;<strong> Towards: </strong><%= Company.find_by_id(@company.id).name %></p>
+          <p>&nbsp;&nbsp;<strong> Purpose: </strong><%=@pay_details.purpose %></p>
+          <p>&nbsp;&nbsp;<strong> Amount: </strong><%=@pay_details.amount + " INR" %></p>
+        </div>
+      </div>
+    <% end %>
+    <% if params[:cf_source].present? && params[:plan].present? && !@cashfreedetails.blank?%>
+      <% if @cashfreedetails.tx_status=='SUCCESS' %>
+        <div class="panel panel-success bg-lighter">
+          <div class="panel-heading text-center"> <i class="icon-ok-sign icon-large"></i> <strong>Thank You! </strong> <br>Your transaction for the amount of <%= @cashfreedetails.order_amount%> against the invoice with Order Id: <%=@cashfreedetails.order_id %> with CashFree was successful. The Transaction Reference Number is<strong> <%=@cashfreedetails.reference_id %></strong>. </div>
+        </div>
+      <% else %>
+        <div class="panel panel-danger bg-lighter">
+          <div class="panel-heading text-center"> <i class="icon-remove-sign icon-large"></i> <strong>Sorry!</strong><br>Your transaction with CashFree was not successful.</div>
+        </div>
+      <% end %>
+    <% end %>
+    <!-- InstaMojo & CashFree rendering options end -->
+    <!-- header -->
+    <header id="header" class="navbar ">
+      <div class="container">
+        <a class="navbar-brand" href="http://wwww.profitbooks.net"><img src="/assets/profitbooks-logo.png"></a>
+      </div>
+    </header>
+    <section id="content" style="margin:-125px">
+      <div class="main-visual">
+        <div class="bg-lighter">
+          <div class="container text-center">
+            <div class="row m-large">
+              <div class="col-lg-4 col-sm-4 media">
+                <!-- Form starts -->
+
+                <section class="panel bg-light">
+                  <header class="panel-heading text-center bg-info">
+                    Get started with ProfitBooks in less than a minute
+                  </header>
+                  <%= render :partial=> "shared/flash_msg"%>
+                  <%= form_for @company, :url => {:action=>:create}, :html=> {:class=>"form-horizontal panel-body"} do |f|%>
+                    <% if @company.errors.any? %>
+                      <div class="alert alert-danger">
+                        <h6>Uh-oh! You have <%= pluralize(@company.errors.count, "error") %>
+                        <ol>
+                          <% @company.errors.full_messages.each do |msg| %>
+                            <li><%= msg %></li>
+                          <% end %>
+                        </ol></h6>
+                      </div>
+                    <% end %>
+                    <%= hidden_field_tag 'plan', params[:plan] %>
+                    <%= hidden_field_tag 'token', params[:token] %>
+                    <%= hidden_field_tag 'id', params[:id] %>
+                    <!-- seting company country id in hidden tag -->
+                    <%= f.hidden_field :country_id, :value => Company.get_default_country.to_s %>
+                    <!-- country id set in above line -->
+
+                    <div class="row block">
+                      <div class="col-lg-12">
+                        <label class="control-label-required pull-left">Your Company Name</label>
+                        <%= f.text_field :name, :class=>"form-control", autofocus: true%>
+                        <small class="text-muted pull-left">minimum 4 characters</small>
+                      </div>
+                    </div>
+                    <div class="row block">
+                      <div class="col-lg-6">
+                        <label class="control-label-required pull-left">Email</label>
+                        <%= f.text_field :email, :placeholder =>"email@example.com", :class=>"form-control" %>
+                        <small class="text-muted pull-left">valid email address</small>
+                      </div>
+                      <div class="col-lg-6">
+                        <label class="control-label-required pull-left">Contact Number</label>
+                        <%= f.text_field :phone, :class=>"form-control", autofocus: true, maxlength:15%>
+                      </div>
+                    </div>
+
+                    <div class="block">
+                      <p>
+                      By registering, you agree to the <a href="http://www.profitbooks.net/terms-and-conditions/" target="_new">Terms</a> and
+                      <a href="http://www.profitbooks.net/privacy-policy/" target="_new">Privacy policy</a>
+                      </p>
+                    </div>
+                    <div align="center">
+                      <button type="submit" class="btn btn-success btn-lg" onclick="this.form.submit(); this.disabled=true;">Start Your 15-day Trial</button></div>
+                    <div class="line line-dashed"></div>
+                    <p class="text-muted text-center"><small>Already have an account?</small>
+                    <a href="https://www.profitbookshq.com/login/index">Sign in</a></p>
+                  <% end %>
+                  <!-- Form Ends -->
+              </div> <!-- Column ends -->
+              <div class="col-lg-8 col-sm-8 media">
+                <div margin="0px">
+                  <h2 class="animated fadeInUp">Join thousands of businesses who trust ProfitBooks for managing their finances.</h2>
+                </div>
+                <div align="left">
+                  <br><br>
+                  <div class="col-lg-3 pull-left">
+                    <img src="/assets/signup.png" style="margin:70px -35px">
+                  </div>
+                  <div class="col-lg-6">
+                    <h4>During Free Trial, You can:</h4>
+                    <p><i class="icon-ok "></i> Evaluate all the features with real business data</p>
+                    <p><i class="icon-ok "></i> Create beautiful invoices</p>
+                    <p><i class="icon-ok "></i> Record expenses and banking transactions</p>
+                    <p><i class="icon-ok "></i> Manage entire inventory lifecycle</p>
+                    <p><i class="icon-ok "></i> View insighful reports and do lot more..</p>
+                  </div>
+                </div>
+              </div> <!-- Column ends -->
+            </div> <!-- Row ends -->
+
+            <div class="row" style="margin:-50px 1px">
+              <div class="col-lg-6 col-sm-6 media">
+                <section class="panel-body chat-list">
+                  <article id="chat-id-1" class="chat-item media arrow arrow-left">
+                    <a href="#" class="pull-left thumb-small avatar"><img src="/assets/amit.jpeg" class="img-circle"></a>
+                    <section class="media-body">
+                      <div class="panel bg-lighter m-b-none">
+                        <div class="panel-body">
+                          "After trying 15 different accounting softwares, I finally settled with ProfitBooks. It is super simple and doesn’t scare a non-accountant like me. Go for it!"
+                        </div>
+                      </div>
+                      <small class="text-muted">Mr Amit Mishra (Founder, Interview Mocha)</small>
+                    </section>
+                  </article>
+                </section>
+              </div>
+              <div class="col-lg-6 col-sm-6 media m-t-none">
+                <section class="panel-body chat-list">
+                  <article id="chat-id-1" class="chat-item media arrow arrow-left">
+                    <a href="#" class="pull-left thumb-small avatar"><img src="/assets/vinodh.jpg" class="img-circle"></a>
+                    <section class="media-body">
+                      <div class="panel bg-lighter m-b-none">
+                        <div class="panel-body">
+                          "It doesn't require major accounting skills to understand ProfitBooks. The ease with which we can pull out Balance Sheet, Trial Balance, Profit & Loss statements is my favorite feature. Highly Recommended."
+                        </div>
+                      </div>
+                      <small class="text-muted">Mr. Vinodh (Owner, Endotech Solar)</small>
+                    </section>
+                  </article>
+                </section>
+              </div>
+            </div> <!-- row ends -->
+                </section>
+                <!-- / header -->
+                <!-- footer -->
+                <footer id="footer bg-white">
+                  <div class="text-center bg-white clearfix">
+                    <p>
+                    <small>&copy; ProfitBooks Solutions Pvt Ltd.</small><br>
+                    </p>
+                  </div>
+                </footer>
+                <!-- / footer -->
+                <script src="js/jquery.min.js"></script>
+                <!-- Bootstrap -->
+                <script src="js/bootstrap.js"></script>
+                <!-- app -->
+                <script src="js/app.js"></script>
+                <script src="js/app.plugin.js"></script>
+                <script src="js/app.data.js"></script>
+                <!-- Start of HubSpot Embed Code -->
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/1827620.js"></script>
+                <!-- End of HubSpot Embed Code -->
+
+                <!-- Google Analytics Code -->
+                <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-51348222-1', 'auto');
+ga('send', 'pageview');
+                </script>
+                <!-- Google Analytics Code ends-->
+
+                <script src="js/jquery.min.js"></script>
+                <!-- Bootstrap -->
+                <script src="js/bootstrap.js"></script>
+                <!-- app -->
+                <script src="js/app.js"></script>
+  </body>
+</html>

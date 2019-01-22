@@ -1,0 +1,35 @@
+<%= form_tag "/invoices/settle", :class=>'m-b-none', :remote=>true do %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Settlement Details</h4>
+      </div>
+      <div class="modal-body scroll-y" style='max-height:500px;'>   
+        <div class='errorSection'></div>       
+        <%= hidden_field_tag "id", @invoice.id %>
+        <div class="block">
+          <label class="control-label"> Due Amount <%= "#{@invoice.currency} #{@invoice.outstanding}" %></label>
+        </div>
+        <% if @invoice.foreign_currency? %>
+          <div class="block">
+            <label class='control-label-required'>Exchange Rate</label>
+            <%= text_field_tag "settlement_exchange_rate", 0.0, :maxlength => "18", :onkeydown => "return balOnly(event);", :autocomplete => 'off', :class => "form-control text-right", :style=>'width:200px;' %>
+          </div>
+        <% end %>
+        <div class="block">
+          <label class='control-label-required'>Settle To</label><br />
+          <%= select_tag("settlement_account_id", options_from_collection_for_select(@expense_accounts, :id, :name),{:prompt => "Type to Select",:style => "width:100%"}) %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+          <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Settle</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+<% end %>
+<script type="text/javascript"> 
+  $("#settlement_account_id").select2();
+</script>

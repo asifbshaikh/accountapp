@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading text-right">
+        <ul class="nav nav-tabs pull-left">
+          <li class="<%='active' if 'stock_issue_vouchers' == @current_controller %>">
+            <a data-toggle="tab" href="#stock_issue">
+              <i class="icon-signin icon-large"></i>
+              Issue for Production
+            </a>
+          </li>
+          <li class="<%='active' if 'stock_receipt_vouchers' == @current_controller %>">
+            <a data-toggle="tab" href="#stock_receive">
+              <i class="icon-signout icon-large"></i>
+              Receive for Sales
+            </a>
+          </li>
+          <li class="<%='active' if 'stock_transfer_vouchers' == @current_controller %>">
+            <a data-toggle="tab" href="#stock_transfer">
+              <i class="icon-truck icon-large"></i>
+              Record Transfer
+            </a>
+          </li>
+          <li class="<%='active' if 'stock_wastage_vouchers' == @current_controller %>">
+            <a data-toggle="tab" href="#stock_wastage">
+              <i class="icon-trash icon-large"></i>
+              Record Wastage
+            </a>
+          </li>
+        </ul>
+      </header>
+      <div class="panel-body">
+        <div class="tab-content">
+          <div id='stock_issue' class="tab-pane fade <%='active in' if 'stock_issue_vouchers' == @current_controller %>">
+            <%= render "stock_issue_vouchers/form" %>
+          </div>
+          <div id='stock_receive' class="tab-pane fade <%='active in' if 'stock_receipt_vouchers' == @current_controller %>">
+            <%= render "stock_receipt_vouchers/form" %>
+          </div>
+          <div id='stock_transfer' class="tab-pane fade <%='active in' if 'stock_transfer_vouchers' == @current_controller %>">
+            <%= render "stock_transfer_vouchers/form" %>
+          </div>
+          <div id='stock_wastage' class="tab-pane fade <%='active in' if 'stock_wastage_vouchers' == @current_controller %>">
+            <%= render "stock_wastage_vouchers/form" %>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

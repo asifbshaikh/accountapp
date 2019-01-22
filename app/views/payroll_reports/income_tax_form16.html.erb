@@ -1,0 +1,649 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+        	<%if @user.blank?%>
+        	<%= render :partial => "shared/no_record"%>
+        	<%else%>
+            &nbsp;&nbsp;
+            <p align="right">
+			      <a href="/payroll_reports/income_tax_form16.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	  <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+            <div class='highlight'>
+                <div id='report_header' align='center'>
+                    <span class='company_name'>FORM NO. 16</span>
+                    <br>
+                    <span class='report_title'>[See rule 31(I)(a)]
+                        <br>
+                    </span>
+                </div>
+                <hr>
+                <div class='title_name' align=center>
+                    PART A
+                </div>
+                <span class='small'><b>certificate under section 203 of the Income-Tax Act, 1961 for Tax Deduction at source on salary</b></span>
+                <br>
+                <div class ='width4 left'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name and Address of Employer
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <b><%= @company.name  %></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='textindent1'>
+                                22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='width4 right'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name and Designatio of Employee
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                <%= @user.first_name  %> <%= @user.last_name%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <%if !@designation.nil?||!@designation.blank? %>
+								<b> <%= Designation.find(@current_user.designation_id).title %></b>
+							<% else %>
+								<b> <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='width4 left'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th>
+                                    PAN of Deducter
+                                </th>
+                                <th>
+                                    TAN of Deducter
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                           <%if @company.pan %>
+								            <b> <%= @company.pan %></b>
+							            <% else %>
+								              <b> <span class='light'><i>Not available</i></span></b>								
+							            <% end %>
+                            </td>
+                            <td>
+                            <%if @company.tin %>
+								<b> <%= @company.tin %></b>
+							<% else %>
+								<b> <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='width4 right'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th>
+                                    PAN of Employee
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                           <%if !@user_salary_details.nil? %>
+								<b> <%= @user_salary_details.PAN %></b>
+							<% else %>
+								<b> <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='width4 left'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th colspan=2>
+                                    CIT(TDS)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td class='tdwidth1'>
+                                <b>Address</b>
+                            </td>
+                            <td>
+                                <b>: </b>
+                                <%if !@user_information.nil? %>
+								<b> <%= @user_information.present_address %></b>
+							<% else %>
+								<b> <span class='light'><i>Not available</i></span></b>								
+							<% end %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>City</b>
+                            </td>
+                            <td>
+                                <b>: </b>Pune
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Pincode</b>
+                            </td>
+                            <td>
+                                <b>: </b>444602
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='width4 right'>
+                    <table class='zebra-sriped' width=100%>
+                        <thead>
+                            <tr>
+                                <th class='width1'>
+                                    Assessment Year
+                                </th>
+                                <th>
+                                    Period
+                                </th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                2011-2012
+                            </td>
+                            <td>
+                                <b>From : </b>1-Apr-2010 <b>To : </b>31-Mar-2011
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                    <!-- <span class='small left'><b>Summery of Tax Deduction at source</b></span> -->
+                    <table class = "zebra-sriped" border = 0 align = center width=100%>
+                        <thead>
+                        <tr>
+                            <th class='tdwidth1'>
+                                Quarter
+                            </th>
+                            <th>
+                                Receipt no. of original statments of TDS under sub-section(3) of section 200
+                            </th>
+                            <th class='width2'>
+                                Amount of tax deducted in respect of the employee
+                            </th>
+                            <th class='width2'>
+                                Amount of tax deposited/remitted in respect of the employee
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Quarter1
+                                </td>
+                                <td>
+                                    AKC001
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>10603
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>2236
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Quarter2
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>1433
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>(-)850
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Quarter3
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>2032
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>2032
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Quarter4
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>618
+                                </td>
+                                <td>
+                                    <span class='WebRupee'>Rs</span>372
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <b>Total</b>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <b><span class='WebRupee'>Rs</span>14686</b>
+                                </td>
+                                <td>
+                                    <b><span class='WebRupee'>Rs</span>3789</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                <div class='title_name' align=center>
+                    PART B (Refer Note1)
+                </div>
+                <span class='small'><b>Details of salary paid and any other income and tax deducted</b></span>
+                <table class = "zebra-sriped" border = 0 align = center width=100%>
+                    <thead>
+                        <tr>
+                            <th>
+                                Sl. No.
+                            </th>
+                            <th>
+                                <span class='char_spacing'>Particulars</span>
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                            <th>
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class='tdwidth1 border_up'>
+                                1.
+                            </td>
+                            <td class='border_up'>
+                                <b>Gross Salary</b>
+                            </td>
+                            <td class='border_up'>
+                            </td>
+                            <td class='border_up'>
+                            </td>
+                            <td class='border_up'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Salary as per provisions contained in sec 17(1)
+                            </td>
+                            <td>
+                                <span class='WebRupee'>Rs</span>281820
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Value of perquisites u/s 17(2) (as per Form No. 12BA wherever applicable)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Profit in liue of salary under section 17(3) (as per Form No. 12BA wherever applicable)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <b>Total</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <b><span class='WebRupee'>Rs</span>281820</b>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2.
+                            </td>
+                            <td>
+                                <b>Less: Allowance to the Extent u/s 10</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Conveyance Allownce
+                            </td>
+                            <td>
+                                <span class='WebRupee'>Rs</span>8800
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <b>
+                                <span class='WebRupee'>Rs</span>8800
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3.
+                            </td>
+                            <td>
+                                <b>Ballance(1-2)</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td class='border_up border_down'>
+                                <b><span class='WebRupee'>Rs</span>273020</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                4.
+                            </td>
+                            <td>
+                                <b>Deductions</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Profesional Tax(Tax on Employment)
+                            </td>
+                            <td>
+                                <span class='WebRupee'>Rs</span>2200
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                5.
+                            </td>
+                            <td>
+                                <b>Aggregate of Deductions</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <b><span class='WebRupee'>Rs</span>2200</b>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                6.
+                            </td>
+                            <td>
+                                <b>Income chargable under the head 'salaries'(3-5)</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td class='border_up border_down'>
+                                <b><span class='WebRupee'>Rs</span>270820</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                7.
+                            </td>
+                            <td>
+                                <b>Add: any other income reported by the employee</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Income Frome House Property
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                Income Frome Other Sources
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                8.
+                            </td>
+                            <td>
+                                <b>Gross total Income(6+7)</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td class='border_up border_down'>
+                                <b><span class='WebRupee'>Rs</span>270820</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                9.
+                            </td>
+                            <td>
+                                <b>Deductions under Chapter VIA</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                <b>(A) Section 80C, 80CCC and 80CCD</b>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent2'>
+                                Employee Provident Fund(EPF) 
+                            </td>
+                            <td>
+                                <span class='WebRupee'>Rs</span>38360
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent2'>
+                                Provident Fund(PF) 
+                            </td>
+                            <td>
+                                <span class='WebRupee'>Rs</span>38360
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <b><span class='WebRupee'>Rs</span>76720</b>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                1. Aggregate amount deducted under section 80C shall not exceed one lakh rupees.
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td class='textindent1'>
+                                2.Aggregate amount deducted under the three section, ie.80C, 80CCC and 80CCD shall not exceed one lakh rupees.
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+                <hr>
+                <p>
+                    22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                </p>
+            </div>
+            <%end%>
+        </section>
+        &nbsp;&nbsp;
+        <!-- End of Left column/section -->
+        <!-- End of Left column/section -->
+    </div>
+    <!-- End of Wrapper -->
+</div>

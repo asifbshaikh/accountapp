@@ -1,0 +1,24 @@
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% else %>
+  var new_option = new Option("<%= @account.name%>", "<%= @account.id %>");
+  new_option.selected=true;
+  <% if params[:transaction_type] == 'cashacc' %>
+    $("#deposit_from_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == 'deposit_to' %>
+    $("#deposit_to_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == 'bankacc' %>
+    $("#withdrawal_from_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == 'withdrawal_to' %>
+    $("#withdrawal_to_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == 'contra' %>
+    $("#transfer_cash_transferred_from_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == 'transfer_to' %>
+    $("#transfer_cash_transferred_to_id").append($(new_option)).change();
+  <% end %>
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>

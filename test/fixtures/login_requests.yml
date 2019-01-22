@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  created_by: 1
+  status: 1
+  calling_action: MyString
+  gsp_id: 1
+
+two:
+  company_id: 1
+  created_by: 1
+  status: 1
+  calling_action: MyString
+  gsp_id: 1

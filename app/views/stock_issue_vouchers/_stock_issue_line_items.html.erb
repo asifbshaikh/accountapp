@@ -1,0 +1,31 @@
+<tr id="row<%= index %>" valign="top" >
+	<%= hidden_field_tag "stock_issue_voucher[stock_issue_line_items_attributes][#{index}][id]",stock_issue_line_item.id%>
+	<td valign="top" colspan ="2">
+    <%= select_tag "stock_issue_voucher[stock_issue_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(Product.where(:company_id => @company.id, :inventory => true), :id, :name, stock_issue_line_item.product_id, {:"batch_enable" => :batch_enable, :"available_quantity"=>:group_stock }), :include_blank => true, :style => "width:40%;display:inline;", :id => "product_quantity", :"data-index" => index, :class => 'siv-product issue-quantity', :pb_select => "prod_#{index}" %>
+    <% if !stock_issue_line_item.product.blank? && stock_issue_line_item.product.batch_enable? %>
+	     <div class='issue-batch-details' style="display:inline">
+	     	<% if ProductBatch.get_warehouse_batches(@stock_issue_voucher.warehouse_id, stock_issue_line_item.product_id).blank? %>
+	     		<i style='color:red;' id='qty-notif'>Stock not available.</i>
+	     	<% else %>
+	     		<%= select_tag "stock_issue_voucher[stock_issue_line_items_attributes][#{index}][product_batch_id]", options_from_collection_for_select_with_data(ProductBatch.get_warehouse_batches(@stock_issue_voucher.warehouse_id, stock_issue_line_item.product_id), :id, :batch_number,stock_issue_line_item.product_batch_id, {:"available_quantity"=> :quantity}), :style => "width:40%;display:inline;", :"data-index" => index, :"data-unit"=> stock_issue_line_item.product.unit_of_measure, :id => "product_quantity", :class=>'form-control bg-focus issue-batch-select' %>
+	     			<% if stock_issue_line_item.product_batch.quantity.blank? || stock_issue_line_item.product_batch.quantity <=0 %>
+	     				<i style='color:red;' id='qty-notif'>Stock not available.</i>
+	     			<% else %>
+	     				<i style='color:green;' id='qty-notif'>Available qty <%= "#{stock_issue_line_item.product_batch.quantity} #{stock_issue_line_item.product.unit_of_measure}" %></i>
+	     			<% end %>
+	     	<% end %>
+	     </div>
+    <% end %>
+	</td>
+	<td class = "ta-right">
+		<%= text_field_tag "stock_issue_voucher[stock_issue_line_items_attributes][#{index}][quantity]",stock_issue_line_item.quantity, :id => 'quantity', :class => 'siv-quantity form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);", :size => 3, :maxlength => 10 %>
+	</td>
+	<td class = "ta-right">
+		<%= link_to "<i class='icon-remove'></i>".html_safe,{:controller=>:stock_issue_vouchers, :action => :remove_line_item, :index => index}, :class => "btn btn-danger", :title => "remove",:remote => true %>
+	</td>
+</tr>
+
+
+<script type="text/javascript">
+$("[pb_select=prod_<%="#{index}"%>]").select2();
+</script>

@@ -1,0 +1,49 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Estimate:</b>
+  <%= @estimate_line_item.estimate_id %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%= @estimate_line_item.account_id %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @estimate_line_item.quantity %>
+</p>
+
+<p>
+  <b>Unit rate:</b>
+  <%= @estimate_line_item.unit_rate %>
+</p>
+
+<p>
+  <b>Discount:</b>
+  <%= @estimate_line_item.discount %>
+</p>
+
+<p>
+  <b>Tax:</b>
+  <%= @estimate_line_item.tax %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @estimate_line_item.amount %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @estimate_line_item.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_estimate_line_item_path(@estimate_line_item) %> |
+<%= link_to 'Back', estimate_line_items_path %>

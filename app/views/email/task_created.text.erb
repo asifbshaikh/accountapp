@@ -1,0 +1,4 @@
+Hi ,<%= User.find(@task.assigned_to).first_name %>
+	Your task is created.
+	Task description is :<%= @task.description %> 
+	Due date is :<%= @task.due_date %>

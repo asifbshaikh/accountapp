@@ -1,0 +1,158 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width6 first ">&nbsp;
+            <p id="notice"><%= notice %></p>
+            <div class="column width6 first highlight">
+              <div class="column width6 first ">	
+          	   <div id='user_info_div'><span class='basic_info'>Basic Info</span></div>
+                  <div class="column width3 first">
+                    <div class="field">
+					 <b>Username:</b>&nbsp;
+                     <%= @current_user.username %>
+                    </div>
+                      <div class="field">
+                         <b>First name:</b>&nbsp;
+                         <%= @current_user.first_name %>
+                      </div>
+                      <div class="field">
+                          <b>Last name:</b>&nbsp;
+                          <%= @current_user.last_name %>
+                      </div>
+                      <div class="field">
+                         <b>Email:</b>&nbsp;
+                         <%= @current_user.email %>
+                      </div>
+				  </div>
+                  <div class="column width3">
+                  	<div class="field">
+					   <b>Department:</b>&nbsp;
+					   <%= Department.find(@current_user.department_id).name unless @current_user.department_id.nil? %>
+                    </div>
+					<div class="field">
+                       <b>Designation:</b>&nbsp;
+                       <%= Designation.find(@current_user.designation_id).title unless @current_user.designation_id.nil? %>
+                    </div>
+					<div class="field">
+                       <b>Reporting To:</b>&nbsp;
+                       <%= @current_user.reporting_to_id%>
+                    </div>
+				 </div>
+			 </div> &nbsp;
+			 <div class="column width6 first">
+               <div id='user_info_div'><span class='personal_info'>Personal Info</span></div>
+                 <div class="man"> 
+                               <div class="column width3 first">
+                               	 <div class="field">
+                                    <b>Emergency contact:</b>&nbsp;
+                                    <%= UserInformation.find(@current_user.user_information).emergency_contact unless @current_user.user_information.nil? %>
+                                 </div>
+		                      	 <div class="field">
+		                           <b>Blood group:</b>&nbsp;
+		                           <%= UserInformation.find(@current_user.user_information).blood_group unless @current_user.user_information.nil? %>
+		                         </div>
+		                         <div class="field">
+		                           <b>Birth date:</b>&nbsp;
+		                           <%= UserInformation.find(@current_user.user_information).birth_date unless @current_user.user_information.nil? %>
+		                         </div>
+		                         <div class="field">
+		                            <b>Passport number:</b>&nbsp;
+		                            <%= UserInformation.find(@current_user.user_information).passport_number unless @current_user.user_information.nil?%>
+		                         </div>
+	                             <div class="field">
+	                               <b>Passport expiry_date:</b>&nbsp;
+	                               <%= UserInformation.find(@current_user.user_information).passport_expiry_date unless @current_user.user_information.nil?%>
+	                             </div>
+							   </div>
+                               <div class="column width3">
+	                              <div class="field">
+	                                 <b>Gender:</b>&nbsp;
+	                                 <%= UserInformation.find(@current_user.user_information).gender unless @current_user.user_information.nil?%>
+	                              </div>
+			                      <div class="field">
+			                          <b>Marital status:</b>&nbsp;
+			                          <%= UserInformation.find(@current_user.user_information).marital_status unless @current_user.user_information.nil? %>
+			                      </div>
+			                      <div class="field">
+			                          <b>Marriage date:</b>&nbsp;
+			                          <%= UserInformation.find(@current_user.user_information).marriage_date unless @current_user.user_information.nil?%>
+			                      </div>
+			                      <div class="field">
+			                          <b>Present address:</b>&nbsp;
+			                          <%= UserInformation.find(@current_user.user_information).present_address unless @current_user.user_information.nil? %>
+			                      </div>
+							   </div>
+                             </div>
+             </div>&nbsp;
+	         <div class="column width6 first ">
+	            <div id='user_info_div'><span class='personal_info'>Work Info</span></div>
+	             <div class="man">                         
+	               <div class="column width3 first">				
+	                  <div class="field">
+	                    <b>Status:</b>&nbsp;
+	                    <%= UserSalaryDetail.find((@current_user.user_salary_detail).status == 0)? 'Active':'Inactive'  unless @current_user.user_salary_detail.nil?%>
+	                  </div>
+	                  <div class="field">
+	                      <b>Work type:</b>&nbsp;
+	                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).work_type unless @current_user.user_salary_detail.nil?%>
+	                  </div>
+	                  <div class="field">
+	                      <b>Date of joining:</b>&nbsp;
+	                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).date_of_joining unless @current_user.user_salary_detail.nil? %>
+	                  </div>
+	                  <div class="field">
+	                      <b>Work phone:</b>&nbsp;
+	                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).work_phone unless @current_user.user_salary_detail.nil?%>
+	                  </div>
+	                  <div class="field">
+	                      <b>Work location:</b>&nbsp;
+	                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).work_location unless @current_user.user_salary_detail.nil?%>
+	                  </div>
+					</div>	
+				<div class="column width3">
+                   <div class="field">
+                      <b>Bank account number:</b>&nbsp;
+                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).bank_account_number unless @current_user.user_salary_detail.nil? %></td>
+                   </div>
+                   <div  class="field">
+                      <b>Bank name:</b>&nbsp;
+                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).bank_name unless @current_user.user_salary_detail.nil?%>
+                   </div>
+                   <div class="field">
+                      <b>Branch:</b>&nbsp;
+                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).branch unless @current_user.user_salary_detail.nil?%>
+                   </div>
+                   <div class="field">
+                      <b>PAN:</b>&nbsp;
+                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).PAN unless @current_user.user_salary_detail.nil?%>
+                   </div>
+                   <div class="field">
+                      <b>PF account number:</b>&nbsp;
+                      <%= UserSalaryDetail.find(@current_user.user_salary_detail).PF_account_number unless @current_user.user_salary_detail.nil?%>
+                   </div>
+                   <div class="field">
+	                      <b>EPS account number:</b>&nbsp;
+	                     <%= UserSalaryDetail.find(@current_user.user_salary_detail).EPS_account_number unless @current_user.user_salary_detail.nil?%>
+	               </div>
+			     </div>
+	           </div>
+            </div>&nbsp;
+            <div class="column width6 first ">
+               <div id='user_info_div'><span class='personal_info'>User Notes</span></div>
+  	           <b>Notes:</b>&nbsp;
+  	           <%= Usernote.find(@current_user.usernote).notes unless @current_user.usernote.nil?%>
+		    </div>
+		    <div class="action">
+                    <%= link_to 'Edit Profile', edit_user_path(@user),{:class=>"btn btn-green big" } %>&nbsp;
+                    <a href="/users" class="btn btn-green big">View User List</a>
+             </div>
+         </div>
+	 </section>&nbsp;&nbsp;
+    </div>
+</div>

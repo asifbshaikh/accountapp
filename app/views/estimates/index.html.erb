@@ -1,0 +1,39 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-6">
+       <h2><i class="icon-file text"></i><%= @company.label.estimate_label %>s</h2>
+        </div>
+        <div class="col-lg-6 m-t-large" align="right">
+          <a href="/estimates/new" class="btn btn-success btn-lg" onclick="_g"> <i class='icon-plus'></i> New <%= @company.label.estimate_label%></a>
+            <a href="#" class="btn btn-white btn-lg " id="use_filter" title='Filter'><i class="icon-filter"></i></a> 
+       <!-- a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+            <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "filter" %>
+            <%= render :partial=> "shared/flash_msg"%>
+              <div class="table-responsive row">
+                <table id="estimates" class="table table-striped m-b-none text-small" data-source ="<%= estimates_url(:format => "json") %>" >
+          				<thead>
+          					<%= render :partial => "header" %>
+          				</thead>
+          				<tbody>
+          				</tbody>
+          				<tfoot>
+          					<%= render :partial => "footer" %>
+          				</tfoot>
+        			  </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

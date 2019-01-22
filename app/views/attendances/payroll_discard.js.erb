@@ -1,0 +1,14 @@
+<% if @payroll_discard_check.to_s == "false" %>
+setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/attendances/payroll_discard?month=<%= @month %>"
+    });
+}, 10000);
+
+<% elsif @payroll_discard_check.to_s == "true" %>
+	setTimeout(function(){
+    $( ".loader" ).val("<strong> The payroll discard is complete. Redirecting you......</strong>");
+    window.location.href = "/users/manage_payroll";
+  }, 3000);
+<% end %>

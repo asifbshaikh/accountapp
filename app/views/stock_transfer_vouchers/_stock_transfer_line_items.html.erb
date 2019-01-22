@@ -1,0 +1,49 @@
+<tr id="row<%= index %>" class='removeThis' valign="top" >
+	<%= hidden_field_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][id]",stock_transfer_line_item.id %>
+	<%= hidden_field_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][_destroy]" %>
+	<td valign="top">
+			<div style="<%= 'display:none;' unless stock_transfer_line_item.new_record? %>">
+				<%= select_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(@products, :id, :name, stock_transfer_line_item.product_id, {:'batch_enable' => :batch_enable, :'quantity' => :group_stock }), :include_blank => true, :id => "warehouse_product", :style => "width:37%;display:inline;", :'data-index' => index, :class => 'stv-product transfer-quantity-select' %>
+			</div>
+			<% unless stock_transfer_line_item.new_record? %>
+				<%= stock_transfer_line_item.product.name %>
+			<% end %>
+		<% if !stock_transfer_line_item.product.blank? && stock_transfer_line_item.product.batch_enable? %>
+			<div class='transfer-batch-details' style="display:inline">
+				<% if ProductBatch.get_warehouse_batches(@stock_transfer_voucher.warehouse_id, stock_transfer_line_item.product_id).blank? %>
+	     		<i style='color:red;' id='qty-notif'>Stock not available.</i>
+	     	<% else %>
+	     		<% if stock_transfer_line_item.new_record? %>
+						<%= select_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][product_batch_id]", options_from_collection_for_select_with_data(ProductBatch.get_warehouse_batches(@stock_transfer_voucher.warehouse_id, stock_transfer_line_item.product_id), :id, :batch_number, stock_transfer_line_item.product_batch_id,{:'quantity' => :quantity}), :style => "width:40%;display:inline;", :id => "batch-select", :"data-unit"=>stock_transfer_line_item.product.unit_of_measure, :'data-index' => index, :class=>'form-control bg-focus transfer-batch-select'  %>
+	     		<% else %>
+	     			(<%= stock_transfer_line_item.product_batch.batch_number %>)
+	     		<% end %>
+					<% if stock_transfer_line_item.product_batch.quantity.blank? || stock_transfer_line_item.product_batch.quantity <=0 %>
+						<i style='color:red;' id='qty-notif'>Stock not available.</i>
+					<% else %>
+						<i style='color:green;' id='qty-notif'>Available qty <%= "#{stock_transfer_line_item.product_batch.quantity} #{stock_transfer_line_item.product.unit_of_measure}" %></i>
+					<% end %>
+				<% end %>
+			</div>
+		<% end %>
+	</td>
+	<td class = "text-right">
+		<%= text_field_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][transfer_quantity]",stock_transfer_line_item.transfer_quantity, :id => 'quantity', :onkeydown => "return numbersOnly(event);", :size => 3, :maxlength => 10, :class => 'stv-quantity form-control bg-focus text-right', :readonly => (!stock_transfer_line_item.product.blank? && stock_transfer_line_item.product.batch_enable? ) ? true :false %>
+	</td>
+	<td>
+		<% if stock_transfer_line_item.new_record? %>
+			<%= select_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][destination_warehouse_id]", options_from_collection_for_select(@destination_warehouses, :id, :name,:selected => stock_transfer_line_item.destination_warehouse_id ), :include_blank => true, :style=>"width:200px;" %>
+		<% else %>
+			<%= stock_transfer_line_item.destination_warehouse_name %>
+			<%= hidden_field_tag "stock_transfer_voucher[stock_transfer_line_items_attributes][#{index}][destination_warehouse_id]", stock_transfer_line_item.destination_warehouse_id %>
+		<% end %>
+	</td>
+	<td class ="text-right">
+		<%= link_to "<i class='icon-remove'></i>".html_safe,{:controller=>:stock_transfer_vouchers, :action => :remove_line_item, :index => index}, :class => "btn btn-danger", :title => "remove",:remote => true %>
+	</td>
+</tr>
+
+<script>
+	$("#row<%= index %> #warehouse_product").select2();
+	$("#stock_transfer_voucher_stock_transfer_line_items_attributes_<%= index %>_destination_warehouse_id").select2();
+</script>

@@ -1,0 +1,7 @@
+ <%= @company.address.address_line1+', ' if !@company.address.blank? %> 
+<%= @company.address.address_line2+', ' if !@company.address.blank? %> 
+<%= @company.address.city+', ' if !@contact.address.blank? %>
+<%= @company.address.state+',' if @company.address.blank%> <br />
+&nbsp;&nbsp;&nbsp;<%= @company.address.country+', ' if !@company.address.blank? %> 
+<%= 'pin : '+@company.address.postal_code if !@company.address.blank? %>
+

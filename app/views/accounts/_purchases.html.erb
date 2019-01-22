@@ -1,0 +1,29 @@
+<div class='account_container'>
+<% if @purchases.blank? %>
+<%= render "shared/no_record"%>
+<% else %>
+	<table class="display stylized" id="act_details">
+	    <thead>
+	      <tr>
+	      	<th>Purchase number</th>
+	      	<th>Due date</th>
+	      	<th>Amount</th>
+	      	<th>created by</th>
+	      	<th></th>
+	      </tr>
+	    </thead>
+	  <tbody>
+	  	<% @purchases.each do |purchase| %>
+	  	<tr>
+	  		<td><%= link_to purchase.purchase_number, purchase %></td>
+	  		<td><%= purchase.due_date %></td>
+	  		<td><%= purchase.amount %></td>
+	  		<td><%= User.find(purchase.created_by).first_name %></td>
+	  		
+	  		<td><%= %></td>
+	  	</tr>
+	  	<% end %>
+	  </tbody>
+	</table>
+<% end %>
+</div>

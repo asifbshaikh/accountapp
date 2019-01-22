@@ -1,0 +1,30 @@
+<span>Schedule For Date : <%= Time.zone.now.to_date%><br></span>
+<table>
+<thead>
+<tr>
+   <th width="20%">Activity</th>
+   <th width="20%">Customer Name</th>
+   <th width="10%">Time</th>
+</tr>
+</thead>
+<% @super_users.each do |user|%>
+<% lead_activities =  LeadActivity.joins(:lead).where("leads.assigned_to = ? and lead_activities.next_followup = ? and activity_status = ?",user.id, Time.zone.now.to_date,false) %>
+<% unless lead_activities.blank? %>
+<tbody>
+<tr>
+<td>For User : <%= user.first_name%></td>
+</tr>
+   <% lead_activities.each do |activity|%>
+   <tr>
+      <td align="center"><%= Lead.get_activity(activity.next_activity)%></td>
+      <td align="center"><%= activity.lead.name%></td>
+      <td align="center"><%= activity.next_follow_up_time%></td>
+   </tr>
+   <%end%>
+   <tr>
+      <td>Total Activities : <%= lead_activities.count%></td>
+   </tr>
+   <%end%>
+</tbody><br>
+<%end%>
+</table>

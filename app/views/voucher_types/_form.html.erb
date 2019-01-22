@@ -1,0 +1,19 @@
+<%= form_for @voucher_title, :html=> {:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @voucher_title %>
+<div class="col-sm-6">
+  <p>
+    <%= f.label "Title", :class=>"control-label-required" %><br/>
+    <%= f.text_field :voucher_title,:class=>"bg-focus form-control" %>
+  </p>
+</div>
+<div class="col-sm-6">
+  <p>
+    <%= f.label :Status, :class=>"control-label-required" %><br />
+    <%= f.select(:status, :collection=>["[0, False]","[1, True]"]) %>
+  </p>
+</div>
+ <div class="col-lg-8 col-lg-offset-4">                      
+  <button type="submit" class="btn btn-success">Save</button>
+  <a href="#" id ="bck_vttl" class="btn btn-default">Cancel</a>
+</div>
+<% end %>

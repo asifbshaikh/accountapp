@@ -1,0 +1,24 @@
+<div class='oldData'>
+	<table class='table table-striped m-b-none text-small'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Manager</th>
+				<th>City</th>
+				<th>Phone</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @company.warehouses.each do |warehouse| %>
+				<tr>
+					<td><%= best_in_place warehouse, :name, :type=> :input, :path=>"/warehouses/#{warehouse.id}", :html_attrs=>{:class=>'form-control bg-focus'} %></td>
+					<td><%= best_in_place warehouse, :manager_id, :type=> :select, :path=>"/warehouses/#{warehouse.id}", :collection=> @company.managers, :html_attrs=>{:class=>'form-control bg-focus'} unless warehouse.manager_id.blank? %></td>
+					<td><%= best_in_place warehouse, :city, :type=> :input, :path=>"/warehouses/#{warehouse.id}", :html_attrs=>{:class=>'form-control bg-focus'} %></td>
+					<td><%= best_in_place warehouse, :phone, :type=> :input, :path=>"/warehouses/#{warehouse.id}", :html_attrs=>{:class=>'form-control bg-focus'} %></td>
+					<td><%= link_to "<i class='icon-trash'></i>".html_safe, warehouse, :method=>:delete, :confirm=>'Are you sure?' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

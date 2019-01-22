@@ -1,0 +1,3 @@
+  $("#template").remove();
+  $('#templatePlace').after("<%= escape_javascript render(params[:template_value])%>");
+    

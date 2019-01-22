@@ -1,0 +1,96 @@
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+		
+			<div class='highlight'>
+				<div id='report_header' align="center">
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Profit and Loss Account </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width2'><span class='char_spacing'>Particulars</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+							<th class='width2'><span class='char_spacing'>Particulars</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<% if !@inventories.nil?
+										for inv in @inventories %>
+											<tr class="border_right"><td>manjeet s bhatkar</td><td align="right">1234567890</td><td align="right">1234567890</td></tr>
+										<% end 
+										end%>
+										<tr><td><b>Purchase Accounts</b></td><td></td><td><b><%= (@total_purchase_amount)%></b></td></tr>
+										<% if !@purchase_accounts.nil?
+											for p_acc in @purchase_accounts %>
+											<tr><td class="textindent1"><%= p_acc.name %></td><td><%= (p_acc.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+										
+										<tr><td><b>Direct Expences</b></td><td></td><td><b><%=(@total_direct_expence)%></b></td></tr>
+										<% if !@direct_expenses.nil?
+											for exp in @direct_expenses %>
+											<tr><td class="textindent1"><%= exp.name %></td><td><%= (exp.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+										
+										<tr><td><b>Indirect Expences</b></td><td></td><td><b><%= (@total_indirect_expence)%></b></td></tr>
+										<% if !@indirect_expenses.nil?
+											for inexp in @indirect_expenses %>
+											<tr><td class="textindent1"><%= inexp.name %></td><td><%= (inexp.closing_balance)%></td><td></td></tr>
+										<%  end
+										   end 
+									   nett_profit = @total_sales_amount + @total_inventories - (@total_purchase_amount + @total_direct_expence  + @total_indirect_expence) %>
+									   	
+									   	<tr><td><b><span class='char_spacing'>Nett Profit</span></b></td><td></td><td><b><%= (nett_profit)%></td></b></tr>
+									</tbody>
+								</table>
+							</td>
+							<td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Sales Accounts</b></td><td></td><td><b><%= (@total_sales_amount)%></b></td></tr>
+										<% if !@sale_accounts.nil?
+											for s_acc in @sale_accounts %>
+											<tr><td class="textindent1"><%= s_acc.name %></td><td><%=(s_acc.closing_balance)%></td><td></td></tr>
+										<%end
+										end %>
+										<tr><td><b>Indirect Incomes</b></td><td></td><td><b><%= %></b></td></tr>
+									</tbody>
+								</table>
+							</td></tr>
+						</tbody>
+						<tfoot>
+							<tr><td><b><span class='char_spacing'>Total</span></b></td><td align="right"><b><%= (@total_purchase_amount + @total_direct_expence  + @total_indirect_expence + nett_profit)%></b></td><td><b><span class='char_spacing'>Total</span></b></td><td align="right"><b><%= (@total_sales_amount + @total_inventories)%></b></td></tr>
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+&nbsp; 

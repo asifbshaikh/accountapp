@@ -1,0 +1,14 @@
+<%= form_for(@email_action) do |f| %>
+  <%= render 'shared/form_error', :object => @email_action %>
+  <div class="field">
+    <%= f.label :action %><br />
+    <%= f.text_field :action %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

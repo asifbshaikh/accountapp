@@ -1,0 +1,52 @@
+       <%= render :partial => "shared/banking_reconcilation" %>
+       <%= form_for @withdrawal, :url => (@withdrawal), :html=>{:class=>"m-b-none form-horizontal", :remote=>true} do |f| %>
+       <%= f.hidden_field :voucher_number %>
+       <%= hidden_field_tag "transaction_id",@transaction_id%>
+       <%= hidden_field_tag "account_id",@account_id%>
+       <%= f.hidden_field :from_account_id,:value => @account_id%>
+       <div class="errorSection"></div>
+       <div class="row">
+       <div class="col-lg-7">
+              <%= label_tag :transaction_date, 'Transcation date' , :class => "control-label-required" %>
+       </div>
+       <div class="col-lg-7">
+              <%=f.text_field :transaction_date,  :class => 'bg-focus form-control' %>
+       </div>
+       </div><br>
+       <div class="row">
+       <div class="col-lg-7">
+              <%= label_tag :to_account, 'To  Account' , :class => "control-label-required" %>
+       </div>
+       <div class="col-lg-7">
+              <%= f.select(:to_account_id, options_from_collection_for_select(@dep_from_accounts, :id, :name), {:prompt => 'Type to Select'},{:id => "with_to_account",:style => "width:100%;"}) %>
+       </div>
+       </div><br>
+       <div class="row">
+       <div class="col-lg-7">
+              <%= label_tag :amount, 'Amount' , :class => "control-label-required" %>
+       </div>
+       <div class="col-lg-7">
+              <%=f.text_field :amount,:class => 'bg-focus form-control' %>
+       </div>
+       </div><br>
+       <div class="row">
+       <div class="col-lg-7">
+              <%= label_tag :description, 'Description' , :class => "control-label" %>
+       </div>
+       <div class="col-lg-7">
+              <%= f.text_area :description, :rows => "2", :class=>"bg-focus form-control" %>
+       </div>
+       </div><br>
+       <div class="row">
+       <div class="col-lg-7 col-lg-offset-4">
+       <div class='save-btn'></div>
+       <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Proccessing...">Submit</button>
+       <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+       </div>
+       </div>
+       <%end%>
+       <script type="text/javascript">
+       $(document).ready(function(){
+          $('#with_to_account').select2();
+       });
+       </script>

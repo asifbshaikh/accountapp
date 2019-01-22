@@ -1,0 +1,95 @@
+<div class="col-lg-4">
+  <div class="row">
+    <label class=" col-lg-4 control-label-required"><%= @company.label.customer_label %> </label>
+    <% if @gstr_advance_payment.draft? || @gstr_advance_payment.original_gstr_advance_payment.draft? %>
+      <div class="col-lg-8">
+        <div class="input-group">
+          <%= f.select(:account_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@to_accounts, :id, :name,@gstr_advance_payment.account_id, :"currency"=>:get_currency), {:prompt => 'Type to Select'},{:style => "width:200px;"}) %>
+          <span id="gstr_advance_payment-currency" style="color:grey;"></span>
+        </div>
+        <span id='to_acc_bal'></span> <span id='to_acc_cur'></span>
+      </div>
+    <% else %>
+      <div class="col-lg-8">
+        <%= @gstr_advance_payment.account.name %><br/>
+        <% if @gstr_advance_payment.currency != @company.currency_code %>
+          <label>Gstr Advance Payment Currency:</label>  <%= @gstr_advance_payment.currency %>
+        <% end %>
+        <% if @gstr_advance_payment.total_received_amt >0 %>
+          <br/>
+          <label>Exchange rate in <%= @company.currency_code%>:</label> <%= @gstr_advance_payment.exchange_rate %>
+            <%= hidden_field_tag "exchange_rate", @gstr_advance_payment.exchange_rate %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <% if @gstr_advance_payment.total_received_amt == 0 %>
+    <p>
+      <div class="row gstr_advance_payment_exc_rate" style=<%= 'display:none;' if @gstr_advance_payment.currency==@company.currency_code %>  >
+        <label class="col-lg-4 control-label">
+          Exchange Rate in <%= @company.currency_code %>
+        </label>
+        <div class="col-lg-4">
+          <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :size => "5", :class=> "bg-focus form-control text-right" %>
+        </div>
+      </div>
+    </p>
+  <% end %>
+  
+  <% if @voucher_titles.present? %>
+    <p>
+      <div class="row">
+        <label class="control-label col-lg-4">Gstr Advance Payment Title</label> 
+        <div class="col-lg-8">
+          <%= collection_select(:gstr_advance_payment, :voucher_title_id, @voucher_titles, :id, :voucher_title, {:prompt => true},{:id=>"select2-option", :style=>"width:200px;"}) %>
+        </div>
+      </div>
+    </p>
+  <% end %>
+  <div class="row">
+    <div class="col-lg-4 text-right">
+      <label class="control-label">Address</label>
+    </div>
+    <div class="col-lg-8">
+      <div id="address"></div>
+      <%= render("customer_address_with_modal", :billing_address=>@billing_address, :shipping_address=>@shipping_address ) %>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-4">
+  <div class="row">
+    <% if @company.gstr_advance_payment_setting.free_format? %>
+      <label class="col-lg-4 control-label-required">Gstr Advance Payment #</label>
+      <div class="col-lg-8">
+        <%= f.text_field :gstr_advance_payment_number, :size => 10, :class=>"form-control" %>
+      </div>
+    <% else %>
+      <label class="col-lg-4 control-label">Gstr Advance Payment #</label>
+      <div class="col-lg-8">
+        <label class="control-label" style="vertical-align: middle;"><%= @gstr_advance_payment.gstr_advance_payment_number%><%= f.hidden_field :gstr_advance_payment_number %></label>
+      </div>
+    <% end %>
+  </div>
+  <p></p>
+  <div class="row">
+    <label class="col-lg-4 control-label-required">Date </label>
+    <div class="col-lg-4">
+      <%= f.text_field :gstr_advance_payment_date, :class=>'bg-focus form-control' %>
+    </div>
+  </div>
+  <p></p>
+  <div class="row"> 
+    <label class="col-lg-4 control-label">Due On </label>
+    <div class="col-lg-4">
+      <%= f.text_field :due_date, :class => 'bg-focus form-control' %>
+    </div>
+  </div>
+  <p></p>
+  <div class="row"> 
+    <label class="col-lg-4 control-label">PO Ref #</label>
+    <div class="col-lg-4">
+      <%= f.text_field :po_reference, :class=> 'bg-focus form-control' %>
+    </div>
+  </div>
+</div>

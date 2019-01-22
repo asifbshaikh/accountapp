@@ -1,0 +1,48 @@
+<%= render 'shared/page_title'%> <!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+        <%= render :partial => "shared/flash_msg"%>
+        <div class="column width3 first">
+          <p>
+            <label for="branch_name"><h4><%= @branch.name %></h4></label><br/> 
+            <br/>
+          </p> 
+        </div>
+        <div class="column width3">
+          <p class="box">
+            <label for="branch">Address: <%= branch_address %></label>
+            <br/>
+            <label for="branch_address_city">City: <%= branch_city %></label>
+            <br/>
+            <label for="branch_address_pincode">Pin code: <%= branch_pincode %></label>
+            <br/>
+            <label for="branch_address_phone">Phone: <%=@branch.phone %></label>
+            <br/>
+            <label for="branch_address_fax">Fax: <%=@branch.fax %></label>
+          </p> 
+        </div>
+        <table class="display stylized">
+          <tfoot>
+            <tr>
+              <td><%= link_to 'Edit', edit_branch_path(@branch), :class => 'btn btn-green' %>
+                   <a href="/branches" class="btn">Back</a>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div><br/>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= new_button("Add New Branch", new_branch_path)%>
+      <p>
+        <%= list_button_black("View Branches", branches_path)%>
+      </p>
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

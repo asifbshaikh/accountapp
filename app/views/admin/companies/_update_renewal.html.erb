@@ -1,0 +1,20 @@
+<div class="update_form" <%= "style='display:none;'" if flash[:error].blank? %>>
+  <%= form_tag(:action => :renew, :controller => "/admin/companies") do |f| %>
+    <%= hidden_field_tag  "id" ,@company.id %>
+    <table class="" id="company_table">
+      <thead></thead>
+      <tbody>
+        <tr>
+          <td>
+            <%= text_field_tag "subscription[renewal_date]",nil, :class => "form-control", :placeholder=> "New renewal date" %><br/></td>
+          </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td><%= submit_tag "Update Date", :class => "btn btn-success", :size => "2" %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
+</div>

@@ -1,0 +1,18 @@
+<tr class="gradeU">
+  <td><%= link_to warehouse.name, warehouse %></td>
+  <td><%= warehouse.manager unless warehouse.manager_id.blank?%></td>
+  <td><%= warehouse.city %></td>
+  <td><%= warehouse.phone %></td>
+  <td>
+    <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/warehouses/<%= warehouse.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" >
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="<%= edit_warehouse_path(warehouse) %>">Edit</a></li>
+         
+      </ul>
+    </div>
+  </td>
+</tr>

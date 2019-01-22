@@ -1,0 +1,14 @@
+$(".popup-error").remove();
+<% if @voucher_title.errors.any?  %>
+	console.log("error");
+	$(".voucher-title-notif").after("<%= escape_javascript render('shared/popup_form_error', {:object => @voucher_title})%>");
+<% else %>
+	$(".vttl_add").hide();
+	$(".vttl_info").show();
+	$(".voucher-title-info-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".voucher-title-body").html("<%= escape_javascript render('settings/voucher_titles')%>");
+	fadeOutMessage();
+	console.log("success");
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

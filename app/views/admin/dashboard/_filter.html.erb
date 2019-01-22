@@ -1,0 +1,23 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Lead Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="lead-filter">
+      <tbody>
+        <tr>
+          <td><label>Name</label></td>
+          <td id="leadname"></td>
+          <td ><label>Mobile</label></td>
+          <td id="leadmobile"></td>
+          <td><label>Email</label></td>
+          <td id="leademail"></td>
+        </tr>
+        <tr>
+          <td><label>Channel</label></td>
+          <td id="leadchannel" data-channel="<%= Channel.channel_names %>"></td>
+          <td ><label>Campaign</label></td>
+          <td id="leadcampaign" data-campaign="<%= Campaign.campaign_names %>"></td>
+          <td><label>Status</label></td>
+          <td id="leadstatus"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

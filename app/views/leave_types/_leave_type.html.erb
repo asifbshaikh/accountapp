@@ -1,0 +1,17 @@
+<tr>
+    <td><%= link_to truncate(leave_type.leave_type, :length=>40, :separator => " "), leave_type  %></td>
+    <td><%= leave_type.allowed_leaves %></td>
+    <td><%= truncate(leave_type.description, :length => 60, :serparator => " ") %></td>
+    <td>
+     <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/leave_types/<%= leave_type.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href= <%= edit_leave_type_path(leave_type) %>>Edit</a></li>  
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/leave_types/<%= leave_type.id%>" >Delete</a></li>
+      </ul>
+    </div>
+    </td>
+</tr>

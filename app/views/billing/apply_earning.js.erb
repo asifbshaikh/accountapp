@@ -1,0 +1,11 @@
+$(".refbal").remove();
+<% if @earning > 0 && @total.to_i <=0 %>
+$('span#error-msg').text('Select plan/user_pack first');
+<% elsif @earning > 0 %>
+  $('span#order-total').text(<%= @total %>);
+  $("#amount").val(<%= @total %>);
+  $("#earning_amt").val(<%= @earning%>);
+  cal();
+<% else %>
+  $('span#error-msg').text('Invalid Earning');
+<% end %>

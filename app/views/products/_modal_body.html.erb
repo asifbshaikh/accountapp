@@ -1,0 +1,40 @@
+<div class='errorPlace'></div>
+<%= hidden_field_tag "id", product.id %>
+<%= hidden_field_tag "index", row_index %>
+<table class="table table-striped b-t text-small" id ="act_details">
+  <thead>
+    <tr>
+      <th><label> Reference</label></th>
+      <th><label>Qty</label></th>
+      <th><label class='control-label-required'>Batch no.</label> </th>
+      <th><label> Mfd.date</label></th>
+      <th><label> Exp.date</label></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% PurchaseWarehouseDetail.get_hold_product_batches(@company.id, product).each_with_index do |pwd, index| %>
+      <%= hidden_field_tag "product[product_batches_attributes][#{index}][warehouse_id]", pwd.warehouse_id%>
+      <%= hidden_field_tag "product[product_batches_attributes][#{index}][product_id]", product.id%>
+      <%= hidden_field_tag "product[product_batches_attributes][#{index}][reference]", pwd.purchase_line_item.purchase.purchase_number %>
+      <%= hidden_field_tag "product[product_batches_attributes][#{index}][quantity]", pwd.quantity %>
+      <%= hidden_field_tag "product[product_batches_attributes][#{index}][company_id]", @company.id %>
+      <tr>
+        <td>
+          <%= pwd.purchase_line_item.purchase.purchase_number %>
+        </td>
+        <td>
+          <%= pwd.quantity %>
+        </td>
+        <td>
+        <%= text_field_tag "product[product_batches_attributes][#{index}][batch_number]",'', :class=>'form-control', :style => 'width:150px' %>
+        </td>
+        <td>
+        <%= text_field_tag "product[product_batches_attributes][#{index}][manufacture_date]", "", :class => 'form-control mfd_date', "data-index" => index, :style => 'width:100px' %>
+        </td>
+        <td>
+        <%= text_field_tag "product[product_batches_attributes][#{index}][expiry_date]", "", :style => 'width:100px', :class => 'form-control exp_date', "data-index" => index %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

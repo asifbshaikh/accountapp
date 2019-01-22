@@ -1,0 +1,178 @@
+<%= render :partial => 'auto_calculate' %>
+<%= render :partial => "shared/vendor_currency" %>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for @purchase_order, :html => {:multipart => true, :class =>'form-horizontal'} do |f| %>
+          <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+          <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+          <%= hidden_field_tag "company_cur_code", @company.currency_code %>
+          <div id="jHere"></div>
+          <%= render 'shared/form_error' , :object => @purchase_order %>
+          <div class="form-group">
+            <div class="col-lg-3">
+              <% if @voucher_setting.custom_sequence? %>  
+                <label class="control-label-required">Voucher Number</label>              
+                <%= f.text_field :purchase_order_number, :class=> "form-control bg-focus", :style=>"width:200px;" %>
+              <% else %>
+                <label class="control-label"> Voucher Number <%= @purchase_order.purchase_order_number %></label>
+                <%= f.hidden_field :purchase_order_number %>
+              <% end %>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-2'>
+              <%= f.label :Record_date,  :class=>"control-label-required"  %>
+              <%= f.text_field :record_date, :class => "form-control bg-focus", :style=>"width:120px;" %>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-2'>
+              <%= f.label "Due Date",  :class=>"control-label"  %>
+              <%= f.text_field :due_date, :class => "form-control bg-focus", :style=>"width:120px;" %>
+            </div>
+
+          </div>              
+          <div class='form-group'>
+            <div class='col-lg-3'>
+              <label  class="control-label-required" for="productcat">Vendor Name</label>
+              <div class='input-group'>
+                <%= f.select(:account_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@from_accounts, :id, :name, @purchase_order.account_id, :"currency"=>:get_currency), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+                <span id="purchase-order-currency"></span>
+              </div>
+              <span id = 'from_acc_bal'></span>
+              <span id = 'from_acc_cur'></span>
+            </div>
+            <div class="col-lg-1"></div>              
+            <div class=" col-lg-2 purchase_order_exc_rate" style=<%= 'display:none;' if @purchase_order.currency == @company.currency_code %> >
+              <label class="control-label">Exchange Rate in <%= @company.currency_code %></label>
+              <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :size => "5", :class=> "bg-focus form-control text-right sm-input" %>
+            </div>
+            <% if @purchase_order.gst_purchaseorder? %>
+              <div class="col-lg-3">
+                 <label class="control-label">GSTIN&nbsp;</label><span id="gstin"></span>
+              </div>
+            <% end %>
+          </div>
+          <div class="form-group">     
+            <div class="col-lg-2">
+              <%= f.label :Project_id, "Under Project",  :class=>"control-label" %>
+              <div class="input-group">
+                <%= f.select(:project_id, options_from_collection_for_select(@projects, :id, :name, @purchase_order.project_id), {:include_blank=> 'Type to select'},{:style => "width:150px;"}) %>
+              </div>
+            </div>
+          </div>
+          <p></p>
+          <table class="table table-striped b-t text-small" id="purchase_order_line_items" style="">
+            <thead>
+              <tr>
+                <th width='24%'><label class="control-label-required">Item</label></th>
+                <th width='25%'>Description</th>
+                <th width='12%'><label class = "control-label-required">Qty</label></th>
+                <th width='12%'><label class="control-label-required">Unit Cost</label></th>
+                <th><label>Discount%</label></th>
+                <th width='12%'><label>Tax</label></th>
+                <th width='22%' style="text-align:right;"><label class="control-label-required">Amount (<span class="comcur"><%= @company.currency_code%></span><span id='taccur'></span>)</label></th>
+                <th width='5%'></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @purchase_order.purchase_order_line_items.each_with_index do |purchase_order_line_item, index| %>  
+              <%= render "purchase_order_line_items", :purchase_order_line_item => purchase_order_line_item, :index => index %> 
+              <% end %>
+              <%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+              <tr id="row_link" class='row-link' valign="top">
+                <td valign="top" colspan="8">
+                <%= link_to "+Add item row",{:action => :add_row, :index => @purchase_order.purchase_order_line_items.size}, :class=> "btn btn-white btn-sm", :remote => true %>
+                </td>
+              </tr>
+          
+          <% @purchase_order.other_charge_line_items.each_with_index do |other_charge_line_item, other_charge_index| %>
+              <%= render "other_charge_line_items", :other_charge_line_item => other_charge_line_item, :other_charge_index => other_charge_index %>
+              <% end %>
+              <tr id="other_charge_row_link" valign="top">  
+                <td colspan='8'>         
+                <%= link_to "+ Add Other Charge",{:action => :add_other_charge_row, :other_charge_index => @purchase_order.other_charge_line_items.size}, :class => 'btn btn-sm btn-white',:remote => true %> 
+                </td>
+              </tr>
+            
+
+              <tr>
+                <td align="right" colspan='6'>Sub total</td>
+                <td align="right"> <span id="order-total">0.00</span></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td colspan="5"></td>
+                <td align='right'>Discount</td>
+                <td align='right'> <span id="discount">0.00</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                    <td colspan='5'></td>
+                <td align="right">Tax</td>
+                <td align="right"> <span id="tax-amount">0.00</span></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan='5'></td>
+                <td align="right"><b>Total</b></td>
+                <td align="right"> <span id = "total">00.00</span></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class='form-group'>
+            <div class='col-lg-12'>
+              <% unless @purchase_order.new_record? || !@purchase_order.uploaded_file_file_name? %>
+              <%=  truncate(@purchase_order.file_name, :length => 30)%>&nbsp;
+              (<%= number_to_human_size(@purchase_order.file_size) %>)
+              <% end %> 
+
+              <% if @purchase_order.new_record? || !@purchase_order.uploaded_file_file_name? %> 
+                <%= f.label "Attach a scanned proof (Image or PDF document)" %>
+              <% else %>
+                <%= f.label "Replace scanned proof (Image or PDF document)"%>
+              <% end %>
+
+              <%= f.file_field :uploaded_file, :class => 'btn btn-white' %><%= hidden_field_tag "old_file_size", @purchase_order.old_file_size %>
+
+              <% unless @purchase_order.new_record? || !@purchase_order.uploaded_file_file_name? %>
+                <div class='checkbox'>
+                  <label class='checkbox-custom'>
+                    <input type="checkbox" name="purchase_order[delete_uploaded_file]" value=1>
+                    <i class="icon-unchecked checked"></i>
+                    Remove file
+                  </label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-6'>
+              <%= f.label :customer_notes, "Narration", :class=>'control-label' %>
+                <%= text_area_tag "purchase_order[customer_notes]", "#{@purchase_order.customer_notes.blank? ? @voucher_setting.customer_notes : @purchase_order.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %>
+            </div>
+            <div class='col-lg-6'>
+              <%= f.label :terms_and_conditions, :class => 'control-label' %>
+              <%= text_area_tag "purchase_order[terms_and_conditions]", "#{@purchase_order.terms_and_conditions.blank? ? @voucher_setting.terms_and_conditions : @purchase_order.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %>
+            </div>  
+          </div >
+          <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-4">
+              <%= f.submit "Save", :class => "btn btn-success" %>&nbsp;
+              <a href="/purchase_orders" class="btn  btn-default ">Cancel</a>
+            </div>
+          </div>
+        <%end %>
+      </div>
+    </section>
+  </div>
+</div>
+<div id='modal-vendor' class='modal fade'>
+  <%= render "vendors/popup_vendor_form", :selector=>"purchase_order_account_id" %>
+</div>
+<script type="text/javascript"> 
+  $("#purchase_order_account_id").select2();
+  $("#purchase_order_project_id").select2();
+</script>

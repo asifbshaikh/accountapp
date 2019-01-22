@@ -1,0 +1,34 @@
+<script>
+	$(document).ready(function(){
+	var balance = new Object();
+	'<% @from_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#paid_from').change(function(){
+			var name = $("#paid_from option:selected").text();
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#from_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#from_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#paid_to').change(function(){
+			var name = $("#paid_to option:selected").text();
+			bal = parseFloat(balance[name]);
+			if (name != '' && bal > 0){
+				$('span#to_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#to_acc_bal').html("<span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+	});
+</script>

@@ -1,0 +1,13 @@
+<div class="row">
+		<div class="col-lg-8">
+		<% if !params[:branch_id].blank? %>
+		Branch: <b><%= Branch.find(params[:branch_id]).name%></b>
+		<% end %><br />
+      <%= render "shared/duration" %>
+	</div>
+	<div class="col-lg-4" align="right">
+		<span class="xsmall light">Account name : </span>
+		<br />
+		<span class="large"><b><%= (params[:account_id].blank?)? @accounts.first.name  : Account.find(params[:account_id]).name%></b></span>
+	</div>
+</div>

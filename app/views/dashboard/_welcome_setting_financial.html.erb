@@ -1,0 +1,34 @@
+<div class="form-group">
+  <label class="col-lg-4 control-label-required">Financial year starts on</label>
+  <div class="col-lg-6">
+   <select name='fiscal_year' class='form-control' style="width:100%">
+    <option value="1" <%= "selected" if @financial_year.start_date.month == 1%>>1st January</option>
+    <option value="2" <%= "selected" if @financial_year.start_date.month == 2 %>>1st February</option>
+    <option value="3" <%= "selected" if @financial_year.start_date.month == 3 %>>1st March</option>
+    <option value="4" <%= "selected" if @financial_year.start_date.month == 4 %>>1st April</option>
+    <option value="5" <%= "selected" if @financial_year.start_date.month == 5 %>>1st May</option>
+    <option value="6" <%= "selected" if @financial_year.start_date.month == 6 %>>1st June</option>
+    <option value="7" <%= "selected" if @financial_year.start_date.month == 7 %>>1st July</option>
+    <option value="8" <%= "selected" if @financial_year.start_date.month == 8 %>>1st August</option>
+    <option value="9" <%= "selected" if @financial_year.start_date.month == 9 %>>1st September</option>
+    <option value="10" <%= "selected" if @financial_year.start_date.month == 10 %>>1st October</option>
+    <option value="11" <%= "selected" if @financial_year.start_date.month == 11%>>1st November</option>
+    <option value="12" <%= "selected" if @financial_year.start_date.month == 12 %>>1st December</option>
+  </select>
+</div>
+</div>
+<div class="form-group">
+  <label class="col-lg-4 control-label-required">Country </label>
+  <div class="col-lg-6">
+    <select name="country_id" class='form-control' style="width:100%">
+      <% @countries.each do |country| %>
+      <option value=<%= country.id %> <%= "selected=selected" if (!@company.country.blank? && country.id == @company.country.id) || @company.country.blank? && country.name == 'India' %> ><%= country.name %></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-9 col-lg-offset-3 actions m-t">
+      <button class="btn btn-success btn-sm btn-next" data-last="Finish" data-wizard="next" data-target="#form-wizard" type="button">Get Started</button>
+    </div>
+  </div>
+</div>

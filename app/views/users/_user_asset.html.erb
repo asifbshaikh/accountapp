@@ -1,0 +1,5 @@
+<tr>
+    <td><%= user_asset.asset_tag %></td>
+    <td colspan ="2"><%= word_wrap(user_asset.description, :line_width => 10) %></td>
+    <td><%= user_asset.purchase_date.strftime("%d-%m-%Y") %></td>
+ </tr>

@@ -1,0 +1,165 @@
+<%= form_for @company, :html => {:multipart => true} do |f| %>
+  <%= render 'shared/form_error' , :object => @company %>
+  <table class="display stylized" width="100%">
+    <thead>
+      <tr><th colspan="2">Edit Company</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="25%"><%= f.label 'Company name' , :class => "required"%></td>
+        <td><%= f.text_field :name, :autofocus => "autofocus" %></td>
+      </tr>
+      <tr>
+        <td><%= label_tag "Location", 'Location', :class => 'required' %></td>
+        <td>
+        <select name="company[country_id]" style="width: 50%;">
+            <% @countries.each do |country| %>
+              <option value=<%= country.id %> <%= "selected=selected" if (!@company.country.blank? && country.id == @company.country.id) || @company.country.blank? && country.name == 'India' %> ><%= country.name %></option>
+            <% end %>
+          </select>
+          <%= hidden_field_tag "company[country_attributes][id]", @company.country.id unless @company.country.blank? %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= label_tag 'currency_code', "Currency", :class => 'required' %></td>
+        <td>
+          <%= select_tag "company[company_currencies_attributes][0][currency_id]", options_from_collection_for_select(@currencies, "id", "currency_code"), :include_blank => true %>
+        </td>
+      </tr>
+
+      <tr>
+        <td><%= label_tag 'timezone', "Time zone", :class => 'required' %></td>
+        <td>
+          <%= time_zone_select( "company", 'timezone', ActiveSupport::TimeZone.all, :default => "#{@company.timezone.blank? ? '' : @company.timezone }", :include_blank => true)  %>
+        </td>
+      </tr>
+      <tr>
+        <td><%= label_tag "fiscal_year", "Financial year start on", :class => 'required' %></td>
+        <td>
+          <select name='fiscal_year'>
+            <option value="1" <%= "selected" if @financial_year.start_date.month == 1%>>1st January</option>
+            <option value="2" <%= "selected" if @financial_year.start_date.month == 2 %>>1st February</option>
+            <option value="3" <%= "selected" if @financial_year.start_date.month == 3 %>>1st March</option>
+            <option value="4" <%= "selected" if @financial_year.start_date.month == 4 %>>1st April</option>
+            <option value="5" <%= "selected" if @financial_year.start_date.month == 5 %>>1st May</option>
+            <option value="6" <%= "selected" if @financial_year.start_date.month == 6 %>>1st June</option>
+            <option value="7" <%= "selected" if @financial_year.start_date.month == 7 %>>1st July</option>
+            <option value="8" <%= "selected" if @financial_year.start_date.month == 8 %>>1st August</option>
+            <option value="9" <%= "selected" if @financial_year.start_date.month == 9 %>>1st September</option>
+            <option value="10" <%= "selected" if @financial_year.start_date.month == 10 %>>1st October</option>
+            <option value="11" <%= "selected" if @financial_year.start_date.month == 11%>>1st November</option>
+            <option value="12" <%= "selected" if @financial_year.start_date.month == 12 %>>1st December</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label :Phone, :class => "required" %></td>
+        <td><%= f.text_field :phone, :onkeydown => "return numbersOnly(event);", :maxlength => 14, :size => "30" %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label :Fax %></td>
+        <td><%= f.text_field :fax %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label :email %></td>
+        <td><%= f.text_field :email %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "PAN" %><br/><small>(Permanent Account Number)</small></td>
+        <td><%= f.text_field :pan %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "VAT" %><br/><small>(Value Added Tax registration number)</small></td>
+        <td><%= f.text_field :VAT_no %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "CST" %></td>
+        <td><%= f.text_field :CST_no %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "Excise" %></td>
+        <td><%= f.text_field :excise_reg_no %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "Service tax no" %></td>
+        <td><%= f.text_field :service_tax_reg_no %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "Sales tax no" %></td>
+        <td><%= f.text_field :sales_tax_no %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= f.label "TIN"%><br/><small>(Tax Identification Number)</small></td>
+        <td><%= f.text_field :tin %></td>
+      </tr>
+      <!--  <tr>
+        <td class="field"><%= f.label "Payroll day"%></td>
+        <td><%= f.text_field :payroll_date %><br/> <small>Enter the day of the month for example 30 or 31</small></td>
+      </tr> -->
+     <tr>
+        <td class="field"><label>Terms and Conditions</label><br/><small>(Default for your invoice)</small></td>
+        <td><%= f.text_area :terms_and_conditions, :rows=>"3",:cols=>"20" %></td>
+      </tr>
+      <tr>
+        <td class="field"><label>Customer Note</label><br/><small>(Default for your invoice)</small></td>
+        <td><%= f.text_area :customer_note, :rows=>"3",:cols=>"20" %></td>
+      </tr>
+      <%= f.fields_for :address do |add|%>
+        <tr>
+        <td class="field"><%= add.label "Address"%></td>
+        <td><%= add.text_area :address_line1, :rows => "3", :cols=> "32" %></td>
+      </tr>
+      <!-- <tr>
+        <td class="field"><%= add.label "Addres line 2"%></td>
+        <td><%= add.text_field :address_line2 %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= add.label "City"%></td>
+        <td><%= add.text_field :city %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= add.label "State"%></td>
+        <td><%= add.text_field :state %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= add.label "Country"%></td>
+        <td><%= add.text_field :country %></td>
+      </tr>
+      <tr>
+        <td class="field"><%= add.label "Postal code"%></td>
+        <td><%= add.text_field :postal_code, :maxlength => "6", :onkeydown => "return numbersOnly(event);", :size => "30" %></td>
+      </tr> -->
+      <% end %>
+      <% unless @company.new_record? || !@company.logo? %>
+	  <tr>  <td></td> <td><%= image_tag(@company.logo.url, :alt => 'Logo', :title => 'Current logo') %></td></tr>
+	    <% end %>
+        <tr>
+           <td class ="field">
+              <% if @company.new_record? || !@company.logo? %>
+               <%= f.label "Upload logo" %>
+              <% else %>
+               <%= f.label "Replace logo"%>
+              <% end %>
+           </td>
+           <td class ="field"><%= f.file_field :logo %><%= hidden_field_tag "old_file_size", @company.old_file_size %><br/>
+            <small>Only JPG and PNG files are supported</small><br>
+
+      	   <% unless @company.new_record? || !@company.logo? %>
+	      <%= f.check_box(:delete_logo) %>
+	      <%= f.label(:delete_logo, 'Remove logo') %>
+	  <% end %>
+	    </td>
+        </tr>
+
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          <button type="submit" class="btn btn-green btn-save">Save</button>&nbsp;
+          <a href= "/settings/show" class="btn btn-cancel">Cancel</a>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
+

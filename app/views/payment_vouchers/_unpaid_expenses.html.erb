@@ -1,0 +1,19 @@
+<% expenses_payments.each_with_index do |expense_payment, index| %>
+  <% expense = expense_payment.expense %>
+  <tr>
+    <td><%= expense.voucher_number %></td>
+    <td><%= expense.currency %> <%= number_with_precision expense.paid_amount, :precision=>2 %></td>
+    <td><%= expense.currency %> <%= number_with_precision expense.outstanding, :precision=>2 %></td>
+    <td><%= expense.due_date  %></td>
+    <td>
+      <%= hidden_field_tag "payment_voucher[expenses_payments_attributes][#{index}][id]", expense_payment.id %>
+      <%= hidden_field_tag "payment_voucher[expenses_payments_attributes][#{index}][expense_id]", expense.id %>
+      <% if !expense.foreign_currency? %>
+        <%= text_field_tag "payment_voucher[expenses_payments_attributes][#{index}][tds_amount]", expense_payment.tds_amount , :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %>
+      <% else %>
+        <%= text_field_tag "payment_voucher[expenses_payments_attributes][#{index}][tds_amount]", "", :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);", :disabled => true %>
+      <% end %>
+    </td>
+    <td><%= text_field_tag "payment_voucher[expenses_payments_attributes][#{index}][amount]", expense_payment.amount, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %></td>
+  </tr>
+<% end %>

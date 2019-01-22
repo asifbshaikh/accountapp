@@ -1,0 +1,18 @@
+<tr id="row<%= index %>" valign="top" class = "sacc_line" >
+    <%= hidden_field_tag "saccounting[saccounting_line_items_attributes][#{index}][id]",saccounting_line_item.id%>
+    <%= hidden_field_tag "saccounting[saccounting_line_items_attributes][#{index}][_destroy]"%>
+ <td style="padding-left:0">
+   <%= select_tag "saccounting[saccounting_line_items_attributes][#{index}][from_account_id]", options_from_collection_for_select(@from_accounts, :id, :name,
+              :selected => saccounting_line_item.from_account_id ),:style=>"width:200px;",:class=>'bg-focus form-control',:include_blank => true  %>
+
+</td>         
+     <td></td>
+ <td>
+    <%= text_field_tag "saccounting[saccounting_line_items_attributes][#{index}][amount]", saccounting_line_item.amount,:size=>4, :id => "amount" ,:onkeydown =>"return numbersOnly(event);", :maxlength => 18, :class=>"bg-focus form-control text-right" %>
+ </td>
+ <td style="padding-right:0" align='right'>
+    <%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :saccounting_line_item_id => saccounting_line_item.id},:class =>"btn btn-danger btn-sm", :remote => true%>
+ </td>
+</tr> 
+          
+                         

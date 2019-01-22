@@ -1,0 +1,81 @@
+
+<script>
+  $(document).ready(function(){
+    getLeavecount();
+    $('#leave_request_leave_type_id').change(function(){
+     getLeavecount();
+    });
+
+});
+    
+  function getLeavecount(){
+    var total_leave_cnt = new Object();
+    var pending_leave_count = new Object();
+    '<% for l in @leave_cards %>'
+      total_leave_cnt['<%= l.id %>'] = '<%= l.total_leave_cnt %>'
+      pending_leave_count['<%= l.id %>'] = '<%= l.pending_leave_count %>'
+    '<% end %>'
+    var total_leave_count = total_leave_cnt[(document.getElementById('leave_request_leave_type_id').value)];
+    var total_leave_balance = pending_leave_count[(document.getElementById('leave_request_leave_type_id').value)];
+      
+    if (total_leave_count != null) {
+    document.getElementById("leave_count").innerHTML =  total_leave_balance + " remaining out of " + total_leave_count
+  }
+ } 
+</script>
+
+<%= form_for @leave_request, :html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @leave_request %>
+       <div class="row">
+        <div class="col-sm-6">
+          <p>
+            <%= f.label "Leave Type", :class =>"control-label-required" %></br>
+               <%= collection_select(:leave_request, :leave_type_id, @leave_cards, :leave_type_id, :leave_type_name,{},:class=> "bg-focus form-control", :prompt => true) %>
+          </p>
+        </div>   
+        </div> 
+        <div class="row">
+	        <div class="col-sm-6">
+          <p>
+            <%= f.label "Start date", :class =>"control-label-required" %> <br />
+	          <%= f.text_field :start_date, :class => "bg-focus form-control" %>
+            </p>
+          </div>
+	        <div class="col-sm-6">
+          <p>
+            <%= f.label "End date", :class =>"control-label-required" %> <br />
+            <%= f.text_field :end_date, :class => "bg-focus form-control" %>
+            </p>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-6">
+          <p>
+            <%= f.label "Contact number during leave", :class =>"control-label-required" %><br />
+            <%= f.text_field :contact_during_leave, :class => "bg-focus form-control", :onkeydown => "return numbersOnly(event);", :maxlength=> 12 %>
+            </p>
+          </div>
+        <div class="col-sm-6">
+          <p>
+            <%= f.label "Select leave approver", :class =>"control-label-required" %><br />
+            <%= f.collection_select :approved_by, @approvers, :id, :full_name, {}, {:class=>"bg-focus form-control"}%>
+     
+            </p>
+          </div>
+          </div>
+        <div class="col-sm-12"> 
+          <p>
+            <%= f.label "Reason for leave", :class =>"control-label-required" %><br />
+	          <%= f.text_area :reason_for_leave, :rows=> 3, :cols=> 30, :class=>"bg-focus form-control"%>
+          </p>
+        </div>
+      <div class="col-lg-8 col-lg-offset-4">                      
+        <%if @leave_cards.blank? %>
+             <a href="#", class="btn btn-success">Save</a>
+            <% else %>
+           <button type="submit" class="btn btn-success">Save</button>
+            <% end %>
+           <a href="#" title="Back" id ="bck_leave_req" class="btn btn-white">Cancel</a>
+       </div>
+     
+<% end %>

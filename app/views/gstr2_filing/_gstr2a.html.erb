@@ -1,0 +1,48 @@
+<div class="panel-body"> 
+  <div class="row">
+    <div class="col-sm-12 m-b-mini">
+      <p>These purchases are recorded in ProfitBooks but not reflecting in the list uploaded by your supplier on GSTN portal. You can decide what to do with them by clicking on action buttons. </p>
+      Total Records<label class="label bg-info m-l-mini">12</label> 
+    </div>
+    <div><%= link_to "<i class='icon-plus'></i> Request GSTR2a".html_safe, :controller => :gstr2_filing, :action => :fetch_gstr2a_b2b, :gstr_two_id => @gstr_two.id %></div>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <p> <br></p> 
+      <table class="table table-striped b-t text-small">
+        <thead>
+          <tr>
+            <th><input name="checkboxA" type="checkbox"></th>
+            <th>Purchase Number</th>
+            <th>Supplier Name</th>
+            <th>Date</th>
+            <th>Purchase Amount</th>
+            <th>Total Items</th>
+            <th>Total Taxes</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><!-- <i class="icon icon-ok text-success"> --></i></td>
+            <td><div class="btn-group">
+              <!-- <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button> -->
+                <ul class="dropdown-menu">
+                  <li><a href="#">Delete From ProfitBooks</a></li>
+                  <li><a href="#">Missed by supplier</a></li>
+                </ul>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>			 <!-- Table ends -->
+    </div><!--"all projects" tab ends --> 
+  </div>

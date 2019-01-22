@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial=>"shared/flash_msg"%>
+      <div id="jHere"></div>
+<%= form_for @delivery_challan,  :html => {:class => "form-horizontal"} do |f| %>
+  <%= render 'shared/form_error', :object => @delivery_challan %>
+    <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+    <%= hidden_field_tag 'delivery_challan[sales_order_id]', @sales_order.id %>      
+    <%=f.hidden_field :voucher_number, :value => @delivery_challan.voucher_number %>
+ <div class='form-group'>
+    <div class="col-lg-3">
+      <% if @delivery_challan.voucher_setting.custom_sequence? %>
+        <%= f.label :voucher_number, :class=>"control-label-required" %>
+        <%= f.text_field :voucher_number, :class=>"form-control bg-focus", :style=>"width:200px;" %>
+      <% else %>
+        <label class="control-label"> Voucher number <%= @delivery_challan.voucher_number %> </label>
+      <% end %>
+    </div>
+    <div class='col-lg-3'>
+      <label><%= @company.label.customer_label%></label> : <%= @sales_order.customer_name %>
+     <%=f.hidden_field :customer_id, :value => @sales_order.customer_id %>
+    </div>
+    <div class='col-lg-3'>
+      <label class="control-label-required">Date</label>
+      <%= text_field_tag "delivery_challan[voucher_date]", @delivery_challan.voucher_date, :class=>"form-control bg-focus" %>
+    </div>
+    <div class='col-lg-3' colspan=2>
+    <%= f.label "Warehouse" , "#{@company.label.warehouse_label}", :class =>"control-label-required" %><br/>
+    <%= select_tag("delivery_challan[warehouse_id]", options_from_collection_for_select(@company.warehouses, :id, :name, :selected => @delivery_challan.warehouse_id), :class=>'form-control bg-focus')%>
+    </div>
+  </div>
+   
+ <div class="form-group">
+ <div class="col-lg-12">
+  <table class="table table-striped b-t dc-line" id="delivery_challan_line_items">
+    <thead>
+      <tr>
+        <th style=' width:20%;'>
+         <label class="control-label-required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+        </th>
+        <th style=' width:21%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+        <th style='width:33'>Available Qty</th>
+        <th style='width:8'>Qty in SO</th>
+        <th style=' width:12%;' class="control-label-required"><label>Qty Delivered</label></th>
+      </tr>
+    </thead>
+  <tbody>
+  <% @delivery_challan.delivery_challan_line_items.each_with_index do |delivery_challan_line_item, index| %>  
+    <%= render "delivery_challan_line_items", :delivery_challan_line_item => delivery_challan_line_item, :index => index %> 
+  <% end %>
+  </tbody>
+  </table>
+ </div>
+ </div>
+      <div class="form-group">
+        <div class="col-lg-5">
+        <label class="control-label">Customer Notes</label>
+          <%= text_area_tag "delivery_challan[customer_notes]", "#{@delivery_challan.customer_notes.blank? ? @voucher_setting.customer_notes : @delivery_challan.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+        <label class="control-label">Terms and Conditions</label>
+          <%= text_area_tag "delivery_challan[terms_and_conditions]", "#{@delivery_challan.terms_and_conditions.blank? ? @voucher_setting.terms_and_conditions : @delivery_challan.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %><br/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-8 col-lg-offset-4">                      
+          <%= hidden_field_tag "sales_order_id", @sales_order.id %>
+          <button type="submit" class="btn btn-success">Generate</button>
+
+          <%= link_to 'Cancel', sales_orders_path, :class => "btn btn-default" %>
+        </div>
+      </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>

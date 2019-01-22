@@ -1,0 +1,28 @@
+	<% if flash[:notice] %>
+	<!-- Flash message -->
+		<div class="alert alert-success">
+		<h6><i class="icon-ok-sign icon-large"></i><%= flash[:notice]%></h6>
+		</div>
+	<!-- flash message end -->
+	<% end %>
+	<% if flash[:error] %>
+	<!-- error message -->
+		<div class="alert alert-danger"><i class="icon-ban-circle icon-large"></i><strong>Uh-oh! You have error!</strong>
+		 <h6><i class="icon-ban-circle icon-large"></i><%= flash[:error]%></h6>
+     	</div>
+	<% end %>
+    <!-- error msg end -->
+	<% if flash[:success] %>	
+	<!-- success message -->
+		<div class="alert alert-success">
+			<h6><i class="icon-ok-sign icon-large"></i><%= flash[:success] %></h6>
+		</div>
+    <!-- success msg end -->
+	<% end %>
+	<% if flash[:alert] %>
+	<!-- warning  message -->
+		<div class="alert alert-info">
+		  <h6><i class="icon-info-sign icon-large"></i> <%= flash[:alert]%></h6>
+		</div>
+    <!-- warning msg end -->
+	<% end %>

@@ -1,0 +1,31 @@
+<h1>Listing issue_raw_materials</h1>
+
+<table>
+  <tr>
+    <th>Issue date</th>
+    <th>Issued to</th>
+    <th>Inventory</th>
+    <th>Quantity</th>
+    <th>Company</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @issue_raw_materials.each do |issue_raw_material| %>
+  <tr>
+    <td><%= issue_raw_material.issue_date %></td>
+    <td><%= issue_raw_material.issued_to %></td>
+    <td><%= issue_raw_material.inventory_id %></td>
+    <td><%= issue_raw_material.quantity %></td>
+    <td><%= issue_raw_material.company_id %></td>
+    <td><%= link_to 'Show', issue_raw_material, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+    <td><%= link_to 'Edit', edit_issue_raw_material_path(issue_raw_material) %></td>
+    <td><%= link_to 'Delete', issue_raw_material, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Issue raw material', new_issue_raw_material_path %>

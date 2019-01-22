@@ -1,0 +1,34 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Recieved date:</b>
+  <%= @finished_good.recieved_date %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @finished_good.quantity %>
+</p>
+
+<p>
+  <b>Recieved from:</b>
+  <%= @finished_good.recieved_from %>
+</p>
+
+<p>
+  <b>Inventory:</b>
+  <%= @finished_good.inventory_id %>
+</p>
+
+<p>
+  <b>Company:</b>
+  <%= @finished_good.company_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_finished_good_path(@finished_good) %> |
+<%= link_to 'Back', finished_goods_path %>

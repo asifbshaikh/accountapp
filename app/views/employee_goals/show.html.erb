@@ -1,0 +1,68 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+   <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+      <!-- Left column/section -->
+          <section class="column width6 first" ></br>
+          	<div class="highlight">
+          	<%= render :partial => "shared/flash_msg"	%>
+           <!--   <div id='user_info_div'><span class='basic_info'>Employee Goal</span></div> -->
+                 <table class="display stylized" id="act_details">
+	                  <thead>
+	                  	<tr>
+	                  		<th colspan="2">Goal Details </th>
+	                  	</tr>
+	                  </thead>
+	                  <tbody>
+		                  <tr>
+		                     <td><label>For User:</label></td>
+		                     <td><%= User.find(@employee_goal.for_employee).first_name %></td>
+						          </tr>
+		                  <tr>
+		                    <td><label>From date:</label></td>
+		                     <td><%= @employee_goal.from_date.strftime("%d-%m-%Y") %></td>
+		                  </tr>
+		                  <tr>
+		                    <td><label>To Date:</label></td>
+		                    <td><%= @employee_goal.to_date.strftime("%d-%m-%Y") %></td>
+		                  </tr>
+		                  <tr>
+										    <td><label>Goal:</label></td>
+										    <td><%= MasterObjective.find(@employee_goal.goals).objective_name %></td>
+										  </tr>
+											<% if !@employee_goal.manager_comments.blank?%>
+											<tr>
+											  <td><label>Manager comments:</label></td>
+											  <td><%= @employee_goal.manager_comments %></td>
+											</tr>
+											<% end %>
+       					 </tbody>
+					       <tfoot>
+						         <tr>
+                        <td colspan="2">
+		                      <%= link_to 'Edit', edit_employee_goal_path(@employee_goal) , :class => "btn btn-green" %> &nbsp;
+		                      <%= link_to 'Back', employee_goals_path, :class => "btn btn-gray" %>
+						            </td>		 
+						          </tr>
+					       </tfoot>
+				    </table>
+			 <!-- End of Left column/section -->
+			    </div><br />
+        </section>
+         <!-- Right column/section -->
+	    <aside class="column width2"><br />
+	           <a href="/employee_goals" class="btn btn-special btn-green btn-green-index">&nbsp; View all goals</a>
+	         <div id="rightmenu">
+	                 <dl class="first">
+	                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+	                       <dd><%= link_to 'Help', "/helps/41", :class=>"nyroModal" %></dd>  
+	                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+	                 </dl>
+	           </div><br />
+	   </aside>
+  <!-- End of Right column/section -->
+    </div>
+ </div>

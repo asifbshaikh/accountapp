@@ -1,0 +1,19 @@
+<tr>
+    <td><%= link_to saccounting.voucher_number, saccounting %></td>
+    <td><%= saccounting.voucher_date.strftime("%d-%m-%Y") %></td>
+    <td><%= truncate(saccounting.to_account_name, :length => 20) %></td>
+    <td><%= format_currency saccounting.amount %></td>
+    <td><%= saccounting.created_by_user %></td>
+    <td><div class="btn-group" style="float: right;">
+          <button class="btn btn-white" onclick="location.href='/saccountings/<%= saccounting.id %>'"; >View</button>
+          <button class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="<%= edit_saccounting_path(saccounting) %>">Edit</a></li>
+            <li><a href="<%= saccounting_path(saccounting, :format => "pdf") %>" target = "_blank">Export to PDF</a></li>
+             <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/saccountings/<%= saccounting.id%>" >Delete</a></li>
+          </ul>
+      </div></td>
+</tr>

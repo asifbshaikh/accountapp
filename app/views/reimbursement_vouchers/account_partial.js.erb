@@ -1,0 +1,5 @@
+$(".subP").remove();
+$('.loader').remove();
+<% str = "shared/#{@account_head.root.name.downcase.gsub(/\s+/,'').gsub(/\(/,"").gsub(/\)/,"").gsub(/\//,"")}" unless @account_head.blank? %>
+$(".open-balance").after('<%= escape_javascript render :partial => str unless str.blank? %>');
+$(".btnsave").attr('class', 'btn btn-sm btn-success btnsave'); // enablink button

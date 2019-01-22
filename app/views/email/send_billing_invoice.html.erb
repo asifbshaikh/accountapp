@@ -1,0 +1,17 @@
+<p>Hello <%= @user.first_name %>,<br />
+    Thanks for joining <%= link_to 'Profitbooks.net', 'http://profitbooks.net/' %>. You can download the attached invoice (Invoice no. <%= @billing_invoice.invoice_number %>). Your current plan is <%= @company.plan.display_name %> and it is valid till <%= @company.subscription.end_date.to_date %><br />
+    In case any issue, feel free to <a href="mailto:support@profitbooks.net">contact us</a> for assistance.
+</p>
+
+<b>Getting Help</b><br/>
+   -----------------------------------------------<br/>
+   You can write to  <a href="mailto:support@profitbooks.net"><b>support@profitbooks.net</b></a> for any issue related to the application. Also let us know if you want to see a particular feature in the application.
+<br/><br/>
+We look forward to a long relationship.
+<br/><br/>
+
+Thanks, <br />
+The ProfitBooks Team.
+<hr>
+Sent using <a href= "https://www.profitbooks.net" target = "_blank">ProfitBooks.net</a><br/>
+<a href= "https://www.profitbooks.net/home/pricing" target = "_blank">Create</a> your free account today and start managing office finances in a smarter way.

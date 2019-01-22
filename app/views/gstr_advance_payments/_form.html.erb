@@ -1,0 +1,236 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-sm-12">
+        <section class="panel">
+          <%= form_for @gstr_advance_payment,  :html => {:class => "form-horizontal"} do |f| %>
+            <div class="panel-body">
+              <div id="jHere"></div>
+              <%= render :partial => 'auto_calculate' %>
+                <%= render 'shared/form_error', :object => @gstr_advance_payment %>
+                <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+                <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+                <%= hidden_field_tag 'discount', params[:discount].blank? ? 0 : params[:discount] %>
+                <div class="col-sm-6">
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                      <label class="control-label control-label-required">Vendor</label>
+                    </div>
+                    <% if @gstr_advance_payment.to_account.blank? %>
+                      <div class='input-group'>             
+                        <%= f.select(:to_account_id, options_from_collection_for_select_with_data(@from_accounts, :id, :name, @gstr_advance_payment.to_account_id, :"currency"=>:get_currency,"gstn" => :get_gstn), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+                      </div>
+                      <% else %>
+                           <div> <%= @gstr_advance_payment.customer.name %></div>
+                      <% end %>
+                    <div class="col-sm-3">
+                      <label class="control-label">GSTIN</label>
+                    </div>
+                    <div class="col-sm-3">
+                      <label><span id="purchase-gstin"></span></label>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                      <label class="control-label">Address</label>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                      <label class="control-label">Billing Address:</label>
+                    </div>
+                    <div class="col-sm-3">
+                      <label class="control-label">Shipping Address:</label>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class='col-lg-3'></div>
+                    <div class='col-sm-3'>
+                      <div id="billing-address-address-line1"></div>
+                      <div id="billing-address-city"></div>
+                      <div id="billing-address-state"></div>
+                      <div id="billing-address-country"></div>
+                      <div id="billing-address-postal-code"></div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div id="shipping-address-address-line1"></div>
+                      <div id="shipping-address-city"></div>
+                      <div id="shipping-address-state"></div>
+                      <div id="shipping-address-country"></div>
+                      <div id="shipping-address-postal-code"></div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                      <label class="control-label control-label-required">Payment Mode </label>
+                    </div>
+                    <div class="col-lg-8">
+                      <div class="btn-group" data-toggle="buttons" >
+                        <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+                          <%= radio_button_tag 'transaction_type','cash' %>
+                          <i class="icon-ok icon-large text-active"></i>Cash
+                        </label>
+                        <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+                          <%= radio_button_tag "transaction_type",'cheque' %>
+                          <i class="icon-ok icon-large text-active"></i>Cheque
+                        </label>
+                        <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+                          <%= radio_button_tag "transaction_type",'card'%>
+                          <i class="icon-ok icon-large text-active"></i>Credit/Debit Card
+                        </label>
+                        <label class="btn btn-sm btn-default transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+                          <%= radio_button_tag "transaction_type",'ibank' %>
+                          <i class="icon-ok icon-large text-active"></i>Internet Banking
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='form-group'>
+                    <div class='col-sm-2'></div>
+                    <div class="pmnt"></div>
+                    <%= render :partial => "#{params[:transaction_type]}" unless @payment_detail.blank? || params[:transaction_type].blank? %> 
+                  </div>
+                </div>
+                <div class="col-sm-1">
+                  <!-- Blank Column -->
+                </div>
+                <div class="col-sm-5">
+                  <div class="form-group">
+                      <div class="col-sm-3">
+                        <label class="control-label">Voucher Number </label>
+                      </div>
+                      <div class="col-lg-4" style='margin-bottom:0;margin-top:0;padding-top:7px;'>
+                        <%= @gstr_advance_payment.voucher_number %>
+                        <%= f.hidden_field :voucher_number %>
+                        <%= hidden_field_tag "gstr_advance_payment[voucher_date]", Time.zone.now.to_date %>
+                      </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                     <label class="control-label control-label-required">Receipt Date </label>
+                    </div>
+                    <div class="col-lg-4">
+                      <%= text_field_tag 'voucher_date', params[:voucher_date], :placeholder => "Select Date", :class=>'form-control bg-focus', :style=>"width:120px" %>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-3">
+                      <label class="control-label control-label-required">Deposit to </label>
+                    </div>
+                    <div class="col-lg-4">
+                      <%= f.select(:from_account_id, options_from_collection_for_select_with_data(@bank_accounts, :id, :name, @gstr_advance_payment.from_account_id, :"currency"=>:get_currency), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+                    </div>
+                  </div>
+                  <div class='row form-group'>
+                    <div class='col-sm-3'>
+                      <label class="control-label control-label">Payment Description </label>
+                    </div>
+                    <div class='col-lg-4'>
+                      <%= f.text_area :payment_details, :rows => 3, :cols => 60, :class=>'form-control bg-focus' %>
+                    </div>
+                  </div>          
+                  <div class="col-sm-1"></div>  
+                </div>
+                <div class="col-sm-6">
+                  <div class="row form-group">
+                    <div class="col-lg-3">
+                      <label class="control-label control-label-required"> Place of supply</label>            
+                    </div>
+                    <div class="input-group">
+                          <%= collection_select(:gstr_advance_payment, :place_of_supply, @states, :state_code, :name, {:prompt => true},{:state_code=>"select2-option", :style=>"width:200px;"}) %>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-12">
+                <table class="table table-striped b-t" id="gstr_advance_payment_line_items">
+                  <thead>
+                    <tr>
+                      <th style=' width:19%;'>
+                        <label class="control-label-required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+                      </th>
+                      <th style=' width:19%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                      <th style=' width:12%;' class="control-label control-label-required"><label class = "control-label-required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></label></th>
+                      <th style=' width:12%;'><label class="control-label control-label-required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+                      <th style=' width:11%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+                      <th style=' width:11%;'>Tax</th>
+                      <th style=' width:22%;text-align:right;' class="control-label-required"><label class="required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<span class="comcur"><%= @company.currency_code%></span><span id='taccur'></span>)</label></th>
+                      <th style=' width:5%;'> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @gstr_advance_payment.gstr_advance_payment_line_items.each_with_index do |gstr_advance_payment_line_item, index| %>
+                      <%= render "gstr_advance_payment_line_items", :gstr_advance_payment_line_item => gstr_advance_payment_line_item, :index => index %>
+                    <% end %>
+                    <tr id="row_link" class='row-link' valign="top">
+                      <td valign="top" colspan="8">
+                        <%= link_to  "+ Add new row",{:action => :add_row, :index => @gstr_advance_payment.gstr_advance_payment_line_items.size}  , :class => 'btn btn-white btn-sm',:remote => true %>
+                      </td>
+                    </tr>
+                    <% @gstr_advance_payment.shipping_line_items.each_with_index do |shipping_line_item, shipping_index| %>
+                      <%= render "shipping_line_items", :shipping_line_item => shipping_line_item, :shipping_index => shipping_index %>
+                    <% end %>
+                    <tr id="shipping_row_link" valign="top">
+                      <td valign="top" colspan="8">
+                        <%= link_to "+ Add other charge",{:action => :add_shipping_row, :shipping_index=>@gstr_advance_payment.shipping_line_items.size}, :class =>'btn btn-white btn-sm',:remote => true %></td>
+                    </tr>
+                    <tr>
+                      <td colspan='5'class="text-right" style="background-color: #fff;border:none;"></td>
+                      <td class="text-right" style="background-color: #fff;">Sub total</td>
+                      <td style="background-color: #fff;" align="right" > <span id="gstr_advance_payment-total">0.00</span></td>
+                      <td style="background-color: #fff;"></td>
+                    </tr>
+                    <tr>
+                      <td colspan='5' class="text-right" style="background-color: #fff;border:none;"></td>
+                      <td  class="text-right" style="background-color: #fff;">Discount</td>
+                      <td align="right" style="background-color: #fff;"> <span id="discount">0.00</span></td>
+                      <td style="background-color: #fff;"></td>
+                    </tr>
+                    <tr>
+                      <td style="background-color: #fff; border-bottom: none;border:none;" colspan="5"></td>
+                      <td class="text-right" style="background-color: #fff;">Tax </span></td>
+                      <td style="background-color: #fff;" align="right" > <span id="tax-amount">0.00</span></td>
+                      <td style="background-color: #fff;"></td>
+                    </tr>
+                    <tr>
+                      <td style="background-color: #fff; border-bottom: none;border:none;" colspan="5"></td>
+                      <td class="text-right" style="background-color: #fff;"><b>Total</b></td>
+                      <td align="right" style="background-color: #fff;"><b></b> <span id = "total">0.00</span></td>
+                      <td style="background-color: #fff;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-8 col-lg-offset-4">
+          <%= f.submit "Save", :class=>"btn btn-success" %>
+          <%= link_to 'Cancel', gstr_advance_payments_path, :class => "btn btn-default" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </section>
+</section>
+<!-- .modal -->
+<div id="modal1" class="modal fade">
+  <%= render "customers/popup_customer_form", :selector=>"gstr_advance_payment_account_id" %>
+</div>
+<div id="modal2" class="modal fade">
+  <%= render "shared/account_details", :account_heads => @sales_account_heads, :transaction_type => "item" %>
+</div>
+<div id="modal3" class="modal fade">
+  <%= render "shared/account_details", :account_heads => @tax_account_heads, :transaction_type => "tax" %>
+</div>
+<!-- / .modal -->
+
+<script type="text/javascript">
+  $("#gstr_advance_payment_from_account_id").select2();
+  $("#gstr_advance_payment_to_account_id").select2();
+  $("#gstr_advance_payment_place_of_supply").select2();
+  //$('#voucher_date').datepicker({format: 'dd-mm-yyyy'});
+</script>

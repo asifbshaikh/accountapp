@@ -1,0 +1,25 @@
+<table class="display stylized" >
+<%= form_for(@payment_voucher) do |f| %>
+<div id="user_info_div"><span class="basic_info"><%= f.label "Payment Mode" %></span></div>
+<tbody>
+<tr>
+<td class="pay_mode">
+ <%= radio_button_tag :transaction_type,'cash', :checked => true %>
+   <%= f.label :transaction_type, "Cash", :value => "cash" %>
+   <%= radio_button_tag :transaction_type,'cheque' %>
+   <%= f.label :transaction_type, "Cheque", :value => "cheque" %>
+   <%= radio_button_tag :transaction_type,'card' %>
+   <%= f.label :transaction_type, "Card", :value => "card" %>
+   <%= radio_button_tag :transaction_type,'ibank' %>
+   <%= f.label :transaction_type, "Internet Banking", :value => "ibank" %> 
+</td>
+<td></td>
+</tr>
+</tbody>
+<% end %>
+
+<tr>
+<td colspan="2"><%= render "shared/transaction_type" %></td>
+</tr>
+
+</table>

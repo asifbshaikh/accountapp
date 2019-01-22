@@ -1,0 +1,6 @@
+<% if @resp %>
+  $('#oldData').remove();
+  $('#newData').after("<%= escape_javascript render :partial => 'dropbox_files' %>");
+<% else %>
+  $('span.no-filename').text('File name can not be blank.');
+<% end %>

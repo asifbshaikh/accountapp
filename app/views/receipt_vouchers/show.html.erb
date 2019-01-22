@@ -1,0 +1,139 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i><%= @receipt_voucher.advanced? ? "Advance Receipt" : "Receipt" %> - <%= @receipt_voucher.voucher_number %> </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <a href="/receipt_vouchers/new" class="btn btn-success btn-lg"><i class="icon-plus"></i> New Receipt</a>
+        <div class="btn-group">
+          <button  onclick="location.href= '<%= edit_receipt_voucher_path(@receipt_voucher)%>'"; class="btn btn-info btn-lg" > <i class="icon-edit"> </i> Edit</button>
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <% if @receipt_voucher.advanced? %>
+              <li class='text-left'>
+                <%= link_to "<i class='icon-anchor'> </i>Allocate".html_safe, {:controller=>:receipt_vouchers, :action=> :allocate, :id=>@receipt_voucher.id } %>
+              </li>
+            <% end %>
+            <li class="text-left"><%= link_to raw('<i class="icon-trash"> </i>Delete '), receipt_voucher_path(@receipt_voucher), :method => "delete", :confirm => "Are you sure?" %></li>
+          </ul>
+        </div>
+        <%= link_to raw('<i class="icon-print"> </i>'), receipt_voucher_path(@receipt_voucher, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target =>"_blank" %>
+        <button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'>
+          <span class="dropdown-label"><i class="icon-envelope"></i></span>
+        </button>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), receipt_vouchers_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+        <p></p>
+      </div>
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-6">
+            <div class="panel">
+              <header class="panel-heading">
+                <div class='col-lg-6'>Allocation history</div>
+                <div class='col-lg-6 text-right'>
+                  <% if @receipt_voucher.advanced? && @receipt_voucher.unallocated_amount > 0 %>
+                    <%= link_to "<i class='icon-anchor'> </i>Allocate".html_safe, {:controller=>:receipt_vouchers, :action=> :allocate, :id=>@receipt_voucher.id }, :class=>"btn btn-sm btn-info" %>
+                  <% end %>
+                </div>
+              </header>
+              <div class=''>
+                <% if @receipt_voucher.invoices_receipts.blank? %>
+                  <%= render "shared/no_record" %>
+                <% else %>
+                  <table class="table table-striped m-b-none text-small">
+                    <thead>
+                      <tr>
+                        <th>Invoice No.</th>
+                        <% unless @receipt_voucher.tds_amount.blank? || @receipt_voucher.tds_amount <=0 %>
+                          <th class='text-right'>TDS Deducted(<%= @receipt_voucher.currency_code %>)</th>
+                        <% end %>
+                        <th class='text-right'>Received Amount(<%= @receipt_voucher.currency_code %>)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @receipt_voucher.invoices_receipts.each do |invoice_receipt| %>
+                        <tr>
+                          <td><%= link_to invoice_receipt.invoice.invoice_number, invoice_receipt.invoice %></td>
+                          <% unless @receipt_voucher.tds_amount.blank? || @receipt_voucher.tds_amount <=0 %>
+                            <td class='text-right'><%= invoice_receipt.tds_amount %></td>
+                          <% end %>
+                          <td class='text-right'><%= format_amount(invoice_receipt.amount) %></td>
+                        </tr>
+                      <% end %>
+                      <% if @receipt_voucher.advanced? %>
+                        <tr>
+                          <td class='text-right'><strong>Total</strong></td>
+                          <% unless @receipt_voucher.tds_amount.blank? || @receipt_voucher.tds_amount <=0 %>
+                            <td class='text-right'><strong><%= @receipt_voucher.invoices_receipts.sum(:tds_amount) %></strong></td>
+                          <% end %>
+                          <td class='text-right'> <strong><%= format_amount(@receipt_voucher.invoices_receipts.sum(:amount)) %></strong></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <section class="panel">
+              <header class="panel-heading">
+                Money received from <%= @receipt_voucher.from_account_name %>
+              </header>
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p><strong>Received Date:</strong> <%= @receipt_voucher.received_date %></p>
+                  <% unless @receipt_voucher.project.blank? %>
+                    <p>
+                    	<strong>Under project:</strong> <%= @receipt_voucher.project_name %>
+                    </p>
+                  <% end %>
+                  <p><strong>Deposit to Account: </strong> <%= @receipt_voucher.to_account_name %></p>
+                  <p><strong> Amount: </strong><%= @receipt_voucher.currency_code%> <%= format_amount @receipt_voucher.amount %></p>
+                  <% if @receipt_voucher.exchange_rate != 0 %>
+                    <p><strong> Exchange Rate in <%= @company.currency_code%>: </strong><%= @receipt_voucher.exchange_rate %></p>
+                  <% end %>
+                  <% if !@receipt_voucher.tds_amount.blank? && @receipt_voucher.tds_amount > 0 %>
+                    <p><strong>TDS Amount :</strong> <%= format_currency @receipt_voucher.tds_amount %> </p>
+                  <% end %>
+                  <% if !@receipt_voucher.allocated? && @receipt_voucher.advanced? && @receipt_voucher.unallocated_amount > 0 %>
+                    <p><strong>Unallocated Amount : </strong><%= @receipt_voucher.currency_code%> <%= format_amount@receipt_voucher.unallocated_amount %> </p>
+                  <% end %>
+                  <% if @receipt_voucher.unallocated_tds_amount > 0 %>
+                    <p><strong>Unallocated TDS Amount : </strong> <%= format_currency @receipt_voucher.unallocated_tds_amount %> </p>
+                  <% end %>
+                    <p><strong>Created by : </strong> <%= @receipt_voucher.user.username %> </p>
+                </div>
+                <div class='col-sm-6'>
+                  <p><strong>Receipt Mode:</strong> <%= @receipt_voucher.payment_detail.payment_mode %></p>
+                  <%= render "#{@receipt_voucher.payment_detail.payment_mode.to_s.downcase.gsub(/\s+/, "")}_details"%>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+				<div class="row">
+          <%if !@receipt_voucher.description.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Description</label><br/>
+              <%= breaking_word_wrap(@receipt_voucher.description)%>
+            </p>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :receipt_voucher => @receipt_voucher %>
+</div>

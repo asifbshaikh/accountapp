@@ -1,0 +1,95 @@
+<tr>
+  <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+  <td class="text-right" style='background-color:#fff;'><b>Sub total</b></td>
+  <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.sub_total %></b></td>
+</tr>
+
+<%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+<%= render :partial=> "shipping_line_item_details" , :collection => @shipping_line_items %>
+
+<% if @invoice.discount>0 %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>Discount</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.discount %></b></td>
+  </tr>
+<% end %>
+
+<% if @invoice.tax>0 %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>Tax <%= @invoice.tax_inclusive? ? "Inclusive" : "Exclusive" %></b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.tax %></b></td>
+  </tr>
+<% end %>
+
+
+<tr>
+  <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+  <td class="text-right" style='background-color:#fff;'><b>Total</b></td>
+  <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.total_amount %></b></td>
+</tr>
+
+<% if @invoice.paid_amount>0 %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>Payment received</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.paid_amount %></b></td>
+  </tr>
+<% end %>
+
+<% if @invoice.tds_amt>0 %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>TDS amount</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.tds_amt %></b></td>
+  </tr>
+<% end %>
+
+<% if @invoice.has_return_any? %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>Return voucher amount</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.credit_note_amount %></b></td>
+  </tr>
+<% end %>
+
+<% if @invoice.has_credit_allocation_any? %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>Credit note amount</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.allocated_credit %></b></td>
+  </tr>
+<% end %>
+
+<% if @invoice.has_gst_credit_allocation_any? %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b>GST Credit note amount</b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.allocated_gst_credit %></b></td>
+  </tr>
+<% end %>
+
+<% if !@invoice.cash_invoice? && @invoice.outstanding>0 %>
+
+  <% if !@invoice.paid? %>
+   <tr>
+      <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+      <td class="text-right" style='background-color:#fff;'><b>Balance due</b></td>
+      <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.outstanding %></b></td>
+    </tr>
+  <% else %>
+    <tr>
+      <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    </tr>
+  <% end %>
+
+<% end %>
+
+<% if @invoice.foreign_currency? && @invoice.paid? %>
+  <tr>
+    <td style='background-color:#fff; border-bottom:none;' colspan='<%= line_item_column_count %>'>&nbsp;</td>
+    <td class="text-right" style='background-color:#fff;'><b><%= (@invoice.gain_or_loss > 0) ? "Loss" : "Gain" %> </b></td>
+    <td class="text-right" style="background:none;border-top:1px solid #EEEEEE"><b><%= format_amount @invoice.gain_or_loss.abs %></b></td>
+  </tr>
+<% end %>

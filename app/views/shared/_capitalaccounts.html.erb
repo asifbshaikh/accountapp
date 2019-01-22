@@ -1,0 +1,27 @@
+  <div class="block subP">
+    <label class='control-label'>Name</label>
+    <%= text_field_tag 'capital[name]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>E-mail</label>
+    <%= text_field_tag 'capital[email]','', :class=>'form-control' %>
+    <span id="email"></span>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>Address Line 1</label>
+    <%= text_field_tag 'capital[address_attributes][address_line1]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>Address Line 2</label>
+    <%= text_field_tag 'capital[address_attributes][address_line2]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>City</label>
+    <%= text_field_tag 'capital[address_attributes][city]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>State</label>
+    <%= text_field_tag 'capital[address_attributes][state]','', :class=>'form-control' %>
+  </div>
+  
+

@@ -1,0 +1,48 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+       // Chart for Bank accounts
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Tax account');
+        data.addColumn('number', 'Amount');
+        '<% @sales_hash.sort.reverse.each do |key, value| %>'
+         data.addRows([
+                     ['<%= value %>', parseInt('<%=  key.to_i %>')]
+                     ]);
+        '<% end %>'
+        var options = {'title':'Financial Year <%= @financial_year.year.name %>'
+                       };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('sales_tax_div'));
+        chart.draw(data, options);
+
+        // Chart for Cash accounts
+        var data1 = new google.visualization.DataTable();
+        data1.addColumn('string', 'Tax Account');
+        data1.addColumn('number', 'Amount');
+        '<% @purchase_hash.sort.reverse.each do |key, value| %>'
+           data1.addRows([
+                     ['<%= value %>', parseInt('<%=  key.to_i %>')]
+                     ]);
+        '<% end %>'
+
+        var options1 = {'title':'Financial Year <%= @financial_year.year.name %>'
+                       };
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('purchase_tax_div'));
+        chart1.draw(data1, options1);
+
+      }
+    </script>
+

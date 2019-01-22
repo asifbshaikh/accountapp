@@ -1,0 +1,62 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+   <!-- Wrapper -->
+   <div class="wrapper">
+    <!-- Left column/section -->
+      <section class="column width6 first" ></br>
+      	<div class="highlight">
+      	<%= render :partial => "shared/flash_msg"	%>
+        <table class="display stylized" id="act_details">
+           <thead>
+           	 <tr><th colspan="2">Announcement  </th></tr>
+           </thead>
+           <tbody>	 
+               <tr>
+                  <td>
+                     <label>Title:</label>
+                     <%= @organisation_announcement.title %>
+                  </td>
+               </tr>
+               <tr>
+                 <td>
+                  <label> Announcement: </label> 
+                &nbsp; <p> <%= breaking_word_wrap(@organisation_announcement.announcement) %></p>
+                 </td> 
+               </tr>
+                <tr>
+                   <td>
+                     <label>Created By:</label>
+                     <%= User.find(@organisation_announcement.created_by).first_name  %>
+                   </td> 
+                </tr>
+              </tbody>
+              <tfoot>
+              	 <tr>
+              	    <td colspan="2">
+	               <%= link_to 'Edit', edit_organisation_announcement_path(@organisation_announcement),{:class=>"btn btn-green big", :class=>"hidden" } %> &nbsp;
+	              </td>
+              	 </tr>
+              </tfoot>      
+          </table>  
+          </div><br />
+      </section>
+           <!-- End of Left column/section -->
+           <!-- Right column/section -->
+		    <aside class="column width2">
+          <% if @current_user.roles[0].name == "Owner" %>
+          </br>
+          <%= new_button "Create New Announcement", new_organisation_announcement_path %>
+            <p><%= list_button_black "View Announcements", organisation_announcements_path %></p>
+          <% else %>
+            <p><%= list_button_black "View Announcements", "/my_organisation/announcement" %></p>
+          <% end %> 
+		   </aside>
+		  <!-- End of Right column/section -->
+       </div>
+   <!-- End of Wrapper -->
+   </div>
+<!-- End of Page content -->

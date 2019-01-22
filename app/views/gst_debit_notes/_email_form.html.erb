@@ -1,0 +1,41 @@
+   <form action="/gst_debit_notes/email_gst_debit_note" method="post" class="" data-remote='true' >
+    <%= hidden_field_tag  :id, gst_debit_note.id %>
+<div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Email Gst Debit Note</h4>
+        </div>
+        <div class="modal-body">
+        <div class="errorPlace"></div>
+    <div class="block">
+       <%= label_tag :email, 'Email ID' , :class =>"control-label-required" %>
+       <%=text_field_tag :email, "#{gst_debit_note.account.customer.blank? ? gst_debit_note.account.vendor.email : gst_debit_note.account.customer.email}", :class => 'bg-focus form-control' %>
+      </div>
+      <div class="block">
+       <%= label_tag :subject, 'Subject' , :class => "control-label" %>
+       <%=text_field_tag :subject, "New Gst Debit Note has been created for you", :class => 'bg-focus form-control' %>
+      </div>
+      
+    <div class="block">
+       <%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+       <%= text_area_tag  :text,
+        "Hello #{gst_debit_note.account.name},
+            Please find the Gst Debit Note attached with this email.
+  Thanks,
+  #{@company.name}",
+      :rows=>4, :class=>"form-control"%>
+    <div class="block"><br/>
+       <label><i class="icon-paper-clip icon-large"></i></label>
+       <%=  gst_debit_note.gst_debit_note_number.to_s + ".pdf" %>
+    </div>
+    </div>
+        <div class="text-center">
+          <div class='save-btn'></div>
+            <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Sending...">Send</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+</div>
+</div>
+</div>
+      </form>

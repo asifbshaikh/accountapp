@@ -1,0 +1,1 @@
+<%= link_to raw('<i class="icon-mail-reply"> </i>Return This Purchase'), new_purchase_return_path(:purchase_id=>@purchase.id), :class=>"btn btn-white btn-lg" unless @purchase.fully_returned? %>

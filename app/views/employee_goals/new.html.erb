@@ -1,0 +1,33 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+ <div id="page">
+   <!-- Wrapper -->
+    <div class="wrapper">
+     <!-- Left column/section -->
+      <section  class="column width6 first"></br>
+      	<div class="highlight">
+         <% if @master_objectives.blank? %>
+            <br /> <div class = "box box-warning">
+	            Currently there are no Objective, please <a href = "/master_objectives/new">create</a> atleast one to create goal for.
+ 	         </div>
+ 	     <%end%>
+	    <%= render 'form' %>
+	    </div><br />
+      </section>
+     <!-- End of Left column/section -->
+     <!-- Right column/section -->
+        <aside class="column width2"><br />
+        	<a href="/employee_goals" class="btn btn-special btn-green btn-green-index">&nbsp; View all goals </a>
+           <div id="rightmenu">
+                <dl class="first">
+                     <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                     <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd> 
+                     <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                </dl>
+           </div><br />
+        </aside>
+       <!-- End of Right column/section -->
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<%= form_for(@invoice_attachment) do |f| %>
+  <% if @invoice_attachment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@invoice_attachment.errors.count, "error") %> prohibited this invoice_attachment from being saved:</h2>
+
+      <ul>
+      <% @invoice_attachment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

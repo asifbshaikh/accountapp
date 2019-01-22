@@ -1,0 +1,16 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i>Import Journals</h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), journal_imports_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        </div>  
+      </div>
+      <p></p>
+      <%= render :partial => "shared/flash_msg" %>     
+      <%= render 'form' %>
+    </section>
+  </section>
+

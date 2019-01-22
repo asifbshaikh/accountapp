@@ -1,0 +1,66 @@
+<script type="text/javascript">
+  
+   $('#task_billable').live('click', function(){
+      $('.sales_acc_info').toggle('slow');
+  });
+   if($("#task_billable").is(":checked")){
+    $('.sales_acc_info').show();
+  }else{
+    $('.sales_acc_info').hide();
+  }
+</script>
+<%= form_for @task, :html=>{:class=>"form-horizontal", :remote=>true} do |f| %>
+  <%= hidden_field_tag "task[project_id]", @project.id %>
+	<div class='modal-dialog'>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+				<h4 class="modal-title" id="myModalLabel">Add Task</h4>
+			</div>
+
+			<div class="modal-body scroll-y" style="max-height:500px;">
+        <div class="errorSection"></div>
+				<div class='block'>
+					<%= f.label :Description, :class => "control-label-required" %><br/>
+          <%= f.text_area :description ,:rows => "2",:class=>"bg-focus form-control" %>
+				</div>
+        <div class="block">
+          <%= f.label :Due_date, :class => "control-label-required" %><br/>
+          <%= f.text_field :due_date, :class=>"bg-focus form-control" %>
+        </div>
+        <% if !@company.plan.free_plan?%>
+	        <div class="block">
+	          <%= f.label :assigned_to, :class=>"control-label" %>
+	        	<%= collection_select(:task, :assigned_to, @company.users, :id, :first_name, {}, {:class=>"bg-focus form-control"}) %>
+	      	</div>
+        <%end%>
+        <div class="block">
+          <%= f.label :priority , :class=>"control-label"%>
+          <%= f.select(:priority_name,[['Low'],['Normal'],['High']], {}, {:class=>"bg-focus form-control"}) %>
+        </div>
+        <!--  -->
+        <div class="block">
+          <label>
+	          <% if !@task.billable? %>
+	          <%= f.check_box(:billable, :value => 1, :disabled=> false, :class=>"" )%>
+	          <% else %>
+	          <%= f.check_box(:billable, :value => 1, :disabled=> (@task.new_record? ? false : true), :class=>"")%>
+	          <% end %>
+	        	Billable</label>
+        </div>
+        <div class="block">
+          <div class='sales_acc_info' style='display: none;' disabled='disabled'>
+	          <%= f.label 'Income account', :class=>"control-label" %>
+	          <%= select_tag('task[sales_account_id]', options_from_collection_for_select(Account.get_income_accounts(@company.id), :id, :name, @task.sales_account_id ),  :class=>"bg-focus form-control")%>
+        	</div>
+      	</div>
+				</div>
+
+			<div class="modal-footer">
+				<div class='save-btn'></div>
+		    <button class="btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+	      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+<% end %>

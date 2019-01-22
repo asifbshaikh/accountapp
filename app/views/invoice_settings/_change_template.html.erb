@@ -1,0 +1,156 @@
+<div class="row" id="container">
+  <div class="status_form" <%= "style='display:none;'" if flash[:error].blank? %>>
+     <%= form_tag({:action => :change_template, :controller => "/invoice_settings"}, :remote=>true) do |f| %>
+<div class='error-place'></div>
+  <%= hidden_field_tag  "id" ,@company.id %>
+
+<div class="col-sm-3">
+  <%= label_tag "template_id", "Select Template",:class=>"control-label" %>
+</div>
+
+<div class="col-sm-4">
+  <%= select_tag "company_template[template_id]", options_from_collection_for_select(@templates, "id", "template_name", :selected => @invoice_template.template.id), :class=>"bg-focus form-control" %>
+</div>
+
+<div class="col-sm-2">
+  <div class='save-btn'></div>
+      <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+  </div>
+<% end %>
+
+<div class="col-sm-3">
+  <button id="inv_edit_button" class="btn-white btn-sm dropdown-toggle"  data-toggle="modal" data-target='#modal3'> <i   class="icon-edit"></i>Edit</button>
+      <div id="modal3" class="modal fade">
+           <%= render "invoice_settings/template_margin",:collection=>@templates%>
+      </div>
+    </div>
+  </div>
+</div><br/><br/>
+
+<div class="image-form"> </div>
+  <div class="col-sm-12">
+    <div class="row"><br/>
+      <div class="col-sm-3">
+        <div class="image-to-center">
+         <div class="itemsContainer">
+           <div class="image">
+            <a href="#" id="classic-preview" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+             <span class="small-plusplay">Classic</span>
+            <%= image_tag 'screens/classic-temp.png',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'Classic Invoice Template' %><br/>
+          </a>
+        <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify' %> </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<div class="col-sm-3">
+  <div class="image-to-center">
+    <div class="itemsContainer">
+      <div class="image">
+        <a href="#" id="modern1-preview" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+          <span class="small-plusplay">Modern1</span>
+            <%= image_tag 'screens/modern1-temp.png',:width=>"194", :height=>"113" ,:class=>'captify' %><br/>
+          </a>
+        </div>
+      <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify' %> </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-3">
+  <div class="image-to-center">
+    <div class="itemsContainer">
+      <div class="image">
+        <a id="thermal-preview" href="#" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+          <span class="small-plusplay">Thermal</span>
+           <%= image_tag 'screens/tharmal.png',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'Thermal Invoice Template' %><br/>
+          </a>
+       </div>
+      <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify' %>
+    </div>
+  </div>
+ </div>
+</div>
+
+<div class="col-sm-3">
+  <div class="image-to-center">
+    <div class="itemsContainer">
+      <div class="image">
+        <a id="tabular-temp-preview" href="#" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+          <span class="small-plusplay">Tabular</span>
+          <%= image_tag 'screens/tabular-temp.png',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'Tabular Invoice Template' %><br/>
+         </a>
+      </div>
+        <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify'%></div>
+      </div>
+    </div>
+  </div>
+<center>
+
+
+<div class="col-sm-3">
+  <div class="image-to-center">
+    <br/> 
+     <div class="itemsContainer">
+      <div class="image">
+        <a id="SMB-preview" href="#" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+         <span class="small-plusplay">SMB</span><br/>
+          <%= image_tag 'screens/SMB.png', :width=>"194", :height=>"113" ,:class=>'captify', :alt=>'SMB Invoice Template' %>
+          <br/></a>
+        </div>
+         <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify'%></div>
+        </div>
+       </div>
+      </div>
+  </center>
+
+    <center>
+      <div class="col-sm-3">
+       <div class="image-to-center">
+        <br/> 
+         <div class="itemsContainer">
+          <div class="image">
+            <a id="professional-preview" href="#" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+             <span class="small-plusplay">Professional</span>
+             <%= image_tag 'screens/professional.png',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'PROFESSIONAL Template' %><br/></a>
+           </div>
+            <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify'%></div>
+         </div>
+       </div>
+     </div>
+    </center>
+      
+    <center>
+      <div class="col-sm-3">
+        <br>
+          <div class="image-to-center">
+           <div class="itemsContainer">
+            <div class="image">
+             <a href="#" id="fix_table-preview" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+               <span class="small-plusplay">Retail</span>
+                <%= image_tag 'screens/fix_table.jpg',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'Retail Template' %><br/></a>
+             </div>
+                <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify'%></div>
+             </div>
+          </div>
+       </div>
+    </center>
+
+    <center>
+      <div class="col-sm-3">
+        <br/> 
+         <div class="image-to-center">
+          <div class="itemsContainer">
+            <div class="image">
+              <a id="minimalist-preview" href="#" class="picture-frame-fifth mb0" rel="prettyPhoto[gallery]">
+               <span class="small-plusplay">Minimalist</span>
+                <%= image_tag 'screens/minimalist.png',:width=>"194", :height=>"113" ,:class=>'captify', :alt=>'minimalist Invoice Template' %><br/></a>
+            </div>
+            <div class="play"> <%= image_tag 'screens/hover.png',:class=>'captify'%></div>
+          </div>
+        </div>
+       </div>
+    </center>
+  </div>
+</div>

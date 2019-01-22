@@ -1,0 +1,74 @@
+<form action = '/products/take_warehouse_quantity' class='form-horizontal' data-remote='true' >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Warehouse Details</h4>
+      </div>
+      <%= hidden_field_tag 'id', params[:product]%>
+      <div class='modal-body scroll-y' style='max-height:500px;'>
+        <div class="alert alert-danger" style='display:none;'>
+          <button class="close" data-dismiss="alert" type="button">
+            <i class="icon-remove"></i>
+          </button>
+          <div id="err"></div>
+        </div>
+        <table class="table table-striped b-t text-small">
+          <thead>
+            <tr>
+              <th colspan=2><label class='control-label-required'><%= @company.label.warehouse_label %></label></th>
+              <th><label class='control-label-required'> Quantity</label></th>
+              <th>Unit price</th>           
+           </tr>
+          </thead>
+          <% if @product.new_record? %>
+            <% @warehouses.each do |warehouse| %>
+              <tr>
+                <td width='5%'>
+                  <div class='checkbox'>
+                    <label class='checkbox-custom'>
+                    <%= check_box_tag "warehouse_id[]", warehouse.id, @warehouses.first.eql?(warehouse), "data-removable" => false %>
+                    <i class="icon-unchecked"></i>
+                    </label>
+                  </div>
+                </td>
+                <td><%= warehouse.name %></td>
+                
+                <td><%= text_field_tag "product_quantity_at#{warehouse.id}",nil, :class => 'form-control text-right', :maxlength => 8 , :id => "quantity_at_#{warehouse.id}", :onkeydown => "return numbersOnly(event);" %></td>
+                <td><%= text_field_tag "product_price_at#{warehouse.id}",nil, :class => 'form-control text-right', :maxlength => 8 , :onkeydown => "return numbersOnly(event);" %></td>              
+           </tr>
+            <% end %>
+          <% else %>
+            <% @warehouses.each do |warehouse| %>
+              <tr>
+                <td widh='5%'>
+                  <% stock = Stock.find_by_warehouse_id_and_product_id(warehouse.id, @product.id) 
+                    checked = stock.blank? ? false : stock.opening_stock > 0 ? true : false
+                  %>
+                  <div class='checkbox'>
+                    <label class='checkbox-custom'>
+                      <%= check_box_tag "warehouse_id[]", warehouse.id, checked , "data-removable" => stock.blank? ? false : true, 'data-id' => "#{stock.id unless stock.blank? }" %>
+                      <i class='icon-unchecked'></i>
+                    </label>
+                  </div>
+                  </td>
+                <td><%= warehouse.name %></td>
+                
+                <td><%= text_field_tag "product_quantity_at#{warehouse.id}","#{stock.blank? ? '' : stock.opening_stock}", :class => 'form-control text-right', :maxlength => 8 , :id => "quantity_at_#{warehouse.id}", :onkeydown => "return numbersOnly(event);" %></td>
+                <td><%= text_field_tag "product_price_at#{warehouse.id}","#{!stock.blank? && !stock.opening_stock_unit_price.blank? ? stock.opening_stock_unit_price : ''}", :class => 'form-control text-right', :maxlength => 8, :onkeydown => "return numbersOnly(event);" %>
+                <%= hidden_field_tag "available_quantity_at#{warehouse.id}", stock.blank? ? nil : stock.quantity %>
+                <%= hidden_field_tag "opening_stock_at#{warehouse.id}", stock.blank? ? nil : stock.opening_stock %>
+                </td>             
+ </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+        <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,139 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Reimbursement Voucher Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@reimbursement_note.in_frozen_year?]}_reimbursement_note_actions" %>
+        <p></p>
+      </div>
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-8">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-7">
+                  <p>
+                  <strong> Voucher Number: </strong><%= @reimbursement_note.reimbursement_note_number %>
+                </p>
+                <% unless @reimbursement_note.from_account_id.blank? %>
+                  <p><strong>Customer: </strong> <%= @reimbursement_note.from_account_name %></p>
+                <% end %>
+                <p><strong> Amount: </strong> <%= @reimbursement_note.currency %> <%= number_with_precision @reimbursement_note.amount, :precision => 2 %></p>
+                <%if !@reimbursement_note.description.blank? %>
+                  <p><strong> Description: </strong> <%= breaking_word_wrap(@reimbursement_note.description)%></p>
+                <% end %>
+                <p>
+                <strong> Voucher Status: </strong><%= content_tag(:span, @reimbursement_note.get_status, :class => "#{@reimbursement_note.get_badge(@reimbursement_note.get_status)}") %>
+              </p>
+              <% if @reimbursement_note.paid? %>
+                <p>
+                <strong> Reimbursement Receipt: </strong><%= link_to(ReimbursementVoucher.find(@reimbursement_note.reimbursement_voucher_id).voucher_number, reimbursement_voucher_path(ReimbursementVoucher.find(@reimbursement_note.reimbursement_voucher_id))) %>
+              </p>
+            <% end %>
+                </div>
+              </div>
+
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@reimbursement_note.transaction_date %> by <%= User.find(@reimbursement_note.created_by).full_name %></div>
+                </div>
+              </footer>
+            </section>
+            <% if @reimbursement_note.reimbursement_note_line_items.present? %>
+              <section class="panel">
+                <div class="panel-body">
+                  <!-- Invoice basic details -->
+                  <div>
+                    <table class="table table-striped" id="report">
+                      <thead>
+                        <tr>
+                          <th class="col-md-4">Expense Account</th>
+                          <th class="col-md-4">Expense Particulars</th>
+                          <th class="col-md-3 text-right">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @reimbursement_note.reimbursement_note_line_items.each do | line_item | %>
+                          <tr valign="top">
+                            <td><%= line_item.expense_account_name %></td>
+                            <td><%= line_item.description %></td>
+                            <td class="text-right"><%= number_with_precision line_item.amount, :precision => 2 %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+            <% end %>
+            <!-- <div class="row "> -->
+            <!-- <div class="col-lg-12"> -->
+            <!-- <section class="col-lg-12"> -->
+            <section class="panel">
+              <div class='voucher-title-info-error'></div>
+              <header class="panel-heading">
+                <i class="icon-book"></i> Attachments<% if !@reimbursement_note.submitted %><button title="Add New Attachment" id ="add_new" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</button><% end %>
+              </header>
+              <body>
+                <div id="reimbursement_note_attachment" style="display:none;">
+                  <header class="panel-heading">
+                    <strong> Attach a scanned proof (Image or PDF document)</strong>
+                  </header>
+                  <div class="panel-body">
+                    <%= form_for('reimbursement_note_attachment',:url=>{:action => :new, :controller => "/reimbursement_note_attachments"},:html => {:multipart => true, :class=>"form-horizontal", :remote=>true}) do |f| %>
+
+                      <%= render "shared/form_error", :object => @reimbursement_note %>
+
+                      <div class="block">
+                        <%= hidden_field_tag  "company_id" ,@company.id,:id => "company" %>
+                        <%= f.label :uploaded_file, "Choose File", :class=>"control-label" %>
+                        <%= f.file_field :uploaded_file, :class => "btn btn-white",:id => "file" %>
+                        <%= hidden_field_tag  "reimbursement_note_id" , @reimbursement_note.id ,:id => "reimbursement_note_id"%>
+                      </div>
+                      <div class="block">
+                        <%= f.submit "Upload", :class=>"btn btn-success", :id =>"submit"%>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </body>
+                <% if @reimbursement_note.reimbursement_note_attachments.blank?%>
+                  <%= render :partial => "shared/no_record"%>
+                <%else%>
+
+                  <div class="panel-body">
+                    <div class="table-responsive row">
+                      <table class="table table-striped b-t">
+                        <thead>
+                          <%= render :partial => "reimbursement_note_attachments/header" %>
+                        </thead>
+                        <tbody>
+                          <%= render :partial => "reimbursement_note_attachments/show" %>
+                        </tbody>
+                        <tfoot>
+                          <%= render :partial => "reimbursement_note_attachments/footer" %>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+                <%end%>
+            </section>
+            <!-- </section> -->
+            <!-- </div> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <!-- first row ends -->
+        <!-- Invoice table ends -->
+    </section>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :reimbursement_note => @reimbursement_note %>
+</div>

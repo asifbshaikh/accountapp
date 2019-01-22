@@ -1,0 +1,14 @@
+$(".popup-error").remove();
+<% if @department.errors.any?  %>
+	console.log("error");
+	$(".department-notif").after("<%= escape_javascript render('shared/popup_form_error', {:object => @department})%>");
+<% else %>
+	$(".dep_add").hide();
+	$(".dep_info").show();
+	$(".department-info-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".department-body").html("<%= escape_javascript render('departments/departments')%>");
+	fadeOutMessage();
+	console.log("success");
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

@@ -1,0 +1,17 @@
+$("#line<%= params[:index] %>").remove();
+$("#row<%= params[:index]%> #quantity").val("");
+<% if !@product.blank? %>
+  <% description=@product.description.gsub(/[\r\n]+/, '\n').gsub(/\"/,"\\\"").html_safe unless @product.description.blank? %>
+  $("#row<%= params[:index]%> #description").val("<%= description %>");
+  $("#row<%= params[:index]%> #unit_cost").val("<%= @product.sales_price %>");
+  <% if @product.inventory? %>
+  	$("#row<%= params[:index]%> #available-qty").html("Available: <%=@product.quantity%> <%= @product.unit_of_measure%>");
+  <% else %>
+  	$("#row<%= params[:index]%> #available-qty").html("");
+  <% end %>
+<% else %>
+  $("#row<%= params[:index]%> #description").val("");
+  $("#row<%= params[:index]%> #unit_cost").val("<%= @product.sales_price %>");
+<% end %>
+calculatePricing();
+cal();

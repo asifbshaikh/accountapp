@@ -1,0 +1,19 @@
+   <tr>
+    <td><%= link_to timesheet.record_date.strftime("%d %b %Y"), timesheet%></td>
+    <td><%= timesheet.total_time %>hrs</td>
+    <td >
+    	   <div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='/timesheets/<%= timesheet.id %>'"; >View</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+         <% if @current_user.id == timesheet.user_id || @current_user.roles[0].name.to_s == "Owner" %>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="<%= edit_timesheet_path(timesheet) %>">Edit</a></li>
+             <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/timesheets/<%= timesheet.id%>" >Delete</a></li>
+          </ul>
+          <% end %>
+      </div>     
+    </td>
+  </tr>

@@ -1,0 +1,74 @@
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+		
+			<div class='highlight'>
+				<div id='report_header' align="center">
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Profit and Loss Account </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table class = "zebra-sriped tablesorter" id = 'MyTable' border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width3'><span class='char_spacing'>Particulars</span></th>
+							<th align="right" colspan="2">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</head>
+						<tbody>
+							<tr><td colspan="3"><span class='char_spacing'><i><u><b>Tradding Account :</b></u></i></span></td></tr>
+							<tr><td class="width6"><b>Sales Accounts</b></td><td></td><td align="right"><b><%= @sales_total_amount %></b></td></tr>
+							<% for account in @accounts %>
+								<tr><td class="textindent1"><%= account.name %></td><td align="right"><%= (account.closing_balance) %></td><td></td></tr>
+							<% end %>
+							
+							<tr><td class="width6"><b>Cost of Sales</b></td><td></td><td align="right"><b><%= (sales_cost = @total_purchase_amount + @opening_stock - @closing_stock) %></b></td></tr>
+							<tr><td class="width6 textindent1">Opening Stock</td><td align="right"><%= (@opening_stock)%></td><td></td></tr>
+							<tr><td class="width6 textindent1">Add:Purchase Accounts</td><td align="right"><%=  @total_purchase_amount %></td><td align="right"></b></td></tr>
+							<tr><td class="width6 textindent1">Less:Closing Stock</td><td align="right"><%= (@opening_stock)%><td></td></tr>
+							
+							<tr><td class="width6"><b>Direct Expences</b></td><td></td><td align="right"><b><%=  @total_direct_expence %></b></td></tr>
+							<% for exps in @direct_expenses %>
+								<tr><td class="textindent1"><%= exps.name %></td><td align="right"><%= (exps.closing_balance) %></td><td></td></tr>
+							<% end %>
+							
+							<tr><td class="width6"><span class='char_spacing'><b>Gross Profit :</b></span></td><td></td><td align="right"><b><%=  (gross_profit = @sales_total_amount - (sales_cost + @total_direct_expence)) %></b></td></tr>
+							
+							<tr><td colspan="3"><span class='char_spacing'><i><u><b>Income Statement :</b></u></i></span></td></tr>
+							<tr><td class="width6"><b>Indirect Incomes</b></td><td></td><td align="right"><b><%= %></b></td></tr>
+							<tr><td class="width6"><b>Indirect Expenses</b></td><td></td><td align="right"><b><%=  @total_indirect_expence %></b></td></tr>
+							<% for inexps in @indirect_expenses %>
+								<tr><td class="textindent1"><%= inexps.name %></td><td align="right"><%= (inexps.closing_balance) %></td><td></td></tr>
+							<% end %>
+							<tr><td class="width6"><span class='char_spacing'><b>Nett Profit :</b></span></td><td></td><td align="right"><b><%=  (gross_profit - (@total_indirect_expence)) %></b></td></tr>
+						</tbody>
+						<tfoot>
+							
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			&nbsp;&nbsp;
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+&nbsp;
+&nbsp;  

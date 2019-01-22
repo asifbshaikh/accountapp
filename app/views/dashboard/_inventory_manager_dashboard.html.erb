@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-12"><!-- Start of income expense chart -->
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-right" id="inv-dash-tab">
+              <li class="active"><a href="#fast-moving" data-toggle="tab" class="fast-moving">Fast moving products</a></li>
+              <li><a href="#reorder" data-toggle="tab" class="reorder-graph">Reorder Levels</a></li>
+            </ul>
+            <span class="hidden-sm">Inventory</span>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="fast-moving">
+                <div class="sparkline inline" data-type="bar" data-height="205" data-width="100%" data-bar-color="#a3e2fe"
+                  data-bar-width="25" data-bar-spacing="30"  data-data = "[<%= product_quantities.join(",")%>]">
+                  <canvas width="100%" height="205" style="display: inline-block; width: 200px; height: 145px; vertical-align: top;"></canvas>
+                </div>
+                <ul class="list-inline text-muted axis"><%= graph_product_names%></ul>
+              </div>
+              <div class="tab-pane fade" id="reorder">
+                <div class="sparkline inline" data-type="bar" data-height="205" data-width="100%" data-bar-color="#a3e2fe"
+                  data-stacked-bar-color=["#f04040","#a3e2fe"] data-zero-color="#f04040" data-bar-width="25" data-bar-spacing="30" data-data = "[<%= reorder_product_quantities.join(",")%>]">
+                  <canvas id="reorder" width="100%" height="205" style="display: inline-block; width: 200px; height: 145px; vertical-align: top;"></canvas>
+                </div>
+                <ul class="list-inline text-muted axis"><%= graph_reorder_product_names%></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div><!-- End of charts -->
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <section class="panel">
+          <header class="panel-heading">Leave Requests</header>
+          <div>
+            <table class="table table-striped m-b-none text-small">
+              <tr>
+                <th>Leave Date :</th>
+                <th>Status :</th>
+              </tr>
+              <% @leave_requests.each do |leave_request| %>
+                <tr>
+                  <td><a href="/leave_requests" class="h5"><%= leave_request.start_date %><b> To </b><%= leave_request.end_date %></a></td>
+                  <td><%= LeaveRequest.get_leave_status(leave_request.leave_status)%></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+  <div class="col-lg-4">
+    <section class="panel">
+      <header class="panel-heading">Expiry Products</header>
+      <div>
+        <table class="table table-striped m-b-none text-small">
+        <% if !@expired_products.blank?%>
+        <tr>
+          <th>Product</th>
+          <th>Expiry Date</th>
+        </tr>
+        <%count = 0%>
+        <%@expired_products.each do |p|%>
+          <% product = Product.find(p.product_id)%>
+        <%count += 1%>
+        <% if count >5
+          break
+          end%>
+          <tr>
+          <td><a href="/products" class="h5"><%= product.name%></a></td>
+          <td><%= p.expiry_date%></td>
+        </tr>
+        <%end%>
+        <%end%>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<tr id="discount_row<%= discount_index %>" valign="top" class='disc_line'>
+   <%= hidden_field_tag "purchase[discount_line_items_attributes][#{discount_index}][id]",discount_line_item.id%>
+   <%= hidden_field_tag "purchase[discount_line_items_attributes][#{discount_index}][tax]", discount_line_item.tax, :value => 0 %>
+   <%= hidden_field_tag "purchase[discount_line_items_attributes][#{discount_index}][_destroy]" %>
+   <td style="background:#EDF4FF"></td>
+   <td colspan="2" class="ta-right" style="background:#EDF4FF"><label class="required">Add Discount:</label></td>
+   <td class="ta-right"  colspan="3" style="background:#EDF4FF">
+	  <%= select_tag "purchase[discount_line_items_attributes][#{discount_index}][account_id]", options_from_collection_for_select(@discount_accounts, :id, :name,:selected => discount_line_item.account_id ), :include_blank => true, :class=>"full", :id => 'purchase_discount_item'  %><br />
+   </td>
+   <td style="background:#EDF4FF" align="right">
+   
+   <%= @company.currency_code %> <%= text_field_tag "purchase[discount_line_items_attributes][#{discount_index}][amount]", discount_line_item.amount, :id => 'discount', :maxlength => 8, :onkeydown => "return numbersOnly(event);", :class => 'amount', :align => 'right' %>
+   </td>
+   <td style="background:#EDF4FF; padding-right:0"><%= link_to "X",{:action => :remove_discount_item, :discount_index => discount_index, :discount_line_item_id => discount_line_item.id},:class =>"btn btn-red", :id => 'cancel', :remote => true %></td>
+</tr>

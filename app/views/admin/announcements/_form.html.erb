@@ -1,0 +1,37 @@
+<%= form_for @announcement, :url => ([:admin, @announcement]) do |f| %>
+  <%= render 'shared/form_error' , :object => @announcement %>
+  <table class="display stylized" width="100%">
+    <thead> 
+      <tr><th colspan="2">Create Announcement</th></tr>
+    </thead> 
+    <tbody> 
+      <tr>
+        <td width="25%"><%= f.label 'Subject' , :class => "required"%></td>
+        <td><%= f.text_field :subject, :autofocus =>"autofocus" %></td>
+      </tr>
+       
+     <tr>
+        <td class="field"><%= f.label "Starts at" %></td>
+        <td><%= f.text_field :starts_at %></td>
+      </tr> 
+     <tr>
+        <td class="field"><%= f.label "Ends at" %></td>
+        <td><%= f.text_field :ends_at %></td>
+      </tr> 
+     
+      <tr>
+        <td class="field"><%= f.label "Message" %></td>
+        <td><%= f.text_area :message, :rows=>"3", :col=>"15" %></td>
+      </tr> 
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          <button type="submit" class="btn btn-green btn-save">Save</button>&nbsp;
+          <a href= "/admin/announcements" class="btn btn-cancel">Cancel</a>
+        </td>    
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
+

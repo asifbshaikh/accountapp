@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Admin </title>
+      <%= stylesheet_link_tag 'application' %>
+      <%= javascript_include_tag 'application' %>
+		<%= csrf_meta_tag %> 
+	</head>
+	<body>
+    <!-- header -->
+    <header id="header" class="navbar">
+      <ul class="nav navbar-nav navbar-avatar pull-right">
+        <li class="dropdown">
+          <a href="#"class="dropdown-toggle" data-toggle="dropdown">            
+            <span class="hidden-xs-only"><%= session[:super_user_name] %></span>
+            <span class="thumb-small avatar inline">
+              <%= image_tag 'avatar_green.png', :alt=>"#{@current_user.full_name}", :class=>'img-circle'%>
+            </span>
+            <b class="caret hidden-xs-only"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% if @current_user.role == "Admin" %>
+		          <li><a href="/admin/super_users">Settings</a></li>
+		        <% end %>
+            <!--  <li> <a href="/admin/announcements">Announcements</a></li> -->
+            <li class="divider"></li>
+            <li><a href="/login/signout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <a class="navbar-brand" href="/admin/dashboard" style="width:58.33%;">Admin Panel</a>
+      <ul class="nav navbar-nav hidden-xs pull-right">
+        <li>
+          <div class="m-t m-b-small"></div>
+        </li>
+      </ul>
+    </header>
+    <!-- / header -->
+
+    <nav id="nav" class="nav-primary bg-green hidden-xs nav-vertical">
+      <ul class="nav" data-spy="affix" data-offset-top="50">
+        <li class="dropdown-submenu <%=tab_selection 'income' %>">
+          <a href="/admin/dashboard"><i class="icon-dashboard icon-xlarge"></i><span>Today</span></a>
+        </li>
+        <li class="dropdown-submenu <%=tab_selection 'income' %>">
+          <a href="/admin/companies"><i class="icon-building icon-xlarge"></i><span>Company</span></a>
+        </li>
+        <!-- <li class="dropdown-submenu <%=tab_selection 'income' %>">
+          <a href="/admin/companies/paid_companies"><i class="icon-building icon-xlarge"></i><span>Paid</span></a>
+        </li>
+        <li class="dropdown-submenu <%=tab_selection 'income' %>">
+          <a href="/admin/companies/trial_companies"><i class="icon-building icon-xlarge"></i><span>Trial</span></a> -->
+        </li>
+        <li class="dropdown-submenu <%= tab_selection 'Accounting'%>">
+          <a href="/admin/leads"><i class="icon-group icon-xlarge"></i><span>Leads</span></a>
+          <!-- <ul class="dropdown-menu">
+          <li><%= link_to 'Leads',admin_leads_path %></li>
+          <li><a href="/admin/leads/activity_reports">Reports</a></li>
+          <li><a href="/admin/leads/lead_reports">Lead Reports</a></li>
+          <li><a href="/admin/webinar/index">Webinar Registrations</a></li>
+          </ul> -->
+        </li>
+
+        <li class="dropdown-submenu <%= tab_selection 'Accounting'%>">
+          <a href="/admin/leads/request_demo"><i class="icon-time icon-xlarge"></i><span>Scheduled Demo</span></a>
+        </li>
+
+        <% if @current_user.role == "Admin" %>
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="#"><i class="icon-book icon-xlarge"></i><span>Billing</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/admin/coupons">Coupon</a></li>
+	            <li><a href="/admin/billing_invoices/index">Billing invoice</a></li>
+            </ul>
+          </li>
+          <!-- <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="/admin/blog_posts"><i class="icon-comments icon-xlarge"></i><span>Blog</span></a> -->
+            <!-- <ul class="dropdown-menu">
+            <li><%= link_to 'Posts', admin_blog_posts_path %></li>
+            <li><%= link_to 'Post Categories', admin_blog_categories_path %></li> 
+		        </ul>
+          </li>-->
+          <!--  <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+          <a href="/admin/plans/index"><i class="icon-gift icon-xlarge"></i><span>Plans</span></a>
+          </li>
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+          <a href="#"><i class="icon-envelope-alt icon-xlarge"></i><span>Mail</span></a>
+          <ul class="dropdown-menu">
+          <li><a href="/admin/email_templates/send_bulk_email">Send bulk mail</a></li>
+          <li><a href="/admin/email_templates/index">Email templates</a></li>
+          </ul>
+          </li> -->
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="/admin/companies/reports"><i class="icon-bar-chart icon-xlarge"></i><span>Reports</span></a>
+          <!-- This was added to create a section in Admin sidebar for monitoring the system -->
+          <!-- Author: Ashish Wadekar -->
+          <!-- Date: 26th September 2016 -->
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="#"><i class="icon-th icon-xlarge"></i><span>Monitoring</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/admin/monitoring/sidekiq">Sidekiq</a></li>
+            </ul>
+          </li>
+          <!-- END -->
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="/admin/profitbooks_workstreams"><i class="icon-cogs icon-xlarge"></i><span>Product updates</span></a>
+          </li>
+
+          <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+            <a href="/admin/profitbooks_workstreams"><i class="icon-cogs icon-xlarge"></i><span>GSP </span></a>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+    <!-- End of Header -->
+    <!-- Start of page contents -->
+    <%= yield %> <!-- End of page Contents -->
+    <!-- Page footer -->
+    <footer id="footer">
+      <div class="text-center padder clearfix">
+      Copyright &copy; 2013 ProfitBooks.net. All rights reserved.
+      </div>
+    </footer>
+    <!-- End of Page footer -->
+    <!-- User interface javascript load -->
+	</body>
+</html>

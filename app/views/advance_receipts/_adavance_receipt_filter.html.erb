@@ -1,0 +1,22 @@
+ <div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Advance Receipt Filter</h4></div>
+    <table class="table table-striped m-b-none text-small recmoney-filter" id="recmoney-filter">
+      <tbody>
+        <tr>
+          <td><label>Voucher no</label></td>
+          <td class="advrecvoucherno"></td>
+          <td><label>Voucher Date</label></td>
+          <td class="advrecDate"></td>
+          <td ><label><%= @company.label.customer_label%></label></td>
+          <td class="advrecacc" data-recaccount="<%= Account.receipt_from_accounts(@company.id) %>"></td>
+        </tr>
+        <tr>
+          <td><label>Project</label></td>
+          <td class="advrecproject"  data-recproject="<%= Project.company_projects(@company.id) %>"></td>
+          <td><label>Amount</label></td>
+          <td class="advrecamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

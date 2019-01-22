@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+  <head>
+    <%= render :partial => "meta_tags" %>
+    <!-- ////////////////////////////////// -->
+    <!-- //     Retina Bookmark Icon     // -->
+    <!-- ////////////////////////////////// -->
+    <!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>    
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+
+    <!--Start of Zopim Live Chat Script-->
+    <%= render :partial => "zopim_chat_and_google_analytics"%>
+    <!-- End Load google Analytics -->
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  </head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial=> "header"%>
+    <!-- header end here -->
+      
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+      <div class="row">    
+        <div class="twelve columns"> 
+          <h2>Thanks for signing up !</h2>
+          <p>We have sent you a verification link to your email ID. Please click on that link to start using ProfitBooks.<br/>
+          <p>In case you don't see that mail in your Inbox, please check the SPAM folder.</p>
+          <div class="clear"></div>
+        </div>          
+      </div>       
+    </section>
+    <!-- content section end here -->
+
+    
+    <!-- footer section start here -->
+    <%= render :partial=> "footer"%>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

@@ -1,0 +1,18 @@
+<div class="panel panel-info data-filter" id="filter" >
+  <div class="panel-heading"><h4 class="panel-title" >Account Filter</h4></div>
+  <table class="table table-striped m-b-none text-small" id = "account-filter" >
+    <tbody>
+      <tr>
+        <td class=""><label>Account Name</label></td>
+        <td id="name"></td>
+        <td class=""><label>Account Group</label></td>
+        <td id="account_head" data-group="<%= AccountHead.company_account_groups(@company.id) %>"></td>
+      
+        <td class=""><label>Account type</label></td>
+        <td id="account_type"></td>
+        <td class=""><label>Created By</label></td>
+        <td id="created_by" data-creater="<%= User.company_users(@company.id) %>"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

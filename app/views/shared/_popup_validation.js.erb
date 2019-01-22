@@ -1,0 +1,21 @@
+$(".popup-error").remove();
+$(".errorSection").after("<%= escape_javascript render('shared/popup_form_error', {:object => @account})%>")
+<% if @account.errors[:name].any? %>
+  $(".account-name").css("border-color",'#f55');
+<% end %>
+
+<% if @account.errors[:start_date].any? %>
+  $(".account-start-date").css("border-color",'#f55');
+<% end %>
+
+<% if @account.errors[:account_head_id].any? %>
+  $(".account-head").css("border-color",'#f55');
+<% end %>
+
+<% if @account.accountable && @account.accountable.errors[:email].any? %>
+  $("#email").css("border-color",'#f55');
+<% end %>
+
+<% if @account.accountable && @account.accountable.errors[:tax_rate].any? %>
+ $("#duties_tax_rate").css("border-color", '#f55');
+<% end %>

@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @pbreferral.company_id %>
+</p>
+
+<p>
+  <b>Invited by:</b>
+  <%= @pbreferral.invited_by %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @pbreferral.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @pbreferral.email %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @pbreferral.status %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%= @pbreferral.token %>
+</p>
+
+<p>
+  <b>Earning:</b>
+  <%= @pbreferral.earning %>
+</p>
+
+<p>
+  <b>Coupon:</b>
+  <%= @pbreferral.coupon_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_pbreferral_path(@pbreferral) %> |
+<%= link_to 'Back', pbreferrals_path %>

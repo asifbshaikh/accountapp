@@ -1,0 +1,21 @@
+<!-- Page title -->
+<%= render "shared/page_title"%> <!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper"></br>
+		<!-- Left column/section -->
+		       <section class="column width6 first"></br>
+		       	   <div class="highlight">
+                       <%= render 'form' %>
+                </div><br />
+           </section>
+
+		<!-- End of Left column/section -->
+		<!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= list_button_white "View Departments", departments_path %>
+    </aside>
+	  <!-- End of Right column/section -->
+</div>
+</div>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @login_request.company_id %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @login_request.created_by %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @login_request.status %>
+</p>
+
+<p>
+  <b>Calling action:</b>
+  <%= @login_request.calling_action %>
+</p>
+
+<p>
+  <b>Gsp:</b>
+  <%= @login_request.gsp_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_login_request_path(@login_request) %> |
+<%= link_to 'Back', login_requests_path %>

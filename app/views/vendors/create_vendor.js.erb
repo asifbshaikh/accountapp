@@ -1,0 +1,12 @@
+$(".popup-error").remove();
+<% if @vendor.errors.any? %>
+	$(".errorSection").after("<%= escape_javascript render('shared/popup_form_error', {:object => @vendor})%>")
+<% else %>
+	var new_option = new Option("<%= @vendor.account.name%>", "<%= @vendor.account.id %>");
+  new_option.selected=true;
+	$("#<%= params[:selector]%>").append($(new_option)).change();
+
+	$("div[id^='modal']").modal('hide');
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

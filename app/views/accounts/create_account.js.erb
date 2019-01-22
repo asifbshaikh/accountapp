@@ -1,0 +1,39 @@
+$('body').append("<div id='msg_box'><div class='box box-success'>Account created successfully</div></div>");
+<% if @is_save %>
+  $('#popup_box_fixed').fadeOut("slow");
+  $('#msg_box').fadeIn("slow", function(){
+    $('#msg_box').fadeOut(7000);
+  });
+<% else %>
+  <% if @account.errors[:name].any? %>
+    var error = "<%= @account.errors[:name].html_safe %>";
+    $("span#name").text(error);
+    $("#name").css("border-color",'#f55');
+  <% end %>
+  
+  <% if @account.errors[:account_head_id].any? %>
+    $("span#account_head_id").text("Please select the account head");
+    $("#accountHead").css("border-color",'#f55');
+  <% end %>
+
+  <% if !@account.accountable.blank? && @account.accountable.errors[:email].any? %>
+    var error = "<%= @account.accountable.errors[:email].html_safe %>";
+    $("span#email")text(error);
+    $("#accountHead").css("border-color",'#f55');
+  <% end %>
+<% end %>
+
+$("#name").keyup(function(){
+  if($("span#name").text()){
+    $("span#name").text('');
+    $("#name").css("border-color", "");
+  }
+});
+
+$("#accountHead").live('change',function() {
+	if($("span#account_head_id").text()){
+    $("span#account_head_id").text('');
+    $("#accountHead").css("border-color", "");
+  }
+});
+

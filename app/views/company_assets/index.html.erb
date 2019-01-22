@@ -1,0 +1,48 @@
+  <section id="content" class="content">
+   <div class="col-lg-10">
+        <h3><i class="icon-tasks text"></i>Manage Assets</h3>
+  </div>
+  <div class="col-lg-2 m-t-large" align="right">
+  <a href="/users" class="btn btn-default btn-lg"> <i class="icon-mail-reply"></i></a>
+  <p></p>
+  </div>
+    <!-- .main -->
+    <section class="col-lg-8">
+       
+       <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=>"shared/flash_msg"%>
+              <div class="table-responsive">
+               <% if @company_assets.blank? %>
+              <%= render :partial => "shared/no_record"%>
+              <% else %>
+             <table id="company_assets" class="table table-striped m-b-none text-small" data-source ="<%= company_assets_url(:format => "json") %>" >
+            <thead>   
+               <%= render :partial => "header" %>
+             </thead>
+             <tbody>
+                <%= render :partial => "company_asset", :collection => @company_assets %>
+             </tbody>
+             <tfoot>
+               <%= render :partial => "footer" %>
+             </tfoot>
+            </table>
+              <% end %>
+            </div>
+          </div>
+      </section>
+    </section>
+    <!-- /.main -->
+    <!-- .sidebar -->
+    <section class="col-lg-4">
+       <section class="panel">
+            <header class="panel-heading">
+              <i class="icon-edit icon-large text-default"></i> &nbsp;New Asset
+            </header>
+            <div class="panel-body">
+              <%= render :partial=>"form"%>
+            </div>
+          </section>
+    </section>
+    <!-- /.sidebar -->
+  </section>

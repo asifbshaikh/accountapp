@@ -1,0 +1,48 @@
+		    <%= f.fields_for @user.user_information do |info| %>
+			  <div class="column width6 first">
+           <div id='user_info_div' ><span class='personal_info'>Personal Info</span></div>
+   		   	 <div class="man"> 
+		         <div class="column width3 first">
+               <div class="field">
+				        <%= info.label :emergency_contact %><br />
+                <%= info.text_field :emergency_contact %>
+               </div>
+						 <div class="field ">
+                <%= info.label :blood_group %><br />
+                <%= info.text_field :blood_group %>
+             </div>
+		         <div class="field ">
+                <%= info.label :birth_date  %><br />
+                <%= info.text_field :birth_date %>
+             </div>
+	           <div class="field">
+                <%= info.label :passport_number %><br />
+                <%= info.text_field :passport_number %>
+             </div>
+             <div class="field ">
+                <%= info.label :passport_expiry_date %><br />
+                <%= info.text_field :passport_expiry_date %>
+             </div>
+						</div> 
+            <div class="column width3">
+		         <div class="field">
+                <%= info.label :gender %><br />
+                <%= info.select( :gender, [['Male'], ['Female']]) %>
+             </div>
+	           <div class="field">
+                <%= info.label :marital_status %><br />
+                <%= info.select(:marital_status, [['Unmarried'],['Married']]) %>
+             </div>
+             <div class="field ">
+                <%= info.label :marriage_date %><br />
+                <%= info.text_field :marriage_date %>
+             </div>
+						 <div class="field">
+                <%= info.label :present_address %><br />
+                <%= info.text_area :present_address, :rows=> 1, :cols=> 21  %>
+             </div>
+						</div> 
+					 </div>
+	      </div>
+	     <% end %>
+

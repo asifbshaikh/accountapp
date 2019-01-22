@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<%= render :partial => "meta_tags" %>
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- //      Stylesheets Files       // -->
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial => "zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial => "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Simple Yet Powerful Features.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                   <a href="/home/pricing" class="simpleBTN green large">Get started for FREE</a>
+
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+        <div class="row">              
+            <div class="three columns">         
+                <aside>
+                    <h5><a href="/home/features_accounting">Easy Accounting</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Simple Invoicing, Bank Transactions, Taxation, Financial Reports and much more..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_payroll">Payroll Management</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Employee Management, Salary Processing, Leave &amp; Holidays Management, Company Announcements..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5>For Managers</h5>
+                    <ul class="sidebar-list">
+                        <li>Roles Based Access, Projects, Ability to Invite Auditors, Powerful Reporting, Complete Control..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_team">For Team Members</a></h5>
+                    <ul class="sidebar-list"><li>Internal Messaging, Tasks &amp; Notes, Document Management with Dropbox Integration..</li>
+                    </ul>
+                </aside>                        
+            </div> <!-- three column ends -->
+            <div class="nine columns">           
+                <!-- blog post 1 -->
+                <div class="blog-post">
+                  <div class="row">                  
+                        <div class="twelve columns">
+                            <div class="post-content">
+                                <h3>Take charge of your business</h3> 
+                                <ul class="post-info">
+                                    <li>Control the information flow within the organization with powerful features designed specially for smart managers.</li>                                 
+                                </ul>           
+                                <p><%= image_tag 'screens/role_based_access.png', :alt=>'Role Based Access(ProfitBooks - Online accounting and payroll management software)', :align=>'left' %><h4>Role-based Access to screens</h4>You can assign role-based access to each employee. For example, staff can access only data entry screens and an accountant can access all the functions. This way, every employee can effectively use the application without compromising data security and integrity.<br><br>You can even invite an auditor to review your books who will have read-only access. </p>  
+                                <p><br></p>
+                                <p><%= image_tag 'screens/projects.png', :alt=>'Project Management(ProfitBooks - Online accounting and payroll management software)', :align=>'right' %><h4>Smart Project Management</h4>
+                                You can create a project and group all income and expense entries under a particular project. This way, you will always have a holistic view over work done for that particular project.<br><br>With project management feature, you can group all income &amp; expense transactions under a specific project for better visibility. Very useful.. isn't it?</p>
+                              <p align="center"><br><br><a href="/home/pricing" class="simpleBTN green large">Made up your mind? Get started for FREE</a></p>
+                            </div><!-- post content ends -->
+                        </div><!-- twelve column ends -->
+                    </div><!-- row ends -->   
+                </div><!-- blog post ends -->
+                            
+          </div><!-- nine columns ends -->
+    </section>
+    <!-- content section end here -->
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+</div>
+<script>$('#noscript').remove();</script>
+</body></html>

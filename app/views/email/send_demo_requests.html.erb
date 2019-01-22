@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		
+		<p>
+				Hi <b><%= @leads.name %></b>,<br />
+				Your request for demo has been registered with ProfitBooks. Our Support team will reach you on the number <%= @leads.mobile %>  in advance to confirm availability on scheduled date <%= @leads.lead_activities.last.next_followup %> between <%= @leads.lead_activities.last.next_follow_up_time %></a>.<br />
+				Please install <a href="http://www.ammyy.com/en/downloads.html" target="_blank">Ammyy Admin</a> or <a href="https://www.teamviewer.com/en/download/" target="_blank">Team Viewer</a>.<br />
+				Cheers,<br />
+				Support Team
+		</p>	
+	</body>
+</html>

@@ -1,0 +1,74 @@
+<!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>Performance Management &rarr; <span>Goals for Employees</span></h1>
+      <!-- Quick search box -->
+      <!-- <form action="" method="get">
+          <input class="" type="text" id="q" name="q" />
+      </form> -->
+    </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	 <div id="tabs-all" class="highlight">
+             <div id="timesheet">
+                    <% if @employee_goals.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                        <table class="display stylized" id="example">
+                          <thead>   
+                            <tr>
+													    <th>Goals</th>
+													    <th>From date</th>
+													    <th>To date</th>
+													  </tr>
+                          </thead>
+                          <tbody>
+                             <% @employee_goals.each do |employee_goal| %>
+														      <tr>
+																	    <td><%= link_to truncate(MasterObjective.find(employee_goal.goals).objective_name, :length => 20), employee_goal, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+																	    <td><%= employee_goal.from_date.strftime("%d-%m-%Y") %></td>
+																	    <td><%= employee_goal.to_date.strftime("%d-%m-%Y") %></td>
+																	  </tr>
+														 <% end %>
+                          </tbody>
+                          <tfoot>
+                           <tr>
+	                         <td colspan="3"></td>
+	                       </tr>
+                          </tfoot>
+                        </table> 
+                        <div class="column width3 first"> 
+                         <%= paginate @employee_goals %>
+                        </div>    
+                    <% end %>
+               </div>
+        </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2">
+           <!--<p ><a href="/employee_goals/new" class="btn btn-special btn-green"><img SRC="" class="icon" alt=""/>Create Goals for employee</a></p>-->
+         <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/27" class="nyroModal">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

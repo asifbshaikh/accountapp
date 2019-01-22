@@ -1,0 +1,95 @@
+<section id="content">
+  <section class="main padder">
+    <div class='row'>
+      <div class='col-lg-4'>
+        <h2><i class="icon-file-text-alt text"></i> View Purchase Return</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <%= render fy_specific_header %>
+      </div>
+    </div>
+    <p></p>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg"%>
+        <div class='row'>
+          <div class='col-sm-5'>
+            <%= @purchase_return.account.vendor.blank? ? customer_details(@purchase_return.account.customer) : vendor_details(@purchase_return.account.vendor) %>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+              <div class="panel-body">
+                <div class="col-sm-6">
+                  <p><strong>Purchase Return Number#:</strong> <%=@purchase_return.purchase_return_number%>
+                  </p>
+                  <p><strong>Against Purchase#:</strong> <%=@purchase_return.purchase.purchase_number%>
+                  </p>
+                  <p><strong>Record Date :</strong> <%=@purchase_return.record_date %></p>
+                  <p><strong>Amount :</strong> <%= @purchase_return.currency %> <%= format_amount @purchase_return.total_amount %></p>
+                  <% if @purchase_return.foreign_currency? %>
+                    <p><strong>Exchange Rate :</strong> <%= @purchase_return.exchange_rate %></p>
+                  <% end %>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="icon-calendar"> </i>Created on <%=@purchase_return.created_at.strftime("%d-%m-%Y") %> by <%= @purchase_return.user.full_name %>
+                  </div>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-lg-12'>
+            <table  class="table table-striped b-t text-small" id="report">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="text-right">Quantity</th>
+                  <th class="text-right">Unit Cost</th>
+                  <th class="text-right">Discount(%)</th>
+                  <th class="text-right">Amount (<%= @purchase_return.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @purchase_return.purchase_return_line_items %>
+                <%= render :partial => "tax_line_item_details", :collection => @purchase_return.tax_line_items.group(:account_id) %>
+                <tr>
+                  <td align="right" colspan="4">Sub total</td>
+                  <td align="right"><%= (purchase_return_sub_total) %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Discount</td>
+                  <td align="right"><%= (purchase_return_discount) %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Tax</td>
+                  <td align="right"><%= format_amount(purchase_return_tax_amount) %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4"><b>Total</b></td>
+                  <td align="right"><b> <%= @purchase_return.currency %> <%= format_amount @purchase_return.total_amount%></b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <% unless @purchase_return.customer_notes.blank? %>
+          <div class="row">
+            <div class="col-lg-6">
+              <strong>Notes:</strong>
+              <p><%= @purchase_return.customer_notes %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>

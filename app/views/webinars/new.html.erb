@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ProfitBooks is an online accounting software for small businesses. It helps you manage invoicing, expenses, banking transactions, taxes and more. Start today!" />
+<meta name="keywords" content="accounting software, invoicing, expenses" />
+<title>Learn More About Cloud Accounting, Register For Webinar | ProfitBooks.net</title>
+
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+<%= render :partial =>"home/zopim_chat_and_google_analytics"%>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".fancybox").fancybox();
+  });
+</script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Camera Jquery
+$('.post-slide').camera({   
+  thumbnails: false,
+  hover: false,
+  fx: 'random',
+  time: 7000,
+  transPeriod: 1500,
+  pagination: false
+});
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div itemscope itemtype="http://schema.org/Event" id="main-wrapper">
+
+	<!-- header start here -->
+    <%= render :partial=>"home/header" %>
+    <!-- header end here -->
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="twelve columns">
+                <h1>Register For Webinar</h1>                
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+            
+     <!-- second section -->
+	 <section id="content-wrapper">
+     <div class="row">
+        	<div class="twelve ">
+                	<div class="row">
+                        <div class="six columns">
+                            <h4><span class="title-green">Join us in one of our <span itemprop="name">online sessions to learn how ProfitBooks </span>can help your business.</span></h4>
+                            <p itemprop="description"><strong>What you will learn:</strong>
+            <ul class="check">
+              <li> How cloud accounting can benefit your business</li>
+              <li> Creating professional invoices, tracking income and expenses</li>
+              <li> Managing documents online and going papaerless</li>
+              <li> Managing inventory</li>
+              <li> Improving productivity using tasks, projects and messages</li>
+              <li> Inviting an auditor to review your books</li>
+              <li> Running payroll and generate salary slips </li>
+            </ul> </p>
+                            <p><strong>How it works:</strong>
+              <br>Just enroll for one of the sessions using this form. You will get an email with instructions to join the <span  itemprop="location" itemscope itemtype="http://schema.org/Place">WebEx meeting<span>. On the meeting day, you can visit the link from your computer and listen to the live session.</p>
+              <p><h6  class="title-green">Sometimes we distribute discount codes at the end of the session, so join now!</h6></p>
+                        </div>
+                        
+                        <div class="six columns">
+                        <div id="contact-form-area2">
+                         <%= render :partial=>"home/flash_message"%>
+                            <!-- Form starts -->
+                           <%= render "form" %>
+                            <!-- Form ends -->
+						<!-- <div class="info"> Every tuesday at 11:30am IST and every friday at 04:30pm IST 						</div>	 -->
+                         </div>
+                      </div>
+                  </div>
+                
+            </div>
+        </div>
+	</section>	
+     <!-- second section ends -->   
+        
+         
+           
+    </section>
+    <!-- content section end here -->
+    
+  <!-- footer section start here -->
+    <%= render :partial=>"home/footer"%>
+    <!-- footer section end here -->
+    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+<meta itemprop="price" content="Free"></span>
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

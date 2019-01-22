@@ -1,0 +1,2 @@
+module Gstr1SummariesHelper
+end

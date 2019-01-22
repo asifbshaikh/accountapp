@@ -1,0 +1,37 @@
+           
+<tr>
+    <td><%= link_to "#{invoice1.invoice_number}", invoice1%></td>
+    <td><%= truncate(invoice1.customer_name, :length => 20)%></td>
+    <td><%= invoice1.due_date.strftime("%d-%m-%Y") %></td>
+    <td> <%= format_currency(invoice1.amount) %></td>
+    <td><%= invoice1.get_status %></td>
+   <% if !@company.plan.free_plan? %>
+    <td><%= !invoice1.project_id.blank? ? invoice1.project_name : "Not available" %></td>
+   <% end %> 
+     <td>
+      <div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/invoices/<%= invoice1.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <% if invoice1.cash_invoice? %>
+            <li><a href= <%= "invoices/#{invoice1.id}/edit?cash_invoice=#{true}" %>>Edit</a></li>
+            <% elsif invoice1.time_invoice? %>
+            <li><a href= <%= "invoices/#{invoice1.id}/edit?time_invoice=#{true}" %>>Edit</a></li>
+            <% else %>
+           <li><a href="<%= edit_invoice_path(invoice1) %>">Edit</a></li>
+            <% end %>
+            <% unless invoice1.recursive_invoice? %>
+              <li><a href="<%= invoice_path(invoice1, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+              <li><a href=<%= "/invoices/create_invoice_email?id=#{invoice1.id}"%>>Email Invoice</a></li>
+              <% if invoice1.invoice_status_id == 0 %>
+                <li><a href="<%="/receipt_vouchers/new?from_account_id=#{invoice1.account_id}&invoice_id=#{ invoice1.id}&invoice_number=#{invoice1.invoice_number}"%>">Make Payment</a></li>
+              <% end %>
+            <% end %>
+             <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/invoices/<%= invoice1.id%>" >Delete</a></li>
+          </ul>
+      </div>    
+   </td>
+  </tr>

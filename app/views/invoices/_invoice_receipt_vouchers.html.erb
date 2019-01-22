@@ -1,0 +1,13 @@
+<% receipt_voucher = invoice_receipt_vouchers.receipt_voucher %>
+<tr>
+  <td><%= link_to receipt_voucher.voucher_number, receipt_voucher_path(receipt_voucher) %></td>
+  <td><%= receipt_voucher.voucher_date %></td>
+  <td><%= receipt_voucher.received_date %></td>
+  <td>
+    <%= receipt_voucher.payment_detail.payment_mode%> <%= (receipt_voucher.exchange_rate != 0) ? "(Exchange rate in #{@company.currency_code} = #{receipt_voucher.exchange_rate})" : "" %>
+  </td>
+  <% if @receipt_vouchers.sum('tds_amount') > 0 %>
+    <td class="text-right"><%= format_amount invoice_receipt_vouchers.tds_amount %></td>
+  <% end %>
+  <td class="text-right"><%= format_amount invoice_receipt_vouchers.amount %></td>
+</tr>

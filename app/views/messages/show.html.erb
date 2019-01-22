@@ -1,0 +1,81 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i>Message Details</h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), messages_path, :class => 'btn btn-default btn-sm', :title=>"Back" %>
+        <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+      <div class= "col-lg-12">
+         <article id="comment-id-1" class="comment-item media arrow arrow-left">
+              <a class="pull-left thumb-small avatar">
+              <% if !User.find(@message.created_by).avatar_file_name.blank? %>
+               <%= image_tag User.find(@message.created_by).avatar.url(:thumb), :class=> "img-circle" %>
+              <% else %>
+               <%= image_tag 'avatar_green.png', :alt=>"#{User.find(@message.created_by).full_name}", :class=>'img-circle'%>
+              <% end %>
+              </a>
+              <section class="media-body panel">
+                <header class="panel-heading clearfix">
+                  <label class="label bg-info m-l-mini"><%= message_from @message%></label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>on <%= @message.created_at %> </span>
+                </header>
+                <div class="panel-body">
+                  <div><strong>Subject: </strong><%= @message.subject %><br/><%= simple_format(@message.description)%></div>
+                  
+                </div>
+              </section>
+            </article>
+             <% @replies.each do |reply|%>
+             <article id="comment-id-1" class="comment-item media arrow arrow-left">
+              <a class="pull-left thumb-small avatar">
+              <% if !User.find(reply.created_by).avatar_file_name.blank? %>
+               <%= image_tag User.find(reply.created_by).avatar.url(:thumb), :class=> "img-circle" %>
+              <% else %>
+               <%= image_tag 'avatar_green.png', :alt=>"#{User.find(reply.created_by).full_name}", :class=>'img-circle'%>
+              <% end %>
+              </a>
+              <section class="media-body panel">
+                <header class="panel-heading clearfix">
+                  <label class="label bg-default m-l-mini"><%= message_from reply%></label> <span class="text-muted m-l-small pull-right"><i class="icon-time"></i>on <%= reply.created_at %> </span>
+                </header>
+                <div class="panel-body">
+                  <div><%= simple_format(reply.description)%></div>
+                </div>
+              </section>
+            </article>
+             <% end %>
+      
+        <div class="form-group">
+              <div class="text-small">
+                <a href ="#" class = "btn btn-success" id ="msg_info">Post reply</a>
+              </div>
+          </div>
+              <div class="form-group rpl_msg">
+               <%= form_for @reply, :html=>{:class=> "form-horizontal"} do |f| %>
+                <%= hidden_field_tag "message[subject]", @message.subject %>
+                <% if @replies.blank? %> 
+                  <%= hidden_field_tag "message[reply_id]", @message.id %>
+                  <%= hidden_field_tag "message[user_id]", @message.created_by %>
+                  <% else %>
+                  <%= hidden_field_tag "message[reply_id]", @replies.last.id %>
+                  <%= hidden_field_tag "message[user_id]", @replies.last.created_by %>
+                <% end %>
+                    <div>
+                      <label>Reply message</label><br/>
+                      <%= f.text_area :description,:rows => "3",:class=>"bg-focus form-control" %>
+                <div class="text-small"><%= f.submit 'Reply', :class => "btn btn-success"%></div>
+                    </div>
+                <% end %>
+               </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>

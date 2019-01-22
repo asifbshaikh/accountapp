@@ -1,0 +1,20 @@
+<tr>
+	<td><%= link_to account_head.name, account_head_path(account_head)%></td>
+	<td><%= account_head.parent_id.nil? ? 'Primary Group' : AccountHead.find(account_head.parent_id).name %></td>
+	<td><%= account_head.created_by_user %></td>
+	<td>
+	  <div class="btn-group" >
+	      <button class="btn btn-white btn-sm" onclick="location.href='/account_heads/<%= account_head.id %>'"; >View</button>
+	      <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+	        <span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu">
+	        <li><%= link_to "Edit", edit_account_head_path(account_head) unless account_head.parent.nil? %></li>
+	        <li><%= link_to 'Create sub group ', new_account_head_path(:parent_id=> account_head.id)%></li>
+	        <li class="divider"></li>
+	        <li><%= link_to "Delete", account_head, :confirm => "Are you sure?", :method => "delete" unless account_head.parent.nil? %></li>
+	      </ul>
+	  </div>
+    </td>
+</tr>
+

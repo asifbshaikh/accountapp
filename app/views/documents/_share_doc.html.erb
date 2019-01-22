@@ -1,0 +1,22 @@
+ <!--Listing Folders-->
+ <% @folders.each do |folder| %>
+      <tr>
+        <td><i class="icon-folder-close"></i>&nbsp;<%= link_to folder.name, browse_path(folder)%></td>
+        <td>-</td>
+        <td><%= folder.updated_at.strftime("%d-%m-%Y")%></td>
+        <td>
+         <%= link_to "<i class='icon-edit'></i>".html_safe, rename_folder_path(folder), :title => "Rename" %> 
+         <%= link_to "<i class='icon-trash'></i>".html_safe, folder, :confirm => 'Are you sure to delete the folder and all of its contents?', :method => :delete, :title=>"Delete Folder" %>
+	</td>
+     </tr>
+ <% end %>
+ <!--Listing Files-->
+ <% @myfiles.each do |myfile| %>
+   <tr>
+      <td><i class="icon-file"></i>&nbsp;<%= link_to myfile.file_name, myfile.uploaded_file.url %></td>
+      <td><%= number_to_human_size(myfile.file_size, :precision => 2) %></td>
+      <td><%= myfile.uploaded_file_updated_at.strftime("%d-%m-%Y") %></td>
+      <td><%= link_to "<i class='icon-trash'></i>".html_safe, myfile, :confirm => 'Are you sure?', :method => :delete, :title=>"Delete" %></td>
+   </tr>
+ <% end %>
+			

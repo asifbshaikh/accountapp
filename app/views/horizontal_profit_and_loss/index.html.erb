@@ -1,0 +1,147 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Profit and Loss</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        <%= link_to_pdf params %>
+        <%= link_to_xls params %>
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "shared/final_account_filter" %>
+            <%= render :partial => "header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small"%>
+                <thead>
+                  <tr>
+                  <th>Expense</th>
+                  <th class="text-right"><%= render "shared/duration" %></th>
+                  <th>Income</th>
+                  <th class="text-right"><%= render "shared/duration" %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="2">
+                      <table  border="0" class="table table-striped b-t text-small" align="center" width="100%">
+                        <tbody>
+                          <tr>
+                            <td><b>Opening Stock</b></td><td></td>
+                            <td class="text-right"><b><%= format_currency(@profit_loss.opening_stock_valuation)%></b></td>
+                          </tr>
+                          <tr>
+                            <td><b>Direct Expenses</b></td><td></td>
+                            <td class="text-right"><b><%= format_currency(@profit_loss.direct_expenses)%></b></td>
+                          </tr>
+                          <% @direct_expense_with_sub_heads.each do |account_head| %>
+                            <tr>
+                              <td class="textindent1">
+                                <a href="/trial_balance/group_summary_report?transaction_type=DirectExpenseAccount&id=<%= account_head.id %>&branch_id=<%= @current_user.branch_id %>&start_date=<%=params[:start_date]%>&end_date=<%=params[:end_date]%>"><%= account_head.name %></a>
+                              </td>
+                              <td class="text-right">
+                                <%= format_currency @desh_hash[account_head.id] %>
+                              </td>
+                              <td></td>
+                            </tr>
+                          <% end %>
+                          <tr>
+                            <td><b>Indirect Expenses</b></td><td></td>
+                              <td class="text-right"><b><%= format_currency(@profit_loss.indirect_expenses)%></b></td>
+                          </tr>
+                          <% @indirect_expense_with_sub_heads.each do |account_head| %>
+                            <tr>
+                              <td class="textindent1">
+                                <a href="/trial_balance/group_summary_report?transaction_type=IndirectExpenseAccount&id=<%= account_head.id%>&branch_id=<%= @current_user.branch_id %>&start_date=<%=params[:start_date]%>&end_date=<%=params[:end_date]%>"><%= account_head.name %></a>
+                              </td>
+                              <td class="text-right"><%= format_currency @iewsh_hash[account_head.id] %></td>
+                              <td></td>
+                            </tr>
+                          <% end %>
+                          <% if @net_profit >= 0 %>
+                            <tr>
+                              <td><b><span class='char_spacing'>Net Profit</span></b></td>
+                              <td></td>
+                              <td class="text-right"><b><%= format_currency(@profit_loss.profit_and_loss)%></b></td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td colspan="2">
+                      <table  border="0" class="table table-striped b-t text-small" align="center" width="100%">
+                        <tbody>
+                          <tr>
+                            <td><b>Direct Incomes</b></td><td></td>
+                            <td class="text-right"><b><%= format_currency(@profit_loss.direct_income)%></b></td>
+                          </tr>
+                        <% @direct_income_with_sub_heads.each do |account_head|  %>
+                          <tr>
+                            <td class="textindent1">
+                              <a href="/trial_balance/group_summary_report?transaction_type=DirectIncomeAccount&id=<%= account_head.id%>&branch_id=<%= @current_user.branch_id %>&start_date=<%=params[:start_date]%>&end_date=<%=params[:end_date]%>"><%= account_head.name %></a>
+                            </td>
+                            <td class="text-right"><%= format_currency(clean_output(-1*@diwsh_hash[account_head.id]))%></td>
+                            <td></td>
+                          </tr>
+                        <% end %>
+                          <tr>
+                            <td><b>Indirect Incomes</b></td>
+                            <td></td>
+                            <td class="border_down text-right"><b><%= format_currency(@profit_loss.indirect_income)%></b></td>
+                          </tr>
+                        <% @indirect_income_with_sub_heads.each do |account_head| %>
+                          <tr>
+                            <td class="textindent1">
+                            <a href="/trial_balance/group_summary_report?transaction_type=IndirectIncomeAccount&id=<%= account_head.id%>&branch_id=<%= @current_user.branch_id %>&start_date=<%=params[:start_date]%>&end_date=<%=params[:end_date]%>"><%= account_head.name %></a>
+                            </td>
+                            <td class="text-right"><%= format_currency( clean_output(-1 * @iiwsh_hash[account_head.id])) %></td>
+                            <td></td>
+                          </tr>
+                        <% end %>
+                          <tr>
+                            <td><b>Stock in hand</b></td><td></td>
+                            <td class="border_down text-right">
+                            <b><%= format_currency(@profit_loss.inventory_valuation)%></b>
+                            </td>
+                          </tr>
+                        <% if @net_profit < 0 %>
+                          <tr>
+                            <td><b><span class='char_spacing'>Net Loss</span></b></td>
+                            <td></td>
+                            <td class="border_down text-right">
+                            <b><%= format_currency(@net_profit.abs)%></b>
+                            </td>
+                          </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td><b>Total</b></td>
+                    <td class="text-right"><b><%= format_currency(@profit_loss.total_expenses)%></b></td>
+                    <td><b>Total</b></td>
+                    <td class="text-right"><b><%= format_currency(@profit_loss.total_income)%></b></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <footer class="row">
+              <%= render "shared/report_footer"%>
+            </footer>
+          </div>
+        </section>
+        <!-- Table ends -->
+      </div>
+    </div>
+  </section>
+</section>

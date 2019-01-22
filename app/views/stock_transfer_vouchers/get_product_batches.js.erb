@@ -1,0 +1,9 @@
+$(".transfer-line #row"+<%= params[:index] %>+" .transfer-batch-details").remove();
+$(".loader").remove();
+<% if @product_batches.blank? %>
+	$("<i style='color:red;' id='qty-notif'>Quantity not available.</i>").appendTo(".transfer-line #row<%= params[:index] %> td:eq(0)");
+<% else %>
+	$("<%= escape_javascript render :partial => 'batch_select' %>").appendTo(".transfer-line #row<%= params[:index] %> td:eq(0)");
+	$(".transfer-line #row"+<%= params[:index] %>+" #quantity").val(<%= @product_batches.first.quantity unless @product_batches.blank? %>);
+	$(".transfer-line #row"+<%= params[:index] %>+" #quantity").attr('readonly', 'readonly');
+<% end %>

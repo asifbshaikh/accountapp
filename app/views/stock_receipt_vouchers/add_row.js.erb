@@ -1,0 +1,4 @@
+$("#row-loader").remove();
+$("#receipt_row_link").before('<%= escape_javascript render( "stock_receipt_line_items",{ :stock_receipt_line_item=> @stock_receipt_line_item, :index => params[:index]} ) %>');
+$("#receipt_row_link").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');
+

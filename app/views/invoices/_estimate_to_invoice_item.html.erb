@@ -1,0 +1,47 @@
+      <tr id="row<%= index %>" valign="top" class ='inv_line'>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][warehouse_id]",invoice_line_item.warehouse_id%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][id]",invoice_line_item.id%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][_destroy]"%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][type]",invoice_line_item.type, :value =>"InvoiceLineItem"%>
+        <td valign="top" style='padding-left:0;' id='item-td'>
+          <%= select_tag("invoice[invoice_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(@products, :id, :name, invoice_line_item.product_id), :include_blank => true, :class => "chzn-select bg-focus form-control",:"data-placeholder" => "Select product", :"data-index" => index, :style=>"width:150px;") %>
+          <%= hidden_field_tag "index", index %>
+          <span id="avg_cost"></span>
+          <br />
+        </td>
+        <td><%= text_area_tag "invoice[invoice_line_items_attributes][#{index}][description]",invoice_line_item.description, :class => "bg-focus form-control", :id => 'description', :cols => 15, :rows=>1 %></td>
+        <% product = "invoice[invoice_line_items_attributes][#{index}][product_id]" %>
+        <td>
+          <% if !@company.plan.is_inventoriable? %>
+            <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][quantity]",nil, :class =>'form-control text-right', :id =>'quantity', :onkeydown => "return numbersOnly(event);", :maxlength => 8, 'data-index' => index, 'data-id' => invoice_line_item.id %>
+             <br/><small>Estimate qty: <%= invoice_line_item.quantity %></small><p id='avail'></p>
+          <% else %> 
+            <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][quantity]",nil, :class =>'bg-focus form-control text-right', :id =>'quantity', :onkeydown => "return numbersOnly(event);", :maxlength => 8, :'data-index' => index, :'data-id' => invoice_line_item.id, :"data-toggle"=>"modal", :"data-target"=>"#modal-qty-#{index}", !(!invoice_line_item.product.blank? && invoice_line_item.product.inventoriable?)? '' : :readonly =>'readonly' %>
+            <br/><small>Estimate qty: <%= invoice_line_item.quantity %></small><p id='avail'></p>
+            <div class='warehouse-qty-details'></div>
+            <div id="line<%= index %>">
+              <% if !invoice_line_item.product.blank? && !invoice_line_item.product.stocks.blank? %>
+                <div class='modal fade' id="modal-qty-<%= index %>">
+                  <% if invoice_line_item.product.batch_enable? %>
+                    <%= render('sales_warehouse_batch_details', {:stocks =>invoice_line_item.product.stocks, :row_index => index, :line_item => invoice_line_item }) %>
+                  <% else %>
+                    <%= render('sales_warehouse_details', {:stocks =>invoice_line_item.product.stocks, :row_index => index, :line_item => invoice_line_item }) %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </td>
+        <td><%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][unit_rate]",invoice_line_item.unit_rate, :class => 'bg-focus form-control amount', :id => 'unit_cost', :onkeydown => "return numbersOnly(event);", :maxlength => 18 %></td><!--Jquery code is in application.js-->
+        <td><%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][discount_percent]", invoice_line_item.discount_percent, :class =>'bg-focus form-control text-right', :id => 'discount', :onkeydown => "return numbersOnly(event);", :maxlength => 5 %></td>
+        <td valign="top" style='padding-left:0;' id='tax-td'>
+          <%= select_tag "invoice[invoice_line_items_attributes][#{index}][tax_account_id]", options_from_collection_for_select_with_data(Account.get_sales_taxes(@company.id), :id, :sales_tax_name,invoice_line_item.tax_account_id,{:"linked" => :linked_sales }), :include_blank => true, :class => "bg-focus form-control chzn-select", :style => "width:100px;",:"data-placeholder" => "Select tax" %>
+          <%= hidden_field_tag "index", index %>
+        </td>
+      <td  align="right">
+		    <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][amount]", invoice_line_item.amount, :id => 'total' %>
+		     <span id="amount">0.0</span>
+      </td>
+      
+    </tr>
+   

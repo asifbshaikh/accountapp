@@ -1,0 +1,60 @@
+       <%= form_for @expense, :url => (@expense), :html=>{:class=>"m-b-none form-horizontal", :remote=>true} do |f| %>
+       <%= f.hidden_field :voucher_number %>
+       <%= hidden_field_tag "transaction_id",@transaction_id%>
+       <%= f.hidden_field :account_id,:value => @account_id%>
+       <%= hidden_field_tag "from_account_id",@account_id%>
+       <%= hidden_field_tag "account_id",@account_name%>
+       <%= hidden_field_tag 'total', @amount %>
+       <%= hidden_field_tag "expense[expense_line_items_attributes][0][type]", "ExpenseLineItem"%>
+       <%= hidden_field_tag "expense[expense_line_items_attributes][0][_destroy]" %>
+       <div class="errorSection"></div>
+       <div class="row">
+         <div class="col-lg-7">
+         <%= label_tag :Expense_date, 'Expense date' , :class => "control-label-required" %>
+         </div>
+         <div class="col-lg-7">
+         <%=f.text_field :expense_date,  :class => 'bg-focus form-control' %>
+         </div>
+       </div><br>
+       <div class="row">
+         <div class="col-lg-7">
+         <%= label_tag :expense_type, 'Type of expense' , :class => "control-label-required" %>
+         </div>
+         <div class="col-lg-7">
+         <%= select_tag "expense[expense_line_items_attributes][0][account_id]", options_from_collection_for_select(@to_accounts, :id, :name),:prompt =>"Select type", :style=>"width:100%;" %>
+         
+         </div>
+       </div><br>
+       <div class="row">
+         <div class="col-lg-7">
+         <%= label_tag :amount, 'Amount' , :class => "control-label-required" %>
+         </div>
+         <div class="col-lg-7">
+         <%= text_field_tag "expense[expense_line_items_attributes][0][amount]", @amount,:class => "text-right bg-focus form-control"%>
+         
+         </div>
+       </div><br>
+       <div class="row">
+         <div class="col-lg-7">
+         <%= label_tag :description, 'Description' , :class => "control-label" %>
+         </div>
+         <div class="col-lg-7">
+         <%= text_area_tag "expense[expense_line_items_attributes][0][description]","", :class=>'bg-focus form-control', :row => 2 %>
+         </div>
+       </div><br>
+       <div class="row">
+         <div class="col-lg-7 col-lg-offset-4">
+          <div class='save-btn'></div>
+          <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Proccessing...">Submit</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+         </div>
+       </div>
+       <%end%>
+       <script type="text/javascript">
+       $(document).ready(function(){
+          $('#expense_expense_line_items_attributes_0_account_id').select2();
+       });
+       </script>
+
+
+       

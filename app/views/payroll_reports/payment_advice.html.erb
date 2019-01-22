@@ -1,0 +1,145 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+        	<%if @users.blank?%>
+        	<%= render :partial => "shared/no_record"%>
+        	<%else%>
+            &nbsp;&nbsp;
+           <p align="right">
+			      <a href="/payroll_reports/payment_advice.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	  <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+            <div class='highlight'>
+                <div id='report_header'>
+                    <span class='company_name'><%= @company.name %></span>
+                    <br>
+                    <span class='report_title'>
+                        <u>
+                            Payment Advice
+                        </u>
+                    </span>
+                </div>
+                <hr><b>The Manager</b>
+                <br>
+                HDFC Bank
+                <br>
+                <br>
+                Dear Sir,
+                <p>
+                    <b>
+                        <u>
+                            Payment Advice from <%= Company.find(@company).name %> A/C # for period 1-May-2011 to 31-May-2010
+                        </u>
+                    </b>
+                    <br>
+                    Please make the payroll transefer from above account number to the bellow mentioned account numbers towards employee salary
+                </p>
+                <table class = "zebra-sriped" align = center width=100%>
+                    <thead>
+                    <tr>
+                        <th>
+                            SL.No.
+                        </th>
+                        <th>
+                            Name of the Employee
+                        </th>
+                        <th>
+                            Account No.
+                        </th>
+                        <th>
+                            Bank Name
+                        </th>
+                        <th>
+                            Branch
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                    </tr>
+                    </head>
+                    <tbody>
+                        <% i = 1 %>
+                        <% for user in @users %>
+                        <tr>
+                            <td>
+                                <%= i %>
+                            </td>
+                            <td>
+                                <%= user.first_name  %> <%= user.last_name%>
+                            </td>
+                            <td>
+                            	<% if UserSalaryDetail.find_by_user_id(user.id).nil? %>
+									<span class='light'><i>Not available</i></span>
+								<% else %>
+                                	<%= UserSalaryDetail.find_by_user_id(user.id).bank_account_number %>
+								<% end %>
+                            </td>
+                            <td>
+                                <% if UserSalaryDetail.find_by_user_id(user.id).nil? %>
+									<span class='light'><i>Not available</i></span>
+								<% else %>
+                                	<%= UserSalaryDetail.find_by_user_id(user.id).bank_name %>
+								<% end %>
+                            </td>
+                            <td>
+                               <% if UserSalaryDetail.find_by_user_id(user.id).nil? %>
+									<span class='light'><i>Not available</i></span>
+								<% else %>
+                                	<%= UserSalaryDetail.find_by_user_id(user.id).branch %>
+								<% end %>
+                            </td>
+                            <td>
+                                <% if SalaryStructure.find_by_for_employee(user.id).nil? %>
+									<span class='light'><i>Not available</i></span>
+								<% else %>
+                                	<%= SalaryStructure.find_by_for_employee(user.id).amount %>
+								<% end %>
+                            </td>
+                        </tr>
+                        <% i+=1 %>
+                        <% end %>
+                        <tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                	 <b>Total</b>
+                                </td>
+                                <td>
+                                    <b><%= @amount %></b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                        </table>
+                        <br>
+                        <span class = 'light'>Your Sincerely</span>
+                        <p>
+                            <b>For <%= Company.find(@company).name %></b>
+                            <br>
+                            <br>
+                            <br>
+                            Authorised Signatory
+                        </p>
+                        <hr>
+                        <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+                    </div>
+                    <%end%>
+                </section>
+                &nbsp;&nbsp;
+                <!-- End of Left column/section -->
+                <!-- End of Left column/section -->
+            </div>
+            <!-- End of Wrapper -->
+            </div>

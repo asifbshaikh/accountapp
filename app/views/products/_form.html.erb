@@ -1,0 +1,256 @@
+<%= form_for(@product, :html=>{:class=>'form-horizontal'}) do |f| %>
+  <%= hidden_field_tag 'warehouse_id[]' %>
+  <%= hidden_field_tag 'import_product_id',@product_import_id %>
+  <%= render 'shared/form_error', :object => @product %>
+      <div class='form-group'>
+        <div class='col-lg-5'> 
+          <%= label_tag "product[name]", "Name", :class => 'control-label-required' %>
+          <%= text_field_tag "product[name]", @product.name,:autofocus =>"autofocus", :class => "form-control bg-focus", :style=>'width:85%' %>
+        </div>  
+        <div class='col-lg-1'></div>
+        <div class='col-lg-5'>               
+          <%= label_tag "product[product_code]", 'Product code', :class=>'control-label' %>
+          <%= text_field_tag "product[product_code]", @product.product_code, :class => "form-control bg-focus", :style=>'width:85%' %>  
+          <%  if @company.country_id == 93 %>   
+          <%= label_tag 'HSN Code','HSN/SAC Code', :class=>'control-label' %>
+              <%= text_field_tag "product[hsn_code]", @product.hsn_code,:autofocus =>"autofocus", :class => "form-control bg-focus", :style=>'width:65%' %>
+               <%= link_to 'HSN/SAC Lookup', '#',:id=> "hsn_modal_selector" %>  
+              <% end %>     
+        </div>
+        <div class='col-lg-5'>            
+          <%= label_tag "product[unit_of_measure]", 'Unit of measure', :class=>'control-label' %>
+          <%= text_field_tag "product[unit_of_measure]", @product.unit_of_measure, :class => "form-control bg-focus", :style=>'width:85%' %>
+        </div>
+        <div class='col-lg-1'></div>
+        <div class='col-lg-5'>                  
+          <%= label_tag "product[Category]", 'Category', :class=>'control-label'%> <small>(separate multiple categories by comma)</small>
+          <%= text_field_tag "product[tag_list]", @product.tag_list.join(', '), :class => "form-control bg-focus", :style=>'width:85%' %>
+        </div>
+        <div class="col-lg-5">
+          <% if @company.plan.is_inventoriable? %>
+            <div style=<%= 'display:none;' unless @product.new_record? %>>
+              <p></p>
+              <div class='row'>
+                <div class='col-sm-7'>
+                  <%= label_tag 'inventory','Enable inventory for this product?', :class=>'control-label' %>
+                </div>
+
+                <div class='col-sm-5'>
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm btn-white <%= 'active' if @product.inventory? %>" id='product-inventory-yes'>
+                      <%= radio_button_tag 'product[inventory]',1, @product.inventory? %>
+                      <i class="icon-ok icon-large text-active"></i>
+                      Yes
+                    </label>
+                    <label class="btn btn-sm btn-white <%= 'active' unless @product.inventory? %>" id='product-inventory-no'>
+                      <%= radio_button_tag 'product[inventory]', 0, !@product.inventory? %>
+                      <i class="icon-ok icon-large text-active"></i>
+                        No
+                      </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id='sales_opening_inventory' style='display:none;'>
+              <div style=<%= 'display:none;' unless @product.new_record? %>>
+                <p></p>
+                <div class='row'>
+                  <div class='col-sm-7'>
+                    <%= label_tag 'batch', "Enable batch for this product?", :class=>'control-label' %>
+                  </div>
+                  <div class='col-sm-5'>
+                    <div class="btn-group" data-toggle="buttons">
+                      <label class="btn btn-sm btn-white <%= 'active' if @product.batch_enable? %>" id='product-batch-enable-yes'>
+                        <%= radio_button_tag 'product[batch_enable]',1, @product.batch_enable? %>
+                        <i class="icon-ok icon-large text-active"></i>
+                        Yes
+                      </label>
+                      <label class="btn btn-sm btn-white <%= 'active' unless @product.batch_enable? %>" id='product-batch-enable-no'>
+                        <%= radio_button_tag 'product[batch_enable]', 0, !@product.batch_enable? %>
+                        <i class="icon-ok icon-large text-active"></i>
+                          No
+                        </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% unless !@product.new_record? && @product.batch_enable? %>
+                <%= label_tag 'opening_stock', 'Opening stock', :class=>'control-label' %>
+                <%= text_field_tag 'opening_inventory', @product.stocks.sum(:opening_stock) , :style => "width: 60%;", :id =>'opening-stock', :onkeydown => "return numbersOnly(event);", :maxlength => 8, 'data-id' => @product.id, :class => "form-control bg-focus text-right", :readonly =>'readonly', :'data-toggle'=>'modal', :'data-target'=>product_specific_target %>
+              <% end %>
+              <%= label_tag "product[reorder_level]", "Reorder level", :class=>'control-label' %>
+              <%= text_field_tag "product[reorder_level]", @product.reorder_level, :style => "width: 60%;", :onkeydown => "return numbersOnly(event);", :class => "form-control bg-focus text-right" %>
+            </div>
+          <% else %>
+            <%= hidden_field_tag "product[inventory]", 0 %>
+          <% end %>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class='col-lg-5'>
+          <%= label_tag "product[description]", "Description", :class=>'control-label' %>
+          <%= text_area_tag "product[description]", @product.description, :rows => 3, :class => "form-control bg-focus", :style=>'width:85%' %>
+        </div>
+
+      </div>
+      <div class='form-group'>
+      <div class="col-xs-5">
+        <section class="panel">
+          <div class="panel-body">
+            <div class="checkbox">
+              <label class="checkbox-custom">
+                <%= check_box_tag "sales", "sales", @product.new_record? ? (@product.type != 'PurchaseItem' ? true : false) : (@product.type == "SalesItem" || @product.type == "ResellerItem") ? true : false, :disabled => @product.new_record? || @product.type == 'PurchaseItem' ? false : true %>
+                <i class="icon-unchecked"></i>
+                 I sell this product
+              </label>
+            </div>
+            <% if !@product.new_record? && (@product.type == "SalesItem" || @product.type == "ResellerItem") %>
+              <%= hidden_field_tag "sales", true %>
+            <% end %>
+            <div class='sales-info' style='display: none;'>
+              <%= label_tag "product[sales_price]", 'Sales price', :class=>'control-label' %>
+              <%= text_field_tag "product[sales_price]", @product.sales_price, :class => "form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);" %>
+              <p></p>
+              <%= label_tag 'income_account','Income account', :class=>'control-label' %>
+              <%= select_tag('product[income_account_id]', options_from_collection_for_select(Account.get_income_accounts(@company.id), :id, :name, :selected=> @product.income_account_id ),{:style => "width:300px;"})%>
+            </div>
+          </div>
+        </section>
+      </div>
+        <div class='col-lg-1'></div>
+        <div class='col-xs-5'>
+          <section class="panel">
+            <div class="panel-body">
+              <div class="checkbox">
+                <label class="checkbox-custom">
+                  <%= check_box_tag "purchase","purchase", (@product.type == "PurchaseItem" || @product.type == "ResellerItem") ? true : false, :disabled => @product.new_record? || @product.type == 'SalesItem' ? false : true, :id=>'purchase-sec' %>
+                  <i class="icon-unchecked"></i>
+                  I purchase this product
+                </label>
+              </div>
+              <% if !@product.new_record? && (@product.type == "PurchaseItem" || @product.type == "ResellerItem") %>
+                <%= hidden_field_tag "purchase", true %>
+              <% end %>
+              <div class='purchase-info' style='display: none;'>
+                <%= label_tag "product[purchase_price]", "Purchase price", :class=>'control-label' %>
+                <%= text_field_tag "product[purchase_price]", @product.purchase_price, :class=> "form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);" %>
+                <p></p>
+                <%= label_tag 'expense_account','Expense account', :class=>'control-label' %>
+                <%= select_tag('product[expense_account_id]', options_from_collection_for_select(Account.get_expense_accounts(@company.id), :id, :name, :selected=> @product.expense_account_id ),{:style => "width:300px;"})%>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div id="modal-hsn-details" class="modal fade">
+             <%= render "hsn_code_form" %>
+           </div>
+      <div class="form-group">
+        <div class="col-lg-8 col-lg-offset-4">
+          <%= f.submit "Save", :class => "btn btn-success" %> &nbsp; 
+          <a class="btn btn-default" href="/products">Cancel</a>
+        </div>
+      </div>
+<% end %>
+
+<div id="modal-warehouse" class="modal fade">
+  <%= render 'warehouse_details' %>
+</div>
+
+<div id="modal-batch" class="modal fade">
+  <%= render 'batch_warehouse_details' %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $('.mfd_date').live('focus', function (e) {
+      console.log($(this).attr('data-index'));
+       $("#mfd_at"+$(this).attr('data-index')).datepicker();
+       e.preventDefault();
+    });
+
+    $('.exp_date').live('focus', function () {
+       $("#exp_at"+$(this).attr('data-index')).datepicker();
+    });
+
+  });
+  $("#product_income_account_id").select2();
+  $("#product_expense_account_id").select2();
+  $("#hsn_chapter").select2();
+  $("#sac_heading").select2();
+
+//Added for  HSN code on 06-05-2017
+// Author: K.Rohit Chandran 
+ $.ajax({
+        type: "GET",
+        data: {chapter_id: 1,code_type: "HSN"},
+        url: "/products/load_hsn_code"
+      });
+ $('#hsnSelection').on('click', function (e) {
+    $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    $.ajax({
+        type: "GET",
+        data: {chapter_id: 1, code_type: "HSN"},
+        url: "/products/load_hsn_code"
+      });
+
+
+});
+
+ $('#sacSelection').on('click', function (e) {
+    $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+     $.ajax({
+        type: "GET",
+        data: {chapter_id: 9954,code_type: "SAC"},
+        url: "/products/load_hsn_code"
+      });
+
+});
+
+
+$('#hsn_chapter').on('change', function (e) {
+    $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+     $.ajax({
+        type: "GET",
+        data: {chapter_id: valueSelected, code_type: "HSN"},
+        url: "/products/load_hsn_code"
+      });
+
+});
+
+$('#sac_heading').on('change', function (e) {
+    $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+     $.ajax({
+        type: "GET",
+        data: {heading_index: valueSelected, code_type: "SAC"},
+        url: "/products/load_hsn_code"
+      });
+
+});
+
+$('#hsn_code').on('change', function (e) {
+    $(".on-go-form").html('<div class="row"><div class="col-lg-12 text-center"><%= image_tag "ajax-loader.gif", :class => "loader" %><p></p><p></p></div></div>');
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+     $.ajax({
+        type: "GET",
+        data: {chapter_id: valueSelected},
+        url: "/products/load_hsn_code"
+      });
+
+});
+// Ends Here
+
+
+  $("#hsn_modal_selector").attr('data-toggle', 'modal')
+  $("#hsn_modal_selector").attr('data-target', '#modal-hsn-details')
+
+</script>

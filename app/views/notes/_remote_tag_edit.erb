@@ -1,0 +1,5 @@
+<%= remote_form_for(@note,
+               :url => remote_tag_update_note_path(@note)
+               :update => "tags")do |f|%>
+<%= f.text_field :tag_list ,:size => 50 %>
+<% end %>			   

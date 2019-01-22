@@ -1,0 +1,56 @@
+<%= render "shared/page_title" %> 
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+ <!-- Wrapper -->
+  <!-- Left column/section -->
+  <div class="wrapper">
+    <section class ="column width6 first"><br/>
+      <div id="tabs" class ="highlight">
+        <%= render "shared/flash_msg" %>
+        <div id="task_container">
+          <div class="clearfix"></div>
+          <table class="display stylized" id="company_table">
+          <thead>
+            <tr>
+              <th colspan="2">Announcement Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><label>Subject</label></td>
+              <td><%= @announcement.subject %></td>
+            </tr>
+            <tr>
+              <td><label>Starts at</label></td>
+              <td><%= @announcement.starts_at.to_date %></td>
+            </tr>
+            <tr>
+              <td><label>Ends at</label></td>
+              <td><%=@announcement.ends_at.to_date %></td>
+            </tr>
+            
+            <tr>
+              <td><label>Message</label></td>
+              <td><%= @announcement.message %></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">
+             </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div><br/>
+  </section>
+    <!-- Right column/section -->
+  <aside class="column width2"><br/>
+    <a href="/admin/announcements" class = "btn btn-special btn-green">
+    <img src ="/images/white_icon/ic_list.png" alt ="companies" class ="icon" />View announcements</a>
+    <p><%= link_to "Edit announcement", edit_admin_announcement_path(@announcement), :class => "btn btn-special btn-green" %></p>
+  </aside>
+  </div>
+</div>
+

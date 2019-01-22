@@ -1,0 +1,13 @@
+<% if @from_accounts.blank? && @to_accounts.blank?%>
+        <br /><div class="box box-warning">
+          Currently there are no customer accounts and product/service accounts.<br/>Click to create  <%= link_to "customer",{:action => :add_customer},:id => 'add_new_model',:remote => true %> and <%= link_to "product/service",{:action => :add_item},:id => 'add_new_model',:remote => true %> account.
+        </div>
+      <% elsif @from_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no product/service accounts.<%= link_to "Click to create one",{:action => :add_item},:id => 'add_new_model',:remote => true %>.
+        </div>
+      <% elsif @to_accounts.blank? %>
+        <br /><div class="box box-warning">
+          Currently there are no customer accounts.<%= link_to " Click to create one",{:action => :add_customer},:id => 'add_new_model',:remote => true %>
+        </div>
+      <% end %>

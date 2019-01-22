@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<head profile="http://gmpg.org/xfn/11">
+<title>ProfitBooks </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="accouting, payroll, online accounting, indian accounting application" />
+<meta name="description" content="ProfitBooks is an Online Accounting and Payroll Application" />
+<meta name="copyright" content="&copy; 2012 The Nextwave Technologies. All rights reserved." />
+<link rel="shortcut icon" href="/images/icons/favicon.html" type="image/x-icon" />
+<!-- Load Jquery -->
+<script src="/javascripts/homepagejs/jquery.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- for IE6 i'm sorry but there is too much wrong with it, needs warning at least, you can disable it by deleting this load. -->
+<script src="/javascripts/homepagejs/jquery.badBrowser.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- ALL jQuery Tools. jQuery library -->
+<script src="/javascripts/homepagejs/jquery.tools.js" type="text/javascript" charset="utf-8"></script>
+<!-- End Load -->
+<!-- Load Pretty Photo -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/jquery.prettyPhoto.css" type="text/css" media="screen" />
+<script src="/javascripts/homepagejs/jquery.prettyPhoto.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load Captify -->
+<script src="/javascripts/homepagejs/jquery.captify.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load Jquery Twitter -->
+<script src="/javascripts/homepagejs/jquery.tweet.js" type="text/javascript"></script>
+<!-- End Load -->
+<!-- Load some small custom scripts -->
+<script src="/javascripts/homepagejs/custom.js" type="text/javascript"></script>
+<!-- End Load -->
+
+<!-- Load Main Stylesheets and Default Color and Style -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style.css" type="text/css" media="screen" />
+<!-- IMPORTANT: This line above is the generic style, should be left alone -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style-green.css" type="text/css" media="screen" title="green" />
+<!-- IMPORTANT: This line above is the line that sets wich style you use by default, after you select wich you like to use, plug it in the line above the disable the style switcher, to do that either read the documentation or folow the note below refering to this -->
+<!-- End Load -->
+<!-- NOTE: Uncomment this following comment if you want to hide Style Switcher -->
+<style type="text/css">
+.style-switcher {
+  display:none !important;
+}
+</style>
+<!-- Load Main Enhancements Stylesheet border radius, transparency, shadows and such things -->
+<link rel="stylesheet" href="/stylesheets/homepagecss/style-enhance.css" type="text/css" media="screen" />
+<!-- End Load -->
+</head>
+<body>
+<!-- start top -->
+<div class="top">
+  <div class="full-width rel">
+    <div class="one-third">
+      <div class="logo"><a href="https://www.profitbooks.net"><img src="/images/misc/logo.png" alt="ProfitBooks.net" /></a></div>
+    </div>
+    <div class="two-third">
+      <div class="rel">
+         <div class="abs utility">Already registered? <a href="https://www.profitbookshq.com/login/index">Sign in</a></div>
+      </div>
+      <div class="mainmenu">
+         <ul>
+      <li ><a href="/home/index"><span>Home</span></a></li>
+      <li><a href="/home/features"><span>Features</span></a></li>
+      <li class="active"><a href="<%= (request.location.country == 'India')? 'www.profitbooks.net/home/pricing' : '/signup/global_pricing?plan=Global' %>"><span>Pricing</span></a></li>
+      <li><a href="/home/faq"><span>FAQ</span></a></li>
+      <li><a href="/home/contact"><span>Contact</span></a></li>
+         </ul>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- end top -->
+<!-- start middle -->
+<div class="middle">
+  <!-- start inner -->
+  <div class="inner">
+    <!-- start custom inner header -->
+    <div class="gradient-down pb30">
+      <div class="full-width">
+       <!-- <div class="one-full">
+          <div class="add-extra-padding-right add-extra-padding-left">
+            <h1 class="center mb0">Finally an application that serves everyone</h1>
+            <h3 class="center mb20">ProfitBooks is for startups, entrepreneurs and new-age accountants.</h3>
+          </div>
+          <div class="mb30 hr">
+            
+          </div>
+        </div>-->
+        <div class="clear"></div>
+        <div class="two-fourth">
+          <h4>ProfitBooks sets you free from complex accounting applications which are often stand-alone, expensive and require accounting knowledge.</h4>
+          <ul class="checklist">
+            <li>Basic Accounting</li>
+            <li>Financial Reports</li>
+            <li>Messages, Tasks, Notes</li>
+            <li>User Access Control</li>
+            <li>3 Users</li>
+            <li>Inventory Management</li>
+            <li>Payroll Management</li>
+          </ul>
+        </div>
+        <div class="one-half">
+     <div class="outer-rounded-box-bold">
+          <div class="simple-rounded-box">
+            <h3>Register</h3>
+         <%= render :partial => "shared/flash_msg"%>    
+                                <div class="box box-info">You are just 1 minute away from your profitbooks account.</div>
+            <%= form_for @company, :url => {:action=>:create_global } do |f|%>
+            <%= render "shared/form_error", :object => @company%>
+              <%= hidden_field_tag 'plan', params[:plan] %>
+              <%= f.fields_for :users do |usr|%>
+              <p>
+                <%= usr.label :first_name, {:class =>'required'} %>
+                <%= usr.text_field :first_name,:autofocus=>"autofocus", :class=>'full' %>
+              </p>
+              <p>
+                <%= usr.label :last_name, {:class =>'required'} %>
+                <%= usr.text_field :last_name, {:class=>'full'} %>
+              </p>
+              <p>
+                <%= label_tag "Email", "Email", :class=>"required" %><br/>
+                <%= usr.text_field :email, {:class =>'full'}%>
+              </p>
+              <p>
+                <%= usr.label :password, {:class=>'required'}%>
+                <%= usr.password_field :password, {:class=>'full'}%>
+              </p>
+              <p>
+                <%= usr.label :password_confirmation, {:class=>'required'}%>
+                <%= usr.password_field :password_confirmation, {:class =>'full'}%>
+              </p>
+           <% end %>
+              <p>
+                <%= f.label 'company name', {:class=>'required'} %><br/>
+                <%= f.text_field :name, {:class=> 'full'} %>
+              </p>
+              <p>
+                <%= label_tag 'country', 'Country', :class => "required" %>
+                <select name="company[country_companies_attributes][0][country_id]" style="width: 50%;">
+                  <% @countries.each do |country| %>
+                    <option value=<%= country.id %> <%= "selected=selected" if !@company.blank? && !@company.country_companies[0].blank? && country.id == @company.country_companies[0].country_id %> ><%= country.name %></option>
+                  <% end %>
+                </select>
+              </p>
+               <p>
+                 <label class="choice" for="remember">
+                  By clicking <b>Register</b> you agree to the 
+                  <a href="/home/terms_of_service">Terms and conditions</a> and 
+                  <a href="/home/privacy_policy">Privacy policy</a>. 
+               </label>
+              </p>
+              <div>
+          
+                <button type = "submit" class="btn-login"> Register</button>        
+              </div>
+              <div class="clear"></div>
+            <% end %>
+          </div></div><br />
+      </div>
+        <div class="one-fourth"> 
+          <div class="icon-to-left"></div>
+         
+          <div class="clear"></div>
+          <div id="tip2_up" style="display:none;">
+            <div class="tip" style="width:240px;">
+              <h4>Some Info Tooltip</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing vitae dolor metus, vitae pulvinar.</p>
+    </div>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+   
+  </div>
+  <!-- end inner -->
+</div>
+<!-- end middle -->
+<!-- start footer -->
+<div class="footer">
+ 
+  <div class="footer-small">
+    <div class="full-width">
+      <div class="one-half left"> &copy; 2012 ProfitBooks.net. All rights reserved.&nbsp; <a href="/home/terms_of_service">Terms of service</a>&nbsp;&nbsp; <a href="/home/privacy_policy">Privacy policy</a></div>
+      <div class="one-half right"> A product by <a href="http://thenextwave.in" target="_blank">The Nextwave Technologies</a>. </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<!-- end footer -->
+<!-- execute cufon for IE flickering -->
+<script type="text/javascript"> Cufon.now(); </script>
+<!-- end cufon execute -->
+<!-- Load google Analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27005400-1']);
+  _gaq.push(['_setDomainName', 'profitbooks.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- End Load google Analytics -->
+
+</body>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+</html>

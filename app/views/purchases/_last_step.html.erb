@@ -1,0 +1,113 @@
+<div class='row'>
+	<div class="col-lg-12">
+		<h4>Enter <%= @company.label.warehouse_label %> Details</h4>
+		<p>Please select the appropriate <%= @company.label.warehouse_label %> where you want to store the stock. If you want to store one product in multiple <%= @company.label.warehouse_label %>s, then click add new row button and create another combination.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<% if @purchase.voucher_setting.custom_sequence? %>
+			<label class="control-label-required">Voucher Number</label>
+			<%= f.text_field :purchase_number, :class=>"form-control focus-bg", :style=>"width:200px;" %>
+		<% else %>
+			<label>Voucher Number <%= @purchase.purchase_number %></label>
+		<% end %>
+		<%= f.hidden_field :bill_reference %>
+		<%= f.hidden_field :reverse_charge %>
+	</div>
+</div>
+<p></p>
+<table class='table table-striped m-b-none text-small'>
+	<thead>
+		<tr>
+			<th width='25%'>Product</th>
+			<th>Quantity purchased</th>
+			<th><label class='control-label-required'> <%= @company.label.warehouse_label %> details</label></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @purchase.purchase_line_items.each_with_index do |line_item, index| %>
+			<!-- purchase_line_items_attributes -->
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][quantity]", line_item.quantity %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][unit_rate]", line_item.unit_rate %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][amount]", line_item.amount %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][description]", line_item.description %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][type]", line_item.type %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][product_id]", line_item.product_id %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][discount_percent]", line_item.discount_percent %>
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][id]", line_item.id %>
+
+				<%= hidden_field_tag "purchase[purchase_line_items_attributes][#{index}][_destroy]", line_item.marked_for_destruction? ? "1" : "0" %>
+				<% line_item.purchase_taxes.each_with_index do |tax, tax_index| %>
+					<%= hidden_field_tag  "purchase[purchase_line_items_attributes][#{index}][purchase_taxes_attributes][#{tax_index}][id]", tax.id %>
+					<%= hidden_field_tag  "purchase[purchase_line_items_attributes][#{index}][purchase_taxes_attributes][#{tax_index}][account_id]", tax.account_id %>
+				<% end %>
+
+			<!-- End -->
+			<% if line_item.inventoriable? && !line_item.marked_for_destruction? %>
+				<tr>
+					<td> <%= line_item.product.name %>	</td>
+					<td><%= number_with_precision line_item.quantity, :precision=>2 %></td>
+					<td>
+						<section class="panel">
+							<div>
+								<table class="table table-striped m-b-none text-small">
+									<thead>
+										<tr>
+											<th>Warehouse</th>
+											<th width="25%">Quantity</th>
+											<th width="10%"></th>
+										</tr>
+									</thead>
+									<tbody>
+									  <% line_item.purchase_warehouse_details.each_with_index do |purchase_warehouse_detail, pwd_index| %>
+					 						<%= render "purchase_warehouse_details", :purchase_warehouse_detail=>purchase_warehouse_detail, :index=>index, :pwd_index=>pwd_index %>
+					 					<% end %>
+										<tr id="warehouse-detail-row-link-<%=index%>">
+											<td colspan='3'>
+												<%= link_to "+ Add new row",{:action => :add_warehouse_detail_row, :index => index, :pwd_index=>line_item.purchase_warehouse_details.size, :product_id=>line_item.product_id}, :class => "btn btn-white btn-sm", :remote => true %>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</section>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+<!-- Purchase attributes -->
+	<%= f.hidden_field :company_id %>
+	<%= f.hidden_field :created_by %>
+	<%= f.hidden_field :account_id %>
+	<%= f.hidden_field :bill_date %>
+	<%= f.hidden_field :record_date %>
+	<%= f.hidden_field :due_date %>
+	<%= f.hidden_field :customer_notes %>
+	<%= f.hidden_field :terms_and_conditions %>
+	<%= f.hidden_field :project_id %>
+	<%= f.hidden_field :branch_id %>
+	<%= f.hidden_field :status_id %>
+	<%= f.hidden_field :custom_field1 %>
+	<%= f.hidden_field :custom_field2 %>
+	<%= f.hidden_field :custom_field3 %>
+	<%= f.hidden_field :currency_id %>
+	<%= f.hidden_field :exchange_rate %>
+	<%= f.hidden_field :tax_inclusive %>
+	<%= f.hidden_field :purchase_order_id %>
+	<%= f.hidden_field :import_purchase %>
+	<%= f.hidden_field :boe_value %>
+	<%= f.hidden_field :boe_date %>
+	<%= f.hidden_field :boe_num %>
+	<% @purchase.other_charge_line_items.each_with_index do |line_item, index| %>
+		<%= hidden_field_tag "purchase[other_charge_line_items_attributes][#{index}][id]",line_item.id %>
+		<%= hidden_field_tag "purchase[other_charge_line_items_attributes][#{index}][account_id]", line_item.account_id %>
+		<%= hidden_field_tag "purchase[other_charge_line_items_attributes][#{index}][amount]", line_item.amount %>
+	<% end %>
+<!-- End of purchase attributes -->
+<script>
+	$("select[id $= warehouse_id]").select2();
+	$("select[id $= purchase_line_item_id]").select2();
+</script>

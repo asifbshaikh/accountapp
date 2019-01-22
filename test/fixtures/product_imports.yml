@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  import_file_id: 1
+  name: MyString
+  description: MyString
+  warehouse: MyString
+  quantity: 9.99
+  batch_no: 1
+  unit_price: 9.99
+  reorder_level: 9.99
+  unit_of_measure: MyString
+  sales_price: 9.99
+  income_account: MyString
+  purchase_price: 9.99
+  expense_account: MyString
+  status: 1
+
+two:
+  import_file_id: 1
+  name: MyString
+  description: MyString
+  warehouse: MyString
+  quantity: 9.99
+  batch_no: 1
+  unit_price: 9.99
+  reorder_level: 9.99
+  unit_of_measure: MyString
+  sales_price: 9.99
+  income_account: MyString
+  purchase_price: 9.99
+  expense_account: MyString
+  status: 1

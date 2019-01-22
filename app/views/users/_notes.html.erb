@@ -1,0 +1,55 @@
+<div class="col-sm-12"><br/>
+ <section class="panel">
+  <header class="panel-heading">
+  <strong>Add New Note</strong>
+  </header>
+  <div class="panel-body">
+   <%= form_for @user, :html => {:class => "form-horizontal"} do |f| %>
+   <div class="col-sm-2 text-right">
+     <p>
+        <%= label_tag "notes", "User Note:", :class=>"control-label" %>
+     </p>
+   </div>
+   <div class="col-sm-10">
+     <p>
+        <%= text_area_tag "user[usernotes_attributes][0][notes]", nil,:rows => 4,:class => 'bg-focus form-control', :maxlength=>"100" %>
+      </p>
+     <p align="center">
+      <button type="submit" class="btn btn-success">Create Note</button>
+     </p>
+     </div>
+  <% end %>
+  </div>
+ </section>
+</div>
+<div class="col-sm-12">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>User Notes</strong>
+  </header>
+  <div class="panel-body">
+   <% if @usernotes.blank? %>
+    <%= render :partial => "shared/no_record" %>
+   <% else %>
+    <div class="col-sm-9">
+     <% for note in @usernotes %>
+      <p><%= note.notes %></p>
+     <% end %>
+    </div>
+    <div class="col-sm-2">
+     <% for note in @usernotes %>
+      <p><i class="icon-calendar"> </i>Created on <%= note.created_at.to_date %></p>
+     <% end %>
+    </div>
+    <div class="col-sm-1">
+     <% for note in @usernotes %>
+      <p><a href= <%= "/users/delete_note?usernote_id=#{note.id}&&id=#{@user.id}" %> title="Delete" data-confirm="are you sure ?"> <i class="icon-trash"></i></a></p>
+     <% end %>
+    </div>
+   <% end %>
+  </div>
+ </section>
+</div>
+
+    
+    

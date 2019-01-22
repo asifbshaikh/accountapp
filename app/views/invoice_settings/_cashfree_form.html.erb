@@ -1,0 +1,38 @@
+<%= form_for('cashfreesetting',:url =>{:action => :cashfree_settings, :controller => "/invoice_settings"}, :html=>{:class=>'form-horizontal', :remote=>true}) do |f| %>
+  <div class='errorPlace'></div>
+  <div class='form-group'>
+    <div class='col-lg-1'></div>
+    <%= hidden_field_tag  "id" ,@company.id %>
+    <div class='col-lg-5'>
+      <%=  label_tag 'bankacc', "Bank Account:", :class=>'control-label' %>
+      <%= select_tag("account_id", options_from_collection_for_select(@company.accounts.where(:accountable_type=>"BankAccount") , :id, :name),:class=>'form-control bg-focus')%>
+    </div>
+    <div class='col-lg-5'>
+      <%= label_tag 'appid', "App Id:", :class=>'control-label' %>
+      <%= f.text_field :appid,:maxlength => 30, :class=>'form-control bg-focus' %>
+    </div>
+  </div>
+  <div class='form-group'>
+    <div class='col-lg-1'></div>
+    <div class='col-lg-5'>
+      <%= label_tag 'secretkey', "Secret Key:", :class=>'control-label' %>
+      <%= f.text_field :secretkey,:maxlength => 45, :class=>'form-control bg-focus' %>
+    </div>
+  <div class='col-lg-5'>
+      <%= label_tag 'expenseacc', "Type of Expense", :class=>'control-label' %>
+      <%= select_tag "expense_account", options_from_collection_for_select(TransactionType.fetch_to_accounts(@company.id, 'expenseacc'), :id, :name),:class=>'form-control bg-focus'%>
+
+    </div>
+     <div class='col-lg-5 col-lg-offset-1'>
+      <%=  label_tag 'expensetaxacc', "Tax", :class=>'control-label' %>
+      <%= select_tag "expensetaxacc", options_from_collection_for_select_with_data(Account.get_purchase_taxes(@company.id), :id, :purchase_tax_name,:account_id,{:"linked" => :linked_purchase }), :class => "form-control bg-focus"%>
+
+    </div>
+    </div>
+  <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-6">
+      <div class='save-btn'>
+      <%= f.submit "Save", :class => "btn btn-success btnsave", :"data-loading-text"=>"Saving..." %> &nbsp;
+    </div>
+  </div>
+<% end %>

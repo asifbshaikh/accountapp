@@ -1,0 +1,33 @@
+
+<div id = "old_data" >
+<!-- <h5>Timesheet Week:</h5>
+  <div class="btn-group" style = "align:right;">
+    <%= link_to "<",{:action => :new_weekly, :dated_on=> (@dates[0]-1.days)}, :class => "btn btn-green", :title=>"Prev week"  %>
+     
+     <a href="" class="btn btn-green"> <%= @dates[0].to_date.strftime("%d %b")%> - <%= @dates[6].to_date.strftime("%d %b %Y") %></a>
+    
+    <%= link_to ">",{:action => :new_weekly, :dated_on => (@dates[6]+1.days)}, :class => "btn btn-green", :title=>"Next week"  %>
+  </div> -->
+  <div class="row">
+  <div class="col-xs-12">
+  <section class="panel">
+      <div class="panel-body">
+       <p>
+         <div class="col-lg-4">
+         <%= link_to '<i class="icon-caret-left"></i>'.html_safe,{:action => :new_weekly, :dated_on=> (@dates[0]-1.days)}, :class=>"btn-default btn-sm pull-left",:title=>"Prev week"  %>
+         </div>
+         <div class="col-lg-4">
+         <strong>
+         <%= @dates[0].to_date.strftime("%d %b")%> - <%= @dates[6].to_date.strftime("%d %b %Y") %>
+         </strong>
+         </div>
+         <div class="col-lg-4">
+         <%= link_to '<i class="icon-caret-right"></i>'.html_safe,{:action => :new_weekly, :dated_on => (@dates[6]+1.days)},:class=>"btn-default btn-sm pull-right" ,:title=>"Next week"  %>
+         </div>
+        </p>     
+      </div>
+    </section>
+   </div>
+  </div>
+
+</div>

@@ -1,0 +1,9 @@
+<% if @invoice.cash_invoice? %>
+              <%= cash_customer_details %>
+            <% else %>
+              <% if @invoice.billing_address.blank? %>
+                <%= @invoice.account.customer.blank? ? vendor_details(@invoice.account.vendor) : customer_details(@invoice.account.customer) %>
+              <% else %>
+                <%= invoice_address_details %>
+              <% end %>
+            <% end %>

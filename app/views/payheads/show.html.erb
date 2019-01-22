@@ -1,0 +1,83 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+   <!-- Wrapper -->
+   <div class="wrapper">
+   <!-- Left column/section -->
+       <section  class="column width6 first "><br />
+        <div class="highlight">
+           <%= render :partial => "shared/flash_msg"%>
+        <table class="display stylized" id="act_details">
+            <thead>
+            	<tr><th colspan="2">Payhead Details</th></tr>
+            </thead>
+            <tbody>       
+               <tr>
+                  <td colspan ="2">
+                    <label> Name:</label>
+                    <%= @payhead.payhead_name %>
+                  </td>
+               </tr>
+               <tr>
+                   <td colspan="2">
+                     <label>Payhead Type:</label>
+                     <%= @payhead.payhead_type %>
+                   </td>
+               </tr>
+               <tr>
+                   <td colspan="2">
+                     <label>Under account:</label>
+                     <%= @payhead.account_name %>
+                   </td>
+               </tr>
+               <tr>
+                  <td colspan ="2">
+                    <label>Applicable:</label>
+                    <%= @payhead.get_visibility %>
+                 </td>
+               </tr>
+
+               <tr>
+                  <td colspan ="2">
+                    <label>Affect Net Salary:</label>
+                    <%= @payhead.affect_net_salary %>
+                  </td>
+               </tr>
+                
+                <tr>
+                  <td colspan="2">
+                    <label>Name appear in payslip:</label>
+                    <%= @payhead.name_appear_in_payslip %>
+                  </td>
+               </tr> 
+                 
+               <tr>
+                  <td colspan="2">
+                     <label>Use of gratuity:</label>
+                    <%= @payhead.use_of_gratuity %>
+                  </td>
+               </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+              	<td colspan="2">
+                 <%= link_to 'Edit', edit_payhead_path(@payhead),{:class=>"btn btn-green" } %> 
+                  <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "" class="btn" >Delete</a> 
+                  <a href="/payheads" class="btn btn-cancel ">Back</a>
+                </td>
+             </tr>
+            </tfoot>   
+         </table> 
+        <!-- End of Left column/section -->
+        </div><br />
+        </section>
+        <!-- Right column/section -->
+        <aside class="column width2"><br />
+          <%= new_button "New Payhead", new_payhead_path %>
+          <p><%= list_button_black "Recent Heads", payheads_path %></p>
+        </aside>
+       <!-- End of Right column/section -->
+    </div>
+</div>		

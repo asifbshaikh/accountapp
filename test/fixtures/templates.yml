@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  template_name: MyString
+  type: MyString
+  deleted: false
+
+two:
+  template_name: MyString
+  type: MyString
+  deleted: false

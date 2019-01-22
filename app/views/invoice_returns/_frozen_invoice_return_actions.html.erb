@@ -1,0 +1,2 @@
+<%= link_to raw('<i class="icon-print"> </i>'), invoice_return_path(@invoice_return, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), invoice_url(@invoice_return.invoice), :class => 'btn btn-default btn-lg' %>

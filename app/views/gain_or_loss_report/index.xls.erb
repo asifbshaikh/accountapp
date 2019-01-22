@@ -1,0 +1,50 @@
+<% account = @account.id %>
+<table>
+	<tr><td colspan=6 align='center'><%= @page_name %></td></tr>
+	<tr><td colspan=6 align='center'><%= (params[:start_date].blank?) ? @ledgers.first.transaction_date : params[:start_date] %> To <%= (params[:end_date].blank?) ? Time.zone.now.to_date : params[:end_date] %></td></tr>
+<thead>
+    <tr>
+    <th width ="6%"> Date </th>
+    <th width ="18%">Customer </th>
+    <th width ="12%">Cust Currency</th>
+    <th width ="9%"> Voucher Number </th>
+    <th width ="9%"> Type </th>
+    <th class="text-right" width ="23%"> Gain </th>
+    <th class="text-right" width ="23%"> Loss </th>
+  </tr>
+</thead>
+        <tbody>
+      <%
+      debit = 0
+      credit = 0
+      prev_date = nil
+      @ledgers.each do |ledger| %>
+      <tr>
+        <td width ="6%"><%= (ledger.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+        <% prev_date = ledger.transaction_date.strftime("%d-%m-%Y")
+        acc = Account.find(ledger.retrieve_corresponding_account) %> 
+        <td width ="18%"><%= ((ledger.debit > 0)? "To":"By") unless ledger.debit.blank? %> 
+        <%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : (acc.name)%>
+        </td>
+        <td width ="12%"><%= acc.get_currency %></td>
+        <td width ="9%">
+         <% if ledger.voucher_type != "Salary" %>
+         <%= link_to truncate(ledger.voucher_number, :length=> 14), ledger.voucher %>
+         <% else %>
+         <%= truncate(ledger.voucher_number, :length=> 14)%>
+         <% end %>
+         </td>
+        <td width ="9%"><%= truncate(ledger.voucher_type, :length =>15) %></td>
+        <td align="right" width ="23%"><%= format_currency(ledger.credit) %></td>
+        <td align="right" width ="23%"><%= format_currency ledger.debit %></td>
+        <% 
+        debit += ledger.credit
+        credit += (ledger.debit.blank? ? 0 : ledger.debit)
+         %>
+      </tr>
+      <% end %>
+      <tr>
+        <td width ="6%"></td><td width ="18%"></td><td width ="12%"></td><td width ="9%"></td><td width ="9%"><b>Total</b></td><td width ="23%" class = 'border_up' align="right"><b><%= format_currency debit%></b></td><td width ="23%" class = 'border_up' align="right"><b><%= format_currency credit%></b></td>
+      </tr>
+   </tbody>				
+   </table>

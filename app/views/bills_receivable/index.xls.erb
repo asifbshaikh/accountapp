@@ -1,0 +1,35 @@
+<table>
+  <tr><td colspan=6 align=center>Bills receivable for <%= customer_name(@account) %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align=center><%= display_branch(@branch_id) %></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= @start_date %> To <%= @end_date %></td></tr>
+  <thead>
+    <tr>
+      <th align='left'>Voucher</th>
+      <th align='left'>Party's Name</th>
+      <th align='left'>Date</th>
+      <th align='left'>Due On</th>
+      <th align="right">Pending Amount (<%= @company.currency_code %>)</th>
+      <th align='left'>Overdue by Days</th>
+    </tr>
+  <thead>
+  <tbody>
+    <% total = 0 %>
+    <% @invoices.each do |invoice| %>
+      <% outstanding_amt =invoice.outstanding %>
+      <% if outstanding_amt >0 %>
+        <tr>
+          <td><%= invoice.invoice_number %></td>
+          <td><%= invoice.account.name %></td>
+          <td><%= invoice.invoice_date %></td>
+          <td><%= invoice.due_date  %></td>
+          <td align="right"><%= outstanding_amt %></td>
+          <td><%= invoice_overdue_days_in_words(invoice.due_date)  %></td>
+        </tr>
+      <% end %>
+      <% total += outstanding_amt %>
+    <% end %>
+  </tbody>
+  <tr><td></td><td></td><td></td><td><b>Grand Total</b></td><td align="right"><b><%=format_currency  total %></b></td><td></td></tr>
+</table>

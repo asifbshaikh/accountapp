@@ -1,0 +1,36 @@
+ <tr>
+<td><a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                      <strong> From Account: </strong> <%= transfer_cash.from_account_name %></p>
+                      <p>
+                      <strong> To Account: </strong> <%= transfer_cash.to_account_name %>
+                      </p>
+                      <p>
+                      <strong> Amount: </strong> <%= format_currency transfer_cash.amount %>
+                      </p>
+                      <p>
+                         <% if !transfer_cash.description.blank? %>
+                          <strong> Description: </strong> 
+                          <%= breaking_word_wrap(transfer_cash.description)%>
+                          <% end %>
+                      </p>
+                        <p>
+                      <strong> Created by:</strong> <%= User.find(transfer_cash.created_by).full_name %>
+                        </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'><%= transfer_cash.voucher_number %></a></td>
+    <td><%= transfer_cash.transaction_date.strftime("%d-%m-%Y")%></td>
+    <td><%= truncate(Account.find(transfer_cash.transferred_from_id).name, :length =>20) %></td>
+    <td><%= truncate(Account.find(transfer_cash.transferred_to_id).name, :length=>20) %></td>
+    <td><%= format_currency transfer_cash.amount %></td>
+    <td>
+     <div class="btn-group" style="float: right;">
+          <button  onclick="location.href= '<%= edit_transfer_cash_path(transfer_cash)%>'"; class="btn btn-white btn-sm" >Edit</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/transfer_cashes/<%= transfer_cash.id%>" >Delete</a></li>
+          </ul>
+      </div>
+    </td>
+  </tr>

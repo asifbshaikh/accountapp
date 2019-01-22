@@ -1,0 +1,62 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+   <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+    <!-- Left column/section -->
+          <section class="column width6 first" ></br>
+          	<div class="highlight">
+            <%= render :partial => "shared/flash_msg"	%>
+            <!--   <div id='user_info_div'><span class='basic_info'>Master Objective</span></div> -->
+             <table class="display stylized" id="act_details">
+             	<thead>
+             		<tr>
+             			<th colspan="2">Objective Details</th>
+             		</tr>
+             	</thead>
+             	<tbody>  
+		            <tr>
+		              <td><label>Objective name:</label></td>
+		              <td><%= @master_objective.objective_name %></td>
+		            </tr>
+		            <tr>
+		              <td><label>Department:</label></td>
+		              <td><%= Department.find(@master_objective.department_id).name %></td>
+		            </tr>
+		            <tr>
+		              <td><label>Details:</label></td>
+		              <td><%= @master_objective.details %></td>
+		            </tr>
+                </tbody>
+                <tfoot>
+                   <tr>
+                   	 <td colspan="2">
+						            <%= link_to 'Edit', edit_master_objective_path(@master_objective), :class => "btn btn-green " %> &nbsp;
+					              <%= link_to 'Back', master_objectives_path, :class => "btn btn-gray " %>
+                     </td>
+                   </tr>  
+                </tfoot>
+             </table> 
+            </div><br /> 
+		 </section>
+            <!-- End of Left column/section -->
+          <!-- Right column/section -->
+		    <aside class="column width2"></br>
+		           <a href="/master_objectives" class="btn btn-special btn-green btn-green-index">&nbsp; View master objectives</a>
+							
+		         <div id="rightmenu">
+		                 <dl class="first">
+		                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+		                       <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>
+		                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+		                 </dl>
+		           </div><br />
+		  
+		    </aside>
+		  <!-- End of Right column/section -->
+				 
+    </div>
+ </div>

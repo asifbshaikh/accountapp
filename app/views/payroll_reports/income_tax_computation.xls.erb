@@ -1,0 +1,131 @@
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+            &nbsp;
+            	
+            <div class='highlight'>
+                <div id='report_header' align='center'>
+                    <span class='company_name'><%= @company.name  %></span>
+                    <br>
+                    <span class='report_title'>
+                        <u>
+                            Income Tax Computation
+                        </u>
+                    </span>
+                </div>
+                <hr>
+                <div class='title_name'>
+		                Income Tax Computation For : <%= @user.first_name  %> <%= @user.last_name %>
+		                
+		                <div  style='float:right'>Financial Year : 1-Apr2010 to 31-Mar-2010</div>
+            	</div>
+            	<div class='width5 left'>
+		                <table class='zebra-sriped' width=100% border=1>
+		                	<thead><tr><th colspan=4>Employee Details</th></tr></thead>
+		                    <tr> <td> Employee No. </td> <td>: <%= @user.id %></td> <td> PAN No. </td> <td>: <%= (@user_salary_detail.blank?)? "Not available" : @user_salary_detail.PAN %></td></tr>
+		                    <tr> <td> Gender</td> <td>: <%= (@user_information.blank?)? 'Not available' : @user_information.gender %></td> <td> Computed based on </td> <td>Proof value</td></tr>
+		                    <tr> <td> Date of joining </td> <td>: <%= (@user_salary_detail.blank?)? 'Not available' : @user_salary_detail.date_of_joining %></td> <td> Computed for the month </td> <td>April-2011</td></tr> 
+		                    <tr><td>Date of birth</td><td>: <%= (@user_information.blank?)? 'Not available' : @user_information.birth_date %></td><td> Assessment year </td> <td>2011-2012	</td></tr>
+		                </table>
+            </div>
+            <div class='width3 right'>
+	    		                <table class='zebra-sriped' width=100% border=1>
+	    		                	<thead><tr><th colspan=2>Income Tax Details</th></tr></thead>
+	    		                    <tr>
+	    		                        <td>
+	    		                            Total Income Tax.
+	    		                        </td>
+	    		                        <td>
+	    		                            31694
+	    		                        </td>
+	    		                    </tr>
+	    		                    <tr>
+	    		                        <td>
+	    		                            Less: Deducted till Feb-2011
+	    		                        </td>
+	    		                        <td>
+	    		                        	28661
+	    		                        </td>
+	    		                    </tr>
+	    		                    <tr>
+	    		                        <td>
+	    		                            Ballance Deductible
+	    		                        </td>
+	    		                        <td class='border_up'>
+	    		                            3033
+	    		                        </td>
+	    		                    </tr>
+	    		                    <tr>
+	    		                        <td>
+	    		                            Tax per Month from Mar-2011
+	    		                        </td>
+	    		                        <td class='border_up'>
+	    		                            3033
+	    		                        </td>
+	    		                    </tr>
+	    		                </table>
+            </div>
+                
+                <table class = "zebra-sriped" border = 1 align = center width=100%>
+                    <thead>
+                    <tr>
+                        <th class='tdwidth1'>
+                            SL.No.
+                        </th>
+                        <th class='width5'>
+                            <span class='char_spacing'>Particulars</span>
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                    </tr>
+                    </head>
+                    <tbody>
+                        <tr><td><b>1.</b></td><td><b>Gross Salary</b></td><td></td><td><b><span class="WebRupee">Rs</span>554232</b></td></tr>
+						<tr><td></td><td class='textindent1'>Salary as per previous contained in Sec 17(1)</td><td><span class="WebRupee">Rs</span>54232</td><td></td></tr>
+						<tr><td></td><td class='textindent1'>Value of Perquisites u/s 17(2)(as per Form 12BA)</td><td></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>Profits in lieu of salary u/s 17(3)(as per Form 12BA)</td><td></td><td></td></tr>
+						<tr><td><b>2.</b></td><td><b>Less: Allowance to the extent exempted U/s 10</b></td><td></td><td><b><span class="WebRupee">Rs</span>8000</b></td></tr>
+						<tr><td></td><td class='textindent1'>Conveyance Allowance</td><td><span class="WebRupee">Rs</span>8000</td><td></td></tr>
+						<tr><td><b>3.</b></td><td><b>Ballance(1-2)</b></td><td></td><td class='border_up'><b><span class="WebRupee">Rs</span>546232</b></td></tr>
+						<tr><td><b>4.</b></td><td><b>Deduction U/s 16</b></td><td></td><td><b><span class="WebRupee">Rs</span>2000</b></td></tr>
+						<tr><td></td><td class='textindent1'>Professional Tax(Tax on Employment)</td><td><span class="WebRupee">Rs</span>2000</td><td></td></tr>
+						<tr><td><b>5.</b></td><td><b>Total income frome salary(3-4)</b></td><td></td><td class='border_up'><b><span class="WebRupee">Rs</span>554232</b></td></tr>
+						<tr><td><b>6.</b></td><td><b>Add other income declared by employee</b></td><td></td><td><b><span class="WebRupee">Rs</span></b></td></tr>
+						<tr><td><b>7.</b></td><td><b>Gross Total Income(5+6)</b></td><td></td><td class='border_up'><b><span class="WebRupee">Rs</span>554232</b></td></tr>
+						<tr><td><b>8.</b></td><td><b>Deduction under chapter vi-A</b></td><td></td><td><b><span class="WebRupee">Rs</span>76533</b></td></tr>
+						<tr><td></td><td class='textindent1'>Investments(80C and 80CCF)</td><td><span class="WebRupee">Rs</span>76553</td><td></td></tr>
+						<tr><td></td><td class='textindent1'>Others(80D, 80DD, 80E etc)</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td><b>9.</b></td><td><b>Total Income chargable to Tax(7-8)</b></td><td></td><td class='border_up'><b><span class="WebRupee">Rs</span>467700</b></td></tr>
+						<tr><td><b>10.</b></td><td><b>Tax on total Income</b></td><td></td><td><b><span class="WebRupee">Rs</span>31694</b></td></tr>
+						<tr><td><b>11.</b></td><td><b>Less: Relief</b></td><td></td><td><b><span class="WebRupee">Rs</span>	</b></td></tr>
+						<tr><td><b>12.</b></td><td><b>Tax Payable after Relief(10-11)</b></td><td></td><td class='border_up'><b><span class="WebRupee">Rs</span>31694</b></td></tr>
+						<tr><td><b>13.</b></td><td><b>Less: Tax Deducted</b></td><td></td><td><b><span class="WebRupee">Rs</span>28661</b></td></tr>
+						<tr><td></td><td class='textindent1'>a) Advance Tax declared by Employee</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>b) Tax Dedicted by the previous Employer</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>c) Tax declared other then Salary</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>d) Tax paid by the Employer</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>e) Self Assessment Tax Declared by Employee</td><td><span class="WebRupee">Rs</span></td><td></td></tr>
+						<tr><td></td><td class='textindent1'>f) Tax declared till Date</td><td><span class="WebRupee">Rs</span>28661</td><td></td></tr>
+                        </tbody>
+                        <tfoot>
+                        <tr><td></td><td class='textalignright'><span class='char_spacing'><hr><b>Ballance Tax Payable/Deductible(12-13)</b><hr></span></td><td></td><td><hr><b><span class="WebRupee">Rs</span>3.033</b><hr></td></tr>
+                        </tfoot>
+                        </table>
+                        <br>
+                        
+                        <hr>
+                        <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+                    </div>
+                </section>&nbsp;&nbsp;
+                <!-- End of Left column/section -->
+                <!-- End of Left column/section -->
+            </div>
+            <!-- End of Wrapper -->

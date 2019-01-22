@@ -1,0 +1,61 @@
+<div class='plan-property'>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-lg-4">
+       <label class="control-label">Valid Till</label>
+      </div>
+      <div class="col-lg-8">
+        <select style='width: 80%;' name='validity' id='validity' class="bg-focus form-control">
+          <option value='12' >1 year</option>
+          <option value='24' >2 years </option>
+          <option value='36' >3 years </option>
+          <option value='60' >5 years </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-lg-4">
+       <label class="control-label">Additional users</label>
+      </div>
+      <div class="col-lg-8">
+      <input type="text" id="rb2" style='width: 50%;' class="bg-focus form-control" onkeydown = "return numbersOnly(event);"  name="additional_users" value = '<%= params[:additional_users] %>' maxlength='8' figure='' coupontype='' />
+       INR 45 per user per month.
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-lg-4">
+      <label class="control-label">Sub Total</label>
+      </div>
+      <div class="col-lg-8">
+       INR <span id ='gross-total'></span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-lg-4">
+      <label class="control-label">Do you have a coupon?</label>
+      </div>
+      <div class="col-lg-8">
+      <input type="text" value="" name="coupon_code" id="coupon_code" style='width: 50%;' class= "bg-focus form-control"><div id='code-search'></div>
+      </div>
+    </div>
+  </div>
+  <!--<% if @current_user.earnings > 0 %>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-lg-4">
+       <label class="control-label">Referral Balance / Earnings</label>
+      </div>
+      <div class="col-lg-8">
+       <input type="text" style='width: 50%;' id="earbal" class="bg-focus form-control" onkeydown = "return numbersOnly(event);"  name="earning" value = '<%= params[:earning] %>' maxlength='8' />
+      <small>Your total referral balance: <%= @company.currency_code %> <%= number_with_precision(@current_user.earnings, :precision => 2)%></small>
+      </div>
+    </div>
+  </div>
+  <% end %>-->
+</div>

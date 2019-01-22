@@ -1,0 +1,60 @@
+/***** No Script Stylesheet *****/
+#mainmenu li:hover ul{
+display:block;		
+}
+
+#layerslider-container {
+width:100%;
+height:450px;
+text-align:center;
+background:url(../images/slideshow/ls_bg1.jpg) no-repeat;
+display:block;
+}
+
+#layerslider-container:before {
+top:47%;
+position:relative;
+font-size:16px;
+font-family:'Montserrat', Helvetica, Arial;
+font-weight:700;
+text-shadow: 3px 3px 1px rgba(0, 0, 0, 0.2);
+color:#fff;
+content: "Hi, your javascript is off..!! for optimal results on this site please enable javascript in your browser";
+}
+
+#footer-wrapper {
+height:140px !important;
+}
+
+.footer-column {
+height:138px !important;
+}
+
+#twitter-box {
+display:none;
+}
+
+#twitter-noscript {
+width:100%;
+margin:5px auto 0;
+display:block;	
+}
+
+#twitter-noscript p{
+width:100%;
+font-family:'Lato',Arial,Tahoma,Verdana;
+font-weight:300;
+font-size:20px;
+color:#999;
+line-height:32px;
+padding:10px 0px 5px 20px;
+text-align:center;
+}
+
+#map_canvas {
+width:100%;	
+height:348px;
+background:url(../images/sample_images/noscript_map.jpg) center center;
+background-repeat:no-repeat;
+display:block;
+}

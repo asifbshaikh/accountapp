@@ -1,0 +1,106 @@
+   <script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for purchase in @purchases
+  	 	@data<<purchase.purchase_number
+  	 	@data<<purchase.bill_date
+  	 	@data<<purchase.due_date
+  	 	@data<<purchase.purchase_line_items.sum(:amount)
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+ <!-- Page title -->
+ <div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Expenses &rarr;<span>Purchases</span></h1>
+                <%= form_for @search, :method => "get", :action => "/purchases/paid" do |f| %>
+		<%=f.text_field :purchase_number_or_bill_date_or_due_date_or_purchase_line_items_amount_equals, :id => "autocomplete", :placeholder =>"search" %>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper"></br>
+    <!-- Left column/section -->
+    <section class="column width6 first">
+    	<div class="highlight">
+    	<%= render :partial => "shared/flash_msg"%>
+    
+      <div id="tab3">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/purchases">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/purchases/unpaid">Unpaid Purchases</a>
+                    </li>
+                    <li class="tab3">
+                        <a href="/purchases/paid">Paid Purchases</a>
+                    </li>
+                    <!--<li class="tab2">
+                        <a href="/purchases/deleted_purchase">Deleted</a>
+                    </li> -->
+                </ul>
+            </div> 
+           <div id = "task_container">
+        
+        <div id="tabs-all">
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <% if @purchases.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+           <% else %>
+          <table class="display stylized" id="example">
+            <thead>
+              <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+                <%= render :partial => "purchase_details", :collection => @purchases %>
+            </tbody>
+            <tfoot>
+               <%= render :partial => "footer" %>
+            </tfoot>
+          </table>
+	              <%= paginate @purchases %>
+           <div class="clear">
+&nbsp;	        </div> 
+          <% end %>
+          <div class="clear">&nbsp;</div>
+        </div>
+        
+      </div>
+    </div><br />
+    </section>
+    <!-- End of Left column/section -->
+  </div>
+  <!-- Right column/section -->
+ <aside class="column width2">
+			 <a href="/purchases/new" class="btn btn-special btn-green btn-green-new"><img src ="/images/add.png" alt = "Add new invoice"class ="icon" /> Create new purchase</a><br /> 
+<br/>
+           <div class="aside_highlight"> 
+            <table class="display filter_stylized">
+              <thead>
+                <tr><th>Search Purchase</th></tr>
+              </thead>
+              <tbody>
+                <%= render :partial => 'filter' %>  
+              </tbody>
+            </table>
+           </div><br/>
+		</aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

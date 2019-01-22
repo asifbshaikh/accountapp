@@ -1,0 +1,10 @@
+$("#dtls").remove();
+<% unless @plan.blank? %>
+	$("#data").after('<%= escape_javascript render :partial => "#{@plan.name.downcase}_plan_details" %>');
+	<% if @plan.name == 'PWYW' %>
+		$(".plan-property").replaceWith('<%= escape_javascript render :partial => "free_plan_property" %>');
+	<% else %>
+		$(".plan-property").replaceWith('<%= escape_javascript render :partial => "plan_property" %>');
+	<% end %>
+<% end %>
+cal();

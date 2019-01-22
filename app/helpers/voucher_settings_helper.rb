@@ -1,0 +1,2 @@
+module VoucherSettingsHelper
+end

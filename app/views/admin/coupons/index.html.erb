@@ -1,0 +1,60 @@
+<section id="content">
+  <section class="main padder">
+    
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>List of Coupons</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <div class="btn-group" >
+          <button class="btn btn-success btn-lg"  onclick="location.href= '<%= new_admin_coupon_path%>'";><i class="icon-plus"></i> Add  New Record</button>
+        </div>
+        <!-- <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>  -->
+        
+        <p></p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "shared/flash_msg" %>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small" id="coupons">
+                <thead>
+                  <tr>
+                    <th>Coupon Name</th>
+                    <th>Coupon code</th>
+                    <th>Type</th>
+                    <th>Date start</th>
+                    <th>Date end</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @coupons.each do |coupon|%>
+                  <tr> 
+                    <td><%= link_to coupon.name, admin_coupon_path(coupon) %></td>
+                    <td><%= coupon.coupon_code %></td>
+                    <td><%= coupon.coupon_type %></td>
+                    <td><%= coupon.date_start %></td>
+                    <td><%= coupon.date_end %></td>
+                    <td><%= link_to '<i class="icon-trash"></i>'.html_safe, admin_coupon_path(coupon), :confirm =>'Are you sure?', :method =>:delete,:class =>"btn btn-default"%></td>
+                  </tr>
+                  <%end %>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+            
+          </div>
+        </section>
+        <!-- Table ends -->
+        
+      </div>    
+    </div>
+  </section>
+</section>

@@ -1,0 +1,38 @@
+<div id='container'>
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"><br />
+    	<div class="highlight">
+    		<%= render :partial => "shared/flash_msg" %><br/>
+            <%= render :partial => "email_form" %>			
+		</div><br />
+    </section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+		<aside class="column width2"><br />
+			<%= list_button_white("Receive Money List", receipt_vouchers_path)%>
+			<!--<div id="rightmenu">
+				<dl class="first">
+					<dt><img width="16" height="16" alt="" SRC="/images/help.png">
+					</dt>
+					<dd>
+						<dd><a href="#">Help</a></dd>
+					</dd>
+					<dd class="last">
+						Press 'space bar'on your key board to autosearch accounts name.
+					</dd>
+				</dl>
+			</div>--><br />
+		</aside>
+		 <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of page -->
+</div>

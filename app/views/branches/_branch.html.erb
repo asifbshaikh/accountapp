@@ -1,0 +1,35 @@
+<tr>
+    <td>
+      <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<% if branch.address.blank? %>
+                        <p>Address not mentioned</p>
+                      <% else%>
+                        <p>
+                      <strong> Address line 1:</strong> <%= (branch.address.blank? && branch.address.address_line1.blank?) ? "Not mentioned" : branch.address.address_line1 %>
+                      </p>
+                      
+                      <p>
+                      <strong> Address line 2:</strong> <%= (branch.address.blank? && branch.address.address_line2.blank?) ? "Not mentioned" : branch.address.address_line2 %>
+                      </p>
+                      <p>
+                      <strong>City :</strong> <%= (branch.address.blank? && branch.address.city.blank?) ? "Not mentioned" : branch.address.city %>
+                      </p>
+                      <p>
+                      <strong>State :</strong> <%= (branch.address.blank? && branch.address.state.blank?) ? "Not mentioned" : branch.address.state  %>
+                      </p>
+                      <p>
+                      <strong>Pincode :</strong> <%= (branch.address.blank? && branch.address.postal_code.blank?) ? "Not mentioned" : branch.address.postal_code  %>
+                      </p>
+                      <p>
+                      <strong>Country :</strong> <%= (branch.address.blank? && branch.address.country.blank?) ? "Not mentioned" : branch.address.country %>
+                      </p>
+                      <% end %>
+                       "
+          title="Branch Address" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Task Detail'><%= branch.name %></a>
+    </td>
+    <td><%= branch.phone %></td>
+    <td><%= branch.created_by_user %></td>
+    <td>
+      <a href= <%= edit_branch_path(branch) %> class="btn btn-success">Edit</a>
+      </td>
+  </tr>

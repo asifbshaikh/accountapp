@@ -1,0 +1,24 @@
+<div class='oldData'>
+	<table class='table table-striped m-b-none text-small'>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Manager</th>
+				<th>City</th>
+				<th>Phone</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @company.warehouses.all.each do |warehouse| %>
+				<tr>
+					<td><%= warehouse.name %></td>
+					<td><%=  warehouse.manager unless warehouse.manager_id.blank? %></td>
+					<td><%= warehouse.city %></td>
+					<td><%= warehouse.phone %></td>
+					<td><%= link_to "<i class='icon-trash'></i>".html_safe, warehouse, :method=>:delete, :confirm=>'Are you sure?' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

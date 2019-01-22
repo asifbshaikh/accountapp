@@ -1,0 +1,147 @@
+<div class="col-lg-4">
+  <div class="row">
+    <div class="col-lg-4">
+      <label control-label-required"><%= @company.label.customer_label %></label>
+    </div>  
+    <% if @invoice.draft? || @invoice.original_invoice.draft? %>
+    <div class="col-lg-8">
+      <div class="input-group">
+        <%= f.select(:account_id, 
+          content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@to_accounts, :id, :name,@invoice.account_id, :"currency"=>:get_currency),
+          {:prompt => 'Type to Select'},{:style => "width:200px;"})
+        %>
+        <span id="invoice-currency" style="color:grey;"></span>
+      </div>
+      <span id='to_acc_bal'></span> <span id='to_acc_cur'></span>
+    </div>
+    <% else %>
+    <div class="col-lg-8">
+      <%= @invoice.account.name %><br/>
+      <% if @invoice.currency != @company.currency_code %>
+      <label>Invoice Currency:</label>  <%= @invoice.currency %>
+      <% end %>
+      <% if @invoice.total_received_amt >0 %>
+      <br/>
+      <label>Exchange rate in <%= @company.currency_code%>:</label> <%= @invoice.exchange_rate %>
+      <%= hidden_field_tag "exchange_rate", @invoice.exchange_rate %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+  <% if @invoice.total_received_amt == 0 %>
+  <p>
+    <div class="row invoice_exc_rate" style=<%= 'display:none;' if @invoice.currency==@company.currency_code %>  >
+      <label class="col-lg-4 control-label">
+        Exchange Rate in <%= @company.currency_code %>
+      </label>
+      <div class="col-lg-4">
+        <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :size => "5", :class=> "bg-focus form-control text-right" %>
+      </div>
+    </div>
+  </p>
+  <% end %>
+  <% if @invoice.gst_invoice? %>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">GSTIN</label>
+    </div>
+    <div class="col-lg-4">
+      <span id="gstin"></span>      
+    </div>
+  </div>
+  <% end %>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">Billing Address</label>
+      <div id="billing-address"></div>
+    </div>
+    <div class="col-lg-4">
+      <label class="control-label">Shipping Address</label>
+      <div id="shipping-address"></div>
+    </div>
+  </div>
+  <% if @voucher_titles.present? %>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">Invoice Title</label> 
+    </div>  
+    <div class="col-lg-8">
+      <%= collection_select(:invoice, :voucher_title_id, @voucher_titles, :id, :voucher_title, {:prompt => true},{:id=>"select2-option", :style=>"width:200px;"}) %>
+    </div>
+  </div>
+  <% end %>
+  <br/>
+  <% if @invoice.gst_invoice? %>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">Place of supply</label> 
+    </div>  
+    <div class="col-lg-8">
+      <%= collection_select(:invoice, :place_of_supply, @states, :state_code, :name, {:prompt => true},{:state_code=>"select2-option", :style=>"width:200px;"}) %>
+    </div>
+  </div><br/>
+  <div class="row">
+    <div class="col-lg-4">
+      <label class="control-label">Export invoice</label>
+    </div>  
+    <div class="col-lg-8">
+      <div class="btn-group" data-toggle="buttons">
+        <label id="enable-export" class="btn btn-sm btn-white<%= ' active' if @invoice.export_invoice? %> Yes">
+          <%= radio_button_tag "invoice[export_invoice]", 1, @invoice.export_invoice? %>
+          <i class="icon-ok icon-large text-active"></i>
+          Yes
+        </label>
+        <label id="disable-export" class="btn btn-sm btn-white<%= ' active' if !@invoice.export_invoice? %> No">
+          <%= radio_button_tag "invoice[export_invoice]", 0, !@invoice.export_invoice? %>
+          <i class="icon-ok icon-large text-active"></i>
+          No
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class= "export-form"> 
+      <% if @invoice.export_invoice? %>
+          <%= render "gst_export_invoice_fields" %> 
+          <% end %>
+      </div>
+  </div>
+  <% end %>
+</div>
+
+<div class="col-lg-4">
+  <div class="row">
+    <% if @company.invoice_setting.free_format? %>
+    <label class="col-lg-4 control-label-required">Invoice #</label>
+    <div class="col-lg-8">
+      <%= f.text_field :invoice_number, :size => 10, :class=>"form-control" %>
+    </div>
+    <% else %>
+    <label class="col-lg-4 control-label">Invoice #</label>
+    <div class="col-lg-8">
+      <label class="control-label" style="vertical-align: middle;"><%= @invoice.invoice_number%><%= f.hidden_field :invoice_number %></label>
+    </div>
+    <% end %>
+  </div>
+  <p></p>
+  <div class="row">
+    <label class="col-lg-4 control-label-required">Date </label>
+    <div class="col-lg-4">
+      <%= f.text_field :invoice_date, :class=>'bg-focus form-control' %>
+    </div>
+  </div>
+  <p></p>
+  <div class="row"> 
+    <label class="col-lg-4 control-label">Due On </label>
+    <div class="col-lg-4">
+      <%= f.text_field :due_date, :class => 'bg-focus form-control' %>
+    </div>
+  </div>
+  <p></p>
+  <div class="row"> 
+    <label class="col-lg-4 control-label">PO Ref #</label>
+    <div class="col-lg-4">
+      <%= f.text_field :po_reference, :class=> 'bg-focus form-control' %>
+    </div>
+  </div>
+</div>

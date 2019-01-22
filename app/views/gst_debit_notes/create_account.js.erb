@@ -1,0 +1,12 @@
+<% if @account.errors.any? %>
+  <%= render "shared/popup_validation" %>
+<% else %>
+  <% if params[:transaction_type] == 'journal' %>
+    var new_option = new Option("<%= @account.name%>", "<%= @account.id %>");
+    new_option.selected=true;
+    $("#debit_note_from_account_id").append($(new_option)).change();
+  <% end %>
+  $("div[id^='modal']").modal('hide');
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

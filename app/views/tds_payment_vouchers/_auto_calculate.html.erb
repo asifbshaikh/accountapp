@@ -1,0 +1,38 @@
+<div id ="jData">
+<script>
+  $(document).ready(function(){
+	
+	cal();
+	$('table#tds_payment tbody input:text').live('keyup', function(e){
+		cal();
+		e.preventDefault();
+	});
+	
+	
+	$('table#tds_payment span#total').text(parseFloat($('input[name=total]').val()).toFixed(2));
+	
+  });
+  
+	function cal(){
+	var auto_calculate = new Object();
+	var i = 0;
+	var total = 0;
+	$('table#tds_payment tbody tr').each(function(){
+		var amount = 0;
+		if (($('table#tds_payment tbody tr:eq(' + i + ')').is(":visible"))  && $('table#tds_payment tbody tr:eq(' + i + ') #amount').val()) {
+			var amount = parseFloat($('table#tds_payment tbody tr:eq(' + i + ') #amount').val());
+			total = total + amount;
+		}
+		else {
+			$('table#tds_payment tbody tr:eq(' + i + ') #total').val('');
+		}
+		i++;
+	});
+	total = total ;
+	$('input[name=total]').val(total);
+	$('table#tds_payment span#total').text(total.toFixed(2));
+	
+	}
+
+</script>
+</div>

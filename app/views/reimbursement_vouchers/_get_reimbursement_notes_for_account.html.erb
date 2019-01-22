@@ -1,0 +1,90 @@
+<% if @reimbursement_notes_for_account.blank? %>
+<%= render "shared/no_record" %>
+<% else %>
+  <div class='form-group'>
+    <div class="col-lg-9">
+      <table class="table table-striped b-t text-small" id="reimbursement_voucher_line_items">
+        <thead>
+          <tr>
+            <th width="20%"><label>Reimbursement Note</label></th>
+            <th width="20%"><label>Date</label></th>
+            <th width="30%"><label>Description</label></th>
+            <th class='text-right'><label>Amount</label></th>
+            <th class='text-right'><label>Receipt</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reimbursement_notes_for_account.each_with_index do | reimbursement_note, index | %>
+            <%= render "reimbursement_voucher_line_items", :reimbursement_voucher_line_item => reimbursement_note, :index => index %>
+          <% end %>
+          <tr>
+            <td colspan="3"></td>
+            <td class="text-right"><strong>Total</strong></td>
+            <td class="text-right"><strong><span id="total-amount">0.00</span></strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="line line-dashed m-t-large"></div>
+  <input type="hidden" name="source" id="source" value="receipt"/>
+    <div class='form-group'>
+      <div class='col-lg-2 text-right'>
+        <%= label_tag "payment_mode", "Receipt Mode", :class=>'control-label-required' %>
+      </div>
+      <div class='col-lg-10'>
+        <div class="btn-group" data-toggle="buttons" >
+          <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+          <%= radio_button_tag 'transaction_type','cash',(params[:transaction_type].blank? || params[:transaction_type] == 'cash')? true : false %>
+          <i class=""></i>Cash
+          </label>
+          <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+          <%= radio_button_tag "transaction_type",'cheque', (params[:transaction_type] == 'cheque')? true : false %>
+          <i class=""></i>Cheque
+          </label>
+          <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+          <%= radio_button_tag "transaction_type",'card', (params[:transaction_type] == 'card')? true : false %>
+          <i class=""></i>Credit/Debit Card
+          </label>
+          <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+          <%= radio_button_tag "transaction_type",'ibank', (params[:transaction_type] == 'ibank')? true : false %>
+          <i class=""></i>Internet Banking
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class='form-group'>
+      <div class='col-lg-2'></div>
+      <div class="rcpt"></div>
+      <%= render :partial => "#{params[:transaction_type]}" unless @reimbursement_voucher.blank? || params[:transaction_type].blank? %>
+    </div>
+    <script>
+    $(document).ready(function(){
+      $("#reimbursement_data").live('keyup', function(){
+        cal();
+        e.preventDefault();
+      });
+
+      // Rendering payment mode form
+      $(".rec_transaction_type").click(function(){
+        var ttype = $(this).attr("data-ttype")
+        $.ajax({
+          type: 'GET',
+          url: "/reimbursement_vouchers/payment_mode?mode="+ttype
+        });
+      });
+    });
+
+    function cal(){
+      var totalAmount=0;
+      $("table#reimbursement_voucher_line_items tbody tr").each(function(i, tr){
+        var amount=0;
+        amount=parseFloat($("#reimbursement_voucher_reimbursement_voucher_line_items_attributes_"+i+"_payment_amount").val());
+        if(amount){
+          totalAmount += amount;
+        }
+      });
+      $("#total-amount").text(totalAmount.toFixed(2));
+    };
+    </script>
+<% end %>

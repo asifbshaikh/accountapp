@@ -1,0 +1,38 @@
+<tr>
+  <td valign="top" style='padding-left: 0;'><%= reimbursement_note.reimbursement_note_number %></td>
+  <td valign="top"><%= reimbursement_note.transaction_date %></td>
+  <td valign="top"><%= reimbursement_note.description %></td>
+  <td class="text-right"><%=reimbursement_note.amount%></td>
+  <td><input class="bg-focus form-control text-right payment" id="payment<%= index%>" type="text" maxlength =18, onkeydown ="return numbersOnly(event);"></td>
+</tr>
+<tr id="row<%= index %>" valign="top" class = 'rn_line'>
+<%= hidden_field_tag "reimbursement_voucher[reimbursement_voucher_line_items_attributes][#{index}][id]", reimbursement_voucher_line_item.id%>
+<%= hidden_field_tag "reimbursement_voucher[reimbursement_voucher_line_items_attributes][#{index}][_destroy]"%>
+
+<td valign="top" style='padding-left: 0;'>
+<td valign="top" style='padding-left: 0;'><%= reimbursement_note.reimbursement_note_number %></td>
+<%= select_tag "reimbursement_note[reimbursement_note_line_items_attributes][#{index}][expense_account_id]", options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, reimbursement_note_line_item.expense_account_id), :"data-index"=> index ,:prompt =>"Type to select", :style=>"width:70%;" %>
+<script>
+$(document).ready(function(){
+$("#modalPlace").after("<div id='modal<%= index %>-add-new-account' class='modal fade'> <%= escape_javascript render('shared/account_details',{ :account_heads => @expense_account_heads, :transaction_type => 'expense', :index => index}) %></div>");
+$('#reimbursement_note_reimubrsement_note_line_items_attributes_<%= index%>_expense_account_id').select2();
+});
+</script>
+</td>
+
+<td>
+<%= text_area_tag "reimbursement_note[reimbursement_note_line_items_attributes][#{index}][description]", reimbursement_note_line_item.description, :size =>10, :id => "description",:"data-index"=> index, :"data-ttype"=>"dr" ,:class=>"bg-focus form-control text-right description{index}"%>
+</td>
+<td class="ta-right">
+<%= text_field_tag "reimbursement_note[reimbursement_note_line_items_attributes][#{index}][amount]", reimbursement_note_line_item.amount, :size =>4, :id => "amount",  :maxlength => 18, :onkeydown => "return numbersOnly(event);",:"data-index"=> index, :"data-ttype"=>"dr" ,:class=>"bg-focus form-control text-right amount{index}"%>
+</td>
+<td style='padding-right: 0'>
+ <%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index,  :reimbursement_note_line_item_id => reimbursement_note_line_item.id}, :class => "btn btn-danger btn-sm", :remote => true %>
+</td>
+<script type="text/javascript">
+  $("#reimbursment_note_reimbursement_note_line_items_attributes_<%= index %>_from_account_id").select2();
+</script>
+</tr>
+
+
+

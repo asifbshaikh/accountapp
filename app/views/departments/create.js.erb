@@ -1,0 +1,40 @@
+
+
+<% if params[:record]== 'department'%>
+  $('body').append("<div id='msg_box'><div class='alert alert-success'>Department created successfully</div></div>");
+  <% if @department.errors.any? %>
+    <%= render :partial => "shared/popup_validation"%>
+    $("#btnsave").remove();
+    $("#save-btn").after("<button id='btnsave' class='btn btn-sm btn-success' type='submit'  data-loading-text='Saving...'>Save</button>");
+  <% else %>
+    $("div[id^='modal']").modal('hide');
+  <% end %>
+
+<% elsif params[:record]=='designation' %>
+$('body').append("<div id='msg_box'><div class='alert alert-success'>Designation created successfully</div></div>");
+  <% if @designation.errors.any? %>
+    <%= render :partial => "shared/popup_validation"%>
+    $("#btnsave").remove();
+    $("#save-btn").after("<button id='btnsave' class='btn btn-sm btn-success' type='submit'  data-loading-text='Saving...'>Save</button>");
+  <% else %>
+    $("div[id^='modal']").modal('hide');
+  <% end %>
+<% elsif params[:record]=='holiday'%>
+$('body').append("<div id='msg_box'><div class='alert alert-success'>Department created successfully</div></div>");
+  <% if @holiday.errors.any? %>
+    <%= render :partial => "shared/popup_validation"%>
+    $("#btnsave").remove();
+    $("#save-btn").after("<button id='btnsave' class='btn btn-sm btn-success' type='submit'  data-loading-text='Saving...'>Save</button>");
+  <% else %>
+    $("div[id^='modal']").modal('hide');
+  <% end %>
+<%elsif params[:record]=='leave_type'%>
+$('body').append("<div id='msg_box'><div class='alert alert-success'>Department created successfully</div></div>");
+  <% if @leave_type.errors.any? %>
+    <%= render :partial => "shared/popup_validation"%>
+    $("#btnsave").remove();
+    $("#save-btn").after("<button id='btnsave' class='btn btn-sm btn-success' type='submit'  data-loading-text='Saving...'>Save</button>");
+  <% else %>
+    $("div[id^='modal']").modal('hide');
+  <% end %>
+<% end %>

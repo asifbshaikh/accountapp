@@ -1,0 +1,5 @@
+<span id="tag">
+   <%= @note.tag_list %>
+   <%= link_to_remote "Edit", :url => remote-tag_edit_note_path(@note),
+                              :method => :get, :update => "tags" %
+ </span>

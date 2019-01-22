@@ -1,0 +1,29 @@
+<tr>
+    <td><%= link_to receipt_voucher.voucher_number, receipt_voucher_path(receipt_voucher)%></td>
+    <td><%= receipt_voucher.received_date %></td>
+    <td><%= truncate(receipt_voucher.from_account_name, :length => 20) %></td>
+    <td><%= format_currency receipt_voucher.amount %></td>
+    <td><%= receipt_voucher.payment_detail.payment_mode %></td>
+    <%if !@company.plan.free_plan? %>
+    <td><%= !receipt_voucher.project_id.blank? ? receipt_voucher.project_name : "Not available" %></td>
+    <% end %>
+    <td> 
+    	<div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='/receipt_vouchers/<%= receipt_voucher.id %>'"; >View</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="<%= edit_receipt_voucher_path(receipt_voucher) %>">Edit</a></li>
+            <li><a href="<%= receipt_voucher_path(receipt_voucher, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+           <li><a href="#" data-toggle="modal" data-target='#modal_<%= receipt_voucher.id %>' data-id="<%= id = receipt_voucher.id %>">Email Voucher</a></li>
+             <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/receipt_vouchers/<%= receipt_voucher.id%>" >Delete</a></li>
+          </ul>
+      </div>     
+    </td>
+  </tr>
+
+<div id="modal_<%= receipt_voucher.id %>" class="modal fade">
+  <%= render "/receipt_vouchers/email_form", :receipt_voucher=> receipt_voucher, :id=> receipt_voucher.id %>
+  </div>

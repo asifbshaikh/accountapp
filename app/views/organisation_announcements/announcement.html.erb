@@ -1,0 +1,54 @@
+<!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>Organisation  &rarr; <span> Announcements</span></h1>
+      <!-- Quick search box -->
+<!--       <form action="" method="get">
+          <input class="" type="text" id="q" name="q" />
+      </form> -->
+    </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+       <!-- Left column/section -->
+   <section class="column width6 first"></br>
+      <div id="tabs-all" class= "highlight">
+        <div id="organisation_announcement">
+            <% if @organisation_announcements.blank? %>
+                <p class="no-holiday"><%= render :partial => "shared/no_record" %></p>
+            <% else %>
+              <p> <h3> Recent Announcements..</h3></p>
+             <table>
+		<%= render "announcement" , :collection =>  @organisation_announcements %>
+	     </table>                    
+	    <% end %>
+        </div>
+      </div><br />
+    </section> 
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2">
+          <!-- <p ><a href="/organisation_announcements" class="btn btn-special btn-green"><img SRC="images/add.png" class="icon" alt=""/> New Announcement</a></p>-->
+     <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/33" class="nyroModal">Help</a></dd>
+                       <dd class="last">This page displays the list of all the announcements.<br/>Click on read more link to view more details.</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->
+
+ 

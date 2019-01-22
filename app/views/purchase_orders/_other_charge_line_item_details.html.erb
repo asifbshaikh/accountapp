@@ -1,0 +1,4 @@
+<tr valign="top">
+    <td align="right" colspan='<%= @purchase_order.discount != 0 ? 6 : 5 %>'><%= other_charge_line_item_details.account.name %></td>
+    <td align="right"><%= number_with_precision other_charge_line_item_details.amount, :precision=>2 %></td>
+</tr> 

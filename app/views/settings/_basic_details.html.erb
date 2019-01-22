@@ -1,0 +1,122 @@
+<div class="col-sm-12"><br/>
+
+     <div class="company_logo">
+      <section class="panel">
+        <header class="panel-heading"><strong>Company logo</strong><span class="pull-right"><a href="#" id ="add_logo" class="btn btn-success btn-sm"> <%= @company.logo_file_name.blank? ? 'Upload Logo' : 'Change Logo' %> </a></span></header>
+        <div class="panel-body text-center">
+          <% if !@company.logo_file_name.blank? %>
+           <%= image_tag @company.logo.url ,:class=>'img-thumbnail', :alt=>'Company logo' %><br/>
+           <% else %>
+            <div class="alert alert-info"><h4> Add your company logo </h4></div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+    <div class="edt_logo">
+      <section class="panel">
+       <header class="panel-heading"><strong>Company logo</strong></header>
+         <div class="panel-body">
+          <%= render :partial=>"update_logo"%>
+        </div>
+       </section>
+     </div>
+  </div>
+
+
+<div class="line line-dashed m-t-large"></div>
+
+
+ <div class="col-sm-12">
+  <section class="panel">
+        <header class="panel-heading"><strong>ProfitBooks Account</strong><span class="pull-right"><a href="/billing/index" title="Upgrade Plan" class="btn btn-info btn-sm">Billing/Upgrade</a></span></header>
+        <div class="panel-body">
+          <p><strong>Plan Name: </strong> <%= @company.plan.display_name %></p>
+          <p><strong>Base Currency: </strong> <%= @company.currency_code%> </p>
+          <p><strong>Registered On: </strong> <%= @company.activation_date.strftime("%d %b %Y") %></p>
+          <p><strong>Next Renewal Date: </strong> <%= @company.subscription.renewal_date.to_date.strftime("%d %b %Y") %></p>
+        </div>
+    </section>
+  </div>
+ 
+
+
+<div class="line line-dashed m-t-large"></div>
+
+
+ <div class="col-sm-12">
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Basic Information</strong>
+   <span class="pull-right">
+   <a href="#" class="btn btn-white btn-sm dropdown-toggle" title="Edit Basic Details" data-toggle="modal" data-target='#modal2'><i class="icon-edit"></i> Edit</a></span>
+  </header>
+  <div class="panel-body">
+    <div class="col-sm-6">
+    <p>
+      <strong>Company name: </strong><%= best_in_place  @company, :name, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 100, :class=>"bg-focus form-control"} %>
+    </p>
+   <p><strong>Address to be shown on reports:</strong><%= simple_format(raw address_info) %></p>
+     <p>
+     <strong>Location : </strong><%= @company.country.name unless @company.country.blank? %>
+     </p>
+    <p><strong>Phone: </strong> <%= best_in_place  @company, :phone, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 15,:onkeydown => "return numbersOnly(event);"} %></p>
+      <p><strong>Company Email: </strong> <%= best_in_place  @company, :email, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 100,:class=>"bg-focus form-control"} %></p>
+   </div>
+
+   <div class="col-sm-6">
+    <p>Socials<hr></p>
+     <p><strong>Facebook: </strong> <%= best_in_place  @company, :facebook_url, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 70,:class=>"bg-focus form-control"} %> </p>
+     <p><strong>Twitter: </strong> <%= best_in_place  @company, :twitter_url, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 70,:class=>"bg-focus form-control"} %></p>
+     <p><strong>LinkedIn: </strong> <%= best_in_place  @company, :linked_in_url, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 70,:class=>"bg-focus form-control"} %></p>
+     <p><strong>Google+: </strong> <%= best_in_place  @company, :google_plus_url, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 70,:class=>"bg-focus form-control"} %></p>
+    </div>
+
+  </div>
+ </section>
+</div>
+ 
+
+
+<div class="line line-dashed m-t-large"></div>
+
+  <div class="col-sm-12">
+   <section class="panel">
+    <header class="panel-heading">
+     <strong>Tax Information</strong>
+    </header>
+    <div class="panel-body">
+      <div class="col-sm-6">
+      <% if @company.indian_company? %>
+        <p><strong>GST registration type</strong>
+          <%= best_in_place  @company, :gst_category_id, type: :select, :collection => @gst_categories.map{|e| [e.id,e.name]} , :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control"}  %><br/><small>Company GST registration type</small>
+        </p>
+        <p><strong>GSTIN:</strong><%= best_in_place  @company, :GSTIN, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 15,:minlength => 15,:class=>"bg-focus form-control", :pattern =>"[0-9]{2}[A-Z0-9]*"} %><br/><small>(GSTIN)</small></p>
+        <p><strong>GSTN Username:</strong><%= best_in_place  @company, :gstn_username, :nil=> '<span class ="variable_item">Click here to add GSTN username </span> ', :html_attrs => {:maxlength => 150, :minlength => 5,:class=>"bg-focus form-control" } %><br/><small>(GSTN username)</small></p>
+
+        <p><strong>PAN:</strong><%= best_in_place  @company, :pan, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %><br/><small>(Permanent Account Number)</small></p>
+        <p><strong>TAN:</strong><%= best_in_place  @company, :tan_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 10,:class=>"bg-focus form-control"} %></p>
+        <p><strong>CST registration no:</strong><%= best_in_place  @company, :CST_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %></p>
+      <% end %>
+        <p><strong>VAT registration no.:</strong><%= best_in_place  @company, :VAT_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %><br/><small>(Value Added Tax registration number)</small></p>
+      </div>
+      <% if @company.indian_company? %>
+      <div class="col-sm-6">
+        <p><strong>Excise registration no:</strong><%= best_in_place  @company, :excise_reg_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %></p>
+        <p><strong>Service tax registration no:</strong><%= best_in_place  @company, :service_tax_reg_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %></p>
+        <p><strong>Sales tax number:</strong><%= best_in_place  @company, :sales_tax_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %></p>
+        <p><strong>TIN:</strong><%= best_in_place  @company, :tin, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %><br/><small>(Tax Identification Number)</small></p>
+      </div>
+      <div class='col-sm-6'>
+        <p><strong>LBT:</strong><%= best_in_place  @company, :lbt_registration_number, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %><br/><small>(Local Body Tax Registration Number)</small></p>
+      </div>
+      <div class='col-sm-6'></div>
+      <% end %>
+    </div>
+   </section>
+  </div>
+</div>
+</div>
+
+ <div id="modal2" class="modal fade">
+    <%= render "form" %>
+  </div>

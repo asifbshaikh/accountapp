@@ -1,0 +1,160 @@
+<section id="content">
+  <section class="main padder">
+    <!-- Page title -->
+    <div class='row'>
+      <div class='col-lg-4'>
+        <!-- Page name -->
+        <h2><i class="icon-file-text-alt text"></i> View Purchase Order </h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <!-- Right buttons -->
+        <a href="/purchase_orders/new" class="btn btn-success btn-lg"> <i class='icon-plus'></i> New Purchase Order</a>
+        <% unless @purchase_order.in_frozen_year? %>
+        <% if !@purchase_order.purchased? %>
+        <div class="btn-group">
+          <%= link_to raw('<i class="icon-edit"> </i> Edit'), edit_purchase_order_path(@purchase_order), :class => 'btn btn-info btn-lg' %>
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li class="text-left"><%= link_to raw('<i class="icon-trash"> </i>Delete'), purchase_order_path(@purchase_order), :method => "delete", :confirm => "Are you sure?" %></li>
+            <li class="divider"></li>
+            <li><a href=<%= "/purchases/po_to_purchase?purchase_order_id=#{@purchase_order.id}" %> >Convert to purchase</a></li>
+          </ul>
+        </div>
+        <% end %>
+        <button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+        <% end %>
+        <%= link_to raw('<i class="icon-print"> </i>'), purchase_order_path(@purchase_order, :format => 'pdf'), :target=>"_blank", :class => 'btn btn-white btn-lg' %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), purchase_orders_path, :class => 'btn btn-default btn-lg' %>
+      </div>
+    </div>
+    <!-- Pger title end -->
+    <p></p>
+
+    <section class='panel'>
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg"%>
+        <!-- voucher details  -->
+        <div class='row'>
+          <div class='col-sm-5'>
+            <!-- left details -->
+            <%=@purchase_order.account.vendor.blank? ? customer_details(@purchase_order.account.customer) :  vendor_details(@purchase_order.account.vendor) %>
+            
+            <% if @purchase_order.gst_purchaseorder? %>
+            <% gstn = @purchase_order.account.customer.present? ? @purchase_order.account.customer.gstn_id : @purchase_order.account.vendor.gstn_id %>
+            <b>GSTIN:</b> <%= gstn %>
+            <% end %>  
+          </div>
+          <div class='col-sm-7'>
+            <!-- Right details -->
+            <section class="panel">
+              <div class="panel-body">
+                <p><strong>Purchase Order Number :</strong> <%=@purchase_order.purchase_order_number%>
+                  <% if @purchase_order.purchased? %>
+                  <span class="badge bg-<%= po_status_badge%>">
+                    <%= @purchase_order.get_status%></span>
+                    <% end %>
+                  </p>
+
+                  <p><strong>Record Date :</strong> <%=@purchase_order.record_date.strftime("%d-%m-%Y") %></p>
+
+                  <p><strong>Amount :</strong> <%= @purchase_order.currency%> <%= format_amount (@purchase_order.amount)%></p>
+                  <p><strong>Due Date:</strong> <%= @purchase_order.due_date%></p>
+
+                  <% if @purchase_order.exchange_rate != 0 %>
+                  <p><strong>Exchange Rate in <%= @company.currency_code %>:</strong> <%= format_amount(@purchase_order.exchange_rate)%></p>
+                  <% end %>
+                </div>
+                <footer class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <i class="icon-calendar"> </i> Created on <%=@purchase_order.created_at.strftime("%d-%m-%Y") %> by <%= @purchase_order.created_by_user %>
+                    </div>
+                    <div class="col-sm-6">
+                      <%= display_project(@purchase_order) %>
+                    </div>
+                  </div>
+                </footer>
+              </section>
+            </div>
+          </div>
+          <!-- voucher details end -->
+
+          <div class='row'>
+            <div class='col-lg-12'>
+              <!-- Line item details -->
+              <table  class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th colspan="2">Description</th>
+                    <th style='text-align:right;'>Qty</th>
+                    <th style='text-align:right;'>Unit Cost</th>
+                    <% unless @discount == 0 %>
+                    <th style='text-align:right;'>Discount%</th>
+                    <% end %>
+                    <th style='text-align:right;'>Amount (<%= format_amount(@purchase_order.currency)%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= render :partial => "line_item_details", :collection => @purchase_order.purchase_order_line_items %>
+                  <%= render :partial => "tax_line_item_details", :collection => @purchase_order.tax_line_items.group(:account_id) %>
+                  <tr>
+                    <td align="right" colspan="<%= @discount ==0 ? 5 : 6 %>">Sub total</td>
+                    <td align="right"> <%= number_with_precision @purchase_order.sub_total, :precision=>2 %></td>
+                  </tr>
+                  <tr>
+                    <td align="right" colspan="<%= @discount ==0 ? 5 : 6 %>">Discount</td>
+                    <td align="right"> <%= number_with_precision @purchase_order.discount, :precision=>2 %></td>
+                  </tr>
+                  <tr>
+                    <td align="right" colspan="<%= @discount ==0 ? 5 : 6 %>"> Tax</td>
+                    <td align="right"> <%= number_with_precision @purchase_order.tax, :precision=>2 %></td>
+                  </tr>
+                  <%= render :partial=> "other_charge_line_item_details" , :collection => @purchase_order.other_charge_line_items %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td align="right" colspan="<%= @discount ==0 ? 5 : 6 %>">Total</td>
+                    <td align="right"> <%= format_amount(@purchase_order.amount) %></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class='row'>
+            <%if @purchase_order.customer_notes.present?%>
+            <div class="col-lg-6">
+              <!-- Narration -->
+              <label for="productcat">Customer Notes</label>
+              <%= breaking_word_wrap(@purchase_order.customer_notes)%>
+            </div>
+            <% end %>
+            <% if @purchase_order.terms_and_conditions.present?%>
+            <div class="col-lg-6">
+              <!-- Tags -->
+              <label for="productvendor">Terms and Conditions</label>
+              <%= breaking_word_wrap(@purchase_order.terms_and_conditions) %>
+            </div>
+            <% end %>
+          </div>
+
+          <% if @purchase_order.file_name.present? %>
+          <div class='row'>
+            <div class = "col-lg-12">
+              <!-- Attached document -->
+              <strong>Attached Document :</strong>
+              <%= link_to @purchase_order.file_name, @purchase_order.uploaded_file.url(:original, false)%>
+              &nbsp;(<%= number_to_human_size(@purchase_order.file_size) %>)
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </section>
+    </section>
+  </section>
+  <div id="modal1" class="modal fade">
+    <%= render "email_form", :purchase_order => @purchase_order %>
+  </div>

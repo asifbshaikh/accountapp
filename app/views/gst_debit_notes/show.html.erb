@@ -1,0 +1,96 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Gst Debit Note Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <% Rails.logger.debug "gst debit note status #{@gst_debit_note.get_status.inspect}"%>
+      <% if @gst_debit_note.get_status == "Open" %>
+      <% Rails.logger.debug "gst debit note status #{@gst_debit_note.get_status.inspect}"%>
+        <%= link_to "Allocate", "/gst_debit_notes/allocate?id=#{@gst_debit_note.id}", :class => "btn btn-success btn-lg" %>
+      <% end %>
+        <%= link_to raw('<i class="icon-print"> </i>'), gst_debit_note_path(@gst_debit_note, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+        <button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), gst_debit_notes_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-5">
+          
+            <h4><strong><%= @gst_debit_note.customer.name %></strong></h4>
+            <p>Nasik</p>
+            <p><i class="icon-envelope-alt"></i> <%= @gst_debit_note.customer.email %></p>
+            <p><i class="icon-phone"> <%= @gst_debit_note.customer.primary_phone_number %></i></p>
+            <b>GSTIN:</b> <%= @gst_debit_note.customer.gstn_id %>
+          </div>
+          
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+               
+                <div class="col-sm-8">
+                  <p>
+                    <strong> Voucher Number: </strong><%= @gst_debit_note.gst_debit_note_number %>
+                  </p>
+                  <p><strong> Debit for: </strong> <%= @gst_debit_note.customer.name %> </p>                 
+                  <p><strong> Amount: </strong> <%= @gst_debit_note.currency %> <%= format_amount @gst_debit_note.amount %></p>
+                  <p><strong> Against Purchase Return: </strong> <%= link_to @gst_debit_note.purchase_return.purchase_return_number, purchase_return_path(@gst_debit_note.purchase_return) %>
+                </div>
+              </div>
+              
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Debited on <%= @gst_debit_note.gst_debit_note_date %></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          
+        </div>
+        
+      
+      </div>
+    </section>
+    <div class="form-group">
+      <div class="col-lg-12">
+        <table class="table table-striped b-t" id="report">
+          <thead>
+            <tr>
+              <th>Item</th>
+                  <th class="text-right">Quantity</th>
+                  <th class="text-right">Unit Cost</th>
+                  <th class="text-right">Discount(%)</th>
+                  <th class="text-right">Amount (<%= @gst_debit_note.currency %>)</th>
+            </tr>
+          </thead>
+         <tbody>
+                <%= render :partial => "line_item_details", :collection => @gst_debit_note.gst_debit_note_line_items %>
+                
+                <tr>
+                  <td align="right" colspan="4">Sub total</td>
+                  <td align="right"><%= gst_debit_note_sub_total %></td>
+                </tr>
+                
+                <tr>
+                  <td align="right" colspan="4">Tax</td>
+                  <td align="right"><%= gst_debit_note_tax_amount %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4"><b>Total</b></td>
+                  <td align="right"><b> <%= @gst_debit_note.currency %> <%= @gst_debit_note.total_amount%></b></td>
+                </tr>
+              </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :gst_debit_note => @gst_debit_note %>
+</div>

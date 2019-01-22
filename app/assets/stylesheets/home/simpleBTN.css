@@ -1,0 +1,313 @@
+/* Shadow */
+/*------------------------------------------------------------------------------------------------------------------------------------
+Fixes
+------------------------------------------------------------------------------------------------------------------------------------*/
+button.simpleBTN::-moz-focus-inner, input.simpleBTN::-moz-focus-inner{border:none; padding:0}/*Remove extra padding in firefox*/
+/*------------------------------------------------------------------------------------------------------------------------------------
+UNIVERSAL PROPERTIES
+------------------------------------------------------------------------------------------------------------------------------------*/
+.simpleBTN{
+	/*Prepare Button*/
+	cursor:pointer;
+	display:block; /*Compatability*/
+	display:inline-block;
+	margin:0px;
+	outline:none;
+	position:relative;
+	padding:6px 12px;
+	text-align:center;
+	text-decoration:none;
+	overflow:visible; /*IE 6,7  padding fix*/
+	white-space:nowrap;
+/*------------------------------------------------------------------------------------------------------------------------------------
+BUTTON STYLE (Normal)
+------------------------------------------------------------------------------------------------------------------------------------*/
+	/*Text*/
+	color:#FFF; /*Compatability*/
+	font-size:14px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-weight:bold;
+	text-shadow:#555 -1px -1px 0px; /*rgba color causes chrome to have jagged text*/
+	
+	/*Round Corners*/
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px; /*More than 4px will make chrome bug visible*/
+	border-radius: 4px;
+	
+	/*Border*/
+	border:1px solid;
+	border-color:#333; /*Compatability*/
+	border-color:rgba(0, 0, 0, .4);
+	
+	/*Shadow and Highlights*/	
+	-moz-box-shadow:
+		0px 1px 1px -1px rgba(0, 0, 0, .6), /*3D Depth Effect*/
+		0px 10px 8px -8px rgba(0, 0, 0, 1), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+	-webkit-box-shadow:	0px 10px 8px -8px rgba(0, 0, 0, 1); /*Safari 4 & Chrome 5 compatability issue ('inset')*/
+	-webkit-box-shadow:
+		0px 1px 1px -1px rgba(0, 0, 0, .6), /*3D Depth Effect*/
+		0px 10px 8px -8px rgba(0, 0, 0, 1), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+	box-shadow:
+		0px 1px 1px -1px rgba(0, 0, 0, .6), /*3D Depth Effect*/
+		0px 10px 8px -8px rgba(0, 0, 0, 1), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+	
+	/*IE Gradient*/
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#55ffffff', endColorstr='#00ffffff');
+}
+/*------------------------------------------------------------------------------------------------------------------------------------
+GRADIENTS / COLORS
+------------------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------- GREEN --------------------*/
+.simpleBTN.green{	
+	/*Button Color*/
+	color:#FFF;
+	background: -moz-linear-gradient(top, #8dd300, #368200) no-repeat;
+	background: -webkit-gradient(linear, center top, center bottom, from(#A9EC22), to(#56AD17)) no-repeat;
+	background-color:#3ba100;/*Compatability*/
+}
+.simpleBTN.green:hover{
+	/*Button Color*/
+	background:	-moz-linear-gradient(top, #8dd300, #409900) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#8dd300), to(#409900)) no-repeat;
+	background-color:#40af00;/*Compatability*/
+}
+.simpleBTN.green:active{
+	/*Button Color*/
+	background:#447e00;
+}
+/*-------------------- RED --------------------*/
+.simpleBTN.red{
+	background:	-moz-linear-gradient(top, #f05c00, #ab0000) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#f05c00), to(#ab0000)) no-repeat;	
+	background-color:#c10000;
+}
+.simpleBTN.red:hover{
+	background:	-moz-linear-gradient(top, #f05c00, #c50000) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#f05c00), to(#c50000)) no-repeat;
+	background-color:#d00000;
+}
+.simpleBTN.red:active{
+	background:#8d0000;
+}
+/*-------------------- ORANGE --------------------*/
+.simpleBTN.orange{
+	background:	-moz-linear-gradient(top, #efb400, #d45800) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#efb400), to(#d45800)) no-repeat;	
+	background-color:#e07800;
+}
+.simpleBTN.orange:hover{
+	background:	-moz-linear-gradient(top, #efb400, #e47b00) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#efb400), to(#e47b00)) no-repeat;
+	background-color:#e47b00;
+}
+.simpleBTN.orange:active{
+	background:#b56600;
+}
+/*-------------------- PURPLE --------------------*/
+.simpleBTN.purple{
+	background:	-moz-linear-gradient(top, #d000fa, #6d00ba) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#d000fa), to(#6d00ba)) no-repeat;	
+	background-color:#8000d0;
+}
+.simpleBTN.purple:hover{
+	background:	-moz-linear-gradient(top, #d000fa, #8a00cf) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#d000fa), to(#8a00cf)) no-repeat;
+	background-color:#8a00e0;
+}
+.simpleBTN.purple:active{
+	background:#6f00a2;
+}
+/*-------------------- PINK --------------------*/
+.simpleBTN.pink{
+	background:	-moz-linear-gradient(top, #ef36b9, #a7007e) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#ef36b9), to(#a7007e)) no-repeat;	
+	background-color:#c1009a;
+}
+.simpleBTN.pink:hover{
+	background:	-moz-linear-gradient(top, #ef36b9, #c70096) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#ef36b9), to(#c70096)) no-repeat;
+	background-color:#ce00a4;
+}
+.simpleBTN.pink:active{
+	background:#a20072;
+}
+/*-------------------- BLUE --------------------*/
+.simpleBTN.blue{
+	color:#FFF;
+	background:	-moz-linear-gradient(top, #00a9e1, #0049af) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#00a9e1), to(#0049af)) no-repeat;	
+	background-color:#006ebd;
+}
+.simpleBTN.blue:hover{
+	background:	-moz-linear-gradient(top, #00a9e1, #0067cb) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#00a9e1), to(#0067cb)) no-repeat;
+	background-color:#0077cc;
+}
+.simpleBTN.blue:active{
+	background:#005094;
+}
+/*-------------------- TEAL --------------------*/
+.simpleBTN.teal{
+	background:	-moz-linear-gradient(top, #00bfbf, #006c7d) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#00bfbf), to(#006d77)) no-repeat;	
+	background-color:#007e97;
+}
+.simpleBTN.teal:hover{
+	background:	-moz-linear-gradient(top, #00bfbf, #007d88) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#00bfbf), to(#007d88)) no-repeat;
+	background-color:#008ba6;
+}
+.simpleBTN.teal:active{
+	background:#005f72;
+}
+/*-------------------- BLACK --------------------*/
+.simpleBTN.black{
+	background:	-moz-linear-gradient(top, #555555, #222222) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#555555), to(#222222)) no-repeat;	
+	background-color:#333333;
+	/*Color Specific*/
+	text-shadow:none;
+}
+.simpleBTN.black:hover{
+	background:	-moz-linear-gradient(top, #555555, #333333) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#555555), to(#333333)) no-repeat;
+	background-color:#444444;
+}
+.simpleBTN.black:active{
+	background:#111111;
+}
+/*-------------------- GREY --------------------*/
+.simpleBTN.grey{
+	background:	-moz-linear-gradient(top, #999999, #444444) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#999999), to(#444444)) no-repeat;	
+	background-color:#666666;
+}
+.simpleBTN.grey:hover{
+	background:	-moz-linear-gradient(top, #999999, #666666) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#999999), to(#666666)) no-repeat;
+	background-color:#777777;
+}
+.simpleBTN.grey:active{
+	background:#555555;
+}
+/*-------------------- WHITE --------------------*/
+.simpleBTN.white{
+	background:	-moz-linear-gradient(top, #f1f1f1, #c1c1c1) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#f1f1f1), to(#c1c1c1)) no-repeat;	
+	background-color:#dddddd;
+	/*Color Specific*/
+	color:#333;
+	text-shadow:#EEE 1px 1px 0px;
+}
+.simpleBTN.white:hover{
+	background:	-moz-linear-gradient(top, #f1f1f1, #d1d1d1) no-repeat;
+	background:	-webkit-gradient(linear, center top, center bottom, from(#f1f1f1), to(#d1d1d1)) no-repeat;
+	background-color:#eeeeee;
+	/*Color Specific*/
+	color:#333;
+}
+.simpleBTN.white:active{
+	background:#999999;
+	/*Color Specific*/
+	color:#333;
+}
+/*------------------------------------------------------------------------------------------------------------------------------------
+BUTTON STYLE (Hover / Active)
+------------------------------------------------------------------------------------------------------------------------------------*/
+.simpleBTN:hover{
+	/*Position*/
+	top:-1px;
+	
+	/*Text*/
+	color:#FFF; /*Compatability*/
+	
+	/*Border*/
+	border-color:#111; /*Compatability*/
+	border-color:rgba(0, 0, 0, .5);
+
+	/*Shadow and Inner Glow*/	
+	-moz-box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 14px 6px -10px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+	-webkit-box-shadow:	0px 14px 6px -10px rgba(0, 0, 0, .6); /*Safari 4 & Chrome 5 compatability issue('inset')*/
+	-webkit-box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 14px 6px -10px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+	box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 14px 6px -10px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 1px 0px rgba(255, 255, 255, .75) inset, /*Highlight*/
+		0px -1px 1px rgba(255, 255, 255, .2) inset /*Highlight*/
+	;
+}
+.simpleBTN:active{
+	/*Text*/
+	color:#EEE; /*Compatability*/	
+	text-shadow:none;
+	
+	/*Shadow and Highlights*/	
+	-moz-box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 12px 6px -8px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 2px 4px rgba(0, 0, 0, .6) inset /*Inner Shadow*/
+	;
+	-webkit-box-shadow: 0px 12px 6px -8px rgba(0, 0, 0, .6); /*Safari 4 & Chrome 5 compatability issue ('inset')*/
+	-webkit-box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 12px 6px -8px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 2px 4px rgba(0, 0, 0, .6) inset /*Inner Shadow*/
+	;
+	box-shadow:
+		0px 1px 1px 0px rgba(0, 0, 0, .8), /*3D Depth Effect*/
+		0px 12px 6px -8px rgba(0, 0, 0, .6), /*Shadow*/
+		0px 2px 4px rgba(0, 0, 0, .6) inset /*Inner Shadow*/
+	;
+	
+	/*IE Gradient*/
+	filter:none;
+}
+/*------------------------------------------------------------------------------------------------------------------------------------
+Round Corner Adjust / Chrome 5 ['inset' + round corner] fix
+------------------------------------------------------------------------------------------------------------------------------------*/
+.simpleBTN.round{
+	/*OVERWRITE*/
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+	
+	-webkit-box-shadow:	0px 12px 6px -8px rgba(0, 0, 0, .6);
+}
+.simpleBTN.round:hover{
+	-webkit-box-shadow:	0px 14px 6px -10px rgba(0, 0, 0, .6);
+}
+.simpleBTN.round:active{
+	-webkit-box-shadow: 0px 12px 6px -8px rgba(0, 0, 0, .6);
+}
+/*------------------------------------------------------------------------------------------------------------------------------------
+Size Adjust
+------------------------------------------------------------------------------------------------------------------------------------*/
+.simpleBTN.tiny{font-size:11px; padding:6px 8px;}
+.simpleBTN.small{font-size:12px; padding:6px 10px;}
+.simpleBTN.large{font-size:16px; padding:8px 14px;}
+.simpleBTN.xlarge{font-size:18px; padding:10px 16px;}
+/*------------------------------------------------------------------------------------------------------------------------------------
+Span Text
+------------------------------------------------------------------------------------------------------------------------------------*/
+.simpleBTN span{display:block; font-weight:normal; font-size:11px; text-shadow:#666 -1px -1px 0px;}
+.simpleBTN.white span{text-shadow:#CCC 1px 1px 0px;}
+.simpleBTN:active span{text-shadow:none;}

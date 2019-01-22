@@ -1,0 +1,41 @@
+<table class="table table-striped b-t text-small">
+<tr><td colspan=6 align=center>Inventory Valuation for <%= (params[:warehouse_id].blank?)? @company.warehouses.first.name  : Warehouse.find(params[:warehouse_id]).name %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center">Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan="6" align="center">As on:<%= @date %></td></tr>
+                <thead>
+                  <tr>
+                    <th>Sr. No.</th>
+                    <th>Product</th>
+                    <th class="text-center" width="35%">Description</th>
+
+                    <th class="text-center">Available QTY</th>
+                     <th class="text-center">Unit of Measure</th>
+                    <th class="text-center">Valuation</th>
+                    <!--<th align="center">Value(Based on Avg. Cost)</th>-->
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_valuation=0%>
+                  <% @products.each_with_index do |product, index|%>
+                    <%
+                    inventory_value = product.inventory_valuation(@date)
+                    total_valuation+=inventory_value
+                    %>
+                    <tr>
+                      <td align="center"><%= index+1 %></td>
+                      <td><%= product.name %></td>
+                      <td align="left" width="35%"><%= breaking_word_wrap("#{product.description}", 60) %></td>
+                      <td align="center"><%= product.opening_stock_on_date(@date, @branch_id) %> </td>
+                       <td align="center"> <%= product.unit_of_measure%></td>
+                      <td align="center"><%= format_amount inventory_value %></td>
+                      <!-- <td></td> -->
+                    </tr>
+                  <% end %>
+                  <tr>
+                    <td colspan="5" class="text-right"><strong>Total valuation</strong></td>
+                    <td class="text-right"><strong><%=format_amount total_valuation%></strong></td>
+                  </tr>
+                </tbody>
+              </table>

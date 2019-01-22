@@ -1,0 +1,3 @@
+$('#billing-address').text("<%= escape_javascript @billing_address.address_line1 if @billing_address.present?%>");
+$('#shipping-address').text("<%= escape_javascript @shipping_address.address_line1 if @shipping_address.present?%>");
+$('#gstin').text("<%= escape_javascript @gstin%>");

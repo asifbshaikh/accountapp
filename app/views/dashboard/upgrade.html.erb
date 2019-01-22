@@ -1,0 +1,125 @@
+<script>
+ $(document).ready(function(){
+    $("#rb1, #rb2").live('click', function(e){
+     var plan = $("input:radio[name=plan_name]:checked").val();
+     var add_on = $("input:radio[name=rb]:checked").val();
+     var amt1 = 0;
+     var amt2 = 0;
+        if(plan=="Accounting Plus")
+         {var  amt1 = 4140;}
+        else if(plan== "Accounting Pro")
+         { var amt1= 5940;}
+
+       if(add_on == "5u")
+          {amt2 = 1200;}
+       else if (add_on == "10u")
+           {amt2 = 2400;}
+       else if (add_on == "25u")
+           {amt2 = 6000;}
+       else if (add_on == "50u")
+           {amt2 = 12000;}
+       else if (add_on == "100u")
+           {amt2 = 24000;}
+
+    var total = 0;
+       total = total+ amt1 + amt2;
+     $('span#order-total').text(total);
+     // alert("HI your plan name is"  +plan+  "and amt1 is" +amt1+ "amt2 is" +amt2+ "and total is" +total);
+  });
+
+});
+</script>
+<!-- Page title -->
+<div id="pagetitle">
+  <div class="wrapper">
+    <h1>Dashboard &rarr;<span>Upgrade plan</span></h1>
+  </div>
+</div>
+  <!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+   <section class="column width6 first"><br/>
+   <div class= "highlight">					
+   <%= render :partial => "shared/flash_msg"%>
+    <p> 
+      <h2>Update your plan </h2>
+      Please select the plan you wish to subscribe. You can add additional user pack.<br>
+      Contact support in case you need assistance.
+    </p>	
+    <fieldset>
+    <legend>Subscription Plan</legend>
+    <div class="clearfix">
+     <div class="column width6 first">									
+     <p>
+      <% if @company.plan.name == "Basic" %>
+        <div class = "box box-info">
+         Your current plan is <%= @company.plan.display_name %>. You can upgrade your plan by selecting below plan. 
+       </div>
+       <% else %>
+      <input type="radio" id="rb1" class="plan_amt" value="Accounting Plus" name="plan_name"/>
+      <label class="choice" for="rb1">
+       <b>Accounting Plus - &#8377; 4140 anually</b> 
+      </label><br/>
+      You will get : User access control, Document management, Inventory management and 5 FREE users.<br><br>
+      <% end %>
+      <input type="radio" id="rb1" class="plan_amt" value="Accounting Pro" name="plan_name"/>
+      <label class="choice" for="rb1">
+        <b>Accounting Pro - &#8377; 5940 anually</b> 
+      </label><br/>
+      You will get : All Accounting Plus features, Payroll management and 10 FREE users.
+     </p>
+     </div>
+    </div>
+    </fieldset>
+    <fieldset>
+    <legend>Additional User Pack</legend>
+    <div class="clearfix">
+     <div class="column width6 first">									
+     <p>
+      <input type="radio" id="rb2" class="" value="5u" name="rb"/>
+      <label class="choice" for="rb2"> 5 Users - &#8377; 1200 anually </label><br>	
+      <input type="radio" id="rb2" class="" value="10u" name="rb"/>
+      <label class="choice" for="rb2"> 10 Users - &#8377; 2400 anually </label><br>
+      <input type="radio" id="rb2" class="" value="25u" name="rb"/>
+      <label class="choice" for="rb2"> 25 Users - &#8377; 6000 anually </label><br>
+      <input type="radio" id="rb2" class="" value="50u" name="rb"/>
+      <label class="choice" for="rb2"> 50 Users - &#8377; 12000 anually </label><br>
+      <input type="radio" id="rb2" class="" value="100u" name="rb"/>
+      <label class="choice" for="rb2"> 100 Users - &#8377; 24000 anually </label><br><br>
+      * For more users, please contact us for bulk pricing.
+     </p>
+     </div>
+    </div>
+    </fieldset>
+    <div class="clearfix">
+     <div class="column width6 first">									
+     <h3>Order Total :<span>&#8377;</span><span id ='order-total'>0.00</span></h3>		
+     <p>	
+       <a href="#" class="btn btn-green">Proceed to payment</a>&nbsp;<a href="#" class="btn btn-gray">Do this later</a>
+     </p>
+     </div>
+    </div>
+   
+  </div><br/>
+  </section>
+  <!-- End of Left column/section -->
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <div id="rightmenu">
+      <dl class="first">
+       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+       <dd><a href="#">Help</a></dd>
+       <dd class="last">This page displays the list of all the plans.<br/>You can send request to upgratde your plan.</dd>
+      </dl>
+    </div><br />
+  </aside>
+      <!-- End of Right column/section -->
+ </div>
+		<!-- End of Wrapper -->
+</div>
+	<!-- End of Page content -->
+	

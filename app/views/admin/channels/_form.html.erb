@@ -1,0 +1,15 @@
+<%= form_for @channel, :url => ([:admin, @channel]), :html=>{:class=>'form-horizontal'} do |f| %>
+  <%= render 'shared/form_error' , :object => @channel %>
+  <div class="col-lg-6 text-right">
+    <p><%= f.label :channel_name, 'Channel name' , :class => "control-label-required"%></p>
+    </div>
+    <div class="col-lg-6">  
+    <p><%= f.text_field :channel_name, :autofocus =>"autofocus" , :class => "form-control" %></p>
+    </div>
+    <div class="col-lg-8 col-lg-offset-4">                      
+      <button type="submit" class="btn btn-success">Save</button>
+      
+    </div>    
+      
+<% end %>
+

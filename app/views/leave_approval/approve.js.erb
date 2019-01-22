@@ -1,0 +1,4 @@
+$("tr#leave-tr<%= @approval_request.id %>").remove();
+$("#leave-notif").after("<div class='alert alert-success leave-card-notif'>Request accepted.</div>");
+
+fadeOutMessage();

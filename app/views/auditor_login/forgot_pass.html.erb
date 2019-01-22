@@ -1,0 +1,29 @@
+  <section id="content">
+    <div class="main padder">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 m-t-large">
+        <br>
+        <p align="center"><%= image_tag 'logo.png', :alt => 'Login to Profitbooks', :disposition => 'inline' %></p>
+          <section class="panel">
+            <header class="panel-heading text-center">
+              Forgot Password
+            </header>
+           <form method="post" action="/auditor_login/check_password" accept-charset="UTF-8"  class="form-horizontal panel-body"> 
+             <%= render :partial=>"shared/flash_msg"%>
+               <div class="block" >
+                <label class="control-label-required"> Username </label>
+                 <%= text_field_tag 'username',params[:username], :class =>'bg-focus form-control' %>
+              </div>
+              <div class="block">
+              <%= show_simple_captcha :label => "Human Authentication" %>
+              </div>
+              <a href="/login/index#auditor" class="pull-right m-t-mini"><small>Back to login</small></a>
+              <span class="loading" style="display: none;">Please wait..</span>
+               <input type="submit" name="submit" class="btn btn-success" id="buttonsend" value="Submit" />
+              
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>

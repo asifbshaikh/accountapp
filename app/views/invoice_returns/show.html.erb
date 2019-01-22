@@ -1,0 +1,95 @@
+<section id="content">
+  <section class="main padder">
+    <div class='row'>
+      <div class='col-lg-4'>
+        <h2><i class="icon-file-text-alt text"></i> View Invoice Return</h2>
+      </div>
+      <div class="col-lg-8 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@invoice_return.in_frozen_year?]}_invoice_return_actions" %>
+      </div>
+    </div>
+    <p></p>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg"%>
+        <div class='row'>
+          <div class='col-sm-5'>
+            <%= @invoice_return.account.customer.blank? ? vendor_details(@invoice_return.account.vendor) : customer_details(@invoice_return.account.customer) %>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+              <div class="panel-body">
+                <div class="col-sm-6">
+                  <p><strong>Invoice Return Number#:</strong> <%=@invoice_return.invoice_return_number%>
+                  </p>
+                  <p><strong>Against Invoice#:</strong> <%= link_to @invoice_return.invoice.invoice_number, invoice_path(@invoice_return.invoice) %>
+                  </p>
+                  <p><strong>Record Date :</strong> <%=@invoice_return.record_date %></p>
+                  <p><strong>Amount :</strong> <%= @invoice_return.currency %> <%= @invoice_return.total_amount %></p>
+                  <% if @invoice_return.foreign_currency? %>
+                    <p><strong>Exchange Rate :</strong> <%= @invoice_return.exchange_rate %></p>
+                  <% end %>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <i class="icon-calendar"> </i>Created on <%=@invoice_return.created_at.strftime("%d-%m-%Y") %> by <%= @invoice_return.user.full_name %>
+                  </div>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-lg-12'>
+            <table  class="table table-striped b-t text-small" id="report">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="text-right">Quantity</th>
+                  <th class="text-right">Unit Cost</th>
+                  <th class="text-right">Discount(%)</th>
+                  <th class="text-right">Amount (<%= @invoice_return.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @invoice_return.invoice_return_line_items %>
+                <%= render :partial => "tax_line_item_details", :collection => @invoice_return.tax_line_items.group(:account_id) %>
+                <tr>
+                  <td align="right" colspan="4">Sub total</td>
+                  <td align="right"><%= invoice_return_sub_total %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Discount</td>
+                  <td align="right"><%= invoice_return_discount %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Tax</td>
+                  <td align="right"><%= invoice_return_tax_amount %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4"><b>Total</b></td>
+                  <td align="right"><b><%= number_with_precision @invoice_return.total_amount, :precision=>2 %></b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <% unless @invoice_return.description.blank? %>
+          <div class="row">
+            <div class="col-lg-6">
+              <strong>Notes:</strong>
+              <p><%= @invoice_return.description %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>

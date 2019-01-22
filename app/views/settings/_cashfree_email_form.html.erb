@@ -1,0 +1,133 @@
+<div class="modal-dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+    <h4 class="modal-title" id="myModalLabel">Request CashFree Account</h4>
+  </div>
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class='errorSection'></div>
+      <div class='errorfile'></div>
+      <div class="field">
+        The scanned copy of following documents are to be uploaded to verify your account at CashFree. You will get a confirmation mail after activating your account.( File upload size is limited to 1 MB per file.)
+      </div>
+      <br />
+      <section>
+        <%= form_for('cashfree_document', :remote=>true ,:url =>{:action => :cashfree_file, :controller => "/settings"}, :html=>{:multipart => true, :class=>'form-horizontal'}) do |f| %>
+
+        <table class="table table-striped b-t">
+          <tbody>
+           <tr>
+            <td colspan="1"><strong><%= f.label :name, "Name:", :class=>"control-label-required" %>   </strong></td>
+            <td> <%= f.text_field :name , :maxlength => 50, :size => 30, :class=>"bg-focus form-control"%></td>
+          </tr>
+          <tr>
+            <td><strong> <%= f.label :pan, "Customer Pan:",:class=>"control-label-required" %> </strong> </td>
+            <%= f.hidden_field :pan, :value => @company.pan  %>
+            <td> <%= @company.pan %> </td>
+          </tr>
+          <tr>
+            <td colspan="1"><strong><%= f.label :uploaded_file_one, "Pan Card:",:class=>"control-label-required" %>   </strong></td>
+            <td> <%= f.file_field :uploaded_file_one,:autofocus =>"autofocus",:class=>" btnsave3 btn btn-sm btn-success",:align => 'right' , :size => "15" %></td>
+          </tr>
+          <tr>
+            <td colspan="1"><strong><%= f.label :uploaded_file_two, "Letter of Incorporation:",:class=>"control-label-required" %>  </strong></td>
+            <td> <%= f.file_field :uploaded_file_two,:autofocus =>"autofocus",:class=>" btnsave3 btn btn-sm btn-success", :size => "15" %> </td>
+          </tr>
+
+          <tr>
+            <td colspan="1"><strong> <%= f.label :uploaded_file_three, "Cancelled Cheque:",:class=>"control-label-required" %></strong></td>
+            <td> <%= f.file_field :uploaded_file_three,:autofocus =>"autofocus",:class=>" btnsave3 btn btn-sm btn-success", :size => "15" %></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="field">
+       <label><input type="checkbox"  value="">I accept the <%= link_to 'Terms&Conditions',"https://gocashfree.com/terms.html", :target => "_blank"%>.</label>
+     </div>
+     <div class="field">
+      <small> *The CashFree account will be created based on your company and user details provided while registering for account in ProfitBooks and all point of contacts will be the same. Please ensure that they all are upto date.<br>*Please ensure that Name,IFSC and  Account number is clearly visible on chequebook. </small>
+    </div>
+    <div class="text-center">
+      <div class="form-group">
+        <div class='save-btn'></div>
+        <%= submit_tag "Request", :class => "btn btn-success btnsave",:id=>"request", :"data-loading-text" => "Requesting..." %> &nbsp;
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    <% end %>
+  </section>
+</div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var flag=[0,0,0];
+    document.getElementById("request").disabled = true;
+    $('input[type=checkbox]').click(function(){
+     if ($('input[type=checkbox]').is(':checked')) {
+      if (flag[0]+flag[1]+flag[2] == 3) {
+
+       document.getElementById("request").disabled = false;
+     };
+   }
+   else{
+
+     document.getElementById("request").disabled = true;
+   };
+ });
+    var flag=[0,0,0];
+    $('#cashfree_document_uploaded_file_one').bind('change', function() {
+
+  //this.files[0].size gets the size of your file.
+
+  if (this.files[0].size <= 1024000) {
+    flag[0]=1;
+
+    document.getElementById("errorfileone").remove();
+  }
+  else {
+    flag[0]=0;
+    document.getElementById("request").disabled = true;
+    $(".errorfile").after("<div class='alert alert-danger invoice-setting-notif' id='errorfileone'>The file size of Pan Card cannot exceed 1 MB.</div>")
+
+  };
+});
+
+
+    $('#cashfree_document_uploaded_file_two').bind('change', function() {
+
+  //this.files[0].size gets the size of your file.
+
+  if (this.files[0].size <= 1024000) {
+    flag[1]=1;
+    document.getElementById("errorfiletwo").remove();
+
+  }
+  else {
+    flag[1]=0;
+    document.getElementById("request").disabled = true;
+    $(".errorfile").after("<div class='alert alert-danger invoice-setting-notif' id='errorfiletwo'>The file size of Letter of Incorporation cannot exceed 1 MB.</div>")
+  };
+
+});
+    $('#cashfree_document_uploaded_file_three').bind('change', function() {
+
+  //this.files[0].size gets the size of your file.
+
+  if (this.files[0].size <= 1024000) {
+    flag[2]=1;
+    document.getElementById("errorfilethree").remove();
+  }
+  else {
+   flag[2]=0;
+   document.getElementById("request").disabled = true;
+   $(".errorfile").after("<div class='alert alert-danger invoice-setting-notif' id='errorfilethree'>The file size of Cancelled Cheque cannot exceed 1 MB.</div>")
+ };
+});
+
+  });
+
+
+
+</script>

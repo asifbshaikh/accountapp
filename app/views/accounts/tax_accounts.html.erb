@@ -1,0 +1,85 @@
+<!-- Page title -->
+<div id="pagetitle">
+  <div class="wrapper">
+    <h1>Accounts &rarr; <span>Chart of Accounts</span></h1>
+  </div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"><br/>
+       <div class="highlight">
+         <%= render :partial => "shared/flash_msg",:locals => {:obj => @account} %>
+          <div id="tab5">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/accounts">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/accounts/bank_accounts">Bank accounts</a>
+                    </li>
+                    <li class="tab3">
+                        <a href="/accounts/customer_accounts">Customers</a>
+                    </li>
+                    <li class="tab4">
+                        <a href="/accounts/vendor_accounts">Vendors</a>
+                    </li>
+                    <li class ="tab5">
+                        <a href="/accounts/tax_accounts">Tax accounts</a>
+                    </li>  
+                    <!-- <li class ="tab6">
+                        <a href="/accounts/product_or_service_accounts">Products/Service</a>
+                    </li>   -->
+                </ul>
+            </div>
+        <div id="task_container">
+        <div id="tabs-all">
+         <% if @accounts.blank? %>
+           <%= render "shared/no_record"%>
+         <% else %> 
+	 <div id = 'abc'>
+           <table class="display stylized" id="user_table">
+              <thead>
+		 <%= render :partial => 'header' %>
+	      </thead>
+	      <tbody>
+                 <%= render :partial => :account, :collection => @accounts %>	
+	      </tbody>
+  	      <tfoot>
+		<%= render :partial =>"footer"%>
+	      </tfoot>
+	    </table>
+      <%= paginate @accounts %>             
+	 </div>
+	 <% end %>
+	 <div class="clear">&nbsp;</div>
+	<div class="colgroup"></div>
+        </div>
+       </div> 
+      </div><br />
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+      <a href="/accounts/new" class="btn btn-special btn-green btn-green-new"><img src = "/images/add.png" class ="icon"/> New account</a>
+      <p>
+      <a href="/account_heads" class="btn btn-special btn-gray"><img src = "/images/black_icon/ic_list.png" class ="icon"/> Account heads</a>
+      </p>
+      <div id="rightmenu">
+  	<dl class="first">
+  	   <dt>
+            <img width="16" height="16" alt="" SRC="images/help.png">
+           </dt>
+	   <dd><a href="#">Help</a></dd>
+	   <dd class="last">This page shows the list of all the accounts. <br/>
+             Click on account name to view more details.<br/><br/>   
+           </dd>							
+	 </dl>
+      </div><br />
+    </aside>
+    <!-- End of Right column/section -->
+   </div>
+	<!-- End of Wrapper -->
+</div>

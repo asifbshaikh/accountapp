@@ -1,0 +1,20 @@
+<tr>
+  <td class="title">
+    <%= link_to truncate(note.subject, :length => 20), note_path(note) %>
+  </td>
+  <td><%= truncate(note.description, :length => 20) %></td>
+  <td><%= note.created_at %></td>
+  <td><%= User.find(note.created_by).first_name  %></td>
+  <td>
+    <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/notes/<%= note.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href= <%= edit_note_path(note) %>>Edit</a></li>  
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/notes/<%= note.id%>" >Delete</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>

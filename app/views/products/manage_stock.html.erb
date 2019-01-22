@@ -1,0 +1,71 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file text"></i>Manage Stock</h2>
+      </div>
+
+      <div class="col-lg-8 m-t-large" align="right">
+        <% if @company.plan.is_inventoriable? %>
+          <%= link_to "<i class='icon-plus'></i> New Record".html_safe, new_stock_issue_voucher_path, :class =>'btn btn-success btn-lg' %>
+        <% end %>
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <% if @company.plan.is_inventoriable? %>
+            <header class="panel-heading text-right">
+              <ul class="nav nav-tabs pull-left" id="invTabs">
+                <li class='active'>
+                  <a data-toggle="tab" href="#stock-issue-tab">
+                    <i class="icon-list icon-large"></i>
+                    Issued for Production
+                  </a>
+                </li>
+                <li class=''>
+                  <a data-toggle="tab" href="#stock-receipt-tab">
+                    <i class="icon-signout icon-large"></i>
+                    Received for Sales
+                  </a>
+                </li>
+                <li class=''>
+                  <a data-toggle="tab" href="#stock-transfer-tab">
+                    <i class="icon-truck icon-large"></i>
+                    Stock Transferred
+                  </a>
+                </li>
+                <li class=''>
+                  <a data-toggle="tab" href="#stock-wastage-tab">
+                    <i class="icon-trash icon-large"></i>
+                    Stock Wastage
+                  </a>
+                </li>
+              </ul>
+            </header>
+          <% end %>
+          <div class="panel-body">
+            <div class="tab-content">
+              <%= render :partial => "shared/flash_msg"%>
+              <% if @company.plan.is_inventoriable? %>
+                <div id='stock-issue-tab' class='tab-pane fade active in'>
+                  <%= render 'stock_issue_vouchers/stock_issue_voucher_details' %>
+                </div>
+                <div id="stock-receipt-tab" class='tab-pane fade'>
+                  <%= render "stock_receipt_vouchers/stock_receipt_voucher_details" %>
+                </div>
+                <div id="stock-transfer-tab" class='tab-pane fade'>
+                  <%= render 'stock_transfer_vouchers/stock_transfer_voucher_details' %>
+                </div>
+                <div id="stock-wastage-tab" class='tab-pane fade'>
+                  <%= render "stock_wastage_vouchers/stock_wastage_voucher_details"%>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,42 @@
+<section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-7">
+            <h2><i class="icon-bar-chart text"></i>List of companies</h2>
+        </div>
+           <div class="col-lg-5 m-t-large" align="right">
+           <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a> 
+        
+        </div>
+      </div>
+        <p></p>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <section class="panel">
+              <div class="panel-body">
+              <%= render :partial => "filter" %>
+                <% if @companies.blank?%>
+                <%= render :partial => "shared/no_record" %>
+                <% else %>
+                <div class="table-responsive row">
+                  <table id = "companies" class="table table-striped m-b-none text-small">
+                    <thead>
+                      <%= render :partial=>"header"%>
+                    </thead>
+                    <tbody>
+                    <%= render :partial => 'admin/companies/company', :collection => @companies %>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                </div>
+                <%end%>
+                </div>
+       
+              </section>
+          </div>
+        </div>
+
+    </section>
+</section>

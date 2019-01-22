@@ -1,0 +1,6 @@
+<tr valign="top">
+  <td ><%= Task.find(timesheet_line_item_details.task_id).description %></td>
+  <td class="text-center"><%= timesheet_line_item_details.day.strftime("%d %b") %></td>
+  <td class="text-center" ><%= timesheet_line_item_details.timestamp %>hrs</td>
+  <td class="text-center" ><%= (Task.find(timesheet_line_item_details.task_id).billable == true)? 'Yes' : 'No' %></td>
+</tr> 

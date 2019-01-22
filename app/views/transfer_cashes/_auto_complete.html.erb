@@ -1,0 +1,14 @@
+<script>
+  $(document).ready(function() {
+    $('#tran_to_account').typeahead({
+      name: 'transferred_to_name',
+      local: <%= raw(@tran_to_accounts.map {|cust| cust.name }.to_json(:only => [:name ])) %>
+    });
+    $('#tran_from_account').typeahead({
+      name: 'transferred_from_name',
+      local: <%= raw(@tran_from_accounts.map {|cust| cust.name }.to_json(:only => [:name ])) %>
+    });
+
+  });
+</script>
+

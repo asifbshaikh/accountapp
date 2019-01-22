@@ -1,0 +1,103 @@
+<section id="content">
+  <section class="main padder">
+  <div class="row">
+       <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> GST Credit Note Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <% if @gst_credit_note.status_id == 0 %>
+      <%= link_to "Allocate", "/gst_credit_notes/allocate?id=#{@gst_credit_note.id}", :class => "btn btn-success btn-lg"%>&nbsp;
+      <% end %>
+      <%= link_to raw('<i class="icon-print"> </i>'), gst_credit_note_path(@gst_credit_note, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank", :title=>"Export to PDF",:print=>'yes' %>&nbsp;
+      <%= link_to raw('<i class="icon-mail-reply"> </i>'), gst_credit_notes_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+      </div>
+      </div>
+       <section class="panel">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class='col-sm-5'>
+          	<%= credit_note_customer_details %>
+            <b>GSTIN: </b><%= gstin_id %>
+            </div>
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-8">
+                  <p><strong> Credit Note Number: </strong>&nbsp;<%= @gst_credit_note.gst_credit_note_number %></p>
+                  <p><strong> Amount: </strong>&nbsp;<%= @gst_credit_note.currency %>&nbsp;<%= format_amount @gst_credit_note.amount %></p>
+                  <p><strong>invoice return number:</strong>&nbsp;<%= link_to @gst_credit_note.invoice_return.invoice_return_number, invoice_return_path(@gst_credit_note.invoice_return) %></p>
+                </div>
+              </div>
+
+               <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Credited on <%=@gst_credit_note.gst_credit_note_date %> by <%= User.find(@gst_credit_note.created_by).full_name %></div>
+                  
+                </div>
+              </footer>
+            </section>
+            </div>
+            </div>
+	<div class='row'>
+          <div class='col-lg-12'>
+            <table  class="table table-striped b-t text-small" id="gst_credit_note_line_items">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="text-right">Quantity</th>
+                  <th class="text-right">Unit Cost</th>
+                  <th class="text-right">Discount</th>
+                  <th class="text-right">Amount (<%= @gst_credit_note.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @gst_credit_note.gst_credit_note_line_items %>
+                <%= render :partial => "tax_line_item_details", :collection => @gst_credit_note.tax_line_items.group(:account_id) %>
+                <tr>
+                  <td align="right" colspan="4">Sub total</td>
+                  <td align="right"><%= gst_credit_note_sub_total %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Discount</td>
+                  <td align="right"><%=gst_credit_note_discount %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4">Tax</td>
+                  <td align="right"><%= gst_credit_note_tax_amount %></td>
+                </tr>
+
+                <tr>
+                  <td align="right" colspan="4"><b>Total</b></td>
+                  <td align="right"><b><%= format_amount(@gst_credit_note.total_amount) %></b></td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            </div>
+            <!-- <div class="row">
+            <div class="col-lg-12">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th>Invoices</th>
+                    <th>Allocated Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @gst_credit_note.gst_credit_allocations.each do |allocated_invoice| %>
+                  <tr valign="top">
+                  <td><%= allocated_invoice.invoice.invoice_number %></td>
+                  <td><%= allocated_invoice.amount %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div> 
+            </div> -->
+       	</section>
+  </section>
+</section>
+

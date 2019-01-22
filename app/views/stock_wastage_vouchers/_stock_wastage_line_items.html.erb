@@ -1,0 +1,38 @@
+<tr id="row<%= index %>" valign="top" >
+  <%= hidden_field_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][id]",stock_wastage_line_item.id %>
+  <%= hidden_field_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][_destroy]","" %>
+  <td valign="top">
+    <div class="data-here"></div>
+    <div class='old-data'  style='display:inline;'>
+      <%= select_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(@products, :id, :name,stock_wastage_line_item.product_id, {:"batch_enable" => :batch_enable, :"quantity"=> :group_stock } ), :include_blank => "Select product", :id => "product_quantity", :style => 'width:40%;display:inline;', :"data-index" => index, :id => "product_select_#{index}"%>
+    </div>
+    <% if !stock_wastage_line_item.product.blank? && stock_wastage_line_item.product.batch_enable? %>
+      <div class='wastage-batch-details'  style='display:inline;'>
+        <% if ProductBatch.get_warehouse_batches(@stock_wastage_voucher.warehouse_id, stock_wastage_line_item.product_id).blank? %>
+          <i style='color:red;' id='qty-notif'>Stock not available.</i>
+        <% else %>
+          <%= select_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][product_batch_id]", options_from_collection_for_select_with_data(ProductBatch.get_warehouse_batches(@stock_wastage_voucher.warehouse_id, stock_wastage_line_item.product_id), :id, :batch_number, stock_wastage_line_item.product_batch_id, {:"quantity"=>:quantity}), :style => "width:30%;display:inline;", :"data-unit"=>stock_wastage_line_item.product.unit_of_measure, :'data-index' => index, :id => "product_quantity", :class=>'form-control bg-focus wastage-batch-select'  %>
+          <% if stock_wastage_line_item.product_batch.quantity.blank? || stock_wastage_line_item.product_batch.quantity <=0 %>
+            <i style='color:red;' id='qty-notif'>Stock not available.</i>
+          <% else %>
+            <i style='color:green;' id='qty-notif'>Available qty <%= "#{stock_wastage_line_item.product_batch.quantity} #{stock_wastage_line_item.product.unit_of_measure}" %></i>
+          <% end %>
+        <% end %>    
+      </div>
+    <% end %>
+  </td>
+  <td>
+    <%= text_area_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][reason]",stock_wastage_line_item.reason, :class=>"form-control bg-focus" %>
+  </td>
+  <td class = "ta-right">
+    <%= text_field_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][quantity]",stock_wastage_line_item.quantity, :id => 'quantity', :class => 'swv-quantity form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);", :maxlength => 10 %>
+  </td>
+  <td class = "ta-right">
+    <%= link_to "<i class='icon-remove'></i>".html_safe,{:controller=>:stock_wastage_vouchers, :action => :remove_line_item, :index => index}, :class => "btn btn-danger", 
+  :title => "remove",:remote => true %>
+  </td>
+</tr>
+
+<script type="text/javascript">
+  $("#product_select_<%= "#{index}" %>").select2();
+</script>

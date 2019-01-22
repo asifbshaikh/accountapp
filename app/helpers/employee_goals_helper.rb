@@ -1,0 +1,2 @@
+module EmployeeGoalsHelper
+end

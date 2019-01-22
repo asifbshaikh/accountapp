@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ProfitBooks is an online accounting software for small businesses. It helps you manage invoicing, expenses, banking transactions, taxes and more. Start today!" />
+    <meta name="keywords" content="accounting software, invoicing, expenses" />
+    <title>Complete Accounting, Professional Invoices, Expenses, Banking Transactions, Payroll, Reports</title>
+    <!-- ////////////////////////////////// -->
+    <!-- //     Retina Bookmark Icon     // -->
+    <!-- ////////////////////////////////// -->
+    <!-- //      /Stylesheets Files       // -->
+    <!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>    
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+   <%= render :partial =>"zopim_chat_and_google_analytics"%>
+    <!-- IE Fix for HTML5 Tags -->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(".fancybox").fancybox();
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        //Retina Image
+        $('img.retina').retina('@2x');
+
+        //Camera Jquery
+        $('.post-slide').camera({   
+          thumbnails: false,
+          hover: false,
+          fx: 'random',
+          time: 7000,
+          transPeriod: 1500,
+          pagination: false
+        });
+        
+        //Footer Equal Height
+        equalHeight($(".footer-column, .footer-logo"));
+      });
+
+      function equalHeight(group) {
+        tallest = 0;
+        group.each(function() {
+          thisHeight = $(this).height();
+          if(thisHeight > tallest) {
+            tallest = thisHeight;
+          }
+        });
+        group.height(tallest);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="main-wrapper">
+      <!-- header start here -->
+      <%= render :partial=> "header" %>
+      <!-- header end here -->
+      
+      <!-- page title start here -->
+      <section id="special-content-wrapper">
+        <div class="row pagetitle">
+          <div class="twelve columns">
+            <h1>Powerful accounting features presented with a simple interface!</h1>                
+          </div>
+        </div>
+      </section>
+      <!-- page title end here -->
+      <section id="content-wrapper">
+        <div class="row mobile3row-content">
+          <div class="four columns">
+            <p><h4>Create Beautiful Invoices</h4>
+              Easily create great looking professionals invoices and receive payments from your customers in no time!
+            </p>
+            <ul class="check">
+              <li>Create Time-based invoices from tasks</li>
+              <li>Create Cash Invoices for cash transactions</li>
+              <li>Track overdue invoices and receivables</li>    
+              <li>Identify customers who owe you and follow up with them</li>
+            </ul>
+            <p>
+              <!-- <a href="http://www.youtube.com/embed/WIuiWw3jqwI" class="simpleBTN white fancybox-media fancybox"><span aria-hidden="true" class="icon-fast-forward"> Watch a 2 minute video</span> </a> -->
+            </p>
+          </div>
+          <div class="eight columns">                 
+            <%= image_tag "invoice.png", :alt=>"Professional invoicing and billing. Create estimates and email them directly to the customer"%>
+          </div>
+        </div>
+      
+        <div class="row mobile3row-content">
+          <div class="four columns clm-type1 mobile-two">
+            <div class="circle-icon circle-left">
+              <span aria-hidden="true" class="icon-mixer"></span>
+            </div>
+            <h5>Customize Everything</h5>
+            <p>You can customize invoice numbers, footer information and change template. Add custom fields to capture more information related to your business process.
+            </p>
+          </div>
+          <div class="four columns clm-type1 mobile-two">
+            <div class="circle-icon circle-left">
+              <span aria-hidden="true" class="icon-repeat-2"></span>
+            </div>
+            <h5>Recurring Invoices</h5>
+            <p>Automate your invoices by setting a frequency for future billing. This feature can save lot of time when you need to bill your clients periodically (monthly, yearly, etc). 
+            </p>
+          </div>
+          <div class="four columns clm-type1 mobile-two">
+            <div class="circle-icon circle-left">
+              <span aria-hidden="true" class="icon-grid"></span>
+            </div>
+            <h5>Do Much More</h5>
+            <p>Convert an estimate to invoice, create delivery challans from the invoices or directly email invoice PDF to your clients. Do lot more.
+            </p>
+          </div>
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="four columns">
+            <p><h4>Track Day To Day Expenses</h4>
+              When you know where your money is going, you can organize the spending easily.
+            </p>
+            <ul class="check">
+              <li>Attach scanned expense receipts</li>
+              <li>Categorise expenses according to projects</li>
+              <li>Record payment made to vendors</li>    
+              <li>Track your payables</li>
+              <li>Record stock purchases</li>    
+              <li>Create professional Purchase Orders and send them directly to your vendors</li>
+            </ul>
+            <p><!-- <a href="http://www.youtube.com/embed/DrVlC2TYoLw" class="simpleBTN white"><span aria-hidden="true" class="icon-fast-forward"> &nbsp;Watch a 2 minute video</span> </a> --></p>
+          </div>
+          <div class="eight columns">                 
+            <%= image_tag "track-expenses-purchases.png"%>
+          </div>
+        </div>
+      
+        <div class="row mobile3row-content">
+          <div class="six columns clm-type1 mobile-two">
+            <div class="circle-icon circle-left">
+              <span aria-hidden="true" class="icon-credit-card-3"></span>
+            </div>
+            <h5>Record Banking Transactions</h5>
+            <p>Get all your bank accounts at one place. Easily record cash withdrawals, deposits and transfers from a simple interface.</p>
+            <p>Unlike traditional (read complicated) accounting systems, you don't need to worry about the debit-credit effect. Just simply record the transactions as they happen and all the necessary accounting will be automatically done in the background.
+            </p>
+          </div>
+          <div class="six columns clm-type1 mobile-two">
+              <div class="circle-icon circle-left">
+                <span aria-hidden="true" class="icon-tag-3"></span>
+                </div>
+                <h5>Manage your stock efficiently</h5>
+        <p>Manage all the products, their production, transfer, wastage and everything else easily with ProfitBooks! </p>
+        <p>Maintain multiple Warehouses, allocate batch numbers, maintain re-order level, identify top-selling product and view all transactions at one place
+        </p>
+          <p><!-- <a href="http://www.youtube.com/embed/eHcWs_ely10" class="simpleBTN white"><span aria-hidden="true" class="icon-fast-forward"> &nbsp;Watch video on Inventory Management</span> </a> --></p>
+            </div>
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="twelve columns text-center">
+                <p><h4>Built For The Entire Team</h4>
+        Work become much easier when we collaborate. With ProfitBooks, you can add new users and assign them specific roles. Users can create tasks, record their time using timesheets and manage work using projects. Better productivity means more work and more work means more profit!
+        </p>
+      <p>
+         <%= image_tag "tasks-timesheet-projects-productivity.png", :alt=>"Improve productivity with tasks and projects. Record timesheets and store documents online."%>
+      </p>
+            </div>                 
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="four columns">
+                <p><h4>Complete Accounting</h4>
+        ProfitBooks is designed keeping Indian Accounting Standards in mind. It presents a very simple interface that even non-accountant can understand and takes care of all the complexity behind the scenes.
+        </p>
+                  <ul class="check">
+                       <li>Record Journal entries</li>
+                       <li>Maintain chart of accounts & taxes</li>
+                       <li>Simple accounting entry screen to record all type of transactions</li>    
+                       <li>Invite an auditor to review your books</li>
+          </ul>
+          <p><!-- <a href="http://www.youtube.com/embed/9Inmze_bmXk" class="simpleBTN white"><span aria-hidden="true" class="icon-fast-forward"> &nbsp;Watch how you can invite an auditor</span> </a> --></p>
+            </div>
+            <div class="eight columns">                 
+                <%= image_tag "vat-tax.png", :alt=>"Record VAT, Service Tax and other tax transactions. Record Journal entries and do complete financial accounting"%>
+            </div>
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="four columns">
+                <p><h4>Run Monthly Payroll In Minutes</h4>
+        Save time every month by processing payroll with just few clicks. Accounting entries are recorded and salary slips are generated automatically.
+        </p>
+                  <ul class="check">
+                       <li>Manage employee leaves</li>
+                       <li>Define salary structure easily</li>
+                       <li>Maintain pay revision history</li>    
+                       <li>Generate payment advice for bank</li>
+                       <li>Payhead wise reports</li>
+          </ul>
+          <!--p><a href="#" class="simpleBTN white"><span aria-hidden="true" class="icon-fast-forward"> &nbsp;Watch Payroll Overview</span> </a></p-->
+            </div>
+            <div class="eight columns">                 
+                <%= image_tag "payroll-process-time-saving.png", :alt=>"Save time in daily accounting and monthly payroll processing."%>
+            </div>
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="four columns">
+                <p><h4>Take Better Decisions</h4>
+        With in-depth reports available at a click of a button, you always know whats going on in your business.
+        </p>
+                  <ul class="check">
+                       <li>Balance Sheet, Trial Balance and Profit & Loss reports  </li>
+                       <li>Customer Statement & Outstanding due</li>
+                       <li>Product wise reports</li>    
+                       <li>Task, Timesheet reports</li>
+                       <li>Payroll reports</li>
+          </ul>
+          <p><a href="/home/pricing" class="simpleBTN green large">Start your free trial</a></p>
+            </div>
+            <div class="eight columns">                 
+                <%= image_tag "income-expense-payables-overview.png", :alt=>"Dashboard shows overview of income and expenses, payables, receivables and audit trail."%>
+            </div>
+        </div>
+         
+    </section>
+    <!-- content section end here -->
+    
+      <!-- footer section start here -->
+      <%= render :partial=> "footer" %>
+      <!-- footer section end here -->
+    </div>
+    <script>$('#noscript').remove();</script>
+  </body>
+</html>

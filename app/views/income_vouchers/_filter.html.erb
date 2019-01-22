@@ -1,0 +1,19 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Other Income Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="incomevoucher-filter" >
+      <tbody>
+        <tr id="filter_global">
+          <td><label>Voucher no</label></td>
+          <td id="incvoucherno"></td>
+          <td><label>Income Date</label></td>
+          <td id="incDate"></td>
+        </tr>
+        <tr id="filter_col2">
+          <td><label>From account</label></td>
+          <td id="incacc" data-incaccount="<%= Account.income_from_accounts(@company.id) %>"></td>
+          <td><label>Amount</label></td>
+          <td id="incamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

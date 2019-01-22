@@ -1,0 +1,30 @@
+<div class="breadcrumbs">  
+  <table style="padding: 0">
+  <tr style="padding: 0;">
+    <td style="vertical-align:middle;padding:0;">
+      <i class="icon-dropbox text"></i>
+    </td>
+    <% if @breadcrumb.length <= 0 %>
+    <td  style="vertical-align:middle;padding:0;">
+    <h5><a href="/db/index">&nbsp; Showing files from ProfitBooks</a></h5>
+    </td>
+    <% else %>
+    <td  style="vertical-align:middle;padding:0;">
+    <h5><a href="/db/index">&nbsp; ProfitBooks</a></h5>
+    </td>
+    <% end %>
+   <% @path = ""
+   @breadcrumb.each do |bc| 
+   @path += "/" unless @breadcrumb.first == bc
+   @path += bc %>
+    <td  style="vertical-align:middle;padding:0;">
+      <% if @breadcrumb.last == bc %>
+       <h5> <%= " / #{bc}" unless bc.blank? %>&nbsp;</h5> 
+      <% else %>
+       <h5> <%= " / " unless bc.blank? %>&nbsp;<%= link_to bc,"/db/index?path=#{@path.to_s}" unless bc.blank? %>&nbsp;</h5>
+      <% end %>
+   <% end %>
+   </td>
+ </tr>
+ </table>
+</div>  

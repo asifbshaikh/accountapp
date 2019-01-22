@@ -1,0 +1,68 @@
+<div id="prev_data" >
+<% if @stocks.blank? %>
+  <div class='titleBar'><div id="popupHeading">Not in stock</div> <a id="popupBoxClose" class="btn btn-danger">x</a></div>
+  <br/>
+   <div class="box box-warning">
+     This product is not available in any of the <%= @company.label.warehouse_label %>. <br/>You can add this from inventory menu.
+   </div> 
+  <%= link_to 'Ok',"#", :id => 'close', :class => 'btn btn-success' %>
+<% else %>
+ <div class='titleBar'><div id="popupHeading">Select <%= @company.label.warehouse_label %></div> <a id="popupBoxClose" class="btn btn-danger">x</a></div>
+  <ul id='error_list'></ul>
+  <table class="stylized full display" id = "act_details" width = 80% >
+	  <thead>
+	  <tr>
+	    <th></th>
+	    <th width='50%'><%= @company.label.warehouse_label %></th>
+	    <th>Available</th>
+	    <th>Quantity</th>
+	  </tr>
+	 </thead>
+	</table>
+  <form action ='/invoices/take_warehouse_quantity' data-remote=true>
+    <%= hidden_field_tag 'row_index', params[:index]%>
+    <%= hidden_field_tag 'line_item', params[:line_item]%>
+    <%= hidden_field_tag 'product_id', params[:product_id] %>
+    <div style="overflow:auto;max-height:300px">
+	<table class="stylized full display" id = "act_details" width = 100% >
+         <tbody> 
+         	<% if params[:line_item].blank? %>
+         	<!-- Popup content for new invoice case -->
+			    <% @stocks.each_with_index do |stock, index| %>
+			    <tr id='row<%= index %>'>
+			      <td>
+			      	<%= check_box_tag "warehouse_id[]", stock.warehouse_id,@stocks.first.eql?(stock), 'data-removable' => 'false', :id => "warehouse_at#{stock.warehouse_id}" %></td>
+			      <td width='50%'><%= stock.warehouse.name %></td>
+			      <td class = "ta-right"><%= stock.quantity %><%= hidden_field_tag "avail_qty_at#{stock.warehouse_id}", stock.quantity, :id => "avail_qty_at_#{stock.warehouse_id}" %></td>
+			      <td><%= text_field_tag "product_quantity_at#{stock.warehouse_id}",nil, :class => 'amount', :maxlength => 8 , :id => "quantity_at_#{stock.warehouse_id}", :onkeydown => "return numbersOnly(event);" %></td>
+			    </tr>
+			  	<% end %>
+			  <% else %>
+			  <!-- Popup contents for edit invoice case -->
+				  <% @stocks.each_with_index do |stock, index| %>
+				    <tr id='row<%= index %>'>
+				      <td>
+				      	<% sales_warehouse = SalesWarehouseDetail.find_by_warehouse_id_and_invoice_line_item_id(stock.warehouse_id, params[:line_item]) %>
+
+				      	<%= check_box_tag "warehouse_id[]", stock.warehouse_id, sales_warehouse.blank? ? false : true, 'data-removable' => sales_warehouse.blank? ? 'false' : 'true' , :id => "warehouse_at#{stock.warehouse_id}",:class => 'bg-focus form-control' %></td>
+				      <td><%= stock.warehouse.name %></td>
+				      <td class = "ta-right">
+				      	<% stock_qty =  stock.quantity
+				      		stock_qty += sales_warehouse.quantity unless sales_warehouse.blank? || sales_warehouse.quantity.blank?
+				      	%>
+				      	<%= stock_qty %><%= hidden_field_tag "avail_qty_at#{stock.warehouse_id}", stock_qty, :id => "avail_qty_at_#{stock.warehouse_id}" %></td>
+                
+				      <td><%= text_field_tag "product_quantity_at#{stock.warehouse_id}","#{sales_warehouse.blank? ? '' : sales_warehouse.quantity}", 
+				      :class => 'amount bg-focus form-control', :maxlength => 8 , :id => "quantity_at_#{stock.warehouse_id}", :onkeydown => "return numbersOnly(event);" %></td>
+				    </tr>
+				  <% end %>
+			  <% end %>
+         </tbody>
+	</table>
+</div>
+<table width='98%'><tr><td align='right' width='70%'>Total</td><td align='right'><span id='totalQuantity' style='color:black;'></span></td></tr></table>
+	<%= submit_tag "Select", :class => 'btn btn-success' %>
+	<%= link_to 'Cancel',"", :id => 'close', :class => 'btn btn-white', :remote => true %>
+  </form>
+  <% end %>
+</div>

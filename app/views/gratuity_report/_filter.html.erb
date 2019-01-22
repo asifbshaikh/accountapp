@@ -1,0 +1,44 @@
+<form action="salary_slip">
+	<div id = 'use_filter' class='title_name' style="cursor: pointer;">
+		<img src="/images/datatable/sort_desc.png"  class="show_image" align="left">
+		&nbsp;&nbsp;Use Filter
+	</div>
+	
+	<div id='filter'>
+	<table>
+		<tr><td>
+				<label>Salary slip for month :</label>
+	 		</td>
+	 		<td>
+ 				<select name="month">
+ 					<option value=<%= Time.zone.now.to_date.month %>>Select month</option>
+	 				<% for i in 1..12 
+		 				if i == params[:month].to_i%>
+		 					<option value=<%= "#{i}" %> selected="selected" ><%= @months[i] %></option>
+		 				<% else %>
+		 					<option value=<%= "#{i}" %>><%= @months[i] %></option>
+		 				<% end %>	
+	 				<% end %>
+ 				</select>
+			</td>
+			<% if @starting_year != Time.zone.now.to_date.year %>
+				<td>
+					<select name="year">
+						<option value=<%= Time.zone.now.to_date.year%>>Select year</option>
+						<% for i in @starting_year..Time.zone.now.to_date.year
+							if i == params[:year].to_i %>
+								<option value=<%= i%> selected = "selected"><%= i %></option>
+							<% else %>
+								<option value=<%= i%>><%= i %></option>
+							<% end %>
+						<% end %>
+					</select>
+				</td>
+			<% end %>
+			<td>
+				<input type="submit" value="Search" />
+			</td>
+		</tr>
+	</table>
+	</div>
+</form>

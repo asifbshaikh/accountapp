@@ -1,0 +1,63 @@
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= label_tag "deposit_to_account_id", "Pay To", :class => "control-label-required" %>
+	</div>
+	<div class='col-lg-10'>
+		<%= render "account_select" %>
+  </div>
+</div>
+<div class="form-group exc_rate">
+	<div class="col-lg-2 text-right">
+		<label class="control-label">Exchange Rate in <%= @company.currency_code %></label>
+	</div>
+	<div class="col-lg-3">
+		<%= text_field_tag "payment_voucher[exchange_rate]", defined?(@payment_voucher)? @payment_voucher.exchange_rate : "" , :class=>'form-control bg-focus text-right', :style=>"width:120px;" %>
+	</div>
+</div>
+<div class="line line-dashed m-t-large"></div>
+<div class="form-group" >
+	<div class="col-lg-12">
+		<h4>Showing unpaid purchases/expenses for selected vendor</h4>
+	</div>
+</div>	
+<div class="form-group">
+	<div class="col-lg-12" id="voucher-details">
+		<%= render "unpaid_vouchers", :purchases_payments=> defined?(@payment_voucher)  ? @payment_voucher.purchases_payments : nil, :expenses_payments => defined?(@payment_voucher) ? @payment_voucher.expenses_payments : nil %>
+	</div>
+</div>	
+<div class="line line-dashed m-t-large"></div>
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= label_tag "From_account_id", "Pay From", :class => "control-label-required" %>
+	</div>
+	<div class="col-lg-3">
+		<div class='input-group'>
+		<%= select_tag("payment_voucher[from_account_id]", options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, defined?(@payment_voucher)? @payment_voucher.from_account_id : ""), {:prompt => 'Type to select', :style => "width:260px;"}) %>
+    </div>
+    <span id="from_acc_bal"></span>
+	</div>
+</div>
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= label_tag "Payment_date", "Payment Date", :class => "control-label-required" %>
+	</div>
+	<div class='col-lg-3'>
+		<%= text_field_tag "payment_voucher[payment_date]", defined?(@payment_voucher)? @payment_voucher.payment_date : "", :class=>'form-control bg-focus', :style=>"width:120px;" %>
+	</div>
+</div>
+<% if @company.indian_company? %>
+<div class='form-group'>
+	<div class='col-lg-2 text-right'>
+		<%= label_tag "tds_section", "TDS Section", :class=>"control-label" %>
+	</div>
+	<div class='col-sm-3'>
+		<%= select_tag('payment_voucher[tds_account_id]', options_from_collection_for_select(Account.get_tds_payable_accounts(@company), :id, :name, defined?(@payment_voucher)? @payment_voucher.tds_account_id : "" ), {:prompt => 'Type to select', :style => "width:260px;"})%>
+  </div>
+</div>
+<% end %>
+
+<script type="text/javascript"> 
+  $("#payment_voucher_from_account_id").select2();
+  $("#payment_voucher_to_account_id").select2();
+  $("#payment_voucher_tds_account_id").select2();
+</script>

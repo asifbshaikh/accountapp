@@ -1,0 +1,13 @@
+<% new_text = "Dear Sir,
+
+We have observed that you are registered with with the ProfitBooks on 24/3/2014 and had explored the application in past. Recently you have not logged on to ProfitBooks system. 
+
+Please let us know if you encountered any problems and you have any feedback. 
+
+In last few months we have added many new features to in invoice, Inventory, Sales Order process etc. I am sure we will be add value to your business process. Request you to login to your account at www.profitbooks.net and explore all these features. 
+
+I will be gald to assist you in case you need to know more about ProfitBooks. You can call us on our support number +91 84 85 86 3000." %>
+<div class="block" id = "template">
+<%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+<%= text_area_tag  :text, new_text,:rows=>4, :class=>"bg-focus form-control"%>
+</div>

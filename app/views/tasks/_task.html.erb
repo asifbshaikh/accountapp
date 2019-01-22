@@ -1,0 +1,53 @@
+
+<tr class="gradeB">
+  <td>
+  <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<% if !task.project_id.blank? %>
+                      <p>
+                      <strong> Project: </strong> <%= task.project.name %>
+                      </p>
+                      <% end %>
+                      <p>
+                      <strong> Due Date: </strong> <%= task.due_date %>
+                      </p>
+                      <p>
+                      <strong> Task description: </strong> <%= breaking_word_wrap(task.description) %>
+                      </p>
+                      <p>
+                      <strong> Assigned to:</strong> <%= task.assigned_user  %>
+                      </p>
+                      <p>
+                      <strong> Billable:</strong> <%= (task.billable == true )? 'Yes' : 'No'%>
+                      </p>
+                      <p>
+                      <strong> Task status:</strong> <%= (task.task_status == 0 )? 'Incomplete' : 'Complete'%>
+                      </p>
+                      <% if task.billable? %>
+                      <p>
+                      <strong>Income Account:</strong>
+                        <%= Account.find(task.sales_account_id).name unless task.sales_account_id.blank? %>
+                     </p>
+                <% end %> "
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Task Detail'><%=   truncate(task.description, :length =>50 ) %></a>
+  
+  </td>
+ <td><%= task.project_id.blank? ? "Not Available" : task.project.name %></td>
+ <td><%= task.due_date.strftime("%d-%m-%Y") %></td>
+ <td><%= task.priority_name %></td>
+ <td>
+   <div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='<%= edit_task_path(task) %>'"; >Edit</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <% if task.task_status == 0 %>
+            <li><a href="<%= "/tasks/mark_complete?id=#{task.id}" %>">Mark complete</a></li>
+            <% else %>
+            <li><a href="<%= "/tasks/mark_complete?id=#{task.id}" %>">Mark incomplete</a></li>
+            <% end %>
+            <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/tasks/<%= task.id%>" >Delete</a></li>
+          </ul>
+      </div>
+  </td>
+</tr>

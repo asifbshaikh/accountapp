@@ -1,0 +1,120 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Ledger</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        <% if !@ledgers.blank? %>
+          <%= link_to_pdf params %>
+          <%= link_to_xls params %>
+        <%end%>
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "shared/filter" %>
+            <% if @accounts.blank? %><br/>
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+              <%= render :partial => "shared/report_header" %><br />
+                <div class="table-responsive row">
+                  <table class="table table-striped b-t text-small">
+                    <thead>
+                      <tr>
+                        <th width ="6%"> Date </th>
+                        <th width ="15%">Account </th>
+                        <th width ="20%">Description</th>
+                        <th width ="10%"> Voucher Number </th>
+                        <th width ="6%">Type</th>
+                        <th class="text-right" width ="18%">Debit</th>
+                        <th class="text-right" width ="18%">Credit</th>
+                        <th class="text-right" width ="25%">Closing Balance</th>
+                      </tr>
+                    </thead>
+                  <tbody>
+                    <tr>
+                      <td width ="6%"></td><td width ="15%"></td>
+                      <td width ="20%"><b>Opening Balance</b></td><td width ="10%"></td><td width ="6%"></td>
+                      <%
+                        if !@opening_balance.blank? && @opening_balance > 0 %>
+                          <td></td>
+                          <td></td>
+                          <td width ="21%" align="right"><b> <%= format_currency @opening_balance.abs %></b></td>
+                        <% else %>
+                          <td></td>
+                          <td></td>
+                          <td width ="25%" align="right"><b><%= format_currency @opening_balance.abs unless @opening_balance.blank? %></b></td>
+                        <% end %>
+                    </tr>
+                    <%
+                      debit = 0
+                      credit = 0
+                      if !@opening_balance.blank? && @opening_balance > 0
+                        debit = @opening_balance
+                      elsif !@opening_balance.blank?
+                        credit = @opening_balance.abs
+                      end
+                      prev_date = nil
+                      @ledgers.each do |ledger|
+                    %>
+                        <tr>
+                          <td width ="6%"><%= (ledger.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": ledger.transaction_date.strftime("%d-%m-%Y")%></td>
+                          <%
+                            prev_date = ledger.transaction_date.strftime("%d-%m-%Y")
+                            acc = ledger.retrieve_corresponding_account
+                          %>
+                          <td width ="15%"><%= ((ledger.debit > 0)? "To":"By") unless ledger.debit.blank? %>
+                            <%= (link_to truncate(acc.name, :length=> 30), "/account_books_and_registers/ledger?account_id=#{acc.id}", :title => acc.name) unless acc.blank?%>
+                          </td>
+                          <td title ='<%= ledger.description %>' width ="20%">
+                            <%= ledger.description%>
+                          </td>
+                          <td width ="10%">
+                            <% if ledger.voucher_type != "Salary" %>
+                              <%= link_to truncate(ledger.voucher_number, :length=> 22), ledger.voucher, :title => ledger.voucher_number %>
+                            <% else %>
+                              <%= truncate(ledger.voucher_number, :length=> 22)%>
+                            <% end %>
+                          </td>
+                          <td width ="6%"><%= truncate(ledger.voucher_type, :length =>15) %></td>
+                          <td align="right" width ="18%"><%= format_currency(ledger.debit) %></td>
+                          <td align="right" width ="18%"><%= format_currency ledger.credit %></td>
+                          <%
+                            credit += ledger.credit
+                            debit += (ledger.debit.blank? ? 0 : ledger.debit)
+                            @ledger_balance = credit - debit
+                          %>
+                          <td align="right" width ="25%"><%= format_currency @ledger_balance %></td>
+                        </tr>
+                      <% end %>
+                    <tr>
+                      <td width ="6%"></td>
+                      <td width ="15%"></td>
+                      <td width ="20%"></td>
+                      <td width ="10%"></td>
+                      <td width ="6%" align="right"><b>Total</b></td>
+                      <td width ="18%" class = 'border_up' align="right"><b><%= format_currency debit%></b></td>
+                      <td width ="18%" class = 'border_up' align="right"><b><%= format_currency credit%></b></td>
+                      <td width ="25%" class = 'border_up' align="right"><b><%= format_currency @ledger_balance%></b></td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+              <footer class="row">
+                <%= render "shared/report_footer"%>
+              </footer>
+            </div>
+          </section>
+          <!-- Table ends -->
+        <%end%>
+      </div>
+    </div>
+  </section>
+</section>

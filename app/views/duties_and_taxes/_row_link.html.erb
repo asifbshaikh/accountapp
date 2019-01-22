@@ -1,0 +1,6 @@
+<tr class='row-link'>
+  <td></td>
+  <td>
+    <%= link_to '+ Add linked tax', {:action => 'add_row', :index => params[:index].to_i + 1 }, :class => 'btn btn-success btn-sm', :remote => true, :id =>"row_link"%>
+  </td>
+</tr>

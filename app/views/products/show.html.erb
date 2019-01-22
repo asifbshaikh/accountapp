@@ -1,0 +1,26 @@
+<section id="content">
+  <section class="main padder">
+    <!-- Page title -->
+    <div class='row'>
+      <div class='col-lg-3'>
+        <!-- Page name -->
+        <h2><i class="icon-file-text-alt text"></i>View Item</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <a href="/products/new" class="btn btn-success btn-lg"> <i class='icon-plus'></i>New Product</a>
+        <%= link_to raw('<i class="icon-edit"> </i>'), edit_product_path(@product),:class => "btn btn-default btn-lg"%>
+        <%= link_to raw('<i class="icon-trash"> </i>'), product_path(@product),:class => "btn btn-default btn-lg", :method => "delete", :confirm => "Are you sure?" %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), products_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+      </div>
+    </div>
+    <!-- Pger title end -->
+    <p></p>
+    <section class='panel'>
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg"%>
+        <!-- voucher details  -->
+        <%= render "#{Product::INVENTORY_STATUS[@product.inventoriable?]}"%>
+      </div>
+    </section>
+  </section>
+</section>

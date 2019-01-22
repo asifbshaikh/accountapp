@@ -1,0 +1,48 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <!-- Left column/section -->
+  <br/>
+  <div class="wrapper">
+    <section class ="column width6 first">
+      <div id="tabs" class ="highlight">
+        <div id="tab7">
+     <%= render :partial=>"tabs"%>
+  </div>
+        <div id="task_container">
+          <div class="clearfix"></div>
+          <div id = "company_container">
+          <% if @subscriptions.blank?%>
+          <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table class="display stylized" id="act_details">
+              <thead>
+                <%= render :partial=>"header"%>
+              </thead>
+              <tbody>
+                <%= render :partial=>"admin/companies/subscription", :collection => @subscriptions %>
+              </tbody>
+            </table>
+          <% end %>
+          </div>
+          <%= paginate @subscriptions %>
+          <div class="clear">
+            &nbsp;
+        </div>
+      </div>
+    </div>
+    <br />
+      <!-- End of Left column/section -->
+  </section>
+    <!-- Right column/section -->
+      <aside class="column width2">
+        <aside class="column width2">
+       <a href="<%= url_for(:format => 'xls') %> " class="btn btn-special  btn-gray"  target = "_blank">
+<%= image_tag "excel_icon.gif" ,:alt=>"Export to Excel", :title=>"Export to Excel" ,:class => "icon"%>&nbsp;Export to Excel</a>       <%= render :partial=> "companies"%>
+        <br/>
+      </aside>
+  </div>
+</div>
+

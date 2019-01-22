@@ -1,0 +1,3 @@
+$("#row-loader").remove();
+$("#row_link_purchase").before('<%= escape_javascript render( "purchase_line_items",{ :purchase_line_item=> @purchase_line_item, :index => params[:index]} ) %>');
+$("#row_link_purchase").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');

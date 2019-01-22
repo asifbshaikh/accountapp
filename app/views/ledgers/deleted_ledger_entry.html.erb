@@ -1,0 +1,43 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"><br />
+		  <div class="highlight">
+		   <%= paginate @ledgers %>
+					<table class="display stylized" id="user_table">
+					  <thead>
+						<%= render :partial => 'header' %>
+						</thead>
+						<tbody>
+						 <%= render :partial => 'deleted_ledger_entry' %>	 
+						</tbody>
+						<tfoot>
+						<%= render :partial => 'footer' %>
+						</tfoot> 
+					</table>
+	        <div class="clear">
+	        	<%= paginate @ledgers %>
+	        	&nbsp;</div>
+	        </div><br />
+    </section>
+  	<!-- Right column/section -->
+  	<aside class="column width2">
+    	<p class="leading"></p> 
+   		<div id="rightmenu">
+		  	<dl class="first">
+			  	<dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+          <dd><%= link_to 'Help', "/46/46", :class=>"nyroModal" %></dd>  
+					<dd class="last">Read "Getting started" on ledgers</dd>							
+				</dl>
+			</div>
+  	</aside>
+  	<!-- End of Right column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

@@ -1,0 +1,8 @@
+<script>
+  $(document).ready(function() {
+    $('#project').typeahead({
+      name: 'projects',
+      local: <%= raw(@projects.map {|proj| proj.name }.to_json(:only => [:name ])) unless @projects.blank? %>
+    });
+  });
+</script>

@@ -1,0 +1,19 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Make Payment Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="payment-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="paymentvoucherno"></td>
+          <td width='10%' class='text-right'><label>Voucher date</label></td>
+          <td id="paymentDate"></td>
+        </tr>
+        <tr>
+          <td class='text-right'><label>Payment to</label></td>
+          <td id="paymentacc" data-paymentaccount="<%= Account.payment_to_accounts(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="paymentamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

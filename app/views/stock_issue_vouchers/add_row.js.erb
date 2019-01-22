@@ -1,0 +1,4 @@
+$("#row-loader").remove();
+$("#issue_row_link").before('<%= escape_javascript render( "stock_issue_vouchers/stock_issue_line_items",{ :stock_issue_line_item=> @stock_issue_line_item, :index => params[:index]} ) %>');
+$("#issue_row_link").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');
+

@@ -1,0 +1,2 @@
+module DaybookHelper
+end

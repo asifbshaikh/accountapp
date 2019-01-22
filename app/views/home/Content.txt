@@ -1,0 +1,83 @@
+Features:
+1) Easy Accounting: 
+Most of the times we depend heavily on our accountant to manage financial data of the company and we don’t really have a clear picture of the business until we learn to use complicated accounting applications. That’s where ProftBooks steps in.
+
+It does not require any special trianing and you can get started right away. Help is available on every screen to guide you. 
+
+Things are organised in such a way that you don't need to be an accoutant to record business transactions. 
+
+1) Invoicing & billing:
+Cash invoices, credit invoices.
+
+2) Income & Expenses:
+Screens are organised into Income and Expenses categories helping you record the transaction without any confusion. 
+
+So, all your income sources like invoices, estimates, payments received for various activities and any other income are under one group.
+
+'Expenses' menu lets you record transactions for day to day expenses, purchases and purchase orders.
+
+
+3) Bank Transactions
+ProfitBooks makes it very easy for you to record bank transactions. There are separate screens for recording deposits, withdrawels and money transfer. 
+
+This reduces the confusion and helps you trak your banking transactions in a more effective manner.
+
+4) Inventory Management
+If you maintain the inventory at different locations, ProfitBooks is a perfect tool to organise the things. You can maintain Warehouses and record product inflow or outflow for that warehouse.
+
+You can also manage raw material stock, wastage and product consumption.
+
+
+5) More
+ProfitBooks lets you record all types of accounting entries using a 'Simple Accounting Entries' screen. 
+
+You can also pass Journal entries and record credit notes or debit notes.
+
+6) Employee Management :
+Go paperless with ProfitBooks. Save information of all your employees at one place. Record when they left, when they joined and when is their birthday ! 
+
+You can even upload scanned copies of related information right in to the application.
+
+7) Salary Processing :
+ProfitBooks lets you create salary structure of each and every employee. You can finish Payroll Processing in minutes and not in days! All you have to do is to press few buttons.
+
+Salary slips are generated for all the employees.
+
+8) Leave Management:
+Employees can apply for leaves using ProfitBooks and business owner or a designated person can approve the leaves.
+
+9) Holidays
+Keep your emplyees well informed about upcoming holidays. You can also upload your policy documents in ProfitBooks. Let all your office related stuff come under one roof.
+
+10) Access Control
+Biggest advantage with ProfitBooks is that it can be used by any employee of your organisation and not just the accountant. You can assign different roles to the staff and capture data from all the sources. For example, users with 'Staff' role can only enter the data. Users with 'accountint' role can manupulate the data. 'Owner' has access to all the functions and so on.
+
+ProfitBooks truely lets you take charge of your business.
+
+11) Projects
+Organise your transactions according to projects. This way, you can see income and expenses recorded for a perticular client on a single screen and take better management decisions.
+
+12) Inviting Auditors:
+Owners can invite the auditor to view company books just by clicking a button. Auditor gets to see the records in read-only mode. So, no more sharing of business data in a in-secure way. Also save time with this powerful feature.
+
+13) Reporting:
+Reporting is the most important function of ProfitBooks as it gives you a holistic picture of your business. Various reports are available at the click of a button giving you up to date data about the current ongoings.
+
+14) Internal Messaging
+Reduce your email volume by using the in-built messaging feature. Staff can exchange notes with other colleagues securely within the application
+
+15) Task Management
+Get organised with in-built to-do application. Set reminders or assign a task to your team mate easily. This ensures increased productivity and happy employees !
+
+16) Document Management
+Store your documents securely withing Profitbooks. You can even integrate your dropbox account and share files within the team.
+
+
+How its useful:
+1) For small busniness:
+Organise your business finances effectively with Profitbooks. 
+
+
+
+
+5) Much More 

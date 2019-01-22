@@ -1,0 +1,62 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-5">
+        <h2><i class="icon-file text"></i>GSTR2 Filing</h2>
+    </div>
+    
+    <div class="col-lg-7 m-t-large" align="right">     
+        <a href="#" class="btn btn-success btn-lg " data-toggle="modal" data-target='#model1'><i class="icon-upload"> </i> File GSTR-2</a> &nbsp;<a href="#" class="btn btn-default btn-lg "><i class="icon-info"> </i> </a> &nbsp;<a href="#" class="btn btn-default btn-lg "><i class="icon-reply"> </i> </a>
+        <p></p>
+
+    </div>  
+    </div>
+    
+    <div class="row">
+          <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body"> 
+
+         <div class="row">
+         <div class="col-lg-1">
+         &nbsp;
+         </div>
+         <div class="col-lg-10">
+         <div class="info-form">
+          <%= render :partial=> "fetch_info" %>
+         </div>
+         
+         </div>
+         </div>  
+
+         <div class="row text-small">
+        <div class="col-sm-1 m-b-mini">
+               <div class="btn-group" id="btn-group" >
+              <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">All Purchase <span class="caret"></span></button>
+              <ul id ="myTab" class="dropdown-menu text-left" >
+                <li  onclick="changeClass();"><%= link_to 'B2B Purchase',gstr2_filings_fetch_data_path(:type =>'B2B'),:remote => true %></li>
+                <li onclick="changeClass();"><%= link_to 'B2BUR Purchase', gstr2_filings_fetch_data_path(:type =>'B2BUR'),:remote => true %></li>   
+                <li onclick="changeClass();"><%= link_to 'Credit Note/Debit Note',gstr2_filings_fetch_data_path(:type =>'CDNR'),:remote => true %></li>  
+                <li onclick="changeClass();"><%= link_to 'Advance Payment',gstr2_filings_fetch_data_path(:type =>'AR'),:remote => true %></li>  
+                <li onclick="changeClass();"><%= link_to 'NIL Rated',gstr2_filings_fetch_data_path(:type =>'NIL'),:remote => true %></li>  
+                <li class="divider"></li>
+                 <li onclick="changeClass();"><%= link_to 'All Purchase',gstr2_filings_fetch_data_path,:remote => true %></li>            
+              </ul>
+            </div>
+              </div>
+        </div>
+
+        <div class="table-responsive">
+          <%= render :partial=> "fetch_data" %>
+        </div>  
+            </div>
+          </section>
+        </div>    
+      </div>
+   </section>
+  </section>
+
+  <div id="model1" class="modal fade">
+    <%= render "request_session"%>
+</div>

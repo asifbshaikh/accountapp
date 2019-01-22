@@ -1,0 +1,67 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h2><i class="icon-user text"></i></i>Customers</h2>
+        </div>
+
+        <div class="col-lg-8 m-t-large" align="right">
+          <div class="btn-group">
+            <button  onclick="location.href= '<%= new_customer_path%>'"; class="btn btn-success btn-lg" > <i class="icon-plus"> </i> Add New Customer</button>
+            <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span><i></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to raw('<i class="icon-cloud-upload"> </i>Import Customers '), customer_imports_path %></li>
+              <li><%= link_to raw('<i class ="icon-cloud-download"> </i>Export Customers '), customers_path(:format=>:xls) %></li>
+            </ul>
+          </div>
+          <!-- <a href="#" class="btn btn-white btn-lg" id="use_filter"><i class="icon-filter"></i> </a> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12"><p></p>
+          <div class="panel panel-info data-filter" id="filter">
+            <div class="panel-heading"><h4 class="panel-title">Customer Filter</h4></div>
+              <table class="table table-striped m-b-none text-small" id="customer-filter" >
+                <tbody>
+                  <tr>
+                    <td><label>Customer Name</label></td>
+                    <td id="cust_name"></td>
+                    <td><label>Email</label></td>
+                    <td id="cust_email"></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <section class="panel">
+            <%= render :partial => "shared/flash_msg"%>
+            <div class="table-responsive">
+              <table id="customers" class="table table-striped m-b-none text-small" data-source ="<%= customers_url(:format => "json") %>" >
+                <thead>
+                  <tr>
+                    <th width="20%">Name</th>
+                    <th width="20%">Credit limit</th>
+                    <th width="20%">Email</th>
+                    <th width="20%">Contact Number</th>
+                    <th width="20%">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr style="visibility:hidden">
+                    <th width="20%">Name</th>
+                    <th width="20%">Credit limit</th>
+                    <th width="20%">Email</th>
+                    <th width="20%">Contact Number</th>
+                    <th width="20%">Actions</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>

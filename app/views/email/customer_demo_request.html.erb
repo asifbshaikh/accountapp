@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	</head>
+	<body>
+		<p>
+    Hi <b>Team</b>, <%= @user.full_name %> has requested for a demo via feedback form.<br/>
+		Please contact this customer.<br/>
+
+      <b>Customer Details:</b><br/>
+         Name: <b><%= @user.full_name %></b><br/>
+			   Email: <%=@user.email %></b><br/>
+			   Company Name: <%=@user.company_name %></b><br/>
+       Mobile No : <%=@company.phone %></b>
+     <%= @feedback%>
+     <br/><br/>Cheers,<br/>
+       <b>ProfitBooks Mailer</b>
+		</p>
+	</body>
+</html>

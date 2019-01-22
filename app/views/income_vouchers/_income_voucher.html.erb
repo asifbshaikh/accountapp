@@ -1,0 +1,64 @@
+<tr>
+    <td>
+     <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                   <strong> Voucher Number: </strong><%= income_voucher.voucher_number %>
+                  </p>
+                      <p>
+                      <strong> Money received from: </strong><%= income_voucher.from_account_name %></p>
+                      <p><strong> To Account: </strong> <%= income_voucher.to_account_name %></p>
+                      <p>
+                        <strong> Amount: </strong> <%= format_currency income_voucher.amount %>
+                        </p>
+                        <p> <strong>Received on</strong><%= income_voucher.income_date %> </p>
+                        <p> <strong> Receipt Mode:</strong> <%= income_voucher.payment_detail.payment_mode %> </p>
+                        <%if !income_voucher.description.blank? %>
+                          <p>
+                          <strong>Description</strong>
+                          <%= breaking_word_wrap(income_voucher.description)%>
+                        </p>
+                        <% end %>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Receipt Detail'>
+       <%= income_voucher.voucher_number %></a>
+    </td>
+    <td><%= income_voucher.income_date.strftime("%d-%m-%Y")%></td>
+    <td><%= truncate(income_voucher.from_account_name, :length =>20) %></td>
+    <td><%= format_currency income_voucher.amount %></td>
+    <td>
+    <% if income_voucher.payment_detail.payment_mode == 'Cash'%>
+        <%= income_voucher.payment_detail.payment_mode unless  income_voucher.payment_detail.blank? %>
+        <% else %>
+    <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="
+                   <% if income_voucher.payment_detail.payment_mode == 'Cheque'%>
+                  <p>Cheque Number: <%= income_voucher.payment_detail.account_number %> </p>
+                  <p>Cheque Date: <%= income_voucher.payment_detail.payment_date.strftime('%d %B %Y')%></p>
+                  <p>Bank Name: <%= income_voucher.payment_detail.bank_name %></p>
+                <% elsif income_voucher.payment_detail.payment_mode == 'Card'%>
+                <p>Card Number: <%= income_voucher.payment_detail.account_number %></p>
+                  <p>Transaction Date: <%= income_voucher.payment_detail.payment_date.strftime('%d %B %Y')%></p>
+                  <p>Transaction Reference: <%= income_voucher.payment_detail.transaction_reference %></p>
+                <% elsif income_voucher.payment_detail.payment_mode == 'Internet Banking'%>
+                  <p>Transaction Date: <%= income_voucher.payment_detail.payment_date.strftime('%d %B %Y')%></p>
+                <p>Bank Name: <%= income_voucher.payment_detail.bank_name %></p>
+                  <p>Transaction Reference: <%= income_voucher.payment_detail.transaction_reference %></p>
+                <% end %>
+                      "
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Payment Mode Detail'>
+        <%= income_voucher.payment_detail.payment_mode unless  income_voucher.payment_detail.blank? %></a>
+        <% end %>
+      </td>
+    <td>
+    <div class="btn-group" style="float: right;">
+        <button class="btn btn-white btn-sm" onclick="location.href='<%= edit_income_voucher_path(income_voucher) %>'"; >Edit</button>
+        <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <!-- <li><a href="<%= edit_income_voucher_path(income_voucher) %>">Edit</a></li>
+           <li class="divider"></li> -->
+          <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/income_vouchers/<%= income_voucher.id%>" >Delete</a></li>
+        </ul>
+    </div>
+    </td>
+  </tr>

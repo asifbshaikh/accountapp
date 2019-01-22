@@ -1,0 +1,90 @@
+  <script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for support in @supports
+  	 	@data<<support.subject
+  	 	@data<<support.ticket_number
+  	    @data<<support.created_date
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Support &rarr;<span>Support ticket</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%=f.text_field :subject_or_ticket_number_or_created_date_equals, :id => "autocomplete", :placeholder=>"search"%>
+		<%end%>
+	</div>
+</div>
+
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	<div class="highlight">
+          <%= render "shared/flash_msg"%>
+           <div id = "task_container">
+      
+          <div id="tabs-all">
+             <div class="colgroup">
+                <div class="width3 column first"> </div>
+             </div>
+             <div class="clearfix"></div>
+             <div id="withdrawal">
+                    <% if @supports.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+	               <table class="display stylized" id="example">
+	                  <thead>   
+	                    <%= render :partial => "header" %>
+	                  </thead>
+	                  <tbody>
+	                     <%= render :partial => "support", :collection => @supports%>
+	                  </tbody>
+	                  <tfoot>
+	                    <%= render :partial => "footer" %>
+	                  </tfoot>
+	                </table>
+	                      <%= paginate @supports %>
+	                <div class="clear">&nbsp; </div>     
+                   <% end %>
+               </div>
+          </div>
+        </div>
+        </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2"><br />
+       	<a href="/supports/new" class="btn btn-special btn-green btn-green-new"><img src ="/images/add.png" class ="icon"/>Create new ticket</a>
+        <div id="rightmenu">
+          <dl class="first">
+           <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+           <dd><a href="#" class="nyroModal">Help</a></dd>
+           <dd class="last">
+	    This page displays the list of support tickets raised by the users.<br/>Click on the ticket number to view more details.<br/><br/>
+	   </dd>
+          </dl>
+          </div><br />
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+
+
+
+

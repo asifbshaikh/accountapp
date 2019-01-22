@@ -1,0 +1,19 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Journal Entry Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="journal-filter" >
+      <tbody>
+        <tr>
+          <td><label>Voucher no</label></td>
+          <td id="journalvoucherno"></td>
+          <td><label>Voucher Date</label></td>
+          <td id="journalDate"></td>
+        </tr>
+        <tr>
+          <td><label>To Account Name</label></td>
+          <td id="journaltoacc" data-journaltoaccounts="<%= Account.journal_to_accounts(@company.id) %>"></td>
+          <td><label>Amount</label></td>
+          <td id="journalamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

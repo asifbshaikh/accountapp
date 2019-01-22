@@ -1,0 +1,95 @@
+
+  <section id="content">
+    <section class="main padder">
+      		
+	<div class="row">
+		<div class="col-lg-4">
+        <h2><i class="icon-cogs text"></i>Manage Payroll</h2>
+		</div>
+		
+		<div class="col-lg-8 m-t-large" align="right">
+                 <%= link_to raw("<i class='icon-cog'></i> Payheads"), payheads_url, :class=>'btn  btn-default btn-lg' %>
+				<p></p>
+		</div>	
+	</div>
+		
+		<div class="row">
+	    <div class="col-lg-6">
+		<!-- Start of payroll -->
+          <section class="panel">
+            <header class="panel-heading bg-light">
+              <i class="icon-list icon-download-alt text-default"></i> Monthly Payroll
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">              
+                <div class="tab-pane active" id="all">
+			  <div class="table-responsive">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Total Amount </th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <% (@start_month..(@current_month-1)).each do |m| %>
+                  <% m < 0 ? (month = 12 + m) : (month = m) %>
+                  <% m < 0 ? (year=Time.zone.now.year - 1) : (year=Time.zone.now.year) %>
+                 <tr>
+                    <td><%= "#{PayrollDetail.payroll_month(month)} #{year}" %> </td>
+                    <td><%= format_currency(payroll_total(month+1,year))  %></td>
+                    <td><%= PayrollDetail.get_status(@company.id, (month+1).to_s, @financial_year)%> </td>
+                    <td>  <%= payroll_action_button(month) %> </td>
+                  </tr>
+                <% end %>
+                  
+                </tbody>
+              </table>
+            </div>
+	
+                </div><!--"all projects" tab ends -->
+			</div>
+            
+            
+          </section>
+		  
+			</div>
+
+<!--Remove   start-->
+      <div class="col-lg-6">
+          <!-- .accordion -->
+          <div class="panel-group m-b" id="accordion2">
+            <div class="panel">
+              <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                  Payroll Guide
+                </a>
+              </div>
+              <div id="collapseOne" class="panel-collapse in">
+                <div class="panel-body text-small">
+                Before running a payroll process, you must setup payheads (salary components) and define salary structure for the employees from their respective profile pages.<br>
+                When you run payroll process for a particular month, ProfitBooks will start a simple 3 step process as following. <br><br>
+                
+                <strong>Step 1 </strong> :  Specify the number of absent days for an employee. If there are any variable components like one off bonus, you can record it at this step.<br><br>
+                <strong>Step 2 </strong>: Select a bank account from where salary will be paid.<br><br>
+                <strong> Step 3 </strong> : ProfitBooks will start processing the payroll and display the results shortly. There are two options to choose from here:<br><br>
+                <strong>A. Finalise payroll:</strong>
+                To finalise the payroll, click the 'Finalise' button. This will finalise the payroll and record journal entries in respective accounts. You can view these postings from Ledger report.<br><br>
+
+                <strong>B. Discard payroll:</strong>
+                To discard the current payroll, click the 'Dicard' button. You will be redirected to 'Manage payroll' screen. This option will reset the payroll for the current month for you to start over. <br><br>
+
+                <strong>Please note that Payroll process once finalised can not be reversed. If there is any change, you’ll have to discard the payroll before finalising.</strong>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+
+  <!--Remove end --> 
+
+   </section>
+  </section>

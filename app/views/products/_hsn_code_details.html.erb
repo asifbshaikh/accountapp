@@ -1,0 +1,37 @@
+    <% unless @product_hsn_codes.blank? %>
+    <div class="col-sm-4"><div class="dataTables_info" id="invoices_info"><%= "Showing #{@min_entry} to #{@max_entry} of #{@product_hsn_codes.total_count} entries" %></div></div>
+    <% end %>
+    <div>
+      <table id= "codes" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th> </th>
+            <th><%= "#{@code_type} Codes#" %></th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% if @product_hsn_codes.blank? %>
+        <tr><td> No records found.</td></tr>
+        <% else %>
+        <%= paginate  @product_hsn_codes, :remote => true %>
+          <% @product_hsn_codes.each do |code| %>
+          <tr>
+          <td>
+         <button type="button" id="button" class="btn btn-xs btn-default bg-success"  data-dismiss="modal" value = <%= "#{code.HSN_Code}" %>>Apply code</button>
+           </td>
+            <td> <%= code.HSN_Code %></td>
+            <td><%= code.description  %></td>
+          </tr>    
+          <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+         <script type="text/javascript">
+              $("button").click(function() {
+                  var selected_value = $(this).val();
+                   document.getElementById("product_hsn_code").value=selected_value;
+        
+              });
+           </script>

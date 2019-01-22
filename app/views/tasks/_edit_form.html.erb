@@ -1,0 +1,145 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        
+
+<%= render :partial => "shared/project_auto_complete" %>
+<%= form_for @task, :html=>{:class=>"form-horizontal"} do |f| %>
+    <%= render 'shared/form_error', :object => @task %>
+      
+         
+      <div class="form-group">
+        <div class="col-lg-12">
+        <div class="col-lg-2">
+          <%= f.label :Description, :class => "control-label-required" %>
+          </div>
+          <div class="col-lg-4">
+          <%= f.text_area :description ,:rows => "2",:class=>"bg-focus form-control" %>
+          </div>
+          <div class="6"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-12">
+         <div class="col-lg-2">
+           <%= f.label :Due_date, :class => "contro-label-required" %>
+           </div>
+           <div class="col-lg-4">
+          <%= f.text_field :due_date, :class=>"bg-focus form-control" %>
+          </div>
+          <div class="6"></div>
+        </div>
+      </div>
+        <% if !@company.plan.free_plan?%>
+        <div class="form-group">
+         <div class="col-lg-12">
+         <div class="col-lg-2">
+           <%= f.label :assigned_to, :class=>"control-label" %>
+           </div>
+           <div class="col-lg-4">
+          <%= collection_select(:task, :assigned_to, @company.users, :id, :first_name, 
+          { }, {:class=>"bg-focus form-control"}) %>
+          </div>
+          <div class="6"></div>
+        </div>
+        </div>
+        <%end%>
+        <div class="form-group">
+        <div class="col-lg-12">
+        <div class="col-lg-2">
+           <%= f.label :priority , :class=>"control-label"%>
+           </div>
+        <div class="col-lg-4">
+          <%= f.select(:priority_name,[['Low'],['Normal'],['High']], {}, {:class=>"bg-focus form-control"}) %>
+          </div>
+          <div class="6"></div>
+        </div>
+        </div>
+        <% if !@projects.blank? && !@company.plan.free_plan? %>
+      <div class="form-group">
+        <div class="col-lg-12">
+          <div class="col-lg-2">
+             <%= f.label "Select project", :class=> 'cotrol-label' %>
+           </div>
+           <div class="col-lg-4">
+             <input type="text" name="project_id"  id="project_auto_complete" class="bg-focus form-control" value='<%= (!@task.project_id.blank?)? "#{@task.project_name}" : ""%>' />
+          </div>  
+          <div class="6"></div>
+        </div>
+      </div>
+            <% end %>
+        <div class="form-group">
+        <div class="col-lg-2">
+          </div>
+         <div class="col-lg-4">
+         <label class="control-label">
+         <% if !@task.billable? %>
+          <%= f.check_box(:billable, :value => 1, :disabled=> false, :class=>"" )%>
+          <% else %>
+          <%= f.check_box(:billable, :value => 1, :disabled=> (@task.new_record? ? false : true), :class=>"")%>
+          <% end %>
+          Billable</label>
+          </div>
+          <div class="6"></div>
+          </div>
+          
+          <div class="form-group">
+          <div class="col-lg-12">
+           <div class='sales_acc_info' style='display: none;' disabled='disabled'>
+          <div class="col-lg-2">
+            <%= f.label 'Income account', :class=>"control-label" %>
+            </div>
+            <div class="col-lg-4">
+            <%= select_tag('task[sales_account_id]', options_from_collection_for_select(Account.get_income_accounts(@company.id), :id, :name, @task.sales_account_id ),  :class=>"bg-focus form-control")%>
+            </div>
+            <div class="6"></div>
+          </div>
+        </div>
+        </div>
+
+          <div class="form-group">
+          <div class="col-lg-12">
+            <div class="col-lg-2">     
+              <label class="control-label">Task status:</label>
+            </div>
+            <div class="col-lg-4">
+                   <%= (@task.task_status == 0 )? 'Incomplete' : 'Complete'%>
+             </div>
+             <div class="col-lg-6"></div>
+            </div>
+            </div> 
+          <div class="form-group">
+          <!-- <div class="col-lg-12">
+            <% if @task.task_status == 1 %>
+            <div class="col-lg-2">
+               <input id='task_task_status' name='task[task_status]'  value='0' type='checkbox' data-confirm='Are you sure?' class="bg-focus form-control" />
+              </div>   
+              <div class="col-lg-4">
+                 <%= f.label :task_status,("Mark incomplete") %>
+                 </div>
+            <% else %>
+            <div class="col-lg-2">
+             <input id='task_task_status' name='task[task_status]' class="bg-focus form-control"  value='1' type='checkbox' data-confirm='Are you sure?'/>
+             </div>
+             <div class="col-lg-4">
+              <%= f.label :task_status,("Mark complete") , :class=> "control-label" %>
+              </div>
+             <% end %> 
+             <div class="col-lg-6"></div>
+            </div>
+          </div>-->
+          <div class="form-group">
+          <p></p>
+          <div class="col-lg-9 col-lg-offset-3">        
+            <%= f.submit 'Save Task', :class=>"btn btn-success" %>&nbsp;
+              <%= link_to 'Cancel',tasks_path , {:class=>"btn btn-white"} %>
+          </div>
+          </div>
+<% end %>
+</div>
+    </section>
+  </div>
+</div>
+
+      

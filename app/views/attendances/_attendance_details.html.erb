@@ -1,0 +1,27 @@
+<table class="table table-striped b-t" id="line_items">
+  <thead>
+    <tr>
+      <th>For Employee</th>
+      <th>Days Abesent</th>
+      <th>Variable Items</th>
+      <th>Net Salary</th>
+      <th>Salary Slip</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <% unless user.salary_structure.blank? %>
+      <% variable_payhead_details = user.variable_payhead_for_this_month(@month) %>
+        <tr>
+          <td><%= user.full_name%></td>
+          <td>
+          <%= user.this_month_attendance(@month) %>
+          </td>
+          <td> <%= variable_payhead_details.blank? ? "No item added" : (render :partial => "attendances/variable_payhead_detail", :collection => variable_payhead_details) %></td>
+          <td><%= format_currency(user.net_salary(@month) + user.variable_pay(@month)) %></td>
+          <td><%= link_to "Pay Slip", "/salary_slip/detail.pdf?month=#{@month.year}-#{@month.month}&user_id=#{user.id}", :target => "_blank" %></td>
+        </tr>
+     <% end %>
+    <% end %>
+  </tbody>
+</table>

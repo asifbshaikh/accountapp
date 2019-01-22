@@ -1,0 +1,8 @@
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+<% else %>
+	$("div[id^='modal']").modal('hide');
+	window.location.reload()
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

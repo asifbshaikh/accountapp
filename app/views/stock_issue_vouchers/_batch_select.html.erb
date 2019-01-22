@@ -1,0 +1,4 @@
+ <div class='issue-batch-details' style="display:inline">
+ 	<%= select_tag "stock_issue_voucher[stock_issue_line_items_attributes][#{params[:index]}][product_batch_id]", options_from_collection_for_select_with_data(@product_batches, :id, :batch_number, @product_batches.first.id, {:"available_quantity"=> :quantity}), :style => "width:40%; display:inline;", :id => "product_quantity", :class=>'form-control bg-focus issue-batch-select', :"data-index" => params[:index], :"data-unit"=> @product_batches.first.product.unit_of_measure  %>
+ 	<i style='color:green;' id='qty-notif'>Available qty <%= "#{@product_batches.first.quantity} #{@product_batches.first.product.unit_of_measure}" %></i>
+ </div>

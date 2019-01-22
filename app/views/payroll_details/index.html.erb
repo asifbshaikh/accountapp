@@ -1,0 +1,110 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-group text"></i> Manage Payroll</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <a href="/users" class="btn btn-white btn-lg"><i class="icon-user"> </i> Employees</a>
+        <div class="btn-group">
+          <button class="btn btn-white btn-lg"><i class="icon-edit"> </i> Manage</button>
+          <button class="btn btn-white btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><i></i></button>
+          <ul class="dropdown-menu" align="left">
+            <li class="text-left"><a href="/leave_requests">Leave Requests</a></li>
+            <li class="text-left"><a href="/company_assets">Manage Assets</a></li>
+            <li class="text-left"><a href="/payheads">Payroll Setting</a></li>
+          </ul>
+        </div>
+        <%= render :partial=>"shared/payroll_report_dropdown" %>
+        <p></p>
+      </div>
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+    	    <!-- First section -->
+          <div class="col-lg-7">
+            <section class="panel">
+              <%= render :partial=>"shared/flash_msg"%>
+              <header class="panel-heading ">
+                Payroll Status by Month
+              </header>
+
+              <ul class="list-group">
+                <% (@start_month..(@current_month-1)).each do |m| %>
+                  <% m < 0 ? (month = 12 + m) : (month = m) %>
+                  <% m < 0 ? (year=Time.zone.now.year - 1) : (year=Time.zone.now.year) %>
+                  <li class="list-group-item">
+                    <div class="media">
+                      <%= payroll_action_button(month) %>
+                      <div class="media-body">
+                        <div>
+                          <a href="#" class="h5"><%= "#{PayrollDetail.payroll_month(month)} #{year}" %></a>
+                        </div>
+                      </div>
+                      <small class="text-muted">
+                        <%= PayrollDetail.get_status(@company.id, (month+1).to_s, @financial_year)%>.
+                      </small>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </section>
+  		  </div><!-- First section ends-->
+  		  <!-- Second section -->
+        <div class="col-lg-5">
+          <div class="col-xs-12">
+            <section class="panel text-center">
+              <div class="panel-body">
+                <p>
+                  <strong> Total Employee: </strong>
+                  <%= @company.users.count %>
+                </p>
+                <p>
+                  <strong> Joined This Month: </strong>
+                  <%= @company.user_joined_this_month.count %>
+                </p>
+                <p>
+                  <strong> Left This Month: </strong>
+                  <%= @company.user_left_this_month.count %>
+                </p>
+              </div>
+            </section>
+          </div>
+          <% unless @holidays.blank? %>
+            <div class="col-xs-12">
+              <section class="panel">
+                <header class='panel-heading'>
+                  Upcoming holidays
+                </header>
+                <div class="panel-body">
+                  <p>
+                    <% @holidays.each do |h|%>
+                      <i class="icon-bell"></i>
+                      <%= h.holiday  %>
+                      <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small>
+                    <%end%>
+                  </p>
+                </div>
+              </section>
+            </div>
+          <% end %>
+
+          <!-- <div class="col-xs-12">
+            <section class="panel">
+              <header class='panel-heading'>
+                Recent activities
+              </header>
+              <div class="panel-body">
+                <p>
+                </p>
+              </div>
+            </section>
+          </div> -->
+        </div><!-- Second section ends-->
+  		</div><!-- first row ends -->
+      </div>
+	  </section>
+  </section>
+</section>
+

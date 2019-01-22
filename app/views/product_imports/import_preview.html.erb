@@ -1,0 +1,95 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-8">
+       <h2><i class="icon-file text"></i>Import Status</h2>
+        </div>
+        
+        <div class="col-lg-4 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-trash"> </i>'), {:controller => "product_imports", :action => "delete_file", :id => @file_id},:confirm => 'Are you sure?',:class=> 'btn btn-default btn-lg',:title =>"Delete"%>
+     <%= link_to raw('<i class="icon-mail-reply"> </i>'), product_imports_path, :class => 'btn btn-default btn-lg', :title =>"Back" %><p></p>
+      </div> 
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <% if @imported_products.blank? %>
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <div class="row">
+            <div class="col-lg-12">
+          <div class = "panel">
+            <div class="panel-body">
+              <span class="badge bg-success">Success :  <%= @successfull_products %></span>
+              <span class="badge bg-danger">Failed : <%= @failed_products %></span>
+              <span class="badge bg-warning">Duplicate : <%= @duplicate_products %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="table-responsive row">
+                <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>inventory Enabled</th>
+                    <th>Batch Enabled</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                 </thead>
+                <tbody>
+                  <% @imported_products.each do |product|%>
+                   <tr>
+                      <td>
+                         <%= product.name%>
+                      </td>
+                      <td>
+                        <% if !product.warehouse.blank? && !product.quantity.blank?%>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if !product.batch_no.blank? %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if product.status == 1 %>
+                        <label class="label bg-success">Success</label>
+                        <% elsif product.status == 0 %>
+                        <label class="label bg-danger">Failed</label>
+                        <% elsif product.status == 2 %>
+                        <label class="label bg-warning">Duplicate</label>
+                        <% end %>
+                      </td>
+                      <% if product.status == 0 %>
+                      <td><%= link_to  "Correct Product", new_product_path(:product_id => product.id), :class => "btn btn-sm btn-success m-b-small", :target => "_blank"%></td>
+                      <%else%>
+                      <td></td>
+                      <% end %>
+                    </tr>
+                 <%end%>
+                </tbody>
+                <tfoot>
+                    <tr>
+                  <td colspan="5" align="center">
+                  
+                  </td>
+                </tr>
+                 </tfoot>
+              </table>
+              </div>
+              <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>

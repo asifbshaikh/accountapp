@@ -1,0 +1,105 @@
+<script>
+	$(document).ready(function(){
+	'<%
+ @data = []
+    for estimate in @estimates
+      @data<<estimate.estimate_number
+      @data<<estimate.estimate_date
+      @data<<estimate.estimate_line_items.sum(:amount)
+      @data<<estimate.account.name
+    end
+%>
+'
+data = '
+<%= @data.join(',')%>'.split(',');
+	$("input#autocomplete").autocomplete({
+	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Income &rarr;<span>Deleted Estimates</span></h1>
+		<%= form_for @search, :method => "get", :action=>"/estimates/deleted_estimate" do |f| %>
+		<%= f.text_field :estimate_number_or_estimate_date_or_estimate_line_items_amount_or_account_name_equals, :id =>"autocomplete", :placeholder => "search" %>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width6 first">
+			<br />
+			<div id="tabs">
+				<div class="highlight">
+					<%= render "shared/flash_msg" %>
+					 <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/estimates">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/estimates/deleted_estimate">Deleted</a>
+                    </li>
+                </ul>
+            </div> 
+        <div class="clearfix"></div>
+           <div id = "task_container">
+						<div class="colgroup">
+							<div class="width3 column first"></div>
+						</div>
+						<% if @estimates.blank? %>
+						<p class="no-withdraw_cash">
+							<%= render :partial => "shared/no_record" %>
+						</p>
+						<% else %>
+						<table class="display stylized" id="example">
+							<thead>
+								<%= render :partial => "header" %>
+							</thead>
+							<tbody>
+								<%= render :partial => "deleted_estimate", :collection => @estimates %>
+							</tbody>
+							<tfoot>
+								<%= render :partial => "footer" %>
+							</tfoot>
+						</table>
+						<div class="clearfix">
+							<div class="width3 column">
+								<%= paginate @estimates %>
+							</div>
+						</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<br />
+		</section>
+		<!-- End of Left column/section -->
+		<!-- Right column/section -->
+		<aside class="column width2">
+			<br />
+			<a href="/estimates/new" class="btn btn-special btn-green btn-green-new">&nbsp; Create new estimate</a>
+			<div id="rightmenu">
+				<dl class="first">
+					<dt><img width="16" height="16" alt="" SRC="/images/help.png">
+					</dt>
+					<dd>
+						<%= link_to 'Help', "/46/46", :class=>"nyroModal" %>
+					</dd>
+					<dd class="last">
+						If you are a new user, you should read "Getting started"
+					</dd>
+				</dl>
+			</div>
+			<br />
+		</aside>
+		<!-- End of Right column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

@@ -1,0 +1,232 @@
+ <section id="content">
+    <section class="main padder">
+
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-user text"></i><%= best_in_place  @vendor, :name, :nil=> '<span class ="variable_item">Click here to add email</span> ', :html_attrs => {:class=>"bg-focus form-control"} %></h2>
+    </div>
+      <div class="col-lg-5 m-t-large" align="right">
+      <div class="btn-group">
+        <button class="btn btn-success btn-lg"><i class="icon-plus"> </i> Create New</button>
+        <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><i></i></button>
+        <ul class="dropdown-menu text-left">
+         <li><a href="/purchases/new?account_id=<%= @vendor.account.id %>">Purchase</a></li>
+          <li><a href="/purchase_orders/new?account_id=<%= @vendor.account.id %>">Purchase order</a></li>
+          <li><a href="/payment_vouchers/new?account_id=<%= @vendor.account.id %>">Payment</a></li>
+        <!--   <li><a href="/vendors/new">Contact</a></li> -->
+        </ul>
+      </div>
+     <!--  <a href="#" class="btn btn-white btn-lg"><i class="icon-file-text"> </i> Statement </a> -->
+      <a href="/vendors" class="btn btn-default btn-lg"><i class="icon-mail-reply"> </i> </a>
+      <p></p>
+    </div>
+  </div>
+ <div class="row">
+      <!-- Address section -->
+        <div class="col-sm-3">
+          <section class="panel bg-light">
+            <div class="panel-body">
+    <p><i class="icon-phone"> </i>
+        <%= best_in_place  @vendor, :primary_phone_number, :nil=> '<span class ="variable_item">Click here to add phone number</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 15,:onkeydown => "return numbersOnly(event);"} %></p>
+       <p><i class="icon-envelope-alt"> </i> <%= best_in_place  @vendor, :email, :nil=> '<span class ="variable_item">Click here to add email</span> ', :html_attrs => {:maxlength => 50,:class=>"bg-focus form-control"} %></p>
+        <p><i class="icon-globe"> </i> <%= best_in_place  @vendor, :website, :nil=> '<span class ="variable_item">Click here to add website</span> ', :html_attrs => {:maxlength => 30,:class=>"bg-focus form-control"} %> </p>
+        <p><i class="icon-money"> </i> <%= best_in_place  @vendor, :currency_id, :type=> :select, :collection=> Currency.list, :nil=> '<span class ="variable_item">Click here to add currency</span> ', :html_attrs=>{:class=>'form-control bg-focus'} %> </p>
+
+          <!-- .accordion -->
+          <div class="panel-group m-b" id="accordion2">
+            <div class="panel">
+              <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                  Billing/Shipping Address
+                </a>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body text-small">
+                  <% unless @vendor.billing_address.blank? %>
+                  <h4>Billing Address</h4>
+                  <p><%= @vendor.billing_address.address_line1 %></p>
+                <% end %>
+                <% unless @vendor.shipping_address.blank? %>
+                  <h4>Shipping Address</h4>
+                  <p><%= @vendor.shipping_address.address_line1 %></p>
+                <% end %>
+                <button class="btn btn-white btn-sm dropdown-toggle text-right"  data-toggle="modal" data-target='#modal1'><span class="dropdown-label"> Update Address</span> </button>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                  Tax Details
+                </a>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body text-small">
+                  <% if @company.country_id == 93 %>
+                  <p><strong>GST Registration type: </strong><%= best_in_place  @vendor, :gst_category_id, type: :select, :collection => GstCategory.all.map{|e| [e.id,e.name]} , :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control"}  %></p>                  
+                  <p><strong>GST: </strong> <%= best_in_place  @vendor, :gstn_id, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control", :pattern =>"[0-9]{2}[A-Z0-9]*",:minlength => 15, :maxlength => 15} %></p>  
+                  <p><strong>PAN: </strong> <%= best_in_place  @vendor, :pan, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <%else%>
+                  <p><strong>Tax Reg. No: </strong> <%= best_in_place  @vendor, :tax_reg_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <% end -%>
+                  <p><strong>TAN: </strong> <%= best_in_place  @vendor, :tan, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <p><strong>VAT TIN: </strong> <%= best_in_place  @vendor, :vat_tin, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <p><strong>CST Reg. No.: </strong> <%= best_in_place  @vendor, :cst, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <p><strong>Excise Reg. No.: </strong> <%= best_in_place  @vendor, :excise_reg_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <p><strong>Service Tax Reg. No: </strong> <%= best_in_place  @vendor, :service_tax_reg_no, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                  <p><strong>LBT Reg. No.: </strong> <%= best_in_place  @vendor, :lbt_registration_number, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 20} %></p>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                  Payment Details
+                </a>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body text-small">
+                  <p><strong>Opening balance : </strong><%= best_in_place  @vendor.account, :opening_balance, :nil=> '<span class ="variable_item">Click here to add opening balance</span> ', :html_attrs => {:class=>"bg-focus form-control",:maxlength => 15,:onkeydown => "return balOnly(event);"} %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- / .accordion -->
+      </div><!-- panel body ends-->
+      </section>
+      </div><!-- Address section ends-->
+
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-xs-4 bg-info padder">
+            <div class="h3 m-t-mini">
+              <%= format_amt_with_currency(@vendor.currency_code, @purchase_total) %>
+              <%if @multicurrency %>
+                <br/> <%= format_amt_with_currency(@company.country.currency_code, @purchase_base_cur_total) %>
+              <% end %>
+            </div>
+            <p>Paid in purchases</p>
+          </div>
+          <div class="col-xs-4 bg-warning padder">
+            <div class="h3 m-t-mini">
+              <%= format_amt_with_currency(@vendor.currency_code, @purchase_orders_total) %>
+              <%if @multicurrency %>
+                <br/><%= format_amt_with_currency(@company.country.currency_code, @purchase_orders_base_cur_total) %>
+              <% end %>
+            </div>
+            <p>Unpaid in purchase orders</p>
+          </div>
+          <div class="col-xs-4 bg-success padder">
+            <div class="h3 m-t-mini">
+              <%=format_amt_with_currency(@vendor.currency_code, @payments_total) %>
+              <%if @multicurrency %>
+                <br/><%= format_amt_with_currency(@company.country.currency_code, @payments_base_cur_total) %>
+              <% end %>
+            </div>
+            <p>Paid this year</p>
+          </div>
+      </div>
+       <!-- row ends -->
+       <div class="row">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li class="active"><a href="#purchase-tab" data-toggle="tab"><i class="icon-list icon-large text-default"></i>Purchases</a></li>
+                <li><a href="#purchase-order-tab" data-toggle="tab"><i class="icon-time icon-large text-default"></i>Purchase Orders</a></li>
+                <li><a href="#payment-tab" data-toggle="tab"><i class="icon-check icon-large text-default"></i>Paid Money</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+            <div class="tab-content">
+            <div class="tab-pane" id="recent-activity">
+            </div>
+
+            <div class="tab-pane active" id="purchase-tab">
+              <div class="table-responsive">
+                <table id="purchases" class="table table-striped m-b-none text-small" data-source="<%= purchases_url(:format => 'json', :vendor => @vendor.account.id) %>" >
+                  <thead>
+                    <tr>
+                      <th>Purchase number</th>
+                      <th>Record Date</th>
+                      <th>Due date</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                    <tr style="visibility:hidden">
+                      <th>Purchase number</th>
+                      <th>Record Date</th>
+                      <th>Due date</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="purchase-order-tab">
+              <div class="table-responsive">
+                <table id="purchase-orders" class="table table-striped m-b-none text-small" data-source="<%= purchase_orders_url(:format => 'json', :vendor => @vendor.account.id) %>" >
+                  <thead>
+                    <tr>
+                      <th>Purchase number</th>
+                      <th>Record date</th>
+                      <th>Amount</th>
+                      <th>Created by</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                    <tr style="visibility:hidden">
+                      <th>Purchase number</th>
+                      <th>Record date</th>
+                      <th>Amount</th>
+                      <th>Created by</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="payment-tab">
+              <div class='table-responsive'>
+                <table class="table table-striped m-b-none text-small" id="payment_vouchers" data-source="<%= payment_vouchers_url(:format=>'json', :vendor=> @vendor.account.id)%>">
+                  <thead>
+                    <tr>
+                      <th>Voucher Number</th>
+                      <th>Payment Date</th>
+                      <th>Amount</th>
+                      <th>Payment Mode</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                    <tr style="visibility:hidden">
+                      <th>Voucher Number</th>
+                      <th>Payment Date</th>
+                      <th>Amount</th>
+                      <th>Payment Mode</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="notes-tab">
+
+            </div>
+           </div>
+          </div>
+          </section>
+        </div>
+      </div>
+</div>
+</section>
+</section>
+
+ <div id="modal1" class="modal fade">
+    <%= render "address"%>
+  </div>

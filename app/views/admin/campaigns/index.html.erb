@@ -1,0 +1,51 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<!-- Left column/section -->
+	<br/>
+	<div class="wrapper">
+    <section class ="column width6 first">
+      <div class ="highlight">
+			  <%= render :partial => "shared/flash_msg" %>
+      	 <div class="clearfix"></div>
+          <div id = "company_container">
+          <% if @campaigns.blank?%>
+          <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table class="display stylized" id="act_details">
+              <thead>
+                <tr>
+                  <th><label>Campaign Name</label></th>
+                  <th><label>Start Date</label></th> 
+                  <th><label>End Date</label></th>
+                  <th><label>Action</label></th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => 'admin/campaigns/campaign', :collection => @campaigns %>
+              </tbody>
+              <tfoot>
+                <tr><td colspan=4></td></tr>
+              </tfoot>
+            </table>
+          <% end %>
+          </div>
+           <%= paginate @campaigns %>
+					<div class="clear">
+						&nbsp;
+        </div>
+     </div>
+		<br />
+			<!-- End of Left column/section -->
+	</section>
+		<!-- Right column/section -->
+      <aside class="column width2">
+<%= new_button("Add New Campaign", new_admin_campaign_path)%>
+
+        <br/>
+      </aside>
+	</div>
+</div>
+

@@ -1,0 +1,22 @@
+<tr>
+  <td colspan="<%= sales_order_line_count %>" class="text-right" style="background:none;border:none;">Sub total</td>
+  <td class="text-right" style="background:none;border:none;"><%=  number_with_precision @sales_order_line_items.sum(:amount), :precision=>2 %></td>
+</tr>
+<% if @sales_order.get_discount != 0 %>
+  <tr>
+     <td colspan="<%= sales_order_line_count %>" class="text-right" style="background:none;border:none;">Discount</td>
+     <td class="text-right" style="background:none;border:none;"><%=  number_with_precision @sales_order.get_discount, :precision=>2 %></td>
+  </tr>
+<% end %>
+
+<% if @sales_order.has_tax_lines? %>
+  <tr>
+    <td colspan="<%= sales_order_line_count %>" class="text-right">Tax</td>
+    <td class="text-right"><%= number_with_precision @sales_order.tax, :precision=>2 %></td>
+  </tr>
+<% end %>
+<%= render :partial=> "shipping_line_item_details" , :collection => @shipping_line_items %>
+<tr>
+  <td class="text-right" colspan="<%= sales_order_line_count %>"><b>Total</b></td>
+  <td class="text-right"><b><%= number_with_precision @sales_order.total_amount, :precision=>2 %></b></td>
+</tr>

@@ -1,0 +1,8 @@
+<% gstr_advance_receipt = invoice_advance_receipt.gstr_advance_receipt %>
+<tr>
+  <td><%= link_to gstr_advance_receipt.voucher_number, gstr_advance_receipt_path(gstr_advance_receipt) %></td>
+  <td><%= gstr_advance_receipt.voucher_date %></td>
+  <td><%= gstr_advance_receipt.received_date %></td>
+  
+  <td class="text-right"><%= format_amount invoice_gstr_advance_receipts.amount %></td>
+</tr>

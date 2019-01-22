@@ -1,0 +1,21 @@
+$(".popup-error").remove();
+$("#address-space").remove();
+<% if @customer.errors.any? %>
+	$(".errorSection").after("<%= escape_javascript render('shared/popup_form_error', {:object => @customer})%>")
+<% else %>
+	<% if params[:selector] == "sales_order_customer_id" %>
+		var new_option = new Option("<%= @customer.name%>", "<%= @customer.id %>");
+		new_option.selected=true;
+		$("#<%= params[:selector]%>").append($(new_option)).change();
+	<% else %>
+	  var new_option = new Option("<%= @customer.account.name%>", "<%= @customer.account.id %>");
+	  new_option.selected=true;
+		$("#<%= params[:selector]%>").append($(new_option)).change();
+	<% end %>
+  <% billing_address=@customer.billing_address.blank? ? Address.new : @customer.billing_address %>
+  <% shipping_address=@customer.shipping_address.blank? ? Address.new : @customer.shipping_address %>
+  $("#address").after('<%= escape_javascript render("invoices/customer_address_with_modal", :billing_address=>billing_address, :shipping_address=>shipping_address ) %>')
+	$("div[id^='modal']").modal('hide');
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

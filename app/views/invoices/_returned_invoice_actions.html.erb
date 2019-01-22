@@ -1,0 +1,6 @@
+<% unless @invoice.fully_returned? %>
+  <%= link_to raw('Return This Invoice'), new_invoice_return_path(:invoice_id=>@invoice.id), :class=>"btn btn-white btn-lg" %>
+<button class="btn btn-success btn-lg dropdown-toggle" title="Add Payment" data-toggle="modal" data-target='#modal2'>
+<span class="dropdown-label"><i class="icon-ok-circle"></i> Add Payment</span>
+</button>
+<% end %>

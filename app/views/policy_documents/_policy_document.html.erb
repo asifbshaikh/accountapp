@@ -1,0 +1,17 @@
+<tr>  
+   <td>
+   <% if policy_document.file_name =~ /.pdf/%>	
+   	<img src="/images/pdf1.gif", height="10", width="10">
+   <% elsif policy_document.file_name =~ /.docx|doc/%>	
+   	<img src="/images/docx.png", height="10", width="10">
+   <% elsif policy_document.file_name =~ /.xlsx/%>
+   	<img src="/images/excel_icon.gif", height="10", width="10">
+   <% elsif policy_document.file_name =~ /.txt/%>	
+   	<img src="/images/edit.png", height="10", width="10">
+   <% end %>  
+   	<%= link_to policy_document.file_name, download_url(policy_document) unless policy_document.file_name.blank? %>
+   	</td>  
+   <td><%= number_to_human_size(policy_document.file_size, :precision =>2) %></td>  
+   <td><%= policy_document.uploaded_file_updated_at.strftime("%d-%m-%Y") %></td>
+   <td><%= link_to 'Delete', policy_document, :confirm => 'Are you sure?', :method => :delete ,:class => "btn btn-gray"%></td>  
+</tr>  

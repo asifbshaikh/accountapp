@@ -1,0 +1,155 @@
+<script>
+  $(document).ready(function(){
+    if (!$.browser.opera) {
+    
+			// select element styling
+			$('select.select_year').each(function(){
+				var title = $(this).attr('title');
+				if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
+				$(this)
+					.css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+					.after('<span class="select_year">' + title + '</span>')
+					.change(function(){
+						val = $('option:selected',this).text();
+						$(this).next().text(val);
+						})
+			});
+
+		};
+    $("select.select_year").change(function(){
+      var year = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: "/dashboard/set_session?session_id="+year
+      });
+    });
+  });
+  </script> 
+  <!-- Header -->
+  <header id="top">
+    <div class="wrapper">
+      <!-- Top navigation -->
+      <%= render :partial=> "shared/user_and_company_title"%> 
+      <!-- End of Top navigation -->
+
+      <!-- Main navigation -->
+      <nav id="menu">
+        <ul class="sf-menu">
+          <li class="home">
+            <%= link_to 'Accounting', :controller => :dashboard %>
+            <ul>
+              <li><%= link_to "Payroll", :controller => :payroll_dashboard%></li>
+            </ul>
+            
+          </li>
+          <li class="<%=tab_selection 'income' %>">
+            <a HREF="#">Income</a>
+            <ul>
+              <li><%= link_to 'Invoices', invoices_path %></li>
+              <li><%= link_to "Receive Money", receipt_vouchers_path %></li>
+              <li><%= link_to 'Estimates', :controller => :estimates, :action => :index %></li>
+              <li><%= link_to 'Other Income', income_vouchers_path %></li>
+            </ul>
+          </li>
+          <li class="<%=tab_selection 'expenses' %>">
+            <a HREF="#">Expenses</a> 
+            <ul>
+              <li><%= link_to "Record Expenses", :controller => :expenses, :action => :index %></li>
+              <li><%= link_to "Record Purchases", :controller => :purchases, :action => :index %></li>
+              <li><%= link_to 'Purchase Orders', purchase_orders_path %></li>
+              <li><%= link_to 'Make Payments', payment_vouchers_path %></li>
+            </ul>
+          </li>
+          <li class="<%=tab_selection 'banking' %>">
+            <a HREF="#">Banking</a>
+            <ul>
+              <li><%= link_to 'Withdraw Cash' , :controller => :withdrawals, :action => :index %></li>
+              <li><%= link_to 'Deposit Cash' , :controller => :deposits, :action => :index %></li>
+              <li><%= link_to 'Transfer Money', :controller => :transfer_cashes, :action => :index %></li>
+              <!--<li><a HREF="/bank_reconciliation/reconcile">Reconciliation</a></li>-->
+            </ul>
+          </li>           
+          <li class="<%=tab_selection 'journal' %>">
+            <a HREF="#">Journal</a>
+            <ul>
+              <li><%= link_to "Journal Entry", :controller => :journals, :action => :index %></li>
+              <li><%= link_to 'Debit Note' , :controller => :debit_notes, :action => :index %></li>
+              <li><%= link_to 'Credit Note' , :controller => :credit_notes, :action => :index %></li>
+              <li><%= link_to 'Simple Accounting Entry' , :controller => :saccountings, :action => :index %></li>
+            </ul>
+          </li>            
+          <li class="<%=tab_selection 'inventory' %>">
+            <a HREF="#">Inventory</a>
+            <ul>
+              <li><%= link_to 'Products', products_path %></li>
+              <li><%= link_to 'Warehouses', warehouses_path %></li>	
+              <li><%= link_to 'Stock Issue Vouchers', stock_issue_vouchers_path %></li>	
+              <li><%= link_to 'Stock Receipt Vouchers', stock_receipt_vouchers_path %></li>
+            </ul>	
+          </li>                
+          <li class="<%=tab_selection 'reports' %>">
+            <a HREF="#">Reports</a>
+            <ul>
+             <li><a HREF="#">Final accounts</a>
+                <ul>
+                  <li><%= link_to "Balance Sheet", :controller => :horizontal_balance_sheet, :action => :index %></li>
+                  <li><%= link_to "Profit and Loss", :controller => :horizontal_profit_and_loss, :action => :index %></li>
+                  <!-- <li><a HREF="#">Cash flow statement</a></li> -->
+                  <li><%= link_to "Trial Balance", :controller => :trial_balance, :action => :index %></li> 
+                </ul>
+              </li> 
+              <li><a href="#">Account Books and Register</a>
+              	<ul>
+              		<li><a href="/bank_book/index"> Bank Book</a></li>
+              	   <li><a href="/cash_book/index"> Cash Book</a></li>
+              	   <li><a href="/credit_note_register/index">Credit Note Register</a></li>
+              	   <li><a href="/debit_note_register/index">Debit Note Register</a></li>
+              	   <li><a href="/journal_register/index"> Journal Register</a></li>
+                   <li><a HREF="/bills_payable/index">Outstanding payments</a></li>
+                   <li><a HREF="/bills_receivable/index">Outstanding Receipts</a></li>
+                   <li><a HREF="/purchase_register/index">Purchase Register</a></li>
+                   <li><a HREF="/sales_register/index">Sales Register</a></li>
+                   <li><a HREF="/sundry_creditor/index">Sundry Creditor</a></li>
+              	</ul>
+              </li>
+              <li><a HREF="/account_books_and_registers/ledger">Ledger</a></li>
+              <li><a HREF="/daybook/index">Day book</a></li>
+               <li><%= link_to 'Recent Activities', workstreams_path %></li>
+            </ul>
+          </li>
+          <li class="<%=tab_selection 'settings' %>">
+	              <a href="">Settings</a>
+	              <ul>
+	                
+                  <% if @current_user.roles[0].name != "Staff" %>
+                  <li><%= link_to 'Accounts', accounts_path %></li>
+                  <li><%= link_to 'Users', users_path %></li>
+                  <li><%= link_to 'Auditors', auditors_path %></li>
+                  <li><%= link_to 'Company',:controller=> :settings, :action=> :show %></li>
+                 <!-- <li>
+                  <%= link_to 'Maintain Projects',:controller=> :projects, :action => :index %>
+                 </li> -->
+                  <% end %>
+                  <li><%= link_to 'My Settings',@current_user %></li>
+	              </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- End of Main navigation -->
+
+      <!-- Aside links -->
+      <aside>
+      <% if @msg_cnt== 0%>
+     	 <%= link_to "Messages", messages_path %>&middot;&nbsp;
+     <% else %>	 
+        <%= link_to "Messages(#{@msg_cnt})", messages_path %>&middot;&nbsp;
+      <% end %> 
+       <%= link_to 'Tasks', tasks_path %> &middot;&nbsp; 
+       <%= link_to 'Notes', notes_path %> &middot;&nbsp; 
+       <%= link_to 'Documents', documents_index_url %>&nbsp; 
+      <!--  <%= link_to 'Contact', contacts_path %> -->
+      </aside>
+      <!-- End of Aside links -->
+    </div>
+  </header>
+  <!-- End of Header -->

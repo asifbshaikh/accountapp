@@ -1,0 +1,20 @@
+<% new_text = "Dear Sir,
+
+Thank you for registering for ProfitBooks. We will be glad to assist you by providing more information on ProfitBooks and help you map your business on ProfitBooks. We tried contacting you on your registered contact no 4423766051 but could not connect.
+
+
+Kindly let me know a good time to talk to you and if possible provide with your alternate number so that we can further contact you.
+ 
+ProfitBooks is an Online Accounting, Inventory Management & Payroll Application especially designed for Small & Medium Businesses. ProfitBooks is very easy to operate and does not require prior accounting knowledge and is trusted by over 1,000 users across India. 
+
+
+Why ProfitBooks? 
+
+-  Most of the times we depend heavily on our accountant to manage financial data of the company and we don’t really have a clear picture of the business until we learn to use complicated accounting applications like Tally. That’s where ProfitBooks steps in.
+-  Send Professional looking Estimates & Invoices to your clients even when you are away from your office 
+-  Multiple application for Invoicing, Accounting, Payroll and Inventory management increases duplication of data and scope for errors. ProfitBooks offers easy to use integrated platform for all important business activities. 
+-  Many businesses use Excel or other manual application to record transactions. These activities does not give up to date overview of business. ProfitBooks enables all important reports with few clicks and enables strong decision making platform." %>
+<div class="block" id = "template">
+<%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+<%= text_area_tag  :text, new_text,:rows=>4, :class=>"bg-focus form-control"%>
+</div>

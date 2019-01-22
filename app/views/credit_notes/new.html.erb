@@ -1,0 +1,14 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+            <h2><i class="icon-edit text"></i>New Credit Note </h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+       <%= link_to raw('<i class="icon-mail-reply"> </i>'), credit_notes_path, :class => 'btn btn-default btn-lg', :title =>"Back" %><p></p>
+          <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+      <%= render :partial=> "form" %>
+    </section>
+  </section>

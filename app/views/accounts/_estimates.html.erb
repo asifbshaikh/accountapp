@@ -1,0 +1,28 @@
+<div class='account_container'>
+<% if @estimates.blank? %>
+  <%= render "shared/no_record"%>
+<% else %>
+  <table class="display stylized" id="act_details">
+      <thead>
+        <tr>
+          <th><%= @company.label.estimate_label %> #</th>
+          <th><%= @company.label.customer_label %></th>
+          <th><%= @company.label.estimate_label %> date</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+    <tbody>
+      <% @estimates.each do |estimate| %>
+      <tr>
+        <td><%= link_to estimate.estimate_number, estimate %></td>
+        <td><%= estimate.customer_name %></td>
+        <td><%= estimate.estimate_date %></td>
+        <td><%= estimate.amount %></td>
+        <td><%= %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+</div>

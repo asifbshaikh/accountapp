@@ -1,0 +1,47 @@
+<!-- Page title -->
+<!-- End of Page title -->
+<!-- Page content -->
+
+<div id="pagetitle" >
+	<div class = "wrapper">
+		<h1>Help &rarr; <span> Help Document </span>
+	</div>
+</div>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width6 first"  >
+			&nbsp;
+			<p id="notice">
+				<%= notice %>
+			</p>
+			<div class="column width6 first highlight">
+				
+				<p>
+					<b>Screen name:</b>
+					<center>
+						<b><i><%= @help.screen_name %></b></i>
+					</center>
+				</p>
+				<!-- <p>
+				<b>Screen:</b>
+				<%= @help.screen_id %>
+				</p> -->
+				<p>
+					<b>Help:</b>
+					<br>
+					<%= @help.help %>
+				</p>
+				<!-- <%= link_to 'Edit', edit_help_path(@help) %> | -->
+				<!-- <%= link_to 'Back', helps_path %> -->
+				<div class="clearfix"></div>
+				<!-- 				<a href  = "http://rsgroup.lvh.me:3000/dashboard/index">Back
+				<br> -->
+			</div>
+			<!-- End of Wrapper -->
+	</div>
+	&nbsp;
+</div>
+
+<!-- End of Page content -->

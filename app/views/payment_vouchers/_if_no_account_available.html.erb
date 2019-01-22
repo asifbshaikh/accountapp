@@ -1,0 +1,5 @@
+<% if @from_accounts.blank? %>
+  <br /><div class="box box-warning">
+    Currently there are no from accounts. Click to <%= link_to " create",{:action => :add_account},:id => 'add_new_model',:remote => true %> account.
+  </div>
+<% end %>

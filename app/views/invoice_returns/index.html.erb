@@ -1,0 +1,45 @@
+<h1>Listing invoice_returns</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Invoice</th>
+    <th>Created by</th>
+    <th>Invoice return number</th>
+    <th>Account</th>
+    <th>Record date</th>
+    <th>Description</th>
+    <th>Total amount</th>
+    <th>Currency</th>
+    <th>Exchange rate</th>
+    <th>Credit note</th>
+    <th>Warehouse</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invoice_returns.each do |invoice_return| %>
+  <tr>
+    <td><%= invoice_return.company_id %></td>
+    <td><%= invoice_return.invoice_id %></td>
+    <td><%= invoice_return.created_by %></td>
+    <td><%= invoice_return.invoice_return_number %></td>
+    <td><%= invoice_return.account_id %></td>
+    <td><%= invoice_return.record_date %></td>
+    <td><%= invoice_return.description %></td>
+    <td><%= invoice_return.total_amount %></td>
+    <td><%= invoice_return.currency_id %></td>
+    <td><%= invoice_return.exchange_rate %></td>
+    <td><%= invoice_return.credit_note_id %></td>
+    <td><%= invoice_return.warehouse_id %></td>
+    <td><%= link_to 'Show', invoice_return %></td>
+    <td><%= link_to 'Edit', edit_invoice_return_path(invoice_return) %></td>
+    <td><%= link_to 'Destroy', invoice_return, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invoice return', new_invoice_return_path %>

@@ -1,0 +1,25 @@
+<div class="panel panel-info data-filter" id="filter">
+  <header class="panel-heading bg-lighter">
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="#" class="panel-toggle text-muted"><i class="icon-caret-down icon-large text-active"></i><i class="icon-caret-up icon-large text"></i></a>
+      </li>
+    </ul>
+    <a href="#" class="panel-toggle "><i class="icon icon-search"></i>Filter</a>
+  </header>
+  <section class="panel-body">
+    <form action = '' class="form-horizontal" method="get" data-validate="parsley">
+      <div class="form-group"><br/>
+        <div class="col-lg-1">Select warehouse</div>
+        <div class="col-lg-2"><%= select_tag('warehouse_id', options_from_collection_for_select(@company.warehouses, :id, :name, params[:warehouse_id]), :prompt => 'All warehouses', :style => "width:180px;") %>
+        </div>
+        <div class="col-lg-2">
+          <input type="submit" value="Search" class="btn btn-success"/>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+<script type="text/javascript">
+  $('#warehouse_id').select2()
+</script>

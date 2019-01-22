@@ -1,0 +1,28 @@
+<% if @gst_credit_note.blank? %>
+	<%= render "shared/no_record" %>
+<% else %>
+	<table class="table table-striped">
+		<thead>
+			<th>Invoice#</th>
+			<th class="text-right">Payment Received(<%= @gst_credit_note.currency %>)</th>
+			<th class="text-right">Outstanding(<%= @gst_credit_note.currency %>)</th>
+			<th>Due On</th>
+			<th width="10%" class="text-right">Amount</th>
+		</thead>
+		<tbody>
+			<% @gst_credit_note.to_account.invoices.each_with_index do |obj, index| %>
+			<% if obj.invoice_status_id == 0 %>
+				<tr id="row<%= index %>">
+					<td><%= obj.invoice_number %></td>
+					<td class="text-right"><%= format_amount(obj.total_amount-obj.outstanding)%></td>
+					<td class="text-right"><%= format_amount(obj.outstanding)%></td>
+					<td><%= obj.due_date %></td>
+					<td class="text-right"><%= text_field_tag "gst_credit_note[gst_credit_allocations_attributes][#{index}][amount]",0.0, :class=>"form-control text-right" %>
+					<%= hidden_field_tag "gst_credit_note[gst_credit_allocations_attributes][#{index}][invoice_id]", obj.id %>
+					</td>
+				</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+<% end %>

@@ -1,0 +1,8 @@
+<tr valign="top">
+  <td valign="top" ><%= line_item_details.product.name %></td>
+  <td align="right"><%= line_item_details.quantity %> <%= line_item_details.product.unit_of_measure %>
+  </td>
+  <td align="right"><%= format_amount line_item_details.unit_rate %> </td>
+  <td align="right"><%= format_amount line_item_details.discount_percent %></td>
+  <td align="right"><%= format_amount line_item_details.amount %> </td>
+</tr> 

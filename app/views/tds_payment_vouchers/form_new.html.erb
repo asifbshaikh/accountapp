@@ -1,0 +1,197 @@
+<script type="text/javascript" src="/javascripts/voucher.js"></script>
+<%= render :partial => "shared/customer_auto_complete" %>
+<%= render :partial => 'shared/current_bal' %>
+
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <div id="jHere"></div>
+          <%= render :partial => 'auto_calculate' %>
+  <%= form_for @tds_payment_voucher, :html => {:multipart => true, :class=>"form-horizontal"} do |f| %>
+          <%= render 'shared/form_error', :object => @tds_payment_voucher %>
+          <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+            <div class="form-group">
+              <div class="row">
+                  <div class="col-lg-12">
+                <div class="col-lg-6">
+                  <div class="col-lg-6">
+                    <%= f.label :Payment_date, :class=>"control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <%= f.text_field :payment_date, :size => "14", :class => 'bg-focus form-control' %><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :Assessment_year, :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <select name ="tds_payment_voucher[assessment_year]" class="bg-focus form-control">
+                      <% @company.financial_years.each do |f_year| %>
+                      <option value=<%= f_year.year_id %>><%= f_year.get_period %></option>
+                      <% end %>
+                    </select><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :challan_no, "Challan No.", :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <%= f.text_field :challan_no ,:size => "14",:maxlength=> "20",:onkeydown => "return numbersOnly(event);", :class => 'bg-focus form-control' %><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :cin_no,"CIN No.", :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <%= f.text_field :cin_no ,:size => "14", :maxlength=> "20",:onkeydown => "return numbersOnly(event);", :class => 'bg-focus form-control' %><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :bsr_code,"BSR Code", :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <%= f.text_field :bsr_code,:maxlength=> "20", :onkeydown => "return numbersOnly(event);",:size => "14", :class => 'bg-focus form-control' %><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :tds_account_id, "Nature of Payment", :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="text" name="tds_account_id" size="14" class="bg-focus form-control" id="from_account_auto_complete" value='<%= (!@tds_payment_voucher.tds_account_id.blank?)? "#{@company.accounts.find(@tds_payment_voucher.tds_account_id).name}" : ""%>' />
+                    <span id="from_acc_bal"></span><br/><br/>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <%= f.label :account_id, "Bank Name", :class => "control-label-required" %>
+                  </div>
+                  <div class="col-lg-6">
+                    <input type="text" name="account_id" size ="14" class ="bg-focus form-control" id="to_account_auto_complete" value='<%= (@tds_payment_voucher.account_id)? "#{@company.accounts.find(@tds_payment_voucher.account_id).name}" : ""%>' />
+                    <span id="to_acc_bal"></span><br/><br/>
+                  </div>
+
+
+                  <div class="col-lg-6">
+                    <%= f.label :tan_no,"Tax Deduction Account No.", :class => "control-label-required" %>
+                  </div>
+                    <% if @company.tan_no.blank? %>
+                    <div class="col-lg-6">
+                    <%= text_field_tag "", "", :placeholder => "Please update your TAN", :maxlength=> "10" ,:size => "14", :class => 'bg-focus form-control' %><br/><br/>
+                     
+                     </div>
+                    <% else %>
+                  <div class="col-lg-6">
+                    <%= text_field_tag "tds_payment_voucher[tan_no]", "#{@company.tan_no}",:maxlength=> "10" ,:size => "14", :class => 'bg-focus form-control' %><br/><br/>
+                    <% end %>
+                    </div>
+
+
+</div>
+<div class="col-lg-6">
+                    <div class="col-lg-8">
+      <section class="panel">
+       <header class="panel-heading">
+          <strong>Payment Details</strong></header>
+        
+      <table class="table" id = "tds_payment">
+        <tbody>
+        <tr>
+          <td><%= f.label :Basic_tax %></td>
+          <td><%= f.text_field :basic_tax, :id=> "amount",:onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td><br>
+        </tr>
+        <tr>
+          <td><%= f.label :Surcharge %></td>
+          <td><%= f.text_field :surcharge,:id=> "amount", :onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :Edu_cess %></td>
+          <td><%= f.text_field :edu_cess, :id=> "amount",:onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :Other %></td>
+          <td><%= f.text_field :other, :id=> "amount",:onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :Penalty %></td>
+          <td><%= f.text_field :penalty, :id=> "amount",:onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :Interest %></td>
+          <td><%= f.text_field :interest, :id=> "amount",:onkeydown => "return numbersOnly(event);",:size => "4", :class => 'bg-focus form-control text-right' %></td>
+        </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+           <td   style="background-color:#fff; border-bottom: none;"><b>Total</b></td>
+           <td class="text-right"  style="background-color:#fff; border-bottom: none;"><strong><%= @company.currency_code %> <span id = "total" >00.00</span></strong></td>
+          </tr>
+        </tfoot>
+      </table>
+      </section>
+      </div>
+</div>
+            </div>
+            </div>
+        </div>
+      
+      <input type="hidden" name="source" id="source" value="payment"/>
+            
+      <div class='form-group'>
+      <div class="row">
+      <div class='col-lg-12'>
+      <div class='col-lg-1'></div>
+            <div class='col-lg-2'>
+            <%= label_tag "payment_mode", "Payment Mode", :class=>'control-label-required' %>
+            </div>
+            <div class='col-lg-3'>
+              <div class="btn-group" data-toggle="buttons" >
+                <label class="btn btn-sm btn-default tds_transaction_type <%= (params[:tds_transaction_type].blank? || params[:tds_transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+                <%= radio_button_tag 'transaction_type','cash' %>
+                <i class="icon-ok icon-large text-active"></i>Cash
+                </label>
+                <label class="btn btn-sm btn-default tds_transaction_type <%= (params[:tds_transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+                <%= radio_button_tag "transaction_type",'cheque' %>
+                <i class="icon-ok icon-large text-active"></i>Cheque
+                </label>
+                <label class="btn btn-sm btn-default tds_transaction_type <%= (params[:tds_transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+                <%= radio_button_tag "transaction_type",'ibank' %>
+                <i class="icon-ok icon-large text-active"></i>Internet Banking
+                </label>
+              </div>
+            </div>
+          </div>
+          </div>
+          </div>
+          <div class='form-group'>
+            <div class="row">
+              <div class='col-lg-12'>
+                <div class="tds_pmnt col-lg-1"></div>
+                <%= render :partial => "#{params[:tds_transaction_type]}" unless @payment_detail.blank? || params[:tds_transaction_type].blank? %><br/>
+              </div>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class='col-lg-1'></div>
+                  <div class='col-lg-2'>
+                    <%= label_tag "description", "Description", :class=>'control-label' %><br/><br/>
+                  </div>
+                  <div class='col-lg-4'>
+                    <%= f.text_area :description, :rows => 3, :cols => 58, :class=>'form-control bg-focus' %>
+                  </div>
+              </div>
+            </div>
+          </div>            
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">                      
+              <button type="submit" class="btn btn-success">Save</button>
+              <%= link_to 'Cancel', tds_payment_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+              <%end%>
+      </div>
+      
+    </section>
+  </div>
+</div>

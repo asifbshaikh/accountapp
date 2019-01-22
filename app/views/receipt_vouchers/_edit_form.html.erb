@@ -1,0 +1,147 @@
+    <%= render :partial => 'shared/customer_auto_complete' %>
+     <%= render :partial => "shared/project_auto_complete" %>
+<div class="row">
+  <div class="col-sm-12">
+    <section class="panel">
+    <div class="panel-body">
+	  <%= form_for @receipt_voucher,:html => {:class => "form-horizontal"} do |f| %>
+      <%= render 'shared/form_error', :object => @receipt_voucher %>
+          <%= f.hidden_field :voucher_number %>
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "invoice_id", "Invoice reference#", :class => "control-label" %>
+            </div>
+            <div class='col-lg-3'>
+              <div class='input-group'>
+              <input type="text" name="invoice_id" size="14"  id="invoice_id_auto_complete" value='<%= !@receipt_voucher.invoice.blank? ? @receipt_voucher.invoice.invoice_number : "" %>' class='form-control bg-focus'>
+                <div class="input-group-btn">
+                  <button class="btn btn-white dropdown-toggle" data-toggle="modal" data-target='#modal-invoice-ref'>
+                    <span class="dropdown-label"><i class='icon-search'></i></span>  
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div class="form-group">
+              <div class="col-sm-2 text-right">
+                <label class="control-label control-label-required">
+                Money received from </label>
+              </div>
+              <div class="col-lg-3">
+              <div class='input-group'>
+            <input type="text" name="from_account_id" class="bg-focus form-control" 
+            id="from_account_auto_complete" value='<%= (!@receipt_voucher.from_account_id.blank?)? "#{@company.accounts.find(@receipt_voucher.from_account_id).name}" : ""%>'
+             />
+              <div class="input-group-btn">
+                  <button class="btn btn-white dropdown-toggle" data-toggle="modal" data-target='#modal-from-account'>
+                    <span class="dropdown-label"><i class='icon-plus'></i></span>  
+                  </button>
+                </div>
+              </div>
+             <span id ='from_acc_bal'></span>
+          </div>
+           </div>
+          
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+               <label class="control-label-required">Deposit to account </label>
+            </div>
+            <div class='col-lg-3'>
+              <div class='input-group'>
+               <input type="text" name="to_account_id" class="bg-focus form-control"  
+          id="to_account_auto_complete" value='<%= (!@receipt_voucher.to_account_id.blank?)? "#{@company.accounts.find(@receipt_voucher.to_account_id).name}" : ""%>' />
+            <div class="input-group-btn">
+          <button class="btn btn-white dropdown-toggle" data-toggle="modal" data-target='#modal-to-account'>
+             <span class="dropdown-label"><i class='icon-plus'></i></span>  
+            </button>
+                </div>
+              </div>
+              <span id="to_acc_bal"></span>
+            </div>
+          </div>  
+
+           <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "Received_date", "Received date", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+             <%= hidden_field_tag "receipt_voucher[voucher_date]", @receipt_voucher.voucher_date %>
+              <%= f.text_field :received_date,:class=>'form-control bg-focus' %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "amount", "Amount", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+              <%= f.text_field :amount, :size => "14", :onkeydown => 'return numbersOnly(event);',:maxlength => "18", :class=>'form-control bg-focus text-right' %>
+            </div>
+          </div>
+			  <% if !@projects.blank? && !@company.plan.free_plan? %>
+         <div class="form-group">
+          <div class="col-lg-2 text-right">
+            <%= f.label "Select project" ,:class=>"control-label"%>
+            </div>
+            <div class="col-lg-3">
+	          <input type="text" name="project_id" id="project" class="bg-focus form-control" value='<%= (!@receipt_voucher.project_id.blank?) ? "#{@receipt_voucher.project_name}" : ""%>' />
+            </div>
+          </div>
+        <% end %>
+     <% if !@receipt_voucher.tds_account_id.blank? && !@receipt_voucher.tds_amount.blank? && @company.indian_company? %>  
+        <div class='form-group'>
+	     		<div class='col-lg-2 text-right'>
+	          <%= label_tag "receipt_voucher[tds_account_id]", "TDS Section", :class=>'control-label' %>
+	        </div>
+	        <div class='col-lg-3'>
+	        	<p></p>
+            <%= hidden_field_tag "receipt_voucher[tds_account_id]", @receipt_voucher.tds_account_id %>
+	 			 		<%= Account.find(@receipt_voucher.tds_account_id).name %>
+	        </div>
+	      </div>
+	      <div class='form-group'>
+	     		<div class='col-lg-2 text-right'>
+	          <%= label_tag "receipt_voucher[tds_amount]", "TDS Amount", :class=>'control-label' %>
+	        </div>
+	        <div class='col-lg-3'>
+	        	<p></p>
+	         	<%= format_currency @receipt_voucher.tds_amount %>
+            <%= hidden_field_tag "receipt_voucher[tds_amount]", @receipt_voucher.tds_amount %>
+	        </div>
+     		</div>
+      <% end %>
+			<input type="hidden" name="source" id="source" value="receipt"/>
+       
+ 			<%= render :partial => "#{@receipt_detail.type.to_s.downcase.gsub(/\s+/, "")}_edit", :locals =>  {:a => f} %>
+ 			<div class="rcpt"></div>
+
+		
+	<div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "description", "Description", :class=>'control-label' %>
+            </div>
+            <div class='col-lg-4'>
+              <%= f.text_area :description, :rows => 3, :cols => 58, :class=>'form-control bg-focus' %>
+            </div>
+          </div>            
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">                      
+              <button type="submit" class="btn btn-success">Save</button>
+              <%= link_to 'Cancel', receipt_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+    <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id='modal-to-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @to_account_heads, :transaction_type=>'receipt_from' %>
+</div>
+<div id='modal-from-account'  class="modal fade">
+  <%= render 'shared/account_details', :account_heads => @from_account_heads, :transaction_type=>'receipt_to' %>
+</div>
+<div id='modal-invoice-ref'  class="modal fade">
+  <%= render "invoices" %>
+</div>

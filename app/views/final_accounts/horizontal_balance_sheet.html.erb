@@ -1,0 +1,160 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+			<% if true %>
+			
+			 <p align="right">
+            	<a href="#" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	<a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+			<% end %>
+			<div class='highlight'>
+				<div id='report_header'>
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Horizontal Balance Sheet </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width2'><span class='char_spacing'>Liabilities</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+							<th class='width2'><span class='char_spacing'>Assets</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Capital Accounts</b></td><td></td><td class='border_down' align="right"><b><%= format_currency(@total_capital_amount)%></b></td></tr>
+										<% for c_acc in @capital_accounts 
+										closing_balance = c_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{c_acc.id}" %>><%= c_acc.name%></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Profit and Loss Account</b></td><td></td><td align="right" class="border_down"><b><%= format_currency(@nett_profit + @opening_balance) %></b></td></tr>
+										<tr><td class="textindent1">Opening Balance</td><td align="right"></td><td></td></tr>
+										<tr><td class="textindent1"><a href='/final_accounts/horizontal_profit_and_loss_report'>Current Period</td><td align="right"><%= format_currency @nett_profit %></td><td></td></tr>
+										<tr><td><b>Loan Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_loan_amount) %></b></td></tr>
+										<% for l_acc in @loan_accounts %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{l_acc.id}" %>><%= l_acc.name %></a></td><td align="right"><%= format_currency l_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Secured Loan Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_secured_loan_amount) %></b></td></tr>
+										<% for l_acc in @secured_loan_accounts 
+										closing_balance = l_acc.closing_balance %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{l_acc.id}" %>><%= l_acc.name %></a></td><td align="right"><%= format_currency(closing_balance)%></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Unsecured Loan Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_unsecured_loan_amount) %></b></td></tr>
+										<% for l_acc in @unsecured_loan_accounts 
+										closing_balance = l_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{l_acc.id}" %>><%= l_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Sundry Creditors</b></td><td></td><td align="right" class="border_down"><b><%= format_currency(@total_sundry_creditor_amount) %></b></td></tr>
+										<% for cl_acc in @sundry_creditor_accounts 
+										closing_balance = cl_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{cl_acc.id}" %>><%= cl_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Duties and Taxes</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_duties_and_taxes_amount) %></b></td></tr>
+										<% for l_acc in @duties_and_taxes_accounts 
+										closing_balance = l_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{l_acc.id}" %>><%= l_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Provisions</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_provision_amount) %></b></td></tr>
+										<% for l_acc in @provision_accounts 
+										closing_balance = l_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{l_acc.id}" %>><%= l_acc.name %></a></td><td align="right"><%= format_currency(closing_balance)%></td><td></td></tr>
+										<% end %>
+										<% if @total_suspense_amount > 0 %>
+										<tr><td><b>Suspense Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_suspense_amount) %></b></td></tr>
+										<% for ca_acc in @suspense_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end 
+										end %>
+									</tbody>
+								</table>
+							</td>
+							<td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Fixed Asset</b><td></td><td class="border_down" align="right"><b><%= format_currency(@total_fixed_asset_amount) %></b></td></tr>
+										<% for f_acc in @fixed_asset_accounts 
+										closing_balance = f_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{f_acc.id}" %>><%= f_acc.name %></a></td><td align="right"><%= format_currency(closing_balance)  %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Investments</b></td><td></td><td class="border_down" align="right"><b><%= format_currency @total_investment_amount %></b></td></tr>
+										
+										<tr><td><b>Bank Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_bank_amount) %></b></td></tr>
+										<% for ca_acc in @bank_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Cash Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_cash_amount)  %></b></td></tr>
+										<% for ca_acc in @cash_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Sundry Debtors</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_sundry_debtor_amount) %></b></td></tr>
+										<% for ca_acc in @sundry_debtor_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance)  %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Deposit</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_deposit_amount)  %></b></td></tr>
+										<% for ca_acc in @deposit_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										
+										<tr><td><b>Loans and Advances</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_loan_and_advance_amount) %></b></td></tr>
+										<% for ca_acc in @loan_and_advance_accounts 
+										closing_balance = ca_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end %>
+										
+										<% if @total_suspense_amount < 0 %>
+										<tr><td><b>Suspense Accounts</b></td><td></td><td class="border_down" align="right"><b><%= format_currency(@total_suspense_amount)%></b></td></tr>
+										<% for ca_acc in @suspense_accounts 
+										closing_balance = ca_acc.closing_balance %>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{ca_acc.id}" %>><%= ca_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<% end 
+										end %>
+									</tbody>
+								</table>
+							</td></tr>
+						</tbody>
+						<tfoot>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td align="right"><b><%= format_currency(@total_liabilities) %></b></td><td><b><span class="char_spacing">Total</span></b></td><td align="right"><b><%= format_currency(@total_assets) %></b></td></tr>
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		&nbsp;&nbsp;
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

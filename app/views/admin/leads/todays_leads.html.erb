@@ -1,0 +1,49 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<!-- Left column/section -->
+	<br/>
+	<div class="wrapper">
+    <section class ="column width6 first">
+      <div id="tabs" class ="highlight">
+<div id="tab4">
+     <%= render :partial=>"tabs"%>
+  </div>
+				<div id="task_container">
+          <div class="clearfix"></div>
+          <div id = "lead_container">
+          <% if @leads.blank?%>
+          <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table class="display stylized" id="act_details">
+              <thead>
+                <tr>
+                  <th><label>Name</label></th>
+                  <th><label>Mobile</label></th>
+                  <th><label>Email</label></th>
+                  <th><label>Channel</label></th>
+                  <th><label>Campaign</label></th>
+                  <th><label>Status</label></th> 
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => 'admin/leads/lead', :collection => @leads %>
+              </tbody>
+            </table>
+          <% end %>
+          </div>
+					<%= paginate @leads %>
+          <div class="clear">
+            &nbsp;
+        </div>
+      </div>
+    </div>
+		<br />
+			<!-- End of Left column/section -->
+	</section>
+		
+	</div>
+</div>
+

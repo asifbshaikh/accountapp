@@ -1,0 +1,5 @@
+<% unless @product.blank? %>
+$("#row<%= params[:index]%> #description").val("<%= @product.description.gsub(/[\r\n]+/, '\n').gsub(/\"/, '\\\"').html_safe unless @product.description.blank? %>");
+$("#row<%= params[:index]%> #unit_cost").val(<%= @product.purchase_price %>);
+cal();
+<% end %>

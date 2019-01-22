@@ -1,0 +1,67 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+        <div id="tabs-all" class="highlight">
+         <%= render :partial => "shared/flash_msg"  %>
+        <div id="tabs">
+          <div id="tab1">
+            <ul id="tabnav">
+              <li class="tab1"><a href="/leave_requests/pending_approval">Pending approval</a></li>
+              <li class="tab2"><a href="/leave_requests/approved">Approved</a></li>
+              <li class="tab2"><a href="/leave_requests/cancelled">Cancelled</a></li>
+            </ul>
+          </div>
+          <div id="task_container">
+            <div id="tabs-all"> 
+                    <% if @leave_requests.blank? %>
+                        <%= render :partial => "shared/no_record", :locals=> {:message =>" You don't have any cancelled leave requests."} %>
+                    <% else %>
+                     <%= paginate @leave_requests %>
+                        <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "leave_request", :collection => @leave_requests %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                        </table> 
+                        <div class="clear">
+                     <div class="width3 column">
+                       <%= paginate @leave_requests %>
+                     </div>
+                  </div>   
+                    <% end %>
+               </div>
+       </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"></br>
+      <%= new_button "New Leave Request", new_leave_request_path %>
+         <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="#" class="nyroModal">Help</a></dd>
+                       <dd class="last">This page displays the list of all the leave requests.<br/> Hover on leave type to view the complete reason for leave.</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

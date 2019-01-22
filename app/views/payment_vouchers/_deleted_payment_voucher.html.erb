@@ -1,0 +1,21 @@
+<tr>
+    <td><%= link_to deleted_payment_voucher.voucher_date.strftime("%d-%m-%Y"), payment_voucher_path(deleted_payment_voucher)%></td>
+    <td><%= deleted_payment_voucher.voucher_number %></td>
+    <td><%= truncate(deleted_payment_voucher.from_account_name, :length =>20) %></td>
+    <td><%= format_currency deleted_payment_voucher.amount %></td>
+    <td><%= deleted_payment_voucher.payment_detail.type %></td>
+    <td>
+      <div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/payment_vouchers/<%= deleted_payment_voucher.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/payment_vouchers/restore_payment_voucher?id=#{deleted_payment_voucher.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/payment_vouchers/permanent_delete_payment_voucher?id=#{deleted_payment_voucher.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+	</td>
+  </tr>
+

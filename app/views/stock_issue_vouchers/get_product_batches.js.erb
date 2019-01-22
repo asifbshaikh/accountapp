@@ -1,0 +1,7 @@
+$(".issue-line #row"+<%= params[:index] %>+" .issue-batch-details").remove();
+$(".loader").remove();
+<% if @product_batches.blank? %>
+	$("<i style='color:red;' id='qty-notif'>Stock not available.</i>").appendTo(".issue-line #row<%= params[:index] %> td:eq(0)");
+<% else %>
+	$("<%= escape_javascript render :partial => 'stock_issue_vouchers/batch_select' %>").appendTo(".issue-line #row<%= params[:index] %> td:eq(0)");
+<% end %>

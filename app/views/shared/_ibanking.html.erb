@@ -1,0 +1,26 @@
+<div id="ibank" style="display:none;">
+<div id="user_info_div"><span class="basic_info">Enter Inter Banking Detail</span></div>
+<table class="display stylized" >
+	<tbody>
+		<tr>
+			<td>
+			    <label> Bank name</label><br/>
+			    <%= text_field_tag 'internet_banking_payment[bank_name]', '', :size => "17" %>
+		       </td>
+		    <td></td>
+		</tr>
+		<tr>
+                       <td>
+			    <label class = "required"> Transaction date</label><br/>
+			    <%= text_field_tag 'internet_banking_payment[transaction_date]', '', :size => "17" %>
+		       </td>
+			<td>
+			    <label> Transaction reference</label><br/>
+			    <%= text_field_tag 'internet_banking_payment[transaction_reference]', '', :size => "17" %>
+		       </td>
+			
+		</tr>
+	</tbody>
+	
+</table>
+</div>

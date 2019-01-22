@@ -1,0 +1,13 @@
+<div class="panel panel-info data-filter" id = "filter">
+  <div class="panel-heading"><h4 class="panel-title" >Account Group Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="accounthead-filter">
+      <tbody>
+        <tr>
+          <td><label>Account Group</label></td>
+          <td id="ahname"></td>
+          <td><label>Created By</label></td>
+          <td id="ahcreatedby" data-creater="<%= User.company_users(@company.id) %>"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

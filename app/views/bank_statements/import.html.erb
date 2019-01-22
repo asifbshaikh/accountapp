@@ -1,0 +1,85 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h2><i class="icon-file text"></i>Add File Data </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <form action="/bank_statements/file_import" method="get" class ="form-horizontal">
+           <%= hidden_field_tag "statement_id", @bank_statement_id %>
+           <%= hidden_field_tag "account_id", @account_id %>
+           <%= hidden_field_tag "start_date", @start_date %>
+           <%= hidden_field_tag "end_date", @end_date %>
+           <%= hidden_field_tag "row_no", @row_no %>
+            <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "date", "Transaction Date", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+                <%= select_tag "date",options_for_select(Array[*(@file[0,1]).first.each_with_index.collect{|v,i| [v,i] }],''),:prompt => "Please select", :class => "form-control" %>
+                  <small>This must be your Transaction date in your file</small>
+            </div>
+            </div>
+
+
+            <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "credit", "Credit", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+                <%= select_tag "credit",options_for_select(Array[*(@file[0,1]).first.each_with_index.collect{|v,i| [v,i] }],''),:prompt => "Please select", :class => "form-control" %>
+                  <small>This must be your credit amount in your file</small>
+            </div>
+            </div>
+
+            <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "debit", "Debit", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+                <%= select_tag "debit",options_for_select(Array[*(@file[0,1]).first.each_with_index.collect{|v,i| [v,i] }],''),:prompt => "Please select", :class => "form-control" %>
+                  <small>This must be your debit amount in your file</small>
+            </div>
+            </div>
+
+            <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "description", "Description", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+                <%= select_tag "description",options_for_select(Array[*(@file[0,1]).first.each_with_index.collect{|v,i| [v,i] }],''),:prompt => "Please select", :class => "form-control" %>
+                  <small>This must be your Description in your file</small>
+            </div>
+            </div>
+
+            <div class='form-group'>
+            <div class='col-lg-2 text-right'>
+              <%= label_tag "account_balance", "Account Balance", :class => "control-label-required" %>
+            </div>
+            <div class='col-lg-3'>
+                <%= select_tag "account_balance",options_for_select(Array[*(@file[0,1]).first.each_with_index.collect{|v,i| [v,i] }],''),:prompt => "Please select", :class => "form-control" %>
+                  <small>This must be your Account Balance in your file</small>
+            </div>
+            </div>
+
+            <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-2">
+                <%= submit_tag "Save", :class => "btn btn-success" %>
+            
+                <a data-method="delete" href=  "/bank_statements/<%= @bank_statement.id%>" data-confirm = "Are you sure?" class= "btn btn-white">Cancel</a>
+            </div>
+            </div>
+
+          </form> 
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>

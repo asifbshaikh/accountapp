@@ -1,0 +1,102 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+<!-- Left column/section -->
+<section class="column width6 first"></br>
+<div class="highlight">
+ <%= render :partial => "shared/flash_msg"%>
+     <%= render :partial => "filter" %>
+<% if @custom_field.blank? %>
+ <%= render :partial => "shared/no_record" %>
+<% else %>
+<div class="box box-info">Showing custom fields for <%= @custom_field.voucher_type %>. Click on custom field value to change it.</div>
+ <table class="display stylized" id="act_details">
+    <thead>
+<tr>
+     <th></th>
+     <th>Field Name</th>
+     <th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+   <tr>
+     <td>
+      <label>Custom Field1:</label> 
+      </td>
+       <td> 
+        <%= best_in_place  @custom_field, :custom_label1, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30} %>
+     </td>
+     <td>
+     <%= best_in_place  @custom_field, :default_value1, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30} %>  
+     </td>
+   </tr>
+   <tr>
+     <td>
+      <label>Custom Field2:</label> 
+      </td>
+     <td>
+      <%= best_in_place  @custom_field, :custom_label2, :nil=> '<span class ="variable_item">Click here to add content</span> ',:html_attrs => {:maxlength => 30} %>
+     </td>
+     <td>
+     <%= best_in_place  @custom_field, :default_value2, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30} %>  
+     </td>
+   </tr>
+   <tr>
+     <td>
+      <label>Custom Field3:</label> 
+      </td>
+     <td>
+       <%= best_in_place  @custom_field, :custom_label3, :nil=> '<span class ="variable_item">Click here to add content</span> ' ,:html_attrs => {:maxlength => 30} %>
+     </td>
+     <td>
+     <%= best_in_place  @custom_field, :default_value3, :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30} %>  
+     </td>
+   </tr>
+   <tr>
+     <td >
+       <label>Show these fields in report:</label> &nbsp;
+     </td>
+       <td>
+       <%= best_in_place @custom_field, :status, :type => :checkbox, :collection => ["No, thanks", "Yes, of course!"] %>
+       </td>
+       <td></td>
+   </tr>
+   
+   </tbody>
+     <tfoot>
+        <tr>
+          <td colspan="3">
+            <a class="btn  btn-gray" href="/dashboard/index"> Back</a>
+          </td>
+        </tr>
+</tfoot>
+</table>
+<% end %>
+</div><br />
+</section>
+   <!-- End of Left column/section -->
+<!-- Right column/section -->
+ <aside class="column width2"><br/>
+ <%= list_button_white("Go Back To Dashboard", dashboard_index_path)%>
+ <p><%= show_button_white("View Report", custom_fields_custom_field_report_path)%></p>
+ <div id="rightmenu">
+       <dl class="first">
+          <dt><%= image_tag  'help.png', :class=> 'icon' , :alt=> 'help'%></dt>
+          <dd><%= link_to 'Help', "", :class=>"nyroModal" %></dd>  
+          <dd class="last"> You can change custom fields by clicking on custom field vlaue. <br/>
+            Set <b>Show this fields in reports</b> to <b>yes</b> to show custom fields in report. 
+          </dd>
+       </dl>
+   </div><br />
+  
+ </aside>
+ <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+

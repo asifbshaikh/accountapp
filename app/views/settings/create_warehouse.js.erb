@@ -1,0 +1,13 @@
+$(".popup-error").remove();
+<% if @warehouse.errors.any? %>
+	$(".errorPlace").after("<%= escape_javascript render('shared/popup_form_error',{:object => @warehouse}) %>");
+<% else %>
+	$(".war_add").hide();
+	$(".war_info").show();
+	$(".oldData").remove();
+	$(".warehouse-error").after("<div class='alert alert-success invoice-setting-notif'>Created successfully.</div>")
+	$(".warehousePlace").after("<%= escape_javascript render('warehouses')%>");
+	fadeOutMessage();
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

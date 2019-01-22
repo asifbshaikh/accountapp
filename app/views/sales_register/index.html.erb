@@ -1,0 +1,86 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Sales Register</h2>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        <% unless @invoices.blank? %>
+          <%= link_to_pdf params %>
+          <%= link_to_xls params %>
+        <%end%>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Table starts -->
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial => "filter" %>
+            <% if @invoices.blank? || @accounts.blank? %>
+              <br />
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+              <div class="row">
+                <div class="col-lg-8">
+                  <%= display_branch(@branch_id) %>
+                  <%= @start_date %> To <%= @end_date %>
+                </div>
+                <div class="col-lg-4" align="right">
+                  <span class="xsmall light">Customer : </span><b><%= customer_name(@account) %></b>
+                </div>
+              </div>
+              <div class="table-responsive row">
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th width = "9%">Invoice Date</th>
+                      <!-- <th width = "12%" >Invoice No.</th> -->
+                       <th class="text-left" width = "9%">Invoice No.</th>
+                       <th class="text-left" width = "15%">Customer Name</th>
+                       <th class="text-left" width = "10%">Due Date</th>
+                       <th class="text-left" width = "5%">Status</th>
+                       <th class="text-right" width = "10%">Amount</th>
+                      <th class="text-left" width = "10%">Created By</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% total_amount=0 %>
+                    <% @invoices.each do |invoice| %>
+                      <tr>
+                        <td width = "9%"><%= invoice.invoice_date %></td>
+                        <td align="left" width ="9%"><%= link_to invoice.invoice_number, "/invoices/#{invoice.id}"%></td>
+
+                        <td align="left" title = '<%= invoice.customer_name %>' width = "15%"><%= link_to invoice.customer_name, "/account_books_and_registers/ledger?account_id=#{invoice.account_id}" %></td>
+                        <td align="left" width ="10%"><%= invoice.due_date %></td>
+                        <td align="left" width ="5%"><%= content_tag(:span, invoice.get_status, :class => "label  #{invoice_status_badge invoice.get_status}") %></td>
+                        <td align="right" width ="10%"><%= format_currency(sales_amount=sales_amount(invoice)) %>
+                        <% total_amount+= sales_amount%>
+                        </td>
+                          <td align="left" title="10%"><%= invoice.created_by_user %></td>
+                      </tr>
+                    <% end %>
+                    <tr>
+                    <td></td>
+
+                      <td colspan="4" align="right" ><b>Total Amount</b></td>
+                      <td width ="10%" class = 'border_down border_up' align="right"><b><%= format_currency total_amount %></b></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <footer class="row">
+                <%= render "shared/report_footer"%>
+              </footer>
+            </div>
+          </section>
+        <!-- Table ends -->
+        <%end%>
+      </div>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,66 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h2><i class="icon-edit text"></i>Account Group Details</h2>
+        </div>
+        <div class="col-lg-8 m-t-large" align="right">
+          <%= link_to raw('<i class="icon-plus"> </i> New Account Group'), new_account_head_path, :class => 'btn btn-success btn-lg'%>
+          <%= link_to raw('<i class="icon-mail-reply"> </i>'), account_heads_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+          <p></p>
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <section class="panel">
+          <%= render :partial => "shared/flash_msg"%>
+            <div class="panel-body">
+                <div class="col-xs-12">
+                  <section class="panel text-center">
+                    <div class="panel-body">
+                     <p><strong><h4><%= @account_head.name%></h4></strong></p>
+                     <% if !@account_head.desc.blank? %>
+                     <p><i class="icon-book" title="Description"></i> <%= @account_head.desc %></p>
+                     <% end %>
+                      <div class="line m-l m-r"></div>
+                      <%= link_to("<i class='icon-edit'></i> Edit account group".html_safe, edit_account_head_path(@account_head), :class => "btn btn-success") if @account_head.erasable? %>
+                    </div>
+                  </section>
+                </div>
+        
+              <div class="col-lg-12">
+                <%if @account_head.children.empty? %> 
+                <div class="alert alert-info"><h4>You don't have any sub account groups. click here to <%= link_to 'Add sub account group',new_account_head_path(:parent_id=> @account_head.id)%></h4> </div>
+                <% else %>
+                  <section class="panel">
+                  <header class="panel-heading">
+                   <strong>Sub Account Groups</strong>
+                  </header>
+                  <div class="panel-body">
+                  <% @account_head.children.each do |account_head| %>
+                   <div class="col-sm-6">
+                    <p><strong>Account Group Name: </strong> <%= link_to account_head.name, account_head_path(account_head) %>
+                    </p>
+              <% if !account_head.desc.blank? %>
+              <p><strong>Description: </strong> <%= account_head.desc %></p>
+              <% end %>
+                   </div>
+                   <% end %>
+                  </div>
+                 </section>
+                <% end %>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>
+

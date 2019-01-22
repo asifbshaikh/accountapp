@@ -1,0 +1,22 @@
+<%= form_for(@login_request) do |f| %>
+
+  <div class="field">
+    <%= hidden_field_tag "action_key", params[:action_key]%>
+    <%= hidden_field_tag "action_value", params[:action_value]%>
+  </div>
+
+  <div class="field">
+    <label> GST Username</label>
+    <%= @company.gstn_username%>
+  </div>  
+  <div class="field">
+    <label>OTP</label>
+    <%= text_field_tag :otp %>
+  </div>
+  <div class="field">
+       <%= f.label " "%>
+  </div>
+  <div class="actions">
+    <%= f.submit "proceed"%>
+  </div>
+<% end %>

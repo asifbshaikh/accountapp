@@ -1,0 +1,28 @@
+<%= a.fields_for :payment_detail, :html => {:multipart => true, :class=>"form-horizontal"} do |t| %>
+<div class='form-group'>
+    <div class="row">
+        <div class="col-lg-12">
+	        <div class='col-lg-3'>
+	            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= label_tag "c_payment", "Cheque Payment Details :", :class=>'control-label' %><br/><br/>
+	        </div>
+	        <div class='col-lg-2'>
+	        <%= label_tag :cheque_number %><br/>
+			<%= t.text_field :account_number, :onkeydown => "return card_cheque_number(event);",  :maxlength => 6, :size => "14", :class => "bg-focus form-control" %>
+	        </div>
+	        <div class="col-lg-2">
+	        <%= t.label :bank_name %><br/>
+			<%= t.text_field :bank_name, :size => "14", :class => "bg-focus form-control" %>
+			</div>
+			<div class="col-lg-2">
+			<%= t.label :payment_date, :class => "required" %><br/>
+			<%= t.text_field :payment_date, :size => "14", :class => "bg-focus form-control"%>
+			</div>
+			<div class="col-lg-2">
+			<%= t.label :branch %><br />
+			<%= t.text_field :branch, :size => "14", :class => "bg-focus form-control" %>
+			</div>
+
+        </div>
+    </div>
+</div>
+<% end %>

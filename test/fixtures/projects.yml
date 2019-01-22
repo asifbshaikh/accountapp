@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  created_by: 1
+  name: MyString
+  start_date: 2013-02-16
+  end_date: 2013-02-16
+  estimated_cost: 9.99
+  description: MyText
+  status: false
+
+two:
+  company_id: 1
+  created_by: 1
+  name: MyString
+  start_date: 2013-02-16
+  end_date: 2013-02-16
+  estimated_cost: 9.99
+  description: MyText
+  status: false

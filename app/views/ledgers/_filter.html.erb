@@ -1,0 +1,39 @@
+<form action = 'ledgers'>
+	<div id = 'use_filter' class='title_name' style="cursor: pointer;">
+		<img src="/images/datatable/sort_desc.png"  class="show_image" align="left">
+		&nbsp;&nbsp;Use Filter
+	</div>
+	<div id='filter' class="filter">
+	<table>
+		<tr>
+			<td>
+				<label>Select Account :</label>
+	 		</td>
+	 	</tr>
+	 	<tr>	
+	 		<td>
+				<select name = 'account_id'>
+					<% for acc_id in @accounts %>
+			    		<% if !params[:account_id].nil? && acc_id.id == params[:account_id].to_i %>
+			    			<option value = '<%= acc_id.id %>' selected="selected"><%= acc_id.name %></option>
+			    		<% else %>
+			    			<option value = '<%= acc_id.id %>' ><%= acc_id.name %></option>
+						<% end %>	
+					<% end %>
+				</select>&nbsp; <label>OR</label>
+			</td>
+			
+		</tr>
+		<tr>
+		  <td><label> Select Date :</label></td>
+		</tr>
+		<tr>
+			<td><label>From :</label><br /><%= text_field_tag :start_date %></td>
+			<td><label>To :</label><br /><%= text_field_tag :end_date %></td>	
+		</tr>
+                <tr> <td>
+				<input type="submit" value="Search" class="btn btn-green"/>
+			</td></tr>
+	</table>
+	</div>
+</form>

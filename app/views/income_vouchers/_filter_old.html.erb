@@ -1,0 +1,67 @@
+<script>
+  $(document).ready(function() {
+  	'<% 
+    @data_hash1 = {}
+     for income_voucher in @income_vouchers
+      @data_hash1[income_voucher.voucher_number] = income_voucher.id
+     end
+     %>'
+    data_hash1 = '<%= @data_hash1.keys.join(',')%>'.split(',');
+    $("input#income_voucher_id_auto_complete").autocomplete({
+      source: data_hash1
+  });
+  
+
+  '<% 
+    @data_hash2 = {}
+     for acc in @from_accounts
+      @data_hash2[acc.name] = acc.id
+     end
+     %>'
+    data_hash2 = '<%= @data_hash2.keys.join(',')%>'.split(',');
+    $("input#from_account_auto_complete").autocomplete({
+      source: data_hash2
+  });
+  
+  
+  });
+</script>
+
+<%= form_for @search, :method => "get" do |f| %>
+  <tr>
+  	<td>
+     <%= f.label :voucher_number, "Income voucher number :"%><br/>
+     <%= f.text_field :voucher_number_equals, :id=>"income_voucher_id_auto_complete", :placeholder => "Press <space> to search", :size => 14 %>
+  	</td>
+  </tr>
+  <tr>
+    <td>
+     <%= f.label :from_account_id, "Received from :"%><br/>
+     <%= f.text_field :from_account_id_equals, :id=>"from_account_auto_complete", :placeholder => "Press <space> to search", :size => 14 %>
+    </td>
+  </tr>
+
+  <tr>
+     <td>
+        <%= f.label :payment_detail_type, "Payment mode :"%><br/>
+        <%= f.select(:payment_detail_type_equals, {'Cash'=>'CashPayment','Cheque'=>'ChequePayment','Card'=>'cardPayment', 'Internet banking' => 'InternetbankingPayment'}, :prompt => true) %>
+    </td>		
+	</tr> 
+	 <tr>
+     <td>
+       <%= f.label :amount_gte, "Amount :" %><br/>
+       <%= f.text_field :amount_gte, :size => 4, :maxlength => 10 %>-
+       <%= f.text_field :amount_lte, :size => 4, :maxlength => 10 %>
+    </td>		
+	</tr> 
+	<tr>
+     <td>
+       <%= f.label :income_date_gte, "Date :" %><br/>
+       <%= f.text_field :income_date_gte, :size => 4 %>-
+       <%= f.text_field :income_date_lte, :size => 4 %>
+    </td>		
+	</tr> 
+	
+	<tr><td><%= f.submit "Go", :class => "btn btn-green" %></td></tr>    	
+	
+ <%end%>

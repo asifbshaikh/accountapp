@@ -1,0 +1,26 @@
+<table class="table table-striped">
+		<thead>
+			<th>Purchase#</th>
+			<th>Payment Made</th>
+			<th>Outstanding</th>
+			<th>Due On</th>
+			<th width="10%">Amount</th>
+		</thead>
+		<tbody>
+		<% Rails.logger.debug "unpaid gst pur #{@gst_debit_note.from_account.purchases.inspect}"%>
+			<% @gst_debit_note.from_account.purchases.each_with_index do |obj, index| %>
+			<% if obj.status_id == 0%>
+			<% Rails.logger.debug "obj #{obj.inspect}"%>
+				<tr id="row<%= index %>">
+					<td><%= obj.purchase_number %></td>
+					<td><%= format_amount(obj.total_amount - obj.outstanding) %></td>
+					<td><%= format_amount obj.outstanding %></td>
+					<td><%= obj.due_date %></td>
+					<td><%= text_field_tag "gst_debit_note[gst_debit_allocations_attributes][#{index}][amount]", 0.0, :class=>"form-control text-right" %>
+					<%= hidden_field_tag "gst_debit_note[gst_debit_allocations_attributes][#{index}][purchase_id]", obj.id %>
+					</td>
+				</tr>
+			<% end %>
+			<% end %>
+		</tbody>
+</table>

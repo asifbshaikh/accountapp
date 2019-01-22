@@ -1,0 +1,32 @@
+	<!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>Email &rarr; <span>Template</span></h1>
+      <!-- Quick search box -->
+      <form action="" method="get">
+          <input class="" type="text" id="q" name="q" />
+      </form>
+    </div>
+</div>
+<!-- End of Page title -->
+
+	<div class="container">
+			<div class="clearfix"></div>	
+			<div class="field">	
+				<!-- <%= label_tag 'Name : ' %>
+				<%= text_field :text1, :class =>'span5' %><br/>
+			</div>&nbsp;
+			<div class = "input-prepend">
+				<%= label_tag 'email : '%>
+				<span class = "add-on">@</span>
+				<%= text_field :text2, :class =>'span4' %><br/>
+			</div><br/> -->
+			<%= label_tag 'event :'  %>
+			<%= collection_select(:email_action_ob, :email_action_method, EmailAction.all, :id, :action, {:prompt => true},{:class => "span4"}) %><br><br>
+			<%= label_tag 'Message :' %>
+			<%= text_area :message, :body, :rows=>7, :cols=>100, :id =>"textarea2",:class =>"xxlarge",:value =>"Hi #{session[:name]}\n " %><br><br>
+			<!--<textarea class="xxlarge" id="textarea2" name="textarea2" rows="3">#{actiondesc['create user']}</textarea>-->
+			<%= button_to "Send" %>
+		</div>
+	</div>
+	

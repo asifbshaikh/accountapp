@@ -1,0 +1,73 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div id="tabs-all" class="highlight">
+        <%= render :partial => "shared/flash_msg"  %>
+        <div id="timesheet">
+          <% if @leave_cards.blank? %>
+            <%= render :partial => "shared/no_record", :locals=> {:message => "Your leave card is not yet created! Please contact your admin." }%>
+          <% else %>
+            
+            <table class="display stylized" id="example">
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Total Leaves</th>
+                  <th>Leaves used</th>
+                  <th>Leaves pending</th>
+                </tr>                       
+              </thead>
+              <tbody>
+                 <% @users.each do |user|%>
+                 
+                  <tr>
+                   <td><%= link_to user.full_name, "/leave_cards/show?user_id=#{user.id}" %></td>
+                   <td><%= user.user_total_leave_count %></td>
+                   <td><%= user.user_utilized_leave_count %></td></td>
+                   <td><%= user.user_pending_leave_count %></td></td>
+                  </tr>
+                 
+                <% end %>
+               
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5"></td>
+                </tr>                        
+              </tfoot>
+            </table>
+            <div class="column width3 ">
+              <%= paginate @leave_cards %>
+            </div>
+          <% end %>
+        </div>
+      </div><br />
+    </section>
+    <!-- End of Left column/section --><!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= new_button "Apply For Leave", new_leave_request_path %>
+      <p><%= show_button "View Leave Dashboard", leave_requests_dashboard_path %></p>         
+      <div id="rightmenu">
+        <dl class="first">
+          <dt>
+            <%= image_tag "help.png" %>
+          </dt>
+          <dd>
+            <a href="#" class="nyroModal">Help</a>
+          </dd>
+          <dd class="last">
+            This page displays the list of all the leave cards.<br/>Click on employee name to view more deatils.
+          </dd>
+        </dl>
+      </div><br />
+    </aside>
+<!-- End of Right column/section -->
+  </div>
+<!-- End of Wrapper -->
+</div>

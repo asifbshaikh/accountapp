@@ -1,0 +1,131 @@
+<section id="content">
+  <section class="main padder">
+   <div class="row"><p></p>
+     <div class="col-lg-4">
+        <h3><i class="icon-check icon-xlarge"></i>Tasks</h3>
+     </div>
+      <div class="col-lg-8" align="right">
+      <%= link_to raw('<i class="icon-book"></i> Documents'), documents_index_path,  :class =>'btn btn-success btn-lg' %>
+       <% if !@company.plan.free_plan? %>
+
+         <% end %>
+         <% if !@company.plan.free_plan? && !@company.plan.essential_plan? %>
+         <%= link_to raw('<i class="icon-calendar"></i> Timesheets'), timesheets_path, :class=>'btn btn-info btn-lg' %>
+       <% end %>
+      </div>
+  </div>
+    <!-- .main -->
+    <div class="row ">
+      <div class="col-lg-12">
+      <div class="row">
+    <section class="col-lg-12">
+       <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+                <li class="active"><a href="#alltask" data-toggle="tab"><i class="icon-inbox icon-large text-default"></i> &nbsp;All</a></li>
+                <li><a href="#todaytask" data-toggle="tab"><i class="icon-calendar"></i> &nbsp;Today&apos;s</a></li>
+                <li><a href="#weektask" data-toggle="tab"><i class="icon-calendar"></i> &nbsp;This Week</a></li>
+                <li><a href="#monthtask" data-toggle="tab"><i class="icon-calendar"></i> &nbsp;This Month</a></li>
+                <li><a href="#completedtask" data-toggle="tab"><i class="icon-check-sign icon-external-link text-default"></i> &nbsp;Completed</a></li>
+              </ul>
+                <%= link_to raw('+ Add Task'),"#modal2",  :class =>'btn btn-success btn-xs pull-right m-t-n-mini m-b-n-mini',:title=>"Add Task", :"data-toggle"=>"modal" %>
+            </header>
+            <div class="panel-body">
+            <%= render :partial=>"shared/flash_msg"%>
+              <div class="tab-content">
+             <div class="tab-pane active" id="alltask">
+              <div class="table-responsive row">
+             <table id="altsk" class="table table-striped b-t text-small" data-source="<%= tasks_url(:format => 'json' )%>" >
+              <thead>
+               <%= render :partial=>"header"%>
+              </thead>
+              <tbody>
+                <%= render :partial=>"task", :collection =>@tasks %>
+              </tbody>
+              <tfoot>
+                <%= render :partial =>"footer"%>
+              </tfoot>
+              </table>
+
+            </div>
+          </div><!--"all projects" tab ends -->
+         <div class="tab-pane" id="todaytask">
+          <div class="table-responsive row">
+          <table  class="table table-striped b-t text-small" id="tdtsk">
+            <thead>
+                <%= render :partial=>"header"%>
+            </thead>
+            <tbody>
+              <%= render :partial =>"task", :collection=> @todays_tasks %>
+            </tbody>
+            <tfoot>
+              <%= render :partial =>"footer"%>
+            </tfoot>
+            </table>
+
+        </div>
+        </div>
+        <div class="tab-pane" id="weektask">
+          <div class="table-responsive row">
+           <table  class="table table-striped b-t text-small" id="wktsk">
+            <thead>
+                <%= render :partial=>"header"%>
+            </thead>
+            <tbody>
+              <%= render :partial =>"task", :collection=> @week_tasks %>
+            </tbody>
+            <tfoot>
+              <%= render :partial =>"footer"%>
+            </tfoot>
+          </table>
+
+        </div>
+        </div>
+         <div class="tab-pane" id="monthtask">
+          <div class="table-responsive row">
+           <table  class="table table-striped b-t text-small" id="mntsk">
+            <thead>
+                <%= render :partial=>"header"%>
+            </thead>
+            <tbody>
+              <%= render :partial =>"task", :collection=> @month_tasks %>
+            </tbody>
+            <tfoot>
+              <%= render :partial =>"footer"%>
+            </tfoot>
+          </table>
+
+        </div>
+        </div>
+        <div class="tab-pane" id="completedtask">
+          <div class="table-responsive row">
+           <table  class="table table-striped b-t text-small" id="cmptsk" >
+            <thead>
+                <%= render :partial=>"header"%>
+            </thead>
+            <tbody>
+              <%= render :partial =>"task", :collection=> @completed_tasks %>
+            </tbody>
+            <tfoot>
+              <%= render :partial=>"footer"%>
+            </tfoot>
+          </table>
+
+        </div>
+        </div>
+      </div>
+      </div>
+      </section>
+    </section>
+    </div>
+    </div>
+    </div>
+    <!-- /.sidebar -->
+    </section>
+  </section>
+  <div id="modal1" class="modal fade">
+    <%= render :partial=>"add_project_form"%>
+  </div>
+  <div id="modal2" class="modal fade">
+  <%= render :partial=>"new_task_form"%>
+ </div>

@@ -1,0 +1,37 @@
+<p></p>
+<div class='col-lg-12'>
+	
+		<%= render "shared/flash_msg" %>
+			<section class="panel">
+				<div class='war_info'>
+					<div class='warehouse-error'></div>
+					<header class="panel-heading">
+						<div class='row'>
+							<div class='col-lg-6'><strong>Warehouses</strong></div>
+							<div class='col-lg-6 text-right'>
+								<%= link_to "<i class='icon-plus'></i> Add New".html_safe, '#', :class=>'btn btn-success btn-sm', :id=>'add_war' %>
+							</div>
+						</div>
+					</header>
+					<div>
+						<div class='warehousePlace'></div>
+						<%= render 'warehouses/warehouses' %>
+					</div>
+				</div>
+				<div class='war_add'>
+					<header class='panel-heading'>
+						<div class='row'>
+							<div class='col-lg-6'><strong>New Warehouse</strong></div>
+							<div class='col-lg-6 text-right'>
+								<a title="Back" id ="bck_war" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a>
+							</div>
+						</div>
+					</header>
+					<div>
+						<%= render :partial=>"/warehouses/form" %>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+	

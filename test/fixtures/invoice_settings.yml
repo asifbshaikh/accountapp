@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  invoice_sequence: 1
+  invoice_no_strategy: 1
+  invoice_prefix: MyString
+
+two:
+  company_id: 1
+  invoice_sequence: 1
+  invoice_no_strategy: 1
+  invoice_prefix: MyString

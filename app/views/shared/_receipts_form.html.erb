@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-sm-12">
+    <section class="panel">
+      <div class="panel-body">
+        <form class="form-horizontal" method="get">
+          <div class='form-group'>
+            <div class="btn-group col-lg-6" data-toggle="buttons">
+              <label class="btn btn-sm btn-default <%= 'active' if @current_controller=='receipt_vouchers' && (params[:option].blank? || params[:option]=='multi_receipt') %>" id="optionMultiReceipt">
+              <input type="radio" name="options" name='multi_receipt' id="optionMultiReceipt"> <i class="icon-ok icon-large text-active"></i>Against Invoice
+              </label>
+              <label class="btn btn-sm btn-default <%= 'active' if @current_controller=='receipt_vouchers' && !params[:option].blank? && params[:option]=='adv_receipt' %>" id="optionAdvanceReceipt">
+              <input type="radio" name="options" name='adv_receipt' id="optionAdvanceReceipt"> <i class="icon-ok icon-large text-active"></i>Advance Receipt
+              </label>
+              <label class="btn btn-sm btn-default <%= 'active' if @current_controller=='income_vouchers' %>" id="optionIncomeVoucher">
+              <input type="radio" name="options" name='other_income' id="optionIncomeVoucher"> <i class="icon-ok icon-large text-active"></i>Other Income
+              </label>
+            </div>
+          </div>
+          <!--first row ends -->
+        </form>
+        <div class='new-receipt-form' style='<%= "display:none;" unless @current_controller=="receipt_vouchers" %>'>
+          <%= render "receipt_vouchers/form" %>
+        </div>
+        <div class='new-income-form' style='<%= "display:none;" unless @current_controller=="income_vouchers" %>'>
+          <%= render "income_vouchers/form" %>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

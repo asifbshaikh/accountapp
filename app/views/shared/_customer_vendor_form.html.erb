@@ -1,0 +1,116 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+      <h4 class="modal-title" id="myModalLabel">New Customer/Vendor</h4>
+    </div>
+    <div class='modal-body'>
+    	<div class="btn-group" data-toggle="buttons" >
+	    	<label class='btn btn-sm btn-default active customerbtn'>
+		    	<%= radio_button_tag "contact_head",'customer', (params[:contact_head].blank? || params[:contact_head] == 'customer') %>
+		    	<i class="icon-ok icon-large text-active"></i>Customer
+	    	</label>
+	    	<label class='btn btn-sm btn-default vendorbtn'>
+	    		<%= radio_button_tag "contact_head",'vendor', (params[:contact_head] == 'vendor') %>
+	    		<i class="icon-ok icon-large text-active"></i>Vendor
+	    	</label>
+    	</div>
+    </div>
+  	<div class='customer-form'>
+    	<%= form_for(customer=Customer.new, :html=>{:class=>'m-b-none form-horizontal', :remote=>true}) do |f| %>
+		    <div class="modal-body scroll-y" style='max-height:450px;'> 
+          <div class='errorSection'></div>  
+  	    	<div class="block">
+            <%= hidden_field_tag "selector", selector %>
+  	    		<%= f.label :name, :class=>'control-label-required' %>
+  	    		<%= f.text_field :name, :class=>'form-control' %>
+  	    	</div>
+          <div class="block">
+            <%= label_tag "start_date","Start from", :class=>'control-label-required' %>
+            <%= text_field_tag "start_date", @financial_year.start_date, :class=>'form-control text-right', :style=>"width:120px" %>
+          </div>
+  	    	<div class="block">
+  	    		<%= label_tag "opening_balance","Opening balance", :class=>'control-label' %>
+  	    		<%= text_field_tag "opening_balance", params[:opening_balance], :class=>'form-control text-right' %>
+  	    	</div>
+  	      <div class="block">
+  	    	  <label class='control-label'>Email</label>
+  	        <%= f.text_field :email, :id=>'email', :class=>'form-control' %>
+  	      </div>
+  	      <div class="block">
+  	        <label class='control-label'>Billing Address</label>
+  	        <%= f.fields_for :addresses, customer.addresses.build(:address_type=>1) do |ba| %>
+              <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+              <%= ba.hidden_field :address_type %>
+  	        <% end %>
+  	      </div>
+  	      <div class="block">
+  	      	<label class="same_address">
+  	      	<%= check_box_tag "same_address" %>
+  	      	  Same as billing
+  	      	</label><br />
+  	        <label class='control-label'>Shipping Address</label>
+  	        <%= f.fields_for :addresses, customer.addresses.build(:address_type=>0) do |ba| %>
+              <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+              <%= ba.hidden_field :address_type %>
+  	        <% end %>
+  	      </div>
+  	    </div>
+  	    <div class="modal-footer">
+  	    	<div class='save-btn'></div>
+  	    	  <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+  	    	<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+  	    </div>
+    	<% end %>
+    </div>
+
+  	<div class='vendor-form'>
+    	<%= form_for(vendor=Vendor.new, :html=>{:class=>'m-b-none form-horizontal', :remote=>true}) do |f| %>
+  	    <div class="modal-body scroll-y" style='max-height:450px;'>   
+          <div class='errorSection'></div>
+  	    	<div class="block">
+            <%= hidden_field_tag "selector", selector %>
+  	    		<%= f.label :name, :class=>'control-label-required' %>
+  	    		<%= f.text_field :name, :class=>'form-control' %>
+  	    	</div>
+          <div class="block">
+            <%= label_tag "start_date","Start from", :class=>'control-label-required' %>
+            <%= text_field_tag "start_date", @financial_year.start_date, :id=>'vendor-start-date', :class=>'form-control text-right', :style=>"width:120px" %>
+          </div>
+  	    	<div class="block">
+  	    		<%= label_tag "opening_balance","Opening balance", :class=>'control-label' %>
+  	    		<%= text_field_tag "opening_balance", params[:opening_balance], :class=>'form-control text-right' %>
+  	    	</div>
+  	      <div class="block">
+  	    	  <label class='control-label'>Email</label>
+  	        <%= f.text_field :email, :id=>'email', :class=>'form-control' %>
+  	      </div>
+  	      <div class="block">
+  	        <label class='control-label'>Billing Address</label>
+  	        <%= f.fields_for :addresses, vendor.addresses.build(:address_type=>1) do |ba| %>
+              <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+              <%= ba.hidden_field :address_type %>
+  	        <% end %>
+  	      </div>
+  	      <div class="block">
+  	      	<label class="same_address">
+  	      	<%= check_box_tag "v_same_address" %>
+  	      	  Same as billing
+  	      	</label><br/>
+  	        <label class='control-label'>Shipping Address</label>
+  	        <%= f.fields_for :addresses, vendor.addresses.build(:address_type=>0) do |ba| %>
+              <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+              <%= ba.hidden_field :address_type %>
+  	        <% end %>
+  	      </div>
+  	    </div>
+  	    <div class="modal-footer">
+  	    	<div class='save-btn'></div>
+  	    	  <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+  	    	<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+  	    </div>
+    	<% end %>
+  	</div>
+  </div>
+</div>
+

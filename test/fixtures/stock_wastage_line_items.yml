@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  stock_wastage_voucher_id: 1
+  product_id: 1
+  quantity: 9.99
+  reason: MyText
+
+two:
+  stock_wastage_voucher_id: 1
+  product_id: 1
+  quantity: 9.99
+  reason: MyText

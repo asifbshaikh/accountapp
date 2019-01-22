@@ -1,0 +1,13 @@
+<% @departments.each do |dep| %>
+  <tr>
+    <td>
+     <%= best_in_place dep, :name, :path => "/departments/#{dep.id}", :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 50, :class=>"bg-focus form-control"} %>
+    </td>
+    <td>
+      <%= best_in_place dep, :status, :type => :select, :path => "/departments/#{dep.id}",:collection => [["Active","Active"], ["Inactive","Inactive"]],:html_attrs=>{:class=>"bg-focus  form-control"} %>
+    </td>
+    <td class="text-center">
+      <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/departments/<%= dep.id%>" title="Delete" ><i class="icon-trash"></i></a>
+    </td>
+  </tr>
+<% end %>

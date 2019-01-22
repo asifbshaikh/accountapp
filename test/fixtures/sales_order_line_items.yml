@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sales_order_id: 1
+  product_id: 1
+  account_id: 1
+  tax_account_id: 1
+  quantity: 9.99
+  unit_rate: 9.99
+  discount: 9.99
+  description: MyText
+  type: 
+  amount: 9.99
+
+two:
+  sales_order_id: 1
+  product_id: 1
+  account_id: 1
+  tax_account_id: 1
+  quantity: 9.99
+  unit_rate: 9.99
+  discount: 9.99
+  description: MyText
+  type: 
+  amount: 9.99

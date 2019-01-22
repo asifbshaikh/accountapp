@@ -1,0 +1,45 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="clearfix">
+          <h3><i class="icon-bullhorn"></i>Product Updates</h3>
+        </div>
+      </div>
+      <div class="col-lg-5 m-t-large" align="right">
+        <button class="btn btn-success btn-lg" onclick="location.href= '/admin/profitbooks_workstreams/new'" ;=""><i class="icon-plus"></i> Add New Update</button>
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <section class="panel" >
+          <%= render "shared/flash_msg" %>
+          <div class="panel-body" id='heading'>
+            <% @product_updates.each do |product_update| %>
+              <article class="media" id="<%= product_update.id%>">
+                <span class="pull-left thumb-small"><i class="<%= product_update.icon_code%> icon-2x text-muted"></i></span>                
+                <div class="media-body">
+                  <div class="h4"><%= product_update.title %></div>
+                  <small class="block"><%= product_update.release_date%> <span class="badge bg-info"><%= product_update.feature_name%></span></small>
+                  <p class="block">
+                    <%=product_update.details %>
+                  </p>
+                  <%= product_update_link(product_update) %>
+                  <span class="pull-right">
+                    <%= product_update_edit_button(product_update) %>
+                    <%= product_update_delete_button(product_update) %>
+                    <%= publish_button(product_update) %>
+                    <%= archive_button(product_update) %>
+                  </span>
+                </div>
+              </article>
+              <div class="line pull-in" id="ln<%=product_update.id%>"></div>
+            <% end %>
+            <%= paginate @product_updates %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

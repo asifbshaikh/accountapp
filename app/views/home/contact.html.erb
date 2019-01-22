@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ProfitBooks is an online accounting software for small businesses. It helps you manage invoicing, expenses, banking transactions, taxes and more. Start today!" />
+<meta name="keywords" content="accounting software, invoicing, expenses" />
+<title>Contact ProfitBooks</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+<%= render :partial =>"zopim_chat_and_google_analytics"%>
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial =>"zopim_chat_and_google_analytics"%>
+<!-- End Load google Analytics -->
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+
+//Map Settings
+$('#map_canvas').googleMaps({
+scroll: false,
+latitude: 40.81098,
+longitude: -73.92786,
+depth: 15, 
+markers: {
+  latitude:     40.81150,
+  longitude: -73.92782,
+  icon: { 
+      image: 'images/map-marker.png',  
+      iconSize: '55, 61', 
+  }                 
+}
+});
+
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+      thisHeight = $(this).height();
+      if(thisHeight > tallest) {
+          tallest = thisHeight;
+      }
+  });
+  group.height(tallest);
+}
+</script>
+<script src="js/theme-functions.js"></script>
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+	<!-- header start here -->
+	<%= render :partial=>"header"%>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+        <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Get in touch with us</h2>                
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+     	<div class="row">    
+            <div class="six columns"> 
+                <p>Please fill in the form shown on right and we will get back to you. If you are an existing customer, please login to ProfitBooks for raising support queries.</p>        
+                <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15133.335065417665!2d73.88238204988697!3d18.513813431062363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c0486d9b71b9%3A0xd642b16ac8a15b02!2sProfitBooks+Accounting+Software!5e0!3m2!1sen!2s!4v1395832116595" width="400" height="300" frameborder="0" style="border:0"></iframe><br /><small><a href="https://goo.gl/maps/gQEpH" style="color:#0000FF;text-align:left" target="_blank">View Larger Map</a></small></p>
+                <div class="clear"></div>
+            </div>         
+            <div class="six columns">               
+                <div id="contact-form-area2">
+                    <!-- Contact Form Start //-->
+                    <%= render :partial =>"flash_message"%>
+                    <form action="new_contact" id="contactform2"> 
+                        <fieldset> 
+                        <label>Name <em>*</em></label>                           
+                        <input type="text" name="name" class="textfield" id="name" value="" /> 
+                        <label>E-mail <em>*</em></label> 
+                        <input type="email" name="email" class="textfield" id="email" value="" /> <label>Mobile Number<em>*</em></label>
+                        <input type="text" onkeydown="return numbersOnly(event);" maxlength="13"  name="contact" id="contact" value="" />
+                          
+                          <label for="commentsText">Comments<em>*</em></label>
+                        <textarea name="message" id="message" class="textarea" cols="2" rows="4"></textarea>
+
+                        <div class="clear"></div> 
+                        <label>&nbsp;</label>
+                        <input type="submit" name="submit" class="simpleBTN blue large"  value="Submit" />
+                        <span class="loading" style="display: none;">Please wait..</span>
+                        <div class="clear"></div>
+                        </fieldset> 
+                    </form>
+                    <!-- Contact Form End //-->
+              </div>
+          </div>            
+      </div>       
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial=>"footer"%>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body>
+</html>

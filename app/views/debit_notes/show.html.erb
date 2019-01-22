@@ -1,0 +1,57 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Debit Note Detail </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@debit_note.in_frozen_year?]}_debit_note_actions" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-8">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-7">
+                  <p>
+                    <strong> Voucher Number: </strong><%= @debit_note.debit_note_number %>
+                  </p>
+                  <p><strong> Debit for: </strong> <%= @debit_note.to_account_name %></p>
+                  <% unless @debit_note.from_account_id.blank? %>
+                    <p><strong> Debit Account of: </strong> <%= @debit_note.from_account_name %></p>
+                  <% end %>
+                  <p><strong> Amount: </strong> <%= @debit_note.currency %> <%= format_amount @debit_note.amount %></p>
+                </div>
+              </div>
+              
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Debited on <%=@debit_note.transaction_date %> by <%= User.find(@debit_note.created_by).full_name %></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Invoice table ends -->
+      <div class="row">
+          <%if !@debit_note.description.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Description</label><br/>
+              <%= breaking_word_wrap(@debit_note.description)%>
+            </p>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>

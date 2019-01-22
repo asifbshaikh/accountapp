@@ -1,0 +1,30 @@
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/
+uploaded_data
+*.*~
+*.orig
+*.pdf
+/task/db.rake
+*.sql
+.sass-cache/
+s3.yml
+database.yml
+Gemfile
+Gemfile.lock
+.ruby-version
+tags
+.tags
+TAGS
+.TAGS
+<<<<<<< HEAD
+.DS_STORE
+.rdb
+dump.rdb
+*.rdb
+*.swp
+.swp
+=======
+.DS_Store
+>>>>>>> reimbursement_feature

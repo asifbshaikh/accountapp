@@ -1,0 +1,38 @@
+<span>Schedule For Date : <%= Time.zone.now.to_date%><br></span>
+<table>
+<thead>
+<tr>
+   <th width="20%">Activity Name</th>
+   <th width="20%">Count</th>
+   <th width="10%">Total Time Spent</th>
+</tr>
+</thead>
+<% @super_users.each do |user|%>
+<% lead_activities =  LeadActivity.joins(:lead).where("leads.assigned_to = ? and lead_activities.next_followup = ? and activity_status = ?",user.id, Time.zone.now.to_date,true)%>
+<% unless lead_activities.blank? %>
+<tbody>
+<tr>
+<td>For User : <%= user.first_name%></td>
+</tr>
+   <% total_time = 0%>
+   <% activities = []%>
+   <% lead_activities.each do |activity|%>
+   <% if !activities.include?(activity.next_activity)%>
+   <% activity_type = lead_activities.where(:next_activity => activity.next_activity)%>
+   <% time = activity_type.sum(:time_spent) %>
+   <% activities << activity.next_activity%>
+   <tr>
+      <td align="center"><%= Lead.get_activity(activity.next_activity)%></td>
+      <td align="center"><%= activity_type.count%></td>
+      <td align="center"><%= time%></td>
+   </tr>
+   <% total_time += time%>
+   <%end%>
+   <%end%>
+   <tr>
+      <td>Total Time : <%= total_time/60 %>:<%= total_time%60 %></td><br>
+   </tr>
+</tbody><br>
+<%end%>
+<%end%>
+</table>

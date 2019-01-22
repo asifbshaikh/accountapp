@@ -1,0 +1,107 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Projects</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-plus"></i> New Project'), "#", :id=>"add_project", :class =>'btn btn-success btn-lg' %>
+        <p></p>
+      </div>
+    </div>
+
+    <div class="row  project_add" style="<%='display:none;' unless @project.errors.any? %>">
+      <div class="col-lg-12">
+        <%= render :partial=> "shared/flash_msg"%>
+        <section class="panel">
+          <header class="panel-heading">
+            <strong>Add New Project</strong>
+          </header>
+          <div class="panel-body">
+            <%= form_for @project, :html=>{:class=>"form-horizontal"} do |f| %>
+              <%= render 'shared/form_error', :object => @project %>
+              <div class="col-sm-6">
+                <div class="col-sm-4 text-right">
+                  <p>
+                    <%= f.label "Name", :class=>"control-label-required" %>
+                  </p>
+                  <p>
+                    <%= f.label "Start date", :class=>"control-label-required" %>
+                  </p>
+                  <p>
+                    <%= f.label "Estimated cost", :class=>"control-label" %>
+                  </p>
+                </div>
+                <div class="col-sm-8">
+                  <p>
+                    <%= f.text_field :name,:class=>"bg-focus form-control" %>
+                  </p>
+                  <p>
+                    <%= f.text_field :start_date, :class=>"bg-focus form-control" %>
+                  </p>
+                  <p>
+                    <%= f.text_field :estimated_cost, :onkeydown => "return numbersOnly(event);", :maxlength => 18,
+                      :class=>"bg-focus form-control text-right" %>
+                  </p>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <%= f.label :description, :class=>"control-label" %><br />
+                <%= f.text_area :description, :rows=> 3, :class=>"bg-focus form-control" %>
+              </div>
+              <div class="col-lg-8 col-lg-offset-4">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="#" id = "bck_project" class="btn btn-default">Cancel</a>
+              </div>
+            <% end %>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <%= render :partial=> "shared/flash_msg"%>
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-left" id="projectTabs">
+              <li class="active"><a href="#ongoingProj_tab" data-toggle="tab"><i class="icon-time icon-large text-default"></i>Ongoing</a></li>
+              <li ><a href="#completedProj_tab" data-toggle="tab"><i class="icon-ok icon-large text-default"></i>Completed</a></li>
+           </ul>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="ongoingProj_tab">
+                <div class="table-responsive">
+                  <table id="ongoing_project" class="table table-striped m-b-none text-small" data-source ="<%= projects_url(:format=> 'json', :ongoingprj => true)%>" >
+                    <thead>
+                      <%= render :partial => "header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <%= render :partial => "footer" %>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <div class="tab-pane" id="completedProj_tab">
+                <div class="table-responsive">
+                  <table id="completed_project" class="table table-striped m-b-none text-small" data-source ="<%= projects_url(:format=> 'json', :completedprj => true)%>" >
+                    <thead>
+                      <%= render :partial => "header" %>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                      <%= render :partial => "footer" %>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

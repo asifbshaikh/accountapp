@@ -1,0 +1,45 @@
+<!-- Page Title-->
+<%= render :partial=> "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+        <%= form_tag(@company, :controller => "/admin/companies") do |f| %>
+        <%= hidden_field_tag "subscription[company_id]", @company.id %>
+          <table class="display stylized" id="company_table">
+              <thead>
+                <tr>
+                  <th colspan = "2"> Renew</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr>
+                   <td>Renewal date</td>
+                   <td><%= @company.subscriptions[0].renewal_date.to_date %></td>
+                  </tr> 
+                  <tr>
+                    <td><%= label_tag "renewal_date", "New date" %></td>
+                    <td><%= text_field_tag "subscription[renewal_date]", nil %></td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                    <tr><td colspan = "2"><%= submit_tag "Submit", :class => "btn btn-green" %></td></tr>
+              </tfoot>
+          </table>
+          <% end %>
+      </div><br />
+    </section>
+      <!-- End of Left column/section -->
+    <!-- Right column/section -->
+<aside class="column width2"><br />
+   <a href="/admin/companies" class="btn btn-special btn-green btn-green-index"><img src="/images/white_icon/ic_list.png" class="icon"/> View companies</a>
+</aside>
+  <!-- End of Right column/section -->
+ </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

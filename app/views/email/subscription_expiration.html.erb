@@ -1,0 +1,24 @@
+Hello <b><%= @user.username %></b>,
+<br/>
+<br/>
+
+  
+<br/><br/>
+  <% if @subscription.end_date == Time.zone.now.to_date %>
+    Your subscription is due to expire <b>today</b>. 
+  <% else %>
+    Your subscription is due to expire on <b><%= @subscription.end_date %></b>.
+  <% end %>
+<br/><br/>
+    Please renew your subscription to avoid  deactivation.
+<br/><br/>
+
+ If you need assistance you can contact us at <a href="mailto:support@profitbooks.net"><b>support@profitbooks.net</b></a>
+<br/><br/>
+Thanks & Regards
+<br/>
+
+The ProfiBooks Team.
+<hr>
+Sent using <a href= "https://www.profitbooks.net" target = "_blank">ProfitBooks.net</a><br/>
+<a href= "https://www.profitbooks.net/home/pricing" target = "_blank">Create</a> your free account today and start managing office finances in a smarter way.

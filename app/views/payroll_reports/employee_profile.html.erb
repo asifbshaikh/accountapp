@@ -1,0 +1,271 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			
+			&nbsp;
+	
+            	<p align="right">
+			      <a href="/employee_profile/index.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	  <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+           
+			<div class='highlight'>
+				<div id='report_header' align='center'>
+					<span class='company_name'><% if Company.find(@company).nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+						<%= @company.name%>
+						<% end %> </span>
+					<p>
+						22 Unifed apartment'
+						2407 East street,
+						camp, Pune(MH).
+						pin:411001
+					</p>
+					<span class='report_title'><u>Profile</u></span>
+					<br>
+					<span class='report_month'>1-April-2010 to 31-March-2011 </span>
+				</div>
+				<hr>
+				<div class='title_name'>
+					<%= @users.first_name %> <%= @users.last_name %>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>1.Basic Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Under </td>
+							<td><b>: <% if !@departments.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= Department.find(@current_user.department_id).name %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td > Employee Number </td>
+							<td><b>: <% if @users.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @current_user.id %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Date Of Joining </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.date_of_joining %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Designation </td>
+							<td><b>: <% if @designations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= Designation.find(@current_user.designation_id).title %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Function </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.work_type %>
+							<% end %> </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>2.General Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Location </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.work_location %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Gender </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.gender %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Date Of Birth </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.birth_date %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Blood Group </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.blood_group %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Father/Mother Name </td>
+							<td><b>: Field not Avail.xxx </b></td>
+						</tr>
+						<tr>
+							<td> Spouse Name </td>
+							<td><b>: Field not Avail.xxx </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>3.Bank Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Bank Name </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.bank_name%>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Branch </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.branch%>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Bank A/c Number </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.bank_account_number %>
+							<% end %> </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>4.Contact Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Contact Number </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.emergency_contact %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Address </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.present_address %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> E-Mail ID </td>
+							<td> <%if @uses.nil? %> <b>: <span class='light'><i>Not available</i></span></b> <% else %> <b>: </b><%= @users.email %></b>
+							<% end %> </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>5.Separation Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Date of Resignation/Retirement </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> PF Date of Releiving </td>
+							<td> xxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Reasons for Leaving </td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>6.Passport & Visa Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Passport Number </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.passport_number %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Country Of Issue </td>
+							<td> xxxxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Passport Expiry Date </td>
+							<td><b>: <% if @user_informations.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_informations.passport_expiry_date %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> Visa Number </td>
+							<td> xxxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Visa Expiry Date </td>
+							<td> xxxxxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>7.Contract Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Work Permit Number </td>
+							<td><b>: 000000xxx</b></td>
+						</tr>
+						<tr>
+							<td> Contract Start Date </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Contract Expiry Date </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>8.Statutory Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Income Tax Number(PAN) </td>
+							<td> <%if @user_salary_details.nil? %> <b>: <span class='light'><i>Not available</i></span></b> <% else %> <b><%= @user_salary_details.PAN %></b> <% end %> </td>
+						</tr>
+						<tr>
+							<td> PF Account Number </td>
+							<td> <%if @user_salary_details.nil? %> <b>: <span class='light'><i>Not available</i></span></b> <% else %> <b><%= @user_salary_details.PF_account_number %></b> <% end %> </td>
+						</tr>
+						<tr>
+							<td> EPS Account Nubmer </td>
+							<td><b>: <% if @user_salary_details.nil? %> <span class = 'light'><i>Not available</i></span> <% else %>
+							<%= @user_salary_details.EPS_account_number %>
+							<% end %> </b></td>
+						</tr>
+						<tr>
+							<td> PF Date Of Joining </td>
+							<td> xxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> ESI Number </td>
+							<td> xxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> ESI Dispensary Name </td>
+							<td> xxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+			</div>
+		
+		</section>
+		&nbsp; <!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

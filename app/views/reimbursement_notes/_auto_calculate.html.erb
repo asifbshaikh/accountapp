@@ -1,0 +1,24 @@
+<script>
+	$(document).ready(function(){
+		cal();
+		$("table#reimbursement_note_line_items").live('keyup change', function(e){
+			cal();
+			e.preventDefault();
+		});
+	});
+
+	function cal(){
+		var totalAmount=0;
+		$("table#reimbursement_note_line_items tbody tr").each(function(i, tr){
+			var amount=0;
+			console.log ("Yay");
+			if ($('[id="row'+i+'"] #amount').is(":visible")) {
+				amount=parseFloat($('[id="row'+i+'"] #amount').val());
+			}
+			if(amount){
+				totalAmount += amount;
+			}
+		});
+		$("span#total").text(totalAmount.toFixed(2));
+	}
+</script>

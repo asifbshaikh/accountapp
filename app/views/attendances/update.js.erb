@@ -1,0 +1,26 @@
+$('body').append("<div id='msg_box'><div class='box box-success'>Attendance updated successfully</div></div>");
+
+<% if @is_save %>
+  $("#<%= params[:Attendance]%>").val('<%= @Attendance.days_present %>');
+  $('#popup_box').fadeOut("slow");
+  $('#msg_box').fadeIn("slow", function(){
+    $('#msg_box').fadeOut(7000);
+  });
+  
+<% else %>
+  <% if @attendance.errors[:days_present].any? %>
+    var error = "<%= @attendance.errors[:days_present] %>";
+    $("span#name").text(error);
+    $("#name").css("border-color",'#f55');
+  <% end %>
+<% end %>
+
+$("#name").keyup(function(){
+  if($("span#name").text()){
+    $("span#name").text('');
+    $("#name").css("border-color", "");
+  }
+});
+
+
+

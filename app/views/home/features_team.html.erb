@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> 
+<html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <%= render :partial => "meta_tags" %>
+    <!-- ////////////////////////////////// -->
+    <!-- //     Retina Bookmark Icon     // -->
+    <!-- ////////////////////////////////// -->
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+
+    <!--Start of Zopim Live Chat Script-->
+    <%= render :partial => "zopim_chat_and_google_analytics" %>
+    <!-- End Load google Analytics -->
+    <!-- IE Fix for HTML5 Tags -->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  </head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial => "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Simple Yet Powerful Features.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                   <a href="/home/pricing" class="simpleBTN green large">Get started for FREE</a>
+
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+        <div class="row">              
+            <div class="three columns">         
+                <aside>
+                    <h5><a href="/home/features_accounting">Easy Accounting</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Simple Invoicing, Bank Transactions, Taxation, Financial Reports and much more..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_payroll">Payroll Management</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Employee Management, Salary Processing, Leave &amp; Holidays Management, Company Announcements..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_managers">For Managers</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Roles Based Access, Projects, Ability to Invite Auditors, Powerful Reporting, Complete Control..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5>For Team Members</h5>
+                    <ul class="sidebar-list"><li>Internal Messaging, Tasks &amp; Notes, Document Management with Dropbox Integration..</li>
+                    </ul>
+                </aside>                        
+            </div> <!-- three column ends -->
+            <div class="nine columns">           
+                <!-- blog post 1 -->
+                <div class="blog-post">
+                  <div class="row">                  
+                        <div class="twelve columns">
+                            <div class="post-content">
+                                <h3>Better Collaboration = Happy Employees !</h3> 
+                                <ul class="post-info">
+                                    <li>Productivity tools that come with ProfitBooks save lot of time for employees during their day to day activities.</li>                                 
+                                </ul>           
+                                <p><%= image_tag 'screens/tasks.png', :alt=>'Internal Messaging and Tasks(ProfitBooks - Online accounting and payroll management software)', :align=>'left'%><h4>Internal Messaging &amp; Tasks</h4>
+                                Send less emails and communicate with in-built messaging system. Its fast, secure and doesn't let information flow outside your organization. <br><br>Tools like tasks manager helps you keep track small tasks that you have planned for the day. You can even assign these tasks to your colleagues with a due date.</p>  
+                                <p><br></p>
+                                <p><%= image_tag 'screens/docs.png', :alt=>'Document Management(ProfitBooks - Online accounting and payroll management software)', :align=>'right' %><h4>Smart Document Management</h4>
+                                You can truly go paperless with in-built document management feature. Store all the important documents at one place and access them whenever you need them, even where you are traveling.<br><br>
+                                If you love Dropbox like we do, you can integrate your account with ProfitBooks and access documents stored in Dropbox within ProfitBooks. That's smart!</p>
+                                <p align="center"><br><br><a href="/home/pricing" class="simpleBTN green large">Made up your mind? Get started for FREE</a></p>
+                            </div><!-- post content ends -->
+                        </div><!-- twelve column ends -->
+                    </div><!-- row ends -->   
+                </div><!-- blog post ends -->
+                            
+          </div><!-- nine columns ends -->
+             
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

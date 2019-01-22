@@ -1,0 +1,32 @@
+  <% if !@custom_field.blank? && !@company.plan.free_plan? %>
+    <% if !@custom_field.custom_label1.blank? %> 
+      <p></p>
+      <div class="row">
+        <label class="col-lg-7 control-label"><%= @custom_field.custom_label1 %></label>
+        <div class="col-lg-5">
+        <%= text_field_tag "invoice[custom_field1]", "#{@invoice.custom_field1.blank? ? @custom_field.default_value1 : @invoice.custom_field1}", :size => "10", :class=>'bg-focus form-control' %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if !@custom_field.custom_label2.blank? %> 
+      <p></p>
+      <div class="row">
+        <label class="col-lg-7 control-label"><%= @custom_field.custom_label2 %></label>
+        <div class="col-lg-5">
+        <%= text_field_tag "invoice[custom_field2]", "#{@invoice.custom_field2.blank? ? @custom_field.default_value2 : @invoice.custom_field2}", :size => "10", :class=>'bg-focus form-control' %>
+        </div>
+      </div>
+    <% end %>
+    
+    <% if !@custom_field.custom_label3.blank? %> 
+      <p></p>
+      <div class="row">
+        <label class="col-lg-7 control-label"><%= @custom_field.custom_label3 %></label>
+        <div class="col-lg-5">
+        <%= text_field_tag "invoice[custom_field3]", "#{@invoice.custom_field3.blank? ? @custom_field.default_value3 : @invoice.custom_field3}", :size => "10", :class=>'bg-focus form-control' %>
+        </div>
+      </div>
+    <% end %>
+    <p></p>
+  <% end %>

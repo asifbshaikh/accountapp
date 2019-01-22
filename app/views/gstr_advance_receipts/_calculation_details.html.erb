@@ -1,0 +1,29 @@
+<tr>
+  <td colspan = "<%= gstr_advance_receipt_line_count %>" class="text-right" style="background:none;"><strong>Sub total</strong></td>
+  <td class="text-right" style="background:none;"><strong><%=  number_with_precision @gstr_advance_receipt.sub_total, :precision=>2 %></strong></td>
+</tr>
+
+<%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+
+<% if @gstr_advance_receipt.get_discount != 0 %>
+	<tr>
+		<td colspan = "<%= gstr_advance_receipt_line_count%>" class="text-right" style="background:none;border:none;"><strong>Discount</strong></td>
+		<td class="text-right" style="background:none;border:none;"><strong><%=  number_with_precision @gstr_advance_receipt.get_discount, :precision=>2 %></strong></td>
+	</tr>
+<% end %>
+
+<% if @gstr_advance_receipt.has_tax_lines? %>
+	<tr>
+		<td colspan = "<%= gstr_advance_receipt_line_count %>" class="text-right"><strong>Total tax 
+		</strong></td>
+		<td class="text-right"><strong><%= number_with_precision @gstr_advance_receipt.tax, :precision=>2 %></strong></td>
+	</tr>
+<% end %>
+
+
+
+<tr>
+	<td class="text-right" colspan="<%= gstr_advance_receipt_line_count %>"><b>Total</b></td>
+	<td class="text-right"><b><%= number_with_precision @gstr_advance_receipt.amount, :precision=>2 %></b></td>
+</tr>
+

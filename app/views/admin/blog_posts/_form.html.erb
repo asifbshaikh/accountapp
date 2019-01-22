@@ -1,0 +1,73 @@
+<%= render :partial=>"editorscript"%>
+<%= form_for @blog_post, :url => ([:admin, @blog_post]), :class=>"form-horizontal" do |f| %>
+  <% if @blog_post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blog_post.errors.count, "error") %> prohibited this blog_post from being saved:</h2>
+
+      <ul>
+      <% @blog_post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <legend>Post Content</legend>
+  <div class="row">
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label :title, :class=>"control-label-required", :for=>"producttitle" %>
+  </div>
+    <div class="col-lg-6">
+      <%= f.text_field :title, :class =>'form-control' %>
+      <small>e.g. How profitbooks will help your business?</small>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+    <label for="productdesc" class="control-label">Content</label>
+    </div>
+    <div class="col-lg-6">
+      <%= f.text_area :content, :class=>"wysiwyg", :rows=>5 ,:cols=>10%>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+    <label for="productdesc" class="control-label">Description</label>
+    </div>
+    <div class="col-lg-6">
+    <%= f.text_area :description, :class=>"form-control large full",:rows=>3 ,:cols=>10%>
+  </div>
+  </div>
+  </div>
+  <div class="row"><br/>
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+         <label for="productcat" class="control-label">Product type</label><br/>
+        </div>
+        <div class="col-lg-6">
+        <%= f.collection_select :blog_category_id, @categories, :id, :title,{} ,{:class=>"form-control"} %>
+        </div>
+        </div>
+    </div> 
+    <div class="row"><br/>
+      <div class="form-group">
+        <div class="col-lg-2 text-right">
+         <label for="productcat" class="control-label">Author</label><br/>
+        </div>
+        <div class="col-lg-6">
+        <%= f.select(:author, [['Harshal Katre'],['Mohnish Katre'],['Amit Mahalle']], {:prompt => true}, {:class=>"form-control bg-focus"} )%>
+        </div>
+        </div>
+    </div>   
+      <div class="form-group"></br>
+        <div class="col-lg-7 col-lg-offset-3">                      
+        <%= f.submit :class => 'btn btn-info ', :value => 'Publish' %>
+        <%= f.submit :class => 'btn btn-info', :value => 'Save as Draft', :name => 'draft' %>
+        <%= link_to 'Cancel', admin_blog_posts_path, :class => 'btn btn-danger' %>
+      </div>
+    </div>
+<% end %>

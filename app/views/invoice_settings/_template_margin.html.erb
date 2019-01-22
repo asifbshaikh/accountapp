@@ -1,0 +1,79 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Template setting</h4>
+    </div>
+       <div class="modal-body" align="left">
+      <div class='error-place1'></div>
+      <div class="status_form" <%= "style='display:none;'" if flash[:error].blank? %>>
+        <%= form_tag({:action => :template_margin, :controller => "/invoice_settings"}, :remote=>true) do |f| %>
+          <div class='error-place'></div>
+           <%= hidden_field_tag  "id" ,@company.id %>
+               <% template=Invoice.get_template(@company, "Invoice", params[:dlc])%>
+              <div class="row">
+            
+              <div class="col-sm-12">
+               <% if template == "minimalist"%>
+                <div class="col-sm-6">
+
+                 <%= check_box_tag(:hide_logo) %>
+                 <%= label_tag(:hide_logo, "Hide company logo") %><br><br>
+                 <%= check_box_tag (:hide_address)%> 
+                 <%= label_tag(:hide_address, "Hide company Address") %>
+                </div>
+                <div class="col-sm-6">
+                 <%= check_box_tag(:HideRateQuantity) %>
+                 <%= label_tag(:HideRateQuantity, "Hide Rate and Quantity Column ") %><br><br>
+                </div><br><br><br>
+                 <%else%>
+                  <%= check_box_tag(:hide_logo) %>
+                 <%= label_tag(:hide_logo, "Hide company logo") %><br><br>
+                 <%= check_box_tag (:hide_address)%> 
+                 <%= label_tag(:hide_address, "Hide company Address") %>
+               <%end%>
+              
+
+          <%if template !='Retail'%>
+            <br><br> 
+               <%= label_tag(:margin, "Select Margin in Millimiter") %><br/>
+            <p>
+            <div id="container">
+               <div class="col-sm-1">
+                <%= label_tag(:top_margin, "Top") %>
+                </div>  
+              <div class="col-sm-3">
+                <%= select_tag :top_margin, options_for_select(1..30),{ prompt: "Select", :class=>"form-control"}%>
+                </div>
+            
+                 <div class="col-sm-1">
+                <%= label_tag(:left_margin, "Left") %>
+                </div>  
+              <div class="col-sm-3">
+                <%= select_tag :left_margin, options_for_select(1..20),{ prompt: "Select", :class=>"form-control"}%>
+                </div>
+                
+               <div class="col-sm-1">
+                <%= label_tag(:right_margin, "Right") %>
+                </div>  
+              <div class="col-sm-3">
+                <%= select_tag :right_margin, options_for_select(1..10),{ prompt: "Select", :class=>"form-control"}%>
+              </div>
+          </div>  
+            </p>
+              <br><br><br><br>
+             <% end %> 
+              </div>
+              </div>   
+                <div class="col-sm-12" align="center">
+                 <div class='save-btn'></div>
+                   <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+                   <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+
+                </div>
+              </div>
+        <% end %>
+      <!-- </div>
+    </div> -->
+  </div>
+</div>

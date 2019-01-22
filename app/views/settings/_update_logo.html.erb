@@ -1,0 +1,26 @@
+<%= form_for @company , :html => {:multipart => true, :class=>"form-horizontal"} do |f|%>
+ <%= render 'shared/form_error', :object => @company %>
+<div class="col-sm-12">
+ <div class="text-center">
+ <% unless @company.new_record? || !@company.logo? %>
+   <%= image_tag @company.logo.url ,:class=>'img-thumbnail', :alt=>'Company logo' %>
+ <% end %>
+ </div> <br/>
+ <% if @company.new_record? || !@company.logo? %> 
+   <%= f.label "Upload new Logo", :class=>"control-label" %>
+  <% else %>
+   <%= f.label "Change Logo", :class=>"control-label" %>
+  <% end %>
+  <%= f.file_field :logo ,:class=>"btn btn-white"%><%= hidden_field_tag "old_file_size", @company.old_file_size %> <small>Only JPG and PNG files are supported</small><br/>
+  
+  <% unless @company.new_record? || !@company.logo? %>
+      <%= f.check_box(:delete_logo) %>
+      <%= f.label(:delete_logo, 'Remove Logo') %>
+   <% end %>
+<%= hidden_field_tag 'row_index', params[:index] %>
+</div>
+  <div class="col-lg-8 col-lg-offset-4">                      
+   <%= submit_tag "Submit", :class => "btn btn-success" %>&nbsp;<%= link_to 'Cancel',"", :id => 'bck_logo', :class => 'btn btn-white', :remote => true %>
+  </div>
+<% end %>
+

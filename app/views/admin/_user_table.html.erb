@@ -1,0 +1,32 @@
+<div id = "user_container">
+	<% if @users.blank?%>
+	<%= render :partial => "shared/no_record" %>
+	<% else %>
+	<table class="display stylized" id="act_details">
+		<thead>
+			<tr>
+				<th colspan="5">User Details</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label>Users Email</label></td>
+				<td><label>Company</label></td>
+				<td ><label>Last login</label></td>
+				<td><label>Days</label></td>
+				<td><label>Action</label></td>
+			</tr>
+			<% @users.each do |user| %>
+			<tr>
+				<td><%= user.email %></td>
+				<% if !user.company.blank? %> <td><%= Company.find(user.company_id).name %></td>
+				<% else %> <td></td>
+				<% end %> <td><%= user.last_login %></td>
+				<td></td>
+				<td></td>
+				<% end %>
+			</tr>
+		</tbody>
+	</table>
+		<% end %>
+</div>

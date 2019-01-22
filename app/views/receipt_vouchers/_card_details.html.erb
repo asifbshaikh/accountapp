@@ -1,0 +1,5 @@
+<% unless @receipt_voucher.payment_detail.account_number.blank?%>
+<p><strong>Card Number:</strong> <%= @receipt_voucher.payment_detail.account_number  %></p>
+<% end %>
+<p><strong>Transaction Date:</strong> <%= @receipt_voucher.payment_detail.payment_date %></p>
+<p><strong>Transaction Reference:</strong> <%= @receipt_voucher.payment_detail.transaction_reference%></p>

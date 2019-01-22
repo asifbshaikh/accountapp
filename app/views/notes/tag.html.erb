@@ -1,0 +1,75 @@
+ <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for note in @notes
+      @data<<note.subject
+      @data<<note.description
+      @data<<note.created_at
+      @data<<note.created_by
+      @data<<note.tags
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+ <!-- Page title -->
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Notes &rarr;<span>Note List</span></h1>
+    <%= form_for @search, :method => "get" do |f| %>
+    <%= f.text_field :subject_or_description_or_created_at_equals, :id=>"autocomplete" %>
+    <%end%>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+     
+    <!-- Left column/section -->
+     <section class="column width6 first"><br />
+        <div id="tabs-all" class = "highlight" >
+            <div class="colgroup">
+               <div class="width3 column first"> </div>
+            </div>
+            <div class="clearfix"></div>
+             <div id="note">
+                    <% if @notes.blank? %>
+                      <p class="no-notes"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+                      <table class="display stylized" id="example">
+                        <thead>
+                          <%= render :partial => "header" %>
+                        </thead>
+                        <tbody>
+                          <%= render :partial => "note", :collection => @notes %>
+                        </tbody>
+                        <tfoot>
+                          </tr><td colspan="4"></td></tr>  
+                        </tfoot>
+                      </table>
+                      <%= paginate @notes %>
+                    <% end %>
+              </div>   
+     </div><br/>
+     </section>             
+    <!-- End of Left column/section -->
+  
+    <!-- Right column/section -->
+     <aside class="column width2"><br />
+       <a href ="/notes/new" class ="btn btn-special btn-green"><img src = "/images/add.png" class = "icon" />Add note</a>
+       <%= render :partial => "tag_display"%>
+     </aside>
+     <!-- End of Right column/section -->
+   
+   </div>
+   <!-- End of Wrapper -->
+ </div>
+<!-- End of Page content -->
+

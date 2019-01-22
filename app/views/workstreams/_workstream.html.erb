@@ -1,0 +1,30 @@
+<% if workstream.action_code == "created"
+          s_cls = 'badge bg-success'
+          i_cls = 'icon-plus'
+        elsif workstream.action_code == "deleted"
+          s_cls = 'badge bg-danger'
+          i_cls = 'icon-trash'
+        else
+          s_cls = 'badge bg-info'
+          i_cls = 'icon-edit'
+          end%>
+          <% sentence = "#{workstream.action}"
+          if sentence.match(/created/)
+          sentence["created"]=""
+        elsif sentence.match(/updated/)
+          sentence["updated"] =""
+          elsif
+            sentence.match(/deleted/)
+          sentence["deleted"] =""
+          end%>
+          <%action_code = workstream.action_code
+          if action_code=="created"
+            action_code="added"
+            end%>
+           <!--Recent Activities -->
+           <tr>
+           <td>
+            <span class='<%= s_cls %>'><i class='<%= i_cls%>'></i></span> <%= workstream_user(workstream.user_id) %>&nbsp;<%= action_code%>&nbsp;<%= sentence%>
+            </td>
+            </tr>
+           

@@ -1,0 +1,99 @@
+<% if @gstr_advance_receipt.from_account.invoices.blank? %>
+  <%= render "shared/no_record" %>
+<% else %>
+  <table class="table table-striped" id='unpaid-invoices'>
+    <tbody>
+    <thead>
+      <tr>
+              
+        <th>Invoice #</th>
+        <th>Received</th>
+        <th>Outstanding</th>
+        <th>Due Date</th>
+        <th>Received Amount</th>
+      </tr>
+    </thead>
+    
+
+      <% @gstr_advance_receipt.from_account.invoices.each_with_index do |obj, index| %>
+        
+       
+          <%if obj.invoice_status_id==0 %>
+        <tr>
+                
+          <td><%= obj.invoice_number %></td>
+          <td><%= obj.currency %> <%= number_with_precision obj.total_received_amt, :precision=>3 %></td>
+          <td><%= obj.currency %> <%= number_with_precision obj.outstanding, :precision=>3 %></td>
+
+          <td><%= obj.due_date  %></td>
+           
+         
+          <td><%= text_field_tag "gstr_advance_receipt[gstr_advance_receipt_invoices_attributes][#{index}][amount]", 0.00, :class=>'form-control text-right', :onkeydown => "return numbersOnly(event);" %>
+
+          <%= hidden_field_tag "gstr_advance_receipt[gstr_advance_receipt_invoices_attributes][#{index}][invoice_id]",obj.id%>
+            
+           
+            
+          </td>
+
+      </tr>
+
+      <%end%>
+      <%end%>  
+  
+      <tr>
+    
+        <td class="text-right" colspan="4"></td>
+        <td class="text-right">Total : <strong><span id="total-amount"></strong></td>
+      </tr>
+
+
+    
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$("table#unpaid-invoices input:text").live('keyup', function(e){
+cal();
+e.preventDefault();
+});
+
+}); 
+
+
+
+
+function cal(){
+
+  var totalAmount=0
+  $("table#unpaid-invoices tbody tr").each(function(i,tr)
+
+  {
+    
+    var amount=0;
+    amount=parseFloat($("#gstr_advance_receipt_gstr_advance_receipt_invoices_attributes_"+i+"_amount").val());
+      if(amount){
+        totalAmount += amount;
+      }
+
+   
+    });
+$("span#total-amount").text(totalAmount.toFixed(2));
+}
+
+
+</script>
+<table>
+</tbody>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+

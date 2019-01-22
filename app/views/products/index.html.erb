@@ -1,0 +1,32 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-4">
+        <h2><i class="icon-file text"></i>Products/Services</h2>
+      </div>
+
+      <div class="col-lg-8 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-plus"> </i>New Product'), new_product_path, class: "btn btn-success btn-lg" %>
+        <%= link_to raw('<i class="icon-cloud-upload"> </i>Import'), product_imports_path, class: "btn btn-white btn-lg"%>
+      </div>
+    </div>
+    <p></p>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <% if @company.plan.is_inventoriable? %>
+            <header class="panel-heading text-left">
+              Showing All Products/Services
+            </header>
+          <% end %>
+          <div class="panel-body">
+              <%= render :partial => "shared/flash_msg"%>
+              <div  class='tab-pane fade active in'>
+                <%= render :partial => "products/product"%>
+              </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>

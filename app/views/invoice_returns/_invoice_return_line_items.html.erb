@@ -1,0 +1,32 @@
+<tr class="item-row" id="row<%= index %>">
+	<td>
+		<%= invoice_return_line_item.product.name %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][product_id]", invoice_return_line_item.product_id %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][line_type]", "InvoiceReturnLineItem" %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][invoice_line_item_id]", invoice_return_line_item.invoice_line_item_id %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][id]", invoice_return_line_item.id %>
+
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][_destroy]" %>
+	</td>
+	<td><%= text_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][quantity]", invoice_return_line_item.quantity, :id=>"quantity", :class=>'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);" %></td>
+	<td class="text-right">
+		<%= number_with_precision invoice_return_line_item.unit_rate, :precision=>(invoice_return_line_item.unit_rate == invoice_return_line_item.unit_rate.round(2) ? 2 : 4) %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][unit_rate]", invoice_return_line_item.unit_rate, :id=>"unit-cost" %>
+		</td>
+	<td class="text-right">
+		<%= invoice_return_line_item.discount_percent.blank? ? 0.0 : invoice_return_line_item.discount_percent %>
+		<%=hidden_field_tag "discount", invoice_return_line_item.discount_percent %>
+		<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][discount_percent]", invoice_return_line_item.discount_percent %>
+	</td>
+	<td id='tax-td'>
+		<% invoice_return_line_item.invoice_return_taxes.each_with_index do |tax, tax_index| %>
+			<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][invoice_return_taxes_attributes][#{tax_index}][id]", tax.id %>
+	  	<%= hidden_field_tag "invoice_return[invoice_return_line_items_attributes][#{index}][invoice_return_taxes_attributes][#{tax_index}][account_id]", tax.account_id, :"data-linked"=>"#{tax.account.linked_sales}" %>
+  	<% end %>
+  	<%= invoice_return_line_item.invoice_return_taxes.blank? ? "<i>Not applicable</i>".html_safe : invoice_return_line_applied_taxes(invoice_return_line_item) %>
+	</td>
+	<td class="text-right"><span id="amount"><%= invoice_return_line_item.amount %></span></td>
+	<td style="padding-right:0"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => invoice_return_line_item.id},:class=> "btn btn-danger", :id => 'cancel', :remote => true%>
+	</td>
+</tr>
+<tr class="row-link" valign="top"></tr>

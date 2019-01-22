@@ -1,0 +1,24 @@
+<div id='user_info_div'>
+  <span class='basic_info'>Create new message<%= f.hidden_field :ticket_number%></span>
+</div>
+<tbody>
+   <tr>
+     <td><%= f.label 'Message To' %></td>
+     <td><%= collection_select(:message, :user_id, @company.users, :id, :username, :autofocus =>"autofocus", :class => 'half') %></td>
+   </tr>
+   <tr>
+     <td><%= f.label :subject, :class => 'required' %></td>
+     <td>
+       <% if !params[:subject].blank? %>
+          <%= label_tag "message[subject]", params[:subject] %>
+          <%= hidden_field_tag "message[subject]", params[:subject] %>
+       <% else %>
+        <%= f.text_field :subject, :class => "half" %>
+       <% end %>
+     </td>
+    </tr>
+    <tr>
+	<td><%= f.label 'Message' %></td>
+	<td><%= f.text_area :description, :class => 'medium half' %></td>
+    </tr>
+ </tbody>

@@ -1,0 +1,32 @@
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+<div class="row">
+<div class="form-group"><br/>
+<div class="col-lg-1"></div>
+       <div class="col-lg-2">                  
+            <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8", :class => "form-control"%>
+        </div>
+        <div class="col-lg-2">
+            <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8", :class => "form-control" %>&nbsp;
+      </div>
+      <div class="col-lg-2">
+            <%= select_tag('activity', options_from_collection_for_select(Lead::ACTIVITY, :first, :last), {:prompt => 'Activity', :style => "width:180px;"})  %>
+      </div>
+      <div class="col-lg-2">
+            <%= select_tag('super_user', options_from_collection_for_select(@super_user, :id, :first_name), {:prompt => 'Followed by', :style => "width:180px;"})  %>
+      </div>
+      <div class="col-lg-2">
+           <input type="submit" value="Search" class="btn btn-success"/>
+       </div>
+                        
+</div> 
+</div>
+</form>
+</div>
+
+<script type="text/javascript">
+   $('#super_user').select2();
+   $('#activity').select2();
+</script>

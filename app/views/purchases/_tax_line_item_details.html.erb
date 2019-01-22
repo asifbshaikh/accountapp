@@ -1,0 +1,9 @@
+ <% 
+ tax_account = tax_line_item_details.account
+ if !(tax_account.accountable_type=='DutiesAndTaxesAccounts' && tax_account.accountable.calculation_method==4 && tax_account.accountable.split_tax == 0) 
+ %>
+<tr valign="top">
+  <td align="right"colspan=5><%= tax_line_item_details.account.name.chomp('on purchase') %></td>
+  <td align="right"><%= number_with_precision @purchase.group_tax_amt(tax_line_item_details.account_id), :precision=>2 %> </td>
+</tr>
+<% end %> 

@@ -1,0 +1,79 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Daily Activity Status Report</h2>
+    </div>
+    <div class="col-lg-5 m-t-large" align="right">
+           <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        </div>
+  </div><br/>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <strong>Leads Report</strong>
+            </header>
+          <div class="panel-body">
+          <%= render :partial => "report_activity_filter" %>
+            <% if @leads.blank? %>
+            <br />
+             <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <div class="row">
+                <div class="col-lg-8">
+                Report for the period:
+                      <b><%= @start_date.strftime("%d %b %Y") %> To <%= @end_date.strftime("%d %b %Y") %></b>
+                </div>
+            </div><br>
+
+
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small" id="activity_reports">
+                <thead>
+                  <tr>
+                    <th width='15%'> Lead Name</th>
+                    <th> Activity </th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th> Status </th>
+                    <th>Outcome</th>
+                    <th>Time Spent (In min.)</th>
+                    <th>Assigned To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% @leads.each do |lead|%>
+                    <% lead_activity = Lead.find_activity(lead.id,@start_date,@end_date)%>
+                    <% lead_activity.each do |la|%>
+                  <tr>
+                    <td><%= lead.name%></td>
+                    <td><%= Lead.get_activity(la.activity) %></td>
+                    <td><%= la.next_followup %></td>
+                    <td><%= la.next_follow_up_time %></td>
+                    <td>
+                    <% if la.activity_status == true %>
+                    Completed
+                    <% else %>
+                    Pending
+                    <% end %>
+                    </td>
+                    <td><%= la.time_spent%></td>
+                    <td><%= la.outcome%></td>
+                    <td><%= lead.assigned_to_name%></td>
+                  </tr>
+                    <% end %>
+                    <% end %>
+                </tbody>
+              </table>
+            </div>
+          <%end%>
+</div>
+</section>
+</div>
+</div>
+</section>
+</section>

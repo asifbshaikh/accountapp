@@ -1,0 +1,26 @@
+$(".imgbox").remove();
+$("#rb2").attr('figure', '');
+$("#rb2").attr('coupontype', '');
+var validity =  parseFloat($('select[name=validity] option:selected').val());
+<% if @order_total==nil %>
+	$("#code-search").html("<span style='color:red;'>You havn't selected a valid plan !</span>");
+
+<% elsif @coupon.blank? %>
+	$("#code-search").html("<span style='color:red;'>Invalid coupon</span>");
+	if(!$("#coupon_code").val()){
+	    $("#code-search").html("");
+	  }
+
+<% elsif @coupon.can_use?(@company.id, @order_total,@validity) %>
+	$("#code-search").html("<span style='color:green;'>Success</span>");
+	$('span#order-total').text(<%= @total %>);
+	$("#amount").val(<%= @total %>);
+	$("#coupon_name").val("<%= @coupon.name %>");
+	$("#coupon_amt").val(<%= @discount %>);
+	$("#coupon_cd").val("<%= @coupon.coupon_code%>");
+	$("#rb2").attr('figure', '<%= @coupon.discount %>');
+	$("#rb2").attr('coupontype', '<%= @coupon.coupon_type %>');
+<% else %>
+	$("#code-search").html("<span style='color:red;'>Expired coupon</span>");
+<% end %>
+cal();

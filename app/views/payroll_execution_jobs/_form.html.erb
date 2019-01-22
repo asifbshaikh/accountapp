@@ -1,0 +1,43 @@
+<%= form_for @payroll_execution_job, :html=>{:class=>'form-horizontal'} do |f| %>
+  <%= render "shared/form_error", :object=>@payroll_execution_job %>
+  <div class="row">
+    <div class="col-lg-2 text-right">
+      <label class="control-label-required">Account to pay from
+    </label></div>
+    <div class="col-lg-3">
+      <div class='input-group'>
+        <input type="text" name="account_name" size ="14" placeholder = "Type a letter to search" id="p_acc" class="bg-focus form-control" value='<%= @payroll_execution_job.account.blank? ? "" : @payroll_execution_job.account.name  %>' />
+        <div class="input-group-btn">
+          <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#modal1'>
+            <span class="dropdown-label"><i class="icon-plus"></i></span>  
+          </button>
+        </div>
+      </div>
+        <span id="to_acc_bal"></span>
+    </div>
+    <div class="col-lg-2 text-right">
+      <label class="control-label-required">Payroll Schedule Date</label>
+    </div>
+    <div class="col-lg-1">
+      <%= f.text_field :execution_date, :class=>'form-control' %>
+    </div>
+  </div>
+  <p></p>
+    <div class="col-lg-12">
+      <%= render "attendances/attendance_details" %>
+    </div>
+    
+    <div class="form-group">
+      <div class="col-lg-9 col-lg-offset-3">                      
+      <% if @payroll_detail.status == 0 && %>
+        <%= hidden_field_tag "month", @month %>
+        <%= submit_tag 'Process payroll', :class=>"btn btn-success" %>&nbsp;
+      <% end %>
+      <a href="/users/manage_payroll" class="btn btn-white">Back</a>
+      </div>
+   </div>
+<% end %>
+
+<div id="modal1" class="modal fade">
+  <%= render "shared/account_details", :account_heads => @account_heads, :transaction_type => "item" %>
+</div>

@@ -1,0 +1,37 @@
+<h1>Listing subscription_histories</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Plan</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Renewal date</th>
+    <th>First subscription date</th>
+    <th>Ip address</th>
+    <th>Amount</th>
+    <th>Allocated storage mb</th>
+    <th>Allocated user count</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @subscription_histories.each do |subscription_history| %>
+  <tr>
+    <td><%= subscription_history.company_id %></td>
+    <td><%= subscription_history.plan_id %></td>
+    <td><%= subscription_history.start_date %></td>
+    <td><%= subscription_history.end_date %></td>
+    <td><%= subscription_history.renewal_date %></td>
+    <td><%= subscription_history.first_subscription_date %></td>
+    <td><%= subscription_history.ip_address %></td>
+    <td><%= subscription_history.amount %></td>
+    <td><%= subscription_history.allocated_storage_mb %></td>
+    <td><%= subscription_history.allocated_user_count %></td>
+    <td><%= link_to 'Show', subscription_history %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

@@ -1,0 +1,14 @@
+<tr>
+  <th>Task</th>
+  <th colspan="2">Description</th>
+  <th class="text-right">Hours</th>
+  <th class="text-right">Rate</th>
+  <% if @invoice.discount != 0 %>
+    <th class="text-right">Discount %</th>
+  <% end %>
+  <% if @invoice.tax != 0 %>
+  <th>Tax Rate</th>
+  <th class = "text-right">Tax Amount</th>
+ <% end %>
+  <th class="text-right">Amount (<%= @invoice.currency%>)</th>
+</tr>

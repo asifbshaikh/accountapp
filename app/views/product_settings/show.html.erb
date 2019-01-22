@@ -1,0 +1,60 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first "><br />
+      <div class="highlight"> 
+        <%= render :partial => "shared/flash_msg" %>
+        <h2>Product Settings</h2>
+        <fieldset>
+        <h4>Multilevel pricing</h4>
+        <div class="box box-info">
+          Currently set to - <b><%= product_setting %></b><br/>
+          <!-- This setting changes how the inventory if effected. Incase set to effected on entry of purchase voucher the inventory of
+          the purchased items increases when the purchase voucher is passed. Incase this setting is not set, the inventory of items
+          is NOT effected with the purchase voucher. The inventory is increased when the goods are received by the Stock Receipt voucher
+          at the Warehouse. -->
+        </div>
+        <% unless @company.product_pricing_levels.blank? || !@company.product_setting.multilevel_pricing? %>
+          <table class="display stylized" id="act_details">
+            <thead>
+              <tr>
+                <th width='15%'>Level</th>
+                <th>Custom level</th>
+                <th>Discount percent(%)</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @company.product_pricing_levels.each_with_index do |product_pricing_level, index| %>
+              <tr>
+                <td>
+                 <label>Level<%= index+1 %>:</label> &nbsp;
+                </td>
+                <td>
+                  <%= best_in_place product_pricing_level, :caption, :path => "/product_settings/update_level_caption?id=#{product_pricing_level.id}", :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:maxlength => 30} %>
+                </td>
+                <td>
+                  <%= best_in_place product_pricing_level, :discount_percent, :path => "/product_settings/update_level_caption?id=#{product_pricing_level.id}", :nil=> '<span class ="variable_item">Click here to add content</span> ', :html_attrs => {:class => 'amount', :onkeydown => "return numbersOnly(event);" } %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </fieldset>
+      <%= edit_button_white("Change product Settings", edit_product_setting_path(@product_setting))%>
+      </div></br>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      <%= edit_button_white("Edit product Settings", edit_product_setting_path(@product_setting))%>
+      <br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>

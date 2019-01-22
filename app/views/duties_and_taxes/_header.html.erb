@@ -1,0 +1,12 @@
+<div class="row">
+		<div class="col-lg-8">
+		<b><%= @tax_account.name %></b>
+		<br />
+          Duration : <%= params[:start_date].blank? ? @financial_year.start_date : params[:start_date] %> to <%= params[:end_date].blank? ? Time.zone.now.to_date : params[:end_date] %><br />
+	</div>
+	<div class="col-lg-4" align="right">
+		<span class="xsmall light">For <%= (@tax_account.tax_on_sales? ? "customer" : "vendor") unless @tax_account.accountable_type== "OtherCurrentAsset" %> : </span>
+		<br />
+		<span class="large"><b><%= @cv_account.blank? ? "All" : @cv_account.name %></b></span>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<div class='oldData'>
+  <% if @leave_cards.blank? %>
+    <%= render :partial => "shared/no_record" %>
+  <% else %>
+    <table class="table table-striped m-b-none text-small">
+      <thead>
+        <tr>
+          <th>Leave Type</th>
+          <th>Total Leaves</th>
+          <th>Used Leaves</th>
+          <th>Pending Leaves</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @leave_cards.each do |leave_card|%>
+        <tr>
+        <td><%= leave_card.leave_type_name %></td>    
+        <td><%= best_in_place leave_card, :total_leave_cnt, :html_attrs=>{:class=>'form-control bg-focus'} %></td>
+        <td><%= leave_card.utilized_leave_cnt %></td>
+        <td><%= leave_card.pending_leave_count %></td>
+        <td><%= link_to "<i class='icon-trash'></i>".html_safe, leave_card, :method=>:delete, :confirm=>'Are you sure?' %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td><strong><%= User.find(@user.id).user_total_leave_count %></strong></td>
+          <td><strong><%= User.find(@user.id).user_utilized_leave_count %></strong></td>
+          <td><strong><%= User.find(@user.id).user_pending_leave_count %></strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+</div>

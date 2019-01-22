@@ -1,0 +1,8 @@
+	  <tr id="row" valign="top" ><td valign="top" ><%= f.collection_select(:account_id, @to_accounts, :id, :name, :include_blank => true) %></td>
+      <td colspan="2"><%= f.text_area :description, :class=>"tiny", :rows=>3, :columns=>5%></td>
+      <td class="ta-right" ><%= f.text_field :quantity, :class => 'half'%></td>
+      <td class="ta-right"><%= f.text_field :unit_rate, :class => 'half'%></td>
+      <td class="ta-right"><%= f.text_field :purchase_order_reference, :class => 'half'%></td>
+      <td class="ta-right"><%= f.text_field :amount, :class => 'half'%></td>
+			<td><%= f.link_to_remove 'Remove' %></td>
+    </tr>

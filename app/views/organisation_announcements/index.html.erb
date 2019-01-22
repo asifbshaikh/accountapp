@@ -1,0 +1,82 @@
+<script>
+		$(document).ready(function(){
+	'<%
+ @data = []
+    for announcement in @organisation_announcements
+      @data<<announcement.title
+
+    end
+%>
+		'
+		data = '
+	<%= @data.join(',')%>'.split(',');
+	$("input#autocomplete").autocomplete({
+	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+<!-- Page title -->
+<div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Administration  &rarr;<span>Manage Organization Announcement</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%= f.text_field :title_like, :id => "autocomplete" , :placeholder=>"search"%>
+		<%end%>
+	</div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+  <section class="column width6 first"></br>
+     <div id="tabs-all" class="highlight">
+	<%= render :partial => "shared/flash_msg"%>
+      <div id="timesheet">
+	<% if @organisation_announcements.blank? %>
+	  <%= render :partial => "shared/no_record" %>
+	<% else %>
+	<table class="display stylized" id="example">
+	  <thead>
+	    <%= render :partial => "header"%>
+	  </thead>
+	  <tbody >
+	    <%= render :partial => "organisation_announcement", :collection => @organisation_announcements %>
+	  </tbody>
+	  <tfoot>
+	    <%= render :partial => "footer"%>
+	  </tfoot>
+	</table>
+	<div class="clear">
+	  <div class="width3 column">
+	   <%= paginate @organisation_announcements %>
+	  </div>
+	</div>
+	<% end %>
+       </div>
+      </div><br />
+   </section>
+ <!-- End of Left column/section -->
+ <!-- Right column/section -->
+ <aside class="column width2"><br />
+ 	<%= new_button "Create New Announcement", new_organisation_announcement_path %>
+  <div id="rightmenu">
+	<dl class="first">
+	  <dt><%= image_tag "help.png", :alt=>'help', :class=>'icon' %></dt>
+	  <dd>
+		<a href="#" class="nyroModal" >Help</a>
+	  </dd>
+	  <dd class="last">
+		This page displays the list of all the announcements.<br/> Click on title to view more details.
+	   </dd>
+        </dl>
+     </div>
+	<br />
+</aside>
+		<!-- End of Right column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

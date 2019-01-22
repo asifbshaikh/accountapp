@@ -1,0 +1,54 @@
+<!-- <form action = ''>
+	<table>
+<thead>
+	<tr>
+<td> 
+  <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8"%>&nbsp;
+  <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8" %>&nbsp;
+</td>
+<td>
+	<%= label_tag :lead_type, "Lead Type" %>&nbsp;
+  <%= select_tag "lead_type", options_for_select([["Customer",1], ["Distributor Tally",2], ["CA Firms",3],["Institution",4],["Software Reseler",5],["Outsourcing Company",6],["Others",7]]), :include_blank => "--Select Option--"%>
+</td>
+<td>
+  <%= label_tag :status, "Status" %>&nbsp;
+  <%= select_tag "status", options_for_select([["Green",1], ["Red",2], ["Amber",0]]), :include_blank => "--Select Option--"%>
+  <%= submit_tag "Go", :class => "btn btn-green" %>
+</td>
+ </tr>
+	</table>
+</form> -->
+
+
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+<div class="row">
+<div class="form-group"><br/>
+<div class="col-lg-1"></div>
+
+       
+       <div class="col-lg-2">                  
+            <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8", :class => "form-control"%>
+        </div>
+        <div class="col-lg-2">
+            <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8", :class => "form-control" %>&nbsp;
+      </div>
+     
+      <div class="col-lg-2">
+            <%= select_tag "lead_type", options_for_select([["Customer",1], ["Distributor Tally",2], ["CA Firms",3],["Institution",4],["Software Reseler",5],["Outsourcing Company",6],["Others",7]]), :prompt => "--Lead Type--", :class => "form-control"%>
+      </div>
+
+      <div class="col-lg-2">
+            <%= select_tag "status", options_for_select([["Green",1], ["Red",2], ["Amber",0]]), :prompt => "--Select Status--", :class => "form-control"%>
+      </div>
+      
+      <div class="col-lg-2">
+           <input type="submit" value="Search" class="btn btn-success"/>
+       </div>
+                        
+</div> 
+</div>
+</form>
+</div>

@@ -1,0 +1,65 @@
+<!-- Page title not required-->
+<div id="pagetitle">
+	 <div class="wrapper-login"></div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper-login">
+				  <!-- Login form -->
+	  <section class="full">
+	  	<div class="highlight">
+		  <h3>Register</h3>
+		  <div class="box box-info">You are just 1 minute away from your profitbooks account.</div>
+		  <%= form_for @company, url: {action: :create} do |f|%>
+				<%= f.fields_for :users do |usr|%>
+				<p>
+					<%= usr.label :first_name, :autofocus=>"autofocus", class: 'required' %>
+					<%= usr.text_field :first_name, {:class=>'full'} %>
+				</p>
+				<p>
+					<%= usr.label :last_name, {:class =>'required'} %>
+					<%= usr.text_field :last_name, {:class=>'full'} %>
+				</p>
+				<p>
+				  <%= usr.label :user_name,{:class=>"required"} %><br/>
+					<%= usr.text_field :username, {:class =>'full'}%>
+			  </p>
+        <p>
+					<%= usr.label :password, {:class=>'required'}%>
+					<%= usr.password_field :password, {:class=>'full'}%>
+			  </p>
+			  <p>
+				  <%= usr.label :password_confirmation, {:class=>'required'}%>
+					<%= usr.password_field :password_confirmation, {:class =>'full'}%>
+			  </p>
+			  <p>
+				  <%= usr.label :email, {:class=>'required'}%>
+					<%= usr.text_field :email, {:class =>'full'}%>
+			  </p>
+     <% end %>
+				<p>
+					<%= f.label 'company name', {:class=>'required'} %><br/>
+					<%= f.text_field :name, {:class=> 'full'} %>
+				</p>
+				 <p>
+				 <!-- <label class="choice" for="remember">
+						By clicking <b>Register</b> you agree to the
+						<a href="/tos.html">Terms and conditions</a>&#44;
+						<a href="privacy.html">Privacy</a> and
+						<a href="refund.html">Refund policies</a>
+					</label>-->
+			  </p>
+			  <div>
+				  <%=f.submit 'Register',{:class=>"btn btn-green"} %> &nbsp; <!--<a href="#">Need help?</a>-->
+			  </div>
+		  <% end %>
+		  </div>
+	  </section>
+			  <!-- End of login form -->
+   </div>
+		  <!-- End of Wrapper -->
+ </div>
+	  <!-- End of Page content -->
+

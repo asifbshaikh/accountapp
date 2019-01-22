@@ -1,0 +1,213 @@
+<div class="row">
+ <div class="col-sm-12"><br/>
+<div class="col-lg-6">
+ <div class="dep_info">
+ <section class="panel">
+ <div class='department-info-error'></div>
+  <header class="panel-heading">
+   <strong>Departments</strong><span class="pull-right"><a title="Add New Department" id ="add_dep" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</a></span>
+  </header>
+  <div class="">
+   <% if @departments.blank? %>
+    <%= render :partial => "shared/no_record" %>
+   <% else %>
+  <table class="table table-striped m-b-none text-small ">
+   <thead>
+     <tr>
+       <th>Name</th>
+       <th>Status</th>
+       <th class="text-center">Action</th>
+     </tr>
+   </thead>
+   <tbody class='department-body'>
+     <%= render "departments/departments"%>
+   </tbody>
+  </table>
+   <% end %>
+  </div>
+ </section>
+ </div>
+ <div class="dep_add">
+   <section class="panel">
+  <header class="panel-heading">
+   <strong>Add New Department</strong><span class="pull-right"><a title="Back" id ="bck_dep" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/departments/form" %>
+  </div>
+ </section>
+ </div>
+</div>
+
+<div class="col-sm-6">
+<div class="deg_info">
+ <section class="panel">
+  <div class='designation-info-error'></div>
+  <header class="panel-heading">
+   <strong>Designations</strong> <span class="pull-right"><a title="Add New Designation" id ="add_deg" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</a></span>
+  </header>
+  <div class="">
+    <% if @designations.blank? %>
+    <%= render :partial => "shared/no_record" %>
+ <% else %>
+  <table class="table table-striped m-b-none text-small ">
+   <thead>
+     <tr>
+       <th>Title</th>
+       <th>Description</th>
+       <th class="text-center">Action</th>
+     </tr>
+   </thead>
+   <tbody class='designation-body'>
+     <%= render "designations/designations" %>
+   </tbody>
+  </table>
+   <% end %>
+  </div>
+ </section>
+</div>
+<div class="deg_add">
+   <section class="panel">
+  <header class="panel-heading">
+   <strong>Add New Designation</strong><span class="pull-right"><a title="Back" id ="bck_deg" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/designations/form" %>
+  </div>
+ </section>
+ </div>
+</div>
+</div>
+</div>
+       <div class="line line-dashed m-t-large"></div>
+  <div class="col-sm-12">
+    <div class="col-sm-6">
+    <div class="hld_info">
+     <section class="panel">
+     <div class='holiday-info-error'></div>
+      <header class="panel-heading">
+       <strong>Holidays</strong> <span class="pull-right"><a title="Add New Holiday" id ="add_hld" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New</a></span>
+      </header>
+      <div class="">
+      <% if @holidays.blank? %>
+      <%= render :partial => "shared/no_record" %>
+     <% else %>
+     <table class="table table-striped m-b-none text-small ">
+        <thead>
+          <tr>
+            <th>Holiday Date</th>
+            <th>Holiday</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class='holiday-body'>
+          <%= render "holidays/holidays"%>
+        </tbody>
+     </table>
+    <% end %>
+      </div>
+     </section>
+     </div>
+     <div class="hld_add">
+   <section class="panel">
+  <header class="panel-heading">
+   <strong>Add New Holiday</strong><span class="pull-right"><a title="Back" id ="bck_hld" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/holidays/form" %>
+  </div>
+ </section>
+ </div>
+    </div>
+
+    <div class="col-sm-6">
+    <div class="lvtp_info">
+     <section class="panel">
+      <div class='leave-type-info-error'></div>
+      <header class="panel-heading">
+       <strong>Leave Types</strong> <span class="pull-right"><a title="Add New Leave Type" id ="add_lvtp" class="btn btn-success btn-sm"><i class="icon-plus"></i> Add New</a></span>
+      </header>
+      <div class="">
+            <% if @leave_types.blank? %>
+      <%= render :partial => "shared/no_record" %>
+     <% else %>
+     <table class="table table-striped m-b-none text-small ">
+      <thead>
+         <tr>
+           <th>Leave Type</th>
+           <th>No. Of Leaves</th>
+           <th class="text-center">Action</th>
+         </tr>
+      </thead>
+      <tbody class='leave-type-body'>
+        <%= render "leave_types/leave_types" %>
+      </tbody>
+     </table>
+   <% end %>
+      </div>
+     </section>
+     </div>
+     <div class="lvtp_add">
+   <section class="panel">
+  <header class="panel-heading">
+   <strong>Add New Leave Type</strong><span class="pull-right"><a title="Back" id ="bck_lvtp" class="btn btn-white btn-sm"><i class="icon-mail-reply"></i></a></span>
+  </header>
+  <div class="panel-body">
+    <%= render :partial=>"/leave_types/form" %>
+  </div>
+ </section>
+ </div>
+    </div>
+</div>
+
+<div class="line line-dashed m-t-large"></div>
+<div class="row">
+ <div class="col-sm-12"><br/>
+<div class="col-sm-6">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Custom Pay Slip setting </strong> 
+  </header>
+  <div class="">
+   <table class="table table-striped b-t">
+     <tbody>
+        <tr>
+         <td><strong>Enable Authorised Signatory</strong></td>
+         <td>
+         <div class='form-group'>
+                  <div class="btn-group col-lg-8" data-toggle="buttons">
+                  <label class="<%= @company.payroll_settings.enable_payslip_signatory? ? 'btn btn-sm btn-success active': 'btn btn-sm btn-default'   %>" id="option-payslip_signatory-enable" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to enable Authorised Signatory on Pay Slip.">
+                  <input type="radio" name='payroll_settings[:enable_payslip_signatory]' value="1" <%= 'checked' if @company.payroll_settings.enable_payslip_signatory? %> > Yes
+                </label>
+                <label class="<%= @company.payroll_settings.enable_payslip_signatory? ? 'btn btn-sm btn-default': 'btn btn-sm btn-danger active'  %>" id="option-payslip_signatory-disable" title="" data-placement="bottom" data-toggle="tooltip" data-original-title="Use this option to disable Authorised Signatory on Pay Slip.">
+                 <input type="radio" name='payroll_settings[:enable_payslip_signatory]' value="0" > No
+                </label>
+                  </div>
+                </div> 
+               </td>
+       </tr>
+     
+       <tr>
+         <td><strong>Pay Slip Footer</strong></td>
+         <td><%= best_in_place  @payroll_settings, :payslip_footer, :nil=> '<span class ="variable_item">Click here to change label</span> ', :html_attrs => {:maxlength => 100, :class=>"bg-focus form-control"} %></td>
+       </tr>
+     </tbody>
+   </table>
+
+    
+  </div>
+ </section>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+   

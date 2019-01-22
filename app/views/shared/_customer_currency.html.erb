@@ -1,0 +1,33 @@
+<script>
+  $(document).ready(function(){
+    var custcur = new Object();
+  '<% @to_accounts.each do |acc|%>'
+   '<% unless acc.blank? %>'
+     '<% if !acc.blank? && (acc.accountable_type == 'SundryDebtor' || acc.accountable_type == 'SundryCreditor') %>'
+       console.log("<%= acc.get_currency%>")
+       custcur['<%= acc.name %>']='<%= acc.get_currency%>'
+      '<% end %>'
+    '<% end %>'
+  '<% end %>'
+
+    $('#to_account_auto_complete').focusout(function(){
+      var name = $(this).attr('value');
+      cur = custcur[name]
+      
+      if (cur){
+        $('span#to_acc_cur').html("<span style='color:grey;'>Currency : </span>"+cur);
+         $('span#taccur').html(cur);
+         $('span.comcur').hide();
+        $('.exc_rate').show();
+      }else{
+        $('span#to_acc_cur').html("<span style='color:grey;'> </span>");
+        $('span#taccur').html("<%= @company.currency_code %>");
+        $('.exc_rate').hide();
+        $('span.comcur').hide();
+      }
+
+    });
+
+
+  });
+</script>

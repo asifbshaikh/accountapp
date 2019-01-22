@@ -1,0 +1,50 @@
+<form action = "create_variable_payhead_detail" data-remote= 'true' method='post'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class='modal-header'>
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Variable payheads</h4>
+      </div>
+      <div class="modal-body">
+        <%= hidden_field_tag "salary_structure_id", user.salary_structure.id %>
+        <%= hidden_field_tag "month", params[:month] %>
+        <%= hidden_field_tag "user_id", user.id %>
+        <h4>For <%= user.full_name %></h4>
+        Effective from date <%= user.salary_structure.effective_from_date %>
+        <table class="table table-striped m-b-none text-small" >
+          <thead>
+            <tr>
+              <th>Payhead</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @payheads.each_with_index do |payhead, index| %>
+              <% variable_payhead_detail = payhead.variable_payhead_for_this_month(@month, user.id) %>
+              <tr>
+                <td>
+                  <%= label_tag "payhead_id", payhead.payhead_name %>
+                  <%= hidden_field_tag "user[variable_payhead_details_attributes][#{index}][payhead_id]", payhead.id %>
+                  <%= hidden_field_tag "user[variable_payhead_details_attributes][#{index}][company_id]", @company.id %>
+                  <%= hidden_field_tag "user[variable_payhead_details_attributes][#{index}][month]", @month %>
+                  <% unless variable_payhead_detail.blank? %>
+                    <%= hidden_field_tag "user[variable_payhead_details_attributes][#{index}][id]", variable_payhead_detail.id %>
+                  <% end %>
+                </td>
+                <td class="ta-right" width="20%">
+                  <%= text_field_tag "user[variable_payhead_details_attributes][#{index}][amount]", variable_payhead_detail.blank? ? 0.0 : variable_payhead_detail.amount , :class => 'bg-focus form-control', :id => 'amount', :onkeydown => "return numbersOnly(event);", :max => 5, :size =>8 %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+        <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</form>
+

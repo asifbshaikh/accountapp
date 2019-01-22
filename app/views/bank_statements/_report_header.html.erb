@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg-3">
+    <b>As on Date:</b>
+    <br />
+      <%= @end_date %>
+  </div>
+
+  <div class="col-lg-6">
+    <section class="panel text-center">
+      <div class="panel-body bg-lighter">
+          <div class="h4 text-success">ProfitBooks Balance : <%= format_currency @account_balance%>
+          </div>
+          <div class="line m-l m-r"></div>
+          <div class="h4 text-info">Bank Balance : <%= @statement_balance.blank? ? "Statement not imported!" : (format_currency @statement_balance) %>
+          </div>
+      </div>
+    </section>
+  </div>
+  <div class="col-lg-3" align="right">
+    <span class="xsmall light">Bank name : </span>
+    <br />
+    <span class="large"><b><%= Account.find(@account_id).name%></b></span>
+  </div>
+</div>

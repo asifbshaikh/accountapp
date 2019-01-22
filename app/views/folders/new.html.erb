@@ -1,0 +1,42 @@
+<!-- Page title -->
+<%= render "shared/page_title" %>
+<!-- End of Page title -->
+ 
+<!-- Page content -->
+ <div id="page">
+   <!-- Wrapper -->
+    <div class="wrapper">
+    <!-- Left column/section -->
+      <!-- Left column/section -->
+        <section class="column width6 first"><br />
+	<div class ="highlight">	        
+           <%= render :partial => "documents/breadcrumbs" %>
+            <div class="content-box" >
+			    <header>
+			      <h3>Create New folder</h3>
+			    </header>
+			    
+		        <section>
+			       <%= render 'form' %>
+		        </section>
+             </div>
+	        </div><br />
+        </section>
+        <!-- End of Left column/section -->
+  
+    <!-- Right column/section -->
+    <aside class="column width2"> <br/>
+      <%= list_button_white("Documents", documents_index_path)%>
+      <!--<div id="rightmenu">
+        <dl class="first">
+        <dt><%= image_tag 'help.png', :class=>'icon', :alt=>'Help' %></dt>
+          <dd><a href="#">Validation</a></dd>
+          <dd class="last">Both the totals should match</dd>
+        </dl>
+      </div>--><br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of page -->

@@ -1,0 +1,20 @@
+ <div class="content-box highlight" id="form2" style="display: none">
+    <header>
+      <h3>Create Folder</h3>
+    </header>
+    <section><br />
+         <%= form_for :folder ,:url => {:action=>:create} do |f| %>  
+          
+          <div class="field">  
+             <%= f.label :name,"Folder Name"%><br />  
+             <%= f.text_field :name,:autofocus =>"autofocus", :size => "17" %>  
+          </div>  
+           <%= f.hidden_field :parent_id %><br />
+          <div class="actions">  
+<!--       			   # <%= f.submit :value => 'Create folder', :class => "btn btn-green btn-green-new"%> -->
+      			  <button type="submit" class="btn btn-green btn-green-new">&nbsp; Create Folder</button>&nbsp;
+      			 
+         </div>    
+        <% end %> 
+    </section>
+ </div>

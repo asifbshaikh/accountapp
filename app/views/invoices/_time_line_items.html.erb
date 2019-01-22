@@ -1,0 +1,32 @@
+<tr id="row<%= index %>" valign="top" class ='inv_line'>
+  <%= hidden_field_tag "invoice[time_line_items_attributes][#{index}][id]",time_line_item.id %>
+  <%= hidden_field_tag "invoice[time_line_items_attributes][#{index}][_destroy]"%>
+<td valign="top" style='padding-left:0;' id='time-td'>
+  <%= select_tag "invoice[time_line_items_attributes][#{index}][task_id]", options_from_collection_for_select(@time_accounts, :id, :description, time_line_item.task_id ), :include_blank => true, :class => "chzn-select bg-focus form-control",:"data-placeholder" => "Choose a task", :"data-index" => index, :style => "width:150px;" %>
+  <%= hidden_field_tag "index", index %>
+  <br />
+</td>
+<td>
+  <%= text_area_tag "invoice[time_line_items_attributes][#{index}][description]",time_line_item.description, :class => "full xsmall bg-focus form-control", :id => 'description', :cols => 15, :rows=>1 %></td>
+<td>
+  <%= text_field_tag "invoice[time_line_items_attributes][#{index}][quantity]",time_line_item.quantity, :class =>'amount bg-focus form-control text-right', :id =>'quantity', :onkeydown => "return numbersOnly(event);", :maxlength => 8, 'data-index' => index, 'data-id' => time_line_item.id %><p id='avail'></p>
+</td>
+<td>
+  <%= text_field_tag "invoice[time_line_items_attributes][#{index}][unit_rate]",time_line_item.unit_rate, :class => 'amount bg-focus form-control text-right', :id => 'unit_cost', :onkeydown => "return numbersOnly(event);", :maxlength => 8 %>
+</td><!--Jquery code is in application.js-->
+<td>
+  <%= text_field_tag "invoice[time_line_items_attributes][#{index}][discount_percent]", time_line_item.discount_percent, :class =>'span1 bg-focus form-control text-right', :id => 'discount', :onkeydown => "return numbersOnly(event);", :maxlength => 5 %>
+</td>
+<td valign="top" style='padding-left:0;' id='tax-td'>
+	<% time_line_item.invoice_taxes.each_with_index do |tax, tax_index| %>  
+		<%= hidden_field_tag "invoice[time_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][id]", tax.id %>
+  	<%= select_tag "invoice[time_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][account_id]", options_from_collection_for_select_with_data(Account.get_sales_taxes(@company.id), :id, :sales_tax_name, tax.account_id, {:"linked" => :linked_sales }), :include_blank => true, :class => "bg-focus form-control", :style => "width:150px;" %>
+  <% end %>
+<%= hidden_field_tag "index", index %>
+</td>
+<td  align="right">
+<%= hidden_field_tag "invoice[time_line_items_attributes][#{index}][amount]", time_line_item.amount, :id => 'total' %>
+<span id="amount">0.0</span>
+</td>
+<td style='padding-right:0;'><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_time_item, :index => index, :line_item_id => time_line_item.id}, :id => 'cancel', :class => "btn btn-danger btn-sm",:remote => true  %></td>
+</tr>

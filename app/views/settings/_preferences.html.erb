@@ -1,0 +1,40 @@
+<div class="col-sm-12">
+ <section class="panel">
+  <header class="panel-heading">
+    Set  terminology for...
+  </header>
+  <div class="panel-body">
+<% if @label.blank? %>
+ <%= render :partial => "shared/no_record" %>
+<% else %>
+    <div class="col-sm-4">
+    <p><strong>Clients who pays you:</strong></p>
+    <p><strong>Estimate :</strong></p>
+    <% if @company.plan.is_inventoriable? %>
+    <p><strong>Warehouse :</strong></p>
+    <% end %>
+    </div>    
+   <div class="col-sm-4">
+      <p>
+      <%= best_in_place @label, :customer_label, :type => :select, :collection => [["Customer", "Customer"],["Client", "Client"], ["Patient", "Patient"], ["Donor", "Donor"],["Member","Member"],["Guest", "Guest"],["User", "User"]],:html_attrs=>{:class=>"bg-focus  form-control"} %>
+      </p>
+      <p>
+      <%= best_in_place @label, :estimate_label, :type => :select, :collection => [["Estimate", "Estimate"],["Quotation", "Quotation"], ["Quote", "Quote"]],:html_attrs=>{:class=>"bg-focus  form-control"} %>
+      </p>
+      <% if @company.plan.is_inventoriable? %>
+      <p>
+        <%= best_in_place @label, :warehouse_label, :type => :select, :collection => [["Warehouse", "Warehouse"],["Godown", "Godown"], ["Location", "Location"]],:html_attrs=>{:class=>"bg-focus  form-control"} %>
+      </p>
+      <% end %>
+   </div>
+   <div class="col-sm-4">
+     <p>
+    <div class="alert alert-info">
+    <h6><i class="icon-info-sign"></i> You can change termiologies by clicking on their vlaue.</h6> 
+    </div>
+     </p>
+   </div>
+  </div>
+ </section>
+<% end %>
+</div>

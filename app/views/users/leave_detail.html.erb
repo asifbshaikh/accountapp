@@ -1,0 +1,121 @@
+   <section id="content">
+    <section class="main padder">
+      
+      <div class="row">
+        <div class="col-lg-7">
+          <h2><i class="icon-user text"></i> <%= @user.full_name %></h2>
+        </div>
+        <div class="col-lg-5 m-t-large" align="right">
+          <% if @current_user.owner? || @current_user.hr? %>
+
+          <a href="#" class="btn btn-info btn-lg" data-toggle="modal" data-target='#modal1' ><i class="icon-refresh"> </i> Reset Password </a>
+        </button>
+        <%= link_to raw("<i class='icon-remove-sign'></i>Make Inactive"),users_url,:method=> "Delete", :class=>'btn btn-danger btn-lg' %>
+        <% end %>
+
+        <%= link_to raw("<i class='icon-mail-reply'></i>Back"), users_url, :class=>'btn  btn-default btn-lg' %>
+        <p></p>
+      </div>  
+    </div>
+    <div class="row">
+      <!-- Address section -->
+      <div class="col-sm-3">
+        <section class="panel bg-light">
+          <div class="panel-body">
+           <div class="text-center clearfix ">
+            <%= user_avatar(@user) %>
+            <div class="bg-light padder padder-v">
+              <div class="bg-light padder padder-v">
+                <a href="#" id ="add_picture" class="btn btn-primary btn-sm"> <i class="icon-edit"></i> <%= @user.avatar_file_name.blank? ? 'Upload Picture' : 'Change Picture' %></a>
+                <% unless @user.new_record? || !@user.avatar? %>
+                <a href="#" id ="rem_picture" class="btn btn-primary btn-sm"> <i class="icon-trash"></i> </a>
+                <% end %>
+              </div>
+
+              <div class="edit_picture">
+                <section class="panel">
+                  <header class="panel-heading"><strong>Upload Picture</strong></header>
+                  <div class="panel-body">
+                    <%= render :partial=>"update_picture"%>
+                  </div>
+                </section>
+              </div>
+
+              <div class="remove_picture">
+                <section class="panel">
+                  <header class="panel-heading"><strong>Remove Picture</strong></header>
+                  <div class="panel-body">
+                    <%= render :partial=>"remove_picture"%>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          
+          <p><strong>Username:</strong> <%= @user.username %> </p>
+          <p><strong>Contact:</strong> <%= @user.emergency_contact %> </p>
+          <p><strong>Email:</strong> <%= @user.email %> </p><br>
+
+          <span class="pull-left">
+            <% if !@user.last_login_time.blank?  %>
+            <a href="#">Last login on <%= @user.last_login_time.strftime("%d %b %y") unless @user.last_login_time.blank?%></a>
+            <% else %>
+            <a href="#"> User not yet logged in.</a>
+
+            <% end %>
+          </span><br>
+
+          
+          
+        </div><!-- panel body ends--> 
+
+      </section>  
+    </div><!-- Address section ends-->
+    
+    <div class="col-lg-9">
+      <div class="row">
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-left">
+              <li class="active"><a href="#work" data-toggle="tab"><i class="icon-list icon-large text-default"></i>Work Details</a></li>
+              <%if !@company.plan.free_plan? && !@company.plan.essential_plan? %>
+              <li><a href="#salary" data-toggle="tab"><i class="icon-time icon-large text-default"></i>Salary Detail</a></li>
+              <li><a href="#leaves" data-toggle="tab"><i class="icon-check icon-large text-default"></i>Leave Details</a></li>
+              <% end %>
+              <%if @current_user.owner? %>
+              <li><a href="#log" data-toggle="tab"><i class="icon-check icon-large text-default"></i>User Activity Log</a></li>
+              <% end %>
+            </ul>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">              
+              <div class="tab-pane active" id="work">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <%= render :partial=>"basic_details" %>
+                  </div></div>
+                  <div class="table-responsive">
+                   
+                  </div>
+                </div><!--First tab ends -->
+                <div class="tab-pane" id="salary">
+                  <%= render :partial=>"salary_details" %>
+                </div>
+                <div class="tab-pane" id="leaves">
+                  <%= render :partial=>"leave_details" %>
+                </div>
+                <div class="tab-pane" id="log">
+
+                  <%= render :partial=>"activity_details" %>
+                </div>
+              </div>
+            </section>
+          </div> <!-- row ends -->
+        </div>
+      </div>    
+    </section>
+  </section>
+  <div id="modal1" class="modal fade">
+    <%= render "reset_password" %>
+  </div>
+

@@ -1,0 +1,22 @@
+<tr>
+    <td><%= link_to project.name, project %></td>
+    <td class="text-center"><%= project.start_date.strftime("%d %b %Y") %></td>
+    <td class="text-center"><%= project.estimated_cost %></td>
+    <td class="text-center"><%= project.created_by_user %></td>
+    <td class="text-center"><%= project.get_status%></td>
+    <td><div class="btn-group" style="float: right;">
+      <button class="btn btn-white btn-sm" onclick="location.href='/projects/<%= project.id %>'"; >View</button>
+      <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu pull-right">
+        <li><a href= <%= edit_project_path(project) %>>Edit</a></li>  
+        
+        <% if @current_user.owner? && !project.status == true%>
+         <li><a href=<%= "/projects/mark_complete?id=#{project.id}"%>>Mark complete</a></li>
+         <li class="divider"></li>
+       <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/projects/<%= project.id %>" >Delete</a></li>
+       <% end %>
+
+      </ul>
+    </div></td>
+</tr>

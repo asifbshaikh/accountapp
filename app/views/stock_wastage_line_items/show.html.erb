@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Stock wastage voucher:</b>
+  <%= @stock_wastage_line_item.stock_wastage_voucher_id %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @stock_wastage_line_item.product_id %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @stock_wastage_line_item.quantity %>
+</p>
+
+<p>
+  <b>Reason:</b>
+  <%= @stock_wastage_line_item.reason %>
+</p>
+
+
+<%= link_to 'Edit', edit_stock_wastage_line_item_path(@stock_wastage_line_item) %> |
+<%= link_to 'Back', stock_wastage_line_items_path %>

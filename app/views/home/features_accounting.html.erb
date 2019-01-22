@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <%= render :partial => "meta_tags" %>
+    <!-- ////////////////////////////////// -->
+    <!-- //     Retina Bookmark Icon     // -->
+    <!-- ////////////////////////////////// -->
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+    <!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+    <!--Start of Zopim Live Chat Script-->
+    <%= render :partial => "zopim_chat_and_google_analytics" %>
+    <!-- End Load google Analytics -->
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+    <!-- IE Fix for HTML5 Tags -->
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  </head>
+  <body>
+    <div id="main-wrapper">
+      <!-- header start here -->
+      <%= render :partial => "header"%>
+      <!-- header end here -->
+      <!-- page title start here -->
+      <section id="special-content-wrapper">
+        <div class="row pagetitle">
+          <div class="seven columns">
+            <h2>Simple Yet Powerful Features.</h2>                
+          </div>
+          <div class="five columns">
+            <div id="breadcrumb">
+              <a href="/home/pricing" class="simpleBTN green large">Get started for FREE</a>
+            </div>  
+          </div>
+        </div>
+      </section>
+      <!-- page title end here -->
+      <!-- content section start here -->
+      <section id="content-wrapper">
+        <div class="row">              
+            <div class="three columns">         
+                <aside>
+                    <h5>Easy Accounting</h5>
+                    <ul class="sidebar-list">
+                        <li>Simple Invoicing, Bank Transactions, Taxation, Financial Reports and much more..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_payroll">Payroll Management</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Employee Management, Salary Processing, Leave &amp; Holidays Management, Company Announcements..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_managers">For Managers</a></h5>
+                    <ul class="sidebar-list">
+                        <li>Roles Based Access, Projects, Ability to Inviting Auditors, Powerful Reporting, Complete Control..</li>
+                    </ul>
+                </aside>                        
+                <aside>
+                    <h5><a href="/home/features_team">For Team Members</a></h5>
+                    <ul class="sidebar-list"><li>Internal Messaging, Tasks &amp; Notes, Document Management with Dropbox Integration..</li>
+                    </ul>
+                </aside>                        
+            </div> <!-- three column ends -->
+            <div class="nine columns">           
+                <!-- blog post 1 -->
+                <div class="blog-post">
+                  <div class="row">                  
+                        <div class="twelve columns">
+                            <div class="post-content">
+                                <h3>Easy Accounting for smart managers !</h3> 
+                                <ul class="post-info">
+                                    <li>You don't need a certified accountant to use ProfitBooks, its so easy that anyone in your office can use it. </li>                                 
+                                </ul>           
+                                <p><%= image_tag 'screens/invoice.png', :alt=>'Invoicing and billing', :align=> 'left' %><h4>Create & send beautiful invoices</h4>
+                                Create professional looking invoices and estimates easily in ProfitBooks. Later, you can directly email them to your clients. Record part or full payment received against that invoice at a click of a button. You can also create invoices quickly for cash transactions. <br><br>ProfitBooks also lets you create custom fields for invoices to record additional information as per your business needs. </p>  
+                                <p><br></p>
+                                <p><%= image_tag 'screens/expense.png', :alt=>'Expenses and banking transactions', :align=>'right'%><h4>Track expenses &amp; purchases</h4>Quickly track expenses incurred for various day to day transactions. User friendly interface lets you create purchase orders and record payments made against any purchase. You can even attach scanned proofs to the records !<br><br>With project management feature, you can group all income &amp; expense transactions under a specific project for better visibility. Very useful.. isn't it?</p>
+                              <p align="center"><br><br><a href="/home/pricing" class="simpleBTN green large">Made up your mind? Get started for FREE</a></p>
+                            </div><!-- post content ends -->
+                        </div><!-- twelve column ends -->
+                    </div><!-- row ends -->   
+                </div><!-- blog post ends -->
+                            
+          </div><!-- nine columns ends -->
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

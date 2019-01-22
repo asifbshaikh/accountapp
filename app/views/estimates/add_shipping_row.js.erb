@@ -1,0 +1,5 @@
+$("#shipping-row-loader").remove();
+$("#shipping_row_link").before('<%= escape_javascript render( "shipping_line_items",{ :shipping_line_item => @shipping_line_item, :shipping_index=> params[:shipping_index]} ) %>');
+$("#shipping_row_link").replaceWith('<%= escape_javascript render( "add_shipping_row_link",{:shipping_index=>params[:shipping_index].to_i+1}) %>');
+
+

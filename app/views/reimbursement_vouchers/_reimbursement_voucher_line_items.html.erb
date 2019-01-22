@@ -1,0 +1,8 @@
+<tr>
+	<%= hidden_field_tag "reimbursement_voucher[reimbursement_voucher_line_items_attributes][#{index}][reimbursement_note_id]", reimbursement_voucher_line_item.id %>
+	<td><%= reimbursement_voucher_line_item.reimbursement_note_number %></td>
+	<td><%= reimbursement_voucher_line_item.transaction_date %></td>
+	<td><%= reimbursement_voucher_line_item.description %></td>
+	<td><%= number_with_precision reimbursement_voucher_line_item.amount, :precision => 2 %></td>
+	<td><%= text_field_tag "reimbursement_voucher[reimbursement_voucher_line_items_attributes][#{index}][payment_amount]", "", :class=>'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);" %></td>
+</tr>

@@ -1,0 +1,81 @@
+  <!-- header -->
+  <header id="header" class="navbar">
+    <ul class="nav navbar-nav navbar-avatar pull-right">
+      <li class="dropdown">
+        <a href=<%= "/myprofile/#{@current_user.id}" %> class="dropdown-toggle" data-toggle="dropdown" id="profile_tour">            
+          <span class="hidden-xs-only"><%= @current_user.full_name%></span>
+          <span class="thumb-small avatar inline">
+            <% if @current_user.auditor? %>
+            <%= image_tag 'avatar_green.png', :alt=>"#{@current_user.full_name}", :class=>'img-circle'%>
+            <% else %>
+            <% if !@current_user.avatar_file_name.blank? %>
+            <%= image_tag @current_user.avatar.url(:thumb), :class=> "img-circle" %>
+            <% else %>
+            <%= image_tag 'avatar_green.png', :alt=>"#{@current_user.full_name}", :class=>'img-circle'%>
+            <% end %>  
+            <% end %>
+          </span>
+          <b class="caret hidden-xs-only"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <% if !@company.basic_details_required? && !@current_user.auditor?  %>
+            <li><a href=<%= "/myprofile/#{@current_user.id}" %>>Profile</a></li>
+            <li><a href="/messages">Messages</a></li>
+            <% if !@current_user.staff? && !@current_user.inventory_manager? && !@current_user.employee?%>
+              <li><a href="/settings/show">Settings</a></li>
+              <li style="background:#CAD3D3">
+                <a href="/pbreferrals" data-toggle="tooltip" data-placement="top" 
+                  title="Get free subscription. Do you know a friend who is doing accounting old fashioned way? Invite him & earn free ProfitBooks subscriptions.">
+                  <i class="icon-gift"></i> Free Subscription
+                </a>
+              </li>
+            <% end %>
+          <% end %>
+          <li class="divider"></li>
+          <li><a href="/login/signout">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    <a class="navbar-brand" href="/dashboard/index" style="width:58.33%;"><%= @company.name %></a>
+    <button type="button" class="btn btn-link pull-left nav-toggle visible-xs" data-toggle="class:slide-nav slide-nav-left" data-target="body">
+      <i class="icon-reorder icon-xlarge text-default"></i>
+    </button>
+    <% unless @current_user.owner? && @company.basic_details_required? %>
+    <ul class="nav navbar-nav hidden-xs">
+      <li>
+        <div class="btn-group">
+          <button class="btn btn-white m-t-small btn-sm dropdown-toggle" data-toggle="dropdown" id="new_button_tour">
+            <i class="icon-plus"></i> New &nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="/invoices/new">Invoice</a></li>
+            <li><a href="/expenses/new">Expense</a></li>
+            <li><a href="/purchases/new">Purchase</a></li>
+            <li><a href="/purchase_orders/new">Purchase Order</a></li>
+            <li><a href="/products/new">Product</a></li>
+            <li><a href="/accounts/new">Account</a></li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div class="m-t m-b-small">
+          <a href="/dashboard/index" title="Dashboard" id="dashboard_tour"><i class="icon-dashboard icon-xlarge"></i></a>
+        </div>
+      </li>
+      <% if !@company.middle_east_company? %>
+        <li>
+          <div class="m-t m-b-small">
+            <%= link_to raw("<i class='icon-check icon-xlarge'></i>"), tasks_path, :id=>"task_menu_tour" %>
+          </div>
+        </li>
+      <% end %>  
+      <li>
+        <div class="m-t m-b-small">
+          <a id="Intercom" href="mailto:402c2c9d003ab5c965babf93ec504bed456a7bc4@incoming.intercom.io" class="dropdown-toggle" ><i class="icon-question-sign icon-xlarge"></i></a>
+        </div>
+      </li>
+    </ul>
+  <% end %>
+</header>
+<!-- / header -->
+

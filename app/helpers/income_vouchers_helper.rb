@@ -1,0 +1,2 @@
+module IncomeVouchersHelper
+end

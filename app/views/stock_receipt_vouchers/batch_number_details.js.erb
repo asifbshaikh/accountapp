@@ -1,0 +1,2 @@
+$(".loader").remove();
+$("<%= escape_javascript render :partial =>  'stock_receipt_vouchers/batch_details' %>").appendTo(".receipt-line #row<%= params[:index] %> td:eq(0)");

@@ -1,0 +1,5 @@
+$("#leaveApproved").remove();
+$("#pasteData").after('<%= escape_javascript render :partial=> "leave_requests/approved_leave_details" %>');
+$("#pasteData").after("<div class='alert alert-success leave-card-notif'>Request revoked.</div>");
+
+fadeOutMessage();

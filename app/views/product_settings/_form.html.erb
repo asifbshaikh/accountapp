@@ -1,0 +1,12 @@
+<%= form_for(@product_setting) do |f| %>
+  <div class="field">
+    <label class='checkbox'>
+      <%= f.check_box :multilevel_pricing %>
+      Multilevel pricing enabled.
+    </label>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-green btn-special'%>
+  </div>
+<% end %>

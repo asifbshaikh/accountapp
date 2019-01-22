@@ -1,0 +1,43 @@
+<h1>Listing purchase_return_line_items</h1>
+
+<table>
+  <tr>
+    <th>Purchase return</th>
+    <th>Account</th>
+    <th>Quantity</th>
+    <th>Unit price</th>
+    <th>Tax</th>
+    <th>Amount</th>
+    <th>Line type</th>
+    <th>Product</th>
+    <th>Tax account</th>
+    <th>Discount percent</th>
+    <th>Warehouse</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @purchase_return_line_items.each do |purchase_return_line_item| %>
+  <tr>
+    <td><%= purchase_return_line_item.purchase_return_id %></td>
+    <td><%= purchase_return_line_item.account_id %></td>
+    <td><%= purchase_return_line_item.quantity %></td>
+    <td><%= purchase_return_line_item.unit_price %></td>
+    <td><%= purchase_return_line_item.tax %></td>
+    <td><%= purchase_return_line_item.amount %></td>
+    <td><%= purchase_return_line_item.line_type %></td>
+    <td><%= purchase_return_line_item.product_id %></td>
+    <td><%= purchase_return_line_item.tax_account_id %></td>
+    <td><%= purchase_return_line_item.discount_percent %></td>
+    <td><%= purchase_return_line_item.warehouse_id %></td>
+    <td><%= link_to 'Show', purchase_return_line_item %></td>
+    <td><%= link_to 'Edit', edit_purchase_return_line_item_path(purchase_return_line_item) %></td>
+    <td><%= link_to 'Destroy', purchase_return_line_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Purchase return line item', new_purchase_return_line_item_path %>

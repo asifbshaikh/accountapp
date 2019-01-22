@@ -1,0 +1,18 @@
+<div class="form-group">
+  <% if @income_voucher.voucher_setting.custom_sequence? %>
+    <div class="col-sm-2 text-right">
+      <label class="control-label-required">Voucher Number </label>
+    </div>
+    <div class="col-lg-3">
+      <%= f.text_field :voucher_number, :class=>"bg-focus form-control", :style=>"width:200px;" %>
+    </div>
+  <% else %>
+    <div class="col-sm-2 text-right">
+      <label class="control-label">Voucher Number </label>
+    </div>
+    <div class="col-sm-3" style='margin-bottom:0;margin-top:0;padding-top:7px;'>
+      <%= @income_voucher.voucher_number%>
+      <%= f.hidden_field :voucher_number %>
+    </div>
+  <% end %>
+</div>

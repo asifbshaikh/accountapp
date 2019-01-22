@@ -1,0 +1,64 @@
+<!-- Page title -->
+<div id="pagetitle">
+   <div class="wrapper">
+      <h1>My Requests &rarr; <span>My Leave Requests</span></h1>
+      <!-- Quick search box -->
+      <!-- <form action="" method="get" >
+          <input class="" type="text" id="q" name="q" />
+      </form> -->
+    </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	<div id="tabs-all" class="highlight">
+						 <div id="timesheet">
+                    <% if @leave_requests.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %>
+												</p>
+                    <% else %>
+                     <p></p>
+                        <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                            <%= render  "my_leave",:collection => @leave_requests %>		
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                        </table>    
+                        <%= paginate @leave_requests %>
+                    <% end %>
+              </div>
+           
+        </div><br />
+        
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+           <a href="/leave_requests/new" class="btn btn-special btn-green"><img SRC="/images/add.png" class="icon" alt=""/>Create Leave Request</a>
+         <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/28" class="nyroModal">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

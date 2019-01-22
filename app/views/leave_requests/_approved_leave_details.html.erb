@@ -1,0 +1,46 @@
+<div id='leaveApproved'>
+ <% if @approved_leave_requests.blank? %>
+   <%= render :partial => "shared/no_record" %>
+ <% else %>
+ <table class="table table-striped m-b-none text-small ">
+   <thead>
+     <tr>
+       <th>Start Date</th>
+       <th>End Date</th>
+       <th>Days</th>
+       <th>Contact During Leave</th>
+       <th>Action</th>
+     </tr>
+   </thead>
+   <tbody>
+   <% @approved_leave_requests.each do |leave_request| %>
+     <tr>
+       <td> 
+         <a  data-toggle="popover" data-html="true" data-placement="right" data-content="<p>
+                   <strong> Reason for leave: </strong> <%= breaking_word_wrap(leave_request.reason_for_leave) %></p>
+                   <p>
+                   <strong>Leave Type:</strong> <%= LeaveType.find(leave_request.leave_type_id).leave_type %>
+                   </p>
+                   <p><strong>Duration:</strong> <%= leave_request.start_date %> <b>to</b> <%= leave_request.end_date%></p>
+                   <p>
+                   <strong>Contact during leave: </strong> <%= leave_request.contact_during_leave %>
+                   </p>
+                     <p>
+                       <strong>Days: </strong> 
+                       <%= leave_request.no_of_days_on_leave %>
+                     </p>
+                   <p>
+                   <strong>Approver</strong> <%= leave_request.approver_name %>
+                   </p>"
+           title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'><%= leave_request.start_date %></a>
+       </td>    
+       <td><%= leave_request.end_date %></td>
+       <td><%= leave_request.no_of_days_on_leave %></td>
+       <td><%= leave_request.contact_during_leave %></td>
+       <td class='leave<%= leave_request.id %>'><%= link_to 'Revoke', {:controller=> "leave_requests", :action => :revoke, :id => leave_request.id}, :remote => true, :id=>"request-ar", :'data-id'=> leave_request.id %></td>
+     </tr>
+   <% end %>
+  </tbody>
+</table>
+ <% end %>
+ </div>

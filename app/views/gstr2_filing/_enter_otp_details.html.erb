@@ -1,0 +1,12 @@
+  <%= form_tag({:action => :submit_otp, :controller => "/gstr2_filings"}, :remote=>true) do |f|  %>
+ <div class="block">
+        <label class="control-label"> Enter One Time Password (OTP) </label>
+        <input type="password" name="otp" class="bg-focus form-control" id="username"   placeholder="OTP"/> 
+   </div>
+
+    <div class="text-center">
+          <div class='save-btn1'></div>
+            <button  class=" btnsave1 btn btn-sm btn-success" type='submit'  data-loading-text="Generating....">Generate OTP</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+   <% end %>

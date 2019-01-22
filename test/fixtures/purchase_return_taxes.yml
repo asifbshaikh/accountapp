@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  purchase_return_line_item_id: 1
+  account_id: 1
+
+two:
+  purchase_return_line_item_id: 1
+  account_id: 1

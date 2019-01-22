@@ -1,0 +1,15 @@
+
+<% if !@custom_field.custom_label1.blank? && !@stock_receipt_voucher.custom_field1.blank? %>
+<p><strong><%= @custom_field.custom_label1 %>:</strong> <%= @stock_receipt_voucher.custom_field1 %></p>
+<br/>
+<% end %>
+
+<% if !@custom_field.custom_label2.blank? && !@stock_receipt_voucher.custom_field2.blank? %>
+<p><strong><%= @custom_field.custom_label2 %>:</strong> <%= @stock_receipt_voucher.custom_field2 %></p>
+<br/>
+<% end %>
+
+<% if !@custom_field.custom_label3.blank? && !@stock_receipt_voucher.custom_field3.blank? %>
+<p><strong><%= @custom_field.custom_label3 %>:</strong> <%= @stock_receipt_voucher.custom_field3 %></p>
+<br/>
+<% end %>

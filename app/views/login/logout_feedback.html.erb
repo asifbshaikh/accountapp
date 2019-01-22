@@ -1,0 +1,31 @@
+
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6 col-lg-offset-3">
+        <h2> Hi <%= @current_user.first_name%>!</h2>
+        <h4>How was you experience with ProfitBooks?</h4>
+      </div>
+    </div>
+  <div class="row">
+  <!-- First section -->
+    <div class="col-lg-6 col-lg-offset-3">
+      <section class="panel">
+      <!-- Step one starts -->
+        <div class="row">
+          <div class="col-lg-12">
+            <%= render :partial=>"shared/flash_msg"%>
+            <div class="step-content">
+              <%= form_tag '/login/feedback_update', :class=>'form-horizontal panel-body' do %>
+                  <div class="step-pane active" id="step1">
+                  <%= render :partial=>"feedback" %>
+                </div>
+              <% end %>
+            </div>
+          </div> 
+        </div>
+      </section>
+    </div><!-- First section ends-->
+  </div><!-- first row ends -->
+  </section>
+</section>

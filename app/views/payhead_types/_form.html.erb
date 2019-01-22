@@ -1,0 +1,16 @@
+<%= form_for(@payhead_type) do |f| %>
+   <%= render 'shared/form_error', :object => @payhead_type %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name,:autofocus =>"autofocus" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :rows => "6", :cols => "20" %>
+  </div>&nbsp;
+  <div class="action">
+     <button type="submit" class="btn btn-green big"><img src="images/add.png" />Submit</button>&nbsp;
+     <button type="reset" class="btn btn-gray big"><img src="images/add.png" />Cancel</button>&nbsp;
+	</div>
+<% end %>

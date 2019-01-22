@@ -1,0 +1,40 @@
+<table>
+  <tr><td colspan=6 align=center>Bills Payable for <%= vendor_name(@account) %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align="center"><%= display_branch(@branch_id)%></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= @start_date %> To <%= @end_date %></td></tr>
+  <thead>
+    <tr>
+      <th>Voucher</th>
+      <th>Party's Name</th>
+      <th>Date</th>
+      <th>Due On</th>
+      <th>Amount(<%= @company.currency_code %>)</th>
+      <th>Overdue by Days</th>
+    </tr>
+  <thead>
+  <tbody>
+    <%
+    total = 0
+    @purchases.each do |purchase|
+      days_overdue= Time.zone.now.to_date - purchase.due_date
+      outstanding = purchase_outstanding(purchase)
+    %>
+    <tr>
+      <td>
+         <%= purchase.purchase_number %>
+       </td>
+       <td>
+       <%= purchase.account.name %>
+       </td>
+      <td><%= purchase.record_date %></td>
+      <td><%= purchase.due_date %></td>
+      <td align="right"><%= outstanding %></td>
+      <td align="center"><%= days_overdue<=0 ? "-" : days_overdue %></td>
+      <% total += outstanding %>
+    </tr>
+    <% end %>                       
+  </tbody>
+  <tr><td></td><td></td><td></td><td><b>Grand Total</b></td><td align="right"><b><%=format_currency total %></b></td><td></td></tr>
+</table>

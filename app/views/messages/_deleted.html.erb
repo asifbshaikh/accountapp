@@ -1,0 +1,12 @@
+<tr class="gradeB">
+  <td class="title" colspan="3">
+	   <a href="#" class="nyroModal"><%= link_to truncate(deleted.subject, :length => 20) ,deleted %></a>
+	</td>
+	<td><%= truncate(deleted.description, :length => 20) %></td>
+  <td><%= deleted.created_at %></td>
+  <td><%= deleted.from %></td>
+<td>
+  <a href= <%= "/messages/restore_message?id=#{deleted.id}"%> class = "btn btn-green" >Restore</a>
+  <a href= <%= "/messages/permanent_delete_message?id=#{deleted.id}"%> data-confirm = "Are you sure, this will permanently deleted?" class = "btn">Delete</a>
+	</td>
+</tr>

@@ -1,0 +1,23 @@
+Hi,
+I am <strong><%= @user.full_name unless @user.blank?%> (<%= @user.username unless @user.blank?%> - <%=@user.company.id unless @user.blank?%>)</strong> 
+facing this problem.....
+<br />
+<br />
+
+The GST request is <%= @request.inspect %>
+
+<br/>
+<br/>
+The GST response is <%= @response.inspect %>
+
+<br/>
+<br/>
+
+<%=@err.inspect%>
+<br/>
+<br/>
+The request URL is </br>
+<%= @request_url %> </br>
+<p>..........................error trace is....................</p>
+<br />
+<%=@err.backtrace.join("\n") %>

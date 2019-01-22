@@ -1,0 +1,249 @@
+
+<table>
+	<tr><td colspan=4 align="center"><b>Balance Sheet</b></td></tr>
+	<tr><td colspan=4 align="center"> as on <%= @balance_sheet.balance_sheet_date %></td></tr>
+	<thead>
+                  <tr>
+                    <th colspan="2">Liabilities</th>
+                    <th class="text-right">as at <%= @balance_sheet.balance_sheet_date %></th>
+                    <th colspan="2">Assets</th>
+                    <th class="text-right">as at <%= @balance_sheet.balance_sheet_date %></th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <b>Capital Account</b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.capital_account_balance)%></b></td>
+                      <td>
+                        <b>Fixed Assets</b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.fixed_asset_account_balance) %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><b>Reserves And Surplus</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_reserves_and_surplus) %></b>
+                      </td>
+                      <td>
+                        <b>Investments</b>
+                      </td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency @balance_sheet.investment_account_balance %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Reserves And Surplus
+                      </td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.reserves_and_surplus_account_balance) %>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <% if (@balance_sheet.profit_and_loss) >= 0 %>
+                      <tr>
+                        <td><b>Profit and Loss Account</b></td>
+                        <td></td>
+                        <td class="text-right"><b><%= format_currency(@balance_sheet.profit_and_loss) %></b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Opening Balance</td>
+                        <td class="text-right"><%= format_currency @balance_sheet.opening_profit_loss %></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Current Period
+                        </td>
+                        <td class="text-right"><%= format_currency @balance_sheet.current_profit_loss %></td><td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    <% end %>
+                    <tr>
+                      <td><b>Loan Accounts</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.loan_account_balance) %></b>
+                      </td>
+                      <td><b>Current Assets</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_current_assets) %></b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><b>Secured Loan Accounts</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.secured_loan_account_balance) %></b>
+                      </td>
+                      <td>Bank Accounts</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.bank_account_balance) %>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b>Unsecured Loan Accounts</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.unsecured_loan_account_balance) %></b>
+                      </td>
+                      <td>Cash Accounts</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.cash_account_balance)  %>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b>Current Liabilities</b></td><td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_current_liability) %></b>
+                      </td>
+                      <td>Customers (Debtors)</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.sundry_debtor_account_balance) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td>Vendors (Creditors)</td>
+                      <td class="text-right" >
+                        <%= format_currency(@balance_sheet.sundry_creditor_account_balance) %>
+                      </td><td></td>
+                      <td>Deposit</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.deposit_account_balance)  %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td>Duties and Taxes</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.duties_and_taxes_account_balance)%>
+                      </td><td></td>
+                      <td>Loans and Advances</td>
+                      <td class='text-right'>
+                        <%= format_currency(@balance_sheet.loan_and_advance_account_balance) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td>Provisions</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.provision_account_balance) %>
+                      </td><td></td>
+                      <td>Closing Stock</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.inventory_valuation) %>
+                      </td><td></td>
+                    </tr>
+                    <tr>
+                      <td>Other Current Liability</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.current_liabilities_account_balance) %>
+                      </td><td></td>
+                      <td>Other Current Assets</td>
+                      <td class="text-right">
+                        <%= format_currency(@balance_sheet.total_other_current_assets) %>
+                      </td><td></td>
+                    </tr>
+
+
+                    <% if @balance_sheet.suspense_account_balance < 0 %>
+                      <tr>
+                        <td><b>Suspense Account</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.suspense_account_balance) %></b>
+                        </td>
+                        <td></td><td></td><td></td>
+                      </tr>
+                    <% elsif @balance_sheet.suspense_account_balance >= 0%>
+                      <tr>
+                        <td></td><td></td><td></td>
+                        <td><b>Suspense Account</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.suspense_account_balance) %></b>
+                        </td>
+                      </tr>
+                    <% end %>
+
+                    <% if (@balance_sheet.profit_and_loss) < 0 %>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Profit and Loss Account</b></td>
+                        <td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.profit_and_loss.abs) %></b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Opening Balance</td>
+                        <td class="text-right"><%= format_currency @balance_sheet.opening_profit_loss.abs %></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <a href='/horizontal_profit_and_loss/index'>Current Period</a>
+                        </td>
+                        <td class="text-right"><%= format_currency @balance_sheet.current_profit_loss %></td><td></td>
+                      </tr>
+                    <% end %>
+                    <% if @balance_sheet.deferred_tax_account_balance >= 0 %>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Deferred Tax Asset</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.deferred_tax_account_balance) %></b>
+                        </td>
+                      </tr>
+                    <% elsif @balance_sheet.deferred_tax_account_balance < 0 %>
+                      <tr>
+                        <td><b>Deferred Tax Asset</b></td><td></td>
+                        <td class="text-right">
+                          <b><%= format_currency(@balance_sheet.deferred_tax_account_balance) %></b>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    <%end%>
+                    <tr>
+                      <td><b>Difference in opening balance</b></td>
+                      <td></td>
+                      <td class="text-right">
+                        <b><%= format_currency(@balance_sheet.total_opening_balance) %></b>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><b>Total</b></td>
+                      <td class="text-right"><b><%= format_currency(@balance_sheet.total_liabilities) %></b></td>
+                      <td colspan="2"><b>Total</b></td>
+                      <td class="text-right"><b><%= format_currency(@balance_sheet.total_assets) %></b></td>
+                    </tr>
+                </tbody>
+</table>

@@ -1,0 +1,31 @@
+<h1>Listing login_requests</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Created by</th>
+    <th>Status</th>
+    <th>Calling action</th>
+    <th>Gsp</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @login_requests.each do |login_request| %>
+  <tr>
+    <td><%= login_request.company_id %></td>
+    <td><%= login_request.created_by %></td>
+    <td><%= login_request.status %></td>
+    <td><%= login_request.calling_action %></td>
+    <td><%= login_request.gsp_id %></td>
+    <td><%= link_to 'Show', login_request %></td>
+    <td><%= link_to 'Edit', edit_login_request_path(login_request) %></td>
+    <td><%= link_to 'Destroy', login_request, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Login request', new_login_request_path %>

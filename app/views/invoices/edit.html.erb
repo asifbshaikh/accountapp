@@ -1,0 +1,30 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-10">
+        <h2><i class="icon-edit text"></i>Invoice</h2>
+      </div>
+      <div class="col-lg-2 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), invoices_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <%= render :partial=> "shared/flash_msg" %>
+    <%= render :partial=> "form" %>
+  </section>
+</section>
+
+<script>
+
+  //for displaying export invoice attributes
+
+  $("#enable-export").click(function(){
+    $(".export-form").html('<%= escape_javascript render "gst_export_invoice_fields" %>');
+    $("#invoice_sbdt").datepicker({format: 'dd-mm-yyyy'});
+    $("#invoice_sbpcode").select2();
+  });
+
+  $("#disable-export").click(function(){
+      $(".export-form").html(' ');
+  });
+</script>

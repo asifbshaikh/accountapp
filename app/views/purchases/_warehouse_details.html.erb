@@ -1,0 +1,47 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+      <h4 class="modal-title" id="myModalLabel">Warehouse details</h4>
+    </div>
+    <div class="modal-body scroll-y" style='max-height:500px;'>
+      <div class='errorPlace'></div>
+      <%= hidden_field_tag 'row_index', params[:index] %>
+      <%= hidden_field_tag 'line_item', params[:line_item] %>
+      <%= hidden_field_tag 'product_id', params[:product_id] %>
+        <table  class="table table-striped b-t text-small" id="warehouse-details<%= row_index %>">
+          <thead>
+            <tr>
+              <th colspan='2'><%= @company.label.warehouse_label %></th>
+              <th class='text-right'>Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% product_id = params[:product_id].blank? ? line_item.product_id : params[:product_id] %>
+            <% @company.warehouses.each_with_index do |warehouse, index| %>
+              <% pwd = PurchaseWarehouseDetail.find_by_warehouse_id_and_purchase_line_item_id_and_product_id(warehouse.id, line_item.id, product_id) unless line_item.id.blank? %>
+              <tr>
+                <td>
+                  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{row_index}][purchase_warehouse_details_attributes][#{index}][product_batch_id]", pwd.product_batch_id unless pwd.blank? %>
+                  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{row_index}][purchase_warehouse_details_attributes][#{index}][product_id]", product_id %>
+
+                  <%= hidden_field_tag "purchase[purchase_line_items_attributes][#{row_index}][purchase_warehouse_details_attributes][#{index}][company_id]", @company.id %>
+                  
+                  <%= check_box_tag "purchase[purchase_line_items_attributes][#{row_index}][purchase_warehouse_details_attributes][#{index}][warehouse_id]", warehouse.id, !pwd.blank? ? true : (params[:purchase].blank? || params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes].blank? || params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes]["#{index}"].blank? || params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes]["#{index}"][:warehouse_id].blank?) ? false : true %>
+                </td>
+                <td><%= warehouse.name %></td>
+                <td>
+                  <%= text_field_tag "purchase[purchase_line_items_attributes][#{row_index}][purchase_warehouse_details_attributes][#{index}][quantity]", !pwd.blank? ? pwd.quantity : (params[:purchase].blank? || params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes].blank? || params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes]["#{index}"].blank?) ? '' : params[:purchase][:purchase_line_items_attributes]["#{row_index}"][:purchase_warehouse_details_attributes]["#{index}"][:quantity], :class=>'form-control text-right quantity' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+      	</table>
+    </div>
+    <div class="modal-footer">
+      <div class='save-btn'></div>
+        <a class="btn btn-sm btn-success btn-save" data-index="<%= row_index %>">Submit</a>
+      <a class="btn btn-sm btn-default btncan" data-index="<%= row_index %>">Cancel</a>
+    </div>
+  </div>
+</div>

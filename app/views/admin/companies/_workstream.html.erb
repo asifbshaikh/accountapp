@@ -1,0 +1,6 @@
+						  <tr>
+                <td>
+                  <span class='<%= "label label-#{workstream.action_code}" %>' ><%= workstream.action_code%></span>&nbsp;	<%= workstream.action%> 
+               <span class = "worklog">by <%= workstream_user(workstream.user_id) %> on <%= workstream.action_time %> from IP address: <%= workstream.IP_address %></span>
+                </td>
+						  </tr>

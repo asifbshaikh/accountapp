@@ -1,0 +1,44 @@
+<section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-7">
+            <h2><i class="icon-bar-chart text"></i>List of paid companies</h2>
+        </div>
+           <!-- <div class="col-lg-5 m-t-large" align="right">
+           <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        
+        </div> -->
+      </div><br/>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+          <header class="panel-heading">
+                            <ul class="nav nav-tabs pull-left">
+                              <li class="active"><a href="#all_companies" data-toggle="tab"><i class="icon-share icon-large text-default"></i>All</a></li>
+                              <li><a href="#exp_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Expiring This Month</a></li>
+                              <li><a href="#expired" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Expired</a></li>
+                              <li><a href="#never_contacted" data-toggle="tab"><i class="icon-thumbs-down icon-large text-default"></i>Never Contacted</a></li>
+                            </ul>
+                          </header>
+
+                        <div class="panel-body">
+                          <div class="tab-content"> 
+                            <div class="tab-pane active" id="all_companies">
+                              <%= render :partial => "admin/companies/paid_company" %>
+                            </div>
+                            <div class="tab-pane" id="exp_month">
+                                <%= render :partial => "admin/companies/paid_expiring_this_month" %>
+                            </div>
+                            <div class="tab-pane" id="expired">
+                                <%= render :partial => "admin/companies/paid_expired_companies" %>
+                            </div>
+                            <div class="tab-pane" id="never_contacted">
+                                <%= render :partial => "admin/companies/paid_never_contacted" %>
+                            </div>
+                          </div>
+                        </div>
+           </section>
+           </div>
+           </div>
+           </section>
+           </section>

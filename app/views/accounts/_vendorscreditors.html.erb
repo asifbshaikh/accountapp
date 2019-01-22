@@ -1,0 +1,57 @@
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Phone number</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[contact_number]','',:onkeydown => "return numbersOnly(event);", :size => "30", :maxlength => "14", :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+	  <div class="col-lg-2 text-right"><label class="control-label">Email</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[email]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">PAN</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[PAN]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+	  <div class="col-lg-2 text-right"><label class="control-label">Sales tax number</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[sales_tax_number]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">TAN</label><br/><small>Tax Account Number</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[tan]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">VAT TIN</label><br/><small>VAT Tax Identification Number</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[vat_tin]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">CST</label><br/><small>Central Sales Tax</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[cst]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Excise Registration No</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[excise_reg_no]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Service Tax Registration No</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[service_tax_reg_no]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Address Line 1</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[address_attributes][address_line1]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Address Line 2</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[address_attributes][address_line2]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">City</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[address_attributes][city]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">State</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[address_attributes][state]','',:size => 3, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Pin code</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'creditor[address_attributes][postal_code]','', :maxlength => "6", :onkeydown => "return numbersOnly(event);", :size => "30", :class=>"bg-focus form-control" %></div>
+  </div>
+

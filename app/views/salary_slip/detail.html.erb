@@ -1,0 +1,148 @@
+<section id="content">
+    <section class="main padder">
+    <div class="row">
+		<div class="col-lg-4">
+         <h3><i class="icon-bar-chart text"></i>Salary Slip (<%= @month.strftime("%B-%Y")%>)</h3>
+		</div>
+       <div class="col-lg-8 m-t-large pull-right" align="right">
+    <% if @current_user.owner? %>
+      <a class="btn btn-info btn-lg"  href="/salary_slip/index">
+		<i class="icon-group"> </i> View All</a>
+      <%end%>
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+    <% if !@salaries.blank? %> 
+    <%= link_to_pdf params %> 
+    <%= link_to_xls params %>
+     <%end%>
+     <a class="btn btn-white btn-lg" title="Back" href=<%= "/users/#{@current_user.id}"%>><i class="icon-mail-reply"> </i></a>
+    <p></p>
+    </div>
+	</div>
+		
+		<div class="row">
+		<!-- Table starts -->
+	        <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+              <%= render :partial => "filter" %>
+            <% if @salaries.blank? %>
+					<br />
+					<div align="center">
+						<h4>Salary Slip For <%=@month.strftime("%B %Y")%></h4>
+						<span class="large">For Employee <b><%= @user.full_name %></b></span>
+					</div><br/>
+					<%= render :partial => "shared/no_record" %>
+     			    <% else %>
+						
+					<div align="center"><h4><strong>
+				      <%= @user.full_name %></strong></h4>
+				    </div><br/>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+				  <tr>
+				  	<th colspan="2" width ="50%">Personal Details</th>
+				  	<th colspan="2" width ="50%">Bank Details</th>
+				  </tr>
+			    </thead>
+                <tbody>
+		          <tr>
+				   <td> Employee No. </td>
+				   <td>: <%= @user_salary_details.employee_no unless @user_salary_details.blank? %></td>
+				   <td> Bank Details </td>
+	     		   <td>: <%=(@user_salary_details.blank?)? 'Not available' : @user_salary_details.bank_name %></td>
+				  </tr>
+				  <tr>
+				   <td> Designation </td>
+				   <td>: <%= (@designation.blank?)? "Not available": @designation.title   %></td>
+				   <td> Income Tax No.(PAN)</td>
+	    		   <td>: <%=(@user_salary_details.blank?)? 'Not available' : @user_salary_details.PAN %></td>
+		          </tr>
+				  <tr>
+				   <td> Location </td>
+				   <td>: <%= (@user_salary_details.blank?)? 'Not available':@user_salary_details.work_location %></td>
+				   <td> PF Account No. </td>
+	    		   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.PF_account_number %></td>
+		          </tr>
+				  <tr>
+				   <td> Date of Joining </td>
+				   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.date_of_joining %></td>
+				   <td> ESI Number </td>
+	     		   <td>: <%= (@user_salary_details.blank?)? 'Not available': @user_salary_details.EPS_account_number %></td>
+				  </tr>
+				  <tr>
+				   <td> Attendance </td>
+				   <td>: <%= @attendance.days_absent.to_i %> days absent</td><td></td><td></td>
+				  </tr>
+		        </tbody>
+              </table>
+              <hr>
+     <table class="table table-striped b-t text-small"%>
+	<thead>
+	  <tr>
+	    <th width ="25%"> Earnings </th>
+	    <th class="text-right" width ="25%"> Amount </th>
+	    <th width ="25%"> Deductions </th>
+	    <th class="text-right" width ="25%"> Amount </th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <% for i in 0..(@count - 1) %>
+	   <tr>
+	    <td><%= (!@earning_arr[i].nil?)? @earning_arr[i] : '' %></td>
+            <td align="right"><%= (!@earning_amount_arr[i].nil?)? format_currency(@earning_amount_arr[i]) : '' %></td>
+	    <td><%= (!@deduction_arr[i].nil?)? @deduction_arr[i] :'' %></td>
+            <td align="right"><%= (!@deduction_amount_arr[i].nil?)? format_currency(@deduction_amount_arr[i]) : '' %></td>
+	   </tr>
+	 <% end %>
+	</tbody>
+	<tfoot>
+	   <tr>
+	     <td>
+		<hr>
+		<b>Total Earning Amount</b>
+		<hr>
+		</td>
+		<td align="right">
+		<hr>
+		<b><%= format_currency(@total_earning) %></b>
+		<hr>
+		</td>
+		<td>
+		<hr>
+		<b>Total Deduction Amount</b>
+		<hr>
+		</td>
+		<td align="right">
+		<hr>
+		<b><%= format_currency @total_deduction %></b>
+		<hr>
+	     </td>
+	   </tr>
+	   <tr>
+		<td></td>
+		<td></td>
+		<td><b>Net Amount</b>
+		<hr>
+		</td>
+		<td align="right"><b><%=  format_currency(@total_earning - @total_deduction) %></b>
+		<hr>
+		</td>
+	  </tr>
+	</tfoot>
+      </table><br>
+      <p align=right>Authorised Signatory</p><hr>
+            </div>
+            <footer class="panel-footer">
+   		<%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+   		<!-- Table ends -->
+   		<%end%>
+        </div>    
+</div>
+</section>
+</section>
+
+   

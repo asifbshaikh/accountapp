@@ -1,0 +1,59 @@
+<section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-7">
+            <h2><i class="icon-bar-chart text"></i>Post Categories</h2>
+        </div>
+           <div class="col-lg-5 m-t-large" align="right">
+           <a href="/admin/blog_posts/new" class="btn btn-success btn-lg " id="use_filter" title="Add new"><i class="icon-plus"></i> Create Post</a> 
+           <p></p>
+        </div>
+      </div>
+
+       
+
+      <div class="row">
+        <div class="col-lg-12">
+         <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+             <div class="row">
+             <div class="col-lg-12">
+              <%= render :partial=>"form" %>
+              </div>
+              </div> 
+              <div class="row">
+              <header class="panel-heading">Post categoris</header>
+              <div class="col-lg-12">
+              
+              <div class="table-responsive row">
+                <table id="pbreferrals" class="table table-striped m-b-none text-small" >
+                <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @blog_categories.each do |blog_category| %>
+                <tr>
+                  <td>                
+                  <%= best_in_place  blog_category, :title, :path => "/admin/blog_categories/#{blog_category.id}", :type => :input,:html_attrs => {:length => 50, :class=>"bg-focus form-control"}%>
+                  </td>
+                  <td><%= link_to '<i class="icon-trash"></i>'.html_safe, [:admin, blog_category], :confirm => 'Are you sure?', :method => :delete, :class=>"btn btn-white btn-sm" %></td>
+                </tr>
+              <% end %>
+              </tbody>
+              </table>
+              </div>
+              </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+
+

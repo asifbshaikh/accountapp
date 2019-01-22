@@ -1,0 +1,89 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+       // Chart for Bank accounts
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Bank Account');
+        data.addColumn('number', 'Balance');
+        '<% @bank_hash.sort.reverse.each do |key, value| %>'
+         data.addRows([
+                     ['<%= value %>', parseInt('<%=  key.to_i %>')]
+                     ]);
+        '<% end %>'
+        var options = {'title':'Bank Accounts',
+                       'width':300,
+                       'height':200};
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('bank_acc_div'));
+        chart.draw(data);
+        
+        // Chart for Cash accounts
+        var data1 = new google.visualization.DataTable();
+        data1.addColumn('string', 'Cash Account');
+        data1.addColumn('number', 'Balance');
+        '<% @cash_hash.sort.reverse.each do |key, value| %>'
+           data1.addRows([
+                     ['<%= value %>', parseInt('<%=  key.to_i %>')]
+                     ]);
+        '<% end %>'
+        
+        var options1 = {'title':'Cash Accounts',
+                        'width':300,
+                        'height':200};
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('cash_acc_div'));
+        chart1.draw(data1);
+        
+        // Chart for sales
+         var data2 = new google.visualization.DataTable();
+         data2.addColumn('string', 'Sales');
+         data2.addColumn('number', 'Amount');
+        
+         data2.addRows([
+                     ['Credit Invoices', parseInt('<%= @credit_invoice_amount.to_i %>')],
+                     ['Total Due', parseInt('<%= @total_due.to_i %>')],
+                     ['Cash Invoices', parseInt('<%= @cash_invoice_amount.to_i %>')],
+                     ['Payment Received', parseInt('<%= @payment_received.to_i %>')]
+                     ]);
+        
+        var options2 = {'title':'Sales This year',
+                       'width':300,
+                       'height':200};
+
+        var chart2 = new google.visualization.PieChart(document.getElementById('sales_div'));
+        chart2.draw(data2);
+
+      // Chart for company performance
+        var data3 = new google.visualization.DataTable();
+          data3.addColumn('string', 'Month');
+          data3.addColumn('number', 'Income');
+          data3.addColumn('number', 'Expense');
+        '<% for a in (@financial_year.start_date.month..@months) %>'
+          '<% date = Date.new((a > 12 ? @financial_year.end_date.year : @financial_year.start_date.year), (a>12 ? (a -12) : a ), 1) %>'
+           data3.addRows([
+                         ['<%= @company.get_month((a>12 ? (a -12) : a ).to_s) %>',  
+                           parseInt('<%=  @company.total_monthly_income(@current_user, date) %>'),parseInt('<%= @company.total_monthly_expense(@current_user, date) %>') ]
+                     ]);
+        '<% end %>'
+
+        var options3 = {
+          title: 'Company Performance'
+        };
+
+        var chart3 = new google.visualization.LineChart(document.getElementById('comp_per_div'));
+        chart3.draw(data3);
+
+      }
+    </script>
+    

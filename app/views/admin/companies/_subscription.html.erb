@@ -1,0 +1,8 @@
+<tr>
+ <td><%= link_to "#{subscription.company.name}", "/admin/companies/#{subscription.company_id}" %></td>
+ <td><%= subscription.company.plan.display_name %></td>
+<td><%= subscription.company.users.first.full_name%>  
+<td><%= subscription.company.phone %></td>       
+<td><%= subscription.company.activation_date %></td>
+<td><%= subscription.renewal_date %></td>
+</tr>

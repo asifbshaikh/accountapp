@@ -1,0 +1,114 @@
+<div class="row">
+
+  <div  class="col-sm-12 m-b-mini">
+
+    <p>This page shows transaction summary received from the <strong>GSTN portal</strong>. Please click on 'Update' button to fetch the latest summary.</p>
+
+    <p>You must verify this information before proceeding to the next step of return filing as GSTN will consider this as a final information for submission.</p>
+
+  </div>
+
+  <div class="table-responsive col-lg-12">
+
+    <% unless @gstr1_section_summary.blank? %>
+    <div>
+      <table class="table table-bordered text-small">
+        <thead>
+          <tr>                    
+            <th>Summary type</th>
+            <th>Total Record</th>
+            <th>Taxable Amount</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>IGST</th>
+            <th>Total Inclusive Of Taxes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @gstr1_section_summary.each_with_index do |summary, index| %>
+          <% if !summary.section_type.eql?("NIL") && !summary.section_type.eql?("DOC_ISSUE") %>
+          <tr>
+            <td><%= summary.section_type %></td>
+            <td><%= summary.total_record %></td>
+            <td class="text-right"><%= format_amount(summary.total_taxable_value) %></td>
+            <td class="text-right"><%= format_amount(summary.total_cgst) %></td>
+            <td class="text-right"><%= format_amount(summary.total_sgst) %></td>
+            <td class="text-right"><%= format_amount(summary.total_igst) %></td>
+            <td class="text-right"><%= format_amount(summary.total_value) %></td>
+            <%= summary_subsection_link(summary) %>
+          </tr>
+          <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <table class="table table-bordered text-small" >
+        <thead>
+          <th>Summary type</th>
+          <th>Total doc issued</th>
+          <th>Total doc cancelled</th>
+          <th>Net doc issued</th>
+        </thead>
+        <tbody>
+          <% @gstr1_section_summary.each_with_index do |summary, index| %>
+          <% if summary.section_type.eql?("DOC_ISSUE") %>
+          <tr>
+            <td><%= summary.section_type %></td>
+            <td><%= summary.total_doc_issued %></td>
+            <td><%= summary.total_doc_cancelled %></td>
+            <td><%= summary.net_doc_issued %></td>
+          </tr>
+          <% end %>
+          <% end %>                                
+        </tbody>
+      </table>
+
+      <table class="table table-bordered text-small" >
+        <thead>
+          <th>Summary type</th>
+          <th>Total nil supply amount</th>
+          <th>Total exempted supply amount</th>
+          <th>Total non GST outward supply amount</th>
+        </thead>
+        <tbody>
+          <% @gstr1_section_summary.each_with_index do |summary, index| %>
+          <% if summary.section_type.eql?("NIL") %>
+          <tr>
+            <td><%= summary.section_type %></td>
+            <td class="text-right"><%= format_amount(summary.nil_supply_amt) %></td>
+            <td class="text-right"><%= format_amount(summary.exempted_supply_amt) %></td>
+            <td class="text-right"><%= format_amount(summary.ngsup_outward_amt) %></td>
+          </tr>
+          <% end %>
+          <% end %>                                
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+
+  </div>
+</div>
+
+<div id="B2B_counter_party_summary" class="modal fade">
+  <% unless @b2b_counter_party_summary.blank? %>
+    <%= render "b2b_summary_popup"%>
+  <% end %>
+</div>
+<div id="CDNR_counter_party_summary" class="modal fade">
+  <%unless @cdnr_counter_party_summary.blank? %>
+    <%= render "cdnr_summary_popup"%>
+  <% end %>
+</div>
+<div id="B2CL_state_code_summary" class="modal fade">
+  <% unless @b2cl_state_code_summary.blank? %>
+    <%= render "b2cl_summary_popup"%>
+  <% end %>
+</div>
+<div id="CDNUR_state_code_summary" class="modal fade">
+  <% unless @cdnur_state_code_summary.blank? %>
+    <%= render "cdnur_summary_popup"%>
+  <% end %>
+</div>

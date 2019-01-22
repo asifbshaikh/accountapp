@@ -1,0 +1,45 @@
+<%= form_for(@custom_field) do |f| %>
+<%= render 'shared/form_error', :object => @custom_field %>
+<table class="display stylized" id="act_details" >
+   <thead>
+    <tr>
+      <th>
+        Set custom fields for: <%= f.label :voucher_type, @custom_field.voucher_type %>
+          <%= f.hidden_field :voucher_type %>
+        </th>
+      </tr>
+    </thead>
+   <tbody> 
+      <tr>
+      <td>
+        <%= f.label "Custom field1" %> &nbsp;<%= f.text_field :custom_label1, :size =>"15", :maxlength => "30"%>
+      </td>
+      </tr>
+      <tr> 
+        <td>
+         <%= f.label "Custom field2" %> &nbsp;<%= f.text_field :custom_label2, :size =>"15", :maxlength =>"30" %>
+        </td>    
+      </tr>
+      <tr>
+        <td>
+          <%= f.label "Custom field1" %> &nbsp;<%= f.text_field :custom_label3, :size =>"15",:maxlength =>"30" %>
+        </td>    
+      </tr>
+      <tr>
+        <td>
+            <%= f.check_box(:status, :value => 1)%>
+            <%= f.label 'Show these fields in report' %> &nbsp;
+    
+        </td>
+      </tr>
+   </tbody>
+   <tfoot>
+      <tr>
+        <td colspan="2">
+          <%= f.submit :value => 'Save',:class=> "btn btn-green btn-save" %>&nbsp;
+          <%= link_to "Cancel", "/custom_fields/show", :class => "btn btn-cancel"%>
+       </td>
+      </tr>
+    </tfoot>
+ </table>
+<% end %>

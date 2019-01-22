@@ -1,0 +1,52 @@
+<section id="content">
+  <section class="main padder">
+   <div class="row"><p></p>
+     <div class="col-lg-4">
+        <h3><i class="icon-tasks text"></i>Branches</h3>
+     </div>
+      <div class="col-lg-8" align="right">
+       <%= link_to raw('<i class="icon-plus"> </i> Add New Branch'), new_branch_path, :class => 'btn btn-success btn-lg' %>
+      </div>
+  </div>
+    <!-- .main -->
+    <div class="row ">
+      <div class="col-lg-12">
+    <section class="col-lg-12">
+       <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=>"shared/flash_msg"%>
+            <div class="table-responsive row">
+             <table id="branches" class="table table-striped b-t text-small" data-source="<%= branches_url(:format => 'json' )%>" >
+             <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Fax</th>
+                  <th>Address</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "branch", :collection => @branches %>
+              </tbody>
+              <tfoot>
+                  <tr style="visibility:hidden">
+                    <td>Name</td>
+                    <td>Phone</td>
+                    <td>Fax</td>
+                    <td>Address</td>
+                    <td></td>
+                  </tr>
+              </tfoot>
+              </table>
+            </div>
+         </div>
+      </section>
+    </section>
+    <!-- /.main -->
+    <!-- .sidebar -->
+    </div>
+    </div>
+    <!-- /.sidebar -->
+    </section>
+  </section>

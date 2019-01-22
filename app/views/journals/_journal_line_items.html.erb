@@ -1,0 +1,24 @@
+<tr id="row<%= index %>" valign="top" class = 'jrn_line'>
+<%= hidden_field_tag "journal[journal_line_items_attributes][#{index}][id]",journal_line_item.id%>
+<%= hidden_field_tag "journal[journal_line_items_attributes][#{index}][_destroy]"%>
+<td style="padding-left:0">
+ <%= select_tag "journal[journal_line_items_attributes][#{index}][from_account_id]",  options_from_collection_for_select(@from_accounts, :id, :name,:selected => journal_line_item.from_account_id ),:style=>"width:200px;",:include_blank => true  %><br />
+</td>
+<td></td>
+<td class="ta-right">
+<%= text_field_tag "journal[journal_line_items_attributes][#{index}][amount]", journal_line_item.amount, :size =>4, :id => "amount",  :maxlength => 18, :onkeydown => "return numbersOnly(event);",:"data-index"=> index, :"data-ttype"=>"dr" ,:class=>"bg-focus form-control text-right debit#{index}"%>
+</td>
+<% if !@journal.old_voucher? %>
+<td class="ta-right">
+<%= text_field_tag "journal[journal_line_items_attributes][#{index}][credit_amount]", journal_line_item.credit_amount, :size =>4, :id => "credit_amount",  :maxlength => 18, :onkeydown => "return numbersOnly(event);", :"data-index"=> index, :"data-ttype"=>"cr", :class=>"bg-focus form-control text-right credit#{index}"%>
+</td>
+<% end %>
+<td style='padding-right: 0'>
+ <%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index,  :journal_line_item_id => journal_line_item.id}, :class => "btn btn-danger btn-sm", :remote => true %>
+</td>
+<script type="text/javascript">
+  $("#journal_journal_line_items_attributes_<%= index %>_from_account_id").select2();
+</script>
+</tr> 
+          
+                         

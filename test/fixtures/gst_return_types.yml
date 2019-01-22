@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_type: MyString
+  return_type: MyString
+
+two:
+  company_type: MyString
+  return_type: MyString

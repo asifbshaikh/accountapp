@@ -1,0 +1,191 @@
+  <% if @company.multilevel_pricing_enabled? %>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label>Pricing level</label></div>
+    <div class="col-lg-3"><%= select_tag("debtor[product_pricing_level_id]", options_from_collection_for_select(@company.product_pricing_levels, :id, :caption, :selected => :id), {:include_blank => true, :class=>"bg-focus form-control"}) %></div>
+  </div>
+  <% end %>
+  <div class="form-group gradeU odd">
+  <section class= "panel" >
+  <header class="panel-heading" style='cursor: pointer;' id='user_info'>
+   <strong>Address & General details</strong> 
+  </header>
+  <div class='panel-body man'>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Billing Address</label><br/><small>(Provide fields like: city, state, country and pin etc.)</small></div>
+    <div class="col-lg-3">
+      <%= text_area_tag 'debtor[address_attributes][address_line1]','',:rows=> 3, :cols => 32, :id => "billing_add", :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Shipping Address</label><br/><small>(Provide fields like: city, state, country and pin etc.)</small></div>
+    <div class="col-lg-3">
+       <input id="same" type="checkbox" value="0" name="Same as billing address">Same as billing address<br/>
+      <%= text_area_tag 'debtor[address_attributes][address_line2]','',:rows=> 3, :cols => 32, :id=>"shipping_add", :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+ 
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Phone number</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contact_number]','',:onkeydown => "return numbersOnly(event);", :size => "30", :maxlength => "15", :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Fax</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[fax]','',:onkeydown => "return numbersOnly(event);", :size => "30", :maxlength => "15", :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Email</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[email]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-2 text-right"><label class="control-label">Website</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[website]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  
+  </div>
+  </section>
+</div>
+
+
+<div class="form-group gradeU odd">
+<section class="panel">
+<header class="panel-heading" style='cursor: pointer;' id='user_info'>
+    <strong>Tax details</strong> 
+</header>
+<div class='panel-body man'  style='display:none;'>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">PAN</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[PAN]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+  <div class="col-lg-2 text-right"><label class="control-label">TAN</label><br/><small>Tax Account Number</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[tan]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">VAT TIN</label><br/><small>VAT Tax Identification Number</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[vat_tin]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+  <div class="col-lg-2 text-right"><label class="control-label">CST</label><br/><small>Central Sales Tax</small></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[cst]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">CIN</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[cin_code]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Excise Registration No</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[excise_reg_no]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Service Tax Registration No</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[service_tax_reg_no]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Date of incorporation</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[date_of_incorporation]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+</div>
+</section>
+</div>
+
+<div class="form-group gradeU odd">
+<section class="panel">
+<header class="panel-heading" style='cursor: pointer;' id='user_info'>
+    <strong>Contacts</strong> 
+</header>
+<div class='panel-body man'  style='display:none;'>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">First name</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][first_name]','',:size => 30, :class=>"bg-focus form-control" %>
+      <%= hidden_field_tag 'debtor[contacts_attributes][0][company_id]', @company.id %>
+      <%= hidden_field_tag 'debtor[contacts_attributes][0][created_by]', @current_user.id %>
+    </div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Last name</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][last_name]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Position</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][position]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Mobile</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][mobile]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label>Email</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][email]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Date of birth</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][birthday]','', :id => 'debtor_contacts_birthday',:size => 30, :class=>"bg-focus form-control"%></div>
+  </div>
+  <div class="form-group gradeU even">
+  <div class="col-lg-2 text-right"><label class="control-label">Date of anniversary</label></div>
+  <div class="col-lg-3"><%= text_field_tag 'debtor[contacts_attributes][0][anniversary]','', :id => 'debtor_anniversary',:size => 30, :class=>"bg-focus form-control"%></div>
+  </div>
+  <div class="form-group gradeU even" id="row_link">
+    <div><%= link_to "Add new contact", {:action => 'add_row', :index => 0 }, :remote => true %></div>
+  </div>
+</div>
+</section>
+</div>
+
+<div class="form-group gradeU odd">
+<section  class="panel">
+<header class="panel-heading" style='cursor: pointer;' id='user_info'>
+    <strong>Bank details</strong> 
+</header>
+<div class='panel-body man'  style='display:none;'>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Bank name</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[bank_name]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">IFSC code</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[ifsc_code]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">MICR code</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[micr_code]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">BSR code</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[bsr_code]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+</div>
+</section>
+</div>
+
+<div class="form-group gradeU odd">
+<section class="panel">
+<header class="panel-heading" style='cursor: pointer;' id='user_info'>
+     <strong> Credit details</strong>
+</header>
+<div class='panel-body man'  style='display:none;'>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Credit days</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[credit_days]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Credit limit</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'debtor[credit_limit]','',:size => 30 ,:class=>"bg-focus form-control" %></div>
+  </div>
+</div>
+</section>
+</div>
+
+<div class="form-group gradeU odd">
+<section class="panel">
+<header class="panel-heading" style='cursor: pointer;' id='user_info'>
+  <strong>Notes</strong>      
+</header>
+<div class='panel-body man'  style='display:none;'>
+  <div class="form-group gradeU even">
+    <div class="col-lg-2 text-right"><label>Notes</label></div>
+    <div class="col-lg-3"><%= text_area_tag 'debtor[notes]','',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+</div>
+</section>
+</div>

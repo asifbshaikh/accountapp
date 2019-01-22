@@ -1,0 +1,46 @@
+ <%= form_for(@income_voucher) do |f| %>
+           <div id='user_info_div'><span class='basic_info'><%= f.label "Payment Mode" %></span></div>
+        <div class="pay_mode">   
+            <%= radio_button_tag :transaction_type,'cash', :checked => true %>
+            <%= f.label :transaction_type, "Cash", :value => "cash" %>
+            <%= radio_button_tag :transaction_type,'cheque' %>
+            <%= f.label :transaction_type, "Cheque", :value => "cheque" %>
+            <%= radio_button_tag :transaction_type,'card' %>
+            <%= f.label :transaction_type, "Card", :value => "card" %>
+            <%= radio_button_tag :transaction_type,'ibank' %>
+            <%= f.label :transaction_type, "Internet Banking", :value => "ibank" %>
+          </div>
+<% end %>			
+         
+   <div id="card" style="display:none;">
+	<div id="user_info_div"><span class="basic_info">Enter Card Detail</span></div>
+
+<table class="display stylized">
+	<%= f.fields_for :payment_mode do |p|%>
+	    <%= p.fields_for :card_payment do |cc|%>
+	<tbody>
+		<tr>
+			<td>
+				<%= cc.label :card_type, "Bank name"%><br/>
+			    <%= cc.text_field :card_type, :class => "half" %>
+			</td>
+			<td>
+				<%= cc.label :card_number %><br />
+			    <%= cc.text_field :card_number, :onkeydown => "return card_cheque_number(event);", :maxlength => 16 %>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<%= cc.label :transaction_date, :class => "required" %><br/>
+			    <%= cc.text_field :transaction_date, :class => "half" %>
+			</td>
+			<td>
+				<%= cc.label :transaction_reference %><br/>
+			    <%= cc.text_field :transaction_reference, :class => "half" %>
+			</td>
+		</tr>
+	</tbody>
+       <% end %>
+	<% end %>
+</table>
+</div>  

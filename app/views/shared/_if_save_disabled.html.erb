@@ -1,0 +1,5 @@
+<%if !@from_accounts.blank? && !@to_accounts.blank? %>
+       <%= f.submit 'Save', :class => "btn btn-green btn-save"%>
+<% else %>
+	<a href="#" class="btn btn-green btn-save">Save</a>
+<% end %>

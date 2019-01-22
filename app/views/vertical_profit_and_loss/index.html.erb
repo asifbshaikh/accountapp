@@ -1,0 +1,89 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+			<% if true %>
+			<p align="right">
+			<a href="/vertical_profit_and_loss/index.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	<a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+			<% end %>
+			<div class='highlight'>
+				<div id='report_header'>
+					<div class="header-left">
+						<span class="large"><%= @page_name%></span>
+						<br />
+						<span class="xxsmall light">1Apr2011 to 31March2012</span> 
+					</div>
+				</div>
+				<br>
+				
+				<table class = "zebra-sriped tablesorter" id = 'MyTable' border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width3'><span class='char_spacing'>Particulars</span></th>
+							<th align="right" colspan="2">  1-Apr-2011 to 31-Mar-2012</th>
+						</tr>
+						</head>
+						<tbody>
+							<tr><td colspan="3"><span class='char_spacing'><i><u><b>Tradding Account :</b></u></i></span></td></tr>
+							<tr><td class="width6"><b>Sales Accounts</b></td><td></td><td align="right"><b><%= format_currency(@total_sales_amount) %></b></td></tr>
+							<% for account in @sale_accounts 
+							closing_balance = account.closing_balance%>
+								<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{account.id}" %>><%= account.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+							<% end %>
+							
+							<tr><td class="width6"><b>Cost of Sales</b></td><td></td><td align="right"><b><%= format_currency(sales_cost = @total_purchase_amount + @opening_stock - @closing_stock) %></b></td></tr>
+							<tr><td class="width6 textindent1">Opening Stock</td><td align="right"><%= format_currency(@opening_stock)%></td><td></td></tr>
+							<tr><td class="width6 textindent1">Add:Purchase Accounts</td><td align="right"><%= format_currency @total_purchase_amount %></td><td align="right"></b></td></tr>
+							<tr><td class="width6 textindent1">Less:Closing Stock</td><td align="right"><%= format_currency(@opening_stock)%><td></td></tr>
+							
+							<tr><td class="width6"><b>Direct Expences</b></td><td></td><td align="right"><b><%= format_currency(@total_direct_expence) %></b></td></tr>
+							<% for exps in @direct_expenses 
+							closing_balance = exps.closing_balance%>
+								<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{exps.id}" %>><%= exps.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+							<% end %>
+							
+							<tr><td class="width6"><span class='char_spacing'><b>Gross Profit :</b></span></td><td></td><td align="right"><b><%= format_currency (gross_profit = @total_sales_amount - (sales_cost + @total_direct_expence)) %></b></td></tr>
+							
+							<tr><td colspan="3"><span class='char_spacing'><i><u><b>Income Statement :</b></u></i></span></td></tr>
+							<tr><td class="width6"><b>Direct Incomes</b></td><td></td><td align="right"><b><%= format_currency(@total_direct_income_amount) %></b></td></tr>
+							<% if !@direct_income_accounts.nil?
+											for s_acc in @direct_income_accounts 
+											closing_balance = s_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{s_acc.id}" %>><%= s_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<%end end %>
+							<tr><td class="width6"><b>Indirect Incomes</b></td><td></td><td align="right"><b><%= format_currency(@total_indirect_income_amount) %></b></td></tr>
+							<% if !@indirect_income_accounts.nil?
+											for s_acc in @indirect_income_accounts 
+											closing_balance = s_acc.closing_balance%>
+											<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{s_acc.id}" %>><%= s_acc.name %></a></td><td align="right"><%= format_currency(closing_balance) %></td><td></td></tr>
+										<%end end %>
+							<tr><td class="width6"><b>Indirect Expenses</b></td><td></td><td align="right"><b><%= format_currency(@total_indirect_expence) %></b></td></tr>
+							<% for inexps in @indirect_expenses 
+							closing_balance = inexps.closing_balance%>
+								<tr><td class="textindent1"><a href=<%= "/account_books_and_registers/ledger?account_id=#{inexps.id}" %>><%= inexps.name %></a></td><td align="right"><%= format_currency(inexps.closing_balance) %></td><td></td></tr>
+							<% end %>
+							<tr><td class="width6"><span class='char_spacing'><b>Nett Profit :</b></span></td><td></td><td align="right"><b><%= format_currency (gross_profit - (@total_indirect_expence)) %></b></td></tr>
+						</tbody>
+						<tfoot>
+							
+						</tfoot>
+				</table>
+				
+				<hr>
+				<%= render :partial => "shared/report_footer" %>
+			</div>
+			&nbsp;&nbsp;
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

@@ -1,0 +1,47 @@
+
+ <table class="display stylized full">
+  <thead>
+    <tr>
+      <th>Voucher #</th>
+      <th>Customer</th>
+      <th>Due date</th>
+      <th>Amount</th>
+      <th>Created By</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @invoices.each do |invoice|%>
+     <td><%= invoice.invoice_number %></td>
+     <td><%= invoice.customer_name %></td>
+     <td><%= invoice.due_date %></td>
+     <td><%= invoice.amount %></td>
+     <td><%= invoice.created_by_user %></td>
+   <% end %>
+  </tbody>
+  
+   <thead>
+    <tr>
+      <th>Voucher #</th>
+      <th>Paid from </th>
+      <th>Expense date</th>
+      <th>Amount</th>
+      <th>Created By</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @expenses.each do |expense|%>
+     <td><%= expense.voucher_number %></td>
+     <td><%= expense.account_name %></td>
+     <td><%= expense.expense_date %></td>
+     <td><%= expense.amount %></td>
+     <td><%= expense.created_by_user %></td>
+   <% end %>
+  </tbody>
+  
+  <tfoot>
+     <tr>
+       <td colspan = "4"></td>
+     </tr>
+  </tfoot>
+</table>
+       

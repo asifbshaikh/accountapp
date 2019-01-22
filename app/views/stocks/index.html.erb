@@ -1,0 +1,51 @@
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Inventory &rarr;<span>Stocks</span></h1>
+  </div>
+</div>
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <%= render "shared/flash_msg" %>
+    <!-- Left column/section -->
+    <section class="column width6 first">
+      <% if @stocks.blank? %>
+        <p class="no-journal"><%= render :partial => "shared/no_record" %></p>
+      <% else %>
+        <div id="tabs-all">
+          <div class="clearfix"></div>
+          <hr/>
+          <table class = "stylized full" id="example">
+            <thead>
+              <tr><th>Name</th><th>Unit of measure</th></tr>
+            </thead>
+            <tbody>
+              <%= render :partial => "stocks", :collection => @stocks %>
+            </tbody>
+            <tfoot>
+            	<%= render"footer" %>
+            </tfoot>
+          </table>
+          <div class="clear">&nbsp;</div>
+        </div>
+      <% end %> 
+    </section>
+    <!-- End of Left column/section -->
+  
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <div id="rightmenu">
+      <dl class="first">
+        <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+        <dd><a href="#">Help</a></dd>
+        <dd class="last">If you are a new user, you should read "Getting started"</dd>              
+      </dl>
+    </div>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+

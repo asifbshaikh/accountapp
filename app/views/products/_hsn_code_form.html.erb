@@ -1,0 +1,57 @@
+<div class="model-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+      <h4 class="modal-title" id="myModalLabel"> <i class="icon-search icon-large text-default"></i>HSN/SAC Lookup</h4>
+    </div>
+    <div class="modal-body">
+    <div class="row">
+        <div class="col-lg-12"><p></p>
+          <section class="panel">
+            <header class="panel-heading text-right">
+              <ul class="nav nav-tabs pull-left"  id="hsnTabs">
+                <li class='active'>
+                  <a data-toggle="tab" href="#hsn-codes-tab" id= "hsnSelection">
+                   HSN
+                  </a>
+                </li>
+                <li class=''>
+                  <a data-toggle="tab" href="#sac-codes-tab" id= "sacSelection">
+                  </i> SAC
+                  </a>
+                </li>
+              </ul>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">
+                <div id='hsn-codes-tab' class='tab-pane fade active in'>
+              <%= label_tag 'Chapter','Chapter', :class=>'control-label' %>
+              <%= select_tag('hsn_chapter', options_from_collection_for_select(HsnChapter.all, :chapter_index, :chapter_heading),{:style => "width:400px;"})%></p>
+
+              <div class="on-go-form col-lg-12" >
+                    
+              </div>
+                 
+                </div>
+                <div id="sac-codes-tab" class="tab-pane fade">
+                <%= label_tag 'Heading','Heading', :class=>'control-label' %>
+                <%= select_tag('sac_heading', options_from_collection_for_select(SacHeading.all, :heading_index, :heading),{:style => "width:400px;"})%></p>
+
+                 <div class="on-go-form col-lg-12" >
+                    
+              </div>
+                
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+       <div class="modal-footer">
+      </div>
+  </div>
+  </div>
+  <script>
+ 
+</script>

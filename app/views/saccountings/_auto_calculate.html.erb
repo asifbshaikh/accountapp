@@ -1,0 +1,34 @@
+<div id="jHere">
+<script>
+  $(document).ready(function(){
+           cal();  
+ 	$('table#saccounting_line_items input:text').live('keyup', function(e){
+		cal();
+                e.preventDefault();
+	});
+	
+	$("table#saccounting_line_items #cancel").live('click', function(e){
+		setTimeout(function(){cal();}, 1500);
+                e.preventDefault();
+	});
+	
+	$('table#saccounting_line_items span#total').text(parseFloat($('input[name=total_paid]').val()).toFixed(2));
+  });
+	function cal(){
+	var i = 0;
+	var total = 0;
+	$('table#saccounting_line_items tbody tr').each(function(){
+		var amount = 0;
+		if  (($('table#saccounting_line_items tbody tr:eq(' + i + ')').is(":visible")) && $('table#saccounting_line_items tbody tr:eq(' + i + ') #amount').val()) {
+			var amount = parseFloat($('table#saccounting_line_items tbody tr:eq(' + i + ') #amount').val());
+			total = total + amount;
+		} 
+		i++;
+	});
+	$('input[name=total_paid]').val(total);
+	$('table#saccounting_line_items span#total').text(total.toFixed(2));
+	
+
+	}
+</script>
+</div>

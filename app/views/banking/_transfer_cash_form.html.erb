@@ -1,0 +1,88 @@
+<%= render :partial => "shared/banking_auto_complete" %>
+        <%= render :partial => 'shared/banking_acc_bal' %>
+<%= form_for @transfer_cash, :html => {:class => "form-horizontal"} do |f| %>
+      <%= render 'shared/form_error', :object => @transfer_cash %> 
+          <div class="form-group">
+           <div class="col-lg-2 text-right"> 
+            <label class="control-label">Voucher Number</label>
+            </div>  
+          <div class="col-lg-3">
+            <label class="control-label">
+              <%= @transfer_cash.voucher_number%><%= f.hidden_field :voucher_number %>
+            </label>
+          </div>
+          </div>
+          <div class="form-group">
+          <div class="col-lg-2 text-right">
+            <%= f.label :Transaction_date,  :class=>"control-label-required"  %>
+          </div>
+           <div class="col-lg-3">
+            <%= f.text_field :transaction_date, :size => "14", :class => 'bg-focus form-control' %>
+          </div>
+          </div>
+        
+        <div class="form-group">
+          <div class="col-lg-2 text-right">
+            <%= f.label :Transferred_from_id, :class=>"control-label-required"%>
+          </div>
+          <div class="col-lg-3">
+          <div class="input-group">
+             <input type="text" name="transferred_from_name" class = "bg-focus form-control" id="tran_from_account" value='<%= (!@transfer_cash.transferred_from_id.blank?)? "#{@company.accounts.find(@transfer_cash.transferred_from_id).name}" : ""%>' /> 
+              <div class="input-group-btn">
+              <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#tran_modal1'>
+                <span class="dropdown-label"><i class="icon-plus"></i></span>  
+              </button>
+            </div>
+             </div>
+            <span id="from_acc_bal" ></span>
+          </div>
+          </div>
+          <div class="form-group">
+          <div class="col-lg-2 text-right">
+           <%= f.label :Transferred_to_id,:class=>"control-label-required" %>
+          </div>
+          <div class="col-lg-3">
+          <div class="input-group">
+            <input type="text" name="transferred_to_name" class= "bg-focus form-control"  id="tran_to_account" value='<%= (!@transfer_cash.transferred_to_id.blank?)? "#{@company.accounts.find(@transfer_cash.transferred_to_id).name}" : ""%>' /> 
+            <div class="input-group-btn">
+              <button class="btn btn-white dropdown-toggle" title="Add New Account" data-toggle="modal" data-target='#tran_modal2'>
+                <span class="dropdown-label"><i class="icon-plus"></i></span>  
+              </button>
+            </div>
+            </div>
+            <span id ="to_acc_bal"></span>
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-lg-2 text-right">
+          <%= f.label :Amount, :class =>"control-label-required" %>
+        </div>
+        <div class="col-lg-3">
+         <%= f.text_field :amount , :onkeydown => "return numbersOnly(event);", :maxlength => 18, :size => "14", :class=> "bg-focus form-control text-right" %>
+        </div>
+        </div>
+        
+          <div class="form-group">
+              <div class="col-lg-2 text-right">
+               <label class="control-label">Description</label>
+              </div>
+              <div class="col-lg-4">
+                <%= f.text_area :description, :rows => "3", :class=>"bg-focus form-control" %>
+                </div>
+            </div>
+                <div class="form-group">
+                  <div class="col-lg-9 col-lg-offset-3">                      
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <%= link_to 'Cancel', banking_index_path, :class => "btn btn-default" %>
+                  </div>
+                </div>
+          <% end %>
+
+          <!-- .modal -->
+  <div id="tran_modal1" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @tran_from_account_heads, :transaction_type => "transferacc" %>
+  </div>
+  <div id="tran_modal2" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @tran_to_account_heads, :transaction_type => "" %>
+  </div>
+  <!-- / .modal -->

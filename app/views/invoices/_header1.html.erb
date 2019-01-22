@@ -1,0 +1,12 @@
+<tr>
+    <th>Invoice #</th>
+    <th><%= @company.label.customer_label %></th>
+    <th>Due Date</th>
+    <th>Amount</th>
+    <th>Status</th>
+   <% if !@company.plan.free_plan? %>
+    <th>Under Project</th>
+   <% end %> 
+    <th></th>
+  </tr>
+

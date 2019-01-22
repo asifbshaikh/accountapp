@@ -1,0 +1,22 @@
+<% if !@issue_voucher_custom_field.blank? && !@company.plan.free_plan? %>
+	<% if !@issue_voucher_custom_field.custom_label1.blank? %>	
+		<div class='col-lg-3'>
+			<label class='control-label'> <%= @issue_voucher_custom_field.custom_label1 %></label><br/>
+			<%= text_field_tag "stock_issue_voucher[custom_field1]", "#{@stock_issue_voucher.custom_field1.blank? ? @issue_voucher_custom_field.default_value1 : @stock_issue_voucher.custom_field1}", :class=>'form-control bg-focus' %>
+		</div>
+		<div class='col-lg-1'></div>
+	<% end %>	
+	<% if !@issue_voucher_custom_field.custom_label2.blank? %>	
+		<div class='col-lg-3'>
+			<label class='control-label'> <%= @issue_voucher_custom_field.custom_label2 %></label><br/>
+			<%= text_field_tag "stock_issue_voucher[custom_field2]", "#{@stock_issue_voucher.custom_field2.blank? ? @issue_voucher_custom_field.default_value2 : @stock_issue_voucher.custom_field2}", :class=>'form-control bg-focus' %>
+		</div>
+		<div class='col-lg-1'></div>
+	<% end %>	
+	<% if !@issue_voucher_custom_field.custom_label3.blank? %>	
+		<div class='col-lg-3'>
+			<label class='control-label'> <%= @issue_voucher_custom_field.custom_label3 %></label><br/>
+			<%= text_field_tag "stock_issue_voucher[custom_field3]", "#{@stock_issue_voucher.custom_field3.blank? ? @issue_voucher_custom_field.default_value3 : @stock_issue_voucher.custom_field3}", :class=>'form-control bg-focus' %>
+		</div>
+	<% end %>	
+<% end %>

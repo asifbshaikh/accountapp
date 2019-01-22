@@ -1,0 +1,87 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-8">
+       <h2><i class="icon-file text"></i>Import Status</h2>
+        </div>
+        
+        <div class="col-lg-4 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-trash"> </i>'), {:controller => "customer_imports", :action => "delete_file", :id => @file_id},:confirm => 'Are you sure?',:class=> 'btn btn-default btn-lg',:title =>"Delete"%>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), customer_imports_path, :class => 'btn btn-default btn-lg', :title =>"Back" %><p></p>
+      </div> 
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <% if @imported_customers.blank? %>
+              <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <div class="row">
+            <div class="col-lg-12">
+          <div class = "panel">
+            <div class="panel-body">
+              <span class="badge bg-success">Success :  <%= @successfull_customers %></span>
+              <span class="badge bg-danger">Failed : <%= @failed_customers %></span>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive row">
+                <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created By</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                 </thead>
+                <tbody>
+                  <% @imported_customers.each do |customer|%>
+                   <tr>
+                      <td>
+                        <%= customer.name%>
+                      </td>
+                      <td>
+                        <%= customer.email%>
+                      </td>
+                      <td>
+                      <%= User.find(customer.created_by).full_name%>
+                      </td>
+                      <td>
+                        <% if customer.status == 1 %>
+                        <label class="label bg-success">Success</label>
+                        <% elsif customer.status == 0 %>
+                        <label class="label bg-danger">Failed</label>
+
+                        <% end %>
+                      </td>
+                      <% if customer.status == 0 %>
+                      <td><%= link_to  "Correct customer", new_customer_path(:customer_id => customer.id), :class => "btn btn-sm btn-success m-b-small", :target => "_blank" %></td>
+                      <%else%>
+                      <td></td>
+                      <% end %>
+                    </tr>
+                 <%end%>
+                </tbody>
+                <tfoot>
+                    <tr>
+                  <td colspan="5" align="center">
+                  
+                  </td>
+                </tr>
+                 </tfoot>
+              </table>
+              </div>
+              
+              <% end %>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>

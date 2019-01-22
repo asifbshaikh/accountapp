@@ -1,0 +1,11 @@
+                <tr>
+                  <td><%= link_to "#{expiry_report.company.name}", admin_company_path(expiry_report.company.id) %></td>
+                  <td><%= expiry_report.plan.name %></td>
+                  <td><%= expiry_report.company.users.first.full_name%></td>
+                  <td><%= expiry_report.company.phone %></td>
+                  <td><%= Company.find_last_contact_date(expiry_report.company.id) unless Company.find_last_contact_date(expiry_report.company.id).blank?%></td>
+                  <td><%= expiry_report.company.users.first.email %></td>				
+                  <td><%= expiry_report.company.activation_date %></td>
+                  <td><%= expiry_report.company.subscription.renewal_date.to_date %></td>
+                </tr>
+

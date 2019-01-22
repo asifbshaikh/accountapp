@@ -1,0 +1,69 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div id="tabs-all" class="highlight">
+        <%= render :partial => "shared/flash_msg"  %>
+        <div id="timesheet">
+          <% if @leaves.blank? %>
+            <%= render :partial => "shared/no_record", :locals=> {:message => "Your leave card is not yet created! Please contact your admin." }%>
+          <% else %>
+            <div class="column width3">
+              <p class="box">
+                <label for="Employee">Employee #: <%=@invoice.invoice_number%></label>
+                <br/>
+                  <label for="Year">Year #:<%= @leave.year %></label>
+                  <br/>
+              </p> 
+            </div>
+            <table class="display stylized" id="example">
+              <thead>
+                <tr>
+                  <th>Leave Type</th>
+                  <th>Total Leaves</th>
+                  <th>Leaves used</th>
+                  <th>Leaves pending</th>
+                </tr>                       
+              </thead>
+              <tbody>
+                <%= render @leaves%>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5"></td>
+                </tr>                        
+              </tfoot>
+            </table>
+            <div class="column width3 ">
+              <%= paginate @leave_types %>
+            </div>
+          <% end %>
+        </div>
+      </div><br />
+    </section>
+    <!-- End of Left column/section --><!-- Right column/section -->
+    <aside class="column width2"><br />
+      <a href="/leave_types/new" class="btn btn-special btn-green"><img src= "/images/add.png" class ="icon"/> New leave request</a>
+      <div id="rightmenu">
+        <dl class="first">
+          <dt>
+            <img width="16" height="16" alt="" SRC="/images/help.png">
+          </dt>
+          <dd>
+            <a href="#" class="nyroModal">Help</a>
+          </dd>
+          <dd class="last">
+            This page displays the list of all the leave types.<br/>Click on leave type to view m,ore deatils.
+          </dd>
+        </dl>
+      </div><br />
+    </aside>
+<!-- End of Right column/section -->
+  </div>
+<!-- End of Wrapper -->
+</div>

@@ -1,0 +1,59 @@
+<!-- Page title -->
+<div id="pagetitle">
+  <div class="wrapper">
+    <h1>Notepad &rarr; <span>Deleted Notes</span></h1>
+    <!-- Quick search box -->
+    <form action="" method="get">
+      <input class="" type="text" id="q" name="q" />
+    </form>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+   
+      <!-- Left column/section -->
+      <section class="column width6 first">
+      <p>Your deleted Notes.</p>
+   
+      
+      <div id="tabs-all">
+         <div class="colgroup">
+             <div class="width3 column first"> </div>
+         </div>
+         <div class="clearfix"></div>
+           <% if @notes.blank? %>
+                        <p class="no-notes"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+				        <p>Your Notes.</p>
+                        <table class="display stylized" id="example">
+                           <thead>
+				                <%= render :partial => "header" %>
+				           </thead>
+				           <tbody>
+				                <%= render :partial => "note", :collection => @notes %>
+				           </tbody>
+				           <tfoot>
+				                <%= render :partial => "header" %>
+				           </tfoot>
+                       </table>
+                    <% end %>
+      </div>
+      </section>
+    <!-- End of Left column/section -->
+
+    <!-- Right column/section -->
+      <aside class="column width2">
+          <p ><a href="/notes/new" class="btn btn-special btn-green"><img SRC="/images/add.png" class="icon" alt=""/>Add new Note</a></p>
+         
+		
+	  </aside>
+     <!-- End of Right column/section -->
+
+  </div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

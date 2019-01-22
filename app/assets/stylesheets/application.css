@@ -1,0 +1,9 @@
+/*
+*= require spinner.css
+*= require_self
+*= require ./app/index.css
+*= require select2.css
+*= require ./app/bootstrap-tour.min.css
+*/
+
+/* rest of file omitted */

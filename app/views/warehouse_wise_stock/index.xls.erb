@@ -1,0 +1,36 @@
+<table>
+  <tr><td colspan=6 align=center><%= @company.label.warehouse_label%> Wise Stock for <%= warehouse_name(@warehouse_id) %></td></tr>
+  <% if !params[:branch_id].blank? %>
+  <tr><td colspan=6 align="center"><%= display_branch(@branch_id) %></td></tr>
+  <% end %>
+  <tr><td colspan=6 align=center>As on: <%= Time.zone.now.to_date %> </td></tr>
+  <% warehouse_name =""%>
+  <% @stocks.each_with_index do |stock, index|%>
+    <% if !warehouse_name.eql?(stock.warehouse.name) %>
+      <% warehouse_name = stock.warehouse.name %>
+      <thead>
+        <tr>
+          <td colspan="6"><b><%= @company.label.warehouse_label%>: <%=stock.warehouse.name%></b></td>
+        </tr>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Product</th>
+          <th align="center">Unit of Measurement</th>
+          <th align="center">Available Qty</th>
+          <th align="center">Description</th>
+          <th align="center">Reorder Level</th>
+          <!-- <th align="center">Value(Based on Avg. Cost)</th> -->
+        </tr>
+      </thead>
+    <% end %>
+    <tr>
+      <td align="center"><%= index+1 %></td>
+      <td><%= stock.product.name %></td>
+      <td align="center"><%= stock.product.unit_of_measure%></td>
+      <td align="right"><%= stock.quantity %></td>
+      <td align="center"><%= stock.product.description %></td>
+      <td align="center"><%= stock.product.reorder_level %></td>
+      <!--  <td></td> -->
+    </tr>
+  <% end %>
+</table>

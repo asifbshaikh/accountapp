@@ -1,0 +1,71 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Daily Activity Status Report</h2>
+    </div>
+    <div class="col-lg-5 m-t-large" align="right">
+           <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        </div>
+  </div><br/>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <strong>Customer Relationship Report</strong>
+            </header>
+          <div class="panel-body">
+          <%= render :partial => "admin/leads/report_activity_filter" %>
+            <div class="row">
+                <div class="col-lg-8">
+                Report for the period:
+                      <b><%= @start_date.strftime("%d %b %Y") %> To <%= @end_date.strftime("%d %b %Y") %></b>
+                </div>
+            </div><br>
+
+            
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small" id="company_activity_reports">
+                <thead>
+                  <tr>
+                    <th width='20%'> Company Name</th>
+                    <th> Activity </th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Time Spent (In min.)</th>
+                    <th>Outcome</th>
+                    <th>Followed By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% @companies.each do |customer_relationship|%>
+                  <tr>
+                    <td><%= customer_relationship.company.name%></td>
+                    <td><%= CustomerRelationship.get_activity(customer_relationship.next_activity) %></td>
+                    <td><%= customer_relationship.next_contact_date %></td>
+                    <td><%= customer_relationship.next_folloup_time %></td>
+                    <td>
+                    <% if customer_relationship.activity_status == true %>
+                    Completed
+                    <% else %>
+                    Pending
+                    <% end %>
+                    </td>
+                    <td><%= customer_relationship.time_spent%></td>
+                    <td><%= customer_relationship.notes%></td>
+                    <td><%= customer_relationship.following_by %></td>
+                  </tr>
+                    <% end %>
+                </tbody>
+              </table>
+            </div>
+</div>
+</section>
+</div>
+</div>
+</section>
+</section>

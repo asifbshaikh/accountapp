@@ -1,0 +1,10 @@
+<tr>
+  <td><%= link_to "#{user.full_name}", admin_user_path(user.id) %></td>
+  <td><%= user.username %></td>
+  <td><%= truncate(user.email, :length => 20) %></td>
+  <td><%= user.company_name %></td>
+  <td><%= user.company.plan.display_name %></td>
+  <td><%= user.roles[0].name%></td>
+  <td><%= user.last_login_time %></td>
+</tr>
+

@@ -1,0 +1,223 @@
+<%= f.fields_for :accountable do |a| %>
+<div class="row">
+<% if @company.multilevel_pricing_enabled? %>
+<div class="col-lg-12">
+<div class="col-lg-6">
+<div class="form-group gradeU odd">
+  <div class="col-lg-4 ">
+  <label class="control-label">Pricing level</label>
+  </div>
+  <div class="col-lg-8">
+  <%= a.collection_select(:product_pricing_level_id, @company.product_pricing_levels, :id, :caption, {:include_blank => true}, :class=>"bg-focus form-control") %>
+  </div>
+  
+</div>
+</div>
+</div>
+<% end %>
+</div>
+<div class="row">
+ <div class="col-lg-12"><br/>
+<section class="panel">
+  <header class="panel-heading" style='cursor: pointer;' id='user_info'>
+   <strong>Address & General Details</strong>
+  </header>
+  <div class="panel-body man">
+  <div class="col-sm-6">
+  <%= a.fields_for :address do |d| %>
+    <div class="form-group gradeU odd">
+      <div class="col-lg-4">
+       <label class="control-label">Billing Address</label>
+       </div>
+       <div class="col-lg-8">
+      <%= d.text_area :address_line1, :rows => 3, :cols => 32, :id => "billing_add", :class=>"bg-focus form-control" %>
+      </div>
+    </div>
+    <div class="form-group gradeU odd">
+    <div class="col-lg-4">
+      <label class="control-label">Shipping Address</label>
+    </div>
+    <div class="col-lg-8">
+      <input id="same" type="checkbox" value="0" name="Same as billing address">Same as billing address<br/>
+      <%= d.text_area :address_line2, :rows => 3, :cols => 32, :id =>"shipping_add", :class=>"bg-focus form-control" %>
+    </div>
+    </div>
+  <% end %>
+  </div>  
+   <div class="col-sm-6">
+    <div class="form-group gradeU odd">
+    <div class="col-lg-4"><%= a.label :contact_number, "Phone number", :class=>"control-label" %></div>
+    <div class="col-lg-8">
+    <%= a.text_field :contact_number, :onkeydown => "return numbersOnly(event);", :size => "30", :maxlength => "14", :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+    <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/>
+     <%= a.label :fax, :class=>"control-label" %>
+     </div>
+     <div class="col-lg-8"><br/>
+      <%= a.text_field :fax, :size => 30, :class=>"bg-focus form-control" %>
+      </div>
+    </div>
+  <div class="form-group gradeU even">
+  <div class="col-lg-4"><br/>
+    <%= a.label :email, :class=>"control-label" %>
+    </div>
+    <div class="col-lg-8"><br/>
+    <%= a.text_field :email, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+    <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/>
+    <%= a.label :website, :class=>"control-label" %>
+    </div>
+    <div class="col-lg-8"><br/>
+    <%= a.text_field :website, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+    </div>
+   </div>
+  </div>
+ </section>
+ </div>
+</div>
+ <div class="row"> 
+<div class="col-sm-12">
+  <section class="panel">
+  <header class="panel-heading" style='cursor: pointer;' id='user_info'>
+   <strong>Tax Details</strong>
+  </header>
+  <div class="panel-body man">
+   <div class="col-sm-6">
+    <div class="form-group gradeU odd">
+    <div class="col-lg-4"><br/><%= a.label :PAN,"PAN", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :PAN, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><%= a.label :tan, "TAN", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :tan, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU odd">
+    <div class="col-lg-4"><br/><%= a.label :vat_tin, "VAT TIN", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :vat_tin, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><%= a.label :cst, "CST", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :cst, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+   </div>
+   <div class="col-sm-6">
+    <div class="form-group gradeU even">
+        <div class="col-lg-6"><br/><%= a.label "CIN", :class=>"control-label" %></div>
+        <div class="col-lg-6"><br/><%= a.text_field :cin_code, :size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+      <div class="form-group gradeU odd">
+        <div class="col-lg-6"><br/><%= a.label "Excise registration number", :class=>"control-label" %></div>
+        <div class="col-lg-6"><br/><%= a.text_field :excise_reg_no, :size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+      <div class="form-group gradeU even">
+        <div class="col-lg-6"><br/><%= a.label "Service tax registration number", :class=>"control-label" %></div>
+        <div class="col-lg-6"><br/><%= a.text_field :service_tax_reg_no, :size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+      <div class="form-group gradeU even">
+        <div class="col-lg-6"><br/><%= a.label "Date of incorporation", :class=>"control-label" %></div>
+        <div class="col-lg-6"><br/><%= a.text_field :date_of_incorporation, :size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+   </div>
+  </div>
+ </section>
+</div>  
+</div>
+<div class="row">
+<div class="col-sm-12">
+  <section class="panel">
+  <header class="panel-heading" style='cursor: pointer;' id='user_info'>
+   <strong>Bank and Credit Details</strong>
+  </header>
+  <div class="panel-body man">
+   <div class="col-sm-6">
+     <div class="form-group gradeU even">
+      <div class="col-lg-4"><%= a.label "Bank name", :class=>"control-label" %></div>
+      <div class="col-lg-8"><%= a.text_field :bank_name, :size => 30, :class=>"bg-focus form-control" %></div>
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><%= a.label "IFSC code", :class=>"control-label" %></div>
+      <div class="col-lg-8"><br/><%= a.text_field :ifsc_code, :size => 30, :class=>"bg-focus form-control" %></div>
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><%= a.label "MICR code", :class=>"control-label" %></div>
+      <div class="col-lg-8"><br/><%= a.text_field :micr_code, :size => 30, :class=>"bg-focus form-control" %></div>
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><%= a.label "BSR code" , :class=>"control-label"%></div>
+      <div class="col-lg-8"><br/><%= a.text_field :bsr_code, :size => 30, :class=>"bg-focus form-control" %></div>
+    </div>
+   </div>
+   <div class="col-sm-6">
+    <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><%= a.label "Credit days", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :credit_days, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><%= a.label "Credit limit", :class=>"control-label" %></div>
+    <div class="col-lg-8"><br/><%= a.text_field :credit_limit, :size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+   </div>
+  </div>
+ </section>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+  <section class="panel">
+  <header class="panel-heading" style='cursor: pointer;' id='user_info'>
+   <strong>Contact Details</strong>
+  </header>
+  <div class="panel-body man">
+  <% @account.accountable.contacts.each_with_index do |contact, index| %>
+   <div class="col-sm-6">
+     <div class="form-group gradeU even">
+      <div class="col-lg-12 text-rcenter"><label class="control-label">Contact <%= index + 1 %> </label></div>
+      
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><label class="control-label">First name</label></div>
+      <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][first_name]",contact.first_name,:size => 30, :class=>"bg-focus form-control" %>
+          <%= hidden_field_tag "account[accountable_attributes][contacts_attributes][#{index}][id]", contact.id%>
+          <%= hidden_field_tag "account[accountable_attributes][contacts_attributes][#{index}][company_id]", @company.id%>
+          <%= hidden_field_tag "account[accountable_attributes][contacts_attributes][#{index}][created_by]", @current_user.id%>
+      </div>
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><label class="control-label">Last name</label></div>
+      <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][last_name]",contact.last_name,:size => 30, :class=>"bg-focus form-control" %>
+      </div>
+    </div>
+    <div class="form-group gradeU even">
+      <div class="col-lg-4"><br/><label class="control-label">Position</label></div>
+      <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][position]",contact.position,:size => 30, :class=>"bg-focus form-control" %></div>
+    </div>
+   </div>
+   <div class="col-sm-6">
+    <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><label class="control-label">Mobile</label></div>
+    <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][mobile]",contact.mobile,:size => 30, :maxlength => 10, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+    <div class="col-lg-4"><br/><label class="control-label">Email</label></div>
+    <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][email]",contact.email,:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-group gradeU even">
+        <div class="col-lg-4"><br/><label class="control-label">Date of birth</label></div>
+        <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][birthday]",contact.birthday, :id => 'account_birthday' ,:size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+      <div class="form-group gradeU even">
+        <div class="col-lg-4"><br/><label class="control-label">Date of anniversary</label></div>
+        <div class="col-lg-8"><br/><%= text_field_tag "account[accountable_attributes][contacts_attributes][#{index}][anniversary]",contact.anniversary, :id => 'account_anniversary',:size => 30, :class=>"bg-focus form-control" %></div>
+      </div>
+   </div>
+  <% end %> 
+  </div>
+ </section>
+</div>
+</div>
+<% end %>

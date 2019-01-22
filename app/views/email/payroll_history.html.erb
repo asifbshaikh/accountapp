@@ -1,0 +1,17 @@
+Hi there, <br />
+Here is summery for processed payroll on <%= Time.zone.now %><br />
+===================================================================<br />
+Total payroll execution jobs to be process = <%= @payroll_execution_jobs.count %><br />
+Successfully processed jobs = <%= @payroll_execution_jobs.count - @companies.size %><br />
+Following user's salary not processed due to no salary structure defined -<br />
+<% @users.each do |user|%>
+	<%= "#{user.full_name} - #{user.company.name}(#{user.company.id}) " %><br />
+<% end %>
+Following user's salary not processed due to attendance not taken - <br />
+<% @attendance_not_taken_users.each do |user| %>
+	<%= "#{user.full_name} - #{user.company.name}(#{user.company.id}) " %><br />
+<% end %>
+Failuer company details - <br />
+<% @companies.each do |company| %>
+	<%= company.name %>(id=<%= company.id %>)<br />
+<% end %>

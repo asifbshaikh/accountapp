@@ -1,0 +1,6 @@
+           <tr class="gradeB">
+             <td class="title" colspan="3"><a href="#" class="nyroModal"><%= link_to truncate(task_row.description, :length => 20) ,task_path(task_row) %></a></td>
+             <td><%= task_row.due_date.strftime("%d-%m-%Y") %></td>
+             <td><%= task_row.assigned_to %></td>
+             <td><%= task_row.priority %></td>
+           </tr>

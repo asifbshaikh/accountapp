@@ -1,0 +1,62 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %>
+<!-- Page Title end -->
+
+<!-- Page content -->
+  <div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper"></br>
+      <!-- Left column/section -->
+      <section class ="column width6 first"></br>
+        <div class="highlight">
+          <%= render :partial => "shared/flash_msg"	%>
+          <table class="display stylized" id="act_details">
+    				<thead>
+		    			<tr>
+                <th colspan="2">Company Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label> Name:</label></td> 
+                <td><%= @company.name%></td>
+              </tr>
+              <tr>
+                <td ><label>Sub Domain:</label></td>
+                <td><%= @company.subdomain %></td>
+              </tr>
+              <tr>
+                <td><label> Pan:</label></td>
+                <td><%= @company.pan %></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">
+                  <%= link_to 'Edit', edit_company_path(@company),{:class=>"btn btn-green btn-green"} %> &nbsp;
+                  <a href="/companies" class="btn btn btn-gray ">Back</a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <br />
+        <!-- End of Left column/section -->
+      </section>
+      <!-- Right column/section -->
+      <aside class="column width2">
+        <!--<a href="/companies" class="btn btn-special btn-green"><img SRC="images/add.png" class="icon" alt=""/>View Companies</a>-->
+        <div id="rightmenu">
+          <dl class="first">
+            <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+            <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd> 
+            <dd class="last">If you are a new user, you should read "Getting started"</dd>							
+          </dl>
+        </div>
+        <br/>
+      </aside>
+      <!-- End of Right column/section -->
+    </div>
+  </div>
+
+

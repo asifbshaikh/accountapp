@@ -1,0 +1,24 @@
+<%= f.fields_for :accountable do |a| %>
+  <div class="form-group">
+    <div class="col-lg-4">
+      <%= a.label 'Interest bearing', :class=>'control-label'%>
+      <div class="input-group">
+        <%= a.radio_button :interest_applicable, true,  { :tabindex=>'4'}  %>Yes &nbsp;
+        <%= a.radio_button :interest_applicable, false,  { :tabindex=>'5'} %> No
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <%= a.label :interest_rate,  :class=>"control-label-required"%>
+      <div class="input-group">
+        <%= a.text_field :interest_rate, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <%= a.label 'Interest compounding type', :class=>'control-label'%>
+      <div class="input-group">
+        <%= a.select :compounding, [['Daily'], ['Monthly'],['Quarterly'],['Yearly'],['Payout']], :class=>'form-control' %> 
+      </div>
+    </div>
+  </div>
+<% end %>
+

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-lg-8">
+		<strong><%= @page_name%></strong>
+		<br />
+		<span class='report_month'>
+		 <%= @date.strftime("%B-%Y")%>
+		</span>
+	</div>
+	<div class="col-lg-4" align="right">
+<!-- 	  <a class="btn btn-default btn-lg" title="Back" href=<%= "/users/#{current_user.id}"%>>
+		<i class="icon-mail-reply"> </i>Back to Profile</a>
+	  <% if @current_user.owner? %>
+      <a class="btn btn-default btn-lg" title="Back" href="/salary_slip/index">
+		<i class="icon-mail-reply"> </i></a>
+      <%end%>
+ -->	</div>
+</div>

@@ -1,0 +1,9 @@
+<li class="dropdown-submenu <%= 'active' if @current_controller=='users' %>">
+	<a href="/users/<%= @current_user.id %>"><i class="icon-file-text icon-xlarge"></i><span>Self Service</span></i></a>
+</li>
+<li class="dropdown-submenu <%= 'active' if @current_controller=='timesheets' %>">
+<a href="/timesheets"><i class="icon-calendar icon-xlarge"></i><span> Book Time </span></i></a>
+</li>
+<li class="dropdown-submenu <%= 'active' if @current_controller=='tasks' %>">
+<a href="/tasks"><i class="icon-check icon-xlarge"></i><span>Manage Tasks</span></i></a>
+</li>

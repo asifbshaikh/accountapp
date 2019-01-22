@@ -1,0 +1,22 @@
+<div class="row">
+<div class="col-lg-12"> 
+<div class="col-lg-6">
+  <h4>Tax collected on sales</h4>
+  <hr/>
+  <% if !@invoices.blank? %>
+    <div id="sales_tax_div"></div>
+  <% else %>
+   Looks like there are no sufficient data to show chart
+  <% end %>
+</div>
+<div class="col-lg-6">
+  <h4>Tax collected on purchase</h4>
+  <hr/>
+  <% if !@purchases.blank? %>
+  <div id="purchase_tax_div"></div>
+  <% else %>
+   Looks like there are no sufficient data to show chart
+  <% end %>
+</div>
+</div> 
+</div>

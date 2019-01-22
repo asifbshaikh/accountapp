@@ -1,0 +1,36 @@
+<div class="col-sm-12"><br/>
+ <section class="panel">
+  <header class="panel-heading">
+    <strong>Branch List</strong><span class="pull-right"><a href="/branches/new" class="btn btn-success btn-sm"><i class="icon-plus"></i>Add New Branch</a></span>
+  </header>
+  <div class="">
+ <% if @branches.blank? %>
+ <%= render :partial => "shared/no_record" %>
+ <% else %>
+  <table class="table table-striped m-b-none text-small ">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Created by</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial=>"/branches/branch", :collection=> @branches %>
+  </tbody>
+  <tfoot>
+      <tr style="visibility:hidden">
+        <td>Name</td>
+        <td>Phone</td>
+        <td>Created By</td>
+        <td></td>
+      </tr>
+  </tfoot>
+  </table>
+<% end %>
+  </div>
+ </section>
+</div>
+
+    

@@ -1,0 +1,34 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+
+<table>
+  <tr>
+    <th>Recieved date</th>
+    <th>Quantity</th>
+    <th>Recieved from</th>
+    <th>Inventory</th>
+    <th>Company</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @finished_goods.each do |finished_good| %>
+  <tr>
+    <td><%= finished_good.recieved_date %></td>
+    <td><%= finished_good.quantity %></td>
+    <td><%= finished_good.recieved_from %></td>
+    <td><%= finished_good.inventory_id %></td>
+    <td><%= finished_good.company_id %></td>
+    <td><%= link_to 'Show', finished_good, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+    <td><%= link_to 'Edit', edit_finished_good_path(finished_good) %></td>
+    <td><%= link_to 'Delete', finished_good, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Finished good', new_finished_good_path %>

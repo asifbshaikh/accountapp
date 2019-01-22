@@ -1,0 +1,43 @@
+<% if !@invoice.recursion.blank? %>
+  <div class="form-group">
+    <div class="row col-lg-12">
+      &nbsp;&nbsp;
+      Do you want this invoice to repeat in future? 
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-sm btn-white<%= ' active' if @invoice.recursion.status? %> recursive_1">
+          <%= radio_button_tag "recursive", 1, @invoice.recursion.status %>
+          <i class="icon-ok icon-large text-active"></i>
+          Yes
+        </label>
+        <label class="btn btn-sm btn-white<%= ' active' if !@invoice.recursion.status? %> recursive_0">
+          <%= radio_button_tag "recursive", 0, !@invoice.recursion.status %>
+          <i class="icon-ok icon-large text-active"></i>
+          No
+        </label>
+      </div>
+
+      <%= hidden_field_tag "invoice[recursion_attributes][status]", @invoice.recursion.status %>
+    </div>
+    <p></p>
+    <div class='recursiveForm col-lg-12' style="background: none repeat scroll 0 0 #FAFDFE; display:none" >
+      <div class="col-lg-4">
+        <div class="col-lg-5"><label>Schedule on</label></div>
+        <div class="col-lg-7">
+          <%= hidden_field_tag "invoice[recursion_attributes][id]", @invoice.recursion.id if @invoice.has_recorded_recursion? %>
+          <%= text_field_tag "invoice[recursion_attributes][schedule_on]",@invoice.recursion.schedule_on, :size => 10, :class=>"bg-focus form-control" %>
+        </div>  
+      </div>
+      <div class="col-lg-4">
+        <div class="col-lg-5"><label>How frequently</label></div>
+        <div class="col-lg-7">
+          <%= select_tag('invoice[recursion_attributes][frequency]', options_from_collection_for_select({'1' => 'Daily', '2' => 'Weekly', '3' => 'Monthly', '4' => 'Quarterly', '5' => 'Half yearly', '6' => 'Yearly'}, :first, :last, @invoice.recursion.frequency), :include_blank => true, :class=>"bg-focus form-control" )%>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="col-lg-5"><label>Repeatations</label></div>
+        <div class="col-lg-7"><%= text_field_tag "invoice[recursion_attributes][iteration]",@invoice.recursion.iteration,:class=>"bg-focus form-control" ,:size => 10, :placeholder => 'Infinite', :onkeydown => "return numbersOnly(event);" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

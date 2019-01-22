@@ -1,0 +1,11 @@
+  $(".popup-error").remove();
+<% if @invitation_detail.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/form_error',{:object=>@invitation_detail})%>");
+  $(".btnsave").remove();
+  $(".save-btn").after(" <button  class='btnsave btn btn-sm btn-success' type='submit'  data-loading-text='Sending invitation...''>Invite</button>");
+<% else %>
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>
+

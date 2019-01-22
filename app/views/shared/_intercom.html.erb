@@ -1,0 +1,25 @@
+<% if Rails.env.production? %>
+<%= intercom_script_tag({ :app_id => "402c2c9d003ab5c965babf93ec504bed456a7bc4",
+                          :user_id => @current_user.id,
+                          :email => @current_user.email,
+                          :custom_data => {
+                          :name => @current_user.full_name,
+                          :username => @current_user.username,
+                          :first_name => @current_user.first_name,
+                          :user_role => @current_user.roles[0].name,
+                          :company => @company.name,
+                          :plan => @company.plan.display_name,
+                          :phone => @company.phone,
+                          :days_left_for_next_renewal => @company.days_left,
+                          :controller=> controller_name,
+                          :action=> action_name,
+                          :financial_year_start_at=>@financial_year.start_date,
+                          :business_type=>"#{@company.get_business_types[@company.business_type]}",
+                          :employee_count=>@company.total_employees,
+                          :renewal_date_at=>@company.subscription.renewal_date,
+                                         },
+                        },{
+                          :widget => {:activator => '#Intercom'}
+                          }
+                      ) %>
+<%end%>

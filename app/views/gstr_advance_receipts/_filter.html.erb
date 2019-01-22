@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" > Gstr Advance Receipt Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="gstr_advance_receipt-filter">
+      <tbody>
+        <tr>
+          <td><label>Gstr Advance Receipt no</label></td>
+          <td id="gstr_advance_receiptno"></td>
+          <td><label> Gstr Advance Receipt Date</label></td>
+          <td id="gstr_advance_receiptDate"></td>
+          <td ><label> Customers </label></td>
+          <td id="gstr_advance_receiptCustomer" data-customer="<%=Account.gstr_advance_receipt_from_accounts(@company.id)%>"></td>
+        </tr>
+        <tr>
+          <td><label>Status</label></td>
+          <td id="gstr_advance_receiptstatus"></td>
+          <td><label>Amount</label></td>
+          <td id="gstr_advance_receiptamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

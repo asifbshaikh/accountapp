@@ -1,0 +1,67 @@
+<thead>
+    <th style=' width:19%;'>
+      <label class="control-label-required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+    </th>
+    <th style=' width:19%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+    <th style=' width:12%;' class="control-label control-label-required"><label class = "control-label-required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></label></th>
+    <th style=' width:12%;'><label class="control-label control-label-required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+    <th style=' width:11%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+    <th style=' width:11%;'>Tax</th>
+    <th style=' width:22%;text-align:right;' class="control-label-required"><label class="required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<span class="comcur"><%= @company.currency_code%></span><span id='taccur'></span>)</label></th>
+    <th style=' width:5%;'> </th>
+  </thead>
+  <tbody>
+<% line_item_details.each do |invoice_line_item,index| %>
+
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][warehouse_id]",invoice_line_item.warehouse_id%>   
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][id]",invoice_line_item.id%>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][type]", invoice_line_item.type, :value => "InvoiceLineItem" %>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][_destroy]" %>
+  <td style="padding-left:0" id='item-td'>
+    <% if (defined?(@invoice) && @invoice.original_invoice.draft?) || invoice_line_item.new_record? %>
+    <%= select_tag "invoice[invoice_line_items_attributes][#{index}][product_id]", options_from_collection_for_select(@to_accounts, :id, :name,:selected => invoice_line_item.product_id ), :include_blank => true,:"data-placeholder" => "Choose a product", :"data-index" => index , :style=>"width:150px;"%>
+    <% else %>
+    <%= invoice_line_item.product.name %>
+    <% end %>
+    <%= hidden_field_tag "index", index %>
+  </td>
+  <td>
+    <%= text_area_tag "invoice[invoice_line_items_attributes][#{index}][description]",invoice_line_item.description, :class => "form-control bg-focus", :id => 'description',:rows =>1, :cols => 10 %>
+  </td>
+
+  <td>
+    <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][quantity]",invoice_line_item.quantity, :class => "form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);", :id => 'quantity', :maxlength => 18, 'data-index' => index %>
+  </td>
+  <td>
+    <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][unit_rate]",invoice_line_item.unit_rate, :class => 'form-control bg-focus text-right', :id => 'unit_cost', :onkeydown => "return numbersOnly(event);", :maxlength => 18 %>
+  </td>
+  <td>
+    <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][discount_percent]", invoice_line_item.discount_percent, :class => 'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);", :id => 'discount' %>
+  </td>
+  <td valign="top" id='tax-td'>
+    <% invoice_line_item.invoice_taxes.each_with_index do |tax, tax_index| %>
+    <div class='row' id="tax-<%=index
+    %>-<%=tax_index%>" style=<%=
+
+
+    "display:none;" if tax_index==1 %>>
+    <div class="col-sm-12">
+
+     <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][id]",tax.id %>
+    <%= select_tag "invoice[invoice_line_items_attributes][#{index}][tax_account_id]", options_from_collection_for_select_with_data(Account.get_sales_taxes(@company.id), :id, :sales_tax_name,invoice_line_item.tax_account_id,{:"linked" => :linked_sales }), :include_blank => true, :class => "bg-focus form-control chzn-select", :style => "width:100px;",:"data-placeholder" => "Select tax" %>
+         
+ </div>
+ <% end %>
+ <a id="add-tax" 
+ data-index="<%=index%>" style="cursor: pointer;"><i> + apply another tax</i></a>
+</td>
+<td align='right'>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][amount]", invoice_line_item.amount, :id => 'total' %>
+  <span id="amount">0.0</span>
+</td>
+<td style="padding-right:0"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => invoice_line_item.id},:class=> "btn btn-danger", :id => 'cancel', :remote => true%></td>
+</tbody>
+<script type="text/javascript"> 
+  $("#invoice_invoice_line_items_attributes_<%= index %>_product_id").select2();
+</script>
+<% end %>I

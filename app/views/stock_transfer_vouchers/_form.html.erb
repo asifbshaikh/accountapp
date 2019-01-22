@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for(@stock_transfer_voucher, :html=>{:class=>'form-horizontal'}) do |f| %>
+          <%= render 'shared/form_error' , :object => @stock_transfer_voucher %>
+          <div class='form-group'>
+            <div class='col-lg-3'>
+              <% if @stock_transfer_voucher.voucher_setting.custom_sequence? %>
+              <%= f.label :voucher_number, :class=>'control-label-required' %>
+              <%=f.text_field :voucher_number, :class=>"form-control bg-focus" %>
+              <% else %>
+                <%= f.label :voucher_number, :class=>'control-label' %> : 
+                <%= @stock_transfer_voucher.voucher_number %><%=f.hidden_field :voucher_number %>
+              <% end %>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-3'>
+              <%= f.label :warehouse_id , "#{@company.label.warehouse_label}", :class =>"control-label-required" %>
+              <div class="input-group">
+                <div style="<%= 'display:none;' unless @stock_transfer_voucher.new_record? %>">
+                  <%= f.collection_select(:warehouse_id, @company.warehouses, :id, :name, {:prompt => "Select Warehouse"}, {:style =>'width:220px;'}) %>
+                </div>
+                <% unless @stock_transfer_voucher.new_record? %>
+                  <%= @stock_transfer_voucher.warehouse.name %>
+                <% end %>
+              </div>
+            </div>
+            <div class='col-lg-1'></div>
+            <div class='col-lg-3'>
+              <%= f.hidden_field :voucher_date %>
+              <%= f.label :transfer_date, :class=>'control-label-required' %>
+              <%= f.text_field :transfer_date, :class=>"form-control bg-focus" %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-lg-12'>
+              <table  class="table table-striped b-t text-small transfer-line" id="line_items"  >
+                <thead>
+                  <tr>
+                    <th width='60%'><label class="form-label-required">Product</label></th>
+                    <th class="text-right"><label class="form-label-required">Transfer Qty</label></th>
+                    <th><label class="form-label-required">Destination <%= @company.label.warehouse_label%></label></th>
+                    <th class="text-right" width="5%">Action</th>
+                  </tr>
+                </thead>
+                <tbody id = 'putHere'>
+                <% @stock_transfer_voucher.stock_transfer_line_items.each_with_index do |stock_line_item, index| %>
+                  <%= render "stock_transfer_vouchers/stock_transfer_line_items", :stock_transfer_line_item => stock_line_item, :index => index %>
+                  <% end %>
+                  <tr id="transfer_row_link" valign="top">
+                  <td valign="top" colspan="8"><%= link_to " + Add New Row", {:controller=>:stock_transfer_vouchers, :action => :add_row, :index => @stock_transfer_voucher.stock_transfer_line_items.size }, :remote => true, :class => "btn btn-white btn-sm" %> </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-lg-6'>
+              <%= f.label :details, :class=>'control-label' %>
+              <%= f.text_area :details, :cols => 70, :rows => 5, :class => 'form-control bg-focus' %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-4">
+              <%= f.submit :value => 'Save', :class=>"btn btn-success" %>
+              <%= link_to "Cancel", stock_transfer_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#stock_transfer_voucher_warehouse_id").select2();
+</script>

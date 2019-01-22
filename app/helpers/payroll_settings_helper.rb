@@ -1,0 +1,2 @@
+module PayrollSettingsHelper
+end

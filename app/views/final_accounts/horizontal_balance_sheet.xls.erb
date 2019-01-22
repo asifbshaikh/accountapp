@@ -1,0 +1,85 @@
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			<% if false %>
+				<%= render :partial => "shared/no_record" %>
+				<% else %>
+			
+			<div class='highlight'>
+				<div id='report_header' align="center">
+					<span class='company_name'><%= @company.name  %></span>
+					<br>
+					<span class='report_title'> <u> Horizontal Balance Sheet </u> </span>
+					<br>
+					
+					1-Apr-2010 to 31-Mar-2011
+				</div>
+				<br>
+				
+				<table border = 0 align = center width=100%>
+					<thead>
+						<tr>
+							<th class='width2'><span class='char_spacing'>Particulars</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+							<th class='width2'><span class='char_spacing'>Particulars</span></th>
+							<th class = "width2" align="right">  1-Apr-2010 to 31-Mar-2011</th>
+						</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Capital Accounts</b></td><td></td><td class='border_down'><b><%=(@total_capital_amount)%></b></td></tr>
+										<% for c_acc in @capital_accounts %>
+											<tr><td class="textindent1"><%= c_acc.name%></td><td align="right"><%= c_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Loans(Liability)</b></td><td></td><td><b><%=  @total_loan_amount %></b></td></tr>
+										<% for l_acc in @loan_accounts %>
+											<tr><td class="textindent1"><%= l_acc.name %></td><td align="right"><%=  l_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Current Liability</b></td><td></td><td align="right"><b><%=  @total_liability_amount %></b></td></tr>
+										<% for cl_acc in @liability_accounts %>
+										<tr><td class="textindent1"><%= cl_acc.name %></td><td align="right"><%=  cl_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Profit and Loss Account</b></td><td></td><td align="right"><b><%= (@nett_profit + @opening_balance) %></b></td></tr>
+										<tr><td class="textindent1">Opening Balance</td><td></td><td></td></tr>
+										<tr><td class="textindent1">Current Period</td><td><%=  @nett_profit %></td><td></td></tr>
+									</tbody>
+								</table>
+							</td>
+							<td colspan="2">
+								<table class = "zebra-sriped" border = 0 align = center width=100%>
+									<tbody>
+										<tr><td><b>Fixed Asset</b><td></td><td><b><%=  @total_fixed_asset_amount %></b></td></tr>
+										<% for f_acc in @fixed_asset_accounts %>
+											<tr><td class="textindent1"><%= f_acc.name %></td><td><%=  f_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+										<tr><td><b>Investments</b></td><td></td><td><b><%= @total_investment_amount %></b></td></tr>
+										<tr><td><b>Current Assets</b></td><td></td><td><b><%=  @total_current_asset_amount %></b></td></tr>
+										<% for ca_acc in @current_asset_accounts %>
+											<tr><td class="textindent1"><%= ca_acc.name %></td><td><%=  ca_acc.closing_balance %></td><td></td></tr>
+										<% end %>
+									</tbody>
+								</table>
+							</td></tr>
+						</tbody>
+						<tfoot>
+							<tr><td><b><span class="char_spacing">Total</span></b></td><td align="right"><b><%= (@total_capital_amount + @total_loan_amount + @total_liability_amount + @nett_profit) %></b></td><td><b><span class="char_spacing">Total</span></b></td><td align="right"><b><%=(@total_fixed_asset_amount + @total_investment_amount + @total_current_asset_amount) %></b></td></tr>
+						</tfoot>
+				</table>
+				
+				<hr>
+				<p>
+					22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+				</p>
+			</div>
+			<% end %>
+		</section>
+		<!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>
+&nbsp; 

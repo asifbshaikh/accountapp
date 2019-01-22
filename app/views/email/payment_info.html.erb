@@ -1,0 +1,31 @@
+Hello <b><%= @user.first_name %></b>,
+<br/>
+ We have received a payment processing request from you. Please see below for more details.
+<br/>
+<b>Information about your payment</b><br/>
+   -----------------------------------------------<br/>
+Transaction status - <%= @payment_transaction.gateway_transaction_status %><br/>
+Billing invoice date - <%= @billing_invoice.invoice_date %><br/>
+Biling invoice number - <%= @billing_invoice.invoice_number %><br/>
+Amount (INR.) - <%= @billing_invoice.amount %>
+
+<br/>
+<b>Information about your account</b><br/>
+   -----------------------------------------------<br/>
+  You have currently subscribed to the <%= @company.plan.display_name %> plan.<br/>
+  On our records, your company name is '<%= @company.name %>' and your contact number is <%= @company.phone %>. <br/>
+<br/>
+<br/>
+
+<b>Getting Help</b><br/>
+   -----------------------------------------------<br/>
+   You can write to  <a href="mailto:support@profitbooks.net"><b>support@profitbooks.net</b></a> for any issue related to the application. Also let us know if you want to see a particular feature in the application.
+<br/><br/>
+
+Thank you for using ProfiBooks. We look forward to a long relationship.
+<br/><br/>
+
+The ProfitBooks Team.
+<hr>
+Sent using <a href= "https://www.profitbooks.net" target = "_blank">ProfitBooks.net</a><br/>
+<a href= "https://www.profitbooks.net/home/pricing" target = "_blank">Create</a> your free account today and start managing office finances in a smarter way.

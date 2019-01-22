@@ -1,0 +1,34 @@
+$('body').append("<div id='msg_box'><div class='box box-success'>Payroll details updated successfully</div></div>");
+
+<% if @is_save %>
+  $("#<%= params[:payroll_execution_job]%>").val('<%= @payroll_execution_job.account_id %>');
+  $('#popup_box').fadeOut("slow");
+  $('#msg_box').fadeIn("slow", function(){
+    $('#msg_box').fadeOut(7000);
+  });
+  
+<% else %>
+
+  <% if @payroll_execution_job.errors[:account_id].any? %>
+    var error = "<%= @payroll_execution_job.errors[:account_id] %>";
+    $("span#name").text(error);
+    $("#name").css("border-color",'#f55');
+  <% end %>
+
+  <%if @payroll_execution_job.errors[:execution_date].any? %>
+  var error = "<%= @payroll_execution_job.errors[:execution_date] %>";
+  $("span#name").text(error);
+  $("#name").css("border-color",'#f55');
+  <% end %>
+
+<% end %>
+
+$("#name").keyup(function(){
+  if($("span#name").text()){
+    $("span#name").text('');
+    $("#name").css("border-color", "");
+  }
+});
+
+
+

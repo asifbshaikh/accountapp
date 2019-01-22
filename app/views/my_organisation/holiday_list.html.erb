@@ -1,0 +1,66 @@
+<%= render :partial => "shared/page_title"%>
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+<div class="wrapper">
+<!-- Left column/section -->
+<section class="column width6 first"></br>
+
+<div id="tabs-all" class="highlight">
+
+<div class="clearfix"></div>
+<div id="holiday">
+<div id="tab2">
+<ul id="tabnav">
+<li class="tab1">
+<a href=<%="/my_organisation/announcement"%>>Recent Announcements</a>
+</li>
+<li class="tab2">
+<a href = <%="/my_organisation/holiday_list"%>>Holiday List</a>
+</li>
+<li class="tab3">
+<a href=<%="/my_organisation/policy_document"%>>Policy Document</a>
+</li>
+</ul>
+</div>
+<div id="task_container">
+<div class="clearfix"></div>    
+<% if @holidays.blank? %>
+    <p class="no-holiday"><%= render :partial => "shared/no_record" %></p>
+<% else %>
+ <p><h3>Holidays this year..</h3></p>
+<table class="display stylized" id="example">
+      <thead>   
+        <tr>
+          <th>Date</th>
+            <th>Holiday</th>
+        </tr>
+      </thead>
+      <tbody>
+       <% @holidays.each do |holiday|%>
+         <tr>
+            <td><%= holiday.holiday_date.strftime("%d-%m-%Y") %></td>
+            <td><%= holiday.holiday %></td>
+         </tr>
+       <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5"></td>
+        </tr>
+      </tfoot>
+    </table>    
+<% end %>
+</div>
+
+</div><br />
+</section>
+<!-- End of Left column/section -->
+ <aside class="column width2"><br/>
+  <%= new_button("Upload New Document", new_policy_document_path)%>
+</aside>
+</div>
+<!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

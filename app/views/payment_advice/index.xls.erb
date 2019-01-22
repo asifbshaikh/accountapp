@@ -1,0 +1,65 @@
+<table>
+  <tr><td colspan="6" align="center"><b>Payment Advice</b></td></tr>
+  <tr><td colspan="6" align="center"><b>For Month : <%=@date.strftime("%B %Y")%></b></td></tr><tr><td colspan="6"></td></tr>
+  <tr><td colspan="6">To Manager</td></tr>
+  <% if !@account.blank? && @account.accountable_type =="BankAccount" && !@account.accountable.bank_name.blank? %>
+    <tr><td colspan="6"><%= @account.accountable.bank_name %></td></tr>
+  <% end %>
+  <tr>
+    <td colspan="6">Dear Sir,
+      <p>
+        <strong>
+          <u>
+            Payment Advice from <%= @company.name %> A/C <%= @account.name %>
+            <% if !@account.blank? && @account.accountable_type=="BankAccount" && !@account.accountable.account_number.blank? %>       
+            (Acc #: <%= @account.accountable.account_number%>) 
+            <% end %>
+            for  <%=@date.strftime("%B %Y")%>
+          </u>
+        </strong><br>
+        &nbsp;Please make the payroll transefer from above account number to the bellow mentioned account numbers towards employee salary
+      </p>
+    </td>
+  </tr>
+  <tr><td colspan="6"></td></tr>
+  <thead>
+    <tr>
+      <th>SL.No.</th>
+      <th>Name of the Employee</th>
+      <th>Account No.</th>
+      <th>Bank Name</th>
+      <th>Branch</th>
+      <th align="right">Amount (<%= @company.currency_code %>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% amount=0 %>
+    <% @users.each_with_index do |user, index| %>
+      <tr>
+        <td><%= index+1 %></td>
+        <td><%= user.full_name%></td>
+        <td><%= user.get_bank_account_number %></td>
+        <td><%= user.get_bank_name %></td>
+        <td><%= user.get_branch %></td>
+        <td align="right"><%= net_amount=user.net_salary(@date) %></td>
+      </tr>
+      <% amount += net_amount %>
+    <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td align="right"><b>Total</b></td>
+      <td align="right"><b><%= (amount) %></b></td>
+    </tr>
+  </tbody>
+  <tr><td colspan="6"></td></tr>
+  <tr><td colspan="6"></td></tr>
+  <tr><td colspan="6">Your Sincerely</td></tr>
+  <tr><td colspan="6"><b>For <%= @company.name %></b></td></tr>
+  <tr><td colspan="6"></td></tr>
+  <tr><td colspan="6"></td></tr>
+  <tr><td colspan="6"></td></tr>
+  <tr><td colspan="6">Authorised Signatory</td></tr>
+</table>

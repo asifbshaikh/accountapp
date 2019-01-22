@@ -1,0 +1,70 @@
+<% account = (params[:account_id].nil?)? Account.find(@accounts.first.id) : Account.find(params[:account_id]) %>
+<table>
+	<tr><td colspan=6 align='center'><b><%= @page_name %></b></td></tr>
+	<tr><td colspan=6 align='center'><b><%= account.name %></b></td></tr>
+	<% if !params[:branch_id].blank?%>
+	<tr><td colspan=6 align='center'>Branch:<b><%= Branch.find(params[:branch_id]).name %></b></td></tr>
+	<% end %>
+	<tr><td colspan=6 align='center'><%= (params[:start_date].blank?) ? @ledgers.first.transaction_date : params[:start_date] %> To <%= (params[:end_date].blank?) ? Time.zone.now.to_date : params[:end_date] %></td></tr>
+	<thead>
+		<tr>
+			<th width ="6%"> Date </th>
+			<th width ="18%">Account </th>
+			<th width ="24%">Description</th>
+			<th width ="6%"> Voucher Number </th>
+			<th width ="6%"> Type </th>
+			<th align="right" width ="20%">Debit <%= @company.country.currency_code %>  </th>
+			<th align="right" width ="20%"> Credit <%= @company.country.currency_code %> </th>
+			<th align="right" width ="20%"> Closing Balance <%= @company.country.currency_code %> </th>
+		</tr>
+		<thead>
+			<tbody>
+				<tr>
+					<td></td><td></td><td><b>Opening Balance</b></td><td></td><td></td>
+					<% opening_balance = @account.opening_balance_on_date(@start_date)
+					if !opening_balance.blank? && opening_balance > 0 %>
+					<td align="right"><b><%= format_currency opening_balance.abs %></b></td><td></td>
+					<% else %>
+					<td></td>
+					<td align="right">
+						<b><%= format_currency opening_balance.abs unless opening_balance.blank? %></b>
+					</td>
+					<% end %>
+				</tr>
+				<%
+				debit = 0
+				credit = 0
+				if !opening_balance.blank? && opening_balance > 0
+					debit = opening_balance
+				elsif !opening_balance.blank?
+					credit = opening_balance.abs
+				end
+				@ledgers.each do |ledger| %>
+				<tr>
+					<td width ="6%"><%=  ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+					<% acc = ledger.retrieve_corresponding_account %>
+					<td width ="18%"><%= ((ledger.debit > 0)? "To":"By") unless ledger.debit.blank? %><%= (truncate(acc.name, :length=> 25) unless acc.blank?)%>
+					</td>
+					<td width ="24%"><%= ledger.description%></td>
+					<td width ="6%">
+						<%= truncate(ledger.voucher_number, :length=> 14) %>
+					</td>
+					<td width ="6%"><%= truncate(ledger.voucher_type, :length =>15) %></td>
+					<td align="right" width ="20%"><%= ledger.debit %></td>
+					<td align="right" width ="20%"><%= ledger.credit %></td>
+					<%
+					credit += ledger.credit
+					debit += ledger.debit unless ledger.debit.blank?
+					@ledger_balance = credit - debit
+					%>
+					<td align="right" width ="20%"><%= @ledger_balance %></td>
+				</tr>
+				<% end %>
+			</tbody>
+			<tr>
+				<td></td><td></td><td></td><td></td><td><b>Total</b></td><td class = 'border_up' align="right"><b><%= format_currency debit%></b></td>
+				<td class = 'border_up' align="right"><b><%= format_currency credit%></b></td>
+				<td class = 'border_up' align="right"><b><%= format_currency @ledger_balance%></b></td>
+			</tr>
+			
+		</table>

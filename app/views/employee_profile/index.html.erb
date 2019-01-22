@@ -1,0 +1,227 @@
+<%= render "shared/page_title" %>
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section class="column width8 first">
+			
+			&nbsp;
+	
+            	<p align="right">
+			      <a href="/employee_profile/index.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+            	  <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+            	</p><br />
+           
+			<div class='highlight'>
+				<div id='report_header' align='center'>
+					<span class="large"><%= @page_name%></span><br />
+					<span class='report_month'>1-April-2010 to 31-March-2011 </span>
+				</div>
+				<hr>
+				<div class='title_name'>
+					<%= @current_user.first_name  %> <%= @current_user.last_name%>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>1. Basic Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Under </td>
+							<td><b>: <%= (@department.blank?)? "Not available" : @department.name%> </b></td>
+						</tr>
+						<tr>
+							<td > Employee Number </td>
+							<td><b>: <%= @current_user.id %> </b></td>
+						</tr>
+						<tr>
+							<td> Date Of Joining </td>
+							<td><b>: <%= (@user_salary_detail.date_of_joining.blank?)? "Not available" : @user_salary_detail.date_of_joining  %> </b></td>
+						</tr>
+						<tr>
+							<td> Designation </td>
+							<td><b>: <%= (@designation.title.blank?)? "Not available" : @designation.title %> </b></td>
+						</tr>
+						<tr>
+							<td> Function </td>
+							<td><b>: <%= (@user_salary_detail.work_type.blank?)? "Not available" : @user_salary_detail.work_type %> </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>2.General Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Location </td>
+							<td><b>: <%= (@user_salary_detail.work_location.blank?)? "Not available" : @user_salary_detail.work_location %> </b></td>
+						</tr>
+						<tr>
+							<td> Gender </td>
+							<td><b>: <%= (@user_information.gender.blank?)? "Not available" : @user_information.gender %> </b></td>
+						</tr>
+						<tr>
+							<td> Date Of Birth </td>
+							<td><b>: <%= (@user_information.birth_date.blank?)? "Not available" : @user_information.birth_date %> </b></td>
+						</tr>
+						<tr>
+							<td> Blood Group </td>
+							<td><b>: <%=(@user_information.blood_group.blank?)? "Not available" : @user_information.blood_group %> </b></td>
+						</tr>
+						<tr>
+							<td> Father/Mother Name </td>
+							<td><b>: Field not Avail.xxx </b></td>
+						</tr>
+						<tr>
+							<td> Spouse Name </td>
+							<td><b>: Field not Avail.xxx </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>3.Bank Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Bank Name </td>
+							<td><b>: <%= (@user_salary_detail.bank_name.blank?)? "Not available" : @user_salary_detail.bank_name %> </b></td>
+						</tr>
+						<tr>
+							<td> Branch </td>
+							<td><b>: <%= (@user_salary_detail.branch.blank?)? "Not available" : @user_salary_detail.branch %> </b></td>
+						</tr>
+						<tr>
+							<td> Bank A/c Number </td>
+							<td><b>: <%= (@user_salary_detail.bank_account_number.blank?)? "Not available" : @user_salary_detail.bank_account_number %> </b></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>4.Contact Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Contact Number </td>
+							<td><b>: <%= (@user_information.emergency_contact.blank?)? "Not available" : @user_information.emergency_contact %> </b></td>
+						</tr>
+						<tr>
+							<td> Address </td>
+							<td><b>: <%= (@user_information.present_address.blank?)? "Not available" : @user_information.present_address %> </b></td>
+						</tr>
+						<tr>
+							<td> E-Mail ID </td>
+							<td><b>: <%= (@current_user.email.blank?)? "Not available" : @current_user.email %></b>
+							 </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>5.Separation Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Date of Resignation/Retirement </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> PF Date of Releiving </td>
+							<td> xxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Reasons for Leaving </td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>6.Passport & Visa Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Passport Number </td>
+							<td><b>: <%= (@user_information.passport_number.blank?)? "Not available" : @user_information.passport_number %> </b></td>
+						</tr>
+						<tr>
+							<td> Country Of Issue </td>
+							<td> xxxxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Passport Expiry Date </td>
+							<td><b>: <%= (@user_information.passport_expiry_date.blank?)? "Not available" : @user_information.passport_expiry_date %> </b></td>
+						</tr>
+						<tr>
+							<td> Visa Number </td>
+							<td> xxxxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Visa Expiry Date </td>
+							<td> xxxxxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>7.Contract Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Work Permit Number </td>
+							<td><b>: 000000xxx</b></td>
+						</tr>
+						<tr>
+							<td> Contract Start Date </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> Contract Expiry Date </td>
+							<td> xxxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<div class='personal_info1'>
+					<div class='info_title' >
+						<span>8.Statutory Information</span>
+					</div>
+					<table class='personal_info' border=0>
+						<tr>
+							<td width="600"> Income Tax Number(PAN) </td>
+							<td><b>: <%= (@user_salary_detail.PAN.blank?)? "Not available" : @user_salary_detail.PAN %></b></td>
+						</tr>
+						<tr>
+							<td> PF Account Number </td>
+							<td> <b>: <%=(@user_salary_detail.PF_account_number.blank?)? "Not available" : @user_salary_detail.PF_account_number %></b></td>
+						</tr>
+						<tr>
+							<td> EPS Account Nubmer </td>
+							<td><b>: <%= (@user_salary_detail.EPS_account_number.blank?)? "Not available" : @user_salary_detail.EPS_account_number %> </b></td>
+						</tr>
+						<tr>
+							<td> PF Date Of Joining </td>
+							<td> xxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> ESI Number </td>
+							<td> xxxxxxxx </td>
+						</tr>
+						<tr>
+							<td> ESI Dispensary Name </td>
+							<td> xxxxxxxx </td>
+						</tr>
+					</table>
+				</div>
+				<p>
+                           <%= render "shared/report_footer"%>
+                        </p>
+			</div>
+		
+		</section>
+		&nbsp; <!-- End of Left column/section -->
+		<!-- End of Left column/section -->
+	</div>
+	<!-- End of Wrapper -->
+</div>

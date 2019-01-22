@@ -1,0 +1,13 @@
+$("span.error").remove();
+$("input:text").css('border-color', '');
+<% if @product.errors.any? %>
+  <% if @product.errors[:name].any? %>
+    $("#product_name").css('border-color', 'red');
+    $("#product_name").after("<span class='error'><br><%= @product.errors[:name]%></span>");
+  <% end %>
+  <% if @product.errors[:] %>
+
+  <% end %>
+<% else %>
+  
+<% end %>

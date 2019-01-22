@@ -1,0 +1,24 @@
+<table class="display stylized" id="act_details">
+  <thead>
+    <tr>
+      <th><label>Company Name</label></th>
+      <th><label>Plan</label></th>
+      <th><label>Owner</label></th>
+      <th><label>Contact</label></th>
+      <th><label>Registration date</label></th>
+      <th><label>Renewal date</label></th>
+    </tr>
+  </thead>
+  <tbody>
+     <% @subscriptions.each do |subscription| %>
+    <tr>
+       <td><%= subscription.company.name %></td>
+       <td><%= subscription.company.plan.display_name %></td>
+      <td><%= subscription.company.users.first.full_name%>  
+      <td><%= subscription.company.phone %></td>       
+      <td><%= subscription.company.activation_date %></td>
+      <td><%= subscription.renewal_date %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

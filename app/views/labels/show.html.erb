@@ -1,0 +1,73 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+<!-- Left column/section -->
+<section class="column width6 first"></br>
+<div class="highlight">
+ <%= render :partial => "shared/flash_msg"%>
+<% if @label.blank? %>
+ <%= render :partial => "shared/no_record" %>
+<% else %>
+ <table class="display stylized" id="act_details">
+    <thead>
+<tr>
+     <th colspan="2">Set Terminology For :</th>
+</tr>
+</thead>
+<tbody>
+   <tr>
+     <td>
+      <label>Clients who pays you:</label> &nbsp;
+        <%= best_in_place @label, :customer_label, :type => :select, :collection => [["Customer", "Customer"],["Client", "Client"], ["Patient", "Patient"], ["Donor", "Donor"],["Member","Member"],["Guest", "Guest"],["User", "User"]] %>
+     </td>
+   </tr>
+   <tr>
+     <td>
+      <label>Estimate:</label> &nbsp;
+      <%= best_in_place @label, :estimate_label, :type => :select, :collection => [["Estimate", "Estimate"],["Quotation", "Quotation"], ["Quote", "Quote"]] %>
+     </td>
+   </tr>
+  <% if @company.plan.is_inventoriable? %>
+   <tr>
+     <td>
+      <label>Warehouse:</label> &nbsp;
+       <%= best_in_place @label, :warehouse_label, :type => :select, :collection => [["Warehouse", "Warehouse"],["Godown", "Godown"], ["Location", "Location"]] %>
+     </td>
+   </tr>
+   <% end %>
+   </tbody>
+     <tfoot>
+        <tr>
+          <td colspan="3">
+            <a class="btn  btn-gray" href="/dashboard/index"> Back</a>
+          </td>
+        </tr>
+</tfoot>
+</table>
+<% end %>
+</div><br />
+</section>
+   <!-- End of Left column/section -->
+<!-- Right column/section -->
+ <aside class="column width2"><br/>
+ <%= list_button_white("Go Back To Dashboard", dashboard_index_path)%>
+ <div id="rightmenu">
+       <dl class="first">
+          <dt><%= image_tag  'help.png', :class=> 'icon' , :alt=> 'help'%></dt>
+          <dd><%= link_to 'Help', "", :class=>"nyroModal" %></dd>  
+          <dd class="last"> You can change termiologies by clicking on their vlaue. <br/>
+          </dd>
+       </dl>
+   </div><br />
+  
+ </aside>
+ <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+

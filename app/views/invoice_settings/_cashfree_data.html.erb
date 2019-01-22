@@ -1,0 +1,22 @@
+<div class='oldData'>
+  <table class='table table-striped m-b-none text-small'>
+     <% @cfkey_history.each do |key|%>
+     <tbody class="cfkey-info-body">
+      <tr>
+        <td><strong>Bank Account</strong></th>
+         <td><%=Account.find_by_id_and_company_id(key.account_id, @company.id).name %></td>
+        </tr>
+        <tr>
+        <td><strong>App Id:</strong></th>
+        <td><%=key.app_id%></td>
+        </tr>
+        <tr>
+        <td><strong>Secret Key:</strong></th>
+        <td><%=key.secret_key%></td>
+        </tr>
+      </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+

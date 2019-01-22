@@ -1,0 +1,29 @@
+<div class='account_container'>
+<% if @payment_vouchers.blank? %>
+<%= render "shared/no_record"%>
+<% else %>
+	<table class="display stylized" id="act_details">
+	    <thead>
+	      <tr>
+	      	<th>Voucher date</th>
+	      	<th>voucher no.</th>
+	      	<th>Amount</th>
+	      	<th>Payment mode</th>
+	      	<th></th>
+	      </tr>
+	    </thead>
+	  <tbody>
+	  	<% @payment_vouchers.each do |payment_voucher| %>
+	  	<tr>
+	  		<td><%= link_to payment_voucher.voucher_date, payment_voucher %></td>
+	  		<td><%= payment_voucher.voucher_number %></td>
+	  		<td><%= payment_voucher.amount %></td>
+	  		<td><%= payment_voucher.payment_detail.payment_mode %></td>
+	  		
+	  		<td><%= %></td>
+	  	</tr>
+	  	<% end %>
+	  </tbody>
+	</table>
+<% end %>
+</div>

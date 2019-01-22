@@ -1,0 +1,20 @@
+<% if @voucher_setting.custom_sequence? %>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= label_tag "voucher_number", "Voucher Number", :class=>"control-label-required" %>
+    </div>
+    <div class="col-lg-10">
+      <%= f.text_field :voucher_number, :class => 'bg-focus form-control', :style=>"width:210px;" %>
+    </div>
+  </div>
+<% else %>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= label_tag "voucher_number", "Voucher Number", :class=>"control-label" %>
+    </div>
+    <div class="col-lg-10" style='margin-bottom:0;margin-top:0;padding-top:7px;'>
+      <%= @expense.voucher_number %>
+      <%= f.hidden_field :voucher_number %>
+    </div>
+  </div>
+<% end %>

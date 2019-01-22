@@ -1,0 +1,92 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h2><i class="icon-file text"></i>Banking</h2>
+        </div>
+            <div class="col-lg-8 m-t-large" align="right">
+            <div class="btn-group" >
+              <button class="btn btn-success btn-lg"><strong>+</strong> New Transactions</button>
+              <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+              <ul class="dropdown-menu text-left" align="left">
+                <li><a href="/banking/new_withdrawal"><i class='icon-plus'> </i>Withdraw Cash</a></li>
+                <li><a href="/banking/new_deposit"><i class='icon-plus'> </i>Deposit Cash</a></li>
+                <li><a href="/banking/new_transfer"><i class='icon-plus'> </i>Transfer Cash</a></li>
+              </ul>
+            </div> 
+          <a href="/bank_statements" class="btn btn-success btn-lg">Bank Reconciliation</a>
+        <a href="#" class="btn btn-white btn-lg" id="use_filter" title="Filter"><i class="icon-filter"></i></a><p></p>
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+               <!-- <li class="active"><a href="#all" data-toggle="tab"><i class="icon-list icon-large text-default"></i>All</a></li> -->
+                <li class="active"><a href="#withdraw" data-toggle="tab"><i class="icon-share icon-large text-default"></i>Withdraw Cash</a></li>
+                <li><a href="#deposit" data-toggle="tab"><i class="icon-download-alt icon-large text-default"></i>Deposit</a></li>
+                <li><a href="#transfer-cash" data-toggle="tab"><i class="icon-exchange icon-large text-default"></i>Transfer Cash</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <div class="tab-content"> 
+            <div class="tab-pane active" id="withdraw">
+             <%= render :partial =>"/withdrawals/filter"%>
+              <div class="table-responsive row">
+                <table id="withdrawals" class="table table-striped m-b-none text-small" data-source ="<%= withdrawals_url(:format => 'json') %>" >
+                <thead>
+                  <%= render :partial => "/withdrawals/header" %>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "/withdrawals/footer" %>
+                </tfoot>
+              </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="deposit">
+              <%= render :partial =>"/deposits/filter"%>
+              <div class="table-responsive row">
+                <table id="deposits" class="table table-striped m-b-none text-small" data-source ="<%= deposits_url(:format => "json") %>" >
+                <thead>
+                  <%= render :partial => "/deposits/header" %>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "/deposits/footer" %>
+                </tfoot>
+              </table>
+              </div>
+            </div>
+            <div class="tab-pane" id="transfer-cash">
+              <%= render :partial=>"/transfer_cashes/filter"%>
+              <div class="table-responsive row">
+                <table id="transfer_cashes" class="table table-striped m-b-none text-small" data-source ="<%= transfer_cashes_url(:format => "json") %>" >
+                <thead>
+                  <%= render :partial => "/transfer_cashes/header" %>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+                <tfoot>
+                  <%= render :partial => "/transfer_cashes/footer" %>
+                </tfoot>
+              </table>
+              </div>
+            </div>
+            </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

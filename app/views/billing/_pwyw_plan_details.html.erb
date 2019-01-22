@@ -1,0 +1,10 @@
+<div id='dtls'>
+<b><%= format_currency ( @plan.blank? ? (@upgradable_plans.first.price * 12) : (@plan.price * 12) ) %></b> per year*
+<ul>
+  <li>Basic accounting</li>
+  <li>Financial reports</li>
+  <li>Basic collaboration</li>
+  <li>Document management</li>
+  <li>Single user</li>
+</ul>
+</div>

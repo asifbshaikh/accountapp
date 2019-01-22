@@ -1,0 +1,23 @@
+ 
+<%= form_for(@feedback) do |f| %>
+ <div class="field"> 
+  <%= render "shared/form_error", :object => @feedback %>
+  <div id='user_info_div'><span class='basic_info'><%= f.label :vote, "How would you rate your experience?:" %></span></div>&nbsp;
+            <%= f.radio_button :vote,'Feedback', :checked => true %>
+            <%= f.label :vote, "Feedback", :value => "Feedback" %>
+           <!-- <%= f.radio_button :vote,'Report a Problem'%>
+            <%= f.label :vote, "Report a Problem", :value => "Report a Problem" %>-->
+            <%= f.radio_button :vote,'Ask a Query' %>
+            <%= f.label :vote, "Ask a Query", :value => "Ask a Query" %>
+            <%= f.radio_button :vote,'Suggest New Feature' %>
+            <%= f.label :vote, "Suggest New Feature", :value => "Suggest New Feature" %>
+  </div>  &nbsp;
+  <div class="field">
+   <div id="user_info_div"><span class='basic_info'><%= f.label :comment %><br /></span></div>
+    <%= f.text_area :comment, :rows => 8, :cols=> 80 %>
+  </div><br />
+  <div class="actions">
+  	   <%= f.submit 'Submit',:onclick => "alert('Your Support sent successfully');",  :class => "btn btn-green btn-save "%>&nbsp;
+          <a href="Cancel" class="nyroModalClose btn btn btn-cancel">Cancel</a>
+   </div>
+<% end %>

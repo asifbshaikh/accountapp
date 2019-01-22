@@ -1,0 +1,31 @@
+<h1>Listing invitation_details</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Sent by</th>
+    <th>Email</th>
+    <th>Token</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @invitation_details.each do |invitation_detail| %>
+  <tr>
+    <td><%= invitation_detail.company_id %></td>
+    <td><%= invitation_detail.sent_by %></td>
+    <td><%= invitation_detail.email %></td>
+    <td><%= invitation_detail.token %></td>
+    <td><%= invitation_detail.status_id %></td>
+    <td><%= link_to 'Show', invitation_detail %></td>
+    <td><%= link_to 'Edit', edit_invitation_detail_path(invitation_detail) %></td>
+    <td><%= link_to 'Destroy', invitation_detail, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Invitation detail', new_invitation_detail_path %>

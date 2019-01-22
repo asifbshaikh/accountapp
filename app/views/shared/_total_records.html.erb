@@ -1,0 +1,23 @@
+<script>
+	$(document).ready(function(){
+	
+	
+		$('#group').focusout(function(){
+			var month = $(this).attr('value');
+			record = get_records(month);
+			
+			
+				$('span#total_records').html("<br><span style='color:grey;'>Total Records : </span>"+record);
+			
+		});
+
+	
+	});
+	function get_records(months){
+		var month = months;
+		total_records = "<%= McaRecord.get_records(month) %>"
+
+
+
+	}
+</script>

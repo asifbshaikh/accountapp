@@ -1,0 +1,21 @@
+<table class = "filter_highlight">
+    <tr>
+    <form action = ''>
+      <td>
+       <% if @company.plan.enterprise_plan? && @current_user.owner? %> 
+        <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), :include_blank => 'Select branch') unless !@current_user.owner?  %>
+        <% end %>
+        &nbsp;<%= text_field_tag :start_date, '',  :placeholder => "Start date", :size => '6' %>&nbsp;
+        <%= text_field_tag :end_date, '',  :placeholder => "End date", :size => '6' %>&nbsp;
+        <input type="submit" value="Search" class="btn btn-green"/>
+      </td>
+    </form>
+     <td width ="30%" class ="ta-right">
+     <% if !@products.blank?  %>
+       <%= link_to_pdf params %>
+       <%= link_to_xls params %>
+      <% end %>
+    </td>
+  </tr>
+  </table> 
+

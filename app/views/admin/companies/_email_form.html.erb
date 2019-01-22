@@ -1,0 +1,43 @@
+<form action="send_email" method="post" class="" data-remote='true' enctype=multipart/form-data >
+<%= hidden_field_tag "company_id", @company.id%>
+<div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Send Email</h4>
+        </div>
+        <div class="modal-body">
+        <div class="errorPlace"></div>
+      <div class="block">
+       <%= label_tag :email, 'Email ID' , :class =>"control-label-required" %>
+       <%= text_field_tag :email, "#{@company.users.first.email}", :class => 'bg-focus form-control' %>
+      </div>
+      <a id="flip"><i class="icon-plus"></i>Add cc</a>
+      <div id="cc_text_box" style="display:none;">
+      <div class="block">
+       <%= label_tag :cc, 'CC' , :class => "control-label" %>
+       <%=text_field_tag :cc, "", :class => 'bg-focus form-control' %>
+      </div>
+      </div>
+      <div class="block">
+        <%= label_tag :select_template, 'Select Template', :class => "control-label" %>
+        <%= select_tag('select_template', options_from_collection_for_select(CustomerRelationship.get_templates, :first, :last), {:prompt => "Select Template", :class => "bg-focus form-control"})%>
+      </div>
+      <div class="block">
+       <%= label_tag :subject, 'Subject' , :class => "control-label" %>
+       <%=text_field_tag :subject, "", :class => 'bg-focus form-control' %>
+      </div>
+      <div class="block" id = "template">
+        <%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+        <%= text_area_tag  :text,"",:rows=>4, :class=>"bg-focus form-control"%>
+      </div>
+      <div id="templatePlace"></div>
+        <div class="text-center">
+          <div class='save-btn'></div>
+            <button  class=" btnsave btn btn-sm btn-success" type='submit' data-loading-text="Sending...">Send</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+</div>
+</div>
+</div>
+</form>

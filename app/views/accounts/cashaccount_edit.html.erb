@@ -1,0 +1,6 @@
+<%= f.fields_for :accountable do |a| %>
+  <tr class="gradeU odd">
+	  <td><%= a.label :location %></td>
+    <td><%= a.text_field :location, :size => 30 %></td>
+  </tr>
+<% end %>

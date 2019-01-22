@@ -1,0 +1,209 @@
+<section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-7">
+            <h2><i class="icon-bar-chart text"></i>Report Charts</h2>
+        </div>
+      </div><br/>
+      <div class="row">
+          <div class="col-lg-8">
+            <form action = '' class="form-horizontal" method="get" data-validate="parsley">
+            <div class="row">
+              <div class="form-group"><br/>
+              <div class="col-lg-1"></div>
+                <div class="col-lg-3">
+                      <%= select_tag "year", options_for_select([ "2013-14", "2014-15" ]),:prompt => "Select financial year", :class => "form-control" %>
+                </div>
+                <div class="col-lg-2">
+                     <input type="submit" value="Search" class="btn btn-success"/>
+                </div>
+              </div> 
+            </div>
+            </form>
+            <div class="row">
+        <div class="col-lg-7">
+            <% if @financial_year == "2013-14"%>
+            <h4>Charts showing data for financial year 2013-14</h4>
+            <%else%>
+            <h4>Charts showing data for financial year 2014-15</h4>
+            <%end%>
+
+        </div>
+      </div>
+            
+        <div class="row">
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Sales Overview</header>
+            <div class="panel-body text-center">
+            <p>
+              <span class="badge bg-info">
+                <%= @monthly_registrations.sum %>
+              </span>&nbsp; Registrations this financial year
+            </p>
+              <div class="inline" style="width: 700px;" >
+                <div class="sparkline inline" data-type="bar" data-height="145" data-bar-width="35" data-bar-spacing="20" data-bar-color="#0099FF" data-composite-data="" data-composite-line-color="#bfea5f" data-composite-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="3"><%= @monthly_registrations.join(",")%></div>
+                  <% date= Company.financial_start_date(params) %>
+                  <% end_date = date + 1.years - 1.days%>
+                <ul class="list-inline text-muted axis">
+                     <% while date <= end_date do %>
+                     <% @monthly_registrations.each do |r|%>
+                     <li><%= date.strftime("%B")%><% date+=1.month %><br><%= r %>
+                     </li>
+                     <%end%>
+                     <%end%>
+                </ul>
+              </div>
+            </div>
+          </section>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Leads Overview</header>
+            <div class="panel-body text-center">
+            <p>
+              <span class="badge bg-info">
+                <%= @monthly_leads.sum %>
+              </span>&nbsp; Leads this financial year
+            </p>
+              <div class="inline" style="width: 700px;" >
+                <div class="sparkline inline" data-type="bar" data-height="145" data-bar-width="35" data-bar-spacing="20" data-bar-color="#0099FF" data-composite-data="" data-composite-line-color="#bfea5f" data-composite-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="3"><%= @monthly_leads.join(",")%></div>
+                <% date= Company.financial_start_date(params) %>
+                  <% end_date = date + 1.years - 1.days%>
+                <ul class="list-inline text-muted axis">
+                     <% while date <= end_date do %>
+                     <% @monthly_leads.each do |r|%>
+                     <li><%= date.strftime("%B")%><% date+=1.month %><br><%= r %>
+                     </li>
+                     <%end%>
+                     <%end%>
+                </ul>
+              </div>
+            </div>
+          </section>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Paid Users Overview</header>
+            <div class="panel-body text-center">
+            <p>
+              <span class="badge bg-info">
+                <%= @paid_users.sum %>
+              </span>&nbsp; Paid Users this financial year
+            </p>
+              <div class="inline" style="width: 700px;" >
+                <div class="sparkline inline" data-type="bar" data-height="145" data-bar-width="35" data-bar-spacing="20" data-bar-color="#0099FF" data-composite-data="" data-composite-line-color="#bfea5f" data-composite-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="3"><%= @paid_users.join(",")%></div>
+                  <% date= Company.financial_start_date(params) %>
+                  <% end_date = date + 1.years - 1.days%>
+                  <ul class="list-inline text-muted axis">
+                     <% while date <= end_date do %>
+                     <% @paid_users.each do |r|%>
+                     <li><%= date.strftime("%B")%><% date+=1.month %><br><%= r %>
+                     </li>
+                     <%end%>
+                     <%end%>
+                </ul>
+              </div>
+            </div>
+          </section>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Leads Vs Paid Users Overview</header>
+            <div class="panel-body text-center">
+            <p>
+              <span class="badge bg-info">
+                <%= @paid_users.sum %>
+              </span>&nbsp; Paid Users
+              <span class="badge bg-success">
+                <%= @monthly_leads.sum %>
+              </span>&nbsp; Leads
+            </p>
+              <div class="inline" style="width: 700px;" >
+                <div class="sparkline inline" data-type="bar" data-height="145" data-bar-width="35" data-bar-spacing="20" data-bar-color="#0099FF" data-composite-data="[<%= @monthly_leads.join(",")%>]" data-composite-line-color="#bfea5f" data-composite-fill-color="#00CC00" data-highlight-line-color="#e1e5e9" data-spot-radius="3"><%= @paid_users.join(",")%></div>
+                  <% date= Company.financial_start_date(params) %>
+                  <% end_date = date + 1.years - 1.days%>
+                <ul class="list-inline text-muted axis">
+                     <% while date <= end_date do %>
+                     <li><%= date.strftime("%B")%><% date+=1.month %>
+                     </li>
+                     <%end%>
+                </ul>
+              </div>
+            </div>
+          </section>
+          </div>
+        </div>
+    
+      </div>
+
+      <div class="col-lg-4">
+      <div class="row">
+      <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Total Companies</header>
+            <div class="panel-body text-center">   
+              <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="['#3fcf7f','#f4c414','#ff5f5f','#0099FF', '#233445']"><%= @pwyw_users.blank? ? "0" : @pwyw_users.count%>,<%= @smb_users.blank? ? "0" : @smb_users.count%>,<%= @enterprize_users.blank? ? "0" : @enterprize_users.count%>,<%= @professional_users.blank? ? "0" : @professional_users.count%>,<%= @trial_users.blank? ? "0" : @trial_users.count%> </div>
+              <div class="line pull-in"></div>
+              <div class="text">
+                <a href="#"><span class="badge bg-success"><%= @pwyw_users.blank? ? "0" : @pwyw_users.count%> Pay What You Want </span></a>&nbsp;
+                <a href="#"><span class="badge bg-warning"><%= @smb_users.blank? ? "0" : @smb_users.count%> SMB </span></a>&nbsp;
+                <a href="#"><span class="badge bg-danger"><%= @enterprize_users.blank? ? "0" : @enterprize_users.count%> Enterprize </span></a>
+                <a href="#"><span class="badge bg-info"><%= @professional_users.blank? ? "0" : @professional_users.count%> Professional </span></a>
+                <a href="#"><span class="badge bg-inverse"><%= @trial_users.blank? ? "0" : @trial_users.count%> Trial </span></a>
+              </div>
+            </div>
+          </section>
+        </div>
+        </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Total Paid Companies</header>
+              <div class="panel-body text-center">   
+                <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="['#3fcf7f','#f4c414','#ff5f5f','#0099FF', '#233445']"><%= @pwyw_users.blank? ? "0" : @pwyw_users.count%>,<%= @smb_users.blank? ? "0" : @smb_users.count%>,<%= @enterprize_users.blank? ? "0" : @enterprize_users.count%>,<%= @professional_users.blank? ? "0" : @professional_users.count%> </div>
+                <div class="line pull-in"></div>
+                <div class="text">
+                  <a href="#"><span class="badge bg-success"><%= @pwyw_users.blank? ? "0" : @pwyw_users.count%> Pay What You Want </span></a>&nbsp;
+                  <a href="#"><span class="badge bg-warning"><%= @smb_users.blank? ? "0" : @smb_users.count%> SMB </span></a>&nbsp;
+                  <a href="#"><span class="badge bg-danger"><%= @enterprize_users.blank? ? "0" : @enterprize_users.count%> Enterprize </span></a>
+                  <a href="#"><span class="badge bg-info"><%= @professional_users.blank? ? "0" : @professional_users.count%> Professional </span></a>
+                </div>
+              </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">Total Paid by sales persons</header>
+              <div class="panel-body text-center">   
+                <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="[<%= @piechart_slices.map(&:inspect).join(', ') %>]"><%= @company_count.join(',')%></div>
+                <div class="line pull-in"></div>
+                <div class="text">
+                <% i = 0
+                @users_companies.each do |key, value| %>
+                  <i class="icon-circle" style="color: <%= @piechart_slices[i] %>"></i><span><%= key%></span>
+                  <% i +=1 %>
+                <%end%>
+                </div>
+              </div>
+          </section>
+        </div>
+      </div>
+
+        </div>
+        </div>
+    </section>
+</section>

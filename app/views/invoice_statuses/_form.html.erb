@@ -1,0 +1,15 @@
+<%= form_for(@invoice_status) do |f| %>
+   <%= render 'shared/form_error', :object => @invoice_status %>
+
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

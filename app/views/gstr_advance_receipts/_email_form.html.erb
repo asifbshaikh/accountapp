@@ -1,0 +1,52 @@
+   <form action="/gstr_advance_receipts/email_gstr_advance_receipt" method="post" class="" data-remote='true' >
+    <%= hidden_field_tag  :id, gstr_advance_receipt.id %>
+<div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Email Gstr Advance Receipt</h4>
+        </div>
+        <div class="modal-body">
+        <div class="errorPlace"></div>
+    <div class="block">
+
+       <%= label_tag :email, 'Email ID' , :class =>"control-label-required" %>
+       
+      <%= text_field_tag :email, "#{gstr_advance_receipt.customer.email}", :class=> "bg-focus form-control" %>
+       
+      
+     
+       
+       
+      </div>
+      <div class="block">
+       <%= label_tag :subject, 'Subject' , :class => "control-label" %>
+       <%=text_field_tag :subject, "New advance receipt has been created for you", :class => 'bg-focus form-control' %>
+      </div>
+      
+    <div class="block">
+       <%= label_tag :text, 'Text' , :class => "control-label" %><br/>
+       <%= text_area_tag  :text,
+        "Hello #{gstr_advance_receipt.from_account.name},
+            Please find the advance receipt attached with this email.
+  Thanks,
+  #{@company.name}",
+      :rows=>4, :class=>"form-control"%>
+    <div class="block"><br/>
+       <label><i class="icon-paper-clip icon-large"></i></label>
+       <%=  gstr_advance_receipt.voucher_number.to_s + ".pdf" %>
+    </div>
+   
+    </div>
+        <div class="text-center">
+          <div class='save-btn'></div>
+            <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Sending...">Send</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+</div>
+</div>
+</div>
+      </form>
+
+
+

@@ -1,0 +1,26 @@
+<tr>
+    <td><%= link_to expense.voucher_number, expense %></td>
+   <%if !@company.plan.free_plan? %>
+    <td><%= !expense.project_id.blank? ? expense.project_name : "Not assigned" %></td>
+   <% end %>  
+    <td><%= expense.expense_date.strftime("%d-%m-%Y") %></td>
+    <td><%= truncate(expense.account.name, :length =>20) unless expense.account.blank? %></td>
+    <td><%= format_currency expense.amount %></td>
+        <td><%= expense.created_by_user %></td>
+    <td>
+      <div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='/expenses/<%= expense.id %>'"; >View </button>
+          <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="<%= edit_expense_path(expense) %>">Edit</a></li>
+            <li><a href="<%= expense_path(expense, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+            <li><a href=<%= "/expenses/copy_expense?id=#{expense.id}" %> >Copy Into New</a></li>
+            
+             <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/expenses/<%= expense.id%>" >Delete</a></li>
+          </ul>
+      </div>
+    </td>
+</tr>

@@ -1,0 +1,36 @@
+ <!-- Page title not required--> 
+<div id="pagetitle">
+  <div class="wrapper-login"></div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+<div class="wrapper-login">
+<!-- Login form -->
+ <section class = "full"><br />					
+ <div class="highlight">
+ <h3></h3>
+ <div class="box box-error"> Invalid username or password</div>
+ <!--<div class="box box-info">Sign in to ProfitBooks Again !!!</div>-->
+ <%= form_tag :action=>:authenticate do %>
+  <p>
+   <%= label_tag 'user_name','Username',:class=>"required" %><br/>
+   <%= text_field_tag 'username',nil, :autofocus => "autofocus", :class =>'full'%>
+  </p>
+  <p>
+   <%= label_tag 'password','Password',:class=>'required'%>
+   <%= password_field_tag 'password',nil, :class=>'full'%>
+  </p>
+  <p>
+    <%= submit_tag 'Sign in',{:class=>"btn btn-green" } %>&nbsp; <!--<a href="/login/forgot_pass">Forgot username/password ?</a>-->
+  </p>
+   <div class="clear">&nbsp;</div>
+  <% end %>
+  </div><br />
+ </section>
+ <!-- End of login form -->
+ </div>
+ <!-- End of Wrapper -->
+</div>
+	  <!-- End of Page content -->

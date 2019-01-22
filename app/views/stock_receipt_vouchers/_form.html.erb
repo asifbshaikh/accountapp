@@ -1,0 +1,87 @@
+<script type="text/javascript">
+  $('.mfd-select').live('focus', function (e) {
+     $("#stock_receipt_voucher_stock_receipt_line_items_attributes_"+ $(this).attr('data-date_index') +"_product_batch_attributes_manufacture_date").datepicker();
+  });
+  $('.exp-select').live('focus', function (e) {
+     $("#stock_receipt_voucher_stock_receipt_line_items_attributes_"+ $(this).attr('data-date_index') +"_product_batch_attributes_expiry_date").datepicker();
+  });
+</script>
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for(@stock_receipt_voucher, :html=>{:class=>'form-horizontal'}) do |f| %>
+          <%= render 'shared/form_error' , :object => @stock_receipt_voucher %>
+          <div class='form-group'>
+             <div class='col-lg-3'>
+              <%= f.label :voucher_number, :class=>'control-label-required'  %>
+              <% if @stock_receipt_voucher.voucher_setting.custom_sequence? %>
+                <%= f.text_field :voucher_number, :class=>"form-control bg-focus" %>
+              <% else %>
+                <%= @stock_receipt_voucher.voucher_number %>
+                <%= f.hidden_field :voucher_number %>
+              <% end %>
+             </div>
+             <div class='col-lg-1'></div>
+              <div class='col-lg-3'>
+                <%= f.label :voucher_date, :class=>'control-label' %>
+                <%= f.text_field :voucher_date, :class=>"form-control bg-focus" %>
+              </div>
+              <div class='col-lg-1'></div>
+              <div class='col-lg-3'>
+                <%= f.label :warehouse_id , "#{@company.label.warehouse_label}", :class =>"control-label-required" %><br/>
+                <%= f.collection_select(:warehouse_id, @company.warehouses, :id, :name, {:prompt => "Select Warehouse"}, {:style=>"width:220px;"})  %>
+              </div>
+          </div>
+          <% unless @company.inventory_setting.purchase_effects_inventory? %>
+            <div class='form-group'>
+              <div class='col-lg-3'>
+                <%= label_tag "purchase", "Purchase reference", :class=>'control-label' unless @stock_receipt_voucher.purchase.blank? %>
+                <% if @stock_receipt_voucher.new_record? %>
+                  <%= f.collection_select :purchase_id, Purchase.get_hold_purchases(@company.id), :id, :purchase_number, {:include_blank => true} , :class=>"form-control bg-focus" %>
+                <% else %>
+                  <%= @stock_receipt_voucher.purchase.purchase_number unless @stock_receipt_voucher.purchase.blank? %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+          <%= render :partial=>"stock_receipt_vouchers/custom_field" , :locals =>{:f=> f}%>
+          <table  class="table table-striped b-t text-small receipt-line" id="line_items"  >
+            <thead>
+              <tr>
+                <th colspan=2><label class="control-label-required">Product</label></th>
+                <th class="text-right" width='10%'><label class="control-label">Unit Value</label></th>
+                <th class="text-right" width='15%'><label class="control-label-required">Quantity</label></th>
+                <th class="text-right" width="7%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @stock_receipt_voucher.stock_receipt_line_items.each_with_index do |stock_line_item, index| %>
+                 <%= render "stock_receipt_vouchers/stock_receipt_line_items", :stock_receipt_line_item => stock_line_item, :index => index %>
+              <% end %>
+              <tr id="receipt_row_link" valign="top">
+                <td valign="top" colspan="9"> <%= link_to "+ Add New Row", { :controller=> :stock_receipt_vouchers, :action => :add_row, :index => @stock_receipt_voucher.stock_receipt_line_items.size }, :remote => true, :class=>"btn btn-white btn-sm" %> </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="form-group">
+            <div class='col-lg-6'>
+              <%= f.label :details, :class=>'control-label' %>
+              <%= f.text_area :details, :cols => 70, :rows => 5, :class => 'form-control bg-focus' %>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class="col-lg-8 col-lg-offset-4">
+              <%= f.submit :value => 'Save', :class=>"btn btn-success" %>&nbsp;
+              <%= link_to "Cancel", stock_receipt_vouchers_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#stock_receipt_voucher_warehouse_id").select2();
+</script>

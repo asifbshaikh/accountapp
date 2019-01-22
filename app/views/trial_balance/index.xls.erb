@@ -1,0 +1,115 @@
+<table>
+	<tr><td colspan=5 align='center'><b>Trial Balance</b></td></tr>
+  <tr><td colspan=5 align='center'><%= @start_date %> To <%= @end_date %> </td></tr>
+               <thead>
+                    <tr>
+                      <th> Particulars</th>
+                      <th> Opening Balance (<%= @company.country.currency_code %>)
+</th>
+                      <th> Debit(<%= @company.country.currency_code %>)</th>
+                      <th> Credit(<%= @company.country.currency_code %>)</th>
+                      <th> Closing Balance(<%= @company.country.currency_code %>)</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Stock Valuation</strong></td>
+                    <td><%= format_currency @opening_inventory_valuation %></td>
+                    <td></td>
+                    <td></td>
+                    <td><%= format_currency @closing_inventory_valuation %></td>
+                  </tr>
+                        <% total_debit = 0
+                        total_credit = 0
+                        total_closing_balance = 0
+                        total_opening_balance = 0
+                        @account_heads.each do |acc_head| %>
+                        <tr>
+                          <td colspan=2><b><%= acc_head.name %></b></td><td></td><td></td><td></td>
+                          </tr>
+                          <%
+                          children_accounts = Array.new
+                          AccountHead.where(:id => acc_head).each{|acc| children_accounts << acc}
+                          children_accounts.each do |child_account_head|
+                            AccountHead.where(:parent_id => child_account_head).each{|acc| children_accounts << acc} unless child_account_head.get_children.blank?
+                          end
+                          children_accounts.each do |child_account| %>
+                          <% if child_account.parent_id.present? %>
+                          <tr>
+                            <td colspan=2><b><%= child_account.name %></b></td><td></td><td></td><td></td>
+                          </tr>
+                        <% end %>
+                        <%
+                        accounts = child_account.current_period_accounts(@end_date)
+                          accounts.each do |account|
+                          %>
+                              <%
+                              debit = 0
+                              credit = 0
+                              opening_balance = 0
+                              closing_balance = 0
+                              # opening_balance = account.opening_balance unless account.opening_balance.blank?
+                              #opening_balance = account.get_opening_balance(@current_user, @company.id, @financial_year, params[:start_date], branch)
+                              opening_balance = account.balance_on_date(@start_date - 1.days)
+                              total_opening_balance += opening_balance
+                              op_sufix=''
+                              cl_sufix=''
+                              if opening_balance.to_d < 0
+                              op_sufix = " Cr"
+                              elsif opening_balance.to_d > 0
+                              op_sufix = " Dr"
+                              end
+                              result = account.ledgers.select(" sum(ledgers.debit) as debit, sum(ledgers.credit) as credit").where(:ledgers => { :company_id => @company}).where(" ledgers.transaction_date between ? and ?", @start_date, @end_date)
+
+                              #credit = Ledger.by_branch(branch).ledgers_in_current_year(@company, account.id, start_date, end_date).sum(:credit)#account.ledgers.sum(:credit)
+                              #debit = Ledger.by_branch(branch).ledgers_in_current_year(@company, account.id, start_date, end_date).sum(:debit)
+
+                              debit = result[0].debit
+                              credit = result[0].credit
+                              if debit.nil?
+                                debit = 0
+                              end
+                              if credit.nil?
+                                credit=0
+                              end
+
+                              total_credit += credit
+                              total_debit += debit
+                              # closing_balance = Ledger.current_year_balance(branch, account.id, start_date, end_date) unless account.current_balance.blank?
+                              #closing_balance = account.get_closing_balance(@current_user, @company.id, @financial_year, params[:end_date], branch)
+                              closing_balance = opening_balance + debit - credit
+                              total_closing_balance += closing_balance
+                              if closing_balance < 0
+                                cl_sufix = " Cr"
+                              elsif closing_balance > 0
+                                cl_sufix = " Dr"
+                              end
+                              %>
+                            <% if closing_balance != 0 || debit > 0 || credit > 0 || opening_balance > 0 %>
+                            <tr>
+                              <td><%= account.name %></td>
+                              <td><%= format_currency opening_balance.abs %><%= op_sufix %></td>
+                              <td><%= format_currency debit.abs %></td>
+                              <td><%= format_currency credit.abs %></td>
+                              <td><%= format_currency closing_balance.abs %><%= cl_sufix %></td>
+                            </tr>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                        <tr>
+                          <td><b>Difference in opening balance</b></td>
+                          <td align='right'><%= format_currency @opening_balance_difference %></td>
+                          <td></td>
+                          <td></td>
+                          <td align='right'><%= format_currency @opening_balance_difference %></td>
+                        </tr>
+                        <tr>
+                          <td><b>Grand Total</b></td>
+                          <td><b><%= format_currency (total_opening_balance + @opening_balance_difference + @opening_inventory_valuation) %></b></td>
+                          <td><b><%= format_currency total_debit %></b></td>
+                          <td><b><%= format_currency total_credit %></b></td>
+                          <td><b><%= format_currency (total_closing_balance + @opening_balance_difference + @opening_inventory_valuation) %></b></td>
+                        </tr>
+                </tbody>
+              </table>

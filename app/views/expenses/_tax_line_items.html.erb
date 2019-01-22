@@ -1,0 +1,18 @@
+<tr id="tax_row<%= tax_index %>" valign="top" class='tx_line'>
+   <%= hidden_field_tag "expense[tax_line_items_attributes][#{tax_index}][id]",tax_line_item.id %>
+   <%= hidden_field_tag "expense[tax_line_items_attributes][#{tax_index}][tax]", tax_line_item.tax, :value => 1 %>
+   <%= hidden_field_tag "expense[tax_line_items_attributes][#{tax_index}][_destroy]" %>
+   <td  class="ta-right" style="background:#EDF4FF"><label class="required">Add Tax:</label></td>
+   <td class="ta-right" style="background:#EDF4FF" colspan='2'>
+	  <%= select_tag "expense[tax_line_items_attributes][#{tax_index}][account_id]", options_from_collection_for_select(@tax_accounts, :id, :name,{'data-man' => 'manjeet',:selected => tax_line_item.account_id }), :include_blank => true, :class=>"full", :id =>'expense_tax'  %><br />
+	  <%= link_to " New account",{:action => :add_account, :transaction_type => 'tax', :index => tax_index},:id => 'add_new_model',:remote => true %> 
+   </td>
+   <td style="background:#EDF4FF" align='right'>
+   <%= hidden_field_tag "expense[tax_line_items_attributes][#{tax_index}][amount]", tax_line_item.amount, :id => 'tax' %>
+   <%= @company.currency_code%> <span id="tax_amount">0.0</span>
+   </td>
+ <td style="background:#EDF4FF; padding-right:0;" align='right'>
+       <%= link_to "X",{:action => :remove_tax_item, :tax_index => tax_index , :tax_line_item_id => tax_line_item.id},:class => "btn btn-red", :id => 'cancel', :remote => true %>
+ </td>
+ 
+</tr>

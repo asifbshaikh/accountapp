@@ -1,0 +1,12 @@
+<div class="table-responsive row">
+  <table class="table table-striped m-b-none text-small" id="stock-issue" data-source="<%= stock_issue_vouchers_path(:format => 'json')%>">
+    <thead>
+     <%= render "stock_issue_vouchers/header"%>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+      <%= render "stock_issue_vouchers/footer" %>
+    </tfoot>
+  </table>
+</div>

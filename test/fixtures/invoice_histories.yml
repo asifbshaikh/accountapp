@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  invoice_id: 1
+  company_id: 1
+  description: MyString
+  created_by: 1
+  record_date: 2014-04-01 16:43:23
+
+two:
+  invoice_id: 1
+  company_id: 1
+  description: MyString
+  created_by: 1
+  record_date: 2014-04-01 16:43:23

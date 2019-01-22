@@ -1,0 +1,16 @@
+  <tr class="subP">
+	  <td><label>Tax Type</label></td>
+    <td>
+      <%= select_tag 'duties[tax]', options_for_select([['Excise'],['Service Tax'],['VAT'],['TDS'],['Others']]) 
+      %> 
+    </td>
+  </tr>
+   <tr class="subP">
+    <td><label>Tax Rate</label></td>
+    <td>
+      <%= hidden_field_tag "duties[auto_calculate_tax]", true %>
+      <%= text_field_tag 'duties[tax_rate]','', :maxlength => "5", :onkeydown => "return numbersOnly(event);", :autocomplete => 'off', :class =>'amount' %><storng>&nbsp;%</strong><br />
+      <span id='tax_rate'></span>
+      </td>
+  </tr>
+

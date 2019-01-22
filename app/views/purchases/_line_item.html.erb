@@ -1,0 +1,14 @@
+	<%= f.fields_for :purchase_line_items do |t| %>
+	  <tr id="row" valign="top" > 
+      <td valign="top" >
+			  <%= t.collection_select(:account_id, @to_accounts, :id, :name, :include_blank => true) %>
+        <br>
+			</td>
+      <td colspan="2"><%= t.text_area :description, :class=>"tiny", :rows=>3, :columns=>5%></td>
+      <td class="ta-right" ><%= t.text_field :quantity, :class => 'half'%></td>
+      <td class="ta-right"><%= t.text_field :unit_rate, :class => 'half'%></td>
+      <td class="ta-right"><%= t.text_field :purchase_order_reference, :class => 'half'%></td>
+      <td class="ta-right"><%= t.text_field :amount, :class => 'half'%></td>
+			<td><%= link_to 'delete', {:action => 'remove_line_item' }, :remote => true %></td>
+    </tr>
+	<% end %>

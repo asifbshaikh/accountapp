@@ -1,0 +1,27 @@
+
+<div class='oldData'>
+  <table class='table table-striped m-b-none text-small'>
+     <% @key_history.each do |key|%>
+     <tbody class="key-info-body">
+      <tr>
+        <td><strong>Bank Account</strong></th>
+         <td><%=Account.find_by_id_and_company_id(key.account_id, @company.id).name %></td>
+        </tr>
+        <tr>
+        <td><strong>Private API Key:</strong></th>
+        <td><%=key.api_key%></td>
+        </tr>
+        <tr>
+        <td><strong>Private Auth Token:</strong></th>
+        <td><%=key.auth_key%></td>
+        </tr>
+        <tr>
+        <td><strong>Private Salt:</strong></th>
+        <td><%=key.salt_key%> </td>
+        </tr>
+      </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+

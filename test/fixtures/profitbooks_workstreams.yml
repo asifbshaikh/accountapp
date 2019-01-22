@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  feature_id: 1
+  icon_code: MyString
+  release_date: 2014-08-12
+  title: MyString
+  details: MyText
+  link_URL: MyString
+  created_by: 
+  status: 1
+
+two:
+  feature_id: 1
+  icon_code: MyString
+  release_date: 2014-08-12
+  title: MyString
+  details: MyText
+  link_URL: MyString
+  created_by: 
+  status: 1

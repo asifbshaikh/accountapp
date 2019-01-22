@@ -1,0 +1,44 @@
+<tr id="row<%= index %>" valign="top" class='exp_line'>
+	<%= hidden_field_tag "expense[expense_line_items_attributes][#{index}][id]",expense_line_item.id%>
+	<%= hidden_field_tag "expense[expense_line_items_attributes][#{index}][type]", expense_line_item.type, :value => "ExpenseLineItem"%>
+	<%= hidden_field_tag "expense[expense_line_items_attributes][#{index}][_destroy]" %>
+	<td valign="top" style='padding-left: 0;'>
+	<%= select_tag "expense[expense_line_items_attributes][#{index}][account_id]", options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, expense_line_item.account_id), :"data-index"=> index ,:prompt =>"Type to select", :style=>"width:70%;" %>
+	<script>
+		$(document).ready(function(){
+			$("#modalPlace").after("<div id='modal<%= index %>-add-new-account' class='modal fade'> <%= escape_javascript render('shared/account_details',{ :account_heads => @expense_account_heads, :transaction_type => 'expense', :index => index}) %></div>");
+			 $('#expense_expense_line_items_attributes_<%= index%>_account_id').select2();
+		});
+	</script>
+	</td>
+	<td>
+		<%= text_area_tag "expense[expense_line_items_attributes][#{index}][description]",expense_line_item.description, :class=>'bg-focus form-control', :row => 2 %>
+	</td>
+	<td id="tax-td">
+		<% expense_line_item.expense_taxes.each_with_index do |tax, tax_index| %>
+		  <div class='row' id="tax-<%=index%>-<%=tax_index%>" style=<%="display:none;" if tax_index==1 %>>
+		    <div class="col-sm-12">
+		     <%= hidden_field_tag "expense[expense_line_items_attributes][#{index}][expense_taxes_attributes][#{tax_index}][id]", tax.id %>
+		      <%= select_tag "expense[expense_line_items_attributes][#{index}][expense_taxes_attributes][#{tax_index}][account_id]", options_from_collection_for_select_with_data(Account.get_purchase_taxes(@company.id), :id, :purchase_tax_name,tax.account_id,{:"linked" => :linked_purchase }), :include_blank => true, :class => "form-control bg-focus", :style => "width: 150px;" %><p></p>
+		    </div>
+		  </div>
+		<% end %>
+		<a id="add-tax" data-index="<%=index%>" style="cursor:pointer;"><i> + apply another tax</i></a>
+	</td>
+	<td>
+		<%= text_field_tag "expense[expense_line_items_attributes][#{index}][amount]", expense_line_item.amount,  :onkeydown => "return numbersOnly(event);", :class => "text-right bg-focus form-control", :id => "amount", :maxlength => 15 %>
+	</td>
+	<td style='padding-right: 0;' align='right'>
+	<%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_expense_line_item, :index => index,  :line_item_id => expense_line_item.id }, :class=> "btn btn-danger", :id => 'cancel', :remote => true %>
+	</td>
+</tr>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#expense_expense_line_items_attributes_<%= index %>_account_id').live("change", function(){
+		  var value=$(this).val();
+		  if(value=="create_new"){
+		    $("div#modal<%= index %>-add-new-account").modal('show');
+		  }
+		});
+	});
+</script>

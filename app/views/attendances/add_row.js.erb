@@ -1,0 +1,3 @@
+$("#row_link").before('<%= escape_javascript render( "salary_structure_line_items",{ :salary_structure_line_item=> @salary_structure_line_item, :index => params[:index]} ) %>');
+$("#row_link").replaceWith('<%= escape_javascript render( "add_row_link",{ :index => params[:index].to_i+1} ) %>');
+

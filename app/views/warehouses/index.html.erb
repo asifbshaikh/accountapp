@@ -1,0 +1,79 @@
+ <script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for warehouse in @warehouses
+  	    @data<<warehouse.name
+  	 	@data<<warehouse.city
+  	 	@data<<warehouse.phone
+  	 	@data<<warehouse.manager_id
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Inventory &rarr;<span><%= @company.label.warehouse_label%></span></h1>
+    <%= form_for @search, :method => "get" do |f| %>
+    <%= f.text_field :name_or_city_or_phone_or_manager_id_equals, :id=>"autocomplete", :placeholder=>"search" %>
+    <%end%>
+  </div>
+</div>
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+    	<div class="highlight">
+        <%= render :partial => "shared/flash_msg"%>
+      <% if @warehouses.blank? %>
+        <p class="no-journal"><%= render :partial => "shared/no_record" %></p>
+      <% else %>
+        <div id="tabs-all">
+          <div class="clearfix"></div>
+         <table class="display stylized" id="act_details">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Manager</th>
+                <th>City</th>
+                <th>Phone</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render :partial => "warehouse", :collection => @warehouses %>
+            </tbody>
+            <tfoot>
+              <tr><td colspan = 5></td></tr>
+            </tfoot>
+          </table>
+          <div class="clear">&nbsp;</div>
+        </div>
+      <% end %> 
+      </div><br />
+    </section>
+    <!-- End of Left column/section -->
+  
+  <!-- Right column/section -->
+  <aside class="column width2"><br />
+  	<%= new_button("Add #{@company.label.warehouse_label}", new_warehouse_path)%>
+   <div id="rightmenu">
+     <dl class="first">
+       <dt><%= image_tag "help.png", :class => 'icon', :alt => 'Help'%></dt>
+       <dd><a href="#">Help</a></dd>
+       <dd class="last">This page displays list of <%= @company.label.warehouse_label%>. <br/> Click on <%= @company.label.warehouse_label%> name to view more details.<br/></dd>              
+     </dl>
+   </div></br>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

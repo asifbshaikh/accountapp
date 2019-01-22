@@ -1,0 +1,2 @@
+module SaccountingsHelper
+end

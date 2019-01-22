@@ -1,0 +1,22 @@
+  <div class='block subP'>
+	  <label class='control-label'>Depreciable</label>
+		<div class='radio'>
+      <label class="radio-custom">
+        <input type="radio" checked="checked" name="fixed[depreciable]" value='1'>
+        <i class="icon-circle-blank checked"></i>
+        Yes
+      </label>
+    </div>
+    <div class='radio'>
+      <label class="radio-custom">
+        <input type="radio" name="fixed[depreciable]" value='0'>
+        <i class="icon-circle-blank"></i>
+        No
+      </label>
+    </div>
+  </div>
+  <div class='block subP'>
+	  <label class='control-label'>Depreciation rate</label>
+    <%= text_field_tag 'fixed[depreciation_rate]','', :class => 'form-control' %>
+  </div>
+

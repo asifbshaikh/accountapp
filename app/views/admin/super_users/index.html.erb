@@ -1,0 +1,72 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h2><i class="icon-cog text"></i>Settings</h2>
+        </div>
+         <div class="col-lg-8 m-t-large" align="right">
+          <button class="btn btn-success btn-lg dropdown-toggle" title="Add Super User" data-toggle="modal" data-target='#modal1'>
+          <span class="dropdown-label"><i class="icon-plus"></i> Add Super User</span>  
+        </button>
+        <p></p>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            
+                          <header class="panel-heading">
+                            <ul class="nav nav-tabs pull-left">
+                             
+                              <li class="active"><a href="#user_setting" data-toggle="tab"><i class="icon-group icon-large text-default"></i>Users</a></li>
+                              <li><a href="#chan_camp" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Channel/Campaign</a></li>
+                              
+                            </ul>
+                          </header>
+                      <div class="panel-body">
+                      <%= render :partial=> "shared/flash_msg"%>
+                        <div class="tab-content"> 
+                          <div class="tab-pane active" id="user_setting">
+                            <% if @super_users.blank?%>
+                            <%= render :partial => "shared/no_record" %>
+                              <% else %>
+                            <div class="table-responsive row">
+                              <table id="all_super_users" class="table table-striped m-b-none text-small">
+                              <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                 <th>Active</th> 
+                                <th>Last login</th>
+                                <th>Action</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <%= render :partial => 'admin/super_users/super_user', :collection => @super_users %>
+                              </tbody>
+                              </table>
+                            </div>
+                            <%end%>
+                          </div>
+
+                          <div class="tab-pane" id="chan_camp">
+                              <%= render :partial => "admin/super_users/channel_camp" %>
+                          </div>
+                          
+                      </div>
+                    
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>
+
+
+<div id="modal1" class="modal fade">
+    <%= render "form" %>
+  </div>

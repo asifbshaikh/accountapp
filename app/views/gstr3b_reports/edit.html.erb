@@ -1,0 +1,443 @@
+<section id="content">
+  <section class="main padder">        
+    <div class="row">
+      <div class="col-lg-5">
+        <h2><i class="icon-file text"></i>GSTR 3B</h2>
+      </div>
+      <div class="col-lg-7 m-t-large" align="right">     
+        <!--<a href="#" class="btn btn-info btn-lg "><i class="icon-upload"> </i>File GSTR-3B</a> &nbsp;-->
+        <!-- <a href="#" class="btn btn-info btn-lg ">Repopulate</a> &nbsp; -->
+        <%= link_to raw('<i class="icon-print"> </i>'), "/gstr3b_reports/#{@gstr3b_report.id}.pdf", :class => 'btn btn-white btn-lg', :target=>"_blank", :title=>"Export to PDF",:print=>'yes' %>
+        <%= link_to "<i class='icon-reply'> </i>".html_safe, gstr3b_reports_path, :class => "btn btn-default btn-lg " %> 
+        <p></p>
+      </div>  
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body"> 
+            <div class="row">
+              <div class="col-lg-1">&nbsp;</div>
+              <div class="col-lg-10">
+                <section class="panel">
+                  <div class="panel-body bg-lighter"> 
+                    <div class="table-responsive col-lg-10">
+                      <table class="table text-small">
+                        <thead>
+                          <tr>
+                            <th>GSTIN</th>
+                            <th>Legal name of registered person</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><%=@company.GSTIN%></td>
+                            <td><%= @company.name%></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>     
+            <div class="row text-small">
+              <div class="col-sm-12 m-b-mini">
+              <!--
+                <div id="mySelect" class="select btn-group m-b" data-resize="auto">
+                  <button type="button" data-toggle="dropdown" class="btn btn-white btn-sm dropdown-toggle">
+                    <span class="dropdown-label"> Filter By &nbsp;</span> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li data-value="1" data-selected="true"><a href="#">B2B Invoices</a></li>
+                    <li ><a href="#">B2C Invoices</a></li>
+                    <li data-value="3" data-fizz="buzz"><a href="#">B2CL Invoices</a></li>
+                    <li data-value="2"><a href="#">Credit Note/Debit Notes</a></li>
+                    <li data-value="2"><a href="#">Advance Payments</a></li>
+                    <li data-value="2"><a href="#">NIL Rated, Exempted</a></li>
+                    <li data-value="3" data-fizz="buzz"><a href="#">Exports</a></li>
+                    <li data-value="3" data-fizz="buzz"><a href="#">E-Commerce</a></li>
+                    <li class="divider"></li>
+                    <li data-value="4"><a href="#">All Invoices</a></li>
+                  </ul>
+                </div> --> 
+              </div>
+              <div class="table-responsive">
+                <p><h5>&nbsp;3.1 Details of outward supplies and inward supplies liable to reverse charge</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Nature of supplies</th>
+                      <th>Total taxable value</th>
+                      <th>Integrated Tax</th>
+                      <th>Central Tax</th>
+                      <th>State / UT Tax</th>
+                      <th>Cess</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>(a) Outward taxable supplies (other than zero rated, nil rated and exempted)</td>
+                      <td><%= @section3.outward_taxable_amount%></td>
+                      <td><%= @section3.outward_igst_tax_amt%></td>
+                      <td><%= @section3.outward_cgst_tax_amt%></td>
+                      <td><%= @section3.outward_sgst_tax_amt%></td>
+                      <td><%= @section3.outward_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(b) Outward taxable supplies (Zero rated)</td>
+                      <td><%= @section3.outward_zero_gst_taxable_amt %></td>
+                      <td><%= @section3.outward_zero_igst_tax_amt%></td>
+                      <td><%= @section3.outward_zero_cgst_tax_amt%></td>
+                      <td><%= @section3.outward_zero_sgst_tax_amt%></td>
+                      <td><%= @section3.outward_zero_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(c) Other Outward supplies (Nil rated, exempted)</td>
+                      <td><%= @section3.outward_nil_gst_taxable_amt %></td>
+                      <td><%= @section3.outward_nil_igst_tax_amt%></td>
+                      <td><%= @section3.outward_nil_cgst_tax_amt%></td>
+                      <td><%= @section3.outward_nil_sgst_tax_amt%></td>
+                      <td><%= @section3.outward_nil_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(d) Inward supplies(liable to reverse charge)</td>
+                      <td><%= @section3.inward_reverse_taxable_amt %></td>
+                      <td><%= @section3.inward_reverse_igst_tax_amt%></td>
+                      <td><%= @section3.inward_reverse_cgst_tax_amt%></td>
+                      <td><%= @section3.inward_reverse_sgst_tax_amt%></td>
+                      <td><%= @section3.inward_reverse_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(e) Non-GST outward supplies</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row text-small">
+              <div class="table-responsive">
+                <p><h5>&nbsp;3.2 Of the supplies shown in 3.1(a), details of inter-state supplies made to unregistered persons, composition taxable persons and UIN holders</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Nature of supplies</th>
+                      <th>Place of supply (State/UT)</th>
+                      <th>Total Taxable value</th>
+                      <th>Amount of Integrated tax</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Supplies made to unregistered persons</td>
+                      <td></td>
+                      <td><%= @section32.unregistered_inv_amt%></td>
+                      <td><%= @section32.unregistered_igst_tax_amt%></td>
+                    </tr>
+                    <% place_of_supply = @section32.unregistered_invoices[0].place_of_supply_state if @section32.unregistered_invoices.present?
+                       total_inv_amt =0
+                       total_tax_amt = 0
+                    %>
+                    <% @section32.unregistered_invoices.each do |invoice| %>
+                      <%  if invoice.place_of_supply_state == place_of_supply
+                            total_inv_amt += invoice.sub_total
+                            total_tax_amt += invoice.igst_tax_amt
+                          else
+                      %>      
+                            <tr>
+                              <td></td>
+                              <td><em><%= place_of_supply%></em></td>
+                              <td><em><%=total_inv_amt%></em></td>
+                              <td><em><%= total_tax_amt%></em></td>
+                            </tr>
+                            <% 
+                              place_of_supply = invoice.place_of_supply_state
+                              total_inv_amt = invoice.sub_total
+                              total_tax_amt = invoice.igst_tax_amt
+                            %>                       
+                      <%  end %>
+                      <% end %>
+                      <% if total_inv_amt != 0 %>
+                          <tr>
+                            <td></td>
+                            <td><em><%= place_of_supply%></em></td>
+                            <td><em><%=total_inv_amt%></em></td>
+                            <td><em><%= total_tax_amt%></em></td>
+                          </tr>                      
+                      <% end %>    
+                    <tr>
+                      <td>Supplies made to composition taxable persons</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>                  
+                    <tr>
+                      <td>Supplies made to UIN holders</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row text-small">
+              <div class="table-responsive">
+                <p><h5>&nbsp;4 Eligible ITC</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Details</th>
+                      <th>Integrated Tax</th>
+                      <th>Central Tax</th>
+                      <th>State / UT Tax</th>
+                      <th>Cess</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>(A) ITC available (whether in full or in part)</td>
+                      <td><%= @section4.total_igst_tax_amt%></td>
+                      <td><%= @section4.total_cgst_tax_amt%></td>
+                      <td><%= @section4.total_sgst_tax_amt%></td>
+                      <td><%= @section4.total_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(1) Import of goods</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(2) Import of services</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(3) Inward supplies liable to reverse charge</em></td>
+                      <td><%= @section4.inward_reverse_igst_tax_amt%></td>
+                      <td><%= @section4.inward_reverse_cgst_tax_amt%></td>
+                      <td><%= @section4.inward_reverse_sgst_tax_amt%></td>
+                      <td><%= @section4.inward_reverse_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(4) Inward supplies from ISD</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(5) All other ITC</em></td>
+                      <td><%= @section4.igst_tax_amt%></td>
+                      <td><%= @section4.cgst_tax_amt%></td>
+                      <td><%= @section4.sgst_tax_amt%></td>
+                      <td><%= @section4.cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(B) ITC Reversed</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(1) As per rules 42 &amp; 43 of CGST rules</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(2) Others</em></td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>(C) Net ITC available (A) - (B)</td>
+                      <td><%= @section4.net_igst_tax_amt%></td>
+                      <td><%= @section4.net_cgst_tax_amt%></td>
+                      <td><%= @section4.net_sgst_tax_amt%></td>
+                      <td><%= @section4.net_cess_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>(D) Ineligible ITC</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(1) As per section 17(5)</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><em>(2) Others</em></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row text-small">
+              <div class="table-responsive">
+                <p><h5>&nbsp;5. Values of exempt, nil-rated, and non-GST inward supplies</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Nature of supplies</th>
+                      <th>Inter-state supplies</th>
+                      <th>Intra-state supplies</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>From a supplier under composition scheme, Exempt and Nil rated</td>
+                      <td><%=@section5.exempt_inter_tax_amt%></td>
+                      <td><%=@section5.exempt_intra_tax_amt%></td>
+                    </tr>
+                    <tr>
+                      <td>Non GST supply</td>
+                      <td><%=@section5.non_gst_inter_tax_amt%></td>
+                      <td><%=@section5.non_gst_intra_tax_amt%></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row text-small">
+              <div class="table-responsive">
+                <p><h5>&nbsp;6.1 Payment of Tax</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Description</th>
+                      <th rowspan="2">Tax Payable</th>
+                      <th colspan="4" class="text-center">Paid through ITC</th>
+                      <th rowspan="2">Tax paid TDS./TCS</th>
+                      <th rowspan="2">Tax/Cess paid in cash</th>
+                      <th rowspan="2">Interest</th>
+                      <th rowspan="2">Late Fee</th>
+                    </tr>
+                    <tr>
+                      <th>Integrated Tax</th>
+                      <th>Central Tax</th>
+                      <th>State / UT Tax</th>
+                      <th>Cess</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Integrated Tax</td>
+                      <td><%= @section6.igst_payable%></td>
+                      <td><%= @section6.igst_paid_with_igst%></td>
+                      <td><%= @section6.igst_paid_with_cgst%></td>
+                      <td><%= @section6.igst_paid_with_sgst%></td>
+                      <td></td>
+                      <td></td>
+                      <td><%= @section6.balance_igst_paid_in_cash%></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Central Tax</td>
+                      <td><%= @section6.cgst_payable%></td>
+                      <% #we need to call the cgst with cgst first ot maintain gst calc rules %>
+                      <% cgst_with_cgst = @section6.cgst_paid_with_cgst %>
+                      <% cgst_with_igst = @section6.cgst_paid_with_igst %>
+                      <td><%= cgst_with_igst %></td>
+                      <td><%= cgst_with_cgst %></td>
+                      <td>-</td>
+                      <td></td>
+                      <td></td>
+                      <td><%= @section6.balance_cgst_paid_in_cash%></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>State/ UT Tax</td>
+                      <td><%= @section6.sgst_payable%></td>
+                      <% sgst_with_sgst = @section6.sgst_paid_with_sgst %>
+                      <% sgst_with_igst = @section6.sgst_paid_with_igst %>
+                      <td><%= sgst_with_igst%></td>
+                      <td>-</td>
+                      <td><%= sgst_with_sgst%></td>
+                      <td></td>
+                      <td></td>
+                      <td><%= @section6.balance_sgst_paid_in_cash%></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Cess</td>
+                      <td><%= @section3.outward_cess_amt%></td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row text-small">
+              <div class="table-responsive">
+                <p><h5>&nbsp;6.2 TDS/TCS Credit</h5></p>
+                <table class="table table-striped b-t text-small">
+                  <thead>
+                    <tr>
+                      <th>Details</th>
+                      <th>Integrated Tax</th>
+                      <th>Central Tax</th>
+                      <th>State / UT Tax</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>TDS</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>TCS</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>  
+        </section>
+      </div>    
+    </div>
+  </section>
+</section>   

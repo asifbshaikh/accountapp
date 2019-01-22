@@ -1,0 +1,27 @@
+<%= form_for(@issue_raw_material) do |f| %>
+   <%= render 'shared/form_error', :object => @issue_raw_material %>
+		<div class="field">
+		  <%= f.label :issue_date %><br />
+		  <%= f.date_select :issue_date,:autofocus =>"autofocus" %>
+		</div>
+		<div class="field">
+		  <%= f.label :issued_to %><br />
+		  <%= f.text_field :issued_to %>
+		</div>
+		<div class="field">
+		  <%= f.label :inventory_id %><br />
+		  <%= f.text_field :inventory_id %>
+		</div>
+		<div class="field">
+		  <%= f.label :quantity %><br />
+		  <%= f.text_field :quantity %>
+		</div>
+		<div class="field">
+		  <%= f.label :company_id %><br />
+		  <%= f.text_field :company_id %>
+		</div>
+		<div class="actions">
+		  <button type="submit" class="btn btn-green big"> Save</button>&nbsp;
+      <button type="reset" class="btn  btn-gray big">Cancel</button>&nbsp;
+		</div>
+<% end %>

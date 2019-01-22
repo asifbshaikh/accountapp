@@ -1,0 +1,5 @@
+ <tr>
+    <td><%= link_to payhead_type.name, payhead_type, :onclick => 'Modalbox.show( this.href , {title: "Profit Next", width:400}); return false;' %></td>
+    <td><%= payhead_type.description %></td>
+    <td><%= link_to 'Delete', payhead_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>

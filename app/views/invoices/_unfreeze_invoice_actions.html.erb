@@ -1,0 +1,5 @@
+<% if !@current_user.auditor? %>
+  <%= render "#{Invoice::STATUS[@invoice.invoice_status_id.to_s].downcase}_invoice_actions" rescue nil %>
+  <button class="btn btn-white btn-lg dropdown-toggle" title="Email Invoice" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+<% end %>
+<%= render "frozen_invoice_actions" %>

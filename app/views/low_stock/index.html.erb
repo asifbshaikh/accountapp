@@ -1,0 +1,76 @@
+<section id="content">
+    <section class="main padder">
+
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Low Stock Register</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+    <% @reorder_level_products =[] %>
+    <% @products.each do |product| %>
+      <% @reorder_level_products << product if !product.blank? && product.inventoriable? && !product.reorder_level.blank? && product.reorder_level >= product.quantity %>
+    <% end %>
+    <% if !@reorder_level_products.blank?  %>
+    <%= link_to_pdf params %>
+    <%= link_to_xls params %>
+     <%end%>
+    <p></p>
+    </div>
+  </div>
+
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+          <div class="panel-body">
+              <%= render :partial => "filter" %>
+            <% if @reorder_level_products.blank? %>
+                    <br />
+              <%= render :partial => "shared/no_record" %>
+              <% else %>
+              <%= render :partial => "header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                      <th width ="25%">Product</th>
+                      <th width ="33%">Particulars</th>
+                      <th width ="15%">Unit of measure</th>
+                      <th width="15%">Available Quantity</th>
+                      <th width="12%">Reorder Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                      <% @products.each do |product| %>
+                      <% if !product.blank? && product.inventoriable? && !product.reorder_level.blank? && product.reorder_level >= product.quantity %>
+                  <tr>
+                    <td width="25%"><%= link_to "#{product.name}", product %></td>
+                    <td width="33%"><%= product.description %></td>
+                    <td width ="15%" align = "center"><%= product.unit_of_measure %></td>
+                    <td width="15%" align="center"><%= product.quantity %></td>
+                    <td width="12%" align ="center"><%= product.reorder_level %></td>
+                  </tr>
+                  <% end %>
+                  <% end %>
+                  <tr>
+                    <td width="25%"></td>
+                    <td width="33%"></td>
+                    <td width="15%"></td>
+                    <td width="15%"></td>
+                    <td width="12%"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="row">
+      <%= render "shared/report_footer"%>
+            </footer>
+            </div>
+          </section>
+      <!-- Table ends -->
+      <%end%>
+        </div>
+</div>
+</section>
+</section>

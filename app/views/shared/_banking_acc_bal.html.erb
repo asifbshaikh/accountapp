@@ -1,0 +1,103 @@
+<script>
+	$(document).ready(function(){
+	var balance = new Object();
+
+'<% @with_from_accounts.each do |acc|%>'
+	balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#with_from_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @with_to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#with_to_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+
+
+		'<% @dep_from_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#dep_from_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @dep_to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#dep_to_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+
+		'<% @tran_from_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#tran_from_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @tran_to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year,@financial_year.end_date) %>')
+	'<% end %>'
+		$('#tran_to_account').focusout(function(){
+			var name = $(this).attr('value');
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+
+			});
+</script>

@@ -1,0 +1,27 @@
+<h1>Listing inventory_settings</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Purchase effects inventory</th>
+    <th>Inventory model</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @inventory_settings.each do |inventory_setting| %>
+  <tr>
+    <td><%= inventory_setting.company_id %></td>
+    <td><%= inventory_setting.purchase_effects_inventory %></td>
+    <td><%= inventory_setting.inventory_model %></td>
+    <td><%= link_to 'Show', inventory_setting %></td>
+    <td><%= link_to 'Edit', edit_inventory_setting_path(inventory_setting) %></td>
+    <td><%= link_to 'Destroy', inventory_setting, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Inventory setting', new_inventory_setting_path %>

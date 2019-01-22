@@ -1,0 +1,166 @@
+<%= form_for(@employee) do |f| %>
+ <%= render 'shared/form_error', :object => @employee %>
+         <div class="column width6 first">
+                <fieldset>
+                <legend>Basic Info: </legend>
+    
+					          <div class="column width3 first">
+					             <%= f.label :employee_name, :class =>"required" %><br />
+					             <%= f.text_field :employee_name  %>
+					          </div>
+					  
+					          
+					  
+					          <div class="column width3 ">
+					             <%= f.label :email, :class =>"required" %><br/>
+					             <%= f.text_field :email %>
+					          </div>
+					  
+					 
+										  <div class="column width3 first">
+										    <%= f.label :present_address, :class =>"required" %><br />
+										    <%= f.text_area :present_address, :rows=> 3, :cols=> 40  %>
+										  </div>
+					           <div class="column width3">
+					              <%= f.label :phone,:class =>"required" %><br />
+					              <%= f.text_field :phone %>
+					           </div>
+											 
+					        </fieldset>
+          </div>
+         <div class="column width6 first">
+			          <fieldset>
+			          <legend id="emp">Work Info:</legend>
+			           <div class="man">
+					          <div class="column width3 first">
+										    <%= f.label :department_id, :class =>"required" %><br />
+												 <%= collection_select(:employee, :department_id, Department.all, :id, :name, :prompt => true) %>
+									  </div>
+									  <div class="column width3">
+										   <%= f.label :designation_id, :class =>"required" %><br />
+												<%= collection_select(:employee, :designation_id, Job.all, :id, :title, :prompt => true) %>
+											 <!--<%= f.text_field :designation_id %>--> 
+										  
+									  </div>
+									
+									  <div class="column width3 first">
+										    <%= f.label :reporting_to_id, :class =>"required" %><br />
+										    <%= f.text_field :reporting_to_id %>
+									  </div>
+										<div class="column width3">
+										    <%= f.label :type %><br />
+										   <%= f.select(:type, [['Permanent'],['Contract'],['Other']], :prompt => true)%>
+									  </div>
+									  <div class="column width3 first">
+										    <%= f.label :status, :class =>"required" %><br />
+										    <%= f.select(:status, [['Active'],['Inactive']],:prompt => true) %>
+							   		 </div>
+									  <div class="column width3">
+										     <%= f.label :work_phone, :class =>"required" %><br />
+										     <%= f.text_field :work_phone %>
+									  </div>
+									  <div class="column width3 first">
+										     <%= f.label :date_of_joining, :class =>"required" %><br />
+										     <%= f.text_field :date_of_joining %>
+										</div>
+									  <div class="column width3">
+										     <%= f.label :work_location, :class =>"required" %><br />
+										     <%= f.text_area :work_location, :rows=> 3, :cols=> 40  %>
+										</div>
+									 </div>	
+			          </fieldset>
+			       </div>
+         <div class="column width6 first">
+			           <fieldset>
+			           <legend>Personal Info: </legend>
+			  
+										  <div class="column width3 first">
+											    <%= f.label :emergency_contact1, :class=>"required" %><br />
+											    <%= f.text_field :emergency_contact1 %>
+										  </div>
+										  <div class="column width3 ">
+											    <%= f.label :date_of_birth, :class =>"required" %><br />
+											    <%= f.text_field :date_of_birth %>
+										  </div>
+										  <div class="column width3 first">
+											    <%= f.label :emergency_contact2, :class=>"required" %><br />
+											    <%= f.text_field :emergency_contact2 %>
+										  </div>
+			                <div class="column width  ">
+			                    <%= f.label :gender, :class =>"required" %><br />
+			                    <%= f.select(:gender, [['Male'],['Female']]) %>
+			                </div>
+										  <div class="column width">
+											    <%= f.label :maratial_status, :class=>"required" %><br />
+											    <%= f.select(:maratial_status, [['Married'],['Unmarried']]) %>
+										  </div>
+										  <div class="column width3 first">
+											    <%= f.label :passport_number, :class=>"required" %><br />
+											    <%= f.text_field :passport_number %>
+										  </div>
+										  <div class="column width3 ">
+											    <%= f.label :wedding_day %><br />
+											    <%= f.text_field :wedding_day %>
+										  </div>
+										  <div class="column width3 first ">
+											    <%= f.label :passport_expiry_date, :class=>"required" %><br />
+											    <%= f.text_field :passport_expiry_date %>
+										  </div>
+										  <div class="column width3 ">
+											    <%= f.label :blood_group, :class=>"required" %><br />
+											    <%= f.text_field :blood_group %>
+										  </div>
+			            </fieldset>
+           </div>
+          <div class="column width6 first">
+			           <fieldset>
+			           <legend>Important Details: </legend>
+			   
+						          <div class="column width3 first">
+											    <%= f.label :bank_account_number, :class=>"required" %><br />
+											    <%= f.text_field :bank_account_number %>
+											 </div>
+											<div class="column width3">
+										      <%= f.label :branch, :class=>"required" %><br />
+											    <%= f.text_field :branch %>
+										  </div>
+										  <div class="column width3 first">
+											    <%= f.label :bank_name, :class=>"required" %><br />
+											    <%= f.text_field :bank_name %>
+											</div>
+											<div class="column width3">
+											    <%= f.label :PAN, :class=>"required" %><br />
+											    <%= f.text_field :PAN %>
+											</div>
+											<div class="column width3 first">
+											    <%= f.label :EPS_account_number, :class=>"required" %><br />
+											    <%= f.text_field :EPS_account_number %>
+											</div>
+											<div class="column width3">
+											    <%= f.label :PF_account_number, :class=>"required" %><br />
+											    <%= f.text_field :PF_account_number %>
+											 </div>
+											 <div class="column width6 first">
+											 	   <%= f.label :notes %><br/>
+													 <%= f.text_area :notes, :rows=>"3", :cols=>"80"%>
+											 </div>
+						      </fieldset>
+				 </div>	
+				 	
+				 <div class="column width3 first">
+			           <div>
+						          <button type="submit" class="btn btn-green big"><img src= "" />&nbsp; Save</button>&nbsp;
+						          <%= link_to 'Cancel', new_employee_path , {:class=>"btn btn-grey big"} %>
+						     </div>
+			   </div>     
+<% end %>
+
+
+  
+ 
+  
+ 
+  
+  
+ 
+

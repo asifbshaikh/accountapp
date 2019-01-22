@@ -1,0 +1,77 @@
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first">
+            &nbsp;
+            
+            <div class='highlight'>
+                <div id='report_header' align='center'>
+                    <span class='company_name'><%= @company.name %></span>
+                    <br>
+                    <span class='report_title'>
+                        <u>
+                            TDS Varience
+                        </u>
+                    </span>
+                    <br>
+                    1-Apr-2010 to 31-Mar-2011
+                </div>
+                <hr>
+                <br>
+				<span class='small'>For All Employee Under Group &nbsp;:</span><span class='small right'>1-Apr-2010 to 31-Mar-2011</span>
+                <table class = "zebra-sriped" border = 1 align = center width=100%>
+                    <thead>
+                    <tr>
+                        <th class='width5'>
+                            <span class='char_spacing'>Particulars</span>
+                        </th>
+                        <th>
+                            TDS Amount
+                        </th>
+                        <th>
+                            Varience Amount
+                        </th>
+                    </tr>
+                    </head>
+                    <tbody>
+                    	<% @month_array = ['April', 'May', 'June', 'July', 'Augest', 'September', 'Octomber', 'November', 'December', 'January', 'February', 'March'] %>
+						<% i=0 %>
+                    	<% 12.times do %>
+						<tr>
+							<td>
+								<%= @month_array[i] %>
+							</td>
+							<td>
+								
+							</td>
+							<td>
+								
+							</td>
+						</tr>
+						<% i+=1 %>
+						<% end %>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class='textalignright border_down border_up'>
+                                <span class='char_spacing'><b>Grant Total</b></span>
+                            </td>
+                            <td class="border_down border_up">
+                                <span class='WebRupee'>Rs</span>
+                                <b>115327</b>
+                                
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table><hr>
+                <p>
+                    22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                </p>
+            </div>
+        </section>&nbsp;&nbsp;
+        <!-- End of Left column/section -->
+        <!-- End of Left column/section -->
+    </div>
+    <!-- End of Wrapper -->
+</div>

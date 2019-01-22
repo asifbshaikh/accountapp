@@ -1,0 +1,43 @@
+<tr>
+    <td>
+  <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                      <strong> Name: </strong> <%= payhead.payhead_name %>
+                      </p>
+                      <p>
+                      <strong> Name appear in payslip: </strong> <%= payhead.name_appear_in_payslip %>
+                      </p>
+                      <p>
+                      <strong> Type: </strong> <%= payhead.payhead_type %>
+                      </p>
+                      <p>
+                      <strong> Under Account:</strong> <%= payhead.account_name %>
+                      </p>
+                      <p>
+                      <strong> Use of gratuity:</strong> <%= payhead.use_of_gratuity %>
+                      </p>
+                      <p>
+                      <strong> Affet net salary:</strong> <%= payhead.affect_net_salary %>
+                      </p>
+                      <p>
+                      <strong>Applicable:</strong>
+                        <%= payhead.get_visibility %>
+                     </p>
+                 "
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Payhead Detail'>
+    <%= payhead.payhead_name %></a></td>
+    <td><%= payhead.name_appear_in_payslip %></td>
+    <td><%= payhead.payhead_type%></td>
+    <td><%= payhead.use_of_gratuity %></td>
+    <td><%= payhead.get_visibility %></td>
+    <td>
+   <div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='<%= edit_payhead_path(payhead) %>'"; >Edit</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/payheads/<%= payhead.id%>">Delete</a> </li>
+          </ul>
+      </div>
+    </td>
+ </tr>

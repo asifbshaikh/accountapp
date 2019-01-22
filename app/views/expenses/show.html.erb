@@ -1,0 +1,189 @@
+<section id="content">
+  <section class="main padder">
+    <div class='row'>
+      <div class='col-lg-3'>
+        <h2><i class="icon-file-text-alt text"></i> View Expense</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= render "#{FinancialYear::STATUS[@expense.in_frozen_year?]}_expense_actions"%>
+      </div>
+    </div>
+    <p></p>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial => "shared/flash_msg" %>
+        <div class="row">
+          <div class='col-sm-5'>
+            <h4><%= @expense.account.name %></h4>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p>
+                    <strong> Expense voucher number #: </strong><%= @expense.voucher_number %>
+                    <span class="badge <%=expense_status_badge(@expense.status)%>"><%= @expense.status %></span>
+                  </p>
+                  <p><strong> Expense Record Date: </strong> <%= @expense.expense_date %></p>
+                  <% if @expense.credit_expense? %>
+                    <p><strong> Due Date: </strong> <%= @expense.due_date %></p>
+                  <% end %>
+                  <p><strong> Amount:</strong> <%= @expense.currency %> <%= format_amount(@expense.total_amount) %></p>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@expense.created_at.strftime("%d-%m-%Y") %> by <%= @expense.created_by_user %></div>
+                  <div class="col-sm-6"><i class="icon-suitcase"> </i><strong> Project: </strong> <%= @expense.project_name unless @expense.project_id.blank? %></div>
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+        <table class="table table-striped" id="report">
+          <thead>
+            <tr>
+              <th>Expense</th>
+              <th>Description</th>
+              <% unless @tax_line_items.blank?  %>
+                <th>Tax Rate</th>
+                <th class="text-right">Tax Amount(<%= format_amount(@expense.currency) %>)</th>
+              <% end %>
+              <th class="text-right">Amount(<%= format_amount(@expense.currency) %>)</th>
+             <!--  <th class="text-right">ITC Details</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <%= render :partial => "line_item_details", :collection => @expense_line_items %>
+            <%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <% unless @tax_line_items.blank? %>
+                <td colspan="2"></td>
+              <% end %>
+              <td class="text-right" colspan="2"><strong>Sub Total</strong></td>
+              <td class="text-right"><%= format_amount(expense_sub_total) %></td>
+            </tr>
+            <tr>
+              <% unless @tax_line_items.blank? %>
+                <td colspan="2"></td>
+              <% end %>
+              <td class="text-right" colspan="2"><strong>Tax</strong></td>
+              <td class="text-right"><%= format_amount(@expense.tax) %></td>
+            </tr>
+            <tr>
+              <% unless @tax_line_items.blank? %>
+                <td colspan="2"></td>
+              <% end %>
+              <td class="text-right" colspan="2"><strong>Total</strong></td>
+              <td class="text-right"><%= format_amount(@expense.total_amount)%></td>
+            </tr>
+            <tr>
+              <% unless @tax_line_items.blank? %>
+                <td colspan="2"></td>
+              <% end %>
+              <td class="text-right" colspan="2"><strong>Tax as per Reverse Charge</strong></td>
+              <td class="text-right"><% if @expense.reverse_charge? %>
+                <%= format_amount(@expense.tax)  %>
+                <% end %>
+              </td>
+            </tr>
+            <% if @expense.credit_expense? %>
+              <tr>
+                <% unless @tax_line_items.blank? %>
+                  <td colspan="2"></td>
+                <% end %>
+                <td class="text-right" colspan="2"><strong>Payment Made </strong></td>
+                <td class="text-right"><%= format_amount(expense_paid_amount) %></td>
+              </tr>
+              <% if @expense.applied_tds? %>
+                <tr>
+                  <% unless @tax_line_items.blank? %>
+                    <td colspan="2"></td>
+                  <% end %>
+                  <td class="text-right" colspan="2"><strong>TDS Deducted </strong></td>
+                  <td class="text-right"><%= format_amount(expense_tds_amount) %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <% unless @tax_line_items.blank? %>
+                  <td colspan="2"></td>
+                <% end %>
+                <td class="text-right" colspan="2"><strong>Outstanding </strong></td>
+                <td class="text-right"><%= format_amount(expense_outstanding) %></td>
+              </tr>
+            <% end %>
+          </tfoot>
+        </table>
+        <% if @expense.credit_expense? %>
+          <div class="row">
+            <div class='col-lg-12'>
+              <% if @payment_vouchers.blank? %>
+              <div class="alert alert-info">
+                <i class="icon-info-sign icon-large"></i> <strong>Payment is due for this expense.</strong>
+              </div>
+              <%else%>
+              <table class="table table-striped b-t">
+                <thead>
+                  <tr>
+                    <th>Voucher Number</th>
+                    <th>Voucher Date</th>
+                    <th>Payment Date</th>
+                    <th>Payment Mode</th>
+                    <% if @payment_vouchers.sum('tds_amount') > 0 %>
+                    <th class="text-right">TDS</th>
+                    <% end %>
+                    <th class="text-right">Amount (<%= format_amount(@expense.currency)%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= render :partial => "expense_payment_vouchers" %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <% if @payment_vouchers.sum('tds_amount') > 0%>
+                      <td align="right" colspan="5">Total</td>
+                    <% else %>
+                      <td align="right" colspan="4">Total</td>
+                    <% end %>
+                      <td align="right">
+                      <%= format_amount(expense_paid_amount) %>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <div class='row'>
+          <div class='col-lg-6'>
+            <% if !@expense.customer_notes.blank?%>
+              <label for="customer_notes">Customer Notes</label><br/>
+              <%= breaking_word_wrap(@expense.customer_notes) %>
+            <% end %>
+          </div>
+          <div class='col-lg-6'>
+            <% if !@expense.tags.blank?%>
+              <label for="productvendor">Tags</label><br/>
+              <%= breaking_word_wrap(@expense.tags) %>
+            <% end %>
+          </div>
+        </div>
+        <% if !@expense.file_name.blank? %>
+          <div class='row'>
+            <div class='col-lg-12'>
+              <label>Attached documents :</label><br />
+              <%= link_to truncate(@expense.file_name, :length => 30), @expense.uploaded_file.url(:original, false), :target=> :blank? %>&nbsp;(<%= number_to_human_size(@expense.file_size) %>)
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>
+<div id="modal-make-payment" class="modal fade">
+  <%= render "payment_form", :expense => @expense %>
+</div>

@@ -1,0 +1,61 @@
+<%= form_for(@purchase_return_line_item) do |f| %>
+  <% if @purchase_return_line_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_return_line_item.errors.count, "error") %> prohibited this purchase_return_line_item from being saved:</h2>
+
+      <ul>
+      <% @purchase_return_line_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :purchase_return_id %><br />
+    <%= f.number_field :purchase_return_id %>
+  </div>
+  <div class="field">
+    <%= f.label :account_id %><br />
+    <%= f.number_field :account_id %>
+  </div>
+  <div class="field">
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_price %><br />
+    <%= f.text_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :tax %><br />
+    <%= f.check_box :tax %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :line_type %><br />
+    <%= f.text_field :line_type %>
+  </div>
+  <div class="field">
+    <%= f.label :product_id %><br />
+    <%= f.number_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tax_account_id %><br />
+    <%= f.number_field :tax_account_id %>
+  </div>
+  <div class="field">
+    <%= f.label :discount_percent %><br />
+    <%= f.text_field :discount_percent %>
+  </div>
+  <div class="field">
+    <%= f.label :warehouse_id %><br />
+    <%= f.number_field :warehouse_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,493 @@
+<%= render "shared/page_title" %>
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Left column/section -->
+        <section class="column width8 first"><br/>
+		<div class='highlight'>
+          <%= render :partial => "shared/no_record"%>
+            &nbsp;
+              <% if !@ledgers.blank? %>
+               <p align="right">
+            <a href="/payroll_reports/payroll_register.pdf" class="btn btn-gray" target ="_blank"><img src="/images/pdf1.gif"  title="Export to PDF"> &nbsp;Export to PDF</a>
+                <a href="<%= url_for(:format => 'xls')%>" class="btn btn-gray"><img src="/images/excel_icon.gif"  title="Export to Excel"> &nbsp;Export to Excel</a>
+              </p><br />
+            <% end %>
+			<div id='report_header' align='center'>
+				
+				<span class='company_name'><%= @company.name %></span>
+				<p><%= @company.address.get_address unless @company.address.blank?%></p>
+				<span class='report_title'><u>Payroll Register</u></span><br>
+				<span class='report_month'></span>
+			</div><hr>	
+            
+            <table class = "zebra-sriped" border = 0 align = center width=100% >
+                <thead>
+                <tr>
+                	<th >
+                      Date
+                    </th>   
+                	<th class= "width4">
+                       Particulars
+                    </th>
+                    <th>
+                       Vch Type
+                    </th>
+                    <th>
+                     Vch No.
+          
+                    </th>
+                    <th>
+                        Debit Amount
+                    </th>
+                    <th>
+                        Credit Amount
+                    </th>
+					
+					 
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                         30-4-2010
+                        </td>
+                        <td>
+                           Special Incentives
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	1
+                        </td>
+						<td>
+                            45000
+                        </td>
+						<td></td>
+						</tr>
+					
+                    <tr>
+                       <td></td>
+                       <td>
+                           Salary Payable
+						  <i>Pay Period: 1-Apr-2010 to 30-Apr-2010<i>
+
+                       </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+					   <td align = right>
+                            45000
+                        </td>
+						
+                    </tr>
+					<tr>
+                        <td>
+                         30-4-2010
+                        </td>
+                        <td>
+                           Employer's PF Contribution@8.33%
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	2
+                        </td>
+						<td>
+                            1082
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td>
+                        </td>
+                        <td>
+                          Employer's PF Contribution@3.37%
+                        </td>
+                        <td></td>
+                       <td></td>
+						<td>
+                            1270
+                        </td>
+						<td></td>
+					</tr>
+					
+					<tr>
+                       <td></td>
+                       <td>
+                          PF Payable
+						  <i>Pay Period: 1-Apr-2010 to 30-Apr-2010<i>
+
+                       </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+					   <td align = right>
+                            2352
+                        </td>
+					</tr>
+					
+					<tr>
+                        <td>
+                         30-4-2010
+                        </td>
+                        <td>
+                           Basic Salary
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	3
+                        </td>
+						<td>
+                            44000
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          Dearness Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            17600
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          House Rent Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            24640
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          Convayance Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            1600
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          professional Tax
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td></td>
+						<td>786</td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                        Employee  PF Contribution@12%
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                           350
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          Employee's Voluntry PF
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            7392
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          TDS
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          Employee's ESI Contribution
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          PF Payable
+						  <i>Pay Period: 1-Apr-2010 to 30-Apr-2010,Computed Tax Based on:Declared Value<i>
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                         31-5-2010
+                        </td>
+                        <td>
+                           Basic Salary
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	4
+                        </td>
+						<td>
+                            44000
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          Dearness Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            17600
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          House Rent Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            24640
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          Convayance Allowance
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td>
+                            1600
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td></td>
+                        <td>
+                          professional Tax
+                        </td>
+                        <td></td>
+                        <td></td>
+						<td></td>
+						<td>786</td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                        Employee  PF Contribution@12%
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                           350
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          Employee's Voluntry PF
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            7392
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          TDS
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          Employee's ESI Contribution
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                       <td></td>
+                       <td>
+                          PF Payable
+						  <i>Pay Period: 1-Apr-2010 to 30-Apr-2010,Computed Tax Based on:Declared Value<i>
+
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+					    <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                         31-5-2010
+                        </td>
+                        <td>
+                           Employer's PF Contribution@8.33%
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	5
+                        </td>
+						<td>
+                            1082
+                        </td>
+						<td></td>
+					</tr>
+					<tr>
+                        <td>
+                        </td>
+                        <td>
+                          Employer's PF Contribution@3.37%
+                        </td>
+                        <td></td>
+                       <td></td>
+						<td>
+                            1270
+                        </td>
+						<td></td>
+					</tr>
+					
+					<tr>
+                       <td></td>
+                       <td>
+                          PF Payable
+						  <i>Pay Period: 1-May-2010 to 31-Apr-2010<i>
+
+                       </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+					   <td align = right>
+                            2352
+                        </td>
+					</tr>
+					<tr>
+                        <td>
+                         31-5-2010
+                        </td>
+                        <td>
+                          Employer's ESI Contibution
+                        </td>
+                        <td>
+                          Payroll
+                        </td>
+                       <td>
+                       	6
+                        </td>
+						<td>
+                            45000
+                        </td>
+						<td></td>
+						</tr>
+					
+                    <tr>
+                       <td></td>
+                       <td>
+                           ESI Payable
+						  <i>Pay Period: 1-May-2010 to 31-Apr-2010<i>
+
+                       </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+					   <td align = right>
+                            45000
+                        </td>
+						
+                    </tr>
+                     
+					
+					 </tbody>
+                       <tfoot>
+                           
+                        </tfoot>
+                        </table>
+
+						
+						<hr>	
+            
+           
+                        <br>
+                         <p>
+                            22 United apartment 2407, East street,camp, Pune(MH).pin:411001
+                        </p>
+						</div>
+
+                  </section>
+                    <!-- End of Left column/section -->
+                    <!-- End of Left column/section -->
+                    </div>
+                    <!-- End of Wrapper -->
+                </div>&nbsp;

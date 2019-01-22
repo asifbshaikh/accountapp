@@ -1,0 +1,27 @@
+<script>
+  $(document).ready(function() {
+  	'<% 
+    @data_hash1 = {}
+     for acc in @to_accounts
+      @data_hash1[acc.name] = acc.id
+     end
+     %>'
+    data_hash1 = '<%= @data_hash1.keys.join(',')%>'.split(',');
+    $("input#to_account_auto_complete").autocomplete({
+      source: data_hash1
+  });
+  
+	'<% 
+  	@data_hash2 = {}
+  	 for acc in @from_accounts
+  	 	@data_hash2[acc.name] = acc.id
+  	 end
+  	 %>'
+  	data_hash2 = '<%= @data_hash2.keys.join(',')%>'.split(',');
+    $("input#from_account_auto_complete").autocomplete({
+    	source: data_hash2
+	});
+	
+	
+	});
+</script>

@@ -1,0 +1,1 @@
+Dir[File.join(Rails.root, 'db', '*.rb')].sort.each {|seed| load seed if seed.split("/").last.split("_").first == "reimbursement"}

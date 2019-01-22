@@ -1,0 +1,12 @@
+
+    <% @leave_requests.each do |leave_request| %>
+		 
+		  <tr>     
+         
+          <td><%= LeaveType.find(leave_request.leave_type).leave_type %></td>
+          <td><%= leave_request.start_date.strftime("%d-%m-%Y") %></td>
+          <td><%= leave_request.end_date.strftime("%d-%m-%Y") %></td>
+          <td><%= leave_request.contact_during_leave %></td>
+          <td></td>
+      </tr>
+	 <% end %>

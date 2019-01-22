@@ -1,0 +1,114 @@
+<script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for invoice in @invoices
+        @data<<invoice.invoice_number
+      @data<<invoice.due_date
+      @data<<invoice.amount
+      @data<<invoice.account.name
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+<!--Page Title-->
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Income &rarr;<span>Invoices</span></h1>
+        <%= form_for @search, :method => "get",:action=> "/invoices/cash_invoice" do |f| %>
+    <%= f.text_field :invoice_number_or_due_date_or_invoice_line_items_amount_or_account_name_equals, :id=>"autocomplete", :placeholder => "search" %>
+    <%end%>
+  </div>
+</div>
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <%= render "shared/flash_msg" %> <!-- Left column/section -->
+    <section class="column width6 first"><br/>
+      <div class="highlight">
+      <!-- tabs start -->
+     <div id="tab4">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/invoices">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/invoices/open">Unpaid Invoices</a>
+                    </li>
+                    <li class="tab3">
+                        <a href="/invoices/closed">Paid Invoices</a>
+                    </li>
+                    <li class="tab4">
+                        <a href="/invoices/cash_invoice">Cash Invoices</a>
+                    </li>
+                    <li class ="tab5">
+                        <a href="/invoices/time_invoice">Time Invoices</a>
+                    </li> 
+                    <li class ="tab6">
+                        <a href="/invoices/draft">Draft</a>
+                    </li>   
+                </ul>
+            </div>
+       <!-- tabs end -->
+      <div id="task_container">
+        <div id="tabs-all">
+        <% if @invoices.blank? %>
+        <p class="no-journal">
+          <%= render :partial => "shared/no_record" %>
+        </p>
+        <% else %>
+          <table class="display stylized" id="example">
+              <thead>   
+                <%= render :partial => "header1" %>
+              </thead>
+              <tbody>
+                <%= render :partial => "invoice1", :collection => @invoices%>
+              </tbody>
+              <tfoot >
+                <%= render :partial => "footer" %>
+              </tfoot>
+          </table> 
+          <%= render :partial => "paginate" %>
+        <% end %>
+          <div class="clear">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      </div><br />
+    </section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+      <%= new_button 'Create credit invoice', new_invoice_path %>
+      <p>
+        <%= new_button 'Create cash invoice', new_invoice_path(:cash_invoice => true) %>
+      </p>
+      <p>
+        <%= new_button 'Create time invoice', new_invoice_path(:time_invoice => true) %>
+      </p>
+       <br /> 
+     
+      <div id="rightmenu">
+        <dl class="first">
+          <dt><%= image_tag 'help.png', :width=>'16', :height=>'16', :alt=>'Help' %>
+          </dt>
+          <dd>
+            <dd><a href="#" class="nyroModal">Help</a></dd>
+          </dd>
+          <dd class="last">
+            If you are a new user, you should read "Getting started"
+          </dd>
+        </dl>
+      </div>
+    </aside>
+    &nbsp; <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

@@ -1,0 +1,186 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> View Advance Payments </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <% if !@current_user.auditor? %>
+        <a href="/gstr_advance_payments/new" class="btn btn-success btn-lg"> New Advance Payments</a>
+         <% if @gstr_advance_payment.status.blank? || @gstr_advance_payment.status==0%>
+          <div class="btn-group">
+           <button class="btn btn-info btn-lg" onclick="location.href= '<%= edit_gstr_advance_payment_path(@gstr_advance_payment)%>'"; > <i class="icon-edit"> </i> Edit</button>
+          </div>
+          <% end %>
+          <button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+      <% end %>
+        
+        <%= link_to raw('<i class="icon-print"> </i>'), gstr_advance_payment_path(@gstr_advance_payment, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank", :title=>"Export to PDF",:print=>'yes' %>
+
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), gstr_advance_payments_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial => "shared/flash_msg"%>
+        <div class="row">
+          <!-- Adv payment First section -->
+          <div class="col-sm-5">
+            <h4><strong><%= @gstr_advance_payment.customer.name %></strong></h4>
+              <% if @gstr_advance_payment.customer.email.present? %>
+                <p><i class="icon-envelope-alt"></i> <%= @gstr_advance_payment.customer.email%></p>
+              <% end %>
+              <% if @gstr_advance_payment.customer.primary_phone_number.present? %>
+                <p><i class="icon-phone"> <%= @gstr_advance_payment.customer.primary_phone_number%></i></p>
+              <% end %>
+          </div>
+          <!-- Invoice second section -->
+          <div class="panel-body">
+           <div class="row">
+
+          <!-- Invoice second section -->
+            <div class="col-lg-7">
+             
+             <div class="panel">
+            <div class="panel-heading"><h4><b>Allocation History</b></h4></div>
+
+               <header class="panel-heading">
+
+                
+                
+                 <% if @gstr_advance_payment.unallocated_amount > 0 %>
+
+                  <div class='col-lg-6 text-left'><b>Allocate To Purchase</b></div>
+                 <div class='col-lg-6 text-right'>
+                
+                    <%= link_to "<i class='icon-anchor'> </i>Allocate To Purchase".html_safe, {:controller=>:gstr_advance_payments, :action=> :allocate, :id=>@gstr_advance_payment.id }, :class=>"btn btn-sm btn-info" %>
+                  
+                 </div>
+
+
+              </header>
+               <%end%>
+              <div class="">
+               <% if @gstr_advance_payment.gstr_advance_purchases_payments.blank? %>
+                  
+               <% else %>
+                  <table class="table table-striped m-b-none text-small">
+                    <thead>
+                      <tr>
+                        <th>Purchase No.</th>
+                        
+                        <th class='text-right'>Received Amount(<%= @gstr_advance_payment.currency_code %>)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @gstr_advance_payment.gstr_advance_purchases_payments.each do |purchase_payment| %>
+                        <tr>
+                          <td><%= link_to purchase_payment.purchase.purchase_number, purchase_payment.purchase %></td>
+                         
+                          <td class='text-right'><%= format_amount(purchase_payment.amount) %></td>
+                        </tr>
+                      <% end %>
+                      
+                        <tr>
+                          <td class='text-right'></td>
+                         
+                          <td class='text-right'> <strong>Total : </strong><strong><%= format_amount(@gstr_advance_payment.gstr_advance_purchases_payments.sum(:amount)) %></strong></td>
+                        </tr>
+                      
+                    </tbody>
+                  </table>
+                <% end %>
+          <!-- Invoice second section ends-->
+          <div class="">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-8">
+                  <p>
+                    <strong> <%= %> Number: </strong><%= @gstr_advance_payment.voucher_number %> 
+                     <span class="badge <%=gstr_advance_payment_status_badge(@gstr_advance_payment.get_status)%>"><%= @gstr_advance_payment.get_status %></span>
+                  </p>
+                  <p><strong> <%= "Payment label"%> Date: </strong> <%= @gstr_advance_payment.voucher_date %></p>
+                  <p><strong> <%= %> Amount: </strong> <%= @gstr_advance_payment.currency%> <%= format_amount(@gstr_advance_payment.amount) %></p>
+                  <% if @gstr_advance_payment.exchange_rate !=0 %>
+                  <p><strong>Exchange Rate:</strong> <%= @gstr_advance_payment.exchange_rate%></p>
+                  <% end %>
+                </div>
+                <!-- Invoice basic details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@gstr_advance_payment.created_at.to_date.strftime("%d-%m-%Y") %> by <%= @gstr_advance_payment.created_by_user%></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></th>
+                  <th colspan="2" ><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                  <th class="text-right"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></th>
+                  <th  class="text-right"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></th>
+                  <% if @gstr_advance_payment.get_discount > 0 %>
+                    <th  class="text-right"><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+                  <% end %>
+
+                  <% if @gstr_advance_payment.has_tax_lines? %>
+                    <th>Tax Rate</th>
+                    <th class="text-right">Tax Amount</th>
+                  <% end %>
+
+                  <th  class="text-right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<%= @gstr_advance_payment.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @gstr_advance_payment_line_items %>
+                <%= render :partial=>"calculation_details" %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+       
+       
+     
+    </section>
+     <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-sm-12">
+        
+          <div class="block">
+          <% if @gstr_advance_payment.gstr_advance_payment_history.blank?%>
+            <%= render :partial => "shared/no_record"%>
+          <% else %>
+          <table class="table text-small row">
+            <thead>
+            </thead>
+            <tbody>
+            <%= render :partial => 'gstr_advance_payments/gstr_advance_payment_history', :collection => @gstr_advance_payment.gstr_advance_payment_history.order("payment_date DESC") %>
+            </tbody>
+          </table>
+          <% end %>
+          </div>
+          </div>
+        </div>
+        </div>
+        </section>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :gstr_advance_payment => @gstr_advance_payment %>
+</div>

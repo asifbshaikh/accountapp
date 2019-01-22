@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<%= render :partial => "meta_tags" %>
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial=> "zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial => "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Partner Program For Distributors</h2>                
+            </div>
+            <div class="five columns">
+                
+            </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">              
+            <div class="twelve columns">
+            
+              <p><h4>Grow your business with ProfitBooks.</h4></p> 
+              <p>We look forward for partnering with companies in any B2B business which cater to SMEs, Professional and Start up Entrepreneurs. We provide dedicated training and support to our channel partners and make them part of our growth.  
+ 
+</p>
+<p>
+<h4> Benefits </h4>
+<ul class="check"> 
+<li> Listing on ProfitBooks Sales Partner Directory at no cost.</li>
+<li> Special discounts for you and your clients.</li>
+<li> Certification and training from ProfitBooks.</li>
+</ul>
+</p> 
+<p><h4>Please fill out <a href="/home/contact">this form</a> and we will get in touch with you.</h4>
+<!-- Form code -->
+</p>
+              
+    
+            </div>
+            
+        </div>         
+         
+    </section>
+    <!-- content section end here -->
+
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

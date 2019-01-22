@@ -1,0 +1,170 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-5">
+        <h2><i class="icon-file-text-alt text"></i> View Sales Order </h2>
+      </div>
+      <div class="col-lg-7 m-t-large" align="right">
+      <% if @sales_order.status == 1 || @sales_order.status == 2 %>
+        <a href=<%= "/delivery_challans/new?sales_order_id=#{@sales_order.id}"%> class="btn btn-success btn-lg"> + Create Delivery Challan</a>
+        <% end %>
+        <div class="btn-group">
+         <button class="btn btn-info btn-lg" onclick="#"; > <i class="icon-edit"> </i> Actions</button>
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li class="text-left"><%= link_to raw('<i class="icon-print"> </i> Export to PDF'), sales_order_path(@sales_order, :format => 'pdf'), :target=>"_blank" unless @sales_order.status==4 %> </li>
+           <% if !@current_user.inventory_manager? %>
+            <% if (@sales_order.status == 2 || @sales_order.status == 3) && (@sales_order.billing_status == 0 || @sales_order.billing_status == 1) && (@sales_order.total_delivered_qty > @sales_order.total_invoiced_qty) %>
+            <li class="text-left"><%= link_to raw('<i class="icon-plus"> </i>Create Invoice'), "/invoices/created_from_sales_order?sales_order_id=#{@sales_order.id}&so_invoice=1" %></li>
+            <% end %>
+            <li class="divider"></li>
+            <% if @sales_order.status == 1 || @sales_order.status == 4 %>
+            <li class="text-left"><%= link_to raw('<i class="icon-edit"> </i>Edit '), edit_sales_order_path(@sales_order) %></li>
+            <li class="text-left"><a href=<%= "/sales_orders/cancel_order?id=#{@sales_order.id}" %> ><i class = "icon-remove"></i> Cancel Sales Order</a></li>
+            <% end %>
+            <% if @sales_order.status == 1 || @sales_order.status == 4 || @sales_order.status == 5%>
+            <li class="text-left"><%= link_to raw('<i class="icon-trash"> </i>Delete '), sales_order_path(@sales_order), :method => "delete", :confirm => "Are you sure?" %></li>
+            <% end %>
+           <% end %>
+          </ul>
+        </div> 
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), sales_orders_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= render :partial =>"shared/flash_msg"%>
+        <div class="row">
+          <!-- Invoice First section -->
+          <div class="col-sm-5">
+          <% if @sales_order.customer_id.present? %>
+            <h4><strong><%= @sales_order.customer.name %></strong></h4>
+            <%if @sales_order.customer.present? %>
+              <% if @sales_order.customer.email.present? %>
+              <p><i class="icon-envelope-alt"></i> <%= @sales_order.customer.email%></p>
+              <% end %>
+              <% if @sales_order.customer.primary_phone_number.present? %>
+              <p><i class="icon-phone"> <%= @sales_order.customer.primary_phone_number%></i></p>
+              <% end %>
+            <% end %>
+            <% end %>
+            <% if @sales_order.gst_salesorder? %>
+            <div class="row">
+              <div class="col-sm-5">
+                <b>Place of supply:</b> <%= @sales_order.place_of_supply_state  %>
+              </div>
+            </div>
+            <% end %>
+          </div>
+          <!-- Invoice second section -->
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-12">
+                  <p>
+                    <strong> Sales Order Number: </strong><%= @sales_order.voucher_number %> 
+                    <span class="badge bg-<%=sales_order_status_badge%>"> 
+                    <%= @sales_order.get_status %></span> 
+                    <span class="badge bg-<%= sales_order_billing_status_badge %>"> 
+                    <%= @sales_order.get_billing_status %></span>
+                  </p>
+                  <p><strong> Date: </strong> <%= @sales_order.voucher_date %></p>
+                  <p><strong> Amount: </strong><%= @sales_order.currency %> <%= format_amount(@sales_order.total_amount)%></p>
+                  <% if @sales_order.exchange_rate !=0 %>
+                    <p><strong>Exchange Rate:</strong> <%= format_amount(@sales_order.exchange_rate) %></p>
+                  <% end %>
+                  <% if !@sales_order.estimate.blank? %>
+                  <p><strong> Generated from : </strong> <%= link_to @sales_order.estimate.estimate_number, estimate_path(@sales_order.estimate_id) %></p>
+                  <% end %>
+                  <% if !@sales_order.po_reference.blank? %>
+                    <p><strong> PO Reference : </strong> <%= @sales_order.po_reference %></p>
+                  <% end %>
+                  <% if !@sales_order.po_date.blank? %>
+                    <p><strong> PO Date : </strong> <%= @sales_order.po_date %></p>
+                  <% end %>
+                </div>
+                <!-- Invoice basic details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@sales_order.created_at.to_date.strftime("%d-%m-%Y") %> by <%= @sales_order.created_by_user %>
+                </div>
+
+                <div class="col-lg-6">
+                  <%= display_project(@sales_order) %>
+                </div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></th>
+                  <th><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                  <th class="text-right"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></th>
+                  <th  class="text-right"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></th>
+                  <% if @sales_order.get_discount!=0 %>
+                    <th  class="text-right"><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+                  <% end %>
+
+                  <% if @sales_order.has_tax_lines? %>
+                    <th>Tax Rate</th>
+                    <th class="text-right">Tax Amount </th>
+                  <% end %>
+                  <th  class="text-right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<%= @sales_order.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @sales_order_line_items %>
+                <%= render :partial => "tax_line_item_details", :collection => @tax_line_items %>
+                <%= render :partial=>"calculation_details" %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+      <div class="row">
+          <%if !@sales_order.customer_notes.blank? %>
+          <div class="col-sm-12">
+            <p>
+              <label for="productcat"><%= @company.label.customer_label %> Notes</label><br/>
+              <%= breaking_word_wrap(@sales_order.customer_notes)%>
+            </p>
+          </div>
+          <% end %>
+        </div>
+        <% if !@delivery_challans.blank? || !@invoice.blank? %>
+        <div class="block">
+              <div class="btn-group" data-toggle="buttons" >
+                <label class="btn btn-sm btn-default sdl">
+                <input type="radio" name='sord' value="sodls" <%='checked=checked' if params[:sord].blank? || params[:sord] == 'sodlc'%> >
+                <i class="icon-ok icon-large text-active"></i>Delivery Challans
+                </label>
+               <% unless @sales_order.billing_status == 0 %> 
+                <label class="btn btn-sm btn-default sin">
+                <input type="radio" name='sord' value="soinvoice" <%= 'checked=checked' if params[:sord] == 'soinvoice' %> >
+                <i class="icon-ok icon-large text-active"></i>Invoice
+                </label>
+                <% end %>
+              </div>
+              </div>
+        <% end %>
+          <%= render :partial=>"delivery_challan"%>
+          <%= render :partial=>"invoices"%>
+      </div>
+    </section>
+  </section>
+</section>
+ 

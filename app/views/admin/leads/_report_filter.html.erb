@@ -1,0 +1,54 @@
+<!-- <form action = ''>
+	<table>
+<thead>
+	<tr>
+<td> 
+  <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8"%>&nbsp;
+  <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8" %>&nbsp;
+</td>
+<td>
+	<%= label_tag :created_by, "Created by"%>&nbsp;
+  <%= select_tag "created_by",options_from_collection_for_select( @super_user,"id","first_name"), :include_blank => "--Select Option--"%>&nbsp;
+  <%= label_tag :activity, "Activity"%>&nbsp;
+  <%= select_tag "activity",options_from_collection_for_select(Lead.get_activities,"first","last"), :include_blank =>"--Select Option--" %>&nbsp;
+  <%= submit_tag "Search", :class => "btn btn-green" %>
+</td>
+ </tr>
+	</table>
+</form> -->
+
+
+
+
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+<div class="row">
+<div class="form-group"><br/>
+<div class="col-lg-1"></div>
+
+       
+       <div class="col-lg-2">                  
+            <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8", :class => "form-control"%>
+        </div>
+        <div class="col-lg-2">
+            <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8", :class => "form-control" %>&nbsp;
+      </div>
+     
+      <div class="col-lg-2">
+            <%= select_tag "created_by",options_from_collection_for_select( @super_user,"id","first_name"), :prompt => "--Created By--", :class => "form-control"%>&nbsp;
+      </div>
+
+      <div class="col-lg-2">
+            <%= select_tag "activity",options_from_collection_for_select(Lead.get_activities,"first","last"), :prompt =>"--Select Option--", :class => "form-control" %>&nbsp;
+      </div>
+      
+      <div class="col-lg-2">
+           <input type="submit" value="Search" class="btn btn-success"/>
+       </div>
+                        
+</div> 
+</div>
+</form>
+</div>

@@ -1,0 +1,62 @@
+
+<%= form_for('users',:url =>{:action => :basic_info, :controller => "/users"}, :html=>{:class=>'form-horizontal', :remote=>true}) do |f| %>
+  <div class='errorPlace'></div>
+  <div class='form-group'>
+    <div class="col-lg-4">
+    <div class="row">
+    <%= hidden_field_tag "user_id", @user.id %>
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Gender</label><br/>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.select( :gender, [['Male'], ['Female']],{ },:class=>'bg-focus form-control') %>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Blood Group</label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.select(:blood_group, [['A Positive'],['A Negative'],['B Positive'],
+               ['B Negative'],['AB Positive'],['AB Negative'],['O Positive'],['O Negative']], { },:class=>'bg-focus form-control') %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Contact</label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.text_field :emergency_contact, :value=>@user.emergency_contact, :onkeydown => "return numbersOnly(event);", :maxlength=> 12, :size => "14",:class=>'bg-focus form-control' %>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Birth Date</label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.text_field :birth_date, :value=> @user.birth_date,:class=>'bg-focus form-control' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Present Address</label>
+        </div>
+        <div class="col-lg-8"><br/>
+        <%= f.text_area :present_address, :value=>@user.present_address,:rows => 2, :cols=> 40, :class=>'bg-focus form-control'  %></div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Permanent Address</label>
+        </div>
+        <div class="col-lg-8"><br/>
+        <%= f.text_area :permanent_address, :value=>@user.permanent_address, :rows => 2, :cols=> 40, :class=>'bg-focus form-control'  %></div>
+        </div>
+      </div>
+  <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-4">
+      <div class='save-btn'></div>
+      <%= f.submit "Save", :class => "btn btn-success btnsave", :"data-loading-text"=>"Saving..." %> &nbsp; 
+    </div>
+  </div>
+<% end %>

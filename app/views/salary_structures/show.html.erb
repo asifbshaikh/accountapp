@@ -1,0 +1,84 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+ <!-- Wrapper -->
+ <div class="wrapper">
+  <!-- Left column/section -->
+   <section class="column width6 first"></br>
+     <div class="highlight">
+     <%= render :partial => "shared/flash_msg"%>
+      <div class="clearfix leading">
+        <div class = "ta-center"><h3>Salary Structure </h3></div>
+        <div class="column width3 first">
+          <p>
+            
+          </p> 
+        </div>
+        <div class="column width3">
+        <p class="box">
+          <label>
+            Employee Name: <%= User.find(@salary_structure.for_employee).full_name %>
+              </label><br/>
+                
+        <label for="invoice_number">
+          Effective from date: <%=@salary_structure.effective_from_date %>
+        </label><br>
+        <label for="invoice_number">
+          Created at: <%= @salary_structure.created_at.to_date %>
+        </label><br>
+        <label for="invoice_number">
+          Updated at: <%= @salary_structure.updated_at.to_date %>
+        </label><br>
+        </p> 
+        </div>
+      </div>
+
+  <table class="display stylized full" id ="act_details">
+       <thead>
+              <tr>
+                <th><label>Pay head</label></th>
+                <th><label>Pay head type</label></th>
+                <th><label>Amount</label></th>
+              </tr>
+       </thead>  
+       <tbody>
+             <% for salary_structure_line_item in @salary_structure.salary_structure_line_items %>
+              <% if salary_structure_line_item.amount > 0 %>
+              <tr>
+                <td><%= Payhead.find(salary_structure_line_item.payhead_id).payhead_name %></td>
+                <td><%= Payhead.find(salary_structure_line_item.payhead_id).payhead_type %></td>
+                <td><%= format_currency salary_structure_line_item.amount %></td>
+              </tr>
+              <% end %>
+             <% end %>   
+          </tbody>
+          <tfoot>
+	              <tr>
+	              	<td>
+	                  <%= link_to 'Edit', edit_salary_structure_path(@salary_structure),{:class=>"btn btn-green " } %> 
+	                  <a href="/salary_structures" class="btn btn-cancel ">&nbsp;Back</a>
+                    <a href=<%= "/salary_structures/copy_salary_structure?id=#{@salary_structure.id}"%> class="btn">Copy this</a>
+	                </td>
+                        <td class= "ta-right"><b>Total</b></td>
+                       <td>
+                         <span id = "total"><b><%= format_currency (@salary_structure.total_amount) %></b></span>
+                       </td>
+	              </tr>
+          </tfoot>
+      </table> 
+    </div><br />
+    </section>
+      <aside class="column width2"><br />
+      <%= new_button "New Salary Structure", new_salary_structure_path %>
+		  <p><%= list_button_black 'View Salary Structures', salary_structures_path %></p>
+      <% if !@salary_structure_histories.blank? %>
+      <p><%= list_button_black "View Histories", "/salary_structure_histories?id=#{@salary_structure.for_employee}" %></p>
+    <% end %>
+    
+         
+		    </aside>
+		 </div>
+ </div>  

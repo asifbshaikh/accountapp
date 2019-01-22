@@ -1,0 +1,33 @@
+
+                            <div class="table-responsive col-lg-12">
+                              <div class="row">
+                            <div  class="col-sm-12 m-b-mini">
+                      <br>
+                      <p>This page shows the summary of your transactions entred in ProfitBooks. <br/>You can view the transaction details on 'Upload & Verify' section. </p>
+                      <p><br/></p>
+
+                    </div>
+
+                   </div>
+
+                              <table class="table text-small">
+                                <thead>
+                                  <tr>                    
+                                    <th>Types Of Invoices</th>
+                                    <th>Total Invoices</th>
+                                    <th>Taxable Amount</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
+                                    <th>IGST</th>
+                                    <th>Total Inclusive Of Taxes</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                 <% @info.values.each_with_index do |info,index| %>
+                                  <%= transaction_summary(info,index+1,@info.count) %>      
+                                <% end %>
+                               
+
+                                </tbody>
+                            </table>
+                          </div>

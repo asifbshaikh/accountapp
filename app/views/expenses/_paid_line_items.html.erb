@@ -1,0 +1,10 @@
+  <tr id="to_row<%= index %>" valign="top" >
+	<%= hidden_field_tag "expense[paid_line_items_attributes][#{index}][id]",paid_line_item.id%>
+	<td valign="top">
+		<%= select_tag "expense[paid_line_items_attributes][#{index}][account_id]", options_from_collection_for_select(@from_accounts, :id, :name,:selected => paid_line_item.account_id ),:include_blank => true, :class => "half", :id => 'expense_from_account'%>
+		<span id='bal'><span>
+	</td>
+    <td><%= text_area_tag "expense[paid_line_items_attributes][#{index}][description]",paid_line_item.description, :row => 2 %></td>
+    <td><%= text_field_tag "expense[paid_line_items_attributes][#{index}][amount]", paid_line_item.amount, :class => "amount", :id =>"amount" ,:onkeydown => "return numbersOnly(event);", :size => 8, :maxlength => 20 %></td>
+	      <td><%= link_to "X",{:action => :remove_paid_line_item, :index => index},:class => "btn btn-red", :id => 'cancel',  :remote => true %></td>
+ </tr>

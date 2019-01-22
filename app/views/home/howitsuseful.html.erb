@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Endymion HTML Template</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Stylesheets Files       // -->
+<!-- ////////////////////////////////// -->
+<%= render :partial => "stylesheets"%>
+  
+<!-- ////////////////////////////////// -->
+<!-- //     Google Webfont Files     // -->
+<!-- ////////////////////////////////// -->
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700"/>
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //        Favicon Files         // -->
+<!-- ////////////////////////////////// -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //      Javascript Files        // -->
+<!-- ////////////////////////////////// -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="javascripts/jquery.easing-1.3.min.js"></script>
+<script src="javascripts/tooltip.js"></script>
+<script src="javascripts/superfish.js"></script>
+<script src="javascripts/tinynav.min.js"></script>
+<script src="javascripts/jquery.fancybox.js?v=2.0.6"></script>
+<script src="javascripts/jquery.fancybox-media.js?v=1.0.3"></script>
+<script src="javascripts/jquery.ui.totop.min.js"></script>
+<script src="javascripts/ddaccordion.js"></script>
+<script src="javascripts/jquery.twitter.js"></script>
+<script src="javascripts/jflickrfeed.min.js"></script>
+<script src="javascripts/faq-functions.js" ></script>
+<script src="javascripts/theme-functions.js"></script>
+<script src="javascripts/jquery.retina.js"></script>
+<script>
+$(document).ready(function() {
+//Retina Image
+$('img.retina').retina('@2x');
+  
+//Footer Equal Height
+equalHeight($(".footer-column, .footer-logo"));
+});
+
+function equalHeight(group) {
+  tallest = 0;
+  group.each(function() {
+    thisHeight = $(this).height();
+    if(thisHeight > tallest) {
+      tallest = thisHeight;
+    }
+  });
+  group.height(tallest);
+}
+</script>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <!-- logo start here -->
+      <div id="logo">
+          <a href="/home/index"><img src="/images/logo.png" alt="ProfitBooks - Online Accounting and Payroll Management Software" class="retina"/></a>
+          
+        </div>
+        <!-- logo end here -->
+        
+        <!-- top information start here -->
+        <div id="top-info">
+          <ul>
+              <li>
+                  <p>Call us to know more</p>
+                    <img src="/images/top_info1.png" alt="" class="retina" /><br/>
+                    <p class="info-text">+91 84 85 86 3000</p>
+                </li>
+                <li>
+                  <p>Already Registered ?</p>
+                    <p class="info-text"><a href="https://www.profitbookshq.com/login/index">Login to your account</a></p>
+                </li>
+            </ul>
+        </div>
+        <!-- top information end here -->
+        
+        <div id="mainmenu-wrapper">
+          <!-- mainmenu start here -->
+            <nav id="mainmenu">
+                <ul id="menu">
+                    <li><a href="/home/features">Features</a></li>
+                  <li class="selected"><a href="/home/howitsuseful">How Its Useful</a></li>
+                <li><a href="/home/pricing">Pricing & Signup</a></li>
+                    <li><a href="#">Partners</a>
+              <ul> 
+                                <li><a href="/home/accountant"><span>-</span> Accountants</a></li>
+                                <li><a href="/home/sales"><span>-</span> Sales & Distribution</a></li>     
+                      </ul>
+                  </li>
+                    <li class="dropdown"><a href="#">Explore</a>
+                              <ul> 
+                                <li><a href="/home/faq"><span>-</span> Common Questions</a></li>
+                                <!--li><a href="blog-left-sidebar.html"><span>-</span> Customer Stories</a></li-->
+                                <li><a href="https://profitbooks.zendesk.com/home"><span>-</span> Support Center</a></li> 
+                                <!--li><a href="single-left-sidebar.html"><span>-</span> Our Blog</a></li-->    
+                      </ul>
+                  </li>
+                    <li><a href="/home/contact">Contact</a></li>
+                    
+              </ul>
+            </nav>
+            <!-- mainmenu end here -->
+            
+            <!-- top socials start here -->
+            <div id="top-socials">
+                <ul class="socials-list">
+                    <li><a href="http://www.facebook.com/profitbooks" target="_blank" title="facebook" class="tooltip"><img src="/images/socials/facebook.png" alt="Follow ProfitBooks on Facebook" class="retina" /></a></li>
+                    <li><a href="http://twitter.com/profitbookslive"  target="_blank" title="twitter" class="tooltip"><img src="/images/socials/twitter.png" alt="Follow ProfitBooks on Twitter" class="retina" /></a></li>
+                    <li><a href="http://www.linkedin.com/company/profitbooks" title="linkedin"  target="_blank" class="tooltip"><img src="/images/socials/linkedin.png" alt="Follow ProfitBooks on Linked-in" class="retina" /></a></li>
+                    <li><a href="https://plus.google.com/102964411717263296476/posts" title="google+"  target="_blank" class="tooltip"><img src="/images/socials/google+.png" alt="Follow ProfitBooks on Google+" class="retina" /></a></li>
+                </ul>
+            </div>
+            <!-- top socials end here -->
+            
+        </div>
+    </header>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+    <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Small or big, ProfitBooks serves all.</h2>                
+            </div>
+            <div class="five columns">
+              <div id="breadcrumb">
+                  <ul>
+                        <li><a href="/home/index">Home</a></li>
+                        <li class="current-page"><a href="/home/howitsuseful">How its useful</a></li>
+                    </ul>
+              </div>  
+          </div>
+      </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+          <div class="twelve columns">
+              <p class="highlighttext">We work hard to fully understand our clients business so that we might find the best design solutions and tailor them to their specific needs and goals.</p>
+            </div>
+        </div>
+    
+      <div class="row">
+          <div class="twelve columns">
+        <ul class="tabs">
+                    <li><a href="#tab-sample1">For Small Business</a></li>
+                    <li><a href="#tab-sample2">For Accountants</a></li>
+                    <li><a href="#tab-sample3">For Service Providers</a></li> 
+                    <li><a href="#tab-sample4">For Sellers</a></li>           
+                    <li><a href="#tab-sample4">For Everyone Else</a></li>                 
+            </ul>
+              <div class="tab_container">
+                  <div id="tab-sample1" class="tab_content">
+                      <div class="row">                         
+                          <div class="four columns">
+                              <div class="service-title">
+                                  <div class="general-icon img-left">
+                                      <span aria-hidden="true" class="icon-terminal-2"></span>
+                                  </div>
+                                  <p class="highlighttext">We create awesome</p>
+                                  <h2>Website.</h2>
+                              </div>
+                          </div>
+                          <div class="four columns">
+                              <p>Quis autem veleumiure reprehenderit qui voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem fugiat quibusdam etautas officiis debitis autrerum voluptates repudiandae sintet molestiae error sit voluptatem accusantium dolorem</p>
+                              <ul class="check">
+                                  <li>Quisaute reprehend voluptate mole</li>
+                                  <li>Et harum quide facilis expedita distio</li>
+                                  <li>Temporibus aute quibusdam officiis</li>                        
+                              </ul>
+                          </div>
+                          <div class="four columns">
+                              <img src="/images/sample_images/services1.jpg" alt="" class="img-left" />
+                          </div>
+                      </div>                                  
+                  </div>
+                                                        
+                  <div id="tab-sample2" class="tab_content">                            
+                      <div class="row">                         
+                          <div class="four columns">
+                              <div class="service-title">
+                                  <div class="general-icon img-left">
+                                      <span aria-hidden="true" class="icon-keys"></span>
+                                  </div>                                    
+                                  <p class="highlighttext">Experience to build</p>
+                                  <h2>Great Apps.</h2>
+                              </div>
+                          </div>
+                          <div class="four columns">
+                              <p>Quis autem veleumiure reprehenderit qui voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem fugiat quibusdam etautas officiis debitis autrerum voluptates repudiandae sintet molestiae error sit voluptatem accusantium dolorem</p>
+                              <ul class="check">
+                                  <li>Quisaute reprehend voluptate mole</li>
+                                  <li>Et harum quide facilis expedita distio</li>
+                                  <li>Temporibus aute quibusdam officiis</li>                        
+                              </ul>
+                          </div>
+                          <div class="four columns">
+                              <img src="/images/sample_images/services2.jpg" alt="" class="img-left" />
+                          </div>
+                      </div>                                        
+                  </div>
+                                                        
+                  <div id="tab-sample3" class="tab_content">                            
+                      <div class="row">                         
+                          <div class="four columns">
+                              <div class="service-title">
+                                  <div class="general-icon img-left">
+                                      <span aria-hidden="true" class="icon-icon0"></span>
+                                  </div>                                    
+                                  <p class="highlighttext">We also offer some</p>
+                                  <h2>Cool Brand.</h2>
+                              </div>
+                          </div>
+                          <div class="four columns">
+                              <p>Quis autem veleumiure reprehenderit qui voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem fugiat quibusdam etautas officiis debitis autrerum voluptates repudiandae sintet molestiae error sit voluptatem accusantium dolorem</p>
+                              <ul class="check">
+                                  <li>Quisaute reprehend voluptate mole</li>
+                                  <li>Et harum quide facilis expedita distio</li>
+                                  <li>Temporibus aute quibusdam officiis</li>                        
+                              </ul>
+                          </div>
+                          <div class="four columns">
+                              <img src="/images/sample_images/services3.jpg" alt="" class="img-left" />
+                          </div>
+                      </div>                                      
+                  </div>
+                    
+                  <div id="tab-sample4" class="tab_content">                            
+                      <div class="row">                         
+                          <div class="four columns">
+                              <div class="service-title">
+                                  <div class="general-icon img-left">
+                                      <span aria-hidden="true" class="icon-database"></span>
+                                  </div>                                    
+                                  <p class="highlighttext">We provide a reliable</p>
+                                  <h2>Hosting.</h2>
+                              </div>
+                          </div>
+                          <div class="four columns">
+                              <p>Quis autem veleumiure reprehenderit qui voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem fugiat quibusdam etautas officiis debitis autrerum voluptates repudiandae sintet molestiae error sit voluptatem accusantium dolorem</p>
+                              <ul class="check">
+                                  <li>Quisaute reprehend voluptate mole</li>
+                                  <li>Et harum quide facilis expedita distio</li>
+                                  <li>Temporibus aute quibusdam officiis</li>                        
+                              </ul>
+                          </div>
+                          <div class="four columns">
+                              <img src="/images/sample_images/services4.jpg" alt="" class="img-left" />
+                          </div>
+                      </div>                                      
+                  </div>                                                                  
+              </div>
+          </div>    
+        </div>   
+              
+        <div class="row">
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-battery-charge-2"></span>
+                </div>              
+                <h5>Easy and Powerfull</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+            </div>
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-flask-full"></span>
+              </div>                
+                <h5>Anytime and Anywhere</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+          </div>
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-support"></span>
+              </div>                
+                <h5>Grow Your Business</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+          </div>
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-floppy"></span>
+              </div>              
+                <h5>Easy and Powerfull</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+          </div>
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-code"></span>
+              </div>                
+                <h5>Anytime and Anywhere</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+          </div>
+            <div class="six columns mobile-two">
+              <div class="box-icon img-left">
+                <span aria-hidden="true" class="icon-rulers"></span>
+              </div>                
+                <h5>Grow Your Business</h5>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti</p>
+          </div>
+      </div>
+        
+        <div class="row">
+          <div class="twelve columns">
+              <h5 class="title-line"><span>Company Fact</span></h5>
+            </div>
+        </div> 
+        
+        <div class="row mobile3row-content">
+            <div class="four columns text-center mobile3column-content">
+              <div class="slogan-box company-fact">             
+                    <h1>100%</h1>
+                    <h5>satisfaction</h5>
+                </div>
+            </div>
+            <div class="four columns text-center mobile3column-content">
+              <div class="slogan-box company-fact">
+                    <h1>23 k</h1>
+                    <h5>dev hours</h5>
+              </div>
+          </div>
+            <div class="four columns text-center mobile3column-content">
+              <div class="slogan-box company-fact">
+                    <h1>1876</h1>
+                    <h5>cups of coffee</h5>
+              </div>
+          </div>
+      </div>
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial => "footer"%>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

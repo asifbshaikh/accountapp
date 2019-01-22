@@ -1,0 +1,11 @@
+<span id="tag">
+   <%= @message.tag_list %>
+   <%= link_to_remote "Edit", :url => remote-tag_edit_message_path(@message),
+                              :method => :get, :update => "tags" %>
+  
+  
+  <!-- <% if_is_logged_in do %>
+   <%= link_to_remote "Edit", :url=> remote_tag_edit_message_path(@message),
+                              :method => :get, :update => "tags" %>
+ <% end %>-->
+ </span>

@@ -1,0 +1,64 @@
+<!-- Page Title Start -->
+<section id="content">
+  <section class="main padder">
+   <div class="row"><p></p>
+     <div class="col-lg-4">
+        <h3><i class="icon-book text"></i>Documents</h3>
+     </div>
+      <div class="col-lg-8" align="right">
+       <a href="/db/dropbox_intro" class="btn btn-info btn-lg"><i class="icon icon-dropbox"></i> Dropbox</a>
+      <%= link_to raw('<i class="icon-mail-reply"> </i>'), tasks_path, :class => 'btn btn-default btn-lg', :title =>"Back" %><p></p>
+      </div>
+  </div>
+   <!-- Left column/section -->
+  <div class="row ">
+    <div class="col-lg-12">
+    <section class="col-lg-8">
+       <section class="panel">
+            <div class="panel-body">
+             <%= render :partial => "documents/breadcrumbs" %>
+             <%= render "shared/flash_msg" %>
+             
+              <% if @folders.blank? && @myfiles.blank? %> 
+               <%= render "shared/no_record" %>
+              <% else %>
+               <div class="table-responsive row">
+               <table class="table table-striped b-t">
+                  <thead>   
+                     <%= render :partial => "documents/header" %>
+                  </thead>
+                  <tbody>
+                     <%= render :partial => "documents/share_doc" %>
+                  </tbody>
+                  <tfoot>
+                     <%= render :partial => "documents/footer" %>
+                  </tfoot>
+               </table>
+               </div>
+              <% end %> 
+	         </div>
+      </section>
+    </section>
+    <section class="col-lg-4">
+      <section class="panel">
+        <header class="panel-heading">
+          <i class="icon-folder-close icon-large text-default"></i> New Folder 
+        </header>
+        <div class="panel-body">
+          <%= render :partial=>"/folders/form"%>
+        </div>
+      </section>
+       <section class="panel">
+        <header class="panel-heading">
+          <i class="icon-file icon-large text-default"></i> New File 
+        </header>
+        <div class="panel-body">
+          <%= render :partial=>"/myfiles/form"%>
+        </div>
+      </section>
+    </section>
+    </div>
+    </div>
+    <!-- /.sidebar -->
+    </section>
+  </section>

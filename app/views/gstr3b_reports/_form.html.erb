@@ -1,0 +1,17 @@
+<%= form_for(@gstr3b_report) do |f| %>
+  <% if @gstr3b_report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gstr3b_report.errors.count, "error") %> prohibited this gstr3b_report from being saved:</h2>
+
+      <ul>
+      <% @gstr3b_report.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

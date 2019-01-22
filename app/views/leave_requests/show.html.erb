@@ -1,0 +1,108 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class ="column width6 first"></br>
+      <div class="highlight">
+        <%= render :partial => "shared/flash_msg"%>
+      <div class="clearfix leading">
+      <div class="column width3 first">
+               <p >
+                <label>Leave requested by:</label><br/>
+                <label><h3><%= User.find(@leave_request.user_id).full_name %></h3></label>  
+               </p> 
+            </div>
+            <div class="column width3">
+              <p class="box">
+                <label>Leave Type:</label> 
+                <%= LeaveType.find(@leave_request.leave_type_id).leave_type %><br/>
+                <label>Contact during leave:</label>
+                <%= @leave_request.contact_during_leave %><br/> 
+              </p> 
+            </div>
+          </div>
+
+        <table class="display stylized" id="act_details">
+          <thead>
+            <tr><th colspan="2">Other Details</th></tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>
+                <label>Reason for leave:</label>
+                <%= breaking_word_wrap(@leave_request.reason_for_leave) %>
+              </td>
+            </tr>
+            <% if @leave_request.leave_status == LeaveRequest::STATUS[:rejected] %>
+            <tr>
+              <td>
+                <label>Leave Status:</label>
+                Rejected
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Reason for rejection:</label>
+                <%= simple_format @leave_request.approver_comment %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+           
+        <div id="task_container">
+         <div class="clearfix"></div>    
+      <table class="display stylized" id="act_details">
+        <thead>
+          <tr>
+            <th>Duration</th>
+            <th>Days</th>
+            <th>Approver</th>
+          </tr>
+        </thead>
+         <tbody> 
+          <td><%= @leave_request.start_date %> <b>to</b> <%= @leave_request.end_date%></td>
+          <td><%= @leave_request.no_of_days_on_leave %></td>
+          <td><%= @leave_request.approver_name %></td>
+        </tbody> 
+        <tfoot>
+          <tr>
+            <td colspan =3>
+              <% if @leave_request.approved? %>
+               <%= link_to 'Revoke', {:action => :revoke, :id => @leave_request.id}, :class => "btn btn-green", :remote => true %>
+             <% else %>
+        
+               <%= link_to "Edit", edit_leave_request_path(@leave_request), :class => "btn btn-green" %>
+              <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "" class="btn" >Delete</a>
+              <% end %>
+              <%= link_to "Back", leave_requests_path, :class => "btn btn-gray" %>
+            </td>
+              </tr>
+            </tfoot>
+           </table>
+         </div>
+  
+      </div><br />
+    </section>
+  <!-- End of Left column/section -->
+    <aside class="column width2"><br />
+      <%= new_button "Apply For Leave", new_leave_request_path %>
+      <p><%= list_button_black "View All Requests", leave_requests_path %></p>
+    <p>
+    <%= show_button "View Leave Dashboard", leave_requests_dashboard_path %>
+    </p>         
+      <div id="rightmenu">
+        <dl class="first">
+          <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+          <dd><a href="/helps/29" class="nyroModal">Help</a></dd>
+          <dd class="last">If you are a new user, you should read "Getting started"</dd>
+        </dl>
+      </div><br />
+    </aside>
+  </div>
+</div>

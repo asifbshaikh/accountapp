@@ -1,0 +1,3 @@
+<a href="/reimbursement_notes/new" class="btn btn-success btn-lg"> + Add New Record</a>
+<%= link_to raw('<i class="icon-print"> </i>'), reimbursement_note_path(@reimbursement_note, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), reimbursement_notes_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>

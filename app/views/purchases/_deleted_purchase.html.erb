@@ -1,0 +1,27 @@
+<tr class="gradeB">
+<td><%= link_to deleted_purchase.purchase_number, deleted_purchase %></td>
+
+<td><%= truncate(Account.find(deleted_purchase.account_id).name, :length=>20) %></td>
+<td><%= deleted_purchase.due_date.strftime("%d-%m-%Y") %></td>
+<td ><%= format_currency deleted_purchase.amount %></td>
+<td> <%= User.find(deleted_purchase.created_by).first_name%></td>
+<%if !@company.plan.free_plan? %>
+<td><%= !deleted_purchase.project_id.blank? ? deleted_purchase.project_name : "Not available" %></td>
+<% end %>  
+ <td>
+     <div class="btn-group" style="float: right;">
+          <button class="btn btn-gray" onclick="location.href='/purchases/<%= deleted_purchase.id %>'"; >View</button>
+          <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href= <%= "/purchases/restore_purchase?id=#{deleted_purchase.id}"%>  >Restore</a></li>
+             <li class="divider"></li>
+            <li><a href= <%= "/purchases/permanent_delete_purchase?id=#{deleted_purchase.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+          </ul>
+      </div>     
+
+
+</td>
+</tr>
+

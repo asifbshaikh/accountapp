@@ -1,0 +1,31 @@
+<% if @credit_note.invoice_credit_allocations.blank? %>
+	<%= render "shared/no_record" %>
+<% else %>
+	<table class="table table-striped">
+		<thead>
+			<th>Invoice#</th>
+			<th class="text-right">Payment Received(<%= @credit_note.currency %>)</th>
+			<th class="text-right">Outstanding(<%= @credit_note.currency %>)</th>
+			<th>Due On</th>
+			<th width="10%" class="text-right">Amount</th>
+			<th width="5%"></th>
+		</thead>
+		<tbody>
+			<% @credit_note.invoice_credit_allocations.each_with_index do |obj, index| %>
+				<tr id="row<%= index %>">
+					<td><%= obj.invoice.invoice_number %></td>
+					<td class="text-right"><%= number_with_precision (obj.invoice.total_amount-obj.invoice.outstanding), :precision=>2 %></td>
+					<td class="text-right"><%= number_with_precision obj.invoice.outstanding, :precision=>2 %></td>
+					<td><%= obj.invoice.due_date %></td>
+					<td class="text-right"><%= text_field_tag "credit_note[invoice_credit_allocations_attributes][#{index}][amount]", obj.amount, :class=>"form-control text-right" %>
+					<%= hidden_field_tag "credit_note[invoice_credit_allocations_attributes][#{index}][invoice_id]", obj.invoice_id %>
+					<%= hidden_field_tag "credit_note[invoice_credit_allocations_attributes][#{index}][id]", obj.id %>
+					</td>
+					<td style="padding-right:0"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_allocation, :index => index},:class=> "btn btn-danger", :id => 'cancel', :remote => true%>
+					<%= hidden_field_tag "credit_note[invoice_credit_allocations_attributes][#{index}][_destroy]"%>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+<% end %>

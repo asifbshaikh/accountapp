@@ -1,0 +1,116 @@
+<%= form_for(customer=Customer.new, :html=>{:class=>'m-b-none form-horizontal', :remote=>true}) do |f| %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">New Customer</h4>
+      </div>
+      <div class="modal-body scroll-y" style='max-height:500px;'>   
+        <div class='errorSection'></div>       
+        <div class="block">
+          <%= f.label :name, :class=>'control-label-required' %>
+          <%= f.text_field :name, :class=>'form-control' %>
+          <%= hidden_field_tag "selector", selector if defined?(selector) %>
+        </div>
+        <% if @company.country_id == 93 %>  
+         <div class="block">
+              <label class='control-label'>GST Registration type</label><br/>
+              <%= collection_select(:customer, :gst_category_id, GstCategory.all, :id, :name, {:prompt => true}, { :style=>"width:200px;"} ) %>
+            </div>         
+            <div class="block">
+              <%= f.label :GSTIN, :class=>'control-label' %>
+              <%= f.text_field :gstn_id, :maxlength=> 15, :class=>"form-control bg-focus" %>
+            </div>
+             <%else%>
+              <div class="block">
+              <%= f.label :Tax_registration_no,  :class=>'control-label' %>
+              <%= f.text_field :tax_reg_no, :class=>"form-control bg-focus" %>
+            </div> 
+            <% end %>
+           
+        <div class="block">
+          <%= label_tag "start_date","Start from", :class=>'control-label-required' %>
+          <%= text_field_tag "account_starts_from", @financial_year.start_date, :class=>'form-control text-right', :style=>"width:120px" %>
+        </div>
+        <div class="block">
+          <%= label_tag "opening_balance","Opening balance", :class=>'control-label' %>
+          <%= text_field_tag "opening_balance", params[:opening_balance], :class=>'form-control text-right', :onkeydown => "return balOnly(event);", :maxlength => "18", :class=>"bg-focus form-control text-right", :style=>"width:120px;" %>
+        </div>
+        <div class="block">
+          <label class='control-label'>Email</label>
+          <%= f.text_field :email, :id=>'email', :class=>'form-control' %>
+        </div>
+         <div class="block">
+            <label class='control-label-required'>Phone Number</label>
+              <%= f.text_field :primary_phone_number, :class=>'form-control' %>
+            </div>
+        <div class="block">
+          <div class="block">
+          <label class='control-label'>Billing Address</label>
+          <%= f.fields_for :addresses, customer.addresses.build(:address_type=>1) do |ba| %>
+            <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+            <%= ba.hidden_field :address_type %>
+          </div>
+            <div class="col-lg-6">
+              <%= ba.label :city,  :class=>'control-label' %>
+              <%= ba.text_field :city, :class=>'form-control' %>
+            </div>
+            <div class="col-lg-6">
+              <%= ba.label :state,  :class=>'control-label-required' %>
+              <%= ba.text_field :state, :class=>'form-control' %>
+            </div>
+            <div class="col-lg-6">
+              <%= ba.label :country,  :class=>'control-label' %>
+              <%= ba.text_field :country, :class=>'form-control' %>
+            </div>
+            <div class="col-lg-6">
+              <%= ba.label :postal_code,  :class=>'control-label' %>
+              <%= ba.text_field :postal_code, :class=>'form-control' %>
+            </div>            
+          <% end %>
+        </div>
+        <div class="block">
+          <label class="same_address">
+          <%= check_box_tag "same_address" %>
+            Same as billing
+          </label><br />
+          <label class='control-label'>Shipping Address</label>
+          <%= f.fields_for :addresses, customer.addresses.build(:address_type=>0) do |ba| %>
+          <div class="block">
+            <%= ba.text_area :address_line1, :class=>'form-control', :rows=>3 %>
+            <%= ba.hidden_field :address_type %>
+          </div>
+          <div>
+            <div class="col-lg-6">
+              <%= ba.label :city,  :class=>'control-label' %>
+            <%= ba.text_field :city, :class=>'form-control' %>
+            </div>
+            <div class="col-lg-6">
+            <%= ba.label :state,  :class=>'control-label-required' %>
+            <%= ba.text_field :state, :class=>'form-control' %>
+          </div>
+          </div>
+          <div>   
+          <div class="col-lg-6">
+              <%= ba.label :country,  :class=>'control-label' %>
+              <%= ba.text_field :country, :class=>'form-control' %>
+            </div>
+            <div class="col-lg-6">
+              <%= ba.label :postal_code,  :class=>'control-label' %>
+              <%= ba.text_field :postal_code, :class=>'form-control' %>
+            </div>    
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+          <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"> 
+    $("select#customer_gst_category_id").select2();
+  </script>
+<% end %>

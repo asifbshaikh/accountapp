@@ -1,0 +1,42 @@
+<%= form_for @leave_type, :html=>{:class=>"form-horizontal", :remote=>true} do |f| %>
+<div class='leave-type-notif'></div>
+<div class='form-group'>
+  <div class="col-sm-6">
+    <p>
+      <%= f.label "Leave Type", :class=>"control-label-required" %><br/>
+      <%= f.text_field :leave_type,:class=>"bg-focus form-control",:maxlength => 50 %>
+    </p>
+    <p>
+      <%= f.label "No. of leaves", :class=>"control-label-required" %><br/>
+      <%= f.text_field :allowed_leaves, :onkeydown => "return numbersOnly(event);", :class=>"bg-focus form-control", :maxlength=>2%>
+    </p>
+  </div>
+  <div class="col-sm-6">
+    <p>
+      <%= f.label :description, :class=>"control-label" %><br />
+      <%= f.text_area :description, :rows=> 3, :class=>"bg-focus form-control" %>
+    </p>
+  </div>
+</div>
+<div class='form-group'>
+  <div class='col-lg-12'>
+  <%= f.check_box :paid %>
+  <%= f.label 'paid', "Paid leave"  %>
+  </div>
+</div>
+<div class='form-group'>
+  <div class='col-lg-12'>
+    <%= f.label "Leaves carried to next year? ", :class=>"control-label-required" %>
+    <%= f.radio_button :carry, true %>Yes &nbsp; <%= f.radio_button :carry, false  %>No
+  </div>
+</div>
+
+    <div class="col-lg-8 col-lg-offset-4">                      
+      <div class='save-btn'></div>
+      <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+    </div>
+
+<% end %>
+
+
+

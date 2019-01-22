@@ -1,0 +1,31 @@
+$(document).ready(function(){
+
+  var bankstatementTable = $('#bank_statements').dataTable({
+      sDom: "<'row'<'col-sm-8'f><'col-sm-4'>r>t<'row'<'col-sm-3'l><'col-sm-4'i><'col col-sm-5'p>>",
+      sPaginationType: "full_numbers",
+      bFilter: false,
+      bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#bank_statements').data('source')       
+      })
+
+   bankstatementTable.fnFilterOnReturn();
+
+    // finding transactions
+      $(".find_match").click(function(){
+     var amount = $(this).attr("data-amount")
+     var account = $(this).attr("data-account")
+     var date = $(this).attr("data-date")
+     var transaction_id = $(this).attr("data-transaction")
+     var transaction_type = $(this).attr("data-transaction-type")
+    
+    $.ajax({
+
+      type: 'GET',
+      data: {Amount: amount,Account: account,Transaction_date: date,Transaction_id: transaction_id,Transaction_type: transaction_type},
+      url: "/bank_statements/match_transaction"
+    });
+  }); 
+
+ });
+

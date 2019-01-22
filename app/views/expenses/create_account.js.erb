@@ -1,0 +1,24 @@
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% else %>
+  <% if params[:transaction_type] == "payment" %>
+    // $("#expense_account_id").val('<%= @account.name %>');
+    var new_option = new Option("<%= @account.name%>", "<%= @account.id %>");
+    new_option.selected=true;
+    $("#expense_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == "expense" %>
+    var new_option=new Option("<%= @account.name %>", "<%= @account.id %>");
+    new_option.selected=true
+    $("#expense_expense_line_items_attributes_<%= params[:index] %>_account_id").append($(new_option)).change();
+  <% elsif params[:transaction_type] == "tax" %>
+    $("#jData").remove();
+    $("#jHere").after("<%= escape_javascript render :partial =>  'expenses/auto_calculate'%>");
+    $("#tax_row<%= params[:index] %> #expense_tax").append("<option value='<%= @account.id %>' selected='selected'><%= @account.name %></option>");
+    cal();
+  <% end %>
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>

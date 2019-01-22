@@ -1,0 +1,66 @@
+<div id="prev_data">
+  <div class='titleBar'><div id="popupHeading">New product</div> <a id="popupBoxClose" class="btn btn-red">x</a></div>
+  <form action= 'create_product' data-remote='true'>
+    <table class="display stylized" id="act_details" >
+      <tbody> 
+        <tr>
+          <td> 
+            <%= label_tag "product[name]", "Name", :class => 'required' %><br />
+            <%= text_field_tag "product[name]", nil,:autofocus =>"autofocus", :style => "width: 80%;" %><br />
+            <%= label_tag 'inventory','Enable inventory for this product?' %><br />
+            <%= radio_button_tag 'product[inventory]',1, true %> Yes
+            <%= radio_button_tag 'product[inventory]', 0 %>No<br />
+            <div id='sales_opening_inventory'>
+              <%= label_tag 'Opening stock'%><br />
+              <%= text_field_tag 'opening_inventory',nil , :style => "width: 80%;", :id =>'opening-stock', :onkeydown => "return numbersOnly(event);", :maxlength => 8, 'data-id' => nil, :class => "amount" %><br />
+              <%= label_tag "product[reorder_level]", "Reorder level" %><br />
+              <%= text_field_tag "product[reorder_level]", nil, :style => "width: 80%;", :onkeydown => "return numbersOnly(event);", :class => "amount" %>
+            </div>
+          </td>
+          <td>
+            <%= label_tag "product[description]", "Description" %><br />
+            <%= text_area_tag "product[description]", nil, :rows => 3, :style => "width: 80%;" %><br />
+            <%= label_tag "product[unit_of_measure]", 'Unit of mesure' %><br />
+            <%= text_field_tag "product[unit_of_measure]", nil, :style => "width: 80%;" %><br />
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2> 
+            <table width='100%'>
+              <tr>
+                <td style="background: white; border-bottom: none;border-right: 1px dotted; width: 50%">
+                  <%= check_box_tag "sales", "sales", true %> Product to sale
+                  <div class='sales-info'>
+                    <%= label_tag "product[sales_price]", 'Sales price' %><br/ >
+                    <%= text_field_tag "product[sales_price]", nil, :style => "width: 80%;", :onkeydown => "return numbersOnly(event);", :class => "amount" %><br />
+
+                    <%= label_tag 'Income account' %><br />
+                    <%= select_tag('product[income_account_id]', options_from_collection_for_select(Account.get_income_accounts(@company.id), :id, :name), :style => "width: 80%;")%>
+                  </div>
+                </td>
+                <td style="background: white; border-bottom: none; padding-left: 5%;">
+                  <%= check_box_tag "purchase","purchase" %> Product to purchase
+                  <div class='purchase-info' style='display: none;'>
+                    <%= label_tag "product[purchase_price]", "Purchase price" %><br/ >
+                    <%= text_field_tag "product[purchase_price]", nil, :style => "width: 80%;", :onkeydown => "return numbersOnly(event);", :class => "amount" %><br />
+
+                    <%= label_tag 'Expense account' %><br />
+                    <%= select_tag('product[expense_account_id]', options_from_collection_for_select(Account.get_expense_accounts(@company.id), :id, :name), :style => "width: 80%;")%>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </body>
+      <tfoot>
+        <tr>
+          <td colspan="2">
+            <%= submit_tag "Create", :class => 'btn btn-green btn-save' %>
+            <a id="close" class="btn btn-cancel" data-remote="true" href="">Cancel</a>
+          </td>
+        </tr>
+      </tfoot>  
+    </table>
+  </form>
+</div>

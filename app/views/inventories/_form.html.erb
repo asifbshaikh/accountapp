@@ -1,0 +1,27 @@
+<%= form_for(@inventory) do |f| %>
+   <%= render 'shared/form_error', :object => @inventory %>
+   <div class="field">
+     <%= f.label :account_id %><br />
+     <%= f.text_field :account_id,:autofocus =>"autofocus" %>
+   </div>
+   <div class="field">
+     <%= f.label :quantity %><br />
+     <%= f.text_field :quantity %>
+   </div>
+   <div class="field">
+     <%= f.label :unit %><br />
+     <%= f.text_field :unit %>
+   </div>
+   <div class="field">
+     <%= f.label :user_id %><br />
+     <%= f.text_field :user_id %>
+   </div>
+   <div class="field">
+     <%= f.label :company_id %><br />
+     <%= f.text_field :company_id %>
+   </div>
+   <div class="actions">
+     <button type="submit" class="btn btn-green big"> Save</button>&nbsp;
+     <button type="reset" class="btn  btn-gray big">Cancel</button>&nbsp;
+   </div>
+<% end %>

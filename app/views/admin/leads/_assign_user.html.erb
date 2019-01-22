@@ -1,0 +1,23 @@
+<form action="change_user" method="post" class="m-b-none form-horizontal" data-remote='true'>
+  <%= hidden_field_tag "id", @lead.id %>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Add Activity</h4>
+      </div>
+      <div class="modal-body scroll-y" style="max-height:500px;">
+        <div class="errorSection"></div>
+        <div class='block'>
+          <%= label_tag "user", "Assigned to" %>
+          <%= select_tag("assigned_to", options_for_select(SuperUser.list_user_options, @lead.assigned_to), :class => "form-control")%>
+        </div>
+        <div class="modal-footer">
+          <div class='save-btn'></div>
+          <button class="btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  import_file_id: 1
+  name: MyString
+  opening_balance: MyString
+  currency: MyString
+  phone_number: MyString
+  email: MyString
+  website: MyString
+  pan: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst_reg_no: MyString
+  cin: MyString
+  excise_reg_no: MyString
+  service_tax_reg_no: MyString
+  lbt_registration_number: MyString
+  credit_days: MyString
+  credit_limit: MyString
+  billing_address: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  postal_code: MyString
+  shipping_address: MyString
+  created_by: 1
+  status: 1
+
+two:
+  import_file_id: 1
+  name: MyString
+  opening_balance: MyString
+  currency: MyString
+  phone_number: MyString
+  email: MyString
+  website: MyString
+  pan: MyString
+  tan: MyString
+  vat_tin: MyString
+  cst_reg_no: MyString
+  cin: MyString
+  excise_reg_no: MyString
+  service_tax_reg_no: MyString
+  lbt_registration_number: MyString
+  credit_days: MyString
+  credit_limit: MyString
+  billing_address: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  postal_code: MyString
+  shipping_address: MyString
+  created_by: 1
+  status: 1

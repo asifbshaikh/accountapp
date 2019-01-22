@@ -1,0 +1,121 @@
+<!-- Page title -->
+<div id="pagetitle">
+  <div class="wrapper">
+    <h1>Process Payment</h1>
+  </div>
+</div>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+ <!-- Wrapper -->
+ <div class="wrapper">
+  <!-- Left column/section -->
+   <section class="column width6 first"></br>
+     <div class="highlight">
+       <%= render "shared/flash_msg"%>
+     <form action="https://sandbox.citruspay.com/thenextwave" method="POST" >
+      <div>	
+	<table>
+        <tbody>
+          <input  name="merchantAccessKey" type="hedden" value="merchant_access_key" />
+          <input name="merchantTxnId" type="hidden" value="" />
+          <input class="text" name="addressState" type="hidden" value="" />
+        
+	  <tr> 
+              <td><label width="125px;">City:</label></td>
+              <td><input class="text" name="addressCity" type="text" value="" /></td>
+          </tr>
+          <tr>
+             <td><label width="125px;">Address:</label></td>
+             <td><input class="text" name="addressStreet1" type="text" value="" /></td>
+           </tr>
+           <tr>
+            	<td> <label width="125px;">Country:</label></td>
+               <td><input class="text" name="addressCountry" type="text" value="" /></td>
+            </tr>
+	    <tr>	
+               <td> <label width="125px;">Pin Code:</label></td>
+               <td><input class="text" name="addressZip" type="text" value="" /></td>
+            </tr>
+	   <tr>	
+             <td><label width="125px;">First Name:</label></td>
+             <td><input class="text" name="firstName" type="text" value="" /></td>
+           </tr>
+	   <tr>
+             <td><label width="125px;">Last Name:</label></td>
+             <td><input class="text" name="lastName" type="text" value="" /></td>
+            </tr>
+	    <tr>
+             <td> <label width="125px;">Mobile Number:</label></td>
+             <td><input class="text" name="phoneNumber" type="text" value="" /></td>
+            </tr>
+	    <tr>	
+              <td> <label width="125px;">Email:</label></td>
+              <td><input class="text" name="email" type="text" value="" /></td>
+	    </tr>
+	    <tr>	
+              <td><label width="125px;">Payment Mode:</label></td>
+              <td>
+                  <select class="text" name="paymentMode">
+			<option value="">Select Payment Mode</option>
+			<option value="NET_BANKING">NetBanking</option>
+			<option value="CREDIT_CARD">Credit Card</option>
+			<option value="DEBIT_CARD">Debit Card</option>
+		  </select>
+	      </td>
+            </tr>
+	   <tr> 
+             <td><label width="125px;">Issuer Code:</label></td>
+             <td><input class="text" name="issuerCode" type="text" value="" /></td>
+	   </tr>
+	   <tr> 
+             <td><label width="125px;">Card Holder Name:</label></td>
+             <td><input class="text" name="cardHolderName" type="text" value="" /></td>
+	   </tr>
+	   <tr> 
+              <td><label width="125px;">Card Number:</label></td>
+              <td><input class="text" name="cardNumber" type="text" value="" /></td>
+	   </tr>
+	   <tr>
+             <td><label width="125px;">Expiry Month:</label></td>
+             <td><input class="text" name="expiryMonth" type="text" value="" /></td>
+	   </tr>
+           <tr>		
+             <td><label width="125px;">Card Type:</label></td>
+             <td><input class="text" name="cardType" type="text" value="" /></td>
+           </tr>
+	   <tr>
+             <td> <label width="125px;">CVV Number:</label></td>
+             <td><input class="text" name="cvvNumber" type="text" value="" /></td>
+           </tr>
+	   <tr> 
+             <td><label width="125px;">Expiry Year:</label></td>
+             <td><input class="text" name="expiryYear" type="text" value="" /></td>
+           </tr>
+	   <tr>
+             <td> <label width="125px;">Return Url:</label></td>
+             <td><input class="text" name="returnUrl" type="text" value="" /></td>
+           </tr>
+	   <tr>
+             <td> <label width="125px;">Amount:</label></td>
+             <td><input class="text" name="orderAmount" type="text" value="" /></td>
+	   </tr>
+	 </tbody>
+          <tfoot>
+           <tr>
+	      <td><input type="submit" name="submit" class="btn-orange" value="Test Transaction" /> &nbsp;
+	       <input type="reset" class="btn" name="reset" value="Cancel" /> </td>
+	   </tr>
+	 </tfoot>
+        </table>
+       </div>	
+       </form>
+    </div><br />
+   </section>
+  <!-- End of Left column/section -->
+  
+ </div>
+		<!-- End of Wrapper -->
+</div>
+	<!-- End of Page content -->
+	

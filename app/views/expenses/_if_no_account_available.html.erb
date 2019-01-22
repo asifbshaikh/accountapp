@@ -1,0 +1,13 @@
+<% if @from_accounts.blank? && @to_accounts.blank?%>
+    <br /><div class="box box-warning">
+      Currently there are no expense accounts and paid from accounts. Click to create <%= link_to " paid from ",{:action => :add_account, :transaction_type => 'payment'},:id => 'add_new_model',:remote => true %> and <%= link_to " expense",{:action => :add_account, :transaction_type => 'expense'},:id => 'add_new_model',:remote => true %> account.
+ </div>
+  <% elsif @from_accounts.blank? %>
+    <br /><div class="box box-warning">
+      Currently there are no paid from accounts. Click to<%= link_to " create ",{:action => :add_account, :transaction_type => 'payment'},:id => 'add_new_model',:remote => true %> one.
+    </div>
+  <% elsif @to_accounts.blank? %>
+    <br /><div class="box box-warning">
+      Currently there are no expense accounts. Click to <%= link_to "create",{:action => :add_account, :transaction_type => 'expense'},:id => 'add_new_model',:remote => true %>one. 
+    </div>
+  <% end %>

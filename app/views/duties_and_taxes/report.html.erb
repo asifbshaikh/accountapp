@@ -1,0 +1,129 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Taxation Report</h2>
+    </div>
+       <div class="col-lg-5 m-t-large" align="right">
+    <% if !@ledgers.blank? %> 
+    <%= link_to_pdf params %> 
+    <%= link_to_xls params %>
+     <%end%>
+    <%= link_to raw('<i class="icon-mail-reply"> </i>'), duties_and_taxes_index_path, :class => 'btn btn-default btn-lg' ,:title=>"Back"%>
+    <p></p>
+    </div>
+  </div>
+    
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+              <%= render :partial => "filter" %>
+          <div class="panel-body">
+            <% if @ledgers.blank? %>
+            <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <%= render :partial => "header" %><br />
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width ="9%"> Date </th>
+                    <th width ="18%"> Customer/Vendor </th>
+                    <th width ="20%"> Product </th>
+                    <th width ="32 %"><span class='char_spacing'>Particulars</span></th>
+                    <th class="text-right" width ="10%"> Debit </th>
+                    <th class="text-right" width ="10%"> Credit </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width ="9%"></td>
+                    <td width ="18%"></td>
+                    <td width ="20%"></td>
+                    <td width ="32%" align="right"><b>Opening Balance</b></td>
+                      <% opening_balance = @tax_account.opening_balance
+                      if !opening_balance.blank? && opening_balance < 0 %> 
+                    <td width ="10%" align="right"><b><%= format_currency opening_balance %></b></td>
+                    <td width ="10%"></td>
+                      <% else %> 
+                    <td width ="10%"></td>
+                    <td width ="10%" align="right">
+                      <b><%= format_currency opening_balance.abs unless opening_balance.blank? %></b>
+                    </td>
+                        <% end %>
+                  </tr>
+                      <%
+                      debit = 0
+                      credit = 0
+                      if !opening_balance.blank? && opening_balance > 0
+                        credit = opening_balance
+                      elsif !opening_balance.blank?
+                        debit = opening_balance.abs 
+                      end
+                      prev_date = nil
+                      @ledgers.each do |ledger| %>
+                        <%   acc = Account.find(ledger.retrieve_corresponding_account) %> 
+                        <% if @cv_account.blank? || acc.eql?(@cv_account) %>
+                  <tr>
+                    <td width ="9%"><%= (ledger.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+                    <% prev_date = ledger.transaction_date.strftime("%d-%m-%Y") %>
+                    <td width ="18%"><%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : acc.name %></td>
+                    <td width ="20%"><%= ledger.get_curresponding_product %></td>
+                    <td width ="32%"><%= ledger.description %></td>
+                    <td width ="10%" align="right"><%= format_currency(ledger.credit) %></td>
+                    <td width ="10%" align="right"><%= format_currency ledger.debit %></td>
+                      <%
+                      debit += ledger.credit
+                      credit += ledger.debit.blank? ? 0 : ledger.debit 
+                       %>
+                  </tr>
+                      <% end %>
+                      <% end %>
+                  <tr>
+                    <td width ="9%"></td>
+                    <td width ="18%"></td>
+                    <td width ="20%"></td>
+                    <td width ="32%"></td>
+                    <td width ="10%" class = 'border_up' align="right"><b><%= format_currency debit%></b></td>
+                    <td width ="10%" class = 'border_up' align="right"><b><%= format_currency credit%></b></td>
+                  </tr>
+                  <tr>
+                    <td width ="9%"></td>
+                    <td width ="18%"></td>
+                    <td width ="20%"></td>
+                    <td width ="32%" align="right"><b>Closing Balance</b></td>
+                      <% 
+                      closing_ballance = debit - credit
+                      if closing_ballance < 0 %>
+                    <td width ="10%" class = 'border_down' align="right">
+                      <b><%= format_currency closing_ballance.abs %></b></td>
+                    <td width ="10%" class = 'border_down'></td>
+                      <% else %>
+                    <td width ="10%" class = 'border_down'></td>
+                    <td width ="10%" class = 'border_down' align="right"><b><%= format_currency closing_ballance.abs %></b></td>
+                      <% end %>
+                  </tr>
+                  <tr>
+                    <td width ="9%"></td>
+                    <td width ="18%"></td>
+                    <td width ="20%"></td>
+                    <td width ="32%"></td>
+                    <td width ="10%" class = 'border_down' align="right"><b><%= (closing_ballance >= 0)? format_currency(debit) : format_currency(debit + closing_ballance.abs ) %></b></td>
+                    <td width ="10%" class = 'border_down' align="right"><b><%= (closing_ballance <= 0)? format_currency(credit) : format_currency(credit + closing_ballance ) %></b></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel-footer">
+              <%= render "shared/report_footer"%>
+            </footer>
+          </div>
+        </section>
+      <!-- Table ends -->
+      <%end%>
+    </div>    
+</div>
+</section>
+</section>

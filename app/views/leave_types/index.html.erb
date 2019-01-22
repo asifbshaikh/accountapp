@@ -1,0 +1,63 @@
+<!-- Page title -->
+<%= render 'shared/page_title'%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+           <div id="tabs-all" class="highlight">
+               <%= render :partial => "shared/flash_msg"	%>
+               <div id="timesheet">
+                  <% if @leave_types.blank? %>
+                    <%= render :partial => "shared/no_record", :locals=> {:message => "You didn't define any leave types yet! Your staff can't apply for leave unless you create leave types." }%>
+                  <% else %>
+                  <table class="display stylized" id="example">
+                    <thead>
+                      <tr>
+                        <th>Leave Type</th>
+                        <th>No. of Leaves</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>                       
+                </thead>
+                <tbody>
+                    <%= render :partial => "leave_type", :collection => @leave_types %>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5"></td>
+                    </tr>                        
+                </tfoot>
+            </table>
+            <div class="column width3 ">
+               <%= paginate @leave_types %>
+           </div>
+           <% end %>
+       </div>
+   </div><br />
+</section>
+<!-- End of Left column/section --><!-- Right column/section -->
+<aside class="column width2"><br />
+<%= new_button "Create New Leave Type", new_leave_type_path %>
+  <div id="rightmenu">
+    <dl class="first">
+        <dt>
+            <%= image_tag "help.png", :alt=>'help', :class=>'icon' %>
+        </dt>
+        <dd>
+            <a href="#" class="nyroModal">Help</a>
+        </dd>
+        <dd class="last">
+            This page displays the list of all the leave types.<br/>Click on leave type to view more details.
+        </dd>
+    </dl>
+</div><br />
+<div id="chart_div"></div>
+</aside>
+<!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

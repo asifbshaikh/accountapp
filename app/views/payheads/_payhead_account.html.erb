@@ -1,0 +1,7 @@
+<div id='account'>
+	<%= select_tag "payhead[account_id]", options_from_collection_for_select(TransactionType.fetch_to_accounts(@company.id, 'payheadacc'), :id, :name,:selected=>(@payhead.account_id unless @payhead.blank? )),:style=>"width:100%;"%>
+
+	<script type="text/javascript"> 
+	  $("#payhead_account_id").select2();
+	</script>
+</div>

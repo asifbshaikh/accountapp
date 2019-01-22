@@ -1,0 +1,60 @@
+<!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+  <!-- Left column/section -->
+    <section class="column width6 first"><br/>
+    <div class="highlight">
+     <%= render :partial => "shared/flash_msg" %> 
+      <!-- <div id='user_info_div'><span class='basic_info'> Note Detail</span></div> -->       
+        <table class="display stylized" id="act_details">
+          <thead>
+            <tr>
+              <th colspan="2">Note Details</th>
+            </tr>
+			    </thead>
+			    <tbody>
+            <tr>
+              <td width="25%"><label>Title</label><br/></td>
+	            <td><%= @note.subject %></td>
+	          </tr>
+	          <tr>
+              <td><label>Description</label></td>
+	            <td><%= simple_format(@note.description) %></td>
+	          </tr>
+	          <tr>
+              <td><label >Tags</label></td>
+	            <td><%= @note.tags.join(", ") %></td>
+	          </tr>
+	         <!-- <tr>
+	            <td><label>Created by</label></td>
+	            <td><%= User.find(@note.created_by).first_name  %></td>
+	          </tr>-->
+	          <tr>
+	            <td colspan = 2>(<span><%= time_ago_in_words(@note.created_at)%> ago</span>)</td>
+	          </tr>
+          </tbody> 
+          <tfoot>
+            <tr>
+				      <td colspan = 2><%= link_to 'Edit Note', edit_note_path(@note),{:class=>"btn btn-green"}%>
+                <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "" class="btn" >Delete</a>
+				      <%= link_to 'Cancel', notes_path, :class=>"btn btn-gray" %></td>
+			      </tr>
+          </tfoot>
+        </table>
+      </div><br/>
+      <!-- End of Left column/section -->
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+      
+       <%= new_button("Add New Note", new_note_path)%>
+       <p> <%= list_button_black("View All Notes", notes_path)%></p>
+      
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+</div>   

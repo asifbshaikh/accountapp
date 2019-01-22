@@ -1,0 +1,7 @@
+<tr>
+    <td><%=link_to feedback.vote, feedback %></td>
+    <td><%= truncate(feedback.comment, :length => 20) %></td>
+    <td><%= User.find(feedback.submitted_by).first_name  %></td>
+    <td><%= Company.find(feedback.company_id).name  %></td>
+    
+  </tr>

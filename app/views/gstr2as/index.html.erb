@@ -1,0 +1,21 @@
+<h1>Listing gstr2as bleh bleh bleh</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @gstr2as.each do |gstr2a| %>
+  <tr>
+    <td><%= link_to 'Show', gstr2a %></td>
+    <td><%= link_to 'Edit', edit_gstr2a_path(gstr2a) %></td>
+    <td><%= link_to 'Destroy', gstr2a, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Gstr2a', new_gstr2a_path %>

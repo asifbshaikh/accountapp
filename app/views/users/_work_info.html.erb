@@ -1,0 +1,103 @@
+
+<%= form_for("users", :url =>{:action => :work_info, :controller => :users}, :html=>{:class=>'form-horizontal', :remote=>true}) do |f| %>
+  <div class="col-lg-4">
+       <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Employee No</label>
+        </div>
+         <%= hidden_field_tag "user_id", @user.id %>
+        <div class="col-lg-8"><br/>
+           <%= f.text_field :employee_no, value: @user.employee_no, :class=>'bg-focus form-control' %>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Joining Date</label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.text_field :date_of_joining, value: @user.date_of_joining, :class=>'bg-focus form-control' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Work Type</label>
+        </div>
+        <div class="col-lg-8"><br/>
+        <%= f.select(:work_type, [['Permanent'],['Contract'],['Other']], {:prompt => false}, {:class=>"bg-focus form-control"})%>
+        </div>
+        </div>
+      <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Payment Type</label>
+        </div>
+        <div class="col-lg-8"><br/>
+        <%= f.select(:payment_type, [['Bank Transfer'],['Cheque'],['Cash']], {:prompt => false}, {:class=>"bg-focus form-control"})%>
+        </div>
+        </div>
+      <div class="row">
+        <div class="col-lg-12">
+       <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">PAN</label>
+        </div>
+        <div class="col-lg-8"><br/>
+           <%= f.text_field :PAN, value: @user.PAN, :class=>'bg-focus form-control' %>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">PF Acc No.</label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.text_field :PF_account_number,:value=>@user.PF_account_number, :maxlength=> 25, :size => "30",:class=>'bg-focus form-control'%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4"><br/>
+        <label class="control-label">Bank Acc No. </label>
+        </div>
+        <div class="col-lg-8"><br/>
+          <%= f.text_field :bank_account_number,:value=>@user.bank_account_number, :onkeydown => "return numbersOnly(event);", :maxlength=> 20,:class=>'bg-focus form-control' %>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+          <label class="control-label">Bank Name</label>
+          </div>
+          <div class="col-lg-8"><br/>
+          <%= f.text_field :bank_name,:value=>@user.bank_name, :class=>'bg-focus form-control' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4"><br/>
+          <label class="control-label">Bank Branch</label>
+          </div>
+          <div class="col-lg-8"><br/>
+          <%= f.text_field :branch,:value=>@user.user_salary_detail_branch, :class=>'bg-focus form-control' %>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+          <label class="control-label">IFSC Code</label>
+          </div>
+          <div class="col-lg-8"><br/>
+          <%= f.text_field :ifsc_code,:value=>@user.ifsc_code, :class=>'bg-focus form-control' %>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-4"><br/>
+          <label class="control-label">Leaving Date</label>
+          </div>
+          <div class="col-lg-8"><br/>
+          <%= f.text_field :date_of_leaving,:value=>@user.date_of_leaving, :class=>'bg-focus form-control' %>
+        </div>
+      </div><br>
+       <div class="form-group">
+    <div class="col-lg-8 col-lg-offset-10">
+      <div class='save-btn'></div>
+      <%= f.submit "Save", :class => "btn btn-success btnsave", :"data-loading-text"=>"Saving..." %> &nbsp; 
+    </div>
+  </div>
+      </div>
+<% end %>

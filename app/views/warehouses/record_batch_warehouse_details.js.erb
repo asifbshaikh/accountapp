@@ -1,0 +1,19 @@
+$("#error li").remove();
+<% if @product.errors.any? %>
+	<% @product.errors.full_messages.each do |error| %>
+		$("#error").append('<li><%= error %></li>');
+	<% end %>
+<% else %>
+	<% pwds = PurchaseWarehouseDetail.get_batch_hold_records(@company.id, @stock.product, @warehouse.id) %>
+	<% str = '' %>
+	<% if @company.plan.is_inventoriable? && @stock.product.batch_enable? && pwds.size > 0  %>
+		<% str = "<span class='label label-updated'>#{pwds.size} batches unallocated</span>".html_safe %>
+	<% end %>
+	<% unless pwds.size > 0 %>
+		$("#row<%= params[:index] %> td#link").html("<a href='/products/<%= @stock.product.id %>'>View product</a>");
+	<% end %>
+
+	$("#row<%= params[:index] %> td#qty").html("<%= @stock.quantity %> <%= str %>");
+	$("#popup_box_fixed").fadeOut("slow");
+	$("#popup_box_fixed").remove();
+<% end %>

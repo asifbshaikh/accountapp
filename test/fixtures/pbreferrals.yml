@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  invited_by: 1
+  name: MyString
+  email: MyString
+  status: 1
+  token: MyString
+  earning: 9.99
+  coupon_id: 1
+
+two:
+  company_id: 1
+  invited_by: 1
+  name: MyString
+  email: MyString
+  status: 1
+  token: MyString
+  earning: 9.99
+  coupon_id: 1

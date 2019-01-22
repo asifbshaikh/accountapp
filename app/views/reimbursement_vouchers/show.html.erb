@@ -1,0 +1,95 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i>Reimbursement Receipt - <%= @reimbursement_voucher.voucher_number %> </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <a href="/reimbursement_vouchers/new" class="btn btn-success btn-lg"><i class="icon-plus"></i> New Receipt</a>
+        <div class="btn-group">
+          <button  onclick="location.href= '<%= edit_reimbursement_voucher_path(@reimbursement_voucher)%>'"; class="btn btn-info btn-lg" > <i class="icon-edit"> </i> Edit</button>
+          <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span><i></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li class="text-left"><%= link_to raw('<i class="icon-trash"> </i>Delete '), reimbursement_voucher_path(@reimbursement_voucher), :method => "delete", :confirm => "Are you sure you want to delete this receipt?" %></li>
+          </ul>
+        </div>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), reimbursement_vouchers_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+        <p></p>
+      </div>
+    </div>
+    <section class="panel">
+      <%= render :partial => "shared/flash_msg" %>
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice second section -->
+          <div class="col-sm-6">
+            <div class="panel">
+              <header class="panel-heading">
+                <div class='col-lg-6'>Allocation history</div>
+                <div class='col-lg-6 text-right'>
+                </div>
+              </header>
+              <div class=''>
+                <% if @reimbursement_voucher.reimbursement_notes.blank? %>
+                  <%= render "shared/no_record" %>
+                <% else %>
+                  <table class="table table-striped m-b-none text-small">
+                    <thead>
+                      <tr>
+                        <th>Reimbursement Voucher No.</th>
+                        <th class='text-right'>Received Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @reimbursement_voucher.reimbursement_notes.each do |reimbursement_receipt| %>
+                        <tr>
+                          <td><%= link_to reimbursement_receipt.reimbursement_note_number, reimbursement_receipt %></td>
+                          <td class='text-right'><%= format_amount reimbursement_receipt.amount%></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <section class="panel">
+              <header class="panel-heading">
+                Money received from <%= @reimbursement_voucher.from_account_name %>
+              </header>
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-6">
+                  <p><strong>Received Date:</strong> <%= @reimbursement_voucher.received_date %></p>
+                  <p><strong>Deposit to Account: </strong> <%= @reimbursement_voucher.to_account_name %></p>
+                  <p><strong> Amount: </strong> <%= format_amount @reimbursement_voucher.amount %></p>
+                    <p><strong>Created by : </strong> <%= @reimbursement_voucher.user.full_name %> </p>
+                </div>
+                <div class='col-sm-6'>
+                  <p><strong>Payment Mode:</strong> <%= @reimbursement_voucher.payment_detail.payment_mode %></p>
+                  <%= render "#{@reimbursement_voucher.payment_detail.payment_mode.to_s.downcase.gsub(/\s+/, "")}_details"%>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+				<div class="row">
+          <%if !@reimbursement_voucher.description.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat">Description</label><br/>
+              <%= breaking_word_wrap(@reimbursement_voucher.description)%>
+            </p>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :reimbursement_voucher => @reimbursement_voucher %>
+</div>

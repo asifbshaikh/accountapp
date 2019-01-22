@@ -1,0 +1,8 @@
+<script>
+  $(document).ready(function() {
+    $('.products').typeahead({
+      name: 'products',
+      local: <%= raw(@products.map {|prod| prod.name }.to_json(:only => [:name])) %>
+    });
+  });
+</script>

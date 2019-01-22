@@ -1,0 +1,52 @@
+<table>
+  <tr><td colspan=6 align=center><%= @page_name %></td></tr>
+  <tr><td colspan=6 align=center>As on:
+<%= (params[:end_date].blank?) ? ( Time.zone.now.to_date) : params[:end_date].to_date %> </td></tr>
+  <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Product</th>
+                  <th align="center">Available Quantity</th>
+                  <th align="center">Unit of Measurement</th>
+                  <th align="center">Reorder Level</th>
+                  <!--<th align="center">Value(Based on Avg. Cost)</th>-->
+                 </tr>
+              </thead>
+              <tbody>
+                <% @products.each_with_index do |product, index|%>
+                <tr>
+                  <td><%= index+1%></td>
+                  <td>
+                   <b><%= product.name %></b> 
+                    <table>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td><%= stock.warehouse.name %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b>Total</b></td></tr>
+                    </table>
+                   </td>
+                  <td align="center" > 
+                    <table>
+                      <tr><td></td></tr>
+                      <% product.stocks.each do |stock|%>
+                      <tr>
+                        <td><%= stock.quantity %></td>
+                      </tr>
+                      <% end %>
+                      <tr><td><b><%= product.stocks.sum(:quantity)%></b></td></tr>
+                    </table>
+                  </td>
+                  <td align="center"><%= product.unit_of_measure%></td>
+                  <td align="center"><%= product.reorder_level %></td>
+                    <!-- <td></td> -->
+                </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="5"></td>
+                </tr>
+              </tfoot>
+</table>

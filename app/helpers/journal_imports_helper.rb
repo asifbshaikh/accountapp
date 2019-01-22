@@ -1,0 +1,2 @@
+module JournalImportsHelper
+end

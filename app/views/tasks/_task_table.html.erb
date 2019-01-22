@@ -1,0 +1,27 @@
+
+
+<div id = "task_container">
+ <% if @tasks.blank?%>
+  <%= render :partial => "shared/no_record" %>
+ <% else %>  
+      <div class="box box-info">
+      
+          You have <b><%= @tasks.open_task.count %></b> open and <b><%= @tasks.closed_task.count %></b> closed tasks . Click on the task for details.
+        
+     </div>
+  <table class="display stylized" id="example">
+        <thead>
+            <%= render :partial => "header" %>
+        </thead>
+        <tbody>
+            <%= render :partial => "task", :collection => @tasks %>
+        </tbody>
+        <tfoot>
+            <%= render :partial => "footer" %>
+        </tfoot>
+    </table>
+    <div id ="pagin">
+       <%= paginate @tasks %>
+    </div>
+	<% end %>	
+</div>

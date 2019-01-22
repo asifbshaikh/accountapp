@@ -1,0 +1,40 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+      <%= render 'form' %></br>
+      </div><br />
+  </section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+    <aside class="column width2"><br />
+      
+     <%= show_button_white("Show", [:admin, @blog_category])%>
+     
+
+      <p class="leading">
+        
+        <%= list_button_black("Categories", admin_blog_categories_path)%>
+      </p>
+      <div id="rightmenu">
+        <dl class="first">
+          <dt><%= image_tag "help.png", :alt=>"help", :class=>"icon"%></dt>
+          <dd>The name of the product cannot be changed.</dd>
+          <dd class="last"></dd>
+        </dl>
+      </div><br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->
+
+

@@ -1,0 +1,11 @@
+$(".popup-error").remove();
+
+<% if @invoice.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/popup_form_error',{:object=>@invoice})%>");
+<% else %>
+  $("div[id^='modal']").modal('hide');
+  window.location.reload()
+<% end %>
+
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Settle</button>");

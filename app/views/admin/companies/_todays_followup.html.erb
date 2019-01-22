@@ -1,0 +1,11 @@
+                <tr>
+                  <td><%= link_to "#{Company.get_company(todays_followup.notable_id).name}", admin_company_path(todays_followup.notable_id) %></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).plan.name %></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).users.first.full_name%></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).phone %></td>
+                  <td><%= todays_followup.last_contact_date %></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).users.first.email %></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).activation_date %></td>
+                  <td><%= Company.get_company(todays_followup.notable_id).subscription.renewal_date.to_date %></td>
+                </tr>
+

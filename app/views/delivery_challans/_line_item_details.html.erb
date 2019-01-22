@@ -1,0 +1,7 @@
+<tr valign="top">
+  <td valign="top" ><%= line_item_details.item_name %></td>
+  <td colspan="2"><%= breaking_word_wrap(line_item_details.description)%></td>
+  <td class="text-right"><%=line_item_details.sales_order_line_item.quantity%> <%= line_item_details.product.unit_of_measure%></td>
+  <td class="text-right"><%= line_item_details.quantity%> <%= line_item_details.product.unit_of_measure %></td>
+</tr>
+

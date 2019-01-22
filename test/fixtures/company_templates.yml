@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  template_id: 1
+  voucher_type: MyString
+
+two:
+  company_id: 1
+  template_id: 1
+  voucher_type: MyString

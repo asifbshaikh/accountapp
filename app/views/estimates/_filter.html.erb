@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title" ><%= @company.label.estimate_label %> Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="estimate-filter">
+      <tbody>
+        <tr>
+          <td><label><%= @company.label.estimate_label%> no</label></td>
+          <td id="estimateno"></td>
+          <td><label><%= @company.label.estimate_label %> Date</label></td>
+          <td id="estimateDate"></td>
+          <td ><label><%= @company.label.customer_label%></label></td>
+          <td id="estimatecustomer" data-customer="<%= @customers %>"></td>
+        </tr>
+        <tr>
+          <td><label>Status</label></td>
+          <td id="estimatestatus"></td>
+          <td><label>Amount</label></td>
+          <td id="estimateamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

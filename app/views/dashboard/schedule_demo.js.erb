@@ -1,0 +1,12 @@
+$(".popup-error").remove();
+<% if @lead.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/form_error',{:object=>@lead})%>");
+  $(".btnsave").remove();
+  $(".save-btn").after(" <button  class='btnsave btn btn-sm btn-info' type='submit'  data-loading-text='Processing...''>Schedule Demo</button>");
+<% else %>
+ $('.errorSection').after("<div class='alert alert-success invoice-setting-notif'>Your demo has been successfully scheduled!!!</div>")
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-info btnsave' type='submit'  data-loading-text='Processing...'>Schedule Demo</button>");
+  $("div[id^='modal']").modal('hide');
+   window.location.reload()
+<% end %>

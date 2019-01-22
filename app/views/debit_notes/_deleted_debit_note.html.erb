@@ -1,0 +1,20 @@
+ <tr>
+    <td><%= link_to deleted_debit_note.transaction_date.strftime("%d-%m-%Y"), deleted_debit_note %></td>
+    <td><%=  deleted_debit_note.debit_note_number %></td>
+    <td><%= truncate(Account.find(deleted_debit_note.from_account_id).name, :length =>20) %></td>
+    <td><%= truncate(Account.find(deleted_debit_note.to_account_id).name, :length =>20) %></td>
+    <td><%= format_currency deleted_debit_note.amount %></td>
+   <td colspan ="2">
+	    <div class="btn-group" style="float: right;">
+        <button class="btn btn-gray" onclick="location.href='/debit_notes/<%= deleted_debit_note.id %>'"; >View</button>
+        <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown" title="More actions">
+        <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href= <%= "/debit_notes/restore_debit_note?id=#{deleted_debit_note.id}"%>  >Restore</a></li>
+          <li class="divider"></li>
+          <li><a href= <%= "/debit_notes/permanent_delete_debit_note?id=#{deleted_debit_note.id}"%> data-confirm = "Are you sure, this will permanently deleted?">Delete</a></li>
+        </ul>
+      </div>     
+    </td>
+  </tr>

@@ -1,0 +1,90 @@
+
+<%= stylesheet_link_tag 'style' %>
+<%= javascript_include_tag 'jquery-1.6.4.min.js', 'popup-layout' %>
+<script type="text/javascript">
+	//window.onload = function(){
+      //  opener.document.body.disabled=true;
+    //}
+
+    function makeSelection(frm, id) {
+      if(!frm || !id)
+        return;
+      var elem = frm.elements[id];
+      if(!elem)
+        return;
+      var val = elem.value;
+      opener.targetElement.value = val;
+      this.close();
+    }
+
+
+	$(document).ready(function(){
+	
+		$('table#tableQty input:text').live('keyup', function(e){
+			//alert('hi there');
+			var qty = 0;
+			var i = 1;
+			var warehQty = new Object();//it was stoped at this point. Resuem from here
+			$('table#tableQty tr').each(function(){
+			  value = parseFloat($('table#tableQty tr:eq(' + i + ') #resp-qty').text());
+			  entered_value = parseFloat($('table#tableQty tr:eq(' + i + ') #qty').val());
+				if(entered_value && value >= entered_value){
+					$('table#tableQty tr:eq(' + i + ') .exp').remove();
+					qty += entered_value;
+				} else if(entered_value > value){
+					$('table#tableQty tr:eq(' + i + ') .exp').remove();
+					$('table#tableQty tr:eq(' + i + ') #qty').after('<span class="exp"><br>cant be greater than available</span>');
+				}
+				i++;
+			});
+			$('#totalQty').val('');
+			$('#totalQty').val(qty);
+			addHidden(entered_value);
+			e.preventDefault();
+		});
+	});
+	
+	function addHidden(eValue){
+		 opener.hiddenQty.value = eValue;
+	}
+</script>
+<body style="background-color:white;">
+<div id="page">
+	
+		<section class='width5'>
+		<div class='highlight'>
+			<h3>Enter Warehouse details</h2>
+			 <form id="frm" name="frm" action="#">
+			 <%= hidden_field_tag 'account_id', params[:account_id] %>
+			 <%= hidden_field_tag 1,1 %>
+				<table class='display stylized' id="tableQty" border='1'>
+				<thead>
+					<tr>
+						<th class='width2'>Warehouse</ht>
+						<th class='width1'>Available Quantity</ht>
+						<th>Quantity</ht>
+					</tr>
+				</thead>
+				<tbody>
+					<% @warehouses.each do |warehouse| %>
+						<tr>
+							<td><%= warehouse.name %><%= hidden_field_tag 'warehouse_id', warehouse.id %></td>
+							<td><div id='resp-qty' ></div> <%= hidden_field_tag 'hidden_quantity', 0 %></td>
+							<td><input type='text' name='qty' class='half' id='qty' onkeydown="return numbersOnly(event);" ></td>
+						</tr>
+					<% end %>
+				</tbody>
+				<tfoot>
+					<td></td>
+					<td>Total Quantity</td>
+					<td><input type='text' name='totalQty' id='totalQty' class='half' disabled='disabled'></td>
+				</tfoot>
+				</table>
+			<input type='button' value="Select" onclick="makeSelection(this.form, 'totalQty');">
+			<input type='button' value="Cancel" onclick="window.close();">
+			</form>
+		</div>
+		</section>
+	
+</div>
+</body>

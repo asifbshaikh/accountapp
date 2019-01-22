@@ -1,0 +1,18 @@
+<form action = 'ledger'>
+<td width = "70%"> Select account &nbsp;
+<select name = 'account_id'>
+  <% for acc_id in @accounts %>
+    <% if !params[:account_id].nil? && acc_id.id == params[:account_id].to_i %>
+     <option value = '<%= acc_id.id %>' selected="selected"><%= acc_id.name %></option>
+    <% else %>
+     <option value = '<%= acc_id.id %>' ><%= acc_id.name %></option>
+    <% end %>	
+  <% end %>
+</select>
+&nbsp;
+<%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "5"%>&nbsp;
+<%= text_field_tag :end_date,'',:placeholder => "End date", :size => "5" %>&nbsp;
+<input type="submit" value="Search" class="btn btn-green"/>
+</td>
+	
+</form>

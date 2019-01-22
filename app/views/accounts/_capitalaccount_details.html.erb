@@ -1,0 +1,18 @@
+  <section class="panel">
+  <header class="panel-heading">
+   <strong>Capital Account Details</strong>
+  </header>
+  <div class="panel-body">
+   <div class="col-sm-6">
+    <p><strong>Name: </strong> <%= @account.accountable.name %></p>
+    <p><strong>Email:</strong><%=@account.accountable.email %></p>
+    </div>
+   <div class="col-sm-6">
+     <p><strong>Address line1:</strong><%= account_address_line1 %></p>
+     <p><strong>Address line2:</strong><%= account_address_line2 %></p>
+     <p><strong>City:</strong><%= account_city %></p>
+     <p><strong>State:</strong><%= account_state %></p>
+     <p><strong>Pin code:</strong><%= account_postal_code %></p>
+   </div>
+  </div>
+ </section>

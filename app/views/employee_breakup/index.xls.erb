@@ -1,0 +1,37 @@
+<div align="center"><h4></h4></div>
+<table>
+    <tr>
+      <td colspan=10 align=center>
+        <strong>Employee Breakup For <%=@date.strftime("%B %Y")%></strong>
+      </td>
+    </tr>
+      <thead>
+          <tr>
+              <th>Employee Name</th>
+              <% @payheads.each do |p|%>
+              <th class="text-right"><%=p.payhead_name%></th>
+              <%end%>
+              <th class="text-right">Total (<%= @company.currency_code %>)</th>
+          </tr>
+      </thead>
+      <tbody>
+      
+        <%@users.each do |u|%>
+        <tr>
+            <% users_salary = u.get_salary%>
+            <%@net_salary=0%>
+            <td width="12%"><%= u.full_name %></td>
+           
+             <% @payheads.each do |p|%>
+             <% salary = p.salary_breakage(u.id, @date) %>
+             <% if salary.blank?%>
+                <td align="right"><%= (0.00)%></td>
+             <%else%>
+              <td align="right"><%= (salary.amount)%></td>
+              <%@net_salary +=p.payhead_type!="Earnings" ? -1*salary.amount : salary.amount %>
+            <% end %>
+            <% end %>
+            <td align="right"><%=(@net_salary)%></td>
+            <%end%>
+      </tbody>
+</table>

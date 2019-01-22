@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-lg-8">
+    <b><%= @page_name%></b>
+    <br />
+    <span class="xxsmall light">
+      As On: <%= (params[:end_date].blank?) ? Time.zone.now.to_date : params[:end_date] %> 
+    </span>
+  </div>
+  <div class="col-lg-4" align="right">
+    <span class="xsmall light"><%= @company.label.customer_label%> name : </span><br />
+    <b></b>
+  </div>
+</div>

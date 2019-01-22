@@ -1,0 +1,59 @@
+<!-- Page Title-->
+<%= render :partial=> "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+        <%= render "shared/flash_msg"%>
+        <%= form_tag(:action => :renew, :controller => "/admin/companies") do |f| %>
+        <%= hidden_field_tag  "company_id" ,@company.id %>
+          <table class="display stylized" id="company_table">
+              <thead>
+                <tr>
+                  <th colspan = "2"> Renew</th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr>
+                   <td><label>Current renewal date</label></td>
+                   <td><%= @company.subscriptions[0].renewal_date.to_date %></td>
+                  </tr> 
+                  <tr>
+                    <td><%= label_tag "renewal_date", "New renewal date" , :class => "required"%></td>
+                    <td>
+                      <%= text_field_tag "subscription[renewal_date]", nil %>
+                    </td>
+                  </tr>
+                  <!-- <tr>
+                    <td><%= label_tag  "", "Reason" , :class => "required"%></td>
+                    <td>
+                      <%= text_area_tag "", nil, :rows=> 3, :col=> 5 %>
+                    </td>
+                  </tr> -->
+              </tbody>
+              <tfoot>
+                    <tr>
+                      <td colspan = "2">
+                       <%= submit_tag "Submit", :class => "btn btn-green" %>&nbsp;
+                       <%= link_to "Cancel", admin_company_path(@company), :class=> "btn" %>
+                      </td>
+                    </tr>
+              </tfoot>
+          </table>
+          <% end %>
+      </div><br />
+    </section>
+      <!-- End of Left column/section -->
+    <!-- Right column/section -->
+<aside class="column width2"><br />
+   <%= list_button_white("View Companies", admin_companies_path)%>
+</aside>
+  <!-- End of Right column/section -->
+ </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

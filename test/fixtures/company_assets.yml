@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  user_id: 1
+  assigned_to: 1
+  asset_tag: MyString
+  description: MyString
+  purchase_date: 2013-08-05
+
+two:
+  company_id: 1
+  user_id: 1
+  assigned_to: 1
+  asset_tag: MyString
+  description: MyString
+  purchase_date: 2013-08-05

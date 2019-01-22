@@ -1,0 +1,21 @@
+<tr>
+	<td><%= link_to "#{deleted_invoice.invoice_number}", deleted_invoice%></td>
+  <% if !@company.plan.free_plan? %>
+    <td><%= !deleted_invoice.project_id.blank? ? deleted_invoice.project_name : "Not available" %></td>
+  <% end %>  
+	<td><%= truncate(deleted_invoice.customer_name, :length =>20)%></td>
+	<td><%= deleted_invoice.due_date.strftime("%d-%m-%Y") %></td>
+	<td> <%= format_currency(deleted_invoice.amount) %></td>
+	<td> <% if deleted_invoice.invoice_status_id == 0 %>
+					Open
+					<% elsif deleted_invoice.invoice_status_id == 1 %>
+					Draft
+					<% elsif deleted_invoice.invoice_status_id == 2 %>
+					Closed
+			 <% end %> 
+	</td>
+	<td>
+		<a href= <%= "/invoices/restore_invoice?id=#{deleted_invoice.id}"%> class = "btn btn-green"  >Restore</a> 
+		<a href= <%= "/invoices/permanent_delete_invoice?id=#{deleted_invoice.id}"%> data-confirm = "Are you sure, this will permanently delete?" class = "btn">Delete</a>
+	</td>
+</tr>

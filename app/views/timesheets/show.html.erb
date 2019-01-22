@@ -1,0 +1,72 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file-text-alt text"></i> View Timesheet</h2>
+      </div>
+      <div class="col-lg-9 m-t-large" align="right">
+       <% if @current_user.id == @timesheet.user_id || @current_user.roles[0].name.to_s == "Owner" %>
+        <%= link_to raw('<i class="icon-edit"> </i>'), edit_timesheet_path(@timesheet), :class => 'btn btn-default btn-lg',:title=>"Edit" %>
+        <%= link_to raw('<i class="icon-trash"> </i>'), timesheet_path(@timesheet), :method => "delete", :confirm => "Are you sure?",:class=>"btn btn-default btn-lg", :title=>"Delete" %>
+        <% end %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), timesheets_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+      <%= render "shared/flash_msg" %>
+       <div class="col-sm-12"><br/>
+      <div class="row">
+        <div class="col-xs-12">
+        <section class="panel text-center">
+            <div class="panel-body">
+             <p><strong>Timesheet week : </strong><%= @timesheet.start_date.strftime("%d %B") %> - <%= @timesheet.end_date.strftime("%d %B %Y") %></p>
+              <p><i class="icon-calendar"> </i> Record Date : <%= @timesheet.record_date.strftime("%d-%B-%Y") %> </p>
+              <div class="line m-l m-r"></div>
+              <p><strong>Booked by : </strong> <%= User.find(@timesheet.user_id).first_name  %></p>     
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Timesheet Detail</strong>
+  </header>
+  <div class="panel-body">
+    <% if @timesheet.blank? %>
+    <%= render :partial => "shared/no_record" %>
+ <% else %>
+     <table class="table table-striped b-t">
+        <thead>
+          <tr>
+           <th><label>Task</label></th>
+           <th class="text-center"><label>Day</label></th>
+           <th class="text-center"><label>Hours</label></th>
+           <th class="text-center"><label>Billable</label></th>
+          </tr>
+        </thead>
+        <tbody>
+        <%= render :partial => "timesheet_line_item_details", :collection => @timesheet.timesheet_line_items %>
+             <tr>
+          <td  class="text-right" colspan="2"><b>Total</b></td>
+          <td class="text-center"><b><%= @timesheet.total_time%>hrs</b></td>
+           <td></td>
+           </tr>
+         </tbody>
+    </table>  
+   <% end %>
+  </div>
+ </section>
+</div>
+</div>
+</section>
+    </section>
+  </section>
+
+
+
+
+

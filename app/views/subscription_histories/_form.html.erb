@@ -1,0 +1,57 @@
+<%= form_for(@subscription_history) do |f| %>
+  <% if @subscription_history.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subscription_history.errors.count, "error") %> prohibited this subscription_history from being saved:</h2>
+
+      <ul>
+      <% @subscription_history.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_id %><br />
+    <%= f.text_field :company_id %>
+  </div>
+  <div class="field">
+    <%= f.label :plan_id %><br />
+    <%= f.text_field :plan_id %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.text_field :start_date %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= f.datetime_select :end_date %>
+  </div>
+  <div class="field">
+    <%= f.label :renewal_date %><br />
+    <%= f.datetime_select :renewal_date %>
+  </div>
+  <div class="field">
+    <%= f.label :first_subscription_date %><br />
+    <%= f.datetime_select :first_subscription_date %>
+  </div>
+  <div class="field">
+    <%= f.label :ip_address %><br />
+    <%= f.text_field :ip_address %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :allocated_storage_mb %><br />
+    <%= f.text_field :allocated_storage_mb %>
+  </div>
+  <div class="field">
+    <%= f.label :allocated_user_count %><br />
+    <%= f.text_field :allocated_user_count %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

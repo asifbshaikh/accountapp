@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  invoice_id: 1
+  created_by: 1
+  invoice_return_number: MyString
+  account_id: 1
+  record_date: 2014-09-17
+  description: MyText
+  total_amount: 9.99
+  currency_id: 1
+  exchange_rate: 9.99
+  credit_note_id: 1
+  warehouse_id: 1
+
+two:
+  company_id: 1
+  invoice_id: 1
+  created_by: 1
+  invoice_return_number: MyString
+  account_id: 1
+  record_date: 2014-09-17
+  description: MyText
+  total_amount: 9.99
+  currency_id: 1
+  exchange_rate: 9.99
+  credit_note_id: 1
+  warehouse_id: 1

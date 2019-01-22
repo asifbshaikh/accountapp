@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Effective From</th>
+      <th>Opening Balance</th>
+      <th>Currency</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Website</th>
+      <th>VAT TIN</th>
+      <th>Excise reg no</th>
+      <th>Service tax reg no</th>
+      <th>Sales tax no</th>
+      <th>LBT registration number</th>
+      <th>CST</th>
+      </tr>
+  </thead>
+  <tbody>
+    <% @vendors.each do |vendor| %>
+      <tr>
+        <td><%= vendor.name %></td>
+        <td><%= vendor.account.start_date %></td>
+        <td><%= vendor.account.opening_balance %></td>
+        <td><%= vendor.currency_code %></td>
+        <td><%= vendor.contact_number %></td>
+        <td><%= vendor.email %></td>
+        <td><%= vendor.website %></td>
+        <% if @company.country_id == 93 %>
+          <td><%= vendor.gstn_id %></td>
+        <%else%>
+          <td><%= vendor.tax_reg_no %></td>
+        <%end%> 
+        <td><%= vendor.vat_tin %></td>
+        <td><%= vendor.excise_reg_no %></td>
+        <td><%= vendor.service_tax_reg_no %></td>
+        <td><%= vendor.lbt_registration_number %></td>
+        <td><%= vendor.cst %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

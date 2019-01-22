@@ -1,0 +1,33 @@
+<table class="table table-striped b-t">
+  <thead>
+    <tr>
+      <th>Sr. No.</th>
+      <th>Voucher #</th>
+      <th>Voucher Date</th>
+      <th><%= @company.label.warehouse_label%></th>
+      <th><%= @custom_field.custom_label1%></th>
+      <th><%= @custom_field.custom_label2%></th>
+      <th><%= @custom_field.custom_label3%></th>
+     </tr>
+  </thead>
+  <tbody>
+    <% @vouchers.each_with_index do |stock, index|%>
+     <% if !stock.custom_field1.blank? || !stock.custom_field2.blank? || !stock.custom_field3.blank? %>
+     <tr>
+        <td align="center"><%= index+1 %></td>
+        <td><%= link_to "#{stock.voucher_number}", stock %></td>
+        <td><%= stock.voucher_date %></td>
+        <td><%= stock.warehouse.name %></td>
+        <td><%= stock.custom_field1 unless @custom_field.custom_label1.blank?%></td>
+        <td><%= stock.custom_field2 unless @custom_field.custom_label2.blank?%></td>
+        <td><%= stock.custom_field3 unless @custom_field.custom_label3.blank?%></td>
+     </tr>
+     <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+     <tr>
+      <td colspan="7"></td>
+    </tr>
+  </tfoot>
+</table>

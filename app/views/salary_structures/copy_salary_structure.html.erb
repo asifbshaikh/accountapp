@@ -1,0 +1,121 @@
+<!-- Page title -->
+<%= render "shared/page_title" %>
+<!-- End of Page title -->
+
+<!-- Page content -->
+ <div id="page">
+   <!-- Wrapper -->
+    <div class="wrapper">
+    <!-- Left column/section -->
+      <section  class="column width6 first"></br>
+        <div class="highlight">
+        <%= render :partial=> "shared/flash_msg"%>
+        <script>
+  $(document).ready(function(){
+var payhead_type = 'Earning';
+   cal()
+        $('table#salary_structure_line_items input:text').live('keyup', function(e){
+    cal();
+                e.preventDefault();
+  });
+  
+  $("table#salary_structure_line_items #cancel").live('click', function(e){
+    setTimeout(function(){cal();}, 1500);
+                e.preventDefault();
+  });
+  
+  function cal(){
+  var i = 0;
+  var total = 0;
+  $('table#salary_structure_line_items tbody tr').each(function(){
+    var amount = 0;
+                   var selected = $(this).find('option:selected');
+      //alert(payhead_type);
+                if (($('table#salary_structure_line_items tbody tr:eq(' + i + ')').is(":visible")) && $('table#salary_structure_line_items tbody tr:eq(' + i + ') #amount').val()) {
+      var amount = parseFloat($('table#salary_structure_line_items tbody tr:eq(' + i + ') #amount').val());
+                        if (selected.attr('data-payhead') == 'Earnings')
+                         {
+          total = total + amount;}
+      else{
+        total = total - amount;}
+    } 
+    i++;
+  });
+  $('input[name=total_paid]').val(total);
+  $('table#salary_structure_line_items span#total').text(total.toFixed(2));
+  
+  
+  }
+  $('table#salary_structure_line_items span#total').text(parseFloat($('input[name=total_paid]').val()).toFixed(2));
+  });
+</script>
+<%= form_for(@salary_structure) do |f| %>
+<%= render 'shared/form_error', :object => @salary_structure %>
+<%= hidden_field_tag 'total_paid', params[:total_paid].blank? ? 0 : params[:total_paid] %>
+<table class="display stylized" id="act_details" >
+  <thead>
+    <tr>
+    <th colspan =2>Enter Salary Structure</th>
+    </tr>
+  </thead>
+  
+  <tbody> 
+      <tr>
+        <td>
+            <%= f.label "For employee", :class => "required" %><br />
+  
+            <%= collection_select(:salary_structure, :for_employee, @users, :id, :first_name,:autofocus =>"autofocus", :prompt => true) %>
+        </td>
+       <td>
+          <%= f.label "Effective_from_date", :class => "required" %><br />
+          <%= f.text_field :effective_from_date, :size=>"17" %>
+       </td>
+       <table width="738" class="display stylized full" id="salary_structure_line_items" style="">
+          <thead>
+             <tr>
+               <th width="80%"><label class="required">Pay Head</label></th>
+               <th width="20%" class="ta-center" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="required">Amount</label></th>
+              </tr>
+          </thead>
+         <tbody>
+            <% @salary_structure.salary_structure_line_items.each_with_index do |salary_structure_line_item, index| %> 
+               <%= render "copy_structure", :salary_structure_line_item => salary_structure_line_item, :index => index %>  
+            <% end %>
+         </tbody>
+         <tfoot>
+      <tr>
+              <td class="ta-right" width="80%"><b>Total</b></td>
+              <td class="ta-right" width="10%">
+                <b><%= @company.currency_code%> <span id = "total">00.00</span></b></td>
+              <td class="ta-center" width="10%"></td>
+            </tr>
+    </tfoot>
+         </table><br />
+    </tr>
+  </body>
+        <tfoot>
+        <tr>
+      <td colspan ="2">
+            <%= f.submit :value => 'Save', :class=>"btn btn-green btn-save"%>
+           &nbsp;<%= link_to 'Cancel', salary_structures_path, :class=>"btn btn-cancel "%><td/>
+      </tr>
+          </tfoot>
+    </table>
+<% end %>
+
+        </div><br />
+     </section>
+     <!-- End of Left column/section -->
+    
+     <!-- Right column/section -->
+
+    <aside class="column width2"><br />
+      <%= list_button_white "View salary structures", salary_structures_path %>
+    </aside>
+    <!-- End of Right column/section -->
+        
+    </div>
+    <!-- End of Wrapper -->
+  </div>
+  <!-- End of Page content -->
+

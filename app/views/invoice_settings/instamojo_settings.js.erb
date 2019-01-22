@@ -1,0 +1,23 @@
+<% if @valid_key %>
+
+$(".error-place1").after("<div class='alert alert-success invoice-setting-notif'>Keys are updated successfully. You are now ready to use Instamojo payment gateway.</div>")
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+setTimeout(function(){
+  $("div.alert-success").fadeOut(6000, function () {
+  $("div.alert-success").remove();
+      });
+}, 4000);
+   window.location.reload()
+<% else %>
+$(".error-place1").after("<div class='alert alert-danger invoice-setting-notif'>Invalid Api-key and Auth-Key.Please acquire a valid key from Instamojo https://www.instamojo.com/developers/</div>")
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+setTimeout(function(){
+  $("div.alert-danger").fadeOut(4000, function () {
+  $("div.alert-danger").remove();
+      });
+}, 2000);
+
+<% end %>
+

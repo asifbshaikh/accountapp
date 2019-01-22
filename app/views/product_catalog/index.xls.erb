@@ -1,0 +1,35 @@
+<table>
+  <tr><td colspan=6 align=center><%= @page_name %></td></tr>
+  <tr><td colspan=6 align=center>As on:
+<%= (params[:end_date].blank?) ? ( Time.zone.now.to_date) : params[:end_date].to_date %> </td></tr>
+  <thead>
+                <tr>
+                  <th>Product Name.</th>
+                  <th>Product Code</th>
+                  <th>Product Category</th>
+                  <th align="center">Description</th>
+                  <th align="center">Sales Price</th>
+                  <th align="center">Purchase Price</th>
+                  <!--<th align="center">Value(Based on Avg. Cost)</th>-->
+                 </tr>
+              </thead>
+              <tbody>
+                <% @products.each do |product|%>
+                <tr>
+                  <td> <%= product.name %> </td>
+                   <td> <%= product.product_code %></td>
+                   <td> <%= product.tag_list.join(', ') %></td>
+                   <td> <%= product.description[0..30] unless product.description.blank? %></td>
+                   <td> <%= product.sales_price %></td>
+                   <td> <%= product.purchase_price %> </td>
+                    
+                    
+                </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="5"></td>
+                </tr>
+              </tfoot>
+</table>

@@ -1,0 +1,24 @@
+<%= form_tag "/leave_approval/reject_leave", :class=>"form-horizontal m-b-none",  :remote => true  do %>
+	<div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header">
+    	  <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+    	  <h4 class="modal-title" id="myModalLabel">Leave Reject</h4>
+    	</div>
+    	<div class="modal-body scroll-y" style='max-height:500px;'>
+    		<div class='errorSection'></div>
+    		<div class='block'>
+				  <%= hidden_field_tag "leave_request[leave_status]", LeaveRequest::STATUS[:rejected] %>
+				  <%= hidden_field_tag "id", leave_request.id %>
+				  <%= label_tag :approver_comment, "Reason for rejection", :class => 'control-label-required' %><br/>
+				  <%= text_area_tag "leave_request[approver_comment]", "", :class=>'form-control', :cols=>50, :rows =>2 %>
+    		</div>
+			</div>
+			<div class="modal-footer">
+			  <div class='save-btn'></div>
+			    <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Rejecting...">Reject</button>
+			  <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+<% end %>

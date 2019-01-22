@@ -1,0 +1,32 @@
+<tr class="item-row" id="row<%= index %>">
+	<td>
+		<%= purchase_return_line_item.product.name %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][product_id]", purchase_return_line_item.product_id %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][line_type]", "PurchaseReturnLineItem" %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][purchase_line_item_id]", purchase_return_line_item.purchase_line_item_id %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][id]", purchase_return_line_item.id %>
+
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][_destroy]" %>
+	</td>
+	<td><%= text_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][quantity]", purchase_return_line_item.quantity, :id=>"quantity", :class=>'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);" %></td>
+	<td class="text-right">
+		<%= purchase_return_line_item.unit_rate %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][unit_rate]", purchase_return_line_item.unit_rate, :id=>"unit-cost" %>
+		</td>
+	<td class="text-right">
+		<%= purchase_return_line_item.discount_percent.blank? ? 0.0 : purchase_return_line_item.discount_percent %>
+		<%=hidden_field_tag "discount", purchase_return_line_item.discount_percent %>
+		<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][discount_percent]", purchase_return_line_item.discount_percent %>
+	</td>
+	<td id='tax-td'>
+		<% purchase_return_line_item.purchase_return_taxes.each_with_index do |tax, tax_index| %>
+			<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][purchase_return_taxes_attributes][#{tax_index}][id]", tax.id %>
+	  	<%= hidden_field_tag "purchase_return[purchase_return_line_items_attributes][#{index}][purchase_return_taxes_attributes][#{tax_index}][account_id]", tax.account_id, :"data-linked"=>"#{tax.account.linked_purchase}" %>
+  	<% end %>
+
+		<%= purchase_return_line_item.purchase_return_taxes.blank? ? "<i>Not applicable</i>".html_safe : purchase_return_line_applied_taxes(purchase_return_line_item) %>
+	</td>
+	<td class="text-right"><span id="amount"><%= purchase_return_line_item.amount %></span></td>
+	<td style="padding-right:0"><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => purchase_return_line_item.id},:class=> "btn btn-danger", :id => 'cancel', :remote => true%>
+	</td>
+</tr>

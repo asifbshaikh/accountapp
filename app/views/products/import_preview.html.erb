@@ -1,0 +1,121 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-10">
+       <h2><i class="icon-file text"></i>Import Status</h2>
+        </div>
+        <div class="col-lg-2 m-t-large" align="right">
+      
+     <%= link_to raw('<i class="icon-mail-reply"> </i>'), products_path, :class => 'btn btn-default btn-lg', :title =>"Back" %><p></p>
+      </div> 
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+              <div class="table-responsive row">
+                <table class="table table-striped m-b-none text-small">
+                <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>inventory Enabled</th>
+                    <th>Batch Enabled</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                 </thead>
+                <tbody>
+                  <% @successfull_products.each do |key,value|%>
+                   <tr>
+                      <td>
+                         <%= key%>
+                      </td>
+                      <td>
+                        <% if value[0] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if value[1] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <span class="label bg-success">Success</span>
+                      </td>
+                      <td></td>
+                    </tr>
+                 <%end%>
+                 <% @failed_products.each do |key,value|%>
+                   <tr>
+                      <td>
+                         <%= key%>
+                      </td>
+                      <td>
+                        <% if value[0] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if value[1] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <span class="label bg-danger">Failed</span>
+                      </td>
+                      <td>
+                        <%= link_to "<i class='icon-plus'></i> Add Product".html_safe, new_product_path, :class =>'btn btn-success',:target => "_blank" %>
+                      </td>
+                    </tr>
+                 <%end%>
+                 <% @duplicate_products.each do |key,value|%>
+                   <tr>
+                      <td>
+                         <%= key%>
+                      </td>
+                      <td>
+                        <% if value[0] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <% if value[1] == true %>
+                          Yes
+                        <% else %>
+                          No
+                        <% end %>
+                      </td>
+                      <td>
+                        <span class="label bg-info">Duplicate</span>
+                      </td>
+                      <td></td>
+                    </tr>
+                 <%end%>
+                </tbody>
+                <tfoot>
+                    <tr>
+                  <td colspan="5" align="center">
+                  
+                  </td>
+                </tr>
+                 </tfoot>
+              </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial =>"shared/flash_msg"%>
+        <script type="text/javascript" src="/javascripts/account.js"></script>
+        <%= form_for @account, :html=>{:class=>"form-horizontal"}  do |f| %>
+          <%= render 'shared/form_error' , :object => @account %>
+          <div class="form-group">
+            <div class="col-lg-4"><br/>
+              <label class="control-label">Account group :</label> 
+              <label class="control-label">
+                <%= @account_head.name %> <%= hidden_field :account, :account_head_id %> 
+              </label>
+            </div>
+            <div class="col-lg-4">
+            <label class="control-label-required">Account name</label>
+            <div class="input-group">
+              <%= f.text_field :name , :maxlength => 50, :size => 30, :class=>"bg-focus form-control"%>
+              <span class="help-block">The name you want to call this account.</span>
+             </div>
+            </div>
+           <% unless @account.accountable_type == "DutiesAndTaxesAccounts" %> 
+            <div class="col-lg-4">
+              <%= f.label :opening_balance,  :class=>"control-label"%>
+              <div class="input-group">
+                <%= f.text_field :opening_balance, :onkeydown => "return balOnly(event);", :size => "30", :maxlength => "18", :class=>"bg-focus form-control" %>
+                <span class="help-block">Enter negative amount for credit opening balance.</span>
+              </div>
+            </div>
+             <div class="input-group">
+            <div class="col-lg-6">
+                <%= label_tag "start_date", 'Effective date', :class=>"control-label-required" %>
+            </div>
+            <div class="col-lg-4">
+                  <%= f.text_field :start_date, :class=>"bg-focus form-control" %>
+             </div>
+             </div>
+
+            <% end %>
+          </div>
+          <%= render :partial => "#{@account.accountable_type.downcase.gsub(/\s+|\(|\)|\//, "")}_edit", :locals => {:f => f}  %> 
+          <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-4">                      
+              <button type="submit" class="btn btn-success">Update account</button>
+              <%= link_to 'Cancel', accounts_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+  <!-- Expense index start -->
+ <table class="display stylized" id="example">
+                    
+					<thead>   
+                         <%= render :partial => "record_expense_hf" %>
+                    </thead>
+                  
+                    <tbody>
+                          <% @record_expenses.each do |record_expense| %>
+                             <tr>
+                                <td><%= link_to "record_expense.expense_date.strftime('%d-%m-%Y' )" , record_expense %></td>
+                                <td><%= record_expense.type_of_expense %></td>
+                                <td><%= record_expense.paid_from %></td>
+								<td><%= record_expense.amount %></td
+                                
+                                <td><%= link_to 'Show', record_expense %></td>
+                                <td><%= link_to 'Edit', edit_record_expense_path(record_expense) %></td>
+                                <td><%= link_to 'Destroy', record_expense, :confirm => 'Are you sure?', :method => :delete %></td>
+                             </tr>
+                           <% end %>
+                     </tbody>
+                     
+					  <tfoot>
+                           <%= render :partial => "record_expense_hf" %>
+                      </tfoot>
+					  
+</table>
+  <!-- Expense index end -->

@@ -1,0 +1,47 @@
+<%= form_for(@employee_goal) do |f| %>
+<%= render 'shared/form_error', :object => @employee_goal %>
+<table class="display stylized" id="act_details" >
+	<div id='user_info_div'><span class='basic_info'>Enter Goal</span></div>
+	<!-- <thead>
+		<tr>
+			<th colspan="2">Enter Goal</th>
+		</tr>
+	</thead> -->
+	<tbody>
+		<tr>
+			<td><%= f.label :for_user, :class =>"required" %>
+			<br/>
+			<%= collection_select(:employee_goal, :for_employee, @users, :id, :first_name, :prompt => true,:autofocus =>"autofocus") %></td>
+			
+			<td><%= f.label :goals, "Goal for Objective",:class => "required" %></br>
+			<%= collection_select(:employee_goal, :goals, @master_objectives, :id, :objective_name, :prompt => true) %></td>
+		<tr></tr>
+		<td><%= f.label :from_date, :class =>"required" %>
+		<br/>
+		<%= f.text_field :from_date %></td>
+		<td><%= f.label :to_date, :class =>"required" %>
+		<br/>
+
+		<%= f.text_field :to_date %></td>
+		</tr>
+		<tr>
+		<td colspan ="2"><%= f.label :manager_comments %>
+		<br/>
+		<%= f.text_area :manager_comments, :rows => 3, :cols => 75 %></td>
+		
+		</tr>
+		
+		</body>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+				<%if @master_objectives.blank?  %> 
+				    <a href="#" class="btn btn-green">Save</a>
+			  <% else %> 
+			      <%= f.submit :value =>'Save', :class=>"btn btn-green"%>
+			  <% end %>
+      &nbsp;<%= link_to 'Cancel', employee_goals_path, :class => "btn btn-gray" %></td>
+			</tr>
+		</tfoot>
+</table>
+<% end %>

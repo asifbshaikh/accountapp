@@ -1,0 +1,77 @@
+<script>
+	$(document).ready(function(){
+		'<% 
+  	@data = []
+  	 for holiday in @holidays
+  	 	@data<<holiday.holiday
+  	 	@data<<holiday.description
+  	 	@data<<holiday.holiday_date
+  	 	
+  	 end
+  	 %>'
+  	data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+    	source: data
+	});
+	});
+</script>
+<!-- Page title -->
+ <div id ="pagetitle">
+	<div class ="wrapper" >
+		<h1>Organisation Settings &rarr;<span>Manage Holiday</span></h1>
+		<%= form_for @search, :method => "get" do |f| %>
+		<%=f.text_field :holiday_or_description_or_holiday_date_equals, :id=>"autocomplete" , :placeholder=>"search"%>
+		<%end%>
+		
+	</div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	  <div id="tabs-all" class="highlight">
+          	<%= render :partial => "shared/flash_msg"	%>
+             <div id="holiday">
+                    <% if @holidays.blank? %></br>
+                   	<%= render :partial => "shared/no_record" %>
+              <% else %>
+                        <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "holiday", :collection => @holidays %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "footer" %>
+                          </tfoot>
+                        </table>    
+                   <% end %>
+               </div>
+       </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+    <aside class="column width2"></br>
+    <%= new_button "Create New Holiday", new_holiday_path %>
+     <div id="rightmenu">
+                 <dl class="first">
+                       <dt><%= image_tag "help.png", :alt=>'help', :class=>'icon' %></dt>
+                       <dd><a href="#" class="nyroModal">Help</a></dd>
+                       <dd class="last">This page displays the list of all the holidays.<br/>Click on date to view more details.</dd>
+                 </dl>
+           </div><br />
+  
+    </aside>
+  <!-- End of Right column/section -->
+ 
+   </div>
+   <!-- End of Wrapper -->
+
+</div>
+<!-- End of Page content -->

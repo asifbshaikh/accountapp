@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+<div id="jHere"></div>
+ <%= render :partial => 'auto_calculate' %>
+<%= form_for @journal,  :html => {:class => "form-horizontal"} do |f| %>
+
+ <%= render 'shared/form_error', :object => @journal %>
+<%= hidden_field_tag 'total_paid', params[:total_paid].blank? ? 0 : params[:total_paid] %>
+   <div class="form-group">
+    <div class="col-lg-3">
+      <% if @journal.voucher_setting.custom_sequence? %>
+        <label class="control-label-required">Voucher Number</label><br/>
+        <%= f.text_field :voucher_number, :class=>"form-control bg-focus" %>
+      <% else %>
+        <label class="control-label">Voucher Number <%= @journal.voucher_number%></label><br/>
+        <%= f.hidden_field :voucher_number %>
+      <% end %>
+    </div>
+    <% if !@journal.new_record? && @journal.old_voucher? %> 
+      <div class="col-lg-3">
+        <label class="control-label-required">To Account Name</label>
+        <%= f.select(:account_id, options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, @journal.account_id), {:prompt=>"Type to select"}, {:style=>"width:200px;"}) %>
+         <span id ='to_acc_bal'></span> 
+      </div> 
+    <% end %>
+    <div class="col-lg-3">
+      <%= f.label :Date,  :class=>"control-label-required"  %>
+      <%= f.text_field :date, :size => "14", :class => 'bg-focus form-control' %>
+    </div>
+    <div class="col-lg-3">
+      <label class="control-label">Under Project</label>
+      <%= f.select(:project_id, options_from_collection_for_select_with_data(@projects, :id, :name, @journal.project_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+    </div>
+  </div>
+  <div class="form-group">
+  <div class="col-lg-12">
+  <table class="table table-striped b-t" id="journal_line_items">
+	<thead>
+	  <tr>
+	    <th><label class="control-label-required">From Account</label></th>
+	    <th></th>
+      <% if @journal.old_voucher? %>
+        <th><label class="control-label-required">Amount</label></th>
+      <% else %>
+		   <th><label class="control-label-required">Debit</label></th>
+       <th><label class="control-label-required">Credit</label></th>
+      <% end %>
+		  <th></th>
+	  </tr>                 
+  	</thead>
+   <tbody>
+     <% @journal.journal_line_items.each_with_index do |journal_line_item, index| %> 
+		 <%= render "journal_line_items", :journal_line_item => journal_line_item, :index => index %>
+     <% end %>
+   <% unless @journal.old_voucher? %>
+   <tr id="row_link" valign="top">
+       <td valign="top" colspan="6">
+           <%= link_to "+ Add new row",{:action => :add_row, :index => @journal.journal_line_items.size},:class=>"btn btn-white btn-sm", :remote => true %>
+       </td>
+    </tr>
+    <% end %>
+   <tbody>
+    <tr>
+    <td style='background-color: #fff;'></td>
+  	 <td style='background-color: #fff;' class="text-right"><b>Total</b></td>
+     <% if @journal.old_voucher? %>
+       <td style='background-color: #fff;' class="text-right"><b> <%= @company.currency_code %> <span id ="total">0.00</span></b></td>
+     <% else %>
+      <td style='background-color: #fff;' class="text-right"><b> <%= @company.currency_code %> <span id ="total">0.00</span></b></td>
+       <td style='background-color: #fff;' class="text-right"><b> <%= @company.currency_code %> <span id ="credittotal">0.00</span></b></td>
+     <% end %>
+   	<td style='background-color: #fff;'></td>
+    </tr>
+   </tbody>   
+  </table>
+  </div>
+  </div>
+      <div class="form-group">
+        <div class="col-lg-5">
+        <label class="control-label">Description</label>
+          <%= f.text_area :description , :rows => "4", :class=>"bg-focus form-control"%>
+         </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+        <label class="control-label">Tags</label>
+          <%= f.text_area :tags , :rows => "4", :class=>"bg-focus form-control"%>
+         </div>
+      </div>
+
+          <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-4">                      
+              <%= f.submit "Save", :class=>"btn btn-success" %>
+              <%= link_to 'Cancel', journals_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+
+      <!-- .modal -->
+  <div id="modal-journal-to-account" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @journal_to_account_heads, :transaction_type => "journal" %>
+  </div>
+  <div id="modal2" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @journal_from_account_heads, :transaction_type => "journal_from" %>
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#journal_account_id").select2();
+      $("#journal_project_id").select2();
+    });
+  </script>
+  <!-- / .modal -->

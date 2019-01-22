@@ -1,0 +1,79 @@
+<%= form_for(@receive_cash) do |f| %>
+   <%= render 'shared/form_error', :object => @receive_cash %>
+   <div class="column width3 first">
+      <fieldset>
+      <legend>Make New Payment </legend>
+		   <div class="field">
+         <%= f.label :voucher_number, :class=>"required" %><br />
+         <%= f.text_field :voucher_number %>
+       </div>
+			 <div class="field">
+				 <%= f.label :received_date, :class => "required" %><br />
+				 <%= f.text_field :received_date %>
+			 </div>
+			 <div class="field">
+				 <%= f.label :amount, :class => "required" %><br />
+				 <%= f.text_field :amount %>
+			 </div>
+			 <div class="field">
+				 <%= f.label :receipt_mode, :class => "required" %><br />
+				 <%= f.select(:receipt_mode, [['Cash'],['Cheque'],['Credit Card']],:prompt => false) %>
+			 </div>
+			 <div id = "cheque" style = "display:none;">
+					<div class="field">
+						<%= f.label :cheque_number %><br/>
+						<%= f.text_field :cheque_number %>
+					</div>  
+					<div class="field">
+					  <%= f.label :cheque_date %><br/>
+            <%= f.text_field :cheque_date%>
+					</div>
+					<div class="field">
+					  <%= f.label :bank %><br/>
+            <%= f.text_field :bank%>
+					</div>
+					<div class="field">
+						<%= f.label :branch %><br/>
+            <%= f.text_field :branch %>
+					</div>
+			  </div>
+			  <div id = "card" style = "display:none;">
+					<div class="field">
+						<%= f.label :card_number %><br/>
+	          <%= f.text_field :card_number %>
+		      </div>
+					<div class="field">
+					  <%= f.label :transaction_date %><br/>
+	          <%= f.text_field :transaction_date %>
+					</div>
+					<div class="field">
+					  <%= f.label :type_of_credit_card %><br/>
+	          <%= f.text_field :type_of_credit_card %>
+					</div>
+					<div class="field">
+					  <%= f.label :transaction_id %><br/>
+	          <%= f.text_field :transaction_id %>
+	        </div>  								
+			  </div>
+			  <div class="field">
+						<%= f.label :from_account_id, :class => "required" %><br />
+					  <%= collection_select(:receive_cash, :from_account_id, @from_accounts, :id, :name, :prompt => true) %>
+            &nbsp;<a href="#" class="nyroModal">Search and select</a>
+			  </div>
+			  <div class="field">
+						<%= f.label :deposit_to_account_id, :class => "required" %><br />
+						<%= collection_select(:receive_cash, :deposit_to_account_id, @to_accounts, :id, :name, :prompt => true) %>
+            &nbsp;<a href="#" class="nyroModal">Search and select</a>
+			  </div>
+				<div class="field">
+						<%= f.label :description %><br />
+						<%= f.text_area :description , :rows => "2", :cols=> "40" %>
+				</div>
+				
+				 <div class="actions">
+            <button type="submit" class="btn btn-green big"><img src="images/add.png" />Save</button>&nbsp;
+            <button type="reset" class="btn btn-gray big"><img src="images/add.png" />Cancel</button>&nbsp;
+         </div>
+      </fieldset>   
+    </div>
+<% end %>

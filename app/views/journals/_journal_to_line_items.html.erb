@@ -1,0 +1,9 @@
+<tr id="to_row<%= index %>" valign="top" class = 'inv_line' >
+    <%= hidden_field_tag "journal[journal_to_line_items_attributes][#{index}][id]",journal_to_line_item.id%>
+    <td><%= select_tag "journal[journal_to_line_items_attributes][#{index}][to_account_id]", options_from_collection_for_select(@to_accounts, :id, :name,:selected => journal_to_line_item.to_account_id ),:include_blank => true, :class => "half"  %>
+           <!-- <a href="#" class="nyroModal">Search and select</a> --></td>
+	 
+    <td class="ta-right"><%= text_field_tag "journal[journal_to_line_items_attributes][#{index}][amount]", journal_to_line_item.amount, :class => 'amount', :size => 8, :maxlength => 20, :onkeydown => "return numbersOnly(event);"%></td>
+          <td><%= link_to "X",{:action => :remove_to_line_item, :index => index ,:journal_to_line_item_id => journal_to_line_item.id},
+                                      :class => "btn btn-red", :remote => true %></td>
+</tr> 

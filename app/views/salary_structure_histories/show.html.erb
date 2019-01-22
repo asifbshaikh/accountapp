@@ -1,0 +1,88 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2><i class="icon-file-text-alt text"></i> View Salary Structure History</h2>
+      </div>
+      <div class="col-lg-4 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-print"> </i>'), salary_structure_history_path(@salary_structure_history, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), user_path(@salary_structure_history.for_employee), :class => 'btn btn-white btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+<div class="row">
+          <div class='col-sm-5'>
+            <h4><strong>Employee Name: </strong><br/><%= @salary_structure_history.for_employee_name %></h4>
+          </div>
+          <div class='col-sm-7'>
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-8">
+                  <p><strong>Company Name: </strong><%=@salary_structure_history.company.name %></p>
+                  <p><strong>Effective From Date: </strong><%=@salary_structure_history.effective_from_date %></p>
+                  <p><strong>Total:</strong> <%= format_currency (@salary_structure_history.total_amount) %></p>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%= @salary_structure_history.created_at.to_date %> by <%= @salary_structure_history.created_by_user %></div>
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Updated on <%= @salary_structure_history.updated_at.to_date %></div>
+                </div>
+              </footer>
+            </section>
+          </div>
+        </div>
+
+<div class="line line-dashed m-t-large"></div>
+  <div class="col-sm-12">
+ <div class="sal_stru">
+ <section class="panel">
+  <header class="panel-heading">
+   <strong>Salary Structure</strong>
+  </header>
+  <div class="">
+    <% if @salary_structure_history.blank? %>
+    <%= render :partial => "shared/no_record" %>
+ <% else %>
+     <table class="table table-striped m-b-none text-small ">
+   <thead>
+     <tr>
+       <th>Payhead</th>
+       <th>Payhead type</th>
+       <th class="text-center">Amount</th>
+     </tr>
+   </thead>
+   <tbody>
+     <% for salary_structure_history_line_item in @salary_structure_history.salary_structure_history_line_items %>
+      
+     <tr>
+       <td>
+        <%= Payhead.find(salary_structure_history_line_item.payhead_id).payhead_name %>
+       </td>
+       <td>
+         <%= Payhead.find(salary_structure_history_line_item.payhead_id).payhead_type %>
+       </td>
+       <td class="text-center">
+        <%= format_currency salary_structure_history_line_item.amount %>
+       </td>
+     </tr>
+     
+     <% end %>
+     <tr>
+       <td colspan="2" class="text-right"><strong>Total</strong></td>
+       <td class="text-center"><strong><%= format_currency (@salary_structure_history.total_amount) %></strong></td>
+     </tr>
+   </tbody>
+  </table>
+  <% end %>
+  </div>
+ </section>
+ </div>
+</div>
+ </div>
+    </section>
+  </section>
+</section>

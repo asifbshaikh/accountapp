@@ -1,0 +1,108 @@
+<div id ="jData">
+<script>
+  $(document).ready(function(){
+		cal();
+		$('table#expense_line_items tbody input:text').live('keyup', function(e){
+			cal();
+			e.preventDefault();
+		});
+		
+		$("table#expense_line_items .exp_line #tax-td select").live('change', function(e){
+			cal();
+	    e.preventDefault(); 
+		});
+
+		$('input[name=reverseCharge]').live('change', function(e){
+			cal();
+			e.preventDefault();
+		});
+  });
+  
+	function cal(){
+		$("tr#auto-added-row").remove();
+	var auto_calculate = new Object();
+	var tax_rate = new Object();
+	'<% @tax_accounts.each do |tax| %>'
+		auto_calculate['<%= tax.id %>'] = '<%= tax.accountable.auto_calculate_tax %>'
+		tax_rate['<%= tax.id %>'] = '<%= tax.accountable.tax_rate %>'
+	'<% end %>'
+	var i = 0;
+	var total = 0;
+	var total_tax = 0;
+	$('table#expense_line_items tbody tr').each(function(){
+		var amount = 0;
+		var x = 0;
+		var t = 0;
+		if (($('table#expense_line_items tbody tr:eq(' + i + ')').is(":visible")) && ($('table#expense_line_items tbody tr:eq(' + i + ')').attr('class') == 'exp_line') && $('table#expense_line_items tbody tr:eq(' + i + ') #amount').val()) {
+			var amount = parseFloat($('table#expense_line_items tbody tr:eq(' + i + ') #amount').val());
+			total = total + amount;
+
+			for (var taxIndex = 0; taxIndex < 2; taxIndex++ ) {
+				data = $('table#expense_line_items tbody tr:eq(' + i + ') #tax-td select:eq('+ taxIndex +') option:selected').attr('data-linked');
+				if(data){
+					if(taxIndex==1){
+						$("#tax-"+ i +"-1").show();
+						$("table#expense_line_items tbody tr:eq(" + i + ") #tax-td a#add-tax").remove();
+					}
+					var parent_tax_amount=0
+					var base_amount = 0
+					$.each($.parseJSON(data), function(index,	object){
+				    var tax_rate = parseFloat(object["rate"]);
+				    var tax_name = object["name"];
+				    var class_name = object["class_name"];
+				    var calculate_on_percent= parseFloat(object["calculate_on_percent"]);
+				    var calculation_method=object["calculation_method"]
+				    var tax_amount = 0
+				    if(object["parent"]){
+    	    		base_amount=amount*(calculate_on_percent/100.0)
+			    	if(calculation_method==4){
+			                parent_tax_amount = base_amount*(tax_rate/100.0);
+			              }else{
+			                parent_tax_amount=tax_amount = base_amount*(tax_rate/100.0);
+			              }
+				   //  	parent_tax_amount=amount*(tax_rate/100);
+							// tax_amount = parent_tax_amount;
+				    }else{
+  			    	amount_to_calculate=parent_tax_amount
+				    	if(calculation_method=="2"){
+				    			amount_to_calculate=parent_tax_amount
+                              amount_to_calculate+=base_amount 
+                              }else if(calculation_method=="3"){
+				    		amount_to_calculate=base_amount
+				    	}
+				    	tax_amount = amount_to_calculate*(tax_rate/100);
+				    	// tax_amount= parent_tax_amount*(tax_rate/100);
+				    }
+
+						if(tax_amount > 0){
+							 
+							total_tax += tax_amount;
+						
+							if($("."+class_name+" td span.tx-amt").text()){
+								var temp = parseFloat($("."+class_name+" td span.tx-amt").text());
+								$("."+class_name+" td span.tx-amt").text((temp+tax_amount).toFixed(2));
+							}else{
+								$('table#expense_line_items tr.row-link-expense:last').after("<tr id='auto-added-row' class='"+class_name+" row-link-expense'><td colspan='3' style='background-color:#fff;' align='right'>"+tax_name+"</td><td style='background-color:#fff;' align='right'><span class='tx-amt'>"+tax_amount.toFixed(2)+"</span></td><td style='background-color:#fff;'></td></tr>")
+							}
+						}	
+					});
+				}
+			};
+		}
+
+		i++;
+	});
+	if ($('input[name=reverseCharge]').is(":checked")){
+	total;
+	}
+	else{
+		total = total + total_tax;
+	}
+	$('input[name=total]').val(total);
+	$('input[name=total_tax]').val(total_tax);
+	$('span#tax-amount').text(total_tax.toFixed(2));
+	$('table#expense_line_items span#total').text(total.toFixed(2));
+	}
+
+</script>
+</div>

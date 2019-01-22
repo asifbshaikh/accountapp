@@ -1,0 +1,8 @@
+$("#other_charge-row-loader").remove();
+$("#other_charge_row_link").before('<%= escape_javascript render( "other_charge_line_items",{ :other_charge_line_item => @other_charge_line_item, :other_charge_index => params[:other_charge_index]} ) %>');
+if("<%= params[:other_charge_index].to_i <=5 %>"){
+$("#other_charge_row_link").replaceWith('<%= escape_javascript render( "add_other_charge_row_link",{ :other_charge_index => params[:other_charge_index].to_i+1}) %>');
+}else{
+$("#other_charge_row_link").remove();
+}
+

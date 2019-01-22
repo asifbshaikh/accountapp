@@ -1,0 +1,7 @@
+ <tr>
+    <td><%= link_to employee.employee_name, employee %></td>
+    <td><%= employee.email %></td>
+    <td><%= Department.find(employee.department).name %></td>
+    <td><%= Job.find(employee.designation_id).title %></td>
+    <td><%= link_to 'Destroy', employee, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>

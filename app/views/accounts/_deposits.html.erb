@@ -1,0 +1,18 @@
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Interest bearing deposit</label></div>
+		<div class="col-lg-3">
+      <%=radio_button_tag 'deposit[interest_applicable]', '1',true,{ :tabindex=>'4'}  %>Yes &nbsp;
+     	<%=radio_button_tag 'deposit[interest_applicable]', '0', false,{ :tabindex=>'5'} %> No
+    </div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Interest rate</label></div>
+    <div class="col-lg-3"><%= text_field_tag 'deposit[interest_rate]','',{:tabindex => 6, :class=>"bg-focus form-control"} %> </div>
+  </div>
+  <div class="form-group gradeU even">
+	  <div class="col-lg-2 text-right"><label class="control-label">Compounding Type</label></div>
+    <div class="col-lg-3">
+      <%= select_tag 'deposit[compounding]',options_for_select([['Daily'],['Monthly'],['Quarterly'],['Yearly'],['Payout']]), :class=>"bg-focus form-control" %> 
+    </div>
+  </div>
+

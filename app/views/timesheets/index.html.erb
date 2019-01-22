@@ -1,0 +1,67 @@
+<section id="content">
+<section class="main padder">
+  <div class="row">
+    <div class="col-lg-3">
+     <h2><i class="icon-file text"></i>Timesheets</h2>
+    </div>
+    <div class="col-lg-9 m-t-large " align="right" >
+    <!-- <a href="/timesheets/report" class="btn btn-white btn-lg "><i class="icon"></i> Report </a> -->
+    <a href="/users" class="btn btn-default btn-lg"> <i class="icon-mail-reply"></i></a>
+    <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+    <p></p>
+    </div>  
+  </div>
+<div class="row">
+    <div class="col-lg-4">
+      <section class="panel">
+        <div class="panel-body">
+          <div class="table-responsive" id = "timesheet">
+          <% if @timesheets.blank? %>
+          <%= render :partial => "shared/no_record" %></p>
+          <% else %>
+           <table id="timesheets" class="table table-striped m-b-none text-small" data-source ="<%= timesheets_url(:format => "json") %>" >
+            <thead>
+             <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+              <%= render :partial => "timesheet", :collection => @timesheets %>
+            </tbody>
+            <tfoot>
+              <%= render :partial => "footer" %>
+            </tfoot>
+          </table>
+          <% end %>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="col-lg-8">
+      <section class="panel">
+        <header class="panel-heading">
+          <ul class="nav nav-tabs pull-left">
+          <li class="active"><a href="#daytime" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Day</a></li>
+          <li><a href="#weektime" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Week</a></li>
+          </ul>
+        </header>
+         <%= render :partial => "shared/flash_msg"%>
+        <div class="panel-body">
+          <div class="tab-content"> 
+            <div class="tab-pane active" id="daytime">
+            <div class="table-responsive">
+             <%= render :partial=> "form" %>
+            </div>
+            </div>
+            <div class="tab-pane" id="weektime">
+            <div class="table-responsive">
+              <%= render :partial=> "form1" %>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+   </div>
+</div>
+</section>
+</section>
+
+

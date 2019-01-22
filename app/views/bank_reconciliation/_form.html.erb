@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+    <%= render :partial=> "filter" %>
+<%= form_tag "{reconcile_ledgers_path}", :method => :put, :html=>{:class=>"form-horizontal"} do %>
+  <% if @ledgers.blank? %>
+    <%= render :partial => "shared/no_record" %>
+  <% else %>
+     <table class="table table-striped b-t" id="report">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Corresponding a/c</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th class="ta-right">Debit</th>
+          <th class="ta-right">Credit</th>
+          <th>Date as per bank</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for ledger in @ledgers %>
+        <tr valign="top">
+          <td valign="top" style="width:10%"><%= ledger.transaction_date%></td>
+          <td class="ta-left" style="width:20%">
+          <%= Account.find(ledger.retrieve_corresponding_account).name%>
+          </td>
+          <td><% ledger.voucher_type.truncate(20) %></td>
+          <td style="width:30%"><%= ledger.description.truncate(50) %></td>
+          <td class="ta-right" style="width:12%" ><%= format_currency ledger.credit %></td>
+          <td class="ta-right" style="width:12%"><%= format_currency ledger.debit %></td>
+          <td class="ta-left"style="width:16%">
+            <%= hidden_field_tag "ledger_ids[]", ledger.id %>
+        <%= text_field_tag "ledger_bank_transaction_date", Time.zone.now.to_date, :class=>"form-control"%>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    <tfoot>
+    <tr>
+    <td  colspan="6"> 
+    <%= submit_tag "Reconcile record", :class => "btn btn-success" %>
+    <!--<a href= <%= "/bank_reconciliation/update_multiple?id=#{ledger.id}" %> class = "btn btn-green">Reconcile records</a>-->
+    <a href= "#" data_type = "resrt" class ="btn btn-default">Cancel</a>  
+    </td>
+    </tr>
+    </tfoot>
+    </table>
+  <% end %>
+<% end %> 
+      </div>
+    </section>
+  </div>
+</div>

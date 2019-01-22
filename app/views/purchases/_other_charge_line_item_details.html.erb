@@ -1,0 +1,8 @@
+<tr valign="top">
+<% if @purchase.discount != 0 %>
+  <td align="right" colspan='5'><%= other_charge_line_item_details.account.name %></td>
+  <% else %>
+  <td align="right" colspan='5'><%= other_charge_line_item_details.account.name %></td>
+  <% end %>
+  <td align="right"><%= number_with_precision other_charge_line_item_details.amount, :precision=>2 %></td>
+</tr> 

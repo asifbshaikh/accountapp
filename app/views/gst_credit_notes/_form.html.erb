@@ -1,0 +1,17 @@
+<%= form_for(@gst_credit_note) do |f| %>
+  <% if @gst_credit_note.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gst_credit_note.errors.count, "error") %> prohibited this gst_credit_note from being saved:</h2>
+
+      <ul>
+      <% @gst_credit_note.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+$(".popup-error").remove();
+<% if @work_details  %>
+	  $('.work_detail_info').show();
+  $('.work_detail_add').hide();
+	$(".user-work-info-error").after("<div class='alert alert-success invoice-setting-notif'>Work information updated successfully.</div>")
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+ window.location.reload()

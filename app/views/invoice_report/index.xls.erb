@@ -1,0 +1,42 @@
+<table>
+  <tr><td colspan=6 align=center><%= @page_name %></td></tr>
+  <tr><td colspan=6 align=center>As on:
+<%= (params[:end_date].blank?) ? ( Time.zone.now.to_date) : params[:end_date].to_date %> </td></tr>
+  <thead>
+                <tr>
+                  <th>Invoice Number</th>
+                  <th>Invoice Date</th>
+                  <th>Customer Name</th>
+                  <th align="center">Quantity</th>
+                  <th align="center">Taxable Amount</th>
+                  <th align="center">CGST</th>
+                  <th align="center">SGST</th>
+                  <th align="center">IGST</th>
+                  <th align="center">Total</th>
+                  
+                 </tr>
+              </thead>
+              <tbody>
+                <% @invoices.each do |invoice| %>
+                          <tr>
+                            <td> <a href = "/invoices/<%= invoice.id %>"><%= invoice.invoice_number %></a>
+                         </td>
+                         <td> <%= invoice.invoice_date %> </td>
+                            <td> <%= invoice.get_party.name %></td> 
+                            
+                             <td> <%= invoice.total_quantity %></td>
+                             <td> <%= invoice.sub_total %> </td>
+                             
+                             <td><%= invoice.calc_cgst_tax_amt%></td>
+                             <td><%= invoice.calc_sgst_tax_amt%></td>
+                             <td><%= invoice.calc_igst_tax_amt%></td>
+                             <td> <%= invoice.total_amount %> </td>
+                          </tr>
+                             <% end %>
+              </tbody>
+              <tfoot>
+                 <tr>
+                  <td colspan="10"></td>
+                </tr>
+              </tfoot>
+</table>

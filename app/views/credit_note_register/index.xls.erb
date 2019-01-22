@@ -1,0 +1,49 @@
+<table>
+  <tr><td colspan=6 align=center><b><%= @page_name %> for <%= (params[:account_id].blank?)? Account.find(@accounts.first.id).name : Account.find(params[:account_id]).name %></b></td></tr>
+   <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align=center>Branch: <b><%= Branch.find(params[:branch_id]).name%></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center><%= (params[:start_date].blank?)? @ledgers.first.transaction_date : params[:start_date] %> To <%= (params[:end_date].blank?)? Time.zone.now.to_date : params[:end_date] %></td></tr>
+  <thead>
+    <tr>
+    	<th align='left'>Date</th>
+		  <th align='left'>Correspondence Account</th>
+      <th align='left'>P a r t i c u l a r s</th>
+      <th align='left'>Type</th>
+      <th align="right">Debit</th>
+      <th align="right">Credit</th>
+    </tr>
+  <thead>
+  <tbody>
+    <%debit = 0
+      credit = 0
+      prev_date = nil 
+      for ledger in @ledgers
+    %>
+    <tr>
+      <% if !ledger.retrieve_corresponding_account.nil? %>
+      <td><%=ledger.transaction_date.strftime("%d-%m-%Y") %></td>
+         <%cur_acc = Account.find(ledger.retrieve_corresponding_account)
+         %>
+      <td><%= (ledger.debit > 0)? "To":"By"%> <%= ledger.multiple_correlate_ledgers? ? "Multiple accounts" : (cur_acc.name)%></td>
+       <td><%=ledger.description %></td>
+       <td><%= ledger.voucher_type %></td>
+       <td align="right"><%= format_currency(ledger.debit) %></td>
+       <td align="right"><%= format_currency ledger.credit %></td>
+        <%debit += ledger.debit
+          credit += ledger.credit
+  			end %>
+     
+    </tr>
+    <% end 
+   closing_balance = debit - credit%> 
+  </tbody>
+  <tr><td></td><td></td><td></td><td></td><td align="right"><b><%= format_currency debit%></b></td><td align="right"><b><%= format_currency(credit) %></b></td></tr>
+  <% if closing_balance < 0 %>
+    <tr><td></td><td></td><td><b>Closing Balance</b></td><td></td><td align='right'><b><%= format_currency(-1*closing_balance) %></b></td><td align="right"></td></tr>
+      <tr><td></td><td></td><td></td><td><b></b></td><td align="right"><b><%= format_currency (debit + -1*closing_balance)%></b></td><td align="right"><b><%= format_currency(credit )%></b></td></tr>
+  <% else %>
+    <tr><td></td><td></td><td><b>Closing Balance</b></td><td></td><td></td><td align="right"><b><%= format_currency(closing_balance) %></b></td></tr>
+      <tr><td></td><td></td><td></td><td><b></b></td><td align="right"><b><%= format_currency debit%></b></td><td align="right"><b><%= format_currency(credit + closing_balance)%></b></td></tr>
+  <% end %>
+</table><hr />

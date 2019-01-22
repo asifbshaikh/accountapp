@@ -1,0 +1,103 @@
+gstr1,RETFILE,v0.2,/v0.2/returns/gstr1,File Gstr1
+gstr1,RETFILE,v0.3,/v0.3/returns/gstr1,File Gstr1
+gstr1,RETSAVE,v0.3,/v0.3/returns/gstr1,Save GSTR1 data
+gstr1,B2B,v0.3,/v0.3/returns/gstr1,GET B2B Invoices
+gstr1,B2CL,v0.3,/v0.3/returns/gstr1,Get B2CL Invoices
+gstr1,B2CS,v0.3,/v0.3/returns/gstr1,GET B2CS Invoices
+gstr1,NIL,v0.3,/v0.3/returns/gstr1,Get Nil Rated Supplies
+gstr1,EXP,v0.3,/v0.3/returns/gstr1,Get EXP
+gstr1,B2BA,v0.2,/v0.2/returns/gstr1,API call for getting all B2B amended invoices for a return period
+gstr1,B2CLA,v0.2,/v0.2/returns/gstr1,API call for getting all B2C Large invoices with amendments for a return period. 
+gstr1,B2CSA,v0.2,/0.2/returns/gstr1,API will be used for getting all B2CSA HSN data for a return period.
+gstr1,CDNR,v0.3,/v0.3/returns/gstr1,API will call CDNR for getting all Credit/Debit notes for a return period of Registered Taxpayer.
+gstr1,CDNR,v0.2,/v0.3/returns/gstr1,API will call CDNR for getting all Credit/Debit notes for a return period of Registered Taxpayer.
+gstr1,CDNA,v0.2,/v0.3/returns/gstr1,API will call CDNA for getting all amended Credit/Debit notes for a return period of Registered Taxpayers 
+gstr1,EXPA,v0.2,/v0.3/returns/gstr1,API call for getting amended invoices related to supplies exported for a return period.
+gstr1,AT,v0.3,/v0.3/returns/gstr1,API call for getting advance tax details for a return period. 
+gstr1,AT,v0.2,/v0.2/returns/gstr1,API call for getting advance tax details for a return period.
+gstr1,ATA,v0.2,/v0.2/returns/gstr1,API call for getting amended advance tax details for a return period.
+gstr1,TXP,v0.3,/v0.3/returns/gstr1,API call for getting tax paid details for a return period.
+gstr1,TXP,v0.2,/v0.2/returns/gstr1,API call for getting tax paid details for a return period.
+gstr1,HSNSUM,v0.3,/v0.3/returns/gstr1,API call for getting HSN Summary details.
+gstr1,HSNSUM,v0.2,/v0.2/returns/gstr1,API call for getting HSN Summary details.
+gstr1,RETSUM,v0.3,/v0.3/returns/gstr1,API is to get the table wise summary of GSTR1 data.
+gstr1,RETSUM,v0.2,/v0.2/returns/gstr1,API is to get the table wise summary of GSTR1 data. 
+gstr1,RETFILE,v0.2,/v0.2/returns/gstr1,File Gstr1
+gstr1,RETFILE,v0.3,/v0.3/returns/gstr1,File Gstr1
+gstr1,B2B,v0.2,/v0.2/returns/gstr1,GET B2B Invoices
+gstr1,B2CL,v0.2,/v0.2/returns/gstr1,Get B2CL Invoices
+gstr1,B2CS,v0.2,/v0.2/returns/gstr1,GET B2CS Invoices
+gstr1,EXP,v0.2,/v0.2/returns/gstr1,Get EXP
+gstr1,NIL,v0.2,/v0.2/returns/gstr1,Get Nil Rated Supplies
+gstr2,RETSAVE,v0.3,/v0.3/returns/gstr2,Save GSTR2 data
+gstr2,RETSAVE,v0.2,/v0.2/returns/gstr2,Save GSTR2 data
+gstr2,B2B,v0.3,/v0.3/returns/gstr2, API call for getting all B2B invoices for a return period.
+gstr2,B2B,v0.2,/v0.2/returns/gstr2, API call for getting all B2B invoices for a return period.
+gstr2,B2BA,v0.2,/v0.2/returns/gstr2,API call for getting all B2B amended invoices for a return period 
+gstr2,IMPG,v0.3,/v0.3/returns/gstr2,API call for getting invoices related to Import of Goods/Capital Goods for a return period.
+gstr2,IMPG,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to Import of Goods/Capital Goods for a return period.
+gstr2,IMPGA,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to Amended Import of Goods/Capital for a return period. 
+gstr2,IMPS,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to Import of Services for a return period.
+gstr2,IMPS,v0.3,/v0.3/returns/gstr2,API call for getting invoices related to Import of Services for a return period.
+gstr2,IMPSA,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to Amended Import of Services for a return period.
+gstr2,CDN,v0.3,/v0.3/returns/gstr2,API call CDN for getting all Credit/Debit notes invoices for a return period.
+gstr2,CDN,v0.2,/v0.2/returns/gstr2,API call CDN for getting all Credit/Debit notes invoices for a return period.
+gstr2,CDNA,v0.2,/v0.2/returns/gstr2,API call CDNA for getting all amended Credit/Debit notes invoices for a return period. 
+gstr2,NIL,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to Nil related for a return period
+gstr2,NIL,v0.3,/v0.3/returns/gstr2,API call for getting invoices related to Nil related for a return period
+gstr2,TDS,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to TDS credit received.
+gstr2,TCS,v0.2,/v0.2/returns/gstr2,API call for getting invoices related to TCS credit.. 
+gstr2,TXLI,v0.2,/v0.2/returns/gstr2,API call for getting Item details related to Tax liability under reverse charge. 
+gstr2,TXLI,v0.3,/v0.3/returns/gstr2,API call for getting Item details related to Tax liability under reverse charge. 
+gstr2,ATXLI,v0.2,/v0.2/returns/gstr2,API call for getting amended Item details related to Tax liability under reverse charge. 
+gstr2,TXP,v0.2,/v0.2/returns/gstr2,API call for getting invoice details related to Tax paid under reverse charge. 
+gstr2,TXP,v0.3,/v0.3/returns/gstr2,API call for getting invoice details related to Tax paid under reverse charge.
+gstr2,RETSUM,v0.3,/v0.3/returns/gstr2,API is to get the table wise summary of GSTR2 data
+gstr2,RETSUM,v0.2,/v0.2/returns/gstr2,API is to get the table wise summary of GSTR2 data
+gstr2,RETFILE,v0.2,/v0.2/returns/gstr2,API is to file the GSTR2 return.
+gstr2,RETFILE,v0.3,/v0.3/returns/gstr2,API is to file the GSTR2 return.
+gstr2,HSNSUM,v0.3,/v0.3/returns/gstr2,API call for getting the HSN Summary details for a return period 
+gstr2,HSNSUM,v0.2,/v0.2/returns/gstr2,API call for getting the HSN Summary details for a return period 
+gstr2,RETSAVE,v0.3,/v0.3/returns/gstr2,Save GSTR2 data
+gstr2a,B2B,v0.3,/v0.3/returns/gstr2a,API call for getting all B2B invoices for a return period
+gstr2a,CDN,v0.3,/v0.3/returns/gstr2a,API call CDN for getting all Credit/Debit notes invoices for a return period.
+gstr3,RETSUM,v0.3,/v0.3/returns/gstr3,Get GSTR3 Details
+gstr3,RETSUM,v0.2,/0.2/returns/gstr3,Get GSTR3 Details
+gstr3,GENERATE,v0.3,/v0.3/returns/gstr3,API call for generate GSTR3 details
+gstr3,GENERATE,v0.2,/0.2/returns/gstr3,API call for generate GSTR3 details
+gstr3,RETFILE,v0.2,/0.2/returns/gstr3,API call for filing GSTR3 
+gstr3,RETFILE,v0.3,/v0.3/returns/gstr3,API call for filing GSTR3 
+gstr1a,B2B,v0.3,/v0.3/returns/gstr1a,Get B2B Invoices
+gstr1a,B2B,v0.2,/0.2/returns/gstr1a,Get B2B Invoices
+gstr1a,B2BA,v0.3,/v0.3/returns/gstr1a,Get B2BA Invoices
+gstr1a,B2BA,v0.2,/0.2/returns/gstr1a,Get B2BA Invoices
+gstr1a,CDNR,v0.2,/0.2/returns/gstr1a,Get CDNR Invoices
+gstr1a,CDNR,v0.3,/v0.3/returns/gstr1a,Get CDNR Invoices
+gstr1a,CDNRA,v0.2,/0.2/returns/gstr1a,Get CDNRA Invoices
+gstr1a,CDNRA,v0.3,/v0.3/returns/gstr1a,Get CDNRA Invoices
+gstr1a,RETSUM,v0.2,/0.2/returns/gstr1a,Get GSTR1A Summary
+gstr1a,RETSUM,v0.3,/v0.3/returns/gstr1a,Get GSTR1A Summary
+gstr1a,RETFILE,v0.3,/v0.3/returns/gstr1a,File Gstr1A
+gstr1a,RETSAVE,v0.3,/v0.3/returns/gstr1a,Save GSTR1A data
+gstr1a,RETSAVE,v0.2,/0.2/returns/gstr1a,Save GSTR1A data
+gstr1,RETSUBMIT,v0.2,/v0.3/returns/gstr1,Submit Gstr1
+gstr1,RETSUBMIT,v0.3,/v0.2/returns/gstr1,Submit Gstr1
+gstr1a,RETSUBMIT,v0.2,/v0.3/returns/gstr1a,Submit Gstr1A
+gstr1a,RETSUBMIT,v0.3,/v0.3/returns/gstr1a,Submit Gstr1A
+gstr3,RETSUBMIT,v0.2,/v0.2/returns/gstr3,SUBMIT GSTR3
+gstr2,RETSUBMIT,v0.2,/v0.3/returns/gstr2,SUBMIT GSTR2
+gstr2,RETSUBMIT,v0.3,/v0.3/returns/gstr3,SUBMIT GSTR2
+gstr1,CDNUR,v0.2,/v0.2/returns/gstr1,API will call CDNUR for getting all Credit/Debit notes for Unregistered Users.
+gstr1,CDNUR,v0.3,/v0.3/returns/gstr1,API will call CDNUR for getting all Credit/Debit notes for Unregistered Users.
+gstr1,CDNURA,v0.2,/v0.2/returns/gstr1,API will call Amended Credit/Debit notes for Unregistered Users
+gstr1,DOCISS,v0.3,/v0.3/returns/gstr1,API calls to get Documents issued during the tax period
+gstr2,B2BUR,v0.3,/v0.3/returns/gstr2,API call for getting B2B Unregistered invoices for a return period
+gstr2,ITCRVSL,v0.3,/v0.3/returns/gstr2,API call for getting invoices related to ITC Reversal for a return period
+gstr2,CDNUR,v0.3,/v0.3/returns/gstr2,API call for getting CDN Unregistered invoices for a return period
+gstr3,RETACCEPT,v0.3,/v0.3/returns/gstr3,API call for accepting the liabilities and interest from GSTR3
+gstr3,RETOFFSET,v0.3,/v0.3/returns/gstr3,API call for offsetting the liabilities and interest from GSTR3 
+gstr3,RETSUBMIT,v0.3,/v0.3/returns/gstr3,API call for submitting the refund claim GSTR3 
+gstr3b,RETSUM,v0.3,/v0.3/returns/gstr3b,Get GSTR3B Details
+gstr3b,RETSAVE,v0.3,/v0.3/returns/gstr3b,Save GSTR3B data
+gstr3b,RETSUBMIT,v0.3,/v0.3/returns/gstr3b,Submit GSTR3B data
+gstr3b,RETOFFSET,v0.3,/v0.3/returns/gstr3b,Offset Liability GSTR3B data

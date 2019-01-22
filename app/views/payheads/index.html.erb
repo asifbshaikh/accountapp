@@ -1,0 +1,40 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-3">
+        <h2><i class="icon-file text"></i>Payheads</h2>
+      </div>
+
+      <div class="col-lg-9 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-plus"></i> New Payhead'), "payheads/new", :class =>'btn btn-success btn-lg' %>
+       <a href="/users/manage_payroll" class="btn btn-default btn-lg"> <i class="icon-mail-reply"></i></a>
+       <!-- <a href="#" class="btn btn-default btn-lg" title='coming soon'><i class="icon-info"> </i> </a> -->
+        <p></p>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+          <%= render :partial=> "shared/flash_msg"%>
+            <div class="">
+              <div class="table-responsive">
+               <% if @payheads.blank? %>
+                 <%= render :partial => "shared/no_record" %>
+              <% else %>
+                <table id="payheads" class="table table-striped m-b-none text-small"  >
+                <thead>
+                  <%= render :partial => "header" %>
+                </thead>
+                <tbody>
+                  <%= render :partial => "payhead", :collection => @payheads %>
+                </tbody>
+              </table>
+              <% end %>
+            </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+  </section>
+</section>

@@ -1,0 +1,12 @@
+$(".popup-error").remove();
+<% if @lead.errors.any? %>
+  $('.errorSection').after("<%= escape_javascript render('shared/form_error',{:object=>@lead})%>");
+  $(".btnsave").remove();
+  $(".save-btn").after(" <button  class='btnsave btn btn-sm btn-success' type='submit'  data-loading-text='Saving...''>Save</button>");
+<% else %>
+  $(".btnsave").remove();
+  $("#status").html("<%= @lead.get_status%>");
+  $("#last_update").html("<%= @lead.updated_at%>");
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+  $("div[id^='lost_modal']").modal('hide');
+<% end %>

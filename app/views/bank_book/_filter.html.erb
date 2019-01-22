@@ -1,0 +1,36 @@
+<form action = 'index'>
+	<div id = 'use_filter' class='title_name' style="cursor: pointer;">
+		<img src="/images/datatable/sort_desc.png"  class="show_image" align="left">
+		&nbsp;&nbsp;Use Filter
+	</div>
+	<div id='filter'>
+	<table>
+		<tr><td>
+				<label>Select Account :</label>
+	 		</td>
+	 		<td>
+				<select name = 'account_id'>
+					<% for acc_id in @bank_accounts %>
+			    		<% if !params[:account_id].nil? && acc_id.id == params[:account_id].to_i %>
+			    			<option value = '<%= acc_id.id %>' selected="selected"><%= acc_id.name %></option>
+			    		<% else %>
+			    			<option value = '<%= acc_id.id %>' ><%= acc_id.name %></option>
+						<% end %>	
+					<% end %>
+				</select>
+			</td>
+			<td>
+				<input type="submit" value="Search" />
+			</td>
+		</tr>
+		<tr>
+			<td>	
+				<%= label_tag 'Date from :' %>&nbsp;
+			</td>
+			<td colspan="2">
+				<%= text_field_tag :start_date %>&nbsp;<%= label_tag 'To'%>&nbsp;<%= text_field_tag :end_date %>
+			</td>
+		</tr>
+	</table>
+	</div>
+</form>

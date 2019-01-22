@@ -1,0 +1,4 @@
+ <div class='dc-batch-details avlstk' style="display:inline">
+ 	<%= select_tag "delivery_challan[delivery_challan_line_items_attributes][#{params[:index]}][product_batch_id]", options_from_collection_for_select_with_data(@product_batches, :id, :batch_number, @product_batches.first.id, {:"available-quantity"=> :quantity}), :style => "width:40%; display:inline;", :id => "prdqty", :class=>'form-control bg-focus dc-batch-select', :"data-index" => params[:index], :"data-unit"=> @product_batches.first.product.unit_of_measure  %>
+ 	<i style='color:green;' id='dcqty-notif<%= params[:index] %>'>Available qty <%= "#{@product_batches.first.quantity} #{@product_batches.first.product.unit_of_measure}" %></i>
+ </div>

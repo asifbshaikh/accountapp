@@ -1,0 +1,56 @@
+			 <%= f.fields_for @user.user_salary_detail do |salary|%>
+        <div class="column width6 first">
+	         <div id='user_info_div' ><span class='personal_info'>Work Info</span></div>
+			     <div class="man">
+	            <div class="column width3 first">
+	            	<div class="field">
+	                <%= salary.label :status %><br />
+	                <%= salary.select(:status, [['Active'],['Inactive']],:prompt => false) %>
+	              </div>
+							  <div class="field">
+		                <%= salary.label :work_type %><br />
+		                <%= salary.select(:work_type, [['Permanent'],['Contract'],['Other']], :prompt => false)%>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :date_of_joining %><br />
+		                <%= salary.text_field :date_of_joining %>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :work_phone %><br />
+		                <%= salary.text_field :work_phone %>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :work_location %><br />
+		                <%= salary.text_area :work_location, :rows=> 1, :cols=> 21  %>
+		            </div>
+							</div>
+	            <div class="column width3">
+	            	<div class="field">
+	                <%= salary.label :bank_account_number %><br />
+	                <%= salary.text_field :bank_account_number %>
+	              </div>
+		            <div class="field">
+		                <%= salary.label :bank_name %><br />
+		                <%= salary.text_field :bank_name %>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :branch %><br />
+		                <%= salary.text_field :branch %>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :PAN %><br />
+		                <%= salary.text_field :PAN %>
+		            </div>
+		            <div class="field ">
+		                <%= salary.label :EPS_account_number%><br />
+		                <%= salary.text_field :EPS_account_number %>
+		            </div>
+		            <div class="field">
+		                <%= salary.label :PF_account_number %><br />
+		                <%= salary.text_field :PF_account_number %>
+		            </div>
+							</div>
+		       </div>
+        </div>
+			 <% end %>
+

@@ -1,0 +1,25 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-6">
+            <h2><i class="icon-edit text"></i>Edit Task</h2>
+        </div>
+        <div class="col-lg-6 m-t-large" align="right">
+        <a href="/tasks/mark_complete?id=<%=@task.id%>" class="btn btn-white btn-lg"> 
+         <% if @task.task_status == 0 %>
+         <i class="icon-ok-circle"></i> Mark Complete
+         <% else %>
+         <i class="icon-pencil"></i> Mark Incomplete
+         <% end %>
+         </a>
+        <%= link_to '<i class="icon-trash"></i>'.html_safe, @task, :method => "delete", :confirm => "Are you sure?", :class => "btn btn-white btn-lg", :title=>"Delete"%>
+       <%= link_to raw('<i class="icon-mail-reply"> </i>'), tasks_path, :class => 'btn btn-default btn-lg', :title =>"Back" %>
+ 
+          <!-- <a href="#" class="btn btn-default "><i class="icon-info"> </i> </a> -->
+          <p></p>
+        </div>  
+      </div>
+      <%= render :partial=> "edit_form" %>
+    </section>
+  </section>
+

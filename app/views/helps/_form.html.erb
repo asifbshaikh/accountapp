@@ -1,0 +1,31 @@
+<%= form_for(@help) do |f| %>
+
+  <div class="field">
+	<%= render "shared/form_error", :object => @help %>	
+ </div>
+
+	<div class="field">
+		<%= f.label :screen_name %>
+		<br />
+		<%= f.text_field :screen_name,:autofocus =>"autofocus" %>
+	</div>
+	<div class="field">
+		<%= f.label :screen_id %>
+		<br />
+		<%= f.text_field :screen_id %>
+	</div>
+	<div class="field">
+		<%= f.label :help %>
+		<br />
+		<%= f.text_area :help,:size => "25 x 15" %>
+	</div>
+     <div class="actions"> 
+     	<% if @help.new_record? %>
+	      <button type="submit" class="btn btn-green big"> Submit</button>&nbsp;
+	      <button type="reset" class="btn  btn-gray big">Cancel</button>&nbsp;
+	    <% else %>
+	      <button type="submit" class="btn btn-green big"> Submit</button>&nbsp;
+          <%= link_to 'Cancle', help_path, :class =>"btn btn-gray big"%>&nbsp;
+        <% end %>
+	 </div>
+	<% end %>

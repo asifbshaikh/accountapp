@@ -1,0 +1,29 @@
+<tr id="lr_<%= leave_request.id%>">
+    <td>
+    <a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                      <strong> Reason for leave: </strong> <%= breaking_word_wrap(leave_request.reason_for_leave) %></p>
+                      <p>
+                      <strong>Leave Type:</strong> <%= LeaveType.find(leave_request.leave_type_id).leave_type %>
+                      </p>
+                      <p><strong>Duration:</strong> <%= leave_request.start_date %> <b>to</b> <%= leave_request.end_date%></p>
+                      <p>
+                      <strong>Contact during leave: </strong> <%= leave_request.contact_during_leave %>
+                      </p>
+                        <p>
+                          <strong>Days: </strong> 
+                          <%= leave_request.no_of_days_on_leave %>
+                        </p>
+                      <p>
+                      <strong>Approver</strong> <%= leave_request.approver_name %>
+                      </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Transaction Detail'>
+          <%= User.find(leave_request.user_id).full_name %></a></td>
+    <td><%= leave_request.leave_type.leave_type %></td>
+    <td><%= leave_request.start_date.strftime("%d-%m-%Y") %></td>
+    <td><%= leave_request.end_date.strftime("%d-%m-%Y") %></td>
+    <td><%= leave_request.contact_during_leave %></td>
+    <td>
+    <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/leave_requests/<%= leave_request.id%>" title="Delete" ><i class="icon-trash"></i></a>
+    </td>
+  </tr>

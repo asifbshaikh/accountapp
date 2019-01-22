@@ -1,0 +1,59 @@
+<!--<%= render 'shared/page_title'%>-->
+<!-- Page content -->
+    <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+
+         <!-- Left column/section -->
+         <section  class="column width6 first">
+            <p id="notice"><%= notice %></p>
+
+            <div class="column width3 first">
+              <fieldset>
+              <legend>Received cash Details : </legend><p>
+ 
+              <table width="80%" cellpadding="2" cellspacing="2">
+                 <tr>
+                    <th align="left">Received date:</th>
+                   <td align= "left"><%= @receive_cash.received_date %></td>
+                 </tr>
+                 <tr>
+                    <th align="left">Amount:</th>
+                    <td align="left"><%= @receive_cash.amount %> Rs</td>
+                 </tr>
+                 <tr>
+                    <th align="left"> Receipt mode:</th>
+                    <td align="left"><%= @receive_cash.receipt_mode %></td>
+                 </tr>
+             </table>
+             </fieldset>
+           </div>
+           <div class="column width3 ">
+             <fieldset>
+             <table width="80%" cellpadding="2" cellspacing="2"> 
+                   <tr>
+                      <th align="left">From account:</th>
+                      <td align= "left"> <%= Account.find( @receive_cash.from_account_id).name %></td>
+                   </tr>
+                  <tr>
+                      <th align="left">Deposit to account:</th>
+                      <td align= "left"> <%= Account.find( @receive_cash.deposit_to_account_id ).name %></td>
+                   </tr>
+                    <tr>
+                        <th align="left">Send thank you mail:</th>
+                        <td align="left"><%=  @receive_cash.send_thank_you_mail  %></td>
+                     </tr>
+                   <tr>
+                      <th align="left">Desceription:</th>
+                      <td align= "left"><%= @receive_cash.description %></td>
+                   </tr>
+              </table> 
+
+              <p >
+                 <%= link_to 'Edit', edit_receive_cash_path(@receive_cash),{:class=>"btn btn-green big" } %> &nbsp;
+                 <a href="/receive_cashes" class="btn btn-green big">View History</a>
+          </p>
+              </fieldset>
+            </div>
+           <!-- End of Left column/section -->
+        </section>

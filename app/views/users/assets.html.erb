@@ -1,0 +1,45 @@
+<% if @company.plan.payroll_enabled? %> 
+             <div id="tab2">
+          <ul id="tabnav">
+            <li class="tab1">
+              <a href=<%="/users/personal_info?id=#{@user.id}"%>>Personal Info</a>
+            </li>
+            <li class="tab2">
+              <a href = <%="/users/work_info?id=#{@user.id}"%>>Work Info</a>
+            </li>
+            <li class="tab3">
+              <a href=<%="/users/assets?id=#{@user.id}"%>>Assets</a>
+            </li>
+          </ul>
+        </div>
+        <div id="task_container">
+          <div class="clearfix"></div>    
+               <% if @user_assets.blank? %>
+      			<%= render "shared/no_record"%>
+				<% else %>
+				<table class="display stylized" id="user_table">
+					<thead>
+						<tr>
+							<th>Asset tag</th>
+							<th colspan = "2" >Description</th>
+							<th>Purchase date</th>
+						</tr>
+					</thead>
+					<tbody>
+					   <%= render :partial => '/users/user_asset', :collection => @user_assets %>
+                     </tbody>
+                     <tfoot>
+                     	 <tr><td colspan ="4"></td></tr>
+                     </tfoot>
+				</table>
+
+					<%= paginate @user_assets %>
+
+			<div class="clear">
+				&nbsp;
+			</div>
+				<% end %>
+			 
+           
+         </div>
+         <% end %>

@@ -1,0 +1,42 @@
+   
+<%= form_for @invoice_setting , :html => {:class => "form-horizontal", :remote=>true} do |f| %>
+  <div class='error-place'></div>
+  <div class="col-sm-12">
+   <p>
+    <%= f.radio_button :invoice_no_strategy, InvoiceSetting::INVOICE_NUMBERING_STRATEGY[:random_number] %><a href="#" data-toggle="tooltip" data-placement="top" title="Example: INV1363684159">&nbsp; &quot;INV&quot;+Random unique number</a>
+   </p>
+   <p>
+     <%= f.radio_button :invoice_no_strategy, InvoiceSetting::INVOICE_NUMBERING_STRATEGY[:daily_reset_sequence_with_date]%><a href="#" data-toggle="tooltip" data-placement="top" title="Example - INV/20130328/001, INV/20130328/002 and INV/20130329/001">&nbsp;&quot;INV&quot;/ yyyymmdd / Daily reset sequence number</a>
+   </p>
+   <p>
+     <%= f.radio_button :invoice_no_strategy, InvoiceSetting::INVOICE_NUMBERING_STRATEGY[:free_format]%><a href="#" data-toggle="tooltip" data-placement="top" title="This field will be editable, you can enter whatever format you want, we will just ensure that this number is unique.">&nbsp;I'll input my own invoice number.</a>
+   </p>
+    <p>
+    <%= f.radio_button :invoice_no_strategy, InvoiceSetting::INVOICE_NUMBERING_STRATEGY[:prefix_with_sequence]%><a href="#"data-toggle="tooltip" data-placement="top" title="Example: INV/100, INV/101 etc">&nbsp;&quot;INV&quot; + Sequence Number</a>
+   </p>
+  </div>
+  <div class="col-sm-12">
+    <p>
+      <%= f.radio_button :invoice_no_strategy, InvoiceSetting::INVOICE_NUMBERING_STRATEGY[:custom_format]%><a href="#" data-toggle="tooltip" data-placement="top" title="Wide range of invoice number setttings. Leave suffix or prefix or both blank if not required. Example - IN/001, 2000/INV and 001">&nbsp;&quot;Custom Prefix/ Custom starting sequence no / Custom prefix</a><br/>
+      <div class="col-sm-3">
+      <span>Prefix</span><br/>
+      <span><%= f.text_field :invoice_prefix, :size => 5,:class=>"bg-focus form-control" %> </span>
+      </div>  
+      <div class="col-sm-6">
+      <span>Starting sequence </span><br/>
+      <span><%= f.text_field :invoice_sequence, :size =>15 ,:class=>"bg-focus form-control"%></span>
+      </div>  
+      <div class="col-sm-3">
+      <span>Suffix</span><br/>
+      <span><%= f.text_field :invoice_suffix, :size =>5,:class=>"bg-focus form-control" %></span>
+      </div>
+    </p>
+  </div>  
+  <div class="col-sm-8 col-sm-offset-4">   <br/>
+  <p>
+    <div class='save-btn'></div>
+    <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+  </p>                   
+  </div>
+    
+<% end %>

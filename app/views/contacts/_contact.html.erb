@@ -1,0 +1,10 @@
+                   <tr class="gradeB">
+                         <td class="name" colspan="2">
+              	              <%= link_to "#{contact.title}" "#{contact.first_name}" "#{contact.last_name}" , contact_path(contact) %>
+              	         </td>
+			             <td><%=  contact.email  %></td>
+                         <td colspan="2"><%= contact.phone1 %>,&nbsp;<%= contact.phone2 %>,&nbsp;<%= contact.mobile %></td>
+                         <td><%= contact.contact_category %> </td>
+					     <td><%= contact.account %></td>
+                   </tr>
+   

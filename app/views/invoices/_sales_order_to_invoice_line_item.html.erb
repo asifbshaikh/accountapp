@@ -1,0 +1,42 @@
+      <tr id="row<%= index %>" valign="top" class ='inv_line'>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][warehouse_id]",invoice_line_item.warehouse_id%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][id]",invoice_line_item.id%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][_destroy]"%>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][type]",invoice_line_item.type, :value =>"InvoiceLineItem"%>
+        <td valign="top" style='padding-left:0;' id='item-td'>
+         <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][product_id]", invoice_line_item.product_id%>
+          <%= invoice_line_item.item_name %>
+          <%= hidden_field_tag "index", index %>
+          <span id="avg_cost"></span>
+          <br />
+        </td>
+        <td>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][description]", invoice_line_item.description %>
+         <%= invoice_line_item.description %>
+        </td>
+        <td>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][quantity]", invoice_line_item.quantity %>
+         <%= number_with_precision invoice_line_item.quantity, :precision=>2 %>
+        </td>
+        <td>
+         <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][unit_rate]", invoice_line_item.unit_rate %>
+         <%= number_with_precision invoice_line_item.unit_rate, :precision=>2 %>
+        </td>
+        <td>
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][discount_percent]", invoice_line_item.discount_percent %>
+         <%= number_with_precision invoice_line_item.discount_percent, :precision=>2 %>
+        </td>
+        <td valign="top" style='padding-left:0;' id='tax-td'>
+        <% invoice_line_item.invoice_taxes.each_with_index do |tax, tax_index| %>
+          <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][account_id]", invoice_line_item.tax_account_id %>
+        <% end %>
+          <%= applied_taxes(invoice_line_item) %>          
+          <%= hidden_field_tag "index", index %>
+        </td>
+      <td  align="right">
+		    <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][amount]", invoice_line_item.amount, :id => 'total' %>
+        <%= number_with_precision invoice_line_item.amount, :precision=>2 %>
+    </td>
+      
+    </tr>
+   

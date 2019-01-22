@@ -1,0 +1,97 @@
+<script>
+  $(document).ready(function(){
+    if (!/opera/.test(navigator.userAgent.toLowerCase())) {
+      // select element styling
+      $('select.select_year').each(function(){
+        var title = $(this).attr('title');
+        if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
+        $(this)
+          .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+          .after('<span class="select_year">' + title + '</span>')
+          .change(function(){
+            val = $('option:selected',this).text();
+            $(this).next().text(val);
+            })
+      });
+    };
+    $("select.select_year").change(function(){
+      var year = $(this).val();
+      $.ajax({
+        type: 'GET',
+        url: "/dashboard/set_session?session_id="+year
+      });
+    });
+  });
+  </script>
+  <!-- Header -->
+      <!-- Top navigation -->
+      <%= render :partial=> "shared/user_and_company_title"%>
+      <!-- End of Top navigation -->
+  <!-- nav -->
+<% unless @current_user.owner? && @company.basic_details_required? %>
+  <nav id="nav" class="nav-primary bg-green hidden-xs nav-vertical">
+    <ul class="nav" data-spy="affix" data-offset-top="50">
+    <% if !@current_user.inventory_manager? %>
+      <li class="dropdown-submenu <%=tab_selection 'income' %>">
+        <a href="#"><i class="icon-money icon-xlarge"></i><span>Income</span></a>
+        <ul class="dropdown-menu <%=tab_selection 'income' %>">
+          <li><%= link_to 'Invoices', invoices_path %></li>
+          <li><%= link_to "Receipts", receipt_vouchers_path %></li>
+          <li><%= link_to "#{@company.label.estimate_label}", :controller => :estimates, :action => :index %></li>
+          <li><%= link_to 'Customers', customers_path %></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu <%=tab_selection 'expenses'%>">
+        <a href="#"><i class="icon-credit-card icon-xlarge"></i><span>Expenses</span></a>
+        <ul class="dropdown-menu">
+          <li><%= link_to "Record Expenses", :controller => :expenses, :action => :index %></li>
+          <li><%= link_to "Record Purchases", :controller => :purchases, :action => :index %></li>
+          <li><%= link_to 'Purchase Orders', purchase_orders_path %></li>
+          <li><%= link_to 'Make Payments', payment_vouchers_path %></li>
+          <li><%= link_to 'Vendors', vendors_path %></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu <%=tab_selection 'banking' %>">
+        <a href="/banking/index"><i class="icon-building icon-xlarge"></i><span>Banking</span></a>
+      </li>
+      <li class="dropdown-submenu <%= tab_selection 'accounting'%>">
+      <a href="#"><i class="icon-book icon-xlarge"></i><span>Accounting</span></a>
+        <ul class="dropdown-menu">
+          <li><%= link_to 'Chart of Accounts', accounts_path %></li>
+          <li><%= link_to 'Taxes', "/duties_and_taxes/index" %></li>
+          <li class="dropdown-submenu"><a href="#">Journal Entry</a>
+            <ul class="dropdown-menu">
+             <li><%= link_to "Journal Entry", :controller => :journals, :action => :index %></li>
+             <li><%= link_to 'Debit Note' , :controller => :debit_notes, :action => :index %></li>
+             <li><%= link_to 'Credit Note' , :controller => :credit_notes, :action => :index %></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu"><a href="#">Reimbursements</a>
+            <ul class="dropdown-menu">
+             <li><%= link_to 'Reimbursement Voucher' , :controller => :reimbursement_notes, :action => :index %></li>
+             <li><%= link_to 'Reimbursement Receipt' , :controller => :reimbursement_vouchers, :action => :index %></li>
+            </ul>
+          </li>
+          <% if !@company.saccountings.blank?%>
+        <li><%= link_to 'Simple Accounting Entry' , :controller => :saccountings, :action => :index %></li>
+        <% end %>
+          <li><%= link_to 'Auditors', auditors_path %></li>
+        </ul>
+      </li>
+    <% end %>
+      <li class="dropdown-submenu <%=tab_selection 'inventory' %>">
+        <a href="/products"><i class="icon-tags icon-xlarge"></i><span>Products</span></a>
+      </li>
+       <li class="dropdown-submenu <%=tab_selection 'payroll' %>">
+        <a href="/users"><i class="icon-group icon-xlarge"></i><span>Employee</span></a>
+      </li>
+    <% if !@current_user.staff? %>
+      <li class="dropdown-submenu <%= tab_selection 'reports' %>">
+        <a href="/account_books_and_registers/reports"><i class="icon-bar-chart icon-xlarge"></i><span>Reports</span></a>
+      </li>
+    <% end %>
+    </ul>
+  </nav>
+  <% end %>
+  <!-- / nav -->
+  <!-- End of Header -->

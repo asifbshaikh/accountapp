@@ -1,0 +1,91 @@
+<%= form_tag({:action => :update_itc_details, :controller => "/expenses"}, :remote=>true) do |f| %>
+
+<%= hidden_field_tag  'id',expense_line_items.id %>
+
+<div class="modal-dialog">
+<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+<%= render :partial => "shared/flash_msg"%>
+      <h4 class="modal-title">ITC Details</h4>
+      </div>
+       <div class="modal-body scroll-y" style='max-height:500px;'>  
+          <div class="block">
+          <label class='control-label'>Eligibility Criteria</label>
+         <%= select_tag "eligibility", "<option></option><option>Input</option><option>Capital Good</option><option>Input Service</option><option>None</option>".html_safe, :class=>'form-control',:required => true %>
+              </div>
+              <br/>
+        <div class="block" class="form-control" >
+          <label class='control-label'>Input Tax % </label>
+         <%= number_field_tag 'input_tax_percentage', '', size: 20, :onkeypress=> "return isNumberKey(event)", :min => 0, :max => 100, :vlaue => 0 %>
+</div>
+      </div>
+ <div class="modal-footer">
+ <div class='save-btn'></div>
+          <button  class=" btnsave btn btn-sm btn-success" type='submit' data-loading-text="Saving..." >Save</button>
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+     
+    </div>
+    </div>
+
+
+
+    <% end %>
+
+    <script type="text/javascript">
+      
+    function isNumberKey(evt)
+  {
+     var charCode = (evt.which) ? evt.which : event.keyCode
+     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+         alert("Please Enter Only Numeric Value:");
+         return false;
+     }
+
+     return true;
+  }
+
+  $(function() {
+
+    $('#input_tax_percentage').on('keydown keyup',function(e){
+      if ($(this).val() >= 100 && e.keyCode != 46 // delete
+        && e.keyCode != 8 ) {            
+         // e.preventDefault(); 
+         alert("value must be in 0-100");  
+         return false;           
+      }
+    });
+
+  })
+
+
+  $("#submit").click(function(){
+    if($("#eligibility").val() == "")
+    {
+      alert("Please select Eligibility Criteria")
+      return false;
+    }
+  return true;
+
+  });
+  
+
+  
+ $("#my").click(function() {
+  var result ;
+   $.ajax({
+            type:'GET',
+            url:'/expenses/get_val?id=<%=expense_line_items.id %>',
+            datatype:'text',
+            success:function(data){
+              console.log(data)
+            },
+            error:function(){
+              alert("an error");
+            },
+
+   });
+});
+
+    </script>

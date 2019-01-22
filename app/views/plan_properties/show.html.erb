@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Plan:</b>
+  <%= @plan_property.plan_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @plan_property.name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @plan_property.value %>
+</p>
+
+<p>
+  <b>Datatype:</b>
+  <%= @plan_property.datatype %>
+</p>
+
+
+<%= link_to 'Edit', edit_plan_property_path(@plan_property) %> |
+<%= link_to 'Back', plan_properties_path %>

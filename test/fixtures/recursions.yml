@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  company_id: 1
+  recursive_id: 1
+  recursive_type: MyString
+  schedule_on: 2013-07-08
+  frequency: 1
+  iteration: 1
+  utilized_iteration: 1
+  status: false
+
+two:
+  company_id: 1
+  recursive_id: 1
+  recursive_type: MyString
+  schedule_on: 2013-07-08
+  frequency: 1
+  iteration: 1
+  utilized_iteration: 1
+  status: false

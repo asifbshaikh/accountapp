@@ -1,0 +1,22 @@
+<tr>
+  <td><%= link_to payment_voucher.voucher_number, payment_voucher_path(payment_voucher)%></td>
+  <td><%= payment_voucher.voucher_date.strftime("%d-%m-%Y") %></td>
+  <td><%= truncate(payment_voucher.to_account_name, :length =>20) %></td>
+  <td><%= format_currency payment_voucher.amount %></td>
+  <td><%= payment_voucher.payment_detail.payment_mode %></td>
+  <td>
+    <div class="btn-group" style="float: right;">
+      <button class="btn btn-white btn-sm" onclick="location.href='/payment_vouchers/<%= payment_voucher.id %>'"; >View</button>
+      <button class="btn btn-white dropdown-toggle btn-sm" data-toggle="dropdown">
+      <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu pull-right">
+        <li><a href="<%= edit_payment_voucher_path(payment_voucher) %>">Edit</a></li>
+        <li><a href="<%= payment_voucher_path(payment_voucher, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/payment_vouchers/<%= payment_voucher.id%>" >Delete</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>
+

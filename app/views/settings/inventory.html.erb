@@ -1,0 +1,35 @@
+<section id="content" class="content-sidebar bg-white">
+    <section class="main">
+     <section id="content" class="content-sidebar bg-white">
+    
+    <!-- .sidebar -->
+    <aside class="sidebar sidebar-large bg-lighter">
+      <div class="padder header-bar bg-lighter clearfix">
+        <h2><i class="icon-gear text"></i> Settings</h2>  <br>      
+      </div>
+      <div class="list-group list-normal m-t-n-xmini scroll-n scrollbar" style="max-height:400px">
+        <a href="#company_profile" id="basic-setting"  data-toggle="tab" class="list-group-item"><strong>Company Details</strong><br><small>Logo, Address, Tax details, etc</small></a>
+        <a href="#invstg" id="invoice-setting" data-toggle="tab" class="list-group-item"><strong>Invoices</strong><br><small>Number Settings, Templates, Custom fields, etc</small></a>
+        <a href="#customfield" id="custom-setting" data-toggle="tab" class="list-group-item"><strong>Custom Fields & Preferences</strong><br><small>Customise vouchers,Set Preferences,etc </small></a>
+        <a href="#inventory" id="inventory-setting" data-toggle="tab" class="list-group-item"><strong>Inventory</strong><br><small>Create Warehouses,etc</small></a>
+        <a href="#payroll" id="payroll-setting" data-toggle="tab" class="list-group-item"><strong>Payroll</strong><br><small>Payheads, Leave types, Holidays, etc</small></a>
+        <a href="#branch" id="branch-setting" data-toggle="tab" class="list-group-item"><strong>Branch</strong><br><small>Create branch</small></a>
+         <a href="#pg" id="pg-setting" data-toggle="tab" class="list-group-item"><strong>Payment Gateway</strong><br><small>Instamojo and CashFree</small></a><br>
+         <p align="center"><%= link_to raw("Billing & Upgrade"), billing_index_path, :class=>'btn btn-info btn-large' %><br><small><strong>Next Renewal Date: </strong> <%= @company.subscription.renewal_date.to_date.strftime("%d %b %Y") %></small></p>
+    </div>
+    </aside>
+      <div class="tab-content">
+      <%= render :partial=>"shared/flash_msg"%>
+      <div class="on-go-form">
+        <div class="tab-pane" id="inventory">
+          <%= render :partial=> "inventory_setting" %>
+        </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- /.sidebar -->
+  </section>
+  </section>
+
+

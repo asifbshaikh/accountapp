@@ -1,0 +1,26 @@
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+  <div class="form-group"><br/>
+        
+      <div class="col-lg-2">
+        <select name="month" id="channel_month" style="width:180px;">
+          <option value=<%= (Time.zone.now.to_date).strftime("%Y-%m") %>>Select month</option>
+          <% @months.each do |m| %>
+              <option value=<%= "#{m.strftime("%Y-%m-%d")}" %>><%= m.strftime("%B-%Y") %></option>
+          <% end %>
+        </select>
+      </div>
+      <div class="col-lg-2">
+        <%= select_tag("channel",options_from_collection_for_select(@channels, :id, :channel_name),{:prompt => "Type to Select",:style => "width:180px;"})%>
+      </div>
+      <div class="col-lg-2">
+         <input type="submit" value="Search" class="btn btn-success"/>
+      </div>
+  </div>
+</form>
+</div>
+<script type="text/javascript">
+  $("#channel_month").select2();
+  $("#channel").select2();
+</script>

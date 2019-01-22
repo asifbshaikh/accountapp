@@ -1,0 +1,20 @@
+<% if @product.inventoriable? %>
+  $("#prev_data").remove();
+  <% if @product.batch_enable? %>
+    $("#putHere").after("<%= escape_javascript render :partial =>  'batch_details' %>")
+  <% else %>
+    $("#putHere").after("<%= escape_javascript render :partial =>  'warehouse_details' %>")
+  <% end %>
+  var h = $("#popup_box_fixed").height();
+  var w = $("#popup_box_fixed").width();
+  var winH = $(window).height();
+  var winW = $(window).width();
+  var top1 = (winH - h)/2;
+  var left = (winW - w)/2;
+  $("#popup_box_fixed").css({'left': left, 'top': top1});
+  $('#popup_box_fixed').fadeIn("slow");
+  calculateQuantity();
+<% else %>
+  $("#row<%= params[:index]%> #quantity").removeAttr('readonly', 'readonly');
+    $('#popup_box_fixed').fadeOut("slow");
+<% end %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  action: MyString
+  url: MyString
+  version: MyString
+  gst_retrun_type: MyString
+  description: MyString
+
+two:
+  action: MyString
+  url: MyString
+  version: MyString
+  gst_retrun_type: MyString
+  description: MyString

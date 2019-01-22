@@ -1,0 +1,34 @@
+<%= form_for @company_asset, :html=>{:class=>"form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @company_asset %>
+<div class="form-group">
+  <div class="col-lg-12">
+    <%= f.label "Asset tag", :class=>"control-label-required" %><br />
+    <%= f.text_field :asset_tag, :class=>"bg-focus form-control" %>
+   </div>
+</div>
+<div class="form-group">
+  <div class="col-lg-12">
+    <%= f.label "Purchase date", :class=>"control-label-required"  %><br />
+    <%= f.text_field :purchase_date, :class=>"bg-focus form-control" %>
+</div>
+</div>
+<div class="form-group">
+   <div class="col-lg-12">
+     <%= f.label :assigned_to, :class=>"control-label" %>
+    <%= collection_select(:company_asset, :assigned_to, @company.users, :id, :first_name, {}, {:class=>"bg-focus form-control"}) %>
+  </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-12">
+      <%= f.label :Description, :class => "control-label" %><br/>
+      <%= f.text_area :description ,:rows => "2",:class=>"bg-focus form-control" %>
+    </div>
+  </div>
+   <div class="form-group">
+    <p></p>
+    <div class="col-lg-9 col-lg-offset-3">        
+      <%= f.submit 'Save', :class=>"btn  btn-success" %>
+    </div>
+    </div>
+
+<% end %>

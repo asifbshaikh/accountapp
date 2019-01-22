@@ -1,0 +1,51 @@
+
+<%= render :partial => "shared/page_title"%>
+
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+<div class="wrapper">
+<!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+       <%= render "shared/flash_msg"%>
+       <div id="tab1">
+          <ul id="tabnav">
+            <li class="tab1">
+              <a href=<%="/my_organisation/announcement"%>>Recent Announcements</a>
+            </li>
+            <li class="tab2">
+              <a href = <%="/my_organisation/holiday_list"%>>Holiday List</a>
+            </li>
+            <li class="tab3">
+              <a href=<%="/my_organisation/policy_document"%>>Policy Document</a>
+            </li>
+          </ul>
+        </div>
+        <div id="task_container">
+          <div class="clearfix"></div>    
+          <div id="organisation_announcement">
+            <% if @organisation_announcements.blank? %>
+                <p class="no-holiday"><%= render :partial => "shared/no_record" %></p>
+            <% else %>
+              <p> <h3> Recent Announcements..</h3></p>
+             <table>
+		     <%= render "announcement" , :collection =>  @organisation_announcements %>
+	         </table>                    
+	        <% end %>
+           </div>
+         </div>
+			  
+       </div><br />
+    </section>
+<!-- End of Left column/section -->
+
+<!-- Right column/section -->
+<aside class="column width2"><br/>
+<%= new_button "Upload New Document", new_policy_document_path %>
+</aside>
+<!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

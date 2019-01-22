@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="ProfitBooks is an online accounting software for small businesses. It helps you manage invoicing, expenses, banking transactions, taxes and more. Signup today!" />
+    <meta name="keywords" content="accounting software, invoicing, expenses" />
+    <title>Online Accounting Software with Invoicing, Payroll and Inventory Management Features | ProfitBooks.net</title>
+
+    <!-- //        Favicon Files         // -->
+    <%= favicon_link_tag 'apple-icon.png', :rel=>'apple-touch-icon-precomposed', :type=> 'image/png' %>    
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- //      Stylesheets Files       // -->
+    <%= stylesheet_link_tag 'home' %>
+    <%= javascript_include_tag 'home' %>
+   <%= render :partial =>"zopim_chat_and_google_analytics"%>
+    <!--Start of Zopim Live Chat Script-->
+
+    <script>
+      $(document).ready(function() {
+      //Retina Image
+      $('img.retina').retina('@2x');
+
+      //Footer Equal Height
+      equalHeight($(".footer-column, .footer-logo"));
+      });
+
+      function equalHeight(group) {
+        tallest = 0;
+        group.each(function() {
+          thisHeight = $(this).height();
+          if(thisHeight > tallest) {
+            tallest = thisHeight;
+          }
+        });
+        group.height(tallest);
+      }
+    </script>
+    <!-- End Load google Analytics -->
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  </head>
+  <body>
+    <div id="main-wrapper">
+      <!-- header start here -->
+      <%= render :partial =>"header" %>
+      <!-- header end here -->
+     
+ <!-- slideshow start here -->  
+  <%= image_tag 'profitbooks-accounting-software-on-ipad.png', :alt =>"Future of Accounting is HERE. ProfitBooks is easy to use and works on any internet enabled device."%>
+             
+     
+    <!-- content section start here -->
+    <section id="special-content-wrapper">
+      <div class="row">
+            <div class="twelve columns text-center">
+              <h1>ProfitBooks is fastest growing and amazingly simple <span class="title-green">Online accounting</span> application, loved by thousands of small businesses in over 21 countries.</h1><br>
+                <p><a href="/home/pricing" class="simpleBTN green large">See pricing &amp; try it free</a> or <a href="/home/accounting_software_features"><b>learn more about the features</b></a></p>
+            </div>
+        </div>
+    </section>
+    <!-- content section end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+      <div class="row">
+          <div class="twelve columns text-center">
+              <h4>How <span class="title-green">ProfitBooks</span> helps</h4>
+                <p class="big-text">Accounting and payroll management integrated into one simple application </p>
+            </div>
+        </div>
+        
+        <div class="row mobile3row-content">
+          <div class="four columns">
+                <p><h4>Get paid on time and ensure a positive cash-flow </h4>
+        Easily create professional estimates or invoices and email them directly to your customers with one click. Automatically track outstanding payment due.
+        </p>
+                <p><h4>Control your expenses by knowing where you are spending money</h4>
+        Analyse how and where you are spending most by easily tracking day-to-day expenses. Create Purchase orders, record purchases and pay your vendors on time.
+        </p>
+            </div>
+            <div class="eight columns">                 
+                <%= image_tag 'invoice.png', :alt=>"Create professional invoices easily"%>
+            </div>
+        </div>
+      <div class="row">
+          <div class="twelve columns text-center">
+              <h4>Run your business with <span class="title-green">clarity.</span></h4>
+                <p class="big-text">Focus on important things with the simplicity of ProfitBooks. Stay ahead in the game. </p>
+            </div>
+        </div>
+               
+        
+        <div class="row mobile3row-content">
+            <div class="eight columns">                 
+                <%= image_tag "customer-focus.png", :alt=>"Know payables and receivables from customers and vendors"%>
+            </div>
+          <div class="four columns">
+                <p><br><h4>Understand which product is most Profitable</h4>
+        Know your highest margin product, track slow moving items, wastages due to expiry dates. Know which product is going out of stock and which product to reorder.
+        </p>
+                <p><h4>Focus on high paying customers</h4>
+        Easily track all the transactions for Customers and Vendors. Know your important Customers and keep them happy.
+        </p>
+            </div>
+        </div>       
+    
+      
+        <div class="row mobile3row-content">
+          <div class="four columns">
+                <p>     
+        <%= image_tag "small-business-accounting.png", :alt=>"Accounting Software Designed For Small Businesses" %>
+        <h5>Designed for small businesses</h5>
+        ProfitBooks has been built by Chartered Accountants for you with a vision to help you grow using latest technology.
+        </p>
+            </div>
+          <div class="four columns">
+                <p>
+                <%= image_tag "support.png", :alt=>"Responsive support team that helps with technical as well as acounting queries"%>
+                <h5>Get help when you need it most</h5>
+        We address 90% customer queries in less than 43 Minutes. Quickly contact us from the application itself. 
+        </p>
+            </div>
+          <div class="four columns">
+                <p>
+                <%= image_tag "anytime-anywhere-access.png", :alt=>"Access your financial data anytime on phones or tablets"%>
+                <h5>Take your Business with you!</h5>
+        You can access your financial data on Mobile, Tablet, Laptop or any internet enabled device.. anytime and anywhere.
+        </p>
+            </div>
+        </div>
+        <!-- testimonial start -->
+        
+        <div class="row">
+          <div class="six columns">
+              <!-- testimonials 1 -->                    
+                <div class="testi-container">                         
+                    <div class="testi-text">
+                        <blockquote>
+                            <p>I just love the simple and intuitive interface of ProfitBooks, it works best for a non-accountant like me. Its time saving and doesn't scare my team ;-) Best accounting software in town!</p>
+                        </blockquote>                                                         
+                    </div>
+                    <div class="clear"></div>                                                                      
+                </div>
+                <div class="testi-baloon"></div>
+                <div class="testi-image">
+                  <%= image_tag "sujit.jpg",:alt=>"Sujit loves simplicity of ProfitBooks"%>
+                </div>
+                <div class="testi-name">Sujit Karpe<br/><span class="company-name">CTO, InterviewMocha.com<br><br></span></div>
+              
+            </div>        
+            
+          <div class="six columns"><h5>Register now and see it in action !</h5>Best way to explore ProfitBooks is to signup for free. Discover tons of useful accounting features and then make up your mind.<br><br>There is nothing to download, signup in less than a minute. <br><br><a href="/home/pricing" class="simpleBTN green large">Use ProfitBooks For Free </a>
+
+            </div>
+            
+          
+        </div>   
+        
+        <!-- testimonial end -->
+         
+    </section>
+    <!-- content section end here -->
+    
+      <!-- footer section start here -->
+      <%= render :partial => "footer" %>
+      <!-- footer section end here -->
+    </div>
+    <script>$('#noscript').remove();</script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<div id="address-space">
+	<div id="add-ro"><%= address=customer_billing_address(billing_address) %>
+		<p></p>
+		<%= link_to "#{address.blank? ? 'Add address' : 'Change'}", "#modal-address", :"data-toggle"=>"modal" %>
+	</div>
+	<div id="modal-address" class="modal fade">
+		<div class="modal-dialog">
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+					<h4 class="modal-title" id="myModalLabel">Billing/Shipping Address</h4>
+				</div>
+				<div class="modal-body scroll-y" style="max-height:500px;">
+					<div class="errorSection"></div>
+					<h4>Billing Address</h4>
+					<div class="line m-l m-r"></div>
+				  <div class='row'>
+				    <div class="col-lg-5">
+				      <%= label_tag "address_line1", "Billing address", :class=>'control-label' %>
+				      <%= text_area_tag "gstr_advance_payment[billing_address_attributes][address_line1]", billing_address.address_line1, :class=>'form-control bg-focus', :rows=>4 %>
+				      <%= hidden_field_tag "gstr_advance_payment[billing_address_attributes][address_type]", 1 %>
+				      <%= hidden_field_tag "gstr_advance_payment[billing_address_attributes][id]", billing_address.id if billing_address.addressable_type=="GstrAdvancePayment"%>
+				    </div>
+				    <div class='col-lg-7'>
+				      <div class="row">
+				        <div class='col-lg-6'>
+				          <%= label_tag "city", "City", :class=>'control-label' %>
+				          <%= text_field_tag "gstr_advance_payment[billing_address_attributes][city]", billing_address.city, :class=>'form-control bg-focus' %>
+				        </div>
+				        <div class='col-lg-6'>
+				          <%= label_tag "state", "State", :class=>'control-label' %>
+				          <%= text_field_tag "gstr_advance_payment[billing_address_attributes][state]", billing_address.state, :class=>'form-control bg-focus' %>
+				        </div>
+				      </div>
+				      <div class="row">
+				        <div class='col-lg-6'>
+				          <%= label_tag "country", "Country", :class=>'control-label' %>
+				          <%= text_field_tag "gstr_advance_payment[billing_address_attributes][country]", billing_address.country, :class=>'form-control bg-focus' %>
+				        </div>
+				        <div class='col-lg-6'>
+				          <%= label_tag "postal_code", "Postal Code", :class=>'control-label' %>
+				          <%= text_field_tag "gstr_advance_payment[billing_address_attributes][postal_code]", billing_address.postal_code, :class=>'form-control bg-focus' %>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+					<h4>Shipping Address</h4>
+					<div class="line m-l m-r"></div>
+				  <div class='row'>
+				    <div class="col-lg-5">
+				        <label class="same_address">
+				        <%= check_box_tag "i_same_address" %>
+				          Same as billing
+				        </label>
+				      <br />
+				      <%= label_tag "address_line1", "Shipping address", :class=>'control-label' %>
+				      <%= text_area_tag "gstr_advance_payment[shipping_address_attributes][address_line1]", shipping_address.address_line1, :class=>'form-control bg-focus', :rows=>4 %>
+				      <%= hidden_field_tag "gstr_advance_payment[shipping_address_attributes][address_type]",0	 %>
+				      <%= hidden_field_tag "gstr_advance_payment[shipping_address_attributes][id]",shipping_address.id if shipping_address.addressable_type=="GstrAdvancePayment" %>
+				    </div>
+				  </div>
+				</div>
+			  <div class="modal-footer">
+				  <button class="btnsave btn btn-sm btn-success" id="btn-add-save" type='submit'  data-dismiss="modal">Save</button>
+					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>

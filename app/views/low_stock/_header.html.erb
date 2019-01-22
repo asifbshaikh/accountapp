@@ -1,0 +1,11 @@
+<div class="row">
+		<div class="col-lg-8">
+		<% if !params[:branch_id].blank? %>
+    Branch: <b><%= Branch.find(params[:branch_id]).name%></b>
+    <% end %><br />
+		<span class="xxsmall light">
+      As on <%= (params[:for_date].blank?) ? Time.zone.now.to_date : params[:for_date] %> 
+    </span>          
+	</div>
+	
+</div>

@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+
+<%= form_for @credit_note, :html => {:class => "form-horizontal"} do |f| %>
+<%= render 'shared/form_error', :object => @credit_note %> 
+    <div class="form-group">
+      <% if @credit_note.voucher_setting.custom_sequence? %>
+        <div class="col-lg-2 text-right"> 
+          <label class="control-label-required">Voucher Number</label>
+        </div>
+        <div class="col-lg-2">
+          <%= f.text_field :credit_note_number, :class=>"form-control bg-focus", :style => "width:200px;" %>
+        </div>
+      <% else %>
+        <div class="col-lg-2 text-right"> 
+          <label class="control-label">Voucher Number</label>
+        </div>
+        <div class="col-lg-3">
+          <label class="control-label">
+            <%= @credit_note.credit_note_number%><%= f.hidden_field :credit_note_number %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+ 	 <div class="form-group">
+      <div class="col-lg-2 text-right">
+       <%= f.label :Transaction_date,  :class=>"control-label-required"  %>
+      </div>
+      <div class="col-lg-3">
+        <%= f.text_field :transaction_date, :size => "14", :class => 'bg-focus form-control' %>
+      </div>
+   </div>
+ 	<div class="form-group">
+   <div class="col-lg-2 text-right">
+   <%= f.label :From_account_id, :class=>"control-label-required"%>
+   </div>
+     <div class="col-lg-3">
+     <div class="input-group">
+         <%= f.select(:from_account_id, options_from_collection_for_select_with_add_new(@from_accounts, :id, :name, @credit_note.from_account_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+      </div>
+	     <span id ='from_acc_bal'></span>
+    </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-2 text-right">
+      <%= f.label :To_account_id,:class=>"control-label-required" %>
+      </div>
+      <div class="col-lg-3">
+      <div class="input-group">
+      <%= f.select(:to_account_id, options_from_collection_for_select_with_add_new(@to_accounts, :id, :name, @credit_note.to_account_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+      </div>
+	<span id ='to_acc_bal'></span>
+	</div>
+  </div>
+  <div class="form-group">
+  <div class="col-lg-2 text-right">
+    <%= f.label :Amount, :class =>"control-label-required" %>
+  </div>
+    <div class="col-lg-3">
+	<%= f.text_field :amount , :onkeydown => "return numbersOnly(event);", :maxlength => 18, :class=> "bg-focus form-control text-right sm-input" %>
+	</div>
+	</div>
+  
+ 		<div class="form-group">
+       <div class="col-lg-2 text-right">
+        <label class="control-label">Description</label>
+       </div>
+        <div class="col-lg-4">
+          <%= f.text_area :description, :rows => "3", :class=>"bg-focus form-control" %>
+      </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-9 col-lg-offset-3">                      
+          <%= f.submit "Save", :class=>"btn btn-success" %>
+          <%= link_to 'Cancel', credit_notes_path, :class => "btn btn-default" %>
+        </div>
+      </div>
+    <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+
+			<!-- .modal -->
+  <div id="modal-credit-note-from-account" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @credit_account_heads, :transaction_type => "journal" %>
+  </div>
+  <div id="modal-credit-note-to-account" class="modal fade">
+    <%= render('shared/customer_vendor_form', {:selector=>'credit_note_to_account_id'}) %>
+  </div>
+  <!-- / .modal -->
+  <script type="text/javascript"> 
+  $("#credit_note_from_account_id").select2();
+  $("#credit_note_to_account_id").select2();
+  </script>

@@ -1,0 +1,49 @@
+<%= render :partial=> "shared/page_title" %>
+<div id="page">
+  <!-- Wrapper -->
+  <!-- Left column/section -->
+
+  <div class="wrapper">
+    <section class ="column width6 first"><br/>
+      <div class ="highlight">
+        
+          <div class="clearfix"></div>
+          <div id = "company_container">
+          <% if @announcements.blank?%>
+          <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <table class="display stylized" id="act_details">
+              <thead>
+                <tr>
+                  <th><label>Subject</label></th>
+                  <th><label>Starts at</label></th>
+                  <th><label>Ends at</label></th>
+                  <th><label>Message</label></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => 'admin/announcements/announcement', :collection => @announcements %>
+              </tbody>
+              <tfoot>
+                <tr><td colspan = 5></td></tr>
+              </tfoot>
+            </table>
+          <% end %>
+          </div>
+           <%= paginate @announcements %>
+          <div class="clear">
+            &nbsp;
+        </div>
+     </div>
+    <br />
+      <!-- End of Left column/section -->
+  </section>
+    <!-- Right column/section -->
+      <aside class="column width2"><br/>
+        <a href="/admin/announcements/new" class="btn btn-special btn-green" >
+       <img src="/images/add.png"  title="Create new lead" class = "icon">Create announcement</a>
+      </aside>
+  </div>
+</div>
+

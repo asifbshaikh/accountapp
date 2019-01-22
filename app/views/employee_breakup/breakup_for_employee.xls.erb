@@ -1,0 +1,40 @@
+        <table>
+          <tr>
+            <td colspan="13" align="center">
+            <strong>Breakup For Employee : <%= User.find(@user_id).full_name%></strong>
+            </td>
+          </tr>
+            <thead>
+              <tr>
+                <th>Payheads</th>
+                <% @months.uniq!.each do |m|%>
+                <th><%= m.strftime("%b-%y")%></th>
+                <%end%>
+                <th align="right">Total (<%= @company.currency_code %>)</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% @payheads.each do |p|%>
+                <% @total = 0 %>
+              <tr>
+                <td><%= p.payhead_name %></td>
+                <% @months.each do |m|%>
+                <%str = "#{m.strftime("%Y-%m")}"+"-01"
+                @date1 = Date.parse(str)%>  
+                  <% salary = Salaries.where("payhead_id = ? and user_id = ? and company_id = ? and month between ? and ?",p.id,@user_id,@company.id,@date1.beginning_of_month, @date1.end_of_month)%>
+                <td align="right">
+                <% if salary.blank?%>
+                <%= (0.00)%>
+                <%else%>
+                <% salary.each do |s|%>
+                <%= (s.amount)%>
+                <% @total += s.amount %>
+                <%end%>
+                </td>
+                <%end%>
+                <%end%>
+                <td align="right"><%= (@total) %></td>
+              </tr>
+                <%  end%>
+            </tbody>
+        </table>

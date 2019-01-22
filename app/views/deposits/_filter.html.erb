@@ -1,0 +1,22 @@
+<div class="panel panel-info data-filter" id ="filter">
+  <div class="panel-heading"><h4 class="panel-title" >Deposit Filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="deposit-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Voucher no.</label></td>
+          <td id="depositvoucherno"></td>
+          <td class='text-right'><label>Date</label></td>
+          <td id="deptransactionDate"></td>
+          <td width='10%' class='text-right'><label>From account</label></td>
+          <td id="depositfromacc" data-depfromaccounts="<%= Account.deposit_from_accounts(@company.id) %>"></td>
+        </tr>
+        <tr>
+          <td width='10%' class='text-right'><label>To account</label></td>
+          <td id="deposittoacc" data-deptoaccounts="<%= Account.deposit_to_accounts(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="depositamount"></td>
+          <td colspan="2"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>  

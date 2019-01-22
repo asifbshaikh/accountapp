@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="copyright" content="&copy; 2012 The Nextwave Technologies. All rights reserved." />
+<meta name="country" content="India" />
+<meta name="author" content="Profitbooks Team" />
+<meta name="organization-Email" content="support@profitbooks.net" />
+<meta name="language" content="English" />
+<title>ProfitBooks.net - Online Accounting & Payroll Management Software for small business</title>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+
+<!-- //      /Stylesheets Files       // -->
+<%= render :partial => "stylesheets" %>  
+<!-- //        Favicon Files         // -->
+<link rel="shortcut icon" href="/images/favicon.ico"/>
+
+<!-- //      Javascript Files        // -->
+<%= render :partial =>"javascripts"%>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial =>"zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <header>
+      <%= render :partial=>"header"%>
+    <!-- header end here -->
+      
+  
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+    
+      <div class="row">
+            <div class="seven columns centered">
+                
+                <div id="error-wrapper">             
+                    <h1>Ooops! page not found...</h1>
+                    <div class="clear"></div>
+                    <div class="divider"></div> 
+                    <p>We're sorry, but we can't find the page you were looking for. It's probably some thing we've done wrong but now we know about it we'll try to fix it. In the meantime, try returning to the homepage or browse other pages using the menu above.</p>
+                </div>
+                                
+            </div>        
+        </div>         
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial =>"footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

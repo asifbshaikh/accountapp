@@ -1,0 +1,2 @@
+module LeaveApprovalHelper
+end

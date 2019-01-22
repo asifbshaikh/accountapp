@@ -1,0 +1,5 @@
+<tr id="warehouse-detail-row-link-<%=index%>">
+	<td colspan='3'>
+		<%= link_to "+ Add new row",{:action => :add_warehouse_detail_row, :index => index, :swd_index=>swd_index+1, :product_id=>params[:product_id]}, :class => "btn btn-white btn-sm", :remote => true %>
+	</td>
+</tr>

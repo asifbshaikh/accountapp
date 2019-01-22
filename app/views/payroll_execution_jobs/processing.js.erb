@@ -1,0 +1,14 @@
+<% if @payroll_processing_check == 0 %>
+setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/payroll_execution_jobs/processing?month=<%= @month %>"
+    });
+}, 10000);
+
+<% elsif @payroll_processing_check == 1 %>
+	setTimeout(function(){
+    $( ".loader" ).val("<strong> The payroll processing is complete. Redirecting you to results page......</strong>");
+    window.location.href = "/attendances/show?month=<%= @month %>";
+  }, 3000);
+<% end %>

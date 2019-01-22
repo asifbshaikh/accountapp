@@ -1,0 +1,41 @@
+<tr id="row<%= index %>" valign="top" class='pur_line'>
+  <%= hidden_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][id]",purchase_order_line_item.id%>
+  <%= hidden_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][_destroy]" %>
+  <%= hidden_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][type]", "PurchaseOrderLineItem" %>
+  <td valign="top" style="padding-left:0" id='item-td'>
+    <%= select_tag("purchase_order[purchase_order_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(@to_accounts, :id, :name,:selected => purchase_order_line_item.product_id ),:include_blank => true, :"data-placeholder" => "Select product", :"data-index" => index, :style => "width:150px;")  %>
+    <%= hidden_field_tag "index", index %>
+  </td>
+  <td>
+    <%= text_area_tag "purchase_order[purchase_order_line_items_attributes][#{index}][description]",purchase_order_line_item.description, :class=>"form-control bg-focus", :id=>'description', :rows => 1, :cols =>10 %>
+  </td>
+  <td>
+    <%= text_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][quantity]",purchase_order_line_item.quantity, :onkeydown => "return numbersOnly(event);", :class => 'form-control bg-focus text-right',:id =>'quantity', :maxlength => 18 %>
+  </td>
+  <td>
+    <%= text_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][unit_rate]",purchase_order_line_item.unit_rate, :onkeydown => "return numbersOnly(event);", :class => 'form-control bg-focus text-right', :id=>'unit_cost', :maxlength => 18 %>
+  </td>
+  <td>
+  <%= text_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][discount_percent]", purchase_order_line_item.discount_percent, :class => 'form-control bg-focus text-right', :onkeydown => "return numbersOnly(event);", :id => 'discount' %>
+</td>
+  <td valign="top" id='tax-td'>
+    <% purchase_order_line_item.purchase_order_taxes.each_with_index do |tax, tax_index| %>
+      <div class='row' id="tax-<%=index%>-<%=tax_index%>" style=<%="display:none;" if tax_index==1 %>>
+        <div class="col-sm-12">
+          <%= hidden_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][purchase_order_taxes_attributes][#{tax_index}][id]", tax.id %>
+          <%= select_tag "purchase_order[purchase_order_line_items_attributes][#{index}][purchase_order_taxes_attributes][#{tax_index}][account_id]", options_from_collection_for_select_with_data(Account.get_purchase_taxes(@company.id), :id, :purchase_tax_name, tax.account_id,{:"linked" => :linked_purchase }), :include_blank => true, :class => "form-control bg-focus", :style => "width: 120px;" %><p></p>
+        </div>
+      </div>
+    <% end %>
+    <a id="add-tax" data-index="<%=index%>" style="cursor:pointer;"><i> + apply another tax</i></a>
+  </td>
+  <td align='right'>
+    <%= hidden_field_tag "purchase_order[purchase_order_line_items_attributes][#{index}][amount]", purchase_order_line_item.amount, :id => 'total' %>
+  <span id="amount">0.0</span>
+  </td>
+  <td style="padding-right:0">
+    <%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => purchase_order_line_item.id},:class => "btn btn-danger", :id => 'cancel', :remote => true %></td>
+</tr>
+<script>
+$("#purchase_order_purchase_order_line_items_attributes_<%= index %>_product_id").select2();
+</script>

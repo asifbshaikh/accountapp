@@ -1,0 +1,11 @@
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% else %>
+  $("#p_acc").val('<%= @account.name %>');
+
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>

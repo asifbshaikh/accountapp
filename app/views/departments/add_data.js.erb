@@ -1,0 +1,11 @@
+$("#prev_data").remove();
+<% if params[:record]== 'department'%>
+$("#abc").after("<%= escape_javascript render :partial =>  '/departments/form' %>");
+<% elsif params[:record]=='designation' %>
+$("#abc").after("<%= escape_javascript render :partial =>  '/designations/form' %>");
+<% elsif params[:record]=='holiday'%>
+$("#abc").after("<%= escape_javascript render :partial =>  '/holidays/form' %>");
+<%elsif params[:record]=='leave_type'%>
+$("#abc").after("<%= escape_javascript render :partial =>  '/leave_types/form' %>");
+<% end %>
+$('#popup_box').fadeIn("slow");

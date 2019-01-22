@@ -1,0 +1,28 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+            <h2><i class="icon-bar-chart text"></i>Blog Post</h2>
+        </div>
+           <div class="col-lg-8 m-t-large" align="right">
+           <a href="/admin/blog_posts/new" class="btn btn-success btn-lg " id="use_filter" title="Add new"><i class="icon-plus"></i> Create Post</a> 
+           <a href="/admin/blog_categories" class="btn btn-success btn-lg " title="Add new"><i class="icon-plus"></i> Add category</a> 
+           <p></p>
+        </div>
+      </div>
+
+       
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <div class="panel-body">
+            <%= render :partial => "blog_post", :collection => @blog_posts %>
+            <p><%= page_entries_info @blog_posts%></p>
+            <p><%= paginate @blog_posts %></p>
+            </div>
+          </section>
+        </div>
+      </div>
+
+    </section>
+  </section>       

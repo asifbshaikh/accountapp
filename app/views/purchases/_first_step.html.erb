@@ -1,0 +1,202 @@
+<div class="form-group">
+	<div class="col-lg-3">
+		<% if @voucher_setting.custom_sequence? %>
+			<%= f.label :purchase_number,"Voucher Number", :class=>'control-label-required' %>
+			<%= f.text_field :purchase_number, :class => 'form-control bg-focus' %>
+		<% else %>
+			<label class="label-control">Voucher Number <%= @purchase.purchase_number%></label>
+			<%= f.hidden_field :purchase_number %>
+		<% end %>
+		 <% if @purchase.gst_purchase? %>
+			  <div class="row">
+			    <div class="col-lg-12">
+			      <label class="control-label">GSTIN&nbsp;</label><span id="gstin"></span> 
+			    </div>
+			  </div>
+		 <% end %>
+	</div>
+ </div>
+<div class='form-group'>
+	<div class='col-lg-3'>
+	<label  class="control-label-required">Vendor Name</label>
+	<% if @purchase.draft? || @purchase.original_purchase.draft? %>
+		<div class='input-group'>
+			<%= f.select(:account_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@from_accounts, :id, :name, @purchase.account_id, :"currency"=>:get_currency), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+			<span id="purchase-currency"></span>
+		</div>
+	<% else %>
+	 	<%= @purchase.account.name %><br/>
+    <% if @purchase.currency != @company.currency_code %>
+    	<label>Purchase Currency:</label>  <%= @purchase.currency %>
+    <% end %>
+	<% end %>
+	<span id = 'from_acc_bal'></span>
+	<span id = 'from_acc_cur'></span>
+	<br/>
+	<% if !@purchase.payment_vouchers.blank? %>
+	  <label>Exchange rate in <%= @company.currency_code%>:</label> <%= @purchase.exchange_rate %>
+		<%= hidden_field_tag "exchange_rate", @purchase.exchange_rate %>
+	<% else %>
+		<div class="purchase_exc_rate" style=<%= 'display:none;' if @purchase.currency==@company.currency_code %> >
+  	  <label class="control-label">Exchange Rate in <%= @company.currency_code %></label>
+  	  <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :size => "5", :class=> "bg-focus form-control text-right" %>
+  	</div>
+	<% end %>
+	</div>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-3'>
+	<%= f.label :Record_date,  :class=>"control-label-required"  %>
+	<%= f.text_field :record_date, :class => 'form-control bg-focus', :style=>"width:120px;" %>
+	</div>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-3'>
+	<%= f.label :Due_date,  :class=>"control-label-required"  %>
+	<%= f.text_field :due_date, :class => 'form-control bg-focus', :style=>"width:120px;" %>
+	</div>
+</div>
+<div class='form-group'>
+	<div class='col-lg-3'>
+	<%= f.label :bill_reference,( "Quotation Reference"), :class=>'control-label' %>
+	<%= f.text_field :bill_reference, :class => 'form-control bg-focus' %>
+	</div>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-3'>
+	<%= f.label :Bill_date,("Quotation Date"), :class=>'control-label'%>
+	<%= f.text_field :bill_date, :class => 'form-control bg-focus', :style=>"width:120px;" %>
+	</div>
+	<div class='col-lg-1'></div>
+	<div class='col-lg-3'>
+	<% if !@projects.blank? && !@company.plan.free_plan? %>
+		<%= f.label "Select project", :class=>'control-label' %>
+		<div class="input-group">
+			<%= f.select(:project_id, options_from_collection_for_select_with_data(@projects, :id, :name, @purchase.project_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+		</div>
+	<% end %>
+	</div>
+  </div>
+
+  
+    <label class="col-lg-2 control-label"><br/>Tax Inclusive</label>
+  
+      <div class="col-lg-2">
+        <div class="btn-group" data-toggle="buttons"><br/>
+          <label class="btn btn-sm btn-white<%= ' active' if @purchase.tax_inclusive? %> inclusive">
+            <%= radio_button_tag "purchase[tax_inclusive]", 1, @purchase.tax_inclusive? %>
+            <i class="icon-ok icon-large text-active"></i>
+            Yes
+          </label>
+          <label class="btn btn-sm btn-white<%= ' active' if !@purchase.tax_inclusive? %> exclusive">
+            <%= radio_button_tag "purchase[tax_inclusive]", 0, !@purchase.tax_inclusive? %>
+            <i class="icon-ok icon-large text-active"></i>
+            No
+          </label>
+        </div>
+      </div>
+    
+    
+    <label class="col-lg-2 control-label" ><br/>Import Purchase</label>
+  
+     <div class="col-lg-2">
+
+         <div class="btn-group" data-toggle="buttons" ><br/>
+          <label class="btn btn-sm btn-white<%= ' active' if @purchase.import_purchase? %>" id="import_purchase_yes">
+            <%= radio_button_tag "purchase[import_purchase]", 1, @purchase.import_purchase? %>
+            <i class="icon-ok icon-large text-active"></i>
+           Yes
+          </label>
+          <label class="btn btn-sm btn-white<%= ' active' if !@purchase.import_purchase? %> " id="import_purchase_no">
+            <%= radio_button_tag "purchase[import_purchase]", 0, !@purchase.import_purchase? %>
+            <i class="icon-ok icon-large text-active"></i>
+            No
+          </label>
+        </div>
+     <div id="import_purchase_model" class="collapse">
+     <%= render "import_purchase" %>
+      </div>
+      </div>
+     
+   <div>
+	<%= f.check_box :reverse_charge, {:class=>"reverseCharge", :onclick=>"$(this).val(this.checked ? 1 : 0)"} %><label>&nbsp;Under reverse charge</label>
+</div>
+<%= render :partial => "custom_field", :locals => {:f => f} %>
+<table class="table table-striped b-t text-small purchase-line" id="purchase_line_items">
+	<thead>
+		<tr>
+			<th width='19%'><label class="control-label-required">Item</label></th>
+			<th width='19%'>Description</th>
+			<th width='12%'><label class="control-label-required">Qty</label></th>
+			<th width='12%'><label class="control-label-required">Unit Cost</label></th>
+			<th width='11%'>Discount%</th>
+			<th width='11%'>Tax</th>
+			<th width='22%'><label class="control-label-required">Amount (<span class="comcur"><%= @purchase.currency%></span><span id='taccur'></span>)</label></th>
+			<th width='5%'></th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @purchase.purchase_line_items.each_with_index do |purchase_line_item, index| %>
+	<%= render "purchase_line_items", :purchase_line_item => purchase_line_item, :index => index %>
+	<% end %>
+	<tr id="row_link_purchase" class='row-link-purchase' valign="top">
+		<td valign="top" colspan="8"> <%= link_to "+ Add new row",{:action => :add_row, :index => @purchase.purchase_line_items.size}, :class => "btn btn-white btn-sm", :remote => true %>
+		</td>
+	</tr>
+
+	<% @purchase.other_charge_line_items.each_with_index do |other_charge_line_item, other_charge_index| %>
+	<%= render "other_charge_line_items", :other_charge_line_item => other_charge_line_item, :other_charge_index => other_charge_index %>
+	<% end %>
+	<tr id="other_charge_row_link" valign="top">  
+		<td colspan='8'>         
+		<%= link_to "+ Add Other Charge",{:action => :add_other_charge_row, :other_charge_index => @purchase.other_charge_line_items.size}, :class => 'btn btn-sm btn-white',:remote => true %> 
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan='4'>
+		<td align='right' colspan='2'>Sub total</td>
+		<td align='right'> <span id="pur-total">0.00</span></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="4"></td>
+		<td align='right' colspan='2'>Discount</td>
+		<td align='right'> <span id="discount">0.00</span></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan="4"></td>
+		<td align='right' colspan='2'>Tax <span id="tax-status"></span></td>
+		<td align='right'> <span id="tax-amount">0.00</span></td>
+		<td></td>
+	</tr>
+</tbody>
+<tr>
+	<td colspan="4"></td>
+	<td align='right' colspan='2'><b>Total</b></td>
+	<td align='right'> <span id = "total">0.00</span></td>
+	<td></td>
+</tr>
+</table>
+
+ <div class="form-group">
+  <div class="col-lg-5">
+  <label class="control-label">Customer Notes</label>
+    <%= text_area_tag "purchase[customer_notes]", "#{@purchase.customer_notes.blank? ? @voucher_setting.customer_notes : @purchase.customer_notes}", :rows => 4, :class => 'bg-focus form-control' %></div>
+  <div class="col-lg-2"></div>
+  <div class="col-lg-5">
+  <label class="control-label">Terms and Conditions</label>
+    <%= text_area_tag "purchase[terms_and_conditions]", "#{@purchase.terms_and_conditions.blank? ? @voucher_setting.terms_and_conditions : @purchase.terms_and_conditions}", :rows => 4, :class => 'bg-focus form-control' %><br/>
+  </div>
+</div>
+<script type="text/javascript">
+  
+  $("#import_purchase_yes").click(function(){
+  
+    $("#import_purchase_model").toggle();
+ });
+
+  $("#import_purchase_no").click(function(){
+  
+    $("#import_purchase_model").hide();
+ });
+
+</script>

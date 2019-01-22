@@ -1,0 +1,12 @@
+<form action = '/admin/leads/pending_leads'>
+	<table>
+<thead>
+	<tr>
+<td> 
+  <%= text_field_tag :start_date,'', :placeholder => "Start date", :size => "8"%>&nbsp;
+  <%= text_field_tag :end_date,'',:placeholder => "End date", :size => "8" %>&nbsp;
+  <%= submit_tag "Go", :class => "btn btn-green" %>
+</td>
+ </tr>
+	</table>
+</form>

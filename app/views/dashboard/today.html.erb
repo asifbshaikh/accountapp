@@ -1,0 +1,180 @@
+      <div class="row"> 
+  <!-- Today panel starts --> 
+        <div class="col-lg-6"> 
+          <section class="panel"> 
+            <header class="panel-heading"> 
+              <ul class="nav nav-tabs pull-right"> 
+                <li class="active"><a href="#messages-1" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i> Today</a></li> 
+                <li><a href="#profile-1" data-toggle="tab">This Week</a></li> 
+              </ul> 
+              <span class="hidden-sm">Whats New..</span> 
+            </header> 
+            <div class="panel-body"> 
+              <div class="tab-content">              
+                <div class="tab-pane active" id="messages-1"> 
+                <%if !@messages.today.blank?%> 
+          
+          <!-- Showing Messages --> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="/messages" class="btn btn-warning btn-circle"> 
+            <i class="icon-envelope"></i> Messages <b class="badge bg-light"><%= @messages.today.count%></b></a> 
+          </div> 
+          <div class="media-body"> 
+            <!--List only 2 records here --> 
+            <%@messages.today.each do |m|%> 
+            <a href="#" class="h5"><%= m.subject%></a> 
+            <small class="block">Sent by <% user=User.find(m.created_by)%><%=user.full_name%></small> 
+            <%end%> 
+          </div> 
+          </article> 
+              <div class="line pull-in"></div> 
+          <%end%> 
+          <% if !@today_tasks.blank?%> 
+          <!-- Showing tasks --> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="/tasks" class="btn btn-info btn-circle"> 
+            <i class="icon-check"></i> Tasks <b class="badge bg-light"><%=@today_tasks.count%></b></a> 
+          </div> 
+          <div class="media-body"> 
+            <!--List only 2 tasks here --> 
+            <%@today_tasks.each do |t|%> 
+            <a href="#" class="h5"><%= t.description%></a> 
+            <small class="block"><%p = Task.find(t.id)%><%= p.priority_name%> priority. Due on: <%= t.due_date.strftime("%d %b %Y")%></small> 
+            <%end%> 
+          </div> 
+          </article> 
+              <div class="line pull-in"></div> 
+          <%end%> 
+              <% if !@todays_birthday_guys.blank?%> 
+          <!-- Showing Events --> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="#" class="btn btn-danger btn-circle"> 
+            <i class="icon-calendar"></i> Events <b class="badge bg-light"><%= @todays_birthday_guys.size%></b></a> 
+          </div> 
+          <div class="media-body"> 
+          <% @todays_birthday_guys.each do |b| %> 
+          <% user=User.find(b.user_id)%> 
+            <!--List only 2 birthdays here --> 
+            <a href="#" class="h5"><%= user.full_name%>'s Birthday</a> 
+            <small class="block">Date :<%= b.birth_date.strftime("%d %b") %> <%= Date.today.year%></small> 
+          <%end%> 
+          </div> 
+          </article> 
+          <%end%> 
+            </div> 
+                <div class="tab-pane" id="profile-1"><div class="tab-pane active" id="messages-1"> 
+          
+          <!-- Showing Messages --> 
+          <% if !@messages.week.blank?%> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="/messages" class="btn btn-warning btn-circle"> 
+            <i class="icon-envelope"></i> Messages <b class="badge bg-light"><%= @messages.week.count%></b></a> 
+          </div> 
+          <div class="media-body"> 
+            <!--List only 2 records here --> 
+            <%@messages.week.each do |m|%> 
+            <a href="#" class="h5"><%= m.subject%></a> 
+            <small class="block">Sent by <% user=User.find(m.created_by)%><%=user.full_name%></small> 
+            <%end%> 
+          </div> 
+          </article> 
+              <div class="line pull-in"></div> 
+          <%end%>        
+          <!-- Showing tasks --> 
+          <% if !@week_tasks.blank?%> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="/tasks" class="btn btn-info btn-circle"> 
+            <i class="icon-check"></i> Tasks <b class="badge bg-light"><%=@week_tasks.count%></b></a> 
+          </div> 
+          <div class="media-body"> 
+            <!--List only 2 tasks here --> 
+            <%@week_tasks.each do |t|%> 
+            <a href="#" class="h5"><%= t.description%></a> 
+            <small class="block"><%p = Task.find(t.id)%><%= p.priority_name%> priority. Due on: <%= t.due_date.strftime("%d %b %Y")%></small> 
+            <%end%> 
+          </div> 
+          </article> 
+              <div class="line pull-in"></div> 
+          <%end%> 
+          <!-- Showing Events --> 
+          <%if @weeks_birthday_guys.size + @holidays_this_week.this_week.count != 0%> 
+          <article class="media"> 
+          <div class="pull-left"> 
+            <a href="#" class="btn btn-danger btn-circle"> 
+            <i class="icon-calendar"></i> Events <b class="badge bg-light"><%= @weeks_birthday_guys.size + @holidays_this_week.this_week.count%></b></a> 
+          </div> 
+          <div class="media-body"> 
+          <% @weeks_birthday_guys.each do |b| %> 
+          <% user=User.find(b.user_id)%> 
+            <!--List only 2 tasks here --> 
+            <a href="#" class="h5"><%= user.full_name%>'s Birthday</a> 
+            <small class="block">Date: <%= b.birth_date.strftime("%d %b") %> <%= Date.today.year%></small> 
+          <%end%> 
+          <% @holidays_this_week.this_week.each do |h|%> 
+                 <a href="#" class="h5"><%= h.holiday  %></a> 
+            <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small> 
+            <%end%> 
+          </div> 
+          </article> 
+          <%end%> 
+            </div> 
+            </div> 
+                <div class="tab-pane" id="settings-1">settings</div> 
+              </div> 
+            </div> 
+          </section> 
+      </div> 
+          <!-- / Today panel endss --> 
+  <div class="col-lg-4">    
+          <section class="panel"> 
+            <header class="panel-heading">Today</header> 
+              <div> 
+                <table class="table table-striped m-b-none text-small"> 
+                  <tr>             
+                    <th colspan="2">Invoices Due : </th> 
+                  </tr> 
+                  <% if !@invoices.blank?%> 
+                  <tr> 
+                    <td><b>Invoice No.</b></td> 
+                    <td><b>Amount</b></td> 
+                  </tr> 
+                    <%counter = 1%> 
+                    <% @invoices.each do |i| %> 
+                    <% if counter >= 5 
+                  break 
+                  end %> 
+                  <tr> 
+                    <td><a href="/invoices" class="h5"><%=i.invoice_number%></a></td> 
+                    <td><%=i.amount%></td> 
+                    </tr> 
+                    <%end%> 
+                    <%end%> 
+                  <tr>             
+                    <th colspan="2">Paybles :</th> 
+                  </tr> 
+                  <% if @paybles.blank?%> 
+                  <tr> 
+                    <td><b>Invoice No.</b></td> 
+                    <td><b>Amount</b></td> 
+                  </tr> 
+                    <%counter = 1%> 
+                    <% @paybles.each do |p|%> 
+                    <% if counter >= 5 
+                  break 
+                  end %> 
+                  <tr> 
+                    <td><a href="/invoices" class="h5"><%= p.invoice_number%></a></td> 
+                    <td><%= p.amount%></td> 
+                  </tr> 
+                  <%end%> 
+                  <%end%> 
+              </table> 
+            </div> 
+          </section> 
+  </div> 
+  </div>

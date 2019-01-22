@@ -1,0 +1,240 @@
+<div class="row">
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-12"><!-- Start of income expense chart -->
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#messages-1" data-toggle="tab">Monthly</a></li>
+              <!--<li><a href="#profile-1" data-toggle="tab">Last Quarter</a></li>
+              <li><a href="#profile-2" data-toggle="tab" class='yearly-graph'>This Year</a></li>-->
+            </ul>
+            <span class="hidden-sm">Income and Expense Overview</span>
+          </header>
+          <div class="panel-body">
+            <div class="tab-content">              
+              <div class="tab-pane active" id="messages-1">
+                <p>
+                  <span class="badge bg-success"><%= monthly_income %></span>&nbsp;Income this month&nbsp;
+                  <span class="badge bg-info"><%= monthly_expense %></span>&nbsp; Expenses this month
+                </p>
+                <div class="sparkline" data-type="line" data-resize="true" data-height="205" data-width="100%" data-line-color="#a3e2fe" data-fill-color="#e3f6ff" data-highlight-line-color="#a3e2fe" data-chart-range-max="<%= @monthly_max%>" data-spot-radius="3" data-composite-data="[<%= @monthly_income.join(",")%>]" data-composite-line-color="#89CB4E" data-composite-fill-color="#f3fce3" data-data="[<%=@monthly_expense.join(",")%>]"></div>
+                <ul class="list-inline text-muted axis"><%= daily_intervals %></ul>
+              </div>
+              <div class="tab-pane" id="profile-1">
+                <p>
+                  <span class="badge bg-success"><%=last_6month_income%></span>&nbsp;Income in last 6 months&nbsp; 
+                  <span class="badge bg-info"><%=last_6month_expense%></span>&nbsp; Expenses in last 6 months
+                </p>
+                <div class="sparkline" data-type="line" data-resize="true" data-height="205" data-width="100%" data-line-color="#bfea5f" data-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="5" data-composite-data="[<%= @last_6month_income.join(",")%>]" data-composite-line-color="#a3e2fe" data-composite-fill-color="#e3f6ff" data-data="[<%=@last_6month_expenses.join(",")%>]"></div>
+                <ul class="list-inline text-muted axis">
+                  <% @date= Time.zone.now.to_date.beginning_of_month-3.month %>
+                  <% while @date <= Time.zone.now.to_date  do %>
+                    <li><%=@date %><%@date+=10%></li>
+                  <%end%>
+                </ul>
+              </div>
+              <div class="tab-pane" id="profile-2">
+                <p>
+                  <span class="badge bg-success"><%=yearly_income%></span>&nbsp;Income this year&nbsp; 
+                  <span class="badge bg-info"><%=yearly_expense%></span>&nbsp; Expenses this year
+                </p>
+                <div class="sparkline" data-type="line" data-resize="true" data-height="205" data-width="100%" data-line-color="#bfea5f" data-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="5" data-composite-data="[<%=@yearly_income.join(",")%>]" data-composite-line-color="#a3e2fe" data-composite-fill-color="#e3f6ff" data-data="[<%=@yearly_expenses.join(",")%>]"></div>
+                <ul class="list-inline text-muted axis">
+                  <% @date= @financial_year.start_date %>
+                  <% while @date <= Time.zone.now.to_date.end_of_year do %>
+                    <li><%= @date.strftime("%B")%><% @date+=1.month %></li>
+                  <%end%>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div><!-- End of Income expense chart -->
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- Top 5 Receivables  -->
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#amount-1" data-toggle="tab">By Amount</a></li>
+              <li><a href="#period-1" data-toggle="tab">By Period</a></li>
+            </ul>
+            <span class="hidden-sm">Top 5 Receivables</span>
+          </header>
+          <div class="tab-content">              
+            <div class="tab-pane active" id="amount-1">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th width="45%">Customer</th>
+                    <th class="text-right" width="55%">Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= display_receivables(@receivables,"") %>
+                </tbody>  
+              </table>
+            </div>
+            <div class="tab-pane" id="period-1">
+              <div class="tab-pane active" id="amount-1">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th width="45%">Customer</th>                    
+                    <th class="text-right" width="40%">Value (<%= @company.currency_code%>)</th>
+                    <th width="15%">Overdue</th>
+                  </tr>
+                </thead>
+                  <%= display_receivables(@receivables,"day") %>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>  
+      </section>
+    </div><!-- Top 5 Receivables ends -->
+
+    <div class="col-lg-6">
+          <section class="panel">
+            <header class="panel-heading">Sales by Product/Service (Year till date)</header>
+            <% if @paid_invoices.blank? && @overdue_invoices.blank? && @unpaid_invoices.blank?%>
+            <div class="col-lg-12" align="center"><%= render :partial => "/shared/no_record" %></div>
+          <% else %>
+            <div class="panel-body text-center">   
+              <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="['#3fcf7f','#ff5f5f','#f4c414']"><%= @paid_invoices.count%>,<%= @overdue_invoices.count%>,<%= @unpaid_invoices.count%></div>
+              <div class="line pull-in"></div>
+              <div class="text">
+                Invoice Status:&nbsp;
+                <a href="#"><span class="badge bg-success"><%= @paid_invoices.count%> Paid </span></a>&nbsp;
+                <a href="#"><span class="badge bg-warning"><%= @unpaid_invoices.count%> Unpaid </span></a>&nbsp;
+                <a href="#"><span class="badge bg-danger"><%= @overdue_invoices.count%> Overdue </span></a>
+              </div>
+            </div>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+    <div class="row"><!-- Row to show payables and expense pie chart-->
+      <div class="col-lg-6"><!-- Top 5 Payables  -->
+        <section class="panel">
+          <header class="panel-heading">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#amount-2" data-toggle="tab">By Amount</a></li>
+              <li><a href="#period-2" data-toggle="tab">By Period</a></li>
+            </ul>
+            <span class="hidden-sm">Top 5 Payables</span>
+          </header>
+          <div class="tab-content">              
+            <div class="tab-pane active" id="amount-2">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                    <th width="45%">Vendor</th>                    
+                    <th class="text-right" width="55%">Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%= display_expenses(@overdue_expenses, "") %>
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane" id="period-2"><div class="tab-pane active" id="amount-2">
+              <table class="table table-striped m-t-none text-small">
+                <thead>
+                    <tr>
+                      <th width="45%">Vendor</th>                    
+                      <th class="text-right" width="40%">Value (<%= @company.currency_code %>)</th>
+                      <th width="15%">Overdue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <%= display_expenses(@overdue_expenses, "day") %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>  
+      </section>
+    </div><!-- Top 5 Receivables ends -->
+    <div class="col-lg-6">
+      <!--
+        <section class="panel">
+          <header class="panel-heading">Expense Overview by category</header>
+            <div class="panel-body text-center">              
+              <div class="sparkline inline" data-type="pie" data-height="175" data-slice-colors="['#233445','#3fcf7f','#ff5f5f','#f4c414','#13c4a5']">20,15,5,40,20</div>
+                <!-- below block is not required for now 
+                <div class="line pull-in"></div>
+                <div class="text-mini">
+                  <i class="icon-circle text-info"></i> 25%
+                  <i class="icon-circle text-success"></i> 15%
+                  <i class="icon-circle text-danger"></i> 25%
+                  <i class="icon-circle text-primary"></i> 18%
+                  <i class="icon-circle text-warning"></i> 40%
+                </div>
+            </div>
+          </header>
+        </section>
+      -->
+    </div>
+  </div><!-- Row to show payables and expense pie chart ends -->  
+</div>
+<!-- End of col8 -->
+  <div>
+    <div class="col-lg-4">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if !@todays_birthday_guys.blank? || @holidays_this_week.count != 0%>
+            <section class="panel bg-info">
+              <div class="panel-body">
+                <% if !@todays_birthday_guys.blank?%>
+                  <% @todays_birthday_guys.each do |b| %> 
+                    <p>
+                      <i class="icon-bell"></i> 
+                      <% user=User.find(b.user_id)%> 
+                      <%= user.full_name%>'s Birthday Today!
+                    </p>
+                  <%end%>
+                <%end%>
+                <%if @holidays_this_week.count != 0%> 
+                  <% @holidays_this_week.each do |h|%> 
+                    <p>
+                      <i class="icon-bell"></i>
+                      <%= h.holiday  %>
+                      <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small> 
+                    </p>
+                  <%end%>
+                <%end%>
+              </div>    
+            </section>
+          <%end%>  
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="hidden-sm">Cash and Bank Balances</span>
+            </header>
+            <table class="table table-striped m-b-none text-small">
+              <thead>
+                <tr>
+                  <th width="50%">Account</th>                    
+                  <th class="text-right" width="55%">Value (<%= @company.currency_code %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= display_cash_or_bank_accounts(@cash_accounts) %>
+                <%= display_cash_or_bank_accounts(@bank_accounts) %>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+    </div> <!-- Col4 ends -->
+  </div>
+</div>

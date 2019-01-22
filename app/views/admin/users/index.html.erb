@@ -1,0 +1,64 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+       <h2><i class="icon-file text"></i>List of Users</h2>
+        </div>
+          
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-left">
+               <!-- <li class="active"><a href="#all" data-toggle="tab"><i class="icon-list icon-large text-default"></i>All</a></li> -->
+                <li class="active"><a href="#users" data-toggle="tab"><i class="icon-share icon-large text-default"></i>All</a></li>
+                <li><a href="#users_last_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Last month</a></li>
+                <li><a href="#users_last3_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Last 3 Month</a></li>
+                <li><a href="#users_last6_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Last 6 month</a></li>
+                <li><a href="#users_last9_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Last 9 month</a></li>
+                <li><a href="#users_last12_month" data-toggle="tab"><i class="icon-calendar icon-large text-default"></i>Last 12 month</a></li>
+              </ul>
+            </header>
+            <div class="panel-body">
+            <%= render :partial=> "shared/flash_msg"%>
+            <div class="tab-content"> 
+            <div class="tab-pane active" id="users">
+              <div class="table-responsive row">
+                <table id="users_all" class="table table-striped m-b-none text-small" data-source="<%= admin_users_url(:format => 'json',:tab_ref=> "all_users") %>">
+                <thead>
+                <%= render :partial => "admin/users/users_header" %>
+              </thead>
+              <tbody>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="users_last_month">
+                <%= render :partial => "/admin/users/users_last_month" %>
+            </div>
+            <div class="tab-pane" id="users_last3_month">
+                <%= render :partial => "/admin/users/users_last3_month" %>
+            </div>
+            <div class="tab-pane" id="users_last6_month">
+                <%= render :partial => "/admin/users/users_last6_month" %>
+            </div>
+             <div class="tab-pane" id="users_last9_month">
+                <%= render :partial => "/admin/users/users_last9_month" %>
+            </div>
+             <div class="tab-pane" id="users_last12_month">
+                <%= render :partial => "/admin/users/users_last12_month" %>
+            </div>
+            
+            
+            </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

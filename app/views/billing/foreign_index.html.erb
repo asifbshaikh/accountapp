@@ -1,0 +1,164 @@
+<script>
+  $(document).ready(function(){
+    cal();
+    $("#rb1").live('click', function(e){
+      cal();
+    });
+    $("#rb2").keyup(function(){
+      cal();
+    });
+  
+  $("#apply_coupon").click(function(){
+    var order_total = $('#amount').val();
+    var coupon_code = $('#coupon_code').val();
+    if (coupon_code != ''){
+    $.ajax({
+      type: 'get',
+      data: {order_total: order_total, coupon_code: coupon_code},
+      url: '/billing/apply_coupon'
+    });
+    }
+  });
+  $("#renewBtn").live('click', function(){
+    $('tr.xyz').remove();
+    $('span.plan_h').text('Renew your subscription');
+    $("table#man tbody tr:last").after("<tr><td><b>Plan name : </b><%= @company.plan.display_name %> - &#8377; <%= @company.plan.price * 12 %> annually</td></tr>");
+    $("table#man tbody tr:last").after("<input type='hidden' name='plan_name' value=<%= @company.plan.name%> amount=<%= @company.plan.price * 12 %>>");
+    cal();
+  });
+});
+function cal(){
+      var plan = $("input:radio[name=plan_name]:checked").val();
+      var planAmount = $("input:radio[name=plan_name]:checked").attr('amount');
+      var userPack = $("input:text[name=additional_users]").val();
+      if($("input:text[name=additional_users]").val()){
+        var userAmount = parseInt(userPack)*45*12;
+        $("#user_pack").val(userPack);
+      }
+      var total = 0;
+      if(planAmount != null){
+        planAmount = parseInt(planAmount);
+      }else if($("input:hidden[name=plan_name]").attr('amount')){
+        planAmount = parseFloat($("input:hidden[name=plan_name]").attr('amount'));
+      }
+      else{
+        planAmount = 0;
+      } 
+  
+      if(userAmount != null){
+        userAmount = parseInt(userAmount);
+      }else{
+        userAmount = 0;
+      }
+      discount = 0;
+      total =  planAmount + userAmount;
+      if($("#rb2").attr('coupontype') == 'Fixed Amount' && total > 0){
+        discount = parseFloat($("#rb2").attr('figure'));
+      } else if($("#rb2").attr('coupontype') == 'Percentage' && total > 0){
+        discount = total * (parseFloat($("#rb2").attr('figure')) / 100 );
+      }
+      total = total - discount;
+      $("#coupon_amt").val(discount);
+      $("span#user_amount").text(" " + userAmount + " annually");
+      $('span#order-total').text(total);
+      $("#amount").val(total);
+}
+</script>
+<!-- Page title -->
+  <%= render :partial => "shared/page_title" %>
+  <!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"><br/>
+      <div class= "highlight">					
+        <%= render :partial => "shared/flash_msg"%>
+        <%= render "shared/form_error", :object => @billing_invoice unless @billing_invoice.blank? %>
+        <p> 
+          <h3>Hello <a href= <%= "/users/#{@current_user.id}" %> ><%= @current_user.first_name%></a>!</h3>
+        </p>	
+        <%= form_tag "" do %>
+          <table class ="display stylized">
+            <thead>
+              <tr class='xyz'><th> Active services</th></tr>
+          </thead>
+          <tbody>
+           <tr class='xyz'>
+             <td>
+              You are subscribed to <%= @company.plan.display_name %> plan.
+             </td>
+           </tr>
+           </tbody>
+         
+       </table>
+  
+          
+          <table class="display stylized">
+            <% if @company.subscriptions[0].allocated_user_count > 1 %>
+            <thead>
+              <tr><th colspan=2>Addons</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td  style="width:20%"> 
+                  <label class="choice" for="rb2"> <b>Additional users</b></label><br>
+                  <small>&#8377; 45 per user per month.</small>
+                </td>
+                <td>
+                  <input type="text" id="rb2" class="amount" onkeydown = "return numbersOnly(event);"  name="additional_users" value = '<%= params[:additional_users] %>' maxlength='8' figure='' coupontype='' /> &nbsp; &#8377;<span id='user_amount' ></span>
+                </td>
+              </tr>
+              <% end %>
+              <tr>
+                <td colspan=2>
+                  <input type="hidden" value="" name="coupon_cd" id="coupon_cd"/>	
+                  <input type="hidden" value="" name="coupon_amt" id="coupon_amt"/>	
+                  <input type="hidden" value="" name="coupon_name" id="coupon_name"/>	
+                  <div class='coupon'>
+                    <label><b> Do you have a coupon?</b></label><br/>
+                    <input type="text" value="" name="coupon_code" id="coupon_code"/>	
+                    <a class="btn btn-green" id="apply_coupon">Apply</a>
+                    <span id="error-msg" style="color: red;">	</span>
+                  </div>
+                  <div class="box box-success" style="display: none;" id='msg-success'>Coupon has been applied to your deal.</div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan=2>
+                  <input type="hidden" name="user_pack" value="" id="user_pack"/>
+                  <h3>Order Total :<span>&#8377;</span><span id ='order-total'>0.00</span></h3>
+                  <input type="hidden" value="" name="amount" id="amount"/>		
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan=2>	
+                  <input type="submit" value='Proceed to payment' class="btn btn-green"></input>&nbsp;<a href="/dashboard/index" class="btn btn-gray">Do this later</a>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        <% end %>     
+      </div><br/>
+    </section>
+    <!-- End of Left column/section -->
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+  <!--    <a href ="/billing_history/index" class ="btn btn-special btn-gray"><img src ="/images/black_icon/ic_list.png" class ="icon"> View payment history</a>-->
+      <div id="rightmenu">
+        <dl class="first">
+          <dt><%= image_tag 'help.png', :class=>'icon', :alt=>'Help' %></dt>
+          <dd><a href="#">Help</a></dd>
+          <dd class="last">This page displays the list of all the plans.You can send request to upgrade your plan.</dd>
+        </dl>
+      </div><br />
+    </aside>
+    <!-- End of Right column/section -->
+  </div>
+	<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

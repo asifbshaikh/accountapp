@@ -1,0 +1,47 @@
+<table>
+  <tr><td colspan=6 align=center>Sales register for <%= customer_name(@account) %></td></tr>
+  <% if !params[:branch_id].blank? %>
+   <tr><td colspan=6 align=center><%= display_branch(@branch_id) %></b></td></tr>
+   <% end %>
+  <tr><td colspan=6 align=center>
+    <%= @start_date %> To <%= @end_date %>
+    </td></tr>
+  <thead>
+    <tr>
+      <th width = "9%">Create Date</th>
+      <th  width = "12%"><span class='char_spacing'>Invoice No.</span></th>
+      <th class="text-right" width = "12%">Customer Name</th>
+      <th class="text-right" width = "12%">Due Date</th>
+      <th class="text-right" width = "19%">Status</th>
+      <th class="text-right" width = "19%">Amount</th>
+      <th class="text-right" width = "12%">Created By</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <% total_amount=0 %>
+     <% @invoices.each do |invoice| %>
+       <tr>
+        <td width = "9%"><%= invoice.invoice_date %></td>
+        <td align="right" width ="12%"><%= invoice.invoice_number %></td>
+       
+        <td title = '<%= invoice.customer_name %>' width = "20%"><%= invoice.customer_name %></td>
+         <td align="right" width ="12%"><%= invoice.due_date %></td>
+        <td align="right" width ="19%"><%=invoice.get_status%></td>
+        <td align="right" width ="19%"><%= format_currency(sales_amount=sales_amount(invoice)) %>
+        <% total_amount+=sales_amount%>
+        </td>
+        <td align="right" width ="12%"><%= invoice.created_by_user %></td>
+       </tr>
+     <% end %>
+      <tr>
+        <td width ="9%"></td>
+        <td width ="19%" ></td>
+        <td width ="19%"></td>
+        <td width ="19%"></td>
+        <td width ="24%"><b>T o t a l</b></td>
+        <td width ="19%" align="right"><b><%= format_currency total_amount %></b></td>
+      </tr>
+  </tbody>
+</table>

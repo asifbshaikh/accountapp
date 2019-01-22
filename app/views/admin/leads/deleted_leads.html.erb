@@ -1,0 +1,72 @@
+<section id="content">
+    <section class="main padder">
+          
+  <div class="row">
+    <div class="col-lg-7">
+        <h2><i class="icon-bar-chart text"></i>Lost Leads</h2>
+    </div>
+  </div><br/>
+    <div class="row">
+        <div class="col-lg-12">
+          <div class = "panel">
+            <div class="panel-body">
+              <span class="badge bg-danger">Not Interested = <%= @not_interested.blank? ? "" : @not_interested %></span>
+              <span class="badge bg-primary">Lost to Competion = <%= @lost_to_competion.blank? ? "" : @lost_to_competion %></span>
+              <span class="badge bg-success">Junk Leads = <%= @junk.blank? ? "" : @junk %></span>
+              <span class="badge bg-info">Feature Missing = <%= @feature_missing.blank? ? "" : @feature_missing %></span>
+              <span class="badge bg-inverse">Pricing Issue =<%= @pricing_issue.blank? ? "" : @pricing_issue %></span>
+              <span class="badge bg-warning">Other = <%= @other.blank? ? "" : @other %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+    <!-- Table starts -->
+          <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              <strong>Lost Leads</strong>
+            </header>
+          <div class="panel-body">
+
+            <% if @leads.blank? %>
+             <%= render :partial => "shared/no_record" %>
+            <% else %>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small" id="leads_deleted">
+                <thead>
+                  <tr>
+                    <th width='20%'>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Signup Date</th>
+                    <th>Delete Reason</th>
+                    <th>Deletion Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% @leads.each do |lead|%>
+                <tr>
+                  <td><%= lead.name%></td>
+                  <td><%= lead.email%></td>
+                  <td><%= lead.mobile%></td>
+                  <% if !lead.company.blank?%>
+                  <td><%= lead.company.activation_date%></td>
+                  <% else %>
+                  <td>Not Registered</td>
+                  <% end %>
+                  <td><%= lead.get_deleted_reason%></td>
+                  <td><%= lead.notes%></td>
+                </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          <%end%>
+</div>
+</section>
+</div>
+</div>
+</section>
+</section>

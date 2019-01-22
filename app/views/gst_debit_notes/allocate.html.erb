@@ -1,0 +1,48 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> Allocate Gst Debit Note - <%= @gst_debit_note.gst_debit_note_number %></h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), gst_debit_notes_path, :class => 'btn btn-default btn-lg',:title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <%= form_for @gst_debit_note, :url=>"/gst_debit_notes/create_allocation", :method=>:post, :html=>{:class=>"form-horizontal"} do |f| %>
+          <%= hidden_field_tag "id", @gst_debit_note.id %>
+          <%= render "shared/form_error", :object=>@gst_debit_note %>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label>Vendor Name</label>
+            </div>
+            <div class="cols-lg-10"><%= @gst_debit_note.to_account_name %></div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-2 text-right">
+              <label>Unallocated Amount</label>
+            </div>
+            <div class="cols-lg-10"><%= format_currency @gst_debit_note.unallocated_amount %></div>
+          </div>
+          <div class="line line-dashed m-t-large"></div>
+          <div class='form-group'>
+            <div class="col-lg-12">
+              <h4>Showing unpaid purchases for the selected vendor:</h4>
+            </div>
+            <div class="col-lg-12" id='purchaseDetails'>
+              <%= render "gst_debit_notes/unpaid_purchases" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">                      
+            <%= f.submit "Save", :class=>"btn btn-success" %>
+              <%= link_to 'Cancel', gst_debit_notes_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  </section>
+</section>

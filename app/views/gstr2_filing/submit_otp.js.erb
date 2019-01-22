@@ -1,0 +1,16 @@
+<% if @valid_otp["status_cd"].to_i == 1%>
+$(".error-place1").after("<div class='alert alert-success invoice-setting-notif'>Your session is activated for two hours from now.");
+$(".btnsave1").remove();
+$(".save-btn1").after("<button class='btn btn-sm btn-success btnsave1' type='submit'  data-loading-text='Processing...'>Submit</button>");
+<% else %>
+$(".error-place1").after("<div class='alert alert-danger invoice-setting-notif'>You have provided an invalid OTP.</div>")
+$(".btnsave1").remove();
+$(".save-btn1").after("<button class='btn btn-sm btn-success btnsave1' type='submit'  data-loading-text='Generating...'>Generate</button>");
+setTimeout(function(){
+  $("div.alert-danger").fadeOut(6000, function () {
+  $("div.alert-danger").remove();
+      });
+}, 2000);
+
+<% end %>
+

@@ -1,0 +1,26 @@
+ <table class="table table-striped m-b-none text-small" id="purchases"  data-source="<%= purchases_url(:format => 'json', :project=>@project.id) %>">
+   <thead>
+    <tr>
+      <th>Purchase Number</th>
+      <th>Vendor name </th>
+      <th>Due date</th>
+      <th>Amount</th>
+      <th>Created By</th>
+    </tr>
+  </thead>
+  <tbody>
+   
+  </tbody>
+  
+  <tfoot>
+    <tr style="visibility:hidden">
+      <th>Purchase Number</th>
+      <th>Vendor name </th>
+      <th>Due date</th>
+      <th>Amount</th>
+      <th>Created By</th>
+    </tr>
+
+  </tfoot>
+</table>
+<%= paginate @purchases %>

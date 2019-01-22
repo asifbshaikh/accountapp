@@ -1,0 +1,10 @@
+$(".error-place").after("<div class='alert alert-success'>Updated successfully.</div>")
+
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+
+setTimeout(function(){
+  $("div.alert-success").fadeOut(3000, function () {
+  $("div.alert-success").remove();
+      });
+}, 3000);

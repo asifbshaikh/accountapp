@@ -1,0 +1,105 @@
+         <header id="top">
+            <div class="wrapper">
+            <!-- Title/Logo - can use text instead of image -->
+              <div id="title"><img alt="Profitnext.com" src="/images/logo.png"/></div>
+
+                <!-- Top navigation -->
+                <div id="topnav">
+                  <a href="#"><img class="avatar" src="/images/user_32.png" alt="" /></a>
+                  Logged in as  <b><%= session[:name]%></b><br/>
+                  <span>|</span> <a href="#">Settings</a>
+                  <span>|</span> <%= link_to 'Logout', root_path, :method => :destroy %><br />
+                </div>
+                <!-- End of Top navigation -->
+               
+                    <!-- Main navigation -->
+                       <nav id="menu">
+                          <ul class="sf-menu">
+                                <li class="home">
+                                  <%= link_to "Payroll", :controller => :payroll_dashboard %>
+                                  <ul>
+                                    <li><%= link_to "Accounting", :controller => :dashboard %></li>
+                                  </ul>
+                                </li>
+              
+                                <li>
+                                   <a href="#">Self Service</a>
+                                    <ul>
+                                       <li><a href="/assets/my_asset">My Assets</a></li>
+                                      
+                                       <li><a href="#">My Details</a>
+                                                                              
+                                       </li>
+                                        <li><a href="/employee_goals/emp_goal">My Performance</a>
+                                                                                   
+                                       </li>
+                                       <li><a href="#">My Requests</a>
+                                          <ul>
+                                            <li><a href="/leave_requests/my_leave_request">View my Leave requests</a></li>
+                                          </ul>
+                                        </li>
+                                       <li><a href="#">Salary Slips</a></li>
+                                      
+                                    </ul>
+                                </li>
+                               
+                                <li>
+                                   <a href="#">Timesheets</a>
+                                    <ul>
+                                       <li><a href="/timesheets">Book Time</a></li>
+                                       <li><a href="/tasks">Manage Tasks</a></li>
+                                    </ul>
+                                </li>
+                               
+                                <li>
+                                   <a href="#">Forms</a>
+                                    <ul>
+                                       <li> <a href="/leave_requests/new">Leave Request</a></li>
+                                    </ul>
+                               </li>
+                        
+                               <li>
+                                  <a href="#">Organisation</a>
+                                   <ul>
+                                      <li> <a href="/organisation_announcements/announcement">Announcements</a></li>
+                                      <li><a href="/holidays/holiday_list">Holiday List</a></li>
+                                      <li><a href="/policy_documents/new">Policy Documents</a></li>
+																			<li><a href="/documents/index">Share Document</a></li>
+                                   </ul>
+                               </li>
+                               
+                               <li>
+                                  <a href="#">Administration</a>
+                                   <ul>
+                                       <li> <a href="/master_objectives">Performance Management</a>
+                                        <!--  <ul>
+                                            <li><a href="/master_objectives/new">Create Master Objectives</a></li>
+                                            <li><a href="/employee_goals/new">Create Goals for Employee</a></li>
+                                          </ul>-->
+                                       </li>
+                                      <li><a href="#">Manage Employees</a></li>
+                                      <li><a href="/salary_structures/new">Manage Salary Structure</a></li>
+                                      <li><a href="#">Organisation Settings</a>
+                                          <ul>
+                                             <li><a href="/assets">Manage Assets</a></li>
+                                             <li><a href="/departments">Manage Departments</a></li>
+                                             <li><a href="/holidays">Manage Holidays</a> </li>
+                                             <li><a href="/designations">Manage Designation</a></li>
+                                             <li><a href="/leave_types">Manage Leave Types</a></li>
+                                             <li><a href="/organisation_announcements">Manage Announcement</a></li>
+                                          </ul>
+                                      </li>
+                                      <li><a href="#">Process Payroll</a></li>
+                                   </ul>
+                               </li>
+                         </ul>
+                     </nav>
+                    <!-- End of Main navigation -->
+                    
+              <!-- Aside links -->
+              <aside>
+                 <b>Messages (0)</b> &middot;&nbsp;<%= link_to 'Tasks', tasks_path %> &middot;&nbsp; <%= link_to 'Notes', notes_path %> &middot;&nbsp; <%= link_to 'People', contacts_path %>
+              </aside>
+             <!-- End of Aside links -->
+            </div>
+         </header>

@@ -1,0 +1,67 @@
+<%= f.fields_for :accountable do |a| %>
+ <div class="col-lg-4">
+  <div class="form-group gradeU odd">
+	   <%= a.label :contact_number, :class=>"control-label" %><br/>
+     <%= a.text_field :contact_number,:onkeydown => "return numbersOnly(event);", :size => "30", :maxlength => "14", :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU even">
+	  <%= a.label :email, :class=>"control-label" %><br/>
+    <%= a.text_field :email,:size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU odd">
+	  <%= a.label :PAN, "PAN",:class=>"control-label" %><br/>
+    <%= a.text_field :PAN,:size => 30 , :class=>"bg-focus form-control"%>
+  </div>
+  </div>
+  <div class="col-lg-4">
+  <div class="form-group gradeU odd">
+	   <%= a.label :sales_tax_number, :class=>"control-label" %><br/>
+     <%= a.text_field :sales_tax_number, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU even">
+	  <%= a.label :TAN,"TAN" ,:class=>"control-label" %><br/>
+    <%= a.text_field :tan, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU odd">
+	  <%= a.label :vat_tin, "VAT TIN", :class=>"control-label" %><br/>
+    <%= a.text_field :vat_tin, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  </div>
+  <div class="col-lg-4">
+  <div class="form-group gradeU even">
+	  <%= a.label "CST", :class=>"control-label" %><br/>
+    <%= a.text_field :cst, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU odd">
+	  <%= a.label "Excise registration number", :class=>"control-label" %><br/>
+    <%= a.text_field :excise_reg_no, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  <div class="form-group gradeU even">
+	  <%= a.label "Service tax registration number", :class=>"control-label" %><br/>
+    <%= a.text_field :service_tax_reg_no, :size => 30, :class=>"bg-focus form-control" %>
+  </div>
+  </div>
+  <%= a.fields_for :address do |d| %>
+    <div class="form-group gradeU odd">
+      <label class="control-label">Address Line 1</label><br/>
+      <%= d.text_field :address_line1, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+    <div class="form-group gradeU odd">
+      <label class="control-label">Address Line 2</label><br/>
+      <%= d.text_field :address_line2, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+    <div class="form-group gradeU odd">
+      <label class="control-label">City</label><br/>
+      <%= d.text_field :city, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+    <div class="form-group gradeU odd">
+      <label class="control-label">State</label><br/>
+      <%= d.text_field :state, :size => 30, :class=>"bg-focus form-control" %>
+    </div>
+    <div class="form-group gradeU odd">
+      <label class="control-label">Pin code</label><br/>
+      <%= d.text_field :postal_code, :maxlength => "6", :onkeydown => "return numbersOnly(event);", :size => "30", :class=>"bg-focus form-control"  %>
+    </div>
+  <% end %>  
+<% end %>
+

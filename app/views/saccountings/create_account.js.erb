@@ -1,0 +1,14 @@
+<% if @account.errors.any? %>
+  <%= render :partial => "shared/popup_validation"%>
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% else %>
+  <% if params[:transaction_type] == 'saccounting_to' %>
+    $("#to_account_auto_complete").val('<%= @account.name %>');
+  <% elsif params[:transaction_type] == 'saccounting'%>
+    $("#saccounting_saccounting_line_items_attributes_<%= params[:index] %>_from_account_id").append("<option value='<%= @account.id %>' selected='selected'><%= @account.name %></option>");
+  <% end %>
+  $("div[id^='modal']").modal('hide');
+  $(".btnsave").remove();
+  $(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+<% end %>

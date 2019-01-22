@@ -1,0 +1,23 @@
+<!-- <div class="col-lg-2 m-t-large" align="right">
+    <div class="m-b">
+      <select id="select2-option" style="width:200px" onChange="if(this.selectedIndex!=0) self.location=this.options[this.selectedIndex].value">
+          <optgroup label="Payroll Reports">
+          	  <option value="">-----View more reports-----</option>
+              <option value="/payment_advice/index">Payment Advice</option>
+              <option value="/employee_breakup/index">Breakup By Employee</option>
+              <option value="/employee_breakup/breakup_for_employee">Breakup For Employee</option>
+          </optgroup>
+      </select>
+    </div>
+
+</div> -->
+
+<div class="btn-group">
+  <button class="btn btn-white btn-lg"><i class="icon-bar-chart"> </i>Payroll Reports</button>
+  <button class="btn btn-white btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span><i></i></button>
+  <ul class="dropdown-menu" align="left">
+    <li class="text-left"><a href="/employee_breakup/index">Breakup by Employee</a></li>
+    <li class="text-left"><a href="/employee_breakup/breakup_for_employee">Breakup for Employee</a></li>
+    <li class="text-left"><a href="/payment_advice/index">Payment Advice</a></li>
+  </ul>
+</div>  

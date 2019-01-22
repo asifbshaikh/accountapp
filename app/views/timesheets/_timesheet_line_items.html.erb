@@ -1,0 +1,19 @@
+<tr id="row<%= index %>" valign="top" class = 'tmsht_line'>
+<%= hidden_field_tag "timesheet[timesheet_line_items_attributes][#{index}][id]",timesheet_line_item.id%>
+<%= hidden_field_tag "timesheet[timesheet_line_items_attributes][#{index}][_destroy]"%>
+<td style="padding-left:0">
+    <%= select_tag "timesheet[timesheet_line_items_attributes][#{index}][task_id]", 
+    options_from_collection_for_select(@tasks, :id, :description,:selected => timesheet_line_item.task_id ), :class =>'bg-focus form-control',:include_blank => true,:style => "width: 250px;"  %>
+</td>
+<td> 
+  <%= text_field_tag "timesheet[timesheet_line_items_attributes][#{index}][day]", (timesheet_line_item.day.blank? ? Time.zone.now.to_date : timesheet_line_item.day), :id => "field_at_#{index}" ,:size =>"6" ,:class=>"timesheet-day bg-focus form-control", "data-index" => index %>
+</td>
+ <td class="ta-right">
+    <%= text_field_tag "timesheet[timesheet_line_items_attributes][#{index}][timestamp]", timesheet_line_item.timestamp, :class => 'amount bg-focus form-control text-right',:id => "timestamp", :size=>"2" ,:maxlength => 2, :onkeydown => "return numbersOnly(event);"%>
+ </td>
+  <td style='padding-right: 0'>
+    <%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :timesheet_line_item_id => timesheet_line_item.id}, :class => "btn btn-danger btn-sm", :remote => true %>
+ </td>
+</tr> 
+
+

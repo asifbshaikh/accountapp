@@ -1,0 +1,18 @@
+
+            <div class="btn-group" >
+              <button class="btn btn-success btn-lg" title="Print"><small><i class="icon-print " ></i></small></button>
+              <button class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+              <ul class="dropdown-menu text-left" align="left">
+                <li><%= link_to 'Original', invoice_path(@invoice, :format => 'pdf', :value=>"1", :dlc=>"no"), :id=>"print1-inv", :target=>"_blank" %></li>
+                <li><%= link_to 'Duplicate', invoice_path(@invoice, :format => 'pdf', :value=>"2", :dlc=>"no"), :id=>"print1-inv", :target=>"_blank" %></li>
+                <li><%= link_to 'Triplicate', invoice_path(@invoice, :format => 'pdf', :value=>"3", :dlc=>"no"), :id=>"print1-inv", :target=>"_blank" %></li>                
+              </ul>
+            </div>
+
+
+  
+<% if @invoice.so_invoice? && !@invoice.in_frozen_year? %>
+  <%= link_to raw('<i class="icon-trash"> </i>'), invoice_path(@invoice), :method => "delete", :confirm => "Are you sure?", :class => 'btn btn-white btn-lg', :title=>"Delete" %>
+<% end %>
+<%= link_to raw('<i class="icon-mail-reply"> </i>'), invoices_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+<p></p>

@@ -1,0 +1,18 @@
+$("#address-space").remove();
+<%if @customer.present? %>
+	<% billing_address=@customer.billing_address.blank? ? Address.new : @customer.billing_address %>
+	<% shipping_address=@customer.shipping_address.blank? ? Address.new : @customer.shipping_address %>
+	$("#billing-address-address-line1").text('<%= escape_javascript(billing_address.address_line1)%>');
+	$("#billing-address-city").text('<%= escape_javascript(billing_address.city)%>');
+	$("#billing-address-state").text('<%= escape_javascript(billing_address.state)%>');
+	$("#billing-address-country").text('<%= escape_javascript(billing_address.country)%>'); 
+	$("#billing-address-postal-code").text('<%= escape_javascript(billing_address.postal_code)%>'); 
+
+
+	$("#shipping-address-address-line1").text('<%= escape_javascript(shipping_address.address_line1)%>');
+	$("#shipping-address-city").text('<%= escape_javascript(shipping_address.city)%>');
+	$("#shipping-address-state").text('<%= escape_javascript(shipping_address.state)%>');
+	$("#shipping-address-country").text('<%= escape_javascript(shipping_address.country)%>');
+	$("#shipping-address-postal-code").text('<%= escape_javascript(billing_address.postal_code)%>'); 
+
+<% end %>

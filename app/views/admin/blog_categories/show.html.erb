@@ -1,0 +1,31 @@
+<!-- Page title -->
+<%= render "shared/page_title"%>
+<!-- End of Page title -->
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+      <div class="highlight">
+        <p id="notice"><%= notice %></p>
+        <p>
+          <b>Title:</b>
+          <%= @blog_category.title %>
+        </p>
+      </div>
+    </section>
+    <!-- Right column/section -->
+    <aside class="column width2"><br/>
+     
+    <%= edit_button("Edit Category", "/admin/blog_categories/#{@blog_category.id}/edit")%>  
+      <p><%= list_button_black("Categories", admin_blog_categories_path)%></p>
+      
+    </aside>
+   
+    <!-- End of Right column/section -->
+  </div>
+  <!-- End of Wrapper -->
+</div>    
+  </div>
+</div>

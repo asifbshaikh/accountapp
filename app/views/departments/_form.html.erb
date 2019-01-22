@@ -1,0 +1,24 @@
+<%= form_for @department,:html=>{:class=>"form-horizontal", :remote=>true} do |f| %>
+<%= render 'shared/form_error', :object => @department %>
+<div class='department-notif'></div>
+<div class="col-sm-6">
+  <p>
+    <%= f.label "Name", :class=>"control-label-required" %><br/>
+    <%= f.text_field :name,:class=>"bg-focus form-control" %>
+  </p>
+  <p>
+    <%= f.label "Status", :class=>"control-label" %><br/>
+    <%= f.select(:status, [['Active'],['Inactive']],{} ,{:class=>"bg-focus form-control"}) %>
+  </p>
+</div>
+<div class="col-sm-6">
+  <p>
+    <%= f.label :description, :class=>"control-label" %><br />
+    <%= f.text_area :description, :rows=> 3, :class=>"bg-focus form-control" %>
+  </p>
+</div>
+     <div class="col-lg-8 col-lg-offset-4">                      
+      <div class='save-btn'></div>
+      <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+    </div>
+<% end %>

@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+
+<%= form_for @project, :html=>{:class=>"form-horizontal"}  do |f| %>
+ <%= render 'shared/form_error', :object => @project %>
+ <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <label class="control-label-required">Project name</label>
+    </div>
+    <div class="col-lg-3">
+     <%= f.text_field :name,  :maxlength => 50, :class=>"bg-focus form-control" %>
+     <small>The name you want to call this project.</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 text-right">
+      <%= f.label "Start date ", :class => "control-label-required" %>
+    </div>
+    <div class="col-lg-3">
+      <%= f.text_field :start_date, :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+    <% if !@project.new_record? %>
+    <div class="form-group">
+      <div class="col-lg-2 text-right"><%= f.label "End date", :class=>"control-label" %></div>
+      <div class="col-lg-3"> <%= f.text_field :end_date, :class=>"bg-focus form-control" %> </div>
+    </div>
+    <div class="form-group">
+     <div class="col-lg-2 text-right"><%= f.label "Status ", :class=>"control-label" %></div>
+     <div class="col-lg-3"> 
+      <%= f.select(:status, {'Ongoing'=>false,'Complete'=>true}, { },:class=>"bg-focus form-control", :prompt => false) %> 
+      </div>
+    </div>
+    <% end %>
+    <div class="form-group">
+      <div class="col-lg-2 text-right">
+        <%= f.label "Estimated cost", :class=>"control-label" %>
+        </div>
+      <div class="col-lg-3"> 
+        <%= f.text_field :estimated_cost, :onkeydown => "return numbersOnly(event);", :maxlength => 18, :class=>"bg-focus form-control" %> 
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-2 text-right"><%= f.label "Description "%></div>
+      <div class="col-lg-4">
+      <%= f.text_area :description, :rows => "3", :cols=> "33", :class=>"bg-focus form-control" %></div>
+    </div>
+     <div class="form-group">
+          <div class="col-lg-7 col-lg-offset-3">                      
+            <button type="submit" class="btn btn-success">Save</button>
+            <%= link_to 'Cancel', projects_path, :class => "btn btn-default" %>
+          </div>
+      </div>
+<% end %>

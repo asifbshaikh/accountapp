@@ -1,0 +1,18 @@
+<%= form_for(@message) do |f| %>
+  <%= render 'shared/form_error', :object => @message %>
+ 
+	
+	    <tbody class = "man">  
+        	<tr>
+                 <td>
+                  <%= f.text_area :description, :class => 'medium half' %>
+                 </td>
+                 </tr>
+               
+			<tr>
+			   <td colspan="2"><%= f.submit 'Reply', :class => "btn btn-green"%></td>
+		  	</tr>
+		
+	</tbody>
+  
+ <% end %>   	

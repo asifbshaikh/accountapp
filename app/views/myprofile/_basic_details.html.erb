@@ -1,0 +1,58 @@
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-20">
+          <header class="panel-heading">
+            <strong>Basic Info</strong>
+          </header>
+          <div class="panel-body">
+            <div class="col-sm-6">
+              <p><label>Name: &nbsp </label><%= @user.full_name%></p>
+              <p><label>Role: &nbsp </label> <%= @user.role_name %></p>
+              <%if @company.plan.name=="Enterprise" %>
+              <p><label>Branch: &nbsp </label><%= @user.branch_name %></p>
+              <% end %> 
+              <p><strong>Present Address: &nbsp</strong><br><%=breaking_word_wrap(@user.present_address)  unless @user.present_address.blank? %> </p>
+            </div>
+            <div class="col-sm-6">
+              <p><label>Gender: &nbsp</label> <%= @user.gender%></p>
+              <p><label>Blood Group: &nbsp</label> <%= @user.blood_group%></p>
+              <p><label></i>Birth date: &nbsp </label> <%= birth_date(@user)%></p>
+              <p><strong>Permanent Address: &nbsp</strong><br><%= breaking_word_wrap(@user.permanent_address) unless @user.permanent_address.blank?%> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-20">
+      <header class="panel-heading">
+        <strong>Work Info</strong>
+      </header>
+      <div class="panel-body">
+        <div class="col-sm-6">
+          <p><label>Employee No.: &nbsp </label> <%= @user.employee_no %></p>
+          <p><label>Work Type: &nbsp </label> <%= @user.work_type %></p>
+          <p><label>Payment Type: &nbsp </label> <%= @user.payment_type%></p>
+          <p><label>PAN: &nbsp </label> <%= @user.PAN %></p>
+        </div>
+        <div class="col-sm-6">
+          <p><label>Joined on: &nbsp </label> <%= joining_date(@user)%></p>
+          <p><label>PF account number: &nbsp</label> <%= @user.PF_account_number%></p>
+          <p><label>Bank Account Number: &nbsp </label> <%= @user.bank_account_number%></p>
+          <p><label>Bank Name: &nbsp </label> <%= @user.bank_name %></p>
+          <p><label>Bank Branch: &nbsp </label> <%= @user.user_salary_detail_branch %></p>
+          <p><label>IFSC Code: &nbsp </label> <%= @user.ifsc_code %></p>
+          <p><label>Date of Leaving: &nbsp </label> <%= @user.date_of_leaving %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<% if !@company.plan.free_plan? && !@company.plan.essential_plan? %>
+<div class="row">
+  <div class="col-sm-12">
+    
+  </div>
+  <% end %>

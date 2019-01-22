@@ -1,0 +1,328 @@
+     
+        <div class="row">
+        <div class="col-lg-6"><!-- Top 5 Receivables  -->
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#amount-1" data-toggle="tab">By Amount</a></li>
+                <li><a href="#period-1" data-toggle="tab">By Period</a></li>
+              </ul>
+              <span class="hidden-sm">Unpaid Invoices</span>
+            </header>
+            
+              <div class="tab-content">              
+                <div class="tab-pane active" id="amount-1">
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Invoice No.</th>                    
+                    <th width="60%">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% if !@overdue_invoices.blank?
+                      counter = 1 
+                   @overdue_invoices.each do |i|
+                    counter +=1
+                    if counter >= 5
+                      break
+                  end %>
+                <tr>
+                <td><a href="/invoices"><%= i.invoice_number%></a></td>
+                <td><%= format_currency i.amount%></td>
+                </tr>
+                <%end
+                else %>
+                  <div class="">0 Invoices</div> 
+                  <%end%>
+                </tbody>
+              </table>
+        </div>
+        <div class="tab-pane" id="period-1"><div class="tab-pane active" id="amount-1">
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Invoice No.</th>                    
+                    <th>Amount</th>
+                    <th>Overdue Days</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% if !@overdue_invoices.blank?
+                      counter = 1 
+                   @overdue_invoices.each do |i|
+                    counter +=1
+                    if counter >= 5
+                      break
+                  end %>
+                <tr>
+                  <td><a href="/invoices"><%= i.invoice_number%></a></td>
+                  <td><%= format_currency i.amount%></td>
+                <% count =1
+                    date = i.due_date
+                while date <= Date.today do
+                      date +=1.day
+                      count +=1
+                      end%>
+                    <td><%= count%> Days</td>
+                    </tr>
+                <% end 
+                   else %>
+                  <div class="">0 Invoices</div> 
+                <%end%>
+                </tbody>
+              </table>
+
+        </div>
+        </div>
+        </div>
+          </section>
+    </div><!-- Top 5 Receivables ends -->
+          
+    <div class="col-lg-6">
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="hidden-sm">Tasks this week</span>
+            </header>
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Description</th>                    
+                    <th>Due on</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <%@week_tasks.each do |t|%> 
+                  <tr>             
+                    <td><%= t.description%></td>
+                    <td><%= t.due_date.strftime("%d %b %Y")%>
+                    </td>
+                  </tr>
+                  <%end%>
+                </tbody>
+        </table>
+              <div class="line pull-in"></div>
+              <div class="text">&nbsp;
+                <a href="#" class="btn btn-success btn-sm">All Tasks </span></a>&nbsp;
+                <a href="#" class="btn btn-info btn-sm">My Timesheet </span></a>&nbsp;
+                <a href="#" class="btn btn-info btn-sm">My Leave Card </span></a>&nbsp;
+              </div>
+          </section>
+        </div>
+    </div>
+    </div>
+
+    <div class="row"><!-- Row to show payables and expense pie chart-->
+        <div class="col-lg-6"><!-- Top 5 Payables  -->
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#amount-2" data-toggle="tab">By Amount</a></li>
+                <li><a href="#period-2" data-toggle="tab">By Period</a></li>
+              </ul>
+              <span class="hidden-sm">Top 5 Payables</span>
+            </header>
+              <div class="tab-content">              
+                <div class="tab-pane active" id="amount-2">
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Account</th>                    
+                    <th width="60%">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if !@overdue_expences.blank?
+                      counter = 1 
+                   @overdue_expences.each do |r|
+                    if counter >= 5
+                      break
+                  end %>
+                  <tr>
+                    <td>
+                    <a href=<%= "/purchases/#{r.id}"%>><%= r.customer_name %></a>
+                    
+                    </td>
+                    <%
+                    if r.total_amount > 0
+                      suffix = " Dr"
+                    elsif r.total_amount < 0
+                      suffix = " Cr"
+                    end
+                    %>
+                    <td><%= format_currency r.total_amount.abs %><%= suffix %></td>
+                    </tr>
+                <% counter += 1
+                     end 
+                   else %>
+                  <div class="">0 paybles</div> 
+          <% end %>
+                </tbody>
+              </table>
+        </div>
+        <div class="tab-pane" id="period-2"><div class="tab-pane active" id="amount-2">
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Account</th>                    
+                    <th width="40%">Value</th>
+                    <th >Overdue Days</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if !@overdue_expences.blank?
+                      counter = 1 
+                   @overdue_expences.each do |r|
+                    if counter >= 5
+                      break
+                  end %>
+                  <tr>
+                    <td>
+                    <a href=<%= "/purchases/#{r.id}"%>><%= r.customer_name %></a>
+                    
+                    </td>
+                    <%
+                    if r.total_amount > 0
+                      suffix = " Dr"
+                    elsif r.total_amount < 0
+                      suffix = " Cr"
+                    end
+                    %>
+                    <td><%= format_currency r.total_amount.abs %><%= suffix %></td>
+                    <% count =1
+                    date = r.due_date
+
+                    while date <= Date.today do
+                      date +=1.day
+                      count +=1
+                      end%>
+                    <td><%= count%> Days</td>
+                    </tr>
+                <% counter += 1
+                     end 
+                   else %>
+                  <div class="">0 paybles</div> 
+          <% end %>
+                </tbody>
+              </table>
+              </div>
+        </div>
+      </div>  
+            
+          </section>
+      </div><!-- Top 5 Receivables ends -->
+    <div class="col-lg-6">
+          <section class="panel">
+            <header class="panel-heading">
+              <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#amount-1" data-toggle="tab">By Amount</a></li>
+                <li><a href="#period-1" data-toggle="tab">By Period</a></li>
+              </ul>
+              <span class="hidden-sm">Pending Estimates</span>
+            </header>
+            <div class="panel-body">
+              <div class="tab-content">              
+                <div class="tab-pane active" id="amount-1">
+        <table class="table table-striped m-t-none text-small">
+                <thead>
+                  <tr>
+                    <th>Account</th>                    
+                    <th width="70">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>             
+                    <td>App downloads</td>
+                    <td class="text-success">
+                      <i class="icon-level-up"></i> 40%
+                    </td>
+                  </tr>
+                  <tr>             
+                    <td>Social connection</td>
+                    <td class="text-success">
+                      <i class="icon-level-up"></i> 20%
+                    </td>
+                  </tr>
+                  <tr>             
+                    <td>Social connection</td>
+                    <td class="text-success">
+                      <i class="icon-level-up"></i> 20%
+                    </td>
+                  </tr>
+                  <tr>             
+                    <td>Revenue</td>
+                    <td class="text-warning">
+                      <i class="icon-level-down"></i> 5%
+                    </td>
+                  </tr>
+                  <tr>             
+                    <td>Customer increase</td>
+                    <td class="text-danger">
+                      <i class="icon-level-down"></i> 20%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        </div>
+      </div>  
+            
+          </section>
+        </div>
+      </div><!-- Row to show payables and expense pie chart ends -->  
+    
+    </div><!-- End of col8 -->
+    
+    <div class="col-lg-4">
+      <div class="row">
+      <div class="col-lg-12">
+      <section class="panel bg-info">
+      <div class="panel-body">      
+        <p><i class="icon-bell"></i> Amit's Birthday today!</p>
+        <p><i class="icon-bell"></i> Gandhi Jayanti today!</p>
+      </div>    
+      </section>    
+      </div>
+      </div>
+      
+      <div class="row">
+      <div class="col-lg-12"><!-- Recent Activity start -->
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="hidden-sm">My Recent Activities (Only by this user)</span>
+            </header>
+            <div class="panel-body">     
+           <!--Recent Activities -->
+            <a href="#" class="h5">
+            <span class="badge bg-success"><i class="icon-plus"></i></span> User  Added new invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-info"><i class="icon-edit"></i></span> User Edited invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+           <div class="line pull-in"></div>
+            <a href="#" class="h5">
+            <span class="badge bg-danger"><i class="icon-trash"></i></span> User Deleted invoice #INV1234 for Mr. Kumar worth Rs. 33,000</a>
+            
+            </div>
+          </section>
+      </div><!-- / Recent Activity end -->
+      </div>
+      
+    </div> <!-- Col4 ends -->

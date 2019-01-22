@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= screen_title(controller_name.to_s) %></title>
+    <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag 'application' %>
+    <%= favicon_link_tag 'favicon.ico' %>
+    <%= csrf_meta_tag %>
+    <% if Rails.env.production?  %>
+    <%= render :partial => "shared/analytics" %>
+    <% end %>    
+  </head>
+  <body>
+    <%= render :partial => "shared/auditor_header" %>
+    <%= yield %>
+    <div id="mp"></div>
+    <%= render :partial => "shared/auditor_footer" %>
+    <a href="#" class="hide slide-nav-block" data-toggle="class:slide-nav slide-nav-left" data-target="body"></a>
+  </body>
+</html>

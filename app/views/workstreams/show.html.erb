@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @workstream.company_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @workstream.user_id %>
+</p>
+
+<p>
+  <b>Action time:</b>
+  <%= @workstream.action_time %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @workstream.IP_address %>
+</p>
+
+<p>
+  <b>Action:</b>
+  <%= @workstream.action %>
+</p>
+
+
+<%= link_to 'Edit', edit_workstream_path(@workstream) %> |
+<%= link_to 'Back', workstreams_path %>

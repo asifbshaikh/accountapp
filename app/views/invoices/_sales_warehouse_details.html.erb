@@ -1,0 +1,24 @@
+<tr id="row-<%= index %>-<%= swd_index %>">
+	<td>	
+		<%= select_tag("invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][warehouse_id]", options_from_collection_for_select_with_data(sales_warehouse_detail.product.available_stocks, :warehouse_id, :warehouse_name, sales_warehouse_detail.warehouse_id, {:"quantity"=> :quantity, :"product_id"=>:product_id}), {:style => "width:200px;", :"data-index" => index.to_s, :"data-swd_index"=>swd_index.to_s, :"data-batch_en"=>sales_warehouse_detail.product.batch_enable}) %>
+		<span id="swqty" style="color:green;font-style:italic;">Available: <%= display_stock_quantity(sales_warehouse_detail) %></span>
+		<%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][_destroy]" %>
+		<%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][product_id]", sales_warehouse_detail.product_id %>
+	</td>
+	<% if sales_warehouse_detail.product.batch_enable? %>
+		<td id="batch-td">
+			<%= select_tag("invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][product_batch_id]", options_from_collection_for_select_with_data(sales_warehouse_detail.available_batches, :id, :batch_number, sales_warehouse_detail.product_batch_id, {:"quantity"=> :quantity}), {:style => "width:200px;", :"data-index" => index.to_s, :"data-swd_index"=>swd_index.to_s}) %>
+			<span id="batchqty" style="color:green;font-style:italic;">Available: <%= sales_warehouse_detail.product_batch.quantity unless sales_warehouse_detail.product_batch.blank? %></span>
+		</td>
+	<% end %>
+	<td>
+		<%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][sales_warehouse_details_attributes][#{swd_index}][quantity]", sales_warehouse_detail.quantity, :class=>"form-control bg-focus text-right", :onkeydown => "return numbersOnly(event);" %>
+	</td>
+	<td>
+		<%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_warehouse_detail_row, :index => index, :swd_index=>swd_index},:class=> "btn btn-danger", :id => 'cancel', :remote => true%>
+	</td>
+</tr>
+<script>
+	$("#invoice_invoice_line_items_attributes_<%= index %>_sales_warehouse_details_attributes_<%= swd_index %>_warehouse_id").select2();
+	$("#invoice_invoice_line_items_attributes_<%= index %>_sales_warehouse_details_attributes_<%= swd_index %>_product_batch_id").select2();
+</script>

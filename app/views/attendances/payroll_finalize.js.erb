@@ -1,0 +1,14 @@
+<% if @payroll_finalizing_check.to_s == "false" %>
+setTimeout(function(){
+    $.ajax({
+      type: 'GET',
+      url: "/attendances/payroll_finalize?month=<%= @month %>"
+    });
+}, 10000);
+
+<% elsif @payroll_finalizing_check.to_s == "true" %>
+	setTimeout(function(){
+    $( ".loader" ).val("<strong> The payroll processing is complete. Redirecting you to results page......</strong>");
+    window.location.href = "/attendances/show?month=<%= @month %>";
+  }, 3000);
+<% end %>

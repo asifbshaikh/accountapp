@@ -1,0 +1,95 @@
+<%= render :partial => 'shared/customer_auto_complete' %>
+<div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+          <h4 class="modal-title" id="myModalLabel">Add Payment</h4>
+        </div>
+    <div class="modal-body">
+    <%= form_for @receipt_voucher,:html => {:class => "m-b-none form-horizontal"}, :remote=>true do |f| %>
+      <%= render 'shared/form_error', :object => @receipt_voucher %>
+      <%= f.hidden_field :voucher_number %>
+      <%= hidden_field_tag 'receipt_voucher[invoice_id]', @invoice.id %>
+           <%= hidden_field_tag 'receipt_voucher[from_account_id]', @invoice.account_id %>
+           <%= hidden_field_tag "receipt_voucher[voucher_date]", Time.zone.now.to_date %>
+           <%= hidden_field_tag "receipt_voucher[project_id]", @invoice.project_id %>
+
+          <div class="block">
+               <label class="control-label-required">Deposit to account </label>
+               <input type="text" name="to_account_id" class="bg-focus form-control" id="to_account_auto_complete"   />
+            </div>
+          
+           <div class='block'>
+              <%= label_tag "Received_date",  :class => "control-label-required" %>
+              <%= f.text_field :received_date,  :class=>'form-control bg-focus' %>
+          </div>
+          <div class='block'>
+              <%= label_tag :amount, "Amount", :class => "control-label-required" %>
+              <%= f.text_field :amount, :size => "14", :onkeydown => 'return numbersOnly(event);',:maxlength => "18", :class=>'form-control bg-focus text-right' %>
+          </div>
+			  
+          <% if @company.indian_company? %>
+  	      <div class='block'>
+              <%= label_tag "tds", "TDS applicable?", :class=>'control-label' %>
+              <div class="btn-group " data-toggle="buttons" >
+                <label class="btn btn-sm btn-default rec_tds_yes <%= (params[:rec_tds] == 'yes')? 'active' : ''%>">
+                <%= radio_button_tag :rec_tds,'yes', (params[:rec_tds] == 'yes') %>
+                <i class="icon-ok icon-large text-active"></i>Yes
+                </label>
+                
+                <label class="btn btn-sm btn-default tds_no <%= (params[:rec_tds].blank? || params[:rec_tds] == 'no')? 'active' : ''%>">
+                <%= radio_button_tag :rec_tds,'no', (params[:rec_tds].blank? || params[:rec_tds] == 'no') %>
+                <i class="icon-ok icon-large text-active"></i>No
+                </label>
+              </div>
+          
+          </div>
+
+
+          <div class='tds-rec' style='display: none;'>
+          <div class='block'>
+            <%= select_tag('receipt_voucher[tds_account_id]', options_from_collection_for_select(Account.get_tds_receivable_accounts(@company), :id, :name, nil ),:include_blank => true, :prompt=> "Select TDS Section", :class=>'form-control bg-focus')%>
+                <%= text_field_tag "receipt_voucher[tds_amount]", nil, :style => "width: 80%;", :onkeydown => "return numbersOnly(event);", :class => "form-control bg-focus text-right", :placeholder=>'TDS Amount' %>
+          </div>
+        </div>
+        <% end%>
+            
+
+	<input type="hidden" name="source" id="source" value="receipt"/>
+     <div class='block'>
+              <%= label_tag "payment_mode", "Receipt Mode", :class=>'control-label-required' %>
+              <div class="btn-group " data-toggle="buttons" >
+                <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type].blank? || params[:transaction_type] == 'cash')? 'active' : '' %>" data-ttype='cash'>
+                <%= radio_button_tag 'transaction_type','cash' %>
+                <i class="icon-ok icon-large text-active"></i>Cash
+                </label>
+                <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'cheque')? 'active' : '' %>" data-ttype='cheque'>
+                <%= radio_button_tag "transaction_type",'cheque' %>
+                <i class="icon-ok icon-large text-active"></i>Cheque
+                </label>
+                <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'card')? 'active' : '' %>" data-ttype='card'>
+                <%= radio_button_tag "transaction_type",'card'%>
+                <i class="icon-ok icon-large text-active"></i>Credit/Debit Card
+                </label>
+                <label class="btn btn-sm btn-default rec_transaction_type <%= (params[:transaction_type] == 'ibank')? 'active' : '' %>" data-ttype='ibank'>
+                <%= radio_button_tag "transaction_type",'ibank' %>
+                <i class="icon-ok icon-large text-active"></i>Internet Banking
+                </label>
+              </div>
+            </div>
+          
+          <div class='block'>
+            <div id="rcpt"></div>
+            <%= render :partial => "#{params[:transaction_type]}" unless @payment_detail.blank? || params[:transaction_type].blank? %> 
+          </div>
+          
+     </div>
+          <div class="modal-footer">
+          <div class='save-btn'></div>
+             <button  class=" btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,29 @@
+var quantity = 0;
+$("#error li").remove();
+if($("#product_batch_enable_1").is(":checked")){
+	$('.warehouse-detail').remove();
+	<% unless params[:row_index].blank? %>
+		$("<div class='warehouse-detail'></div>").appendTo('form')
+		<% params[:row_index].each_with_index do |rw_index, index| %>
+			<% if !params["warehouse_at#{rw_index}"].blank? && !params["quantity_at#{rw_index}"].blank? %>
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][warehouse_id]" value=<%= params["warehouse_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][quantity]" value=<%= params["quantity_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][opening_stock_unit_price]" value=<%= params["price_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][batch_number]" value=<%= params["batch_number_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][manufacture_date]" value=<%= params["mfd_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][expiry_date]" value=<%= params["exp_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][id]" value=<%= params["product_batch_id_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][company_id]" value=<%= @company.id %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][opening_batch]" value=<%= true %> >').appendTo('.warehouse-detail');
+				quantity = quantity + <%= params["quantity_at#{rw_index}"].to_i %>;
+			<% elsif params["warehouse_at#{rw_index}"].blank? %>
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][id]" value=<%= params["product_batch_id_at#{rw_index}"] %> >').appendTo('.warehouse-detail');
+				$('<input type="hidden" name="product[product_batches_attributes][<%= index %>][_destroy]" value=1 >').appendTo('.warehouse-detail');
+			<% end %>
+		<% end %>
+	<% end %>
+}
+$("#opening-stock").val(quantity);
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");
+$("div[id^='modal']").modal('hide');

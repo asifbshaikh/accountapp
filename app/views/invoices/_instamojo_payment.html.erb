@@ -1,0 +1,48 @@
+<!-- <form action="/invoices/instamojo_payment" method="post" class="" data-remote='true' > -->
+<%= form_tag({:action => :instamojo_payment, :controller => "/invoices"}, :remote=>true) do |f| %>
+    <%= hidden_field_tag  :id, invoice.id %>
+      <%= hidden_field_tag :customer_id, @invoice.account.id %>
+     <%= hidden_field_tag  :name, @invoice.account.name %>
+     <%= hidden_field_tag  :email, @invoice.account.customer.email unless @invoice.account.customer.blank?  %>
+     <%= hidden_field_tag  :phone, @invoice.account.customer.primary_phone_number unless @invoice.account.customer.blank? %>
+     <%= hidden_field_tag  :invoice_number, @invoice.invoice_number %>
+     <%= hidden_field_tag  :invoice_amount, @invoice.outstanding %>
+     <%= hidden_field_tag  :created_by, @current_user.full_name %>
+
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Instamojo Payment link </h4>
+      </div>
+      <div class="modal-body">
+      <div class='error-place1'></div>
+      <div class="block">
+        <small>Please ensure that the details shown below are correct</small>
+         <p> <strong> Customer Name: </strong><%= @invoice.account.name %></p>
+         
+              <p><strong> E-mail: </strong><%= @invoice.account.customer.email unless @invoice.account.customer.blank?  %></p>
+              <p><strong> Mobile: </strong><%=@invoice.account.customer.primary_phone_number unless @invoice.account.customer.blank? %></p>
+
+              <p><strong> Against Invoice Number: </strong><%= @invoice.invoice_number %></p>
+                <p><strong>Invoice Amount: </strong> <%= format_amt_with_currency(@invoice.currency,@invoice.outstanding)%></p>
+                <% if @invoice.exchange_rate != 0 %>
+                <p><strong>Exchange Rate: </strong> <%= @invoice.exchange_rate %></p>
+                <% end %>
+                <p><strong> Due Date: </strong> <%= @invoice.due_date %></p> 
+                <% if !@invoice.account.customer.blank?%>
+               <label> <%= check_box_tag 'send_sms', 'True', false %>Enable for auto generated SMS from Instamojo.</label> 
+               <% end %>
+
+      </div>
+        <div class="text-center">
+          <div class='save-btn1'></div>
+            <button  class=" btnsave1 btn btn-sm btn-success" type='submit'  data-loading-text="Generating....">Generate</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+</div>
+</div>
+</div>
+<% end %>
+<!-- </form> -->

@@ -1,0 +1,84 @@
+<script>
+$(document).ready(function(){
+  // html textbox editor
+  $('.wysiwyg').wysiwyg({
+    controls: {
+      strikeThrough : { visible : true },
+      underline     : { visible : true },
+
+      justifyLeft   : { visible : true },
+      justifyCenter : { visible : true },
+      justifyRight  : { visible : true },
+      justifyFull   : { visible : true },
+
+      indent  : { visible : true },
+      outdent : { visible : true },
+
+      subscript   : { visible : true },
+      superscript : { visible : true },
+
+      undo : { visible : true },
+      redo : { visible : true },
+
+      insertOrderedList    : { visible : true },
+      insertUnorderedList  : { visible : true },
+      insertHorizontalRule : { visible : true },
+
+      h4: {
+          visible: true,
+          className: 'h4',
+          command: $.browser.msie ? 'formatBlock' : 'heading',
+          arguments: [$.browser.msie ? '<h4>' : 'h4'],
+          tags: ['h4'],
+          tooltip: 'Header 4'
+      },
+      h5: {
+          visible: true,
+          className: 'h5',
+          command: $.browser.msie ? 'formatBlock' : 'heading',
+          arguments: [$.browser.msie ? '<h5>' : 'h5'],
+          tags: ['h5'],
+          tooltip: 'Header 5'
+      },
+      h6: {
+          visible: true,
+          className: 'h6',
+          command: $.browser.msie ? 'formatBlock' : 'heading',
+          arguments: [$.browser.msie ? '<h6>' : 'h6'],
+          tags: ['h6'],
+          tooltip: 'Header 6'
+      },
+
+      cut   : { visible : true },
+      copy  : { visible : true },
+      paste : { visible : true },
+      html  : { visible: true }
+    }
+  });
+});
+</script>
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+          <h2><i class="icon-edit text"></i>New Post</h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+       <a href="/admin/blog_categories" class="btn btn-success btn-lg " title="Add new"><i class="icon-plus"></i> Add category</a> 
+      <a href="/admin/blog_posts" class="btn btn-white btn-lg" title="Back"><i class="icon-mail-reply"></i></a>
+      <p></p>
+      </div>  
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <section class="panel">
+          <div class="panel-body">
+            <%= render :partial=> "form" %>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</section>
+
+     

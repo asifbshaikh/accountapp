@@ -1,0 +1,19 @@
+ <!-- Page title -->
+  <%= render "shared/page_title"%>
+<!-- End of Page title -->
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Status:</b>
+  <%= @invoice_status.status %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @invoice_status.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_invoice_status_path(@invoice_status) %> |
+<%= link_to 'Back', invoice_statuses_path %>

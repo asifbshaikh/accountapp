@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @gst_return.company_id %>
+</p>
+
+<p>
+  <b>Financial year:</b>
+  <%= @gst_return.financial_year_id %>
+</p>
+
+<p>
+  <b>Month:</b>
+  <%= @gst_return.month %>
+</p>
+
+
+<%= link_to 'Edit', edit_gst_return_path(@gst_return) %> |
+<%= link_to 'Back', gst_returns_path %>

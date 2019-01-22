@@ -1,0 +1,31 @@
+<h1>Listing gstr1_summaries</h1>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Gstr one</th>
+    <th>Summary type</th>
+    <th>Return period</th>
+    <th>Chksum</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @gstr1_summaries.each do |gstr1_summary| %>
+  <tr>
+    <td><%= gstr1_summary.company_id %></td>
+    <td><%= gstr1_summary.gstr_one_id %></td>
+    <td><%= gstr1_summary.summary_type %></td>
+    <td><%= gstr1_summary.return_period %></td>
+    <td><%= gstr1_summary.chksum %></td>
+    <td><%= link_to 'Show', gstr1_summary %></td>
+    <td><%= link_to 'Edit', edit_gstr1_summary_path(gstr1_summary) %></td>
+    <td><%= link_to 'Destroy', gstr1_summary, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Gstr1 summary', new_gstr1_summary_path %>

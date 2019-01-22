@@ -1,0 +1,22 @@
+  <div class="block subP">
+	  <label class='control-label'>Email</label>
+    <%= text_field_tag 'creditor[email]','', :id=>'email', :class=>'form-control' %><span id="email"></span>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>Address Line 1</label>
+    <%= text_field_tag 'creditor[address_attributes][address_line1]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>Address Line 2</label>
+    <%= text_field_tag 'creditor[address_attributes][address_line2]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>City</label>
+    <%= text_field_tag 'creditor[address_attributes][city]','', :class=>'form-control' %>
+  </div>
+  <div class="block subP">
+    <label class='control-label'>State</label>
+    <%= text_field_tag 'creditor[address_attributes][state]','', :class=>'form-control' %>
+  </div>
+  
+

@@ -1,0 +1,17 @@
+<tr valign="top">
+    <td><%= line_item_details.item_name %><br/>
+      <% if line_item_details.product.inventory? && line_item_details.purchase_order.gst_purchaseorder? %>
+      HSN: 
+      <% elsif !line_item_details.product.inventory? && line_item_details.purchase_order.gst_purchaseorder %>
+      SAC: 
+      <% end %>
+      <%= "#{line_item_details.product.hsn_code}" if line_item_details.product.hsn_code.present? %>
+  </td>
+  <td colspan="2"><%= line_item_details.description%></td>
+  <td align="right"><%= number_with_precision line_item_details.quantity, :precision=>2 %> <%= line_item_details.product.unit_of_measure %></td>
+  <td align="right"><%= number_with_precision line_item_details.unit_rate, :precision=>(line_item_details.unit_rate == line_item_details.unit_rate.round(2) ? 2 : 4) %></td>
+  <% unless @discount == 0 %>
+  	<td align="right"><%= "#{number_with_precision line_item_details.discount_percent, :precision=>2 }%" unless line_item_details.discount_percent.blank? %></td>
+  <% end %>
+  <td align="right"><%= number_with_precision line_item_details.amount, :precision=>2  %></td>
+</tr> 

@@ -1,0 +1,44 @@
+           
+<tr>
+    <td><%= link_to "#{invoice.invoice_number}", invoice%></td>
+    <td><%= truncate(invoice.customer_name, :length => 20)%></td>
+    <td><%= invoice.due_date.strftime("%d-%m-%Y") %></td>
+    <td><%= format_currency(invoice.amount) %></td>
+    <td><%= invoice.get_status %></td>
+   <%if !@company.plan.free_plan? %>
+    <td><%=  invoice.project_name  %></td>
+   <% end %> 
+   <td>
+      <div class="btn-group" style="float: right;">
+          <button class="btn btn-white btn-sm" onclick="location.href='/invoices/<%= invoice.id %>'"; >View</button>
+          <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <% if invoice.cash_invoice? %>
+              <li><a href= <%= "/invoices/#{invoice.id}/edit?cash_invoice=#{true}" %>>Edit</a></li>
+              <li><a href= <%= "/invoices/copy_invoice?id=#{invoice.id}&cash_invoice=#{true}" %>>Copy Into New</a></li>
+            <% elsif invoice.time_invoice? %>
+              <li><a href= <%= "/invoices/#{invoice.id}/edit?time_invoice=#{true}" %>>Edit</a></li>
+              <li><a href= <%= "/invoices/copy_invoice?id=#{invoice.id}&time_invoice=#{true}" %>>Copy Into New</a></li>
+            <% else %>
+              <li><a href="<%= edit_invoice_path(invoice) %>">Edit</a></li>
+              <li><a href= <%= "/invoices/copy_invoice?id=#{invoice.id}" %>>Copy Into New</a></li>
+            <% end %>
+              <li><a href="<%= invoice_path(invoice, :format => "pdf") %>"   target = "_blank">Export to PDF</a></li>
+              <li><a href="#" data-toggle="modal" data-target='#modal_<%= invoice.id %>'>Email Invoice</a></li>
+            <% if invoice.invoice_status_id == 0 %>
+              <li><a href="#" data-toggle="modal" data-target='#modal_add_payment_<%= invoice.id %>'>Add Payment</a></li>
+            <% end %>
+            <li class="divider"></li>
+            <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/invoices/<%= invoice.id%>" >Delete</a></li>
+          </ul>
+      </div>     
+   </td>
+  </tr>
+<div id="modal_<%= invoice.id %>" class="modal fade">
+    <%= render "email_form", :invoice=> invoice %>
+  </div>
+  <div id="modal_add_payment_<%= invoice.id %>" class="modal fade">
+    <%= render "add_payment_form", :invoice => invoice %>
+  </div>

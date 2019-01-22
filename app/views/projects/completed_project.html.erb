@@ -1,0 +1,69 @@
+<%= render :partial => "shared/page_title"%>
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first"></br>
+
+      <div id="tabs-all" class="highlight">
+        <%= render :partial => "shared/flash_msg"   %>
+          <div id="tab3">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/projects">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/projects/ongoing_project">Ongoing</a>
+                    </li>
+                    <li class="tab3">
+                        <a href="/projects/completed_project">Completed</a>
+                    </li>
+                </ul>
+            </div> <!-- tabs end -->
+      <div id="task_container">
+        <div id="tabs-all">
+         <div id="project">
+              <% if @projects.blank? %>
+                <%= render :partial => "shared/no_record" %>
+              <% else %>
+                  <table class="display stylized" id="example">
+                     <thead>   
+                           <%= render :partial => "header" %>
+                         </thead>
+                         <tbody>
+                            <%= render :partial => "project", :collection => @projects %>
+                         </tbody>
+                         <tfoot>
+                           <%= render :partial => "footer" %>
+                         </tfoot>
+                  </table>   
+                  <div class="clear">
+                      <div class="width3 column">
+                        <%= paginate @projects %>
+                      </div>
+                    </div>  
+             <% end %> 
+        </div>
+      </div>
+    </div>
+     </div><br />
+     
+   </section>
+      <!-- End of Left column/section -->
+    <!-- Right column/section -->
+      <aside class="column width2"><br />
+       <%= new_button("Add New Project", new_project_path)%>
+       <div id="rightmenu">
+           <dl class="first">
+              <dt><%= image_tag 'help.png', :class=>'icon', :alt=>'Help' %></dt>
+              <dd><%= link_to 'Help', "#", :class=>"nyroModal" %></dd>  
+              <dd class="last">This page displays the list of all the projects.<br/>Click on project name to view more details.</dd>
+           </dl>
+       </div><br />
+    </aside>
+  <!-- End of Right column/section -->
+ </div>
+   <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

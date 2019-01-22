@@ -1,0 +1,364 @@
+<section id="content">
+  <section class="main padder">
+  <div class="row">
+    <div class="col-lg-7">
+      <h2><i class="icon-bar-chart text"></i>VAT Summary Report</h2>
+    </div>
+    <div class="col-lg-5 m-t-large" align="right">
+      <a href="#" class="btn btn-white btn-lg " id="use_filter" title="Filter"><i class="icon-filter"></i></a>
+        <%= link_to_pdf params %>
+        <%= link_to_xls params %>
+      <p></p>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Table starts -->
+    <div class="col-lg-12">
+      <section class="panel">
+        <div class="panel-body">
+          <%= render :partial => "tax_summary_filter" %>
+          <% if @sales_ledgers.blank? && @purchase_ledgers.blank? && @other_ledgers.blank? %>
+            <br/>
+            <%= render :partial => "shared/no_record" %>
+          <% else %>
+            <%= render :partial => "tax_summary_header" %>
+            <div class="col-lg-8">
+              <h4>Output VAT</h4>
+            </div>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width ="6%"> Voucher Date </th>
+                    <th width ="20%"> Voucher No </th>
+                    <th width ="20%"> Account Name </th>
+                    <th class="text-right" width ="12%"> Total Voucher Value (<%= @company.currency_code%>)</th>
+                    <th width ="17%">Tax Applied </th>
+                    <th width ="10%"> VAT TIN </th>
+                    <th class="text-right" width ="15%"> Total Tax Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_output_VAT=0%>
+                  <% current_tax_total = 0%>
+                  <% if @sales_ledgers.blank? %>
+                    <tr>
+                      <td colspan="5">There are no sales related VAT transactions</td>
+                    </tr>
+                  <% else %>
+                    <% current_account = @sales_ledgers.first.account unless @sales_ledgers.blank?%>
+                    <tr>
+                      <td colspan="7"><strong><%= current_account.name%></strong></td>
+                    </tr>
+
+                    <% @sales_ledgers.each do |ledger|%>
+                      <% if current_account != ledger.account %>
+                        <tr>
+                          <td colspan="4"></td>
+                          <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name %> :</strong></td>
+                          <td align="right"><strong><%= number_with_precision(current_tax_total, precision: 2)%></strong></td>
+                        </tr>
+                        <% current_account = ledger.account %>
+                        <% current_tax_total = 0 %>
+                        <tr>
+                          <td colspan="7"><strong><%= ledger.account.name%></strong></td>
+                        </tr>
+                      <% end %>
+                      <% corresponding_account = Account.find_by_id(ledger.retrieve_corresponding_account) %>
+                      <tr>
+                        <td><%= ledger.transaction_date %></td>
+                        <td><%= voucher_link(ledger) %></td>
+                        <td><%= corresponding_account.name %></td>
+                        <td align="right">
+                          <%= number_with_precision(ledger.voucher.total_amount, :precision=>2 ) %>
+                        </td>
+                        <td><%= ledger.account.name %></td>
+                        <td><%= account_vat_tin(corresponding_account) %></td>
+                        <td align="right"><%= number_with_precision(tax_amount= sales_vat_amount(ledger), :precision=>2 ) %></td>
+                        <% current_tax_total +=tax_amount %>
+                        <% total_output_VAT+=tax_amount%>
+                      </tr>
+                    <%end %>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name unless current_account.blank?%> :</strong></td>
+                        <td align="right"><strong><%= number_with_precision(current_tax_total, :precision=>2)%></strong></td>
+                      </tr>
+                    <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><div class="h5">Total Output VAT :</div></td>
+                    <td align="right"><div class="h5"><%= number_with_precision(total_output_VAT, :precision=>2) %></div></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="col-lg-8">
+              <h4>Input VAT</h4>
+            </div>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width ="6%"> Voucher Date </th>
+                    <th width ="20%"> Voucher No </th>
+                    <th width ="20%"> Account Name </th>
+                    <th class="text-right" width ="12%"> Total Voucher Value (<%= @company.currency_code%>)</th>
+                    <th width ="17%">Tax Applied </th>
+                    <th width ="10%"> VAT TIN </th>
+                    <th class="text-right" width ="15%"> Total Tax Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_input_VAT=0%>
+                  <% current_tax_total = 0%>
+                  <% if @purchase_ledgers.blank? %>
+                    <tr>
+                      <td colspan="5">There are no purchase related VAT transactions</td>
+                    </tr>
+                  <% else %>
+                    <% current_account = @purchase_ledgers.first.account unless @purchase_ledgers.blank?%>
+                    <% tax_on_purchase=0%>
+                    <tr>
+                      <td colspan="7"><strong><%= current_account.name%></strong></td>
+                    </tr>
+                    <% @purchase_ledgers.each do |ledger|%>
+                      <% if current_account != ledger.account %>
+                        <tr>
+                          <td colspan="4"></td>
+                          <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name %> :</strong></td>
+                          <td align="right"><strong><%= number_with_precision(current_tax_total, precision: 2)%></strong></td>
+                        </tr>
+                        <% current_account = ledger.account %>
+                        <% current_tax_total = 0 %>
+                        <tr>
+                          <td colspan="7"><strong><%= ledger.account.name%></strong></td>
+                        </tr>
+                      <% end %>
+                      <% corresponding_account = Account.find_by_id(ledger.retrieve_corresponding_account) %>
+                      <tr>
+                        <td><%= ledger.transaction_date %></td>
+                        <td><%= voucher_link(ledger) %></td>
+                        <td><%= corresponding_account.name %></td>
+                        <td align="right">
+                          <%= number_with_precision(ledger.voucher.total_amount, precision: 2 ) %>
+                        </td>
+                        <td><%= ledger.account.name %></td>
+                        <td><%= account_vat_tin(corresponding_account) %></td>
+                        <td align="right"><%= number_with_precision(tax_amount= purchase_vat_amount(ledger), precision: 2 ) %></td>
+                        <% current_tax_total +=tax_amount %>
+                        <% total_input_VAT+=tax_amount%>
+                      </tr>
+                    <%end %>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name unless current_account.blank?%> :</strong></td>
+                        <td align="right"><strong><%= number_with_precision(current_tax_total, precision: 2)%></strong></td>
+                      </tr>
+                  <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><div class="h5">Total Input VAT :</div></td>
+                    <td align="right"><div class="h5"><%= number_with_precision(total_input_VAT, precision: 2) %></div></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- other output VAT entries -->
+            <div class="col-lg-8">
+              <h4>Other Output VAT entries</h4>
+            </div>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width ="6%"> Voucher Date </th>
+                    <th width ="20%"> Voucher No </th>
+                    <th width ="20%"> Account Name </th>
+                    <th class="text-right" width ="12%"> Total Voucher Value (<%= @company.currency_code%>)</th>
+                    <th width ="17%">Tax Applied </th>
+                    <th width ="10%"> VAT TIN </th>
+                    <th class="text-right" width ="15%"> Total Tax Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_other_output_VAT=0%>
+                  <% current_tax_total = 0%>
+                  <% if @other_ledgers.blank? %>
+                    <tr>
+                      <td colspan="5">There are no other related VAT transactions</td>
+                    </tr>
+                  <% else %>
+                    <% current_account = nil %>
+                    <% @other_ledgers.each do |ledger|%>
+                      <% if ledger.account.name.include? "sales" %>
+                        <% if current_account.blank? %>
+                          <% current_account = ledger.account %>
+                          <tr>
+                            <td colspan="7"><strong><%= current_account.name%></strong></td>
+                          </tr>
+                        <% elsif current_account != ledger.account %>
+                          <tr>
+                            <td colspan="4"></td>
+                            <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name %> :</strong></td>
+                            <td align="right"><strong><%= number_with_precision(current_tax_total, precision: 2)%></strong></td>
+                          </tr>
+                          <% current_account = ledger.account %>
+                          <% current_tax_total = 0 %>
+                          <tr>
+                            <td colspan="7"><strong><%= ledger.account.name%></strong></td>
+                          </tr>
+                        <% end %>
+                        <% current_account = ledger.account %>
+                        <% corresponding_account = Account.find_by_id(ledger.retrieve_corresponding_account) %>
+                        <tr>
+                          <td><%= ledger.transaction_date %></td>
+                          <td><%= voucher_link(ledger) %></td>
+                          <td><%= corresponding_account.name %></td>
+                          <td align="right">
+                            <%= number_with_precision(ledger.voucher.total_amount, :precision=>2 ) %>
+                          </td>
+                          <td><%= ledger.account.name %></td>
+                          <td><%= account_vat_tin(corresponding_account) %></td>
+                          <td align="right"><%= number_with_precision(tax_amount= other_vat_amount(ledger,current_account.name), :precision=>2 ) %></td>
+                          <% current_tax_total +=tax_amount %>
+                          <% total_other_output_VAT+=tax_amount%>
+                        </tr>
+                      <% end %>
+                    <%end %>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name unless current_account.blank? %> :</strong></td>
+                        <td align="right"><strong><%= number_with_precision(current_tax_total, :precision=>2)%></strong></td>
+                      </tr>
+                    <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><div class="h5">Total other output VAT :</div></td>
+                    <td align="right"><div class="h5"><%= number_with_precision(total_other_output_VAT, :precision=>2) %></div></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- other input VAT entries -->
+            <div class="col-lg-8">
+              <h4>Other Input VAT entries</h4>
+            </div>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                <thead>
+                  <tr>
+                    <th width ="6%"> Voucher Date </th>
+                    <th width ="20%"> Voucher No </th>
+                    <th width ="20%"> Account Name </th>
+                    <th class="text-right" width ="12%"> Total Voucher Value (<%= @company.currency_code%>)</th>
+                    <th width ="17%">Tax Applied </th>
+                    <th width ="10%"> VAT TIN </th>
+                    <th class="text-right" width ="15%"> Total Tax Value (<%= @company.currency_code%>)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% total_other_input_VAT=0%>
+                  <% current_tax_total = 0%>
+                  <% if @other_ledgers.blank? %>
+                    <tr>
+                      <td colspan="5">There are no other related VAT transactions</td>
+                    </tr>
+                  <% else %>
+                    <% current_account = nil %>
+                    <% @other_ledgers.each do |ledger|%>
+                      <% if ledger.account.name.include? "purchase" %>
+                        <% if current_account.blank? %>
+                          <% current_account = ledger.account %>
+                          <tr>
+                            <td colspan="7"><strong><%= current_account.name%></strong></td>
+                          </tr>
+                        <% elsif current_account != ledger.account %>
+                          <tr>
+                            <td colspan="4"></td>
+                            <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name %> :</strong></td>
+                            <td align="right"><strong><%= number_with_precision(current_tax_total, precision: 2)%></strong></td>
+                          </tr>
+                          <% current_account = ledger.account %>
+                          <% current_tax_total = 0 %>
+                          <tr>
+                            <td colspan="7"><strong><%= ledger.account.name%></strong></td>
+                          </tr>
+                        <% end %>
+                        <% current_account = ledger.account %>
+                        <% corresponding_account = Account.find_by_id(ledger.retrieve_corresponding_account) %>
+                        <tr>
+                          <td><%= ledger.transaction_date %></td>
+                          <td><%= voucher_link(ledger) %></td>
+                          <td><%= corresponding_account.name %></td>
+                          <td align="right">
+                            <%= number_with_precision(ledger.voucher.total_amount, :precision=>2 ) %>
+                          </td>
+                          <td><%= ledger.account.name %></td>
+                          <td><%= account_vat_tin(corresponding_account) %></td>
+                          <td align="right"><%= number_with_precision(tax_amount= other_vat_amount(ledger,current_account.name), :precision=>2 ) %></td>
+                          <% current_tax_total +=tax_amount %>
+                          <% total_other_input_VAT+=tax_amount%>
+                        </tr>
+                      <% end %>
+                    <%end %>
+                      <tr>
+                        <td colspan="4"></td>
+                        <td class="text-right" colspan="2"><strong>Subtotal  <%= current_account.name unless current_account.blank?%> :</strong></td>
+                        <td align="right"><strong><%= number_with_precision(current_tax_total, :precision=>2)%></strong></td>
+                      </tr>
+                    <% end %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><div class="h5">Total other Input VAT :</div></td>
+                    <td align="right"><div class="h5"><%= number_with_precision(total_other_input_VAT, :precision=>2) %></div></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <% grand_total_output_VAT = total_output_VAT+total_other_output_VAT %>
+            <% grand_total_input_VAT = total_input_VAT+total_other_input_VAT %>
+            <% net_payable_VAT = grand_total_output_VAT - grand_total_input_VAT %>
+            <div class="col-lg-8">
+              <h4>Summary</h4>
+            </div>
+            <div class="table-responsive row">
+              <table class="table table-striped b-t text-small">
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><strong>Total Output VAT :</strong></td>
+                    <td align="right"><strong><%= number_with_precision(grand_total_output_VAT, precision: 2) %></strong></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><strong>Less: Total Input VAT :</strong></td>
+                    <td align="right"><strong><%= number_with_precision(grand_total_input_VAT, precision: 2) %></strong></td>
+                  </tr>
+                  <tr>
+                    <td colspan="5"></td>
+                    <td align="right"><strong>Difference VAT Payable :</strong></td>
+                    <td align="right"><strong><%= number_with_precision(net_payable_VAT, :precision=>2) %></strong></td>
+                  </tr>
+              </table>
+            </div>
+            <footer class="row">
+              <%= render "shared/report_footer"%>
+            </footer>
+          </div>
+        </section>
+        <!-- Table ends -->
+        <%end%>
+      </div>
+    </div>
+  </section>
+</section>

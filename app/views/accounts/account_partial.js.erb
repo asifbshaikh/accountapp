@@ -1,0 +1,6 @@
+$(".gradeU").remove();
+$(".loader").remove();
+$(".open_balance").after(
+'<%= escape_javascript render :partial => @account_head.root.name.downcase.gsub(/\s+|\(|\)|\//,"") %>');
+// $("#s4").dropdownchecklist({ maxDropHeight: 120 });
+$(".btnsave").attr('class', 'btn btn-sm btn-success btnsave'); // enablink button

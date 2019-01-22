@@ -1,0 +1,37 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="row">
+        <div class="col-lg-4">
+          <h2><i class="icon-file text"></i>TDS Payment Vouchers</h2>
+        </div>
+        <div class="col-lg-8 m-t-large" align="right" >
+          <div class="btn-group" >
+            <button class="btn btn-success btn-lg"  onclick="location.href= '<%= new_tds_payment_voucher_path(@tds_payment_voucher)%>'";><i class="icon-plus"></i> Add  New Record</button>
+          </div>
+           <!-- <a href="#" class="btn btn-white btn-lg " id="use_filter"><i class="icon-filter"></i> Filter </a>  -->
+          <!-- <a href="#" class="btn btn-default btn-lg"><i class="icon-info"> </i> </a> -->
+        </div>  
+      </div>
+      <div class="row">
+        <div class="col-lg-12"><p></p>
+         <%= render :partial=> "filter" %>
+          <section class="panel">
+            <div class="panel-body">
+                <%= render :partial=> "shared/flash_msg"%>
+              <div class="table-responsive">
+                <table id="tds_vouchers" class="table table-striped m-b-none text-small" data-source="<%= tds_payment_vouchers_url(:format => 'json') %>" >
+                  <thead>
+                      <%= render :partial=> "header" %>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+   </section>
+  </section>
+
+

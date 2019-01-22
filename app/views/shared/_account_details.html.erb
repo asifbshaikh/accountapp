@@ -1,0 +1,42 @@
+<form action="/accounts/create_account" class="m-b-none" data-remote='true' >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h4 class="modal-title" id="myModalLabel">New Account</h4>
+      </div>
+      <div class="modal-body scroll-y" style='max-height:500px;'>   
+        <div class='errorSection'></div>       
+        <div class="block">
+          <% if defined?(index) %>
+          <%= hidden_field_tag 'row_index', index %>
+          <%= hidden_field_tag 'index', index %>
+          <% end %>
+          <%= hidden_field_tag 'return_url', "/#{controller_name}/create_account" %>
+          <%= hidden_field_tag 'transaction_type', transaction_type %>
+          <%= label_tag "name","Account name", :class =>"control-label-required" %>
+          <%= text_field_tag 'account[name]',nil, :class=>"form-control account-name" , :autocomplete => 'off' %>
+          <span id='account_head_id'></span>
+        </div>
+        <div class="block">
+          <%= label_tag 'account_head_id',"Account group", :class => "control-label-required" %>
+          <%= collection_select(:account, :account_head_id, account_heads, :id, :name, {:prompt => "Select Account"}, :id =>'accountHead', :style=>'width: 100%;',:class => "form-control account-head") %>
+            <span id='account_head_id'></span>
+        </div>
+        <div class="block">
+          <%= label_tag "start_date","Start from", :class =>"control-label" %>
+          <%= text_field_tag 'account[start_date]', @financial_year.start_date, :class => "form-control account-start-date" %>
+        </div>
+        <div class="block open-balance" id='open_balance'>
+          <%= label_tag "opening_balance","Opening balance", :class =>"control-label" %>
+          <%= text_field_tag 'account[opening_balance]', 0.0, :maxlength => "18", :onkeydown => "return balOnly(event);", :autocomplete => 'off', :class => "form-control text-right", :style=>'width:30%' %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class='save-btn'></div>
+          <button class="btn btn-sm btn-success btnsave" type='submit'  data-loading-text="Saving...">Save</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div>
+</form>

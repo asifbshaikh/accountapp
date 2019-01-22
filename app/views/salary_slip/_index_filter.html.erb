@@ -1,0 +1,24 @@
+<div class="panel panel-info data-filter" id="filter">
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+<form action=" ">
+<div class="form-group"><br/>
+ <div class="col-lg-2 text-right">
+   <select name="month" class="form-control">
+  	<option value=<%= Time.zone.now.to_date.month %> selected = "selected">Select month</option>
+	<% for i in 1..12 %>
+	  <option value=<%= i %>><%= @months[i] %>-<%= @starting_year %></option>
+	<% end %>
+    </select> 
+    </div>
+    &nbsp;
+ <!--  <select name="year">
+      <option value=<%= Time.zone.now.year %> selected = "selected">Select year</option>
+      <% for i in ((@starting_year.to_i - 2)..(@starting_year.to_i)) %>
+        <option value=<%= i %>><%= i %></option>
+      <% end %>
+   </select>   --> 
+   &nbsp;
+  <input type="submit" value="Search" class="btn btn-success"/>
+		</div>
+</form>
+</div>

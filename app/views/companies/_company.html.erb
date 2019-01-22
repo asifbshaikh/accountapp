@@ -1,0 +1,7 @@
+    <tr>
+       <td><%= link_to company.name, company%></td>
+       <td><%= company.subdomain %></td>
+       <td><%= company.pan %></td>
+       <td><%= link_to 'Delete', company_path(company), :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+                  

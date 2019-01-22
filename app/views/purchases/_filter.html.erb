@@ -1,0 +1,23 @@
+<div class="panel panel-info data-filter" id="filter">
+  <div class="panel-heading"><h4 class="panel-title">Purchase filter</h4></div>
+    <table class="table table-striped m-b-none text-small" id="purchase-filter">
+      <tbody>
+        <tr>
+          <td width='10%' class='text-right'><label>Purchase no.</label></td>
+          <td id="purchasenumber"></td>
+          <td width='10%' class='text-right'><label>Vendor</label></td>
+          <td id="vendor" data-vendors="<%= Account.company_contacts(@company.id) %>"></td>
+          <td width='10%' class='text-right'><label>Due date</label></td>
+          <td id="duedate"></td>
+        </tr>
+        <tr>
+          <td class='text-right'><label>Status</label></td>
+          <td id="purchasestatus"></td>
+          <td class='text-right'><label>Project</label></td>
+          <td id="project" data-projects="<%= Project.company_projects(@company.id) %>"></td>
+          <td class='text-right'><label>Amount</label></td>
+          <td id="purchaseamount"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>

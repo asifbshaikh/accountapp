@@ -1,0 +1,141 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %> <!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- Left column/section -->
+		<section  class="column width6 first">
+			&nbsp;
+			<p id="notice"><%= notice %></p>
+			<div class=" highlight">
+				<div class="column width6 first ">
+					<div id='user_info_div'><span class='basic_info'>Personal Info:</span></div>
+					<table >
+						<tr >
+							<td align= "left">Name:</td>
+							<td align="left"><%= @contact.title%><%= @contact.first_name %> <%= @contact.last_name %></td>
+						</tr>
+						<tr>
+							<td align= "left">Email:</td>
+							<td align="left"><%= @contact.email %></td>
+						</tr>
+						<tr>
+							<td align= "left">Gender:</td>
+							<td align="left"><%= @contact.gender %></td>
+						</tr>
+						<tr>
+							<td align= "left">Birthday:</td>
+							<td align="left"><%= @contact.birthday.strftime("%d-%m-%Y") %></td>
+						</tr>
+						<tr>
+							<td align= "left">Anniversary:</td>
+							<td align="left"><%= @contact.anniversary%></td>
+						</tr>
+					</table>
+				</div>
+				&nbsp;
+				<div class="column width6 first">
+					<div id='user_info_div'><span class='personal_info'>Contact Number:</span></div>
+					<table >
+						<tr>
+							<td align= "left">Phone1:</td>
+							<td align="left"><%= @contact.phone1 %></td>
+						</tr>
+						<tr>
+							<td align= "left">Phone2:</td>
+							<td align="left"><%= @contact.phone2 %></td>
+						</tr>
+						<tr>
+							<td align= "left">Mobile:</td>
+							<td align="left"><%= @contact.mobile %></td>
+						</tr>
+						<tr>
+							<td align= "left">Business fax:</td>
+							<td align="left"><%= @contact.business_fax %></td>
+						</tr>
+						<tr>
+							<td align= "left">Web page:</td>
+							<td align="left"><%= @contact.web_page %></td>
+						</tr>
+						<tr>
+							<td align= "left">thumbnail:</td>
+							<td align="left"><%= @contact.thumbnail %></td>
+						</tr>
+					</table>
+				</div>
+				&nbsp;
+				<div class="column width6 first">
+					<div id='user_info_div'><span class='personal_info'>Contact Address:</span></div>
+					<table >
+						<tr>
+							<td align= "left">Address1:</td>
+							<td align="left"><%= @contact.address1 %></td>
+						</tr>
+						<tr>
+							<td align= "left">Address2:</td>
+							<td align="left"><%= @contact.address2 %></td>
+						</tr>
+						<tr>
+							<td align= "left">City:</td>
+							<td align="left"><%= @contact.city %></td>
+						</tr>
+						<tr>
+							<td align= "left">State:</td>
+							<td align="left"><%= @contact.state %></td>
+						</tr>
+						<tr>
+							<td align= "left">Pin code:</td>
+							<td align="left"><%= @contact.pin_code %></td>
+						</tr>
+						<tr>
+							<td align= "left">Country:</td>
+							<td align="left"><%= @contact.country %></td>
+						</tr>
+					</table>
+				</div>
+				&nbsp;
+				<div class="column width6 first">
+					<div id='user_info_div'><span class='personal_info'>Otder Details:</span></div>
+					<table >
+						<tr>
+							<td align= "left">Contact category:</td>
+							<td align="left"><%= @contact.contact_category %></td>
+						</tr>
+						<tr>
+							<td align= "left">Designation:</td>
+							<td align="left"><%= @contact.designation %></td>
+						</tr>
+						<tr>
+							<td align= "left">Department:</td>
+							<td align="left"><%= @contact.department %></td>
+						</tr>
+						<tr>
+							<td align= "left">Company:</td>
+							<td align="left"><%= @contact.company %></td>
+						</tr>
+						<tr>
+							<td align= "left">Account:</td>
+							<td align="left"><%= @contact.account %></td>
+						</tr>
+					</table>
+				</div>
+				&nbsp;
+				
+				<div class="width6 first" >
+				<div id='user_info_div'><span class='personal_info'>Notes:</span></div>
+					<div class="field">
+						<b>Notes:</b>
+						<%= @contact.notes %>
+					</div>
+				</div>
+			
+			<p >
+				<%= link_to 'Edit', edit_contact_path(@contact),{:class=>"btn btn-green big"} %> 
+				&nbsp; <a href="/contacts" class="btn btn-green big">Back</a>
+			</p>
+	</div>
+	<!-- End of Left column/section -->
+	</section>&nbsp;
+</div>
+</div> &nbsp;

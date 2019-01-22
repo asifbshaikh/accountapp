@@ -1,0 +1,60 @@
+<div id="s2id_select2-option" class="select2-container">
+<select id="select2-option" style="width:200px;" onChange="if(this.selectedIndex!=0) self.location=this.options[this.selectedIndex].value">
+   <% if !@current_user.inventory_manager?  %>
+    <optgroup label="Financial Reports">
+	    <option value="">-----View More Reports-----</option>
+        <% if @current_user.branch_id.blank? || @current_user.owner? %>
+          <option value="/horizontal_balance_sheet/index">Balance Sheet</option>
+          <option value="/horizontal_profit_and_loss/index">Profit and Loss</option>
+          <option value="/trial_balance/index">Trial Balance</option>
+        <% end %>
+        <option value="/duties_and_taxes/tax_report">Tax Summary Report</option>
+        <option value="/duties_and_taxes/vat_report">VAT Summary Report</option>
+    </optgroup>
+    <optgroup label="Other Reports">
+        <option value="/account_books_and_registers/ledger">Ledger</option>
+        <option value="/daybook/index">Day book</option>
+        <option value="/bank_book/index"> Bank Book</option>
+        <option value="/cash_book/index"> Cash Book</option>
+        <option value="/credit_note_register/index">Credit Note Register</option>
+        <option value="/debit_note_register/index">Debit Note Register</option>
+        <option value="/journal_register/index"> Journal Register</option>
+        <option value="/custom_fields/custom_field_report"> Custom Field Report</option>
+    </optgroup>
+    <optgroup label="Sales Reports">
+        <option value="/sales_register/index">Sales Register</option>
+        <option value="/bills_receivable/index">Outstanding Receipts</option>
+        <option value="/customer_statements/index">Customer Statement</option>
+        <option value="/invoice_settlement/index">Invoice Settlement</option>
+    </optgroup>
+    <optgroup label="Expense Reports">
+        <option value="/purchase_register/index">Purchase Register</option>
+        <option value="/bills_payable/index">Outstanding Payments</option>
+        <option value="/sundry_creditor/index">Sundry Creditor</option>
+    </optgroup>
+    <optgroup label="Work Reports">
+        <option value="/workstreams">Recent Activities</option>
+    </optgroup>
+    <% if !@company.plan.free_plan? && !@company.plan.essential_plan? %>
+    <optgroup label="Timesheet Reports">
+        <option value="/timesheets/report">Timesheet</option>
+    </optgroup>
+    <% end %>
+    <optgroup label="Gain or Loss Reports">
+        <option value="/gain_or_loss_report/index">Gain or Loss Report</option>
+    </optgroup> 
+    <% end %>
+    <% if !@company.plan.professional_plan? && !@company.plan.essential_plan? %>
+    <optgroup label="Inventory Reports">
+        <option value="/stock_wastage_register/index">Stock Wastage Register</option>
+        <option value="/low_stock/index">Low Stock Register</option>
+        <option value="/warehouse_wise_stock/index"><%= @company.label.warehouse_label%> Wise Stock</option>
+        <option value="/warehouse_wise_stock/inventory_valuation"><%= @company.label.warehouse_label%> Wise Stock Valuation</option>
+        <option value="/product_wise_stock/index">Product Wise Stock</option>
+        <option value="/sales_order_reports/customer_wise_so"><%= @company.label.customer_label %> Wise Pending Order</option>
+        <option value="/sales_order_reports/product_wise_so">Product Wise Pending Order</option>
+        <option value="/sales_order_reports/pending_invoices_for_dc">Pending Delivery Challan</option>
+    </optgroup>
+    <% end %>
+</select> 
+</div>

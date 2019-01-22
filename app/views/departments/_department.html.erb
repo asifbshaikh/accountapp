@@ -1,0 +1,20 @@
+
+<tr>
+  <td><%= link_to department.name, department %></td>
+  <td><%= truncate(department.description, :length=>20) %></td>
+  <td><%= department.status %></td>
+  <td>
+   
+   <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/departments/<%= department.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href= <%= edit_department_path(department) %>>Edit</a></li>  
+        <li class="divider"></li>
+        <li><a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "/departments/<%= department.id%>" >Delete</a></li>
+      </ul>
+  </div>
+  </td>
+</tr>
+

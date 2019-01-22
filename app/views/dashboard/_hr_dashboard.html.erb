@@ -1,0 +1,49 @@
+
+<div class="row">
+  <div>
+    <div class="col-lg-4">
+      <div class="row">
+        <div class="col-lg-12">
+          <% if !@todays_birthday_guys.blank? || @holidays_this_week.count != 0%>
+            <section class="panel bg-info">
+              <div class="panel-body">
+                <% if !@todays_birthday_guys.blank?%>
+                  <% @todays_birthday_guys.each do |user| %>
+                    <p>
+                      <i class="icon-bell"></i>
+                      <%= user.full_name%>'s Birthday Today!
+                    </p>
+                  <%end%>
+                <%end%>
+                <%if @holidays_this_week.count != 0%>
+                  <% @holidays_this_week.each do |h|%>
+                    <p>
+                      <i class="icon-bell"></i>
+                      <%= h.holiday  %>
+                      <small class="block">Date: <%= h.holiday_date.strftime("%d %b %Y") %></small>
+                    </p>
+                  <%end%>
+                <%end%>
+              </div>
+            </section>
+          <%end%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12"><!-- Recent Activity start -->
+          <section class="panel">
+            <header class="panel-heading">
+              <span class="hidden-sm">Recent Activities</span>
+            </header>
+            <div class="panel-body">
+              <!--Recent Activities -->
+              <%= render :partial => 'dashboard/workstream', :collection => @workstreams %><br>
+              <a href="/workstreams" class="btn btn-info"> View All Activities</a>
+            </div>
+          </section>
+        </div><!-- / Recent Activity end -->
+      </div>
+
+    </div> <!-- Col4 ends -->
+  </div>
+</div>

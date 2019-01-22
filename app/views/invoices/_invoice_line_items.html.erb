@@ -1,0 +1,42 @@
+<tr id="row<%= index %>" valign="top" class ='inv_line'>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][warehouse_id]",invoice_line_item.warehouse_id%>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][id]",invoice_line_item.id%>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][_destroy]"%>
+  <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][type]",invoice_line_item.type, :value =>"InvoiceLineItem"%>
+  <td valign="top" style='padding-left:0;' id='item-td'>
+    <%= select_tag("invoice[invoice_line_items_attributes][#{index}][product_id]", options_from_collection_for_select_with_data(@products, :id, :name, invoice_line_item.product_id), :include_blank => true,:"data-placeholder" => "Select product", :"data-index" => index, :style=>'width:100%;') %>
+    <%= hidden_field_tag "index", index %>
+    <span id="avg_cost"></span>
+    <br />
+  </td>
+  <td><%= text_area_tag "invoice[invoice_line_items_attributes][#{index}][description]",invoice_line_item.description, :class => "bg-focus form-control", :id => 'description', :cols => 15, :rows=>1 %></td>
+  <% product = "invoice[invoice_line_items_attributes][#{index}][product_id]" %>
+  <td>
+    <%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][quantity]",invoice_line_item.quantity, :class =>'bg-focus form-control text-right', :id =>'quantity', :onkeydown => "return numbersOnly(event);", :maxlength => 18, 'data-index' => index, 'data-id' => invoice_line_item.id %>
+    <p id='available-qty' style="color:green;font-style:italic;"><%= "Available: #{available_quantity(invoice_line_item)} #{invoice_line_item.product.unit_of_measure}" unless invoice_line_item.product.blank? || !invoice_line_item.inventoriable? %></p>
+
+  </td>
+  <td><%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][unit_rate]",invoice_line_item.unit_rate, :class => 'bg-focus form-control amount text-right', :id => 'unit_cost', :onkeydown => "return numbersOnly(event);", :maxlength => 18 %></td><!--Jquery code is in application.js-->
+  <td><%= text_field_tag "invoice[invoice_line_items_attributes][#{index}][discount_percent]", invoice_line_item.discount_percent, :class =>'bg-focus form-control text-right', :id => 'discount', :onkeydown => "return numbersOnly(event);", :maxlength => 5 %></td>
+  <td valign="top" style='padding-left:0;' id='tax-td'>
+    <% invoice_line_item.invoice_taxes.each_with_index do |tax, tax_index| %>
+    <div class='row' id="tax-<%=index%>-<%=tax_index%>" style=<%="display:none;" if tax_index==1 %>>
+      <div class="col-sm-12">
+        <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][id]", tax.id %>
+        <%= select_tag "invoice[invoice_line_items_attributes][#{index}][invoice_taxes_attributes][#{tax_index}][account_id]", options_from_collection_for_select_with_data(Account.get_sales_taxes(@company.id), :id, :sales_tax_name,tax.account_id,{:"linked" => :linked_sales }), :include_blank => true, :class => "bg-focus form-control chzn-select", :style => "width:150px;",:"data-placeholder" => "Select tax" %><p></p>
+      </div>
+    </div>
+    <% end %>
+    <a id="add-tax" data-index="<%=index%>" style="cursor:pointer;"><i> + apply another tax</i></a>
+    <%= hidden_field_tag "index", index %>
+  </td>
+  <td  align="right">
+    <%= hidden_field_tag "invoice[invoice_line_items_attributes][#{index}][amount]", invoice_line_item.amount, :id => 'total' %>
+    <span id="amount">0.0</span>
+  </td>
+  <td style='padding-right:0;'><%= link_to "<i class='icon-remove'></i>".html_safe,{:action => :remove_line_item, :index => index, :line_item_id => invoice_line_item.id}, :id => 'cancel', :class => "btn btn-danger btn-sm",:remote => true  %></td>
+</tr>
+
+<script type="text/javascript"> 
+  $("#invoice_invoice_line_items_attributes_<%= index %>_product_id").select2();
+</script>

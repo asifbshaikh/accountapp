@@ -1,0 +1,33 @@
+ <br>
+ <div class="col-lg-12 col-lg-offset-4">
+<table class="table table-bordered b-t" id="export_invoice_items">
+    <thead>
+      <tr>
+        <th>
+         <label>Shipping Bill Port Code</label>
+        </th>
+        <th><label>Shipping Bill No. or Bill of Export No</label></th>
+        <th ><label>Shipping Bill Date. or Bill of Export Date </label></th>
+      </tr>
+    </thead>
+    <tbody>
+
+    <tr >
+  <td >
+    <%= select_tag("invoice[sbpcode]", options_from_collection_for_select(@port_codes, :port_code, :description), :include_blank => true,:"data-placeholder" => "Select Port code",:style=>'width:100%;') %>
+
+  </td>
+  <td>
+  <div class="col-lg-5">
+        <input class="bg-focus form-control" id="invoice_sbnum" name="invoice[sbnum]" size="30" style="width: 120px;" value="" autocomplete="off"  onkeydown ="return numbersOnly(event);" maxlength = "7">
+        </div>
+   </td>
+  <td>
+      <input class="bg-focus form-control" id="invoice_sbdt" name="invoice[sbdate]" size="30" style="width: 120px;" autocomplete="off" type="text">
+  </td><!--Jquery code is in application.js-->
+</tr>
+                  
+        
+  </tbody>
+  </table>
+  </div>

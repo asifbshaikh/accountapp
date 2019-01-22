@@ -1,0 +1,14 @@
+   <%   debit = 0
+		credit = 0
+		prev_date = nil
+		for ledger in @ledgers
+    %>
+	 <tr class="gradeU <%=cycle('even','odd')%>">
+    <td><%=  (ledger.transaction_date.strftime("%d-%m-%Y") == prev_date)? "": ledger.transaction_date.strftime("%d-%m-%Y")%></td><% prev_date = ledger.transaction_date.strftime("%d-%m-%Y")%>
+    <td><a href=<%= "/accounts/#{Account.find(ledger.account_id).id}"%>><%= Account.find(ledger.account_id).name  %></a></td>
+    <td><%= ledger.voucher_type %></td>
+    <td><%= format_currency ledger.debit %></td>
+    <td><%= format_currency ledger.credit %></td>
+    <td><%= User.find(ledger.created_by).first_name  %></td>
+   
+	<% end %>

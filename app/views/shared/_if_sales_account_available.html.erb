@@ -1,0 +1,13 @@
+<% if @from_accounts.blank? && @to_accounts.blank?%>
+	<br /><div class="box box-warning">
+		Currently there are no customer(s) and sales account(s).<a href="/account_heads">Click to create one.</a>
+	</div>
+<% elsif @from_accounts.blank? %>
+	<br /><div class="box box-warning">
+		Currently there are no customer account(s).<a href="/account_heads">Click to create one.</a>
+	</div>
+<% elsif @to_accounts.blank? %>
+	<br /><div class="box box-warning">
+		Currently there are no sales account(s).<a href="/account_heads">Click to create one.</a>
+	</div>
+<% end %>

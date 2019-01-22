@@ -1,0 +1,11 @@
+                <tr>
+                  <td><%= link_to "#{company.name}", admin_company_path(company.id) %></td>
+                  <td><%= company.plan.display_name %></td>
+                  <td><%= company.users.first.full_name%></td>
+                  <td><%= company.phone %></td>
+                  <td><%=Company.find_last_contact_date(company.id) unless Company.find_last_contact_date(company.id).blank?%></td>
+                  <td><%= company.users.first.email %></td>				
+                  <td><%= company.activation_date %></td>
+                  <td><%= company.subscription.renewal_date.to_date %></td>
+                </tr>
+

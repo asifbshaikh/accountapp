@@ -1,0 +1,45 @@
+var flag = true;
+var quantity = 0;
+var error_arr=[];
+$("#error li").remove();
+$(".errmsg").remove();
+$('.warehouse-detail').remove();
+<% unless params[:warehouse_id].blank? %>
+  $("<div class=warehouse-detail></div>").appendTo('form')
+  <% params[:warehouse_id].each do |a| %>
+    var qty = parseFloat($("input:text[name=product_quantity_at<%= a %>]").val());
+    var unit_cost = parseFloat($("input:text[name=product_price_at<%= a %>]").val());
+    var available_quantity=parseFloat($("input:hidden[name=available_quantity_at<%= a %>]").val());
+    var opening_stock=parseFloat($("input:hidden[name=opening_stock_at<%= a %>]").val());
+    if(unit_cost!='NaN' && unit_cost>0){
+      $("<input type='hidden' name='product_price_at_<%= a %>' value="+ unit_cost +">").appendTo('.warehouse-detail');
+    }
+    if(qty != null && qty>=0){
+    $("<input type='hidden' name='warehouse[]' value=<%= a %>>").appendTo('.warehouse-detail');
+      $("<input type='hidden' name='quantity_at_<%= a %>' value="+ qty +">").appendTo('.warehouse-detail');
+      quantity += qty;
+    }else{
+      flag = false;
+      error_arr.push("Please enter +ve quantity.")
+    }
+    if(available_quantity && opening_stock){
+      if(available_quantity<(opening_stock - qty)){
+        flag = false;
+        error_arr.push("Stock underflow."   )
+      }
+    }
+  <% end %>
+<% end %>
+
+if(flag){
+  $("#opening-stock").val(quantity);
+  $("div[id^='modal']").modal('hide');
+  $(".alert-danger").hide();
+}else{
+  $(".alert-danger").show();
+  $.each(error_arr, function(index, value){
+    $(".alert-danger #err").after("<strong class='errmsg'>"+value+"</strong><p></p>");
+  })
+}
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>");

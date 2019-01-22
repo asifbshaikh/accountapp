@@ -1,0 +1,98 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-5">
+        <h2><i class="icon-file-text-alt text"></i> View Delivery Challan</h2>
+      </div>
+      <div class="col-lg-7 m-t-large" align="right">
+        <%= link_to raw('<i class="icon-print"> </i>'), delivery_challan_path(@delivery_challan, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank" %>
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), sales_order_path(@delivery_challan.sales_order_id), :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <!-- Invoice First section -->
+          <div class="col-sm-5">
+            <h4><strong><%= @delivery_challan.customer_name %></strong></h4>
+            <%if !@delivery_challan.customer.blank? %>
+              <% if !@delivery_challan.customer.email.blank? %>
+              <p><i class="icon-envelope-alt"></i> <%= @delivery_challan.customer.email%></p>
+              <% end %>
+              <% if !@delivery_challan.customer.primary_phone_number.blank? %>
+              <p><i class="icon-phone"> <%= @delivery_challan.customer.primary_phone_number%></i></p>
+              <% end %>
+            <% end %>
+          </div>
+          <!-- Invoice second section -->
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-8">
+                  <p>
+                    <strong> Delivery Challan Number: </strong><%= @delivery_challan.voucher_number %>
+                  </p>
+                  <p><strong>Sales Order Reference: </strong> <%= @delivery_challan.sales_order.voucher_number %></p>
+                  <p><strong>Date: </strong> <%= @delivery_challan.voucher_date %></p>
+                  <p><strong>Warehouse: </strong> <%= @delivery_challan.warehouse_name %></p>
+                </div>
+                <!-- Invoice basic details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-8"><i class="icon-calendar"></i> Created on
+                    <%= dc_created_date(@delivery_challan) %>
+                    by <%= dc_created_by(@delivery_challan)%>
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></th>
+                  <th colspan="2" ><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                  <th class="text-right">Ordered Qty</th>
+                  <th class="text-right">Delivered Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @delivery_challan_line_items %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+      <div class="row">
+          <%if !@delivery_challan.customer_notes.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat"><%= @company.label.customer_label %> Notes</label><br/>
+              <%= breaking_word_wrap(@delivery_challan.customer_notes)%>
+            </p>
+          </div>
+          <% end %>
+          <% if !@delivery_challan.terms_and_conditions.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productvendor">Terms and Conditions</label><br/>
+              <%= breaking_word_wrap(@delivery_challan.terms_and_conditions) %>
+            </p>
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+

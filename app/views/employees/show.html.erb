@@ -1,0 +1,185 @@
+<!-- Page title -->
+<
+<!-- Page content -->
+   <div id="page">
+   <!-- Wrapper -->
+      <div class="wrapper">
+
+      <!-- Left column/section -->
+          <section  class="column width6 first highlight">
+             <p id="notice"><%= notice %></p>
+             <div class="column width3 first">
+                 <fieldset>
+                 <legend>Basic Info: </legend>
+             
+                 <table width="80%" cellpadding="2" cellspacing="2">
+
+												<tr>
+												  <th>Employee name:</th>
+												  <td><%= @employee.employee_name %></td>
+												</tr>
+												
+												
+												<tr>
+												  <th>Email:</th>
+												  <td><%= @employee.email %></td>
+												</tr>
+												
+												<tr>
+												  <th>Phone:</th>
+												  <td><%= @employee.phone %></td>
+												</tr>
+												
+												<tr>
+												  <th>Present address:</th>
+												  <td><%= @employee.present_address %></td>
+												</tr>
+                   </table>
+                  </fieldset>
+             </div>
+             
+						 <div class="column width3">
+                  <fieldset>
+                  <legend>Work Info:</legend>
+                  <table width="80%" cellpadding="2" cellspacing="2">
+                          <tr>
+                            <th>Department:</th>
+                            <td><%= Department.find(@employee.department).name %></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>Designation:</th>
+                            <td><%= Job.find(@employee.designation_id).title %></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>Reporting To:</th>
+                            <td><%= @employee.reporting_to_id %></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>Type:</th>
+                            <td><%= @employee.type %></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>Status:</th>
+                            <td><%= @employee.status %></td>
+                          </tr>
+                          
+                          <tr>
+                            <th>Work Location:</th>
+                            <td><%= @employee.work_location %></td>
+                          </tr>
+													<tr>
+                            <th>Work Phone:</th>
+                            <td><%= @employee.work_phone %></td>
+                          </tr>
+													<tr>
+                            <th>Date of Joining:</th>
+                            <td><%= @employee.date_of_joining %></td>
+                          </tr>
+                  
+                  </table>
+									</fieldset>  
+              </div>
+						 
+						 <div class="column width3 first">
+                 <fieldset>
+                 <legend>Personal Info: </legend>
+             
+                 <table width="80%" cellpadding="2" cellspacing="2">
+
+                       <tr>
+					                <th>Gender:</th>
+					                <td><%= @employee.gender %></td>
+					             </tr>
+					
+												<tr>
+												   <th>Date of birth:</th>
+												   <td><%= @employee.date_of_birth %></td>
+												</tr>
+												
+												<tr>
+												   <th>Blood group:</th>
+												   <td><%= @employee.blood_group %></td>
+												</tr>
+												
+												<tr>
+												   <th>Maratial status:</th>
+												   <td><%= @employee.maratial_status %></td>
+												</tr>
+												
+												<tr>
+												   <th>Wedding day:</th>
+												   <td><%= @employee.wedding_day %></td>
+												</tr>
+												
+												<tr>
+												   <th>Emergency contact1:</th>
+												   <td><%= @employee.emergency_contact1 %></td>
+												</tr>
+												
+												<tr>
+												   <th>Emergency contact2:</th>
+												   <td><%= @employee.emergency_contact2 %></td>
+												</tr>
+												
+												<tr>
+												   <th>Passport number:</th>
+												   <td><%= @employee.passport_number %></td>
+												</tr>
+												
+												<tr>
+												   <th>Passport expiry date:</th>
+												   <td><%= @employee.passport_expiry_date %></td>
+												</tr>
+
+                 </table>
+                 </fieldset>
+             </div>
+             
+             <div class="column width3">
+									<fieldset>
+									<legend>Important Details:</legend>
+									<table width="80%" cellpadding="2" cellspacing="2">
+													<tr>
+													  <th>Bank account number:</th>
+													  <td><%= @employee.bank_account_number %></td>
+													</tr>
+													
+													<tr>
+													  <th>Branch:</th>
+													  <td><%= @employee.branch %></td>
+													</tr>
+													
+													<tr>
+													  <th>Bank name:</th>
+													  <td><%= @employee.bank_name %></td>
+													</tr>
+													
+													<tr>
+													  <th>Pan:</th>
+													  <td><%= @employee.PAN %></td>
+													</tr>
+													
+													<tr>
+													  <th>Eps account number:</th>
+													  <td><%= @employee.EPS_account_number %></td>
+													</tr>
+													
+													<tr>
+													  <th>Pf account number:</th>
+													  <td><%= @employee.PF_account_number %></td>
+													</tr>
+									
+                  </table>
+									</fieldset>  
+              </div>
+
+             <%= link_to 'Edit', edit_employee_path(@employee), :class =>"btn btn-green big" %> |
+             <%= link_to 'Back', employees_path, :class =>"btn btn-green big" %>
+						  <!-- End of Left column/section -->
+         </section>
+    </div>
+ </div>

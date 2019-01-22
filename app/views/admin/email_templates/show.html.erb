@@ -1,0 +1,74 @@
+<!-- Page Title-->
+<%= render "shared/page_title" %>
+<!-- Page Title end -->
+<!-- Page content -->
+<div id="page">
+<!-- Wrapper -->
+  <div class="wrapper">
+<!-- Left column/section -->
+    <section class="column width6 first"></br>
+       <div class="highlight">
+         
+        <%= render :partial=>"shared/flash_msg"%>
+         <table class="display stylized" id="act_details">
+            <thead>
+    <tr>
+             <th colspan="2">Template Details</th>
+    </tr>
+      </thead>
+      <tbody>
+               <tr>
+                 <td>
+                    <label>Template name</label>
+                    <%= @email_template.template_name %>
+                 </td>
+               </tr>
+               <tr>
+                 <td>
+                    <label>subject:</label>
+                    <%= @email_template.subject %>
+                 </td>
+               </tr>
+               <tr>
+                 <td>
+                    <label>Header:</label>
+                    <%= @email_template.header %>
+                 </td>
+               </tr>
+               <tr>
+                 <td>
+                    <label>Body:</label>
+                    <%= @email_template.body %>
+                 </td>
+               </tr>
+               <tr>
+                 <td>
+                    <label>Footer:</label>
+                    <%= @email_template.footer %>
+                 </td>
+               </tr>
+       </tbody>
+             <tfoot>
+                <tr>
+                  <td colspan="2">
+                    <%= link_to 'Edit', edit_admin_email_template_path(@email_template),{:class=>"btn btn-green" } %> 
+                    <a rel="nofollow" data-method="delete" data-confirm="Are you sure?" href= "" class="btn" >Delete</a>
+                     <a href="/admin/email_templates" class="btn">Back</a>&nbsp;
+                  </td>
+                </tr>
+        </tfoot>
+    </table>
+  </div><br />
+   </section>
+           <!-- End of Left column/section -->
+        <!-- Right column/section -->
+         <aside class="column width2"><br />
+          <%= new_button("Add New Template", new_admin_email_template_path)%>           
+          <p><%= list_button_black("View Templates", admin_email_templates_path)%></p>
+          
+         </aside>
+         <!-- End of Right column/section -->
+     </div>
+   <!-- End of Wrapper -->
+ </div>
+<!-- End of Page content -->

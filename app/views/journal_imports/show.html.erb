@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Import file:</b>
+  <%= @journal_import.import_file_id %>
+</p>
+
+<p>
+  <b>Voucher number:</b>
+  <%= @journal_import.voucher_number %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @journal_import.date %>
+</p>
+
+<p>
+  <b>Created by:</b>
+  <%= @journal_import.created_by %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @journal_import.description %>
+</p>
+
+<p>
+  <b>Tags:</b>
+  <%= @journal_import.tags %>
+</p>
+
+<p>
+  <b>Total amount:</b>
+  <%= @journal_import.total_amount %>
+</p>
+
+<p>
+  <b>From account:</b>
+  <%= @journal_import.from_account_id %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @journal_import.amount %>
+</p>
+
+<p>
+  <b>Credit amount:</b>
+  <%= @journal_import.credit_amount %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @journal_import.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_journal_import_path(@journal_import) %> |
+<%= link_to 'Back', journal_imports_path %>

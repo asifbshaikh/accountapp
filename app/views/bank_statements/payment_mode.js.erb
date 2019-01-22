@@ -1,0 +1,2 @@
+$("#remIt").remove();
+$(".oinc").after('<%= escape_javascript render :partial => params[:mode] unless params[:mode] == 'cash' %>');

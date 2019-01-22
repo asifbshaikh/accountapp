@@ -1,0 +1,3 @@
+<div class='old-data'>
+  <%= select_tag "stock_wastage_voucher[stock_wastage_line_items_attributes][#{index}][product_id]", options_from_collection_for_select(@stocks, :product_id, :product_name), :include_blank => "Select product", :class=>"full", :id => "product_quantity"  %>
+</div>

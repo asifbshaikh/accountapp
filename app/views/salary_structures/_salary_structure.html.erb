@@ -1,0 +1,17 @@
+
+<tr>
+   <td><%= link_to User.find(salary_structure.for_employee).full_name, salary_structure %></td>
+   <td><%= salary_structure.effective_from_date.strftime("%d-%m-%Y") %></td>
+   <td>
+     <div class="btn-group" style="float: right;">
+      <button class="btn btn-gray" onclick="location.href='/salary_structures/<%= salary_structure.id %>'"; >View</button>
+      <button class="btn btn-gray dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href= <%= edit_salary_structure_path(salary_structure) %>>Edit</a></li>  
+         <li><a href=<%= "/salary_structures/copy_salary_structure?id=#{salary_structure.id}"%> >Copy this</a></li>
+        <li><a href=<%= "/salary_structure_histories?id=#{salary_structure.for_employee}" %>>View Histories</a></li>
+      </ul>
+    </div>
+   </td>
+</tr>

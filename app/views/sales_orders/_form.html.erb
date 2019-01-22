@@ -1,0 +1,176 @@
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <div class="panel-body">
+        <div id="jHere"></div>
+        <%= render :partial => 'auto_calculate' %>
+        <%= form_for @sales_order,  :html => {:class => "form-horizontal"} do |f| %>
+        <%= render 'shared/form_error', :object => @sales_order %>
+        <%= hidden_field_tag 'total', params[:total].blank? ? 0 : params[:total] %>
+        <%= hidden_field_tag 'total_tax', params[:total_tax].blank? ? 0 : params[:total_tax] %>
+        <%= hidden_field_tag 'discount', params[:discount].blank? ? 0 : params[:discount] %>
+        <div class="form-group">
+          <div class="col-lg-3">
+            <% if @sales_order.voucher_setting.custom_sequence? %>
+            <%= f.label :voucher_number, :class=>"control-label-required" %>
+            <%= f.text_field :voucher_number, :class=>"form-control bg-focus", :style=>"width:200px;" %>
+            <% else %>
+            <label class="control-label">Voucher Number <%= @sales_order.voucher_number %></label>
+            <%= f.hidden_field :voucher_number %>
+            <% end %>
+          </div>
+        </div>
+        <div class="form-group">
+
+          <div class="col-lg-3">
+            <label class="control-label-required"><%= @company.label.customer_label %> </label>
+            <div class="input-group">
+              <%= f.select(:customer_id, content_tag(:option, "+ Add New", :value=>"create_new")+options_from_collection_for_select_with_data(@to_accounts, :id, :name, @sales_order.customer_id, :"currency"=> :currency), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+              <span id="sales-order-currency"></span>
+            </div> 
+            <span id='to_acc_cur'></span>
+          </div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-3">
+            <%= f.label :voucher_date, "Date" ,:class=>"control-label-required"  %>
+            <%= f.text_field :voucher_date, :class => 'bg-focus form-control sm-input' %>
+          </div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-2">
+            <label class="control-label">Under Project</label>
+            <%= f.select(:project_id, options_from_collection_for_select_with_data(@projects, :id, :name, @sales_order.project_id), {:prompt => 'Type to select'},{:style => "width:200px;"}) %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-3">
+            <%= f.label :po_reference, "PO Ref#" ,:class=>"control-label"  %>
+            <%= f.text_field :po_reference, :class => 'bg-focus form-control' %>
+          </div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-3">
+            <%= f.label :po_date, "PO Date" ,:class=>"control-label"  %>
+            <%= f.text_field :po_date, :class => 'bg-focus form-control sm-input' %>
+          </div>
+          <div class="col-lg-1"></div>
+          <% if @sales_order.gst_salesorder? %>
+                 <div class="col-lg-3">
+                    <label class="control-label-required">Place of supply</label>
+                  <div class="input-group">
+                    <%= collection_select(:sales_order, :place_of_supply, @states, :state_code, :name, {:prompt => true},{:state_code=>"select2-option", :style=>"width:200px;"}) %>
+                  </div>
+                </div>
+              <% end %>
+          <div class="col-lg-3">
+            
+          </div>
+        </div>
+        <% if @sales_order.invoices.blank? %>
+        <div class="form-group">
+          <div class="col-lg-2 exc_rate" style=<%= 'display:none;' if @sales_order.currency==@company.currency_code %> >
+            <label class="control-label">Exchange Rate in <%= @company.currency_code %></label>
+            <%= f.text_field :exchange_rate , :onkeydown => "return numbersOnly(event);", :maxlength => 6, :size => "5", :class=> "bg-focus form-control text-right sm-input" %>
+          </div>
+        </div>
+        <% end %> 
+
+        <div class="form-group">
+          <div class="col-lg-12">
+            <table class="table table-striped b-t" id="sales_order_line_items">
+              <thead>
+                <tr>
+                  <th style=' width:19%;'>
+                    <label class="control-label-required"><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></label>
+                  </th>
+                  <th style=' width:19%;'><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                  <th style=' width:12%;' class="control-label-required"><label class = "required"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></label></th>
+                  <th style=' width:12%;'><label class="control-label-required"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></label></th>
+                  <th style=' width:11%;'><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+                  <th style=' width:11%;'>Tax</th>
+                  <th style=' width:22%;text-align:right;' class="control-label-required"><label class="required" align="right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<span class="comcur"><%= @company.currency_code%></span><span id='taccur'></span>)</label></th>
+                  <th style=' width:5%;'> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @sales_order.sales_order_line_items.each_with_index do |sales_order_line_item, index| %>  
+                <%= render "sales_order_line_items", :sales_order_line_item => sales_order_line_item, :index => index %> 
+                <% end %>
+                <tr id="row_link" class='row-link' valign="top">
+                  <td valign="top" colspan="8">
+                    <%= link_to  "+ Add new row",{:action => :add_row, :index => @sales_order.sales_order_line_items.size}, :class => 'btn btn-white btn-sm',:remote => true %>
+                  </td>
+                </tr>
+
+                <% @sales_order.shipping_line_items.each_with_index do |shipping_line_item, shipping_index| %>
+                <%= render "shipping_line_items", :shipping_line_item => shipping_line_item, :shipping_index => shipping_index %>
+                <% end %>
+
+                <tr id="shipping_row_link" valign="top">           
+                  <td valign="top" colspan="8">                                           
+                    <%= link_to "+ Add other charge",{:action => :add_shipping_row, :shipping_index=>@sales_order.shipping_line_items.size}, :class =>'btn btn-white btn-sm',:remote => true %></td>
+                  </tr>
+
+
+                  <tr>
+                    <td colspan='5'class="ta-right" style="background-color: #fff;border:none;"></td>
+                    <td class="ta-right" style="background-color: #fff;">Sub total</td>
+                    <td style="background-color: #fff;" align="right" > <span id="est-total">0.00</span></td>
+                    <td style="background-color: #fff;"></td>
+                  </tr>
+                  <tr>
+                    <td colspan='5' class="ta-right" style="background-color: #fff;border:none;"></td>
+                    <td  class="ta-right" style="background-color: #fff;">Discount</td>
+                    <td align="right" style="background-color: #fff;"> <span id="discount">0.00</span></td>
+                    <td style="background-color: #fff;"></td>
+                  </tr> 
+                  <tr>
+                    <td style="background-color: #fff; border-bottom: none;border:none;" colspan="5"></td>
+                    <td class="ta-right" style="background-color: #fff;">Tax</td>
+                    <td style="background-color: #fff;" align="right" > <span id="tax-amount">0.00</span></td>
+                    <td style="background-color: #fff;"></td>
+                  </tr>
+                  <tr>
+                    <td style="background-color: #fff; border-bottom: none;border:none;" colspan="5"></td>
+                    <td class="ta-right" style="background-color: #fff;"><b>Total</b></td>
+                    <td align="right" style="background-color: #fff;"><b></b> <span id = "total">0.00</span></td>
+                    <td style="background-color: #fff;"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="form-group">
+
+            <div class="col-lg-5">
+              <label class="control-label">Customer Notes</label>
+              <%= f.text_area :customer_notes, :rows => 4, :class=>"bg-focus form-control"%>
+            </div>
+            <div class="col-lg-2"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-4">                      
+              <button type="submit" class="btn btn-success">Save</button>
+              <%= link_to 'Cancel', sales_orders_path, :class => "btn btn-default" %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- .modal -->
+  <div id="modal1" class="modal fade">
+    <%= render "customers/popup_customer_form", :selector=>"sales_order_customer_id" %>
+  </div>
+  <div id="modal2" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @sales_account_heads, :transaction_type => "item" %>
+  </div>
+  <div id="modal3" class="modal fade">
+    <%= render "shared/account_details", :account_heads => @tax_account_heads, :transaction_type => "tax" %>
+  </div>
+  <!-- / .modal -->
+  <script type="text/javascript"> 
+    $("#sales_order_customer_id").select2();
+    $("#sales_order_project_id").select2();
+    $("#sales_order_place_of_supply").select2();
+  </script>

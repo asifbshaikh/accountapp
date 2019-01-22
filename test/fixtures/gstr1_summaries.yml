@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  company_id: 1
+  gstr_one_id: 1
+  summary_type: MyString
+  return_period: MyString
+  chksum: MyString
+
+two:
+  company_id: 1
+  gstr_one_id: 1
+  summary_type: MyString
+  return_period: MyString
+  chksum: MyString

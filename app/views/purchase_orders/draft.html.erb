@@ -1,0 +1,65 @@
+ <!-- Page title -->
+  <div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Expenses &rarr;<span>Purchase Orders</span></h1>
+    <%= form_for @search, method = "get", :action =>"/purchase_orders/draft" do |f| %>
+    <%=f.text_field :purchase_order_number_like%>
+    <%end%>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+  <!-- Wrapper -->
+  <div class="wrapper">
+    <!-- Left column/section -->
+    <section class="column width6 first">
+     <!--  <p>Feeling lost? Do an <a href="estimate_advsearch.html" class="nyroModal">Advanced Search</a></p> -->
+      
+        <%= render :partial => "tabs"%>
+        <div id="task_container">
+        <div id="tabs-all">
+          <div class="colgroup">
+            <div class="width3 column first"> </div>
+          </div>
+          <div class="clearfix"></div>
+          <% if @purchase_orders.blank? %>
+                <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+           <% else %>
+          <table class="display stylized" id="example">
+            <thead>
+              <%= render :partial => "header" %>
+            </thead>
+            <tbody>
+                <%= render :partial => "purchase_order_details", :collection => @purchase_orders %>
+            </tbody>
+            <tfoot>
+               <%= render :partial => "header" %>
+            </tfoot>
+          </table>
+          <% end %>
+          <div class="clear">&nbsp;</div>
+        </div>
+       </div> 
+     
+    </section>
+    <!-- End of Left column/section -->
+  </div>
+  <!-- Right column/section -->
+  <aside class="column width2">
+    <p class="leading"><a href="/purchase_orders/new" class="btn btn-special btn-green"><img SRC="images/add.png" class="icon" alt=""/>New Purchase Order</a></p>
+    <!-- <p class="leading"><a href="/purchases" class="btn btn-special btn-gray"><img SRC="images/add.png" class="icon" alt=""/>Create from Old Purchses</a></p> -->
+   <div id="rightmenu">
+            <dl class="first">
+              <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+              <dd><a href="/helps/6" class="nyroModal">Help</a></dd>
+              <dd class="last">If you are a new user, you should read "Getting started"</dd>              
+            </dl>
+     </div><br/>
+  </aside>
+  <!-- End of Right column/section -->
+</div>
+<!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

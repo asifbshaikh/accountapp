@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company:</b>
+  <%= @subscription_history.company_id %>
+</p>
+
+<p>
+  <b>Plan:</b>
+  <%= @subscription_history.plan_id %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%= @subscription_history.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%= @subscription_history.end_date %>
+</p>
+
+<p>
+  <b>Renewal date:</b>
+  <%= @subscription_history.renewal_date %>
+</p>
+
+<p>
+  <b>First subscription date:</b>
+  <%= @subscription_history.first_subscription_date %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @subscription_history.ip_address %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%= @subscription_history.amount %>
+</p>
+
+<p>
+  <b>Allocated storage mb:</b>
+  <%= @subscription_history.allocated_storage_mb %>
+</p>
+
+<p>
+  <b>Allocated user count:</b>
+  <%= @subscription_history.allocated_user_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_subscription_history_path(@subscription_history) %> |
+<%= link_to 'Back', subscription_histories_path %>

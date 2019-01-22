@@ -1,0 +1,35 @@
+<div class="form-control gradeU even">
+  <div ><label class="control-label">Contact <%= @index + 1 %></label></div>
+</div>
+
+<div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">First name</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][first_name]",'',:size => 30, :class=>"bg-focus form-control" %>
+      <%= hidden_field_tag "debtor[contacts_attributes][#{@index}][company_id]", @company.id, :class=>"bg-focus form-control" %>
+      <%= hidden_field_tag "debtor[contacts_attributes][#{@index}][created_by]", @current_user.id, :class=>"bg-focus form-control" %>
+    </div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Last name</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][last_name]",'',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Position</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][position]",'',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Mobile</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][mobile]",'',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Email</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][email]",'',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Date of birth</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][birthday]",'', :id => 'debtor_contacts_birthday',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>
+  <div class="form-control gradeU even">
+    <div class="col-lg-2 text-right"><label class="control-label">Date of anniversary</label></div>
+    <div class="col-lg-3"><%= text_field_tag "debtor[contacts_attributes][#{@index}][anniversary]",'', :id => 'debtor_anniversary',:size => 30, :class=>"bg-focus form-control" %></div>
+  </div>

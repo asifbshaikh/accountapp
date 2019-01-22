@@ -1,0 +1,49 @@
+<%= render 'shared/flash_msg' %>
+<a id='new_note'>Create new notes</a>
+<div class='form' <%= "style='display:none;'" if flash[:error].blank? %>>
+  <%= form_for @lead, :url=>[:admin, @lead] do |f| %>
+    <%= hidden_field_tag "lead[customer_relationships_attributes][0][created_by]", @current_user.id %>
+    <%= hidden_field_tag "lead[customer_relationships_attributes][0][last_contact_date]", Time.zone.now.to_date %>
+    <div class="field">
+      <%= label_tag "notes", "Notes", :class => 'required' %><br />
+      <%= text_area_tag "lead[customer_relationships_attributes][0][notes]", nil ,:class => 'half', :rows => 5 %>
+    </div>
+    
+    <div class="field">
+      <%= label_tag "next_contact_date", "Next contact date" %><br />
+      <%= text_field_tag "lead[customer_relationships_attributes][0][next_contact_date]", nil %>
+    </div>
+    <br>
+    <div class="actions">
+      <%= submit_tag "Create note", :class => "btn btn-green" %>
+    </div>
+
+  <% end %>
+</div>
+<br /> 
+<% if @customer_relationships.blank? %>
+  <div class="box box-info">
+    Currently there are no customer relationships to show.
+  </div>
+<% else %>
+<table class="display stylized">
+    <thead>
+    <tr>
+      <th width=55%>Notes</th>
+      <th>Last contact date</th>
+      <th>Next contact date</th>
+      <th>Created by</th>
+    </tr>
+    </thead>
+   <tbody>
+     <% @customer_relationships.each do |customer_relationship| %>
+      <tr>
+        <td><%= customer_relationship.notes %></td>
+        <td><%= customer_relationship.last_contact_date %></td>
+        <td><%= customer_relationship.next_contact_date %></td>
+        <td><%= SuperUser.find_by_id(customer_relationship.created_by).first_name unless customer_relationship.created_by.blank? %></td>
+      </tr>
+     <% end %>
+  </tbody>
+  </table>
+<% end %>

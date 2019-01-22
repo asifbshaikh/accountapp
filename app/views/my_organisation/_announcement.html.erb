@@ -1,0 +1,9 @@
+  <% @organisation_announcements.each do |organisation_announcement|%>
+		 <tr>
+		    <td class="width2"><b><%= organisation_announcement.title %></b><br/>(<span><%= time_ago_in_words(organisation_announcement.created_at) %> ago</span>)</td>
+		 </tr>&nbsp;
+			<tr>    
+					<td class="width3"><b><%= truncate(organisation_announcement.announcement, :length => 80) %></b><span><%= link_to '(Read more)', organisation_announcement %></span></td>
+		  </tr>&nbsp;
+			<tr> <td><hr size="0"></td></tr> 
+  <% end %>

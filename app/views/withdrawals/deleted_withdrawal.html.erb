@@ -1,0 +1,97 @@
+  <script>
+  $(document).ready(function(){
+    '<% 
+    @data = []
+     for withdrawal in @withdrawals
+      @data<<withdrawal.voucher_number
+      @data<<withdrawal.transaction_date
+        @data<<withdrawal.amount
+     end
+     %>'
+    data = '<%= @data.join(',')%>'.split(',');
+    $("input#autocomplete").autocomplete({
+      source: data
+  });
+  });
+</script>
+<!-- Page title -->
+<div id ="pagetitle">
+  <div class ="wrapper" >
+    <h1>Banking &rarr;<span>Withdrawals History</span></h1>
+    <%= form_for @search, :method => "get", :action=>"/withdrawals/deleted_withdrawal" do |f| %>
+    <%=f.text_field :voucher_number_or_transaction_date_or_amount_equals, :id => "autocomplete", :placeholder=>"search"%>
+    <%end%>
+  </div>
+</div>
+
+<!-- End of Page title -->
+
+<!-- Page content -->
+<div id="page">
+    <!-- Wrapper -->
+    <div class="wrapper">
+       <!-- Left column/section -->
+       <section class="column width6 first"></br>
+       	<div class="highlight">
+       		<%= render "shared/flash_msg"%>
+            <div id="tab2">
+                <ul id="tabnav">
+                    <li class="tab1">
+                        <a href="/withdrawals">All</a>
+                    </li>
+                    <li class="tab2">
+                        <a href="/withdrawals/deleted_withdrawal">Deleted</a>
+                    </li>
+                </ul>
+            </div> 
+           <div id = "task_container">
+      
+         <div id="tabs-all">
+             <div class="colgroup">
+                <div class="width3 column first"> </div>
+             </div>
+             <div class="clearfix"></div>
+             <div id="withdrawal">
+                    <% if @withdrawals.blank? %>
+                        <p class="no-withdraw_cash"><%= render :partial => "shared/no_record" %></p>
+                    <% else %>
+				               <table class="display stylized" id="example">
+				                  <thead>   
+				                    <%= render :partial => "header" %>
+				                  </thead>
+				                  <tbody>
+				                     <%= render :partial => "deleted_withdrawal", :collection => @withdrawals%>
+				                  </tbody>
+				                  <tfoot>
+				                    <%= render :partial => "footer" %>
+				                  </tfoot>
+				                </table>
+				                <div class="clear">
+				          	      <div class="width3 column">
+				                      <%= paginate @withdrawals %>
+				                  </div>
+				                </div>     
+                   <% end %>
+               </div>
+            </div>
+        </div>
+        </div><br />
+       </section>
+      <!-- End of Left column/section -->
+      
+    <!-- Right column/section -->
+       <aside class="column width2"><br />
+       	<a href="/withdrawals/new" class="btn btn-special btn-green btn-green-new">&nbsp; Withdrawal cash</a>
+           <div id="rightmenu">
+                 <dl class="first">
+                       <dt><img width="16" height="16" alt="" SRC="/images/help.png"></dt>
+                       <dd><a href="/helps/8" class="nyroModal">Help</a></dd>
+                       <dd class="last">If you are a new user, you should read "Getting started"</dd>
+                 </dl>
+           </div><br />
+       </aside>
+      <!-- End of Right column/section -->
+     </div>
+  <!-- End of Wrapper -->
+</div>
+<!-- End of Page content -->

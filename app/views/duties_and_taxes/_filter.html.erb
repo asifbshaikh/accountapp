@@ -1,0 +1,28 @@
+<div class="panel panel-info" >
+<div class="panel-heading"><h4 class="panel-title" > Filter</h4></div>
+<form action = '' class="form-horizontal" method="get" data-validate="parsley">
+  <div class="form-group"><br/>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+          <%= select_tag('account_id', options_from_collection_for_select(@tax_accounts, :id, :name, params[:account_id]),{:prompt => 'Please select', :style => "width:180px;"}) %>
+        </div>
+        <div class="col-lg-2">
+          <%= select_tag('id', options_from_collection_for_select(@customer_vendor, :id, :name, params[:id]),{:prompt => 'Please select', :style => "width:180px;"}) %>
+        </div>
+        <div class="col-lg-2">
+          <%= text_field_tag :start_date, params[:start_date],  :placeholder => "Start date", :size => '6',:class =>"form-control" %>
+          </div>
+          <div class="col-lg-2">
+          <%= text_field_tag :end_date, params[:end_date],  :placeholder => "End date", :size => '6',:class =>"form-control" %>
+        </div>
+        <div class="col-lg-2">
+        <input type="submit" value="Search" class="btn btn-success"/>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+   $('#account_id').select2();
+   $('#id').select2();
+</script>

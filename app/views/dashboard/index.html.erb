@@ -1,0 +1,19 @@
+  <section id="content">
+    <section class="main padder">
+      <div class="col-lg-12">
+        <h3> Hello <%= user_display_name @current_user %>!</h3>
+        <% if !@current_user.auditor? %>
+        <h4><%= last_login_time %>
+          <%= display_tour %>
+        </h4>
+        <% end %>
+        <div style="position:inline;"></div>
+      <%= render :partial=>"shared/flash_msg"%>
+      <% if @current_user.auditor? %>
+       <%= render :partial=> "auditor_dashboard"%>
+      <% else %>
+      <%= render :partial=> "#{@current_user.role_name.downcase.tr(" ","_")}_dashboard"%>
+      <% end %>
+      </div>
+    </section>
+  </section>

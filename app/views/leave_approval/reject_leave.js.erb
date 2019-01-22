@@ -1,0 +1,9 @@
+<% if false #@leave_request.errors.any? %>
+	$(".errorPlace").after("<%= escape_javascript render('shared/popup_form_error',{:object => @leave_request}) %>");
+<% else %>
+
+	$("div[id^='modal']").modal('hide');
+	window.location.href="/users/<%= @leave_request.approved_by %>/#leaves";
+<% end %>
+$(".btnsave").remove();
+$(".save-btn").after("<button class='btn btn-sm btn-success btnsave' type='submit'  data-loading-text='Saving...'>Save</button>")

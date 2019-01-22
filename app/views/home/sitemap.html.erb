@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<%= render :partial=> "meta_tags" %>
+
+<!-- ////////////////////////////////// -->
+<!-- //     Retina Bookmark Icon     // -->
+<!-- ////////////////////////////////// -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-icon.png"/>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag 'home' %>
+  <%= javascript_include_tag 'home' %>
+
+<!--Start of Zopim Live Chat Script-->
+<%= render :partial => "zopim_chat_and_google_analytics" %>
+<!-- End Load google Analytics -->
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+</head>
+<body>
+
+<div id="main-wrapper">
+
+  <!-- header start here -->
+  <%= render :partial=> "header" %>
+    <!-- header end here -->
+      
+    <!-- page title start here -->
+   <section id="special-content-wrapper">
+      <div class="row pagetitle">
+            <div class="seven columns">
+                <h2>Sitemap.</h2>                
+            </div>
+            <div class="five columns">
+              <!-- <div id="breadcrumb">
+                  <ul>
+                        <li><a href="/home/index">home</a></li>
+                        <li><a href="#">pages</a></li>
+                        <li class="current-page"><a href="#">sitemap</a></li>
+                    </ul>
+                </div>   -->
+            </div>
+        </div>
+    </section>
+    <!-- page title end here -->
+    
+    <!-- content section start here -->
+    <section id="content-wrapper">
+      
+      <div class="row">
+            <div class="four columns">
+                <h5 class="title-line"><span>Pages</span></h5>
+                <ul class="arrow">
+                  <li><a href="/home/index">Home</a></li>
+                    <li><a href="/home/features">Product Features</a>
+                      <!-- <ul class="arrow">
+                            <li><a href="/home/features_accounting">Easy Accouting</a></li>
+                            <li><a href="/home/features_payroll">Payroll Management</a></li>
+                            <li><a href="/home/features_managers">For Managers</a></li>
+                            <li><a href="/home/features_team">For Team Members</a></li>
+                        </ul> -->
+                    </li>
+                    <li><a href="/home/pricing">Pricing &amp; Signup</a></li>
+                    <li><a href="/home/accountant">Accountants</a></li>
+                    <li><a href="/home/contact">Support & Contact</a>
+                </ul>
+            </div>
+            
+      </div>           
+         
+    </section>
+    <!-- content section end here -->
+    
+    <!-- footer section start here -->
+    <%= render :partial=> "footer" %>
+    <!-- footer section end here -->
+    
+</div>
+
+<script>$('#noscript').remove();</script>
+</body></html>

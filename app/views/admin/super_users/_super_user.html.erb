@@ -1,0 +1,24 @@
+<tr>
+  <td>
+<a  data-toggle="popover" data-html="true" data-placement="right" 
+        data-content="<p>
+                      <strong> Full Name: </strong> <%= super_user.full_name %></p>
+                      <p>
+                      <strong> Username: </strong> <%= super_user.username %></p>
+                      </p>
+                      <p>
+                      <strong> Email: </strong> <%= super_user.email %></p>
+                      </p>
+                      <p>
+                      <strong> Active: </strong> <%= super_user.active %></p>
+                      </p>"
+          title="" data-original-title='<button type="button" class="close pull-right" data-dismiss="popover"><i class="icon-remove"></i></button>Super User Detail'><%= super_user.full_name %></a>
+  </td>
+  <td><%= super_user.email %>  
+  <td><%= super_user.username %></td>
+  <td><%= super_user.active %></td>				
+  <td><%= super_user.last_login %></td>
+  <td><%= link_to '<i class="icon-trash"></i>'.html_safe, admin_super_user_path(super_user), :confirm =>'Are you sure?', :method =>:delete,:class =>"btn btn-default"%>
+  </td>
+</tr>
+

@@ -1,0 +1,7 @@
+<% if params[:option]=='cash' %>
+	$("label.account-select-label").text("Paid from Account");
+<% else %>
+	$("label.account-select-label").text("Select Vendor/Customer");
+<% end %>
+$("#account-select").replaceWith("<%= escape_javascript render  'account_select', :collection=>@accounts %>");
+$("select#expense_account_id").select2();

@@ -1,0 +1,132 @@
+<%= form_for(@contact) do |f| %>
+    <%= render 'shared/form_error' , :object => @contact %>
+	
+    <div class="column width6 first">
+         <div id='user_info_div'><span>Personal Details</span></div>
+         <div class="column width3 first">                 
+	          <%= f.label :title %><br>
+	          <%= f.select(:title, [['Mr.'],['Mrs.']]),:autofocus =>"autofocus" %><br>
+	       </div>
+		     <div class="column width3">
+	          <%= f.label :gender %><br>
+	          <%= f.select(:gender, [['Male'],['Female']]) %><br>
+	       </div>
+	       <div class="column width3 first">
+	          <%= f.label :first_name %><br>
+	          <%= f.text_field :first_name %><br>
+	       </div>
+	       <div class="column width3 ">
+	          <%= f.label :birthday %><br>
+	          <%= f.text_field :birthday, :order => [:day, :month, :year] %><br>
+	       </div>
+	       <div class="column width3 first">
+	          <%= f.label :last_name %><br>
+	          <%= f.text_field :last_name %><br>
+	       </div>
+	       <div class="column width3">  
+	          <%= f.label :anniversary %><br>
+	          <%= f.text_field :anniversary, :order => [:day, :month, :year] %><br>
+	       </div>
+    </div>
+	  <div class="column width6 first">
+			 <div id='user_info_div'><span>Contact Number</span></div> 
+			 <div class="man">
+	       <div class="column width3 first">
+	  	      <%= f.label :email %><br>
+		        <%= f.text_field :email %><br>
+	       </div>
+           <div class="column width3 ">
+             <%= f.label :mobile %><br/>
+             <%= f.text_field :mobile %><br />
+           </div>
+           <div class="column width3 first">
+             <%= f.label :web_page %><br />
+             <%= f.text_field :web_page %><br />
+           </div>
+		       <div class="column width3">
+             <%= f.label :phone1 %><br/>
+             <%= f.text_field :phone1 %><br />
+           </div>
+           <div class="column width3 first">
+             <%= f.label :business_fax %><br />
+             <%= f.text_field :business_fax %><br />
+           </div>
+           <div class="column width3">
+             <%= f.label :phone2 %><br/>
+             <%= f.text_field :phone2 %><br />
+           </div>
+		   </div>
+    </div>
+	 <div class="column width6 first">
+	     <div id='user_info_div' ><span>Contact Address</span></div> 
+     	 <div class="man">
+			<div class="column width3 first">
+	          <%= f.label :address1 %><br/>
+	          <%= f.text_area :address1 ,:rows => "1", :cols => "21"%><br />
+	        </div>
+		    <div class="column width3 ">
+	          <%= f.label :state %><br />
+	          <%= state_select(:state, "country.state") %><br />
+	        </div>
+	        <div class="column width3 first">
+	          <%= f.label :city %><br />
+	          <%= f.text_field :city %><br />
+	        </div>
+	        <div class="column width3 ">
+	          <%= f.label :address2 %><br />
+	          <%= f.text_area :address2, :rows => "1", :cols => "21" %><br />
+	        </div>
+	        <div class="column width3 first">
+              <%= f.label :pin_code %><br />
+              <%= f.text_field :pin_code %><br />
+            </div>
+	        <div class="column width3">
+	          <%= f.label :country %><br />
+	          <%= country_select(:country, "IN") %><br />
+	        </div>
+		 </div>
+    </div>
+	 <div class="column width6 first">
+			 <div id='user_info_div' ><span>Other Details</span></div>
+	   <div class="man">
+		  <div class="column width3 first">
+             <%= f.label :designation %><br />
+             <%= f.text_field :designation %><br />
+          </div>
+          <div class="column width3 ">
+             <%= f.label :contact_category %><br />
+             <%= f.select(:contact_category, [['Customer'],['Vendor']]) %><br />
+          </div>
+          <div class="column width3 first">
+             <%= f.label :department %><br />
+             <%= f.text_field :department %><br />
+          </div>
+          <div class="column width3 " >
+             <%= f.label :account %><br />
+             <%= f.text_field :account %><br />
+          </div>
+          <div class="column width3 first">
+             <%= f.label :company %><br />
+             <%= f.text_field :company %><br />
+          </div>
+          <div class="column width3">
+             <%= f.label :notes %><br />
+             <%= f.text_area :notes ,:rows => "1", :cols => "21" %><br />
+          </div>
+	   </div>
+     </div>
+	    <% if @contact.new_record? %> 
+	 	     <div class="actions">
+				  <button type="submit" class="btn btn-green big"><img src= "images/add.png" /> Save</button>&nbsp;
+				  <button type="reset" class="btn btn-gray big">Cancel </button>
+			 </div>
+	   <% else %>		 
+				 <div class="actions">
+	                 <button type="submit" class="btn btn-green big"><img src="images/add.png" />&nbsp;Save</button>&nbsp;
+	                 <input name='_method' value='Delete' type='submit' data-confirm='Are you sure?' class="btn btn-grey big" />&nbsp;
+	                 <%= link_to 'Cancel', contact_path , {:class=>"btn btn-grey big"} %>
+	              </div>
+			</div>
+	   <% end %>		
+							 
+<% end %>

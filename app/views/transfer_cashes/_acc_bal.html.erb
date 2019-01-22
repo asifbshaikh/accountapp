@@ -1,0 +1,40 @@
+<script>
+	$(document).ready(function(){
+	var balance = new Object();
+
+'<% @tran_from_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#tran_from_account').change(function(){
+			var name = $("#tran_from_account option:selected").text();
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#tc_from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal + "Dr");
+			}else if(bal <= 0){
+				$('span#tc_from_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal) +"Cr");
+			}else{
+
+			}
+		});
+
+	'<% @tran_to_accounts.each do |acc|%>'
+		balance['<%= acc.name %>']=parseFloat('<%= acc.get_closing_balance(@current_user, @company.id, @financial_year, @financial_year.end_date) %>')
+	'<% end %>'
+		$('#tran_to_account').change(function(){
+			var name = $("#tran_to_account option:selected").text();
+			bal = parseFloat(balance[name]);
+			//alert(bal + bal);
+			//$('p#bal').html(" ");
+			if (name != '' && bal > 0){
+				$('span#tc_to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+bal+"Dr");
+			}else if(bal <= 0){
+				$('span#tc_to_acc_bal').html("<br><span style='color:grey;'>Available balance : </span>"+Math.abs(bal)+"Cr");
+			}else{}
+		});
+
+
+
+			});
+</script>

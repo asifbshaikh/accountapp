@@ -1,0 +1,184 @@
+<section id="content">
+  <section class="main padder">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2><i class="icon-file-text-alt text"></i> View <%= @company.label.estimate_label%> </h2>
+      </div>
+      <div class="col-lg-6 m-t-large" align="right">
+      <% if !@current_user.auditor? %>
+        <a href="/estimates/new" class="btn btn-success btn-lg"> + New <%= @company.label.estimate_label%></a>
+        <% unless @estimate.in_frozen_year? %>
+         <% if @estimate.status.blank?%>
+          <div class="btn-group">
+           <button class="btn btn-info btn-lg" onclick="location.href= '<%= edit_estimate_path(@estimate)%>'"; > <i class="icon-edit"> </i> Edit</button>
+            <button class="btn btn-info btn-lg dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span><i></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li class="text-left"><%= link_to raw('<i class="icon-trash"> </i>Delete '), estimate_path(@estimate), :method => "delete", :confirm => "Are you sure?" %></li>
+              <li class="divider"></li>
+              <li class="text-left"><a href=<%= "/invoices/converted_from_estimate?estimate_id=#{@estimate.id}" %> >Convert to invoice</a></li>
+               <li class="text-left"><a href=<%= "/estimates/convert_to_so?id=#{@estimate.id}" %> >Convert to sales order</a></li>
+            </ul>
+          </div>
+          <% end %>
+          <button class="btn btn-white btn-lg dropdown-toggle" title="Email Voucher" data-toggle="modal" data-target='#modal1'><span class="dropdown-label"><i class="icon-envelope"></i></span></button>
+        <% end %>
+      <% end %>
+        
+        <%= link_to raw('<i class="icon-print"> </i>'), estimate_path(@estimate, :format => 'pdf'), :class => 'btn btn-white btn-lg', :target=>"_blank", :title=>"Export to PDF",:print=>'yes' %>
+
+        <%= link_to raw('<i class="icon-mail-reply"> </i>'), estimates_path, :class => 'btn btn-default btn-lg', :title=>"Back" %>
+        <p></p>
+      </div>  
+    </div>
+    <section class="panel">
+      <div class="panel-body">
+      <%= render :partial => "shared/flash_msg"%>
+        <div class="row">
+          <!-- Invoice First section -->
+          <div class="col-sm-5">
+            <h4><strong><%= @estimate.account.name %></strong></h4>
+            <%if !@estimate.account.customer.blank? %>
+              <% if !@estimate.account.customer.email.blank? %>
+              <p><i class="icon-envelope-alt"></i> <%= @estimate.account.customer.email%></p>
+              <% end %>
+              <% if !@estimate.account.customer.primary_phone_number.blank? %>
+              <p><i class="icon-phone"> <%= @estimate.account.customer.primary_phone_number%></i></p>
+              <% end %>
+            <% else %>
+              <% if !@estimate.account.vendor.email.blank? %>
+              <p><i class="icon-envelope-alt"> <%= @estimate.account.vendor.email%></i></p>
+              <% end %>
+            <% end %>
+            <% if @estimate.gst_estimate? %>
+                <% gstn = @estimate.account.customer.present? ? @estimate.account.customer.gstn_id : @estimate.account.vendor.gstn_id %>
+                <b>GSTIN:</b> <%= gstn %>
+          <% end %>
+          </div>
+          <!-- Invoice second section -->
+          <div class="col-sm-7">
+            <section class="panel">
+              <div class="panel-body">
+                <!-- Invoice basic details -->
+                <div class="col-sm-8">
+                  <p>
+                    <strong> <%= @company.label.estimate_label%> Number: </strong><%= @estimate.estimate_number %> <span class="badge bg-<%=estimate_status_badge%>"><%= @estimate.get_status %></span>
+                  </p>
+                  <p><strong> <%= @company.label.estimate_label%> Date: </strong> <%= @estimate.estimate_date %></p>
+                  <p><strong> <%= @company.label.estimate_label%> Amount: </strong> <%= @estimate.currency%> <%= format_amount(@estimate.total_amount) %></p>
+                  <% if @estimate.exchange_rate !=0 %>
+                  <p><strong>Exchange Rate:</strong> <%= @estimate.exchange_rate%></p>
+                  <% end %>
+                  <% currency_array = ['INR', 'PKR'] %>
+                  <% if currency_array.include?(@estimate.currency) %>
+                  <p><strong>Amount in words: </strong> <%= amount_in_words(@estimate.total_amount)%></p>
+                  <% end %>
+                </div>
+                <!-- Invoice basic details end-->
+                <!-- Invoice optional details -->
+                <% if !@custom_field.blank? %>
+                  <%= render :partial=> "custom_field_details"%>
+                <% end %>
+                <!-- Invoice optional details end-->
+              </div>
+              <footer class="panel-footer">
+                <div class="row">
+                  <div class="col-sm-6"><i class="icon-calendar"> </i> Created on <%=@estimate.created_at.to_date.strftime("%d-%m-%Y") %> by <%= @estimate.created_by_user %></div>
+                  
+                </div>
+              </footer>
+            </section>
+          </div>
+          <!-- Invoice second section ends-->
+        </div>
+        <!-- first row ends -->
+        <!-- Start invoice table -->
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th><%= !@company.invoice_setting.item_label.blank? ? @company.invoice_setting.item_label : "Item" %></th>
+                  <th colspan="2" ><%= !@company.invoice_setting.desc_label.blank? ? @company.invoice_setting.desc_label : "Description" %></th>
+                  <th class="text-right"><%= !@company.invoice_setting.qty_label.blank? ? @company.invoice_setting.qty_label : "Qty" %></th>
+                  <th  class="text-right"><%= !@company.invoice_setting.rate_label.blank? ? @company.invoice_setting.rate_label : "Unit Cost" %></th>
+                  <% if @estimate.get_discount > 0 %>
+                    <th  class="text-right"><%= !@company.invoice_setting.discount_label.blank? ? @company.invoice_setting.discount_label : "Discount %" %></th>
+                  <% end %>
+
+                  <% if @estimate.has_tax_lines? %>
+                    <th>Tax Rate</th>
+                    <th class="text-right">Tax Amount</th>
+                  <% end %>
+
+                  <th  class="text-right"><%= !@company.invoice_setting.amount_label.blank? ? @company.invoice_setting.amount_label : "Amount" %> (<%= @estimate.currency %>)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= render :partial => "line_item_details", :collection => @estimate_line_items %>
+                <%= render :partial=>"calculation_details" %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Invoice table ends -->
+        <div class="row">
+          <%if !@estimate.customer_notes.blank? %>
+          <div class="col-sm-6">
+            <p>
+              <label for="productcat"><%= @company.label.customer_label %> Notes</label><br/>
+              <%= breaking_word_wrap(@estimate.customer_notes)%>
+            </p>
+          </div>
+          <% end %>
+          <% if !@estimate.terms_and_conditions.blank? %>  
+          <div class="col-sm-6">
+            <p>
+              <label for="productvendor">Terms and Conditions</label><br/>
+              <%= breaking_word_wrap(@estimate.terms_and_conditions) %>
+            </p>
+
+          </div>
+          <% end %>
+        </div>
+        <% if !@estimate.file_name.blank? %>
+          <div class='row'>
+            <div class = "col-lg-12">
+            <label>Attached Document :</label>
+              <%= link_to @estimate.file_name, @estimate.attachment.url(:original, false), :target => :blank %>&nbsp;
+              (<%= number_to_human_size(@estimate.file_size) %>)
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+     <section class="panel">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-sm-12">
+        <button id="estimate_history_button" class="btn btn-sm btn-info m-b-small">Show Estimate History</button>
+         <div id="estimate_history" style="display:none;">
+          <div class="block">
+          <% if @estimate.estimate_history.blank?%>
+            <%= render :partial => "shared/no_record"%>
+          <% else %>
+          <table class="table text-small row">
+            <thead>
+            </thead>
+            <tbody>
+            <%= render :partial => 'estimates/estimate_history', :collection => @estimate.estimate_history.order("record_date DESC") %>
+            </tbody>
+          </table>
+          <% end %>
+          </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </section>
+  </section>
+</section>
+<div id="modal1" class="modal fade">
+  <%= render "email_form", :estimate => @estimate %>
+</div>

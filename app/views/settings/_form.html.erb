@@ -1,0 +1,82 @@
+ <%= form_for @company, :html => {:class => "m-b-none form-horizontal"}, :remote=>true do |f| %>
+  <%= render 'shared/form_error' , :object => @company %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+         <h4 class="modal-title" id="myModalLabel">Edit Basic Details</h4>
+        </div>
+      
+        <div class="modal-body scroll-y" style="max-height:500px;">
+          <div class="errorSection"></div>
+         <div class="block">
+            <div class="col-lg-6">
+                <%= f.label 'Company name' , :class => "control-label-required"%><br/>
+                <%= f.text_field :name, :class =>"bg-focus form-control" %>     
+            </div>
+
+            <div class="col-lg-6">
+              <%= f.label 'Facebook url' , :class => "control-label"%><br/>
+              <%= f.text_field :facebook_url, :class =>"bg-focus form-control",:maxlength => 50 %>     
+            </div>
+          </div>
+          <div class="block"> 
+            <div class="col-lg-6">
+               <%= f.label 'Company email' , :class => "control-label-required"%><br/>
+                <%= f.text_field :email, :class =>"bg-focus form-control",:maxlength => 30 %>     
+            </div>
+            <div class="col-lg-6">
+               <%= f.label 'Twitter url' , :class => "control-label"%><br/>
+                <%= f.text_field :twitter_url, :class =>"bg-focus form-control",:maxlength => 50 %>     
+            </div>
+          </div>
+          <div class="block">
+            <div class="col-lg-6">
+                <%= f.label 'Phone' , :class => "control-label-required"%><br/>
+                <%= f.text_field :phone,:maxlength => 15,:onkeydown => "return numbersOnly(event);", :class =>"bg-focus form-control" %>     
+            </div>
+            <div class="col-lg-6">
+                <%= f.label 'Google plus url' , :class => "control-label"%><br/>
+                <%= f.text_field :google_plus_url, :class =>"bg-focus form-control",:maxlength => 50 %>     
+            </div>
+          </div>
+          <div class="block">
+            <div class="col-lg-6">
+              <%= label_tag "Country", 'Country', :class => "control-label-required" %><br/>
+              <%= select_tag("company[country_id]", options_from_collection_for_select(@countries, :id, :name, :selected=> (@company.country.blank? ? Company.get_default_country : @company.country.id)), :class=>'form-control bg-focus')%>
+                <%= hidden_field_tag "company[country_attributes][id]", @company.country.id unless @company.country.blank? %>
+            </div>
+            <div class="col-lg-6">
+                  <%= f.label 'LinkedIn url' , :class => "control-label"%><br/>
+                  <%= f.text_field :linked_in_url, :class =>"bg-focus form-control",:maxlength => 50 %>     
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="col-lg-6">
+              <%= label_tag "LocationState", 'State', :class => "control-label-required" %><br/>
+              <%= select_tag("company[address_attributes][state]", options_from_collection_for_select(@states, :name, :name, :selected=> (@company.country.blank? ? Company.get_default_country : @company.country.id)), :class=>'form-control bg-focus')%>
+                <%= hidden_field_tag "company[country_attributes][id]", @company.country.id unless @company.country.blank? %>
+            </div>
+            <div class="col-lg-6">
+                  <%= f.label 'Youtube channel' , :class => "control-label"%><br/>
+                  <%= f.text_field :linked_in_url, :class =>"bg-focus form-control",:maxlength => 50 %>     
+            </div>
+          </div>       
+
+
+         <div class="block">
+            <%= f.fields_for :address do |add|%>
+             <%= add.label "Address"%>
+             <%= add.text_area :address_line1, :rows => "2",:class=>"bg-focus form-control" %>
+            <% end %>
+          </div> 
+        </div>
+         <div class="modal-footer">
+          <div class='save-btn'></div>
+            <button class="btnsave btn btn-sm btn-success" type='submit'  data-loading-text="Saving...">Save</button>
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+       </div>
+    </div>
+<% end %>

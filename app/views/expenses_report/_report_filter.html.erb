@@ -1,0 +1,42 @@
+ <!-- Filter widget starts -->
+<section class="panel">
+  <header class="panel-heading bg-light">
+    <ul class="nav nav-pills pull-right">
+      <li>
+        <a href="#" class="panel-toggle text-muted"><i class="icon-caret-down icon-large text-active"></i><i class="icon-caret-up icon-large text"></i></a>
+      </li>
+    </ul>
+    <a href="#" class="panel-toggle "><i class="icon icon-search"></i> Search and Filter Records</a>
+  </header>
+  <section class="panel-body ">
+      <div class="row">
+        <%= form_for :expense_report, :html => {:multipart => true, :class => "form-horizontal"} do |f| %>
+          <div class="col-lg-3">                  
+            <% if @company.plan.enterprise_plan? && @current_user.owner?%> 
+              <strong>Select Branch</strong>
+              <%= select_tag('branch_id', options_from_collection_for_select(@company.branches, :id, :name, params[:branch_id]), {:prompt => 'Select branch', :style => "width:150px;display:inline"}) %>
+            <% end %>
+            </div>
+          <div class="col-sm-3" id ="container">
+            <strong>Select Status</strong>
+            <%= select_tag :status, options_for_select([['All'],['Paid'],['Unpaid']], :selected => params[:status]), {:class=>"form-control bg-focus",:style => "width:150px;display:inline"} %>
+          </div>
+ 
+                &nbsp;
+               <strong>Select Date Range</strong>
+            <input type="text" id="start_date" name="start_date" class="form-control sm-input" placeholder="Start date" value="<%= params[:start_date]%>" style="display:inline;">
+            &nbsp;
+            <input type="text" id="end_date" name="end_date" class="form-control sm-input" placeholder="End date" value="<%= params[:end_date]%>" style="display:inline;">
+            &nbsp;
+            <button type="submit" class="btn btn-info btn-sm"><i class="icon-search"></i> Search </button>
+            </div>
+            </div>  
+           <% end %>
+        </form>
+      </div>
+  </section>
+</section>
+<!-- Filter widget Ends-->
+<script type="text/javascript">
+  $('#branch_id').select2();
+</script>

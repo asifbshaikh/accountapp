@@ -1,0 +1,13 @@
+<div class='plan-property'>
+	<div class="row">
+	  <div class="form-group">
+	    <div class="col-lg-4">
+	      <label class="control-label-required">Pay What you want</label>
+	    </div>
+	    <div class="col-lg-8" style='display:inline;'>
+	    	<%= hidden_field_tag "validity", 12 %>
+	    	<input type="text" value="1" name="plan_amount" onkeydown="return numbersOnly(event);" style='width: 50%; display:inline;' id='plan_amount' class= "bg-focus form-control"><b style='display:inline;' >/month</b>
+	    </div>
+	  </div>
+	</div>
+</div>

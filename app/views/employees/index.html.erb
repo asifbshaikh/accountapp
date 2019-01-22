@@ -1,0 +1,70 @@
+<!-- Page title -->
+<div id="pagetitle">
+  <div class="wrapper">
+    <h1>Administration &rarr; <span>Manage Employee</span></h1>
+    <!-- Quick search box -->
+    <form action="" method="get">
+      <input class="" type="text" id="q" name="q" />
+    </form>
+  </div>
+</div>
+<!-- End of Page title -->
+
+<div id="page">
+  <!-- Wrapper -->
+   <div class="wrapper">
+      
+    <!-- Left column/section -->
+      <section class="column width6 first">
+         <%#<p> Click on the contact name to view detail.</p>%>
+      <div id="tabs">
+         <div id="tabs-today">
+            <div class="colgroup">
+               <div class="width3 column first"> </div>
+            </div>
+            <div class="clearfix"></div>
+            
+        <div id="contact_index">
+                <% if @employees.blank? %>
+                   <p class="no-contacts"><%= render :partial => "shared/no_record" %></p>
+                <% else %>
+           <p>Click on the contact name  to view detail.</p>
+                  <table class="display stylized" id="example">
+                          <thead>   
+                            <%= render :partial => "header" %>
+                          </thead>
+                          <tbody>
+                             <%= render :partial => "employee", :collection => @employees %>
+                          </tbody>
+                          <tfoot>
+                            <%= render :partial => "header" %>
+                          </tfoot>
+                        </table> 
+                <% end %>
+           </div>
+         <div class="clear">&nbsp;</div>
+    
+        </div>
+     
+     <br />
+  
+     </div>
+     </section>
+  <!-- End of Left column/section -->
+ 
+  <!-- Right column/section -->
+    <aside class="column width2">
+       <p class="leading"><a href="/employees/new" class="btn btn-special btn-green"><img SRC="" class="icon" alt=""/>Create An Employee</a></p>
+      <div id="rightmenu">
+      <dl class="first">
+          <dt><img width="16" height="16" alt="" SRC="images/help.png"></dt>
+          <dd><a href="#">Help</a></dd>
+          <dd class="last">If you are a new user, you should read "Getting started"</dd>              
+      </dl>
+    </div>
+     
+    </aside>
+  <!-- End of Right column/section -->
+   </div>
+</div>
+

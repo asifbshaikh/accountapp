@@ -1,0 +1,5 @@
+$("#expense_expense_line_items_attributes_<%= params[:index] %>__destroy").val("1");
+<%if params[:index].to_i > 0 %>
+$("#row<%=params[:index]%>").hide();
+<%end%>
+cal();

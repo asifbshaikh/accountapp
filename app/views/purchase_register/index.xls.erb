@@ -1,0 +1,53 @@
+<table>
+  <tr><td colspan=6 align="center">Purchase register for <%= vendor_name(@account) %></td></tr>
+  <% if params[:branch_id].present? %>
+   <tr><td colspan=6 align="center"><%= display_branch(@branch_id) %></td></tr>
+   <% end %>
+  <tr><td colspan=6 align="center"><%= @start_date %> To <%= @end_date %></td></tr>
+  <thead>
+    <% if @include_line_items %>
+      <tr>
+        <th width ="9%">Purchase Date<br/><small><em>Product</em></small></th>
+        <th width="10%">Purchase Number<br/><small><em>Unit rate</em></small></th>
+        <th width ="24%">Vendor<br/><small><em>Quantity</em></small></span></th>
+        <th class="text-right" width ="19%">Amount<br/><small><em>Amount</em></small></th>
+      </tr>
+    <% else %>
+      <tr>
+        <th width="9%">Record Date</th>                      
+        <th width="10%">Purchase number</th>
+        <th width="24%"><span class='char_spacing'>Vendor</span></th>
+        <th class="text-right" width ="19%">Amount</th>
+      </tr>
+    <% end %>  
+  </thead>
+  <tbody>
+    <% total_amount=0 %>
+    <% @purchases.each do |purchase| %>
+      <tr>
+        <td width ="9%"><%= purchase.record_date %></td>
+        <td><%= purchase.purchase_number%></td>
+        <td><%= purchase.account.name %></td>
+        <td align="right" width = "19%"><%= format_currency(purchase_amount=purchase_amount(purchase)) %>
+          <% total_amount+=purchase_amount %>
+        </td>
+      </tr>
+        <% if @include_line_items %>
+          <% purchase.purchase_line_items.each do |line_item| %>
+            <tr>
+              <td><small><em><%= line_item.product.name%></em></small></td>
+              <td><small><em><%= line_item.unit_rate%></em></small></td>
+                <td><small><em><%= line_item.quantity%></em></small></td>
+              <td align="right"><small><em><%= format_currency(line_item.amount)%></em></small></td>
+            </tr>
+          <% end %>  
+        <% end %>      
+    <% end %>
+    <tr>
+      <td width ="9%"></td>
+      <td width ="10%"></td>
+      <td width ="24%" class="text-right"><b>T o t a l</b></td>
+      <td width ="19%" class='border_up border_down' align="right"><b><%= format_currency(total_amount) %></b></td>
+    </tr>
+  </tbody>
+</table>
